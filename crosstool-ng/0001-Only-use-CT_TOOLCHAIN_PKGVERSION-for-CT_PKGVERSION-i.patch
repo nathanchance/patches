@@ -1,0 +1,28 @@
+From 7ea02a27e457f998a0b59e68d5bfa7476c9d0674 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 31 Aug 2017 15:29:50 -0700
+Subject: [PATCH] Only use CT_TOOLCHAIN_PKGVERSION for CT_PKGVERSION if defined
+
+I know what was used to compile the toolchain, I don't need it
+cluttering up the toolchain version.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/crosstool-NG.sh.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/scripts/crosstool-NG.sh.in b/scripts/crosstool-NG.sh.in
+index d5066e21..779280d4 100644
+--- a/scripts/crosstool-NG.sh.in
++++ b/scripts/crosstool-NG.sh.in
+@@ -169,6 +169,7 @@ CT_CC_GCC_EXTRA_CONFIG_ARRAY=( ${CT_ARCH_CC_EXTRA_CONFIG} "${CT_CC_GCC_EXTRA_CON
+ 
+ # Compute the package version string
+ CT_PKGVERSION="crosstool-NG ${CT_VERSION}${CT_TOOLCHAIN_PKGVERSION:+ - ${CT_TOOLCHAIN_PKGVERSION}}"
++[[ -n ${CT_TOOLCHAIN_PKGVERSION} ]] && CT_PKGVERSION=${CT_TOOLCHAIN_PKGVERSION}
+ 
+ # Compute the working directories names
+ CT_TARBALLS_DIR="${CT_WORK_DIR}/tarballs"
+-- 
+2.14.1
+
