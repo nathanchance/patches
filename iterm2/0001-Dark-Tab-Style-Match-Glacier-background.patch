@@ -1,0 +1,26 @@
+From 39ceb854cbdee5beaaa31cc847cc56222123af68 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 21 Jun 2017 21:38:38 -0700
+Subject: [PATCH 1/2] Dark Tab Style: Match Glacier background
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ ThirdParty/PSMTabBarControl/source/PSMDarkTabStyle.m | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ThirdParty/PSMTabBarControl/source/PSMDarkTabStyle.m b/ThirdParty/PSMTabBarControl/source/PSMDarkTabStyle.m
+index 9db997df..f18adb82 100644
+--- a/ThirdParty/PSMTabBarControl/source/PSMDarkTabStyle.m
++++ b/ThirdParty/PSMTabBarControl/source/PSMDarkTabStyle.m
+@@ -17,7 +17,7 @@
+ }
+ 
+ + (NSColor *)tabBarColor {
+-    return [NSColor colorWithCalibratedWhite:0.12 alpha:1.00];
++    return [NSColor colorWithRed:13/255.f green:21/255.f blue:27/255.f alpha:1.00];
+ }
+ 
+ - (NSColor *)tabBarColor {
+-- 
+2.13.1
+
