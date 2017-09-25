@@ -1,0 +1,30 @@
+From dd1b5ea08cef70cf2a5d70de4fc8b1a88b110513 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 25 Sep 2017 14:20:19 -0700
+Subject: [PATCH 3/3] Revert "Fix blend mode so faint text does not punch
+ through the window. Issue 6074"
+
+This completely destroys the look of my favorite font...
+
+This reverts commit c227537848bef3b9e8d15f094198bb0d06ca6aeb.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sources/iTermTextDrawingHelper.m | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/sources/iTermTextDrawingHelper.m b/sources/iTermTextDrawingHelper.m
+index 3c1ed2d4..db03f99b 100644
+--- a/sources/iTermTextDrawingHelper.m
++++ b/sources/iTermTextDrawingHelper.m
+@@ -1217,7 +1217,6 @@ typedef struct iTermTextColorContext {
+     size_t length = numCodes;
+     [self selectFont:font inContext:ctx];
+     CGContextSetFillColorSpace(ctx, CGColorGetColorSpace(color));
+-    CGContextSetBlendMode(ctx, kCGBlendModeSourceAtop);
+     CGContextSetFillColor(ctx, components);
+ 
+     double y = point.y + _cellSize.height + _baselineOffset;
+-- 
+2.14.1
+

@@ -1,7 +1,7 @@
-From 36079963e86e69925160443c79a8b547d3d3cc5b Mon Sep 17 00:00:00 2001
+From d843962227f4527ed828b5a83f893a9fd9869021 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 31 Aug 2017 17:38:31 -0700
-Subject: [PATCH 2/2] Xcode: Add my signing identity
+Subject: [PATCH 2/3] Xcode: Add my signing identity
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/iTerm2.xcodeproj/project.pbxproj b/iTerm2.xcodeproj/project.pbxproj
-index f368d886..e8017da7 100644
+index c7328a89..ccd13e4c 100644
 --- a/iTerm2.xcodeproj/project.pbxproj
 +++ b/iTerm2.xcodeproj/project.pbxproj
-@@ -7199,6 +7199,7 @@
+@@ -7204,6 +7204,7 @@
  						DevelopmentTeam = H7V7XYVQ7D;
  					};
  					874206460564169600CFC3F1 = {
@@ -20,7 +20,7 @@ index f368d886..e8017da7 100644
  						ProvisioningStyle = Manual;
  					};
  					A66717851DCE36C3000CE608 = {
-@@ -8976,10 +8977,10 @@
+@@ -8988,10 +8989,10 @@
  			buildSettings = {
  				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
  				CLANG_WARN_INT_CONVERSION = YES;
@@ -33,7 +33,7 @@ index f368d886..e8017da7 100644
  				FRAMEWORK_SEARCH_PATHS = (
  					"$(inherited)",
  					"$(SRCROOT)",
-@@ -10157,11 +10158,11 @@
+@@ -10169,11 +10170,11 @@
  			buildSettings = {
  				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
  				CLANG_WARN_INT_CONVERSION = YES;
@@ -47,7 +47,7 @@ index f368d886..e8017da7 100644
  				FRAMEWORK_SEARCH_PATHS = (
  					"$(inherited)",
  					"$(SRCROOT)",
-@@ -10228,10 +10229,10 @@
+@@ -10240,10 +10241,10 @@
  			buildSettings = {
  				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
  				CLANG_WARN_INT_CONVERSION = YES;
@@ -61,5 +61,5 @@ index f368d886..e8017da7 100644
  					"$(inherited)",
  					"$(SRCROOT)",
 -- 
-2.13.1
+2.14.1
 
