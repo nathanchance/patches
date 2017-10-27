@@ -1,0 +1,26 @@
+From 24c177ca0ae64b01c4dd0a68d19d7a0f953fe15a Mon Sep 17 00:00:00 2001
+From: Gavin Ni <gisngy@gmail.com>
+Date: Sat, 16 Jul 2016 15:21:30 +0000
+Subject: [PATCH] Display bluetooth battery status when available [2/2]
+
+Change-Id: Ie2f10ee3e4276d05c8218af413ffb13b6b76c7c7
+---
+ src/com/android/bluetooth/hfp/HeadsetStateMachine.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/com/android/bluetooth/hfp/HeadsetStateMachine.java b/src/com/android/bluetooth/hfp/HeadsetStateMachine.java
+index 967d389d..1cbe3b33 100644
+--- a/src/com/android/bluetooth/hfp/HeadsetStateMachine.java
++++ b/src/com/android/bluetooth/hfp/HeadsetStateMachine.java
+@@ -204,6 +204,8 @@ final class HeadsetStateMachine extends StateMachine {
+         VENDOR_SPECIFIC_AT_COMMAND_COMPANY_ID = new HashMap<String, Integer>();
+         VENDOR_SPECIFIC_AT_COMMAND_COMPANY_ID.put("+XEVENT", BluetoothAssignedNumbers.PLANTRONICS);
+         VENDOR_SPECIFIC_AT_COMMAND_COMPANY_ID.put("+ANDROID", BluetoothAssignedNumbers.GOOGLE);
++        VENDOR_SPECIFIC_AT_COMMAND_COMPANY_ID.put("+XAPL", BluetoothAssignedNumbers.APPLE);
++        VENDOR_SPECIFIC_AT_COMMAND_COMPANY_ID.put("+IPHONEACCEV", BluetoothAssignedNumbers.APPLE);
+     }
+ 
+     private HeadsetStateMachine(HeadsetService context) {
+-- 
+2.14.3
+

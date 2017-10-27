@@ -1,0 +1,72 @@
+From 305af11c9c125ef42629a80eed5a1285c15cd4fb Mon Sep 17 00:00:00 2001
+From: Carlo Savignano <carlosavignano@aospa.co>
+Date: Tue, 25 Oct 2016 17:12:49 +0800
+Subject: [PATCH 1/2] fingerprint: notify client when cancelling succeeded
+
+* Some fingerprint hardware hals might not notify userspace in time
+  in some scenarios when successful authentication cancel is performed.
+* This is observed for example in some devices that have power and/or home
+  buttons merged with fingerprint sensor, but not limited to such cases.
+* Add a opt-in configuration to enable client authentication cancel from
+  fingerprint service when successful.
+* This addresses originally an issue where requesting fingerprint to be
+  disabled and then enabled will wait till cancelling timeout before changing
+  fingerprint sensor state and start authenticating again.
+
+Change-Id: I6a6795fbb795f0c6a4ff8ad27ac807e2f744c2d9
+Signed-off-by: Carlo Savignano <carlosavignano@aospa.co>
+---
+ core/res/res/values/du_config.xml                                  | 3 +++
+ core/res/res/values/du_symbols.xml                                 | 3 +++
+ .../java/com/android/server/fingerprint/FingerprintService.java    | 7 ++++++-
+ 3 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/du_config.xml b/core/res/res/values/du_config.xml
+index 6364ee312ca..7cca8397fa8 100644
+--- a/core/res/res/values/du_config.xml
++++ b/core/res/res/values/du_config.xml
+@@ -25,6 +25,9 @@
+ 
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+ 
++    <!-- Whether notify fingerprint client of successful cancelled authentication -->
++    <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
++
+     <!-- The list of components which should be automatically disabled. -->
+     <string-array name="config_disabledComponents" translatable="false">
+     </string-array>
+diff --git a/core/res/res/values/du_symbols.xml b/core/res/res/values/du_symbols.xml
+index b9c76406c14..2671a26705a 100644
+--- a/core/res/res/values/du_symbols.xml
++++ b/core/res/res/values/du_symbols.xml
+@@ -16,6 +16,9 @@
+ -->
+ <resources>
+ 
++  <!-- Whether notify fingerprint client of successful cancelled authentication -->
++  <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
++
+   <!-- Package Manager -->
+   <java-symbol type="array" name="config_disabledComponents" />
+   <java-symbol type="array" name="config_forceEnabledComponents" />
+diff --git a/services/core/java/com/android/server/fingerprint/FingerprintService.java b/services/core/java/com/android/server/fingerprint/FingerprintService.java
+index 6cc7071510b..7ae8d0761c2 100644
+--- a/services/core/java/com/android/server/fingerprint/FingerprintService.java
++++ b/services/core/java/com/android/server/fingerprint/FingerprintService.java
+@@ -1125,7 +1125,12 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
+                         if (client instanceof AuthenticationClient) {
+                             if (client.getToken() == token) {
+                                 if (DEBUG) Slog.v(TAG, "stop client " + client.getOwnerString());
+-                                client.stop(client.getToken() == token);
++                                final boolean notifyClient = mContext.getResources().getBoolean(
++                                        com.android.internal.R.bool.config_notifyClientOnFingerprintCancelSuccess);
++                                final int stopResult = client.stop(client.getToken() == token);
++                                if (notifyClient && (stopResult == 0)) {
++                                    handleError(mHalDeviceId, FingerprintManager.FINGERPRINT_ERROR_CANCELED, 0);
++                                }
+                             } else {
+                                 if (DEBUG) Slog.v(TAG, "can't stop client "
+                                         + client.getOwnerString() + " since tokens don't match");
+-- 
+2.14.3
+

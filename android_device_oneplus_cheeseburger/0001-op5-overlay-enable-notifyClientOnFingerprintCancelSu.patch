@@ -1,0 +1,26 @@
+From 65d8476a9e5b03f83a90caec96bede42852b6cd7 Mon Sep 17 00:00:00 2001
+From: Martinusbe <martinusbe@gmail.com>
+Date: Thu, 5 Oct 2017 23:22:28 +0200
+Subject: [PATCH] op5: overlay: enable notifyClientOnFingerprintCancelSuccess
+
+---
+ overlay/frameworks/base/core/res/res/values/config.xml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/overlay/frameworks/base/core/res/res/values/config.xml b/overlay/frameworks/base/core/res/res/values/config.xml
+index 9bf9216..da0c711 100644
+--- a/overlay/frameworks/base/core/res/res/values/config.xml
++++ b/overlay/frameworks/base/core/res/res/values/config.xml
+@@ -419,6 +419,9 @@
+          memory over what the kernel keeps by default.  -1 keeps the default. -->
+     <integer name="config_extraFreeKbytesAbsolute">40960</integer>
+ 
++    <!-- Whether notify fingerprint client of successful cancelled authentication -->
++    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
++
+     <!-- Whether device has dash charging support -->
+     <bool name="config_hasDashCharger">true</bool>
+ 
+-- 
+2.14.3
+
