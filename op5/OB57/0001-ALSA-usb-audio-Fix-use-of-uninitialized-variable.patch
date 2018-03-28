@@ -1,0 +1,70 @@
+From 1be83c78fc584633029817dcd4e632e5b1c74353 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 28 Mar 2018 01:01:52 -0700
+Subject: [PATCH] ALSA: usb-audio: Fix use of uninitialized variable
+
+Commit 7b92785428e7 ("ALSA: usb-audio: Check out-of-bounds access by
+corrupted buffer descriptor") was not applied correctly. CAF shuffled
+the code in this region in commit 2ecedf5dc75b ("sound: usb: Add support
+for parsing AudioStreaming intf for BADD devices").
+
+The current version will cause undefined behavior as control_header
+is not initialized when used. This matches what Google did with the
+Pixel 2 kernel[1] and my own resolution during the merge of 4.4.92 into
+the android-linux-stable tree[2].
+
+[1] https://android.googlesource.com/kernel/msm/+/26a824c9080ce9f890cea8f73a96cb34f188768e
+[2] https://github.com/android-linux-stable/op5/commit/24f3e5ad46e02a5c883ef3a34b5d181b2bedba43
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/usb/card.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/sound/usb/card.c b/sound/usb/card.c
+index 37dab168ece3..10a71c045178 100644
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -282,7 +282,6 @@ static int snd_usb_create_streams(struct snd_usb_audio *chip, int ctrlif)
+ 	struct usb_host_interface *host_iface;
+ 	struct usb_interface_descriptor *altsd;
+ 	struct usb_interface *usb_iface;
+-	void *control_header;
+ 	int i, protocol;
+ 	int rest_bytes;
+ 
+@@ -308,15 +307,6 @@ static int snd_usb_create_streams(struct snd_usb_audio *chip, int ctrlif)
+ 	 * UAC 2.0 and 3.0 devices use IAD for linking AS interfaces
+ 	 */
+ 
+-	rest_bytes = (void *)(host_iface->extra + host_iface->extralen) -
+-		control_header;
+-
+-	/* just to be sure -- this shouldn't hit at all */
+-	if (rest_bytes <= 0) {
+-		dev_err(&dev->dev, "invalid control header\n");
+-		return -EINVAL;
+-	}
+-
+ 	switch (protocol) {
+ 	default:
+ 		dev_warn(&dev->dev,
+@@ -335,6 +325,15 @@ static int snd_usb_create_streams(struct snd_usb_audio *chip, int ctrlif)
+ 			return -EINVAL;
+ 		}
+ 
++		rest_bytes = (void *)(host_iface->extra + host_iface->extralen) -
++			control_header;
++
++		/* just to be sure -- this shouldn't hit at all */
++		if (rest_bytes <= 0) {
++			dev_err(&dev->dev, "invalid control header\n");
++			return -EINVAL;
++		}
++
+ 		h1 = control_header;
+ 
+ 		if (rest_bytes < sizeof(*h1)) {
+-- 
+2.16.3
+
