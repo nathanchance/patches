@@ -1,0 +1,49 @@
+From ab1f6871f55fa3c2225b560135d4508c02ac9986 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 9 Apr 2018 17:52:07 -0700
+Subject: [PATCH 3.18 3/3] virtio_net: check return value of skb_to_sgvec in
+ one more location
+
+Kernels that do not have f6b10209b90d ("virtio-net: switch to use
+build_skb() for small buffer") will have an extra call to skb_to_sgvec
+that is not handled by e2fcad58fd23 ("virtio_net: check return value of
+skb_to_sgvec always"). Since the former does not appear to be stable
+material, just fix the call up directly.
+
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: David S. Miller <davem@davemloft.net>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+
+Greg, if you feel this should be squashed into the previous commit, by
+all means, feel free. I am not entirely sure if the dev_kfree_skb is
+necessary here, I was hoping to get some review.
+
+---
+ drivers/net/virtio_net.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index ede40841e962..1da54735681b 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -551,7 +551,12 @@ static int add_recvbuf_small(struct receive_queue *rq, gfp_t gfp)
+ 	hdr = skb_vnet_hdr(skb);
+ 	sg_init_table(rq->sg, MAX_SKB_FRAGS + 2);
+ 	sg_set_buf(rq->sg, &hdr->hdr, sizeof hdr->hdr);
+-	skb_to_sgvec(skb, rq->sg + 1, 0, skb->len);
++
++	err = skb_to_sgvec(skb, rq->sg + 1, 0, skb->len);
++	if (unlikely(err < 0)) {
++		dev_kfree_skb(skb);
++		return err;
++	}
+ 
+ 	err = virtqueue_add_inbuf(rq->vq, rq->sg, 2, skb, gfp);
+ 	if (err < 0)
+-- 
+2.17.0
+
