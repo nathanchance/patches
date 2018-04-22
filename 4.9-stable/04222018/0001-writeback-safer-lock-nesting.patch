@@ -1,7 +1,7 @@
-From 5a5765c923b3c37ea55214d75503e61e74375d14 Mon Sep 17 00:00:00 2001
+From 93079f152bd76a5e3ed61551f6c41bf4ca5b037d Mon Sep 17 00:00:00 2001
 From: Greg Thelen <gthelen@google.com>
 Date: Fri, 20 Apr 2018 14:55:42 -0700
-Subject: [PATCH 4.9] writeback: safer lock nesting
+Subject: [PATCH 4.9 v2] writeback: safer lock nesting
 
 commit 2e898e4c0a3897ccd434adac5abb8330194f527b upstream.
 
@@ -139,7 +139,7 @@ index c357f27d5483..32728ff8095c 100644
  
  /**
 diff --git a/include/linux/backing-dev.h b/include/linux/backing-dev.h
-index 43b93a947e61..608a82922f04 100644
+index 43b93a947e61..63f17b106a4a 100644
 --- a/include/linux/backing-dev.h
 +++ b/include/linux/backing-dev.h
 @@ -366,7 +366,7 @@ static inline struct bdi_writeback *inode_to_wb(struct inode *inode)
@@ -178,7 +178,7 @@ index 43b93a947e61..608a82922f04 100644
 -	if (unlikely(*lockedp))
 -		spin_lock_irq(&inode->i_mapping->tree_lock);
 +	if (unlikely(cookie->locked))
-+		spin_lock_irqsave(&inode->i_mapping->tree_lock, *flags);
++		spin_lock_irqsave(&inode->i_mapping->tree_lock, cookie->flags);
  
  	/*
  	 * Protected by either !I_WB_SWITCH + rcu_read_lock() or tree_lock.
@@ -196,7 +196,7 @@ index 43b93a947e61..608a82922f04 100644
 -	if (unlikely(locked))
 -		spin_unlock_irq(&inode->i_mapping->tree_lock);
 +	if (unlikely(cookie->locked))
-+		spin_unlock_irqrestore(&inode->i_mapping->tree_lock, flags);
++		spin_unlock_irqrestore(&inode->i_mapping->tree_lock, cookie->flags);
  
  	rcu_read_unlock();
  }
