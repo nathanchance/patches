@@ -1,0 +1,46 @@
+From d91e12f625e346387b61abfe1e74840b268aee4f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 6 May 2018 14:35:20 -0700
+Subject: [PATCH 10/16] staging: ks7010: Remove unnecessary limit checks
+
+uwrq is an unsigned 32-bit integer, it cannot be less than zero.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/staging/ks7010/ks_wlan_net.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/staging/ks7010/ks_wlan_net.c b/drivers/staging/ks7010/ks_wlan_net.c
+index e96477937f65..0c83d6fe270f 100644
+--- a/drivers/staging/ks7010/ks_wlan_net.c
++++ b/drivers/staging/ks7010/ks_wlan_net.c
+@@ -1928,7 +1928,7 @@ static int ks_wlan_set_beacon_lost(struct net_device *dev,
+ 	if (priv->sleep_mode == SLP_SLEEP)
+ 		return -EPERM;
+ 	/* for SLEEP MODE */
+-	if (*uwrq < BEACON_LOST_COUNT_MIN || *uwrq > BEACON_LOST_COUNT_MAX)
++	if (*uwrq > BEACON_LOST_COUNT_MAX)
+ 		return -EINVAL;
+ 
+ 	priv->reg.beacon_lost_count = *uwrq;
+@@ -2133,7 +2133,7 @@ static int ks_wlan_set_tx_gain(struct net_device *dev,
+ 	if (priv->sleep_mode == SLP_SLEEP)
+ 		return -EPERM;
+ 	/* for SLEEP MODE */
+-	if (*uwrq < 0 || *uwrq > 0xFF)
++	if (*uwrq > 0xFF)
+ 		return -EINVAL;
+ 
+ 	priv->gain.tx_gain = (uint8_t)*uwrq;
+@@ -2165,7 +2165,7 @@ static int ks_wlan_set_rx_gain(struct net_device *dev,
+ 	if (priv->sleep_mode == SLP_SLEEP)
+ 		return -EPERM;
+ 	/* for SLEEP MODE */
+-	if (*uwrq < 0 || *uwrq > 0xFF)
++	if (*uwrq > 0xFF)
+ 		return -EINVAL;
+ 
+ 	priv->gain.rx_gain = (uint8_t)*uwrq;
+-- 
+2.17.0
+

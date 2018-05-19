@@ -1,0 +1,3843 @@
+From 41cca72c37dee07505766b5ef63ef83c1b8cc9dc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 6 May 2018 15:10:41 -0700
+Subject: [PATCH 15/16] staging: rtl8723bs: Replace license boilerplate with
+ SPDX identifiers
+
+This satisfies a checkpatch.pl warning and is the preferred method for
+notating the license due to its lack of ambiguity.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/staging/rtl8723bs/core/rtw_ap.c                | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_btcoex.c            | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_cmd.c               | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_debug.c             | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_eeprom.c            | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_efuse.c             | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c         | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_io.c                | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_ioctl_set.c         | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_mlme.c              | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c          | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_odm.c               | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_pwrctrl.c           | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_recv.c              | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_rf.c                | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_security.c          | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_sta_mgt.c           | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c         | 10 +---------
+ drivers/staging/rtl8723bs/core/rtw_xmit.c              | 10 +---------
+ drivers/staging/rtl8723bs/hal/Hal8723BPwrSeq.c         | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.h        | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.h        | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalBtcOutSrc.h           | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.c       | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.h       | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.c      | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.h      | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.c       | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.h       | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalPhyRf.c               | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalPhyRf.h               | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.c         | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.h         | 10 +---------
+ drivers/staging/rtl8723bs/hal/HalPwrSeqCmd.c           | 10 +---------
+ drivers/staging/rtl8723bs/hal/Mp_Precomp.h             | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_btcoex.c             | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_com.c                | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_com_phycfg.c         | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_intf.c               | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_phy.c                | 10 +---------
+ drivers/staging/rtl8723bs/hal/hal_sdio.c               | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm.c                    | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm.h                    | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_AntDiv.c             | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_AntDiv.h             | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_CfoTracking.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_CfoTracking.h        | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_DIG.c                | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_DIG.h                | 10 +---------
+ .../staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.c   | 10 +---------
+ .../staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.h   | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.c     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.h     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.h     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_HWConfig.c           | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_HWConfig.h           | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.c       | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.h       | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_PathDiv.c            | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_PathDiv.h            | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_RTL8723B.c           | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_RTL8723B.h           | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.c     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.h     | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_RegDefine11N.h       | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_debug.c              | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_debug.h              | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_interface.h          | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_precomp.h            | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_reg.h                | 10 +---------
+ drivers/staging/rtl8723bs/hal/odm_types.h              | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_cmd.c           | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_dm.c            | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c      | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_phycfg.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_rf6052.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723b_rxdesc.c        | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723bs_recv.c         | 10 +---------
+ drivers/staging/rtl8723bs/hal/rtl8723bs_xmit.c         | 10 +---------
+ drivers/staging/rtl8723bs/hal/sdio_halinit.c           | 10 +---------
+ drivers/staging/rtl8723bs/hal/sdio_ops.c               | 10 +---------
+ drivers/staging/rtl8723bs/include/Hal8192CPhyReg.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/Hal8723BPhyCfg.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/Hal8723BPhyReg.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/HalPwrSeqCmd.h       | 10 +---------
+ drivers/staging/rtl8723bs/include/HalVerDef.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/autoconf.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/basic_types.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/cmd_osdep.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/drv_conf.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/drv_types.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/drv_types_sdio.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/ethernet.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_btcoex.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_com.h            | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_com_h2c.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_com_phycfg.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_com_reg.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_data.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_intf.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_pg.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_phy.h            | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_phy_reg.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/hal_sdio.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/ieee80211.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/ioctl_cfg80211.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/mlme_osdep.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/osdep_intf.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/osdep_service.h      | 10 +---------
+ .../staging/rtl8723bs/include/osdep_service_linux.h    | 10 +---------
+ drivers/staging/rtl8723bs/include/recv_osdep.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8192c_recv.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8192c_rf.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_cmd.h       | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_dm.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_hal.h       | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_recv.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_rf.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_spec.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtl8723b_xmit.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_ap.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_beamforming.h    | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_br_ext.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_btcoex.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_byteorder.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_cmd.h            | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_debug.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_eeprom.h         | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_efuse.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_event.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_ht.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_io.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_ioctl.h          | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_ioctl_set.h      | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_mlme.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_mlme_ext.h       | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_mp.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_odm.h            | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_pwrctrl.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_qos.h            | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_recv.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_rf.h             | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_security.h       | 10 +---------
+ drivers/staging/rtl8723bs/include/rtw_version.h        |  1 +
+ drivers/staging/rtl8723bs/include/rtw_xmit.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/sdio_hal.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/sdio_ops.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/sdio_ops_linux.h     | 10 +---------
+ drivers/staging/rtl8723bs/include/sdio_osintf.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/sta_info.h           | 10 +---------
+ drivers/staging/rtl8723bs/include/wifi.h               | 10 +---------
+ drivers/staging/rtl8723bs/include/wlan_bssdef.h        | 10 +---------
+ drivers/staging/rtl8723bs/include/xmit_osdep.h         | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c      | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/ioctl_linux.c         | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/mlme_linux.c          | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/os_intfs.c            | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/osdep_service.c       | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/recv_linux.c          | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/rtw_proc.c            | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/rtw_proc.h            | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c           | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/sdio_ops_linux.c      | 10 +---------
+ drivers/staging/rtl8723bs/os_dep/xmit_linux.c          | 10 +---------
+ 167 files changed, 167 insertions(+), 1494 deletions(-)
+
+diff --git a/drivers/staging/rtl8723bs/core/rtw_ap.c b/drivers/staging/rtl8723bs/core/rtw_ap.c
+index 0b530ea7fd81..45c05527a57a 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_ap.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ap.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_AP_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_btcoex.c b/drivers/staging/rtl8723bs/core/rtw_btcoex.c
+index 79aa02afad01..adac915a2153 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_btcoex.c
++++ b/drivers/staging/rtl8723bs/core/rtw_btcoex.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #include <drv_types.h>
+ #include <rtw_debug.h>
+diff --git a/drivers/staging/rtl8723bs/core/rtw_cmd.c b/drivers/staging/rtl8723bs/core/rtw_cmd.c
+index 9e132f943687..830be63391b7 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_cmd.c
++++ b/drivers/staging/rtl8723bs/core/rtw_cmd.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_CMD_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_debug.c b/drivers/staging/rtl8723bs/core/rtw_debug.c
+index b5dd244fee8f..f852fde47350 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_debug.c
++++ b/drivers/staging/rtl8723bs/core/rtw_debug.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_DEBUG_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_eeprom.c b/drivers/staging/rtl8723bs/core/rtw_eeprom.c
+index 35031a7a5dc5..5eea02cfce1f 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_eeprom.c
++++ b/drivers/staging/rtl8723bs/core/rtw_eeprom.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_EEPROM_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_efuse.c b/drivers/staging/rtl8723bs/core/rtw_efuse.c
+index 44b92ef5db92..bbf6f3fa21ea 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_efuse.c
++++ b/drivers/staging/rtl8723bs/core/rtw_efuse.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_EFUSE_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+index 74750dbce379..0822e440204e 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _IEEE80211_C
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_io.c b/drivers/staging/rtl8723bs/core/rtw_io.c
+index 6bd5a4741e79..d341069097e2 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_io.c
++++ b/drivers/staging/rtl8723bs/core/rtw_io.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c b/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
+index e5354cec8dd5..35ca825a7e5a 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_IOCTL_SET_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index c13e514a655a..cc4f115e082c 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_MLME_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+index 589fab24bb25..a81e13011c49 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_MLME_EXT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_odm.c b/drivers/staging/rtl8723bs/core/rtw_odm.c
+index edbcaeb9f8c2..93e8f17d2574 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_odm.c
++++ b/drivers/staging/rtl8723bs/core/rtw_odm.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include <drv_types.h>
+diff --git a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
+index 85f7769ecc2d..110bbe340b78 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
++++ b/drivers/staging/rtl8723bs/core/rtw_pwrctrl.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_PWRCTRL_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
+index 86f995b8a88b..02f821d42658 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_recv.c
++++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_RECV_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_rf.c b/drivers/staging/rtl8723bs/core/rtw_rf.c
+index 07f5577cc073..a5095a4ef690 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_rf.c
++++ b/drivers/staging/rtl8723bs/core/rtw_rf.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_RF_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_security.c b/drivers/staging/rtl8723bs/core/rtw_security.c
+index aadf67bd0559..612277a555d2 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define  _RTW_SECURITY_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_sta_mgt.c b/drivers/staging/rtl8723bs/core/rtw_sta_mgt.c
+index 03dd6848daa1..82716fd5c6f0 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_sta_mgt.c
++++ b/drivers/staging/rtl8723bs/core/rtw_sta_mgt.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_STA_MGT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+index f6dc26c8bd3d..2b3eb6f8ddc5 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
++++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_WLAN_UTIL_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/core/rtw_xmit.c b/drivers/staging/rtl8723bs/core/rtw_xmit.c
+index be54186fb223..aaabffb0a199 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_xmit.c
++++ b/drivers/staging/rtl8723bs/core/rtw_xmit.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTW_XMIT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/Hal8723BPwrSeq.c b/drivers/staging/rtl8723bs/hal/Hal8723BPwrSeq.c
+index 0376806335d3..57f7f09b3ab9 100644
+--- a/drivers/staging/rtl8723bs/hal/Hal8723BPwrSeq.c
++++ b/drivers/staging/rtl8723bs/hal/Hal8723BPwrSeq.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ /*
+diff --git a/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.c b/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.c
+index 37f42bfc55ed..eb6e07ef5dad 100644
+--- a/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.c
++++ b/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "Mp_Precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.h b/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.h
+index 880bd63d36a5..cdffa391bd9d 100644
+--- a/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.h
++++ b/drivers/staging/rtl8723bs/hal/HalBtc8723b1Ant.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*  The following is for 8723B 1ANT BT Co-exist definition */
+ #define	BT_INFO_8723B_1ANT_B_FTP		BIT7
+diff --git a/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.c b/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.c
+index 33610d39333f..27f57becd934 100644
+--- a/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.c
++++ b/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "Mp_Precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.h b/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.h
+index 5a0fed69eda7..df973fcda48c 100644
+--- a/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.h
++++ b/drivers/staging/rtl8723bs/hal/HalBtc8723b2Ant.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*  The following is for 8723B 2Ant BT Co-exist definition */
+ #define	BT_INFO_8723B_2ANT_B_FTP		BIT7
+diff --git a/drivers/staging/rtl8723bs/hal/HalBtcOutSrc.h b/drivers/staging/rtl8723bs/hal/HalBtcOutSrc.h
+index 38414dd8adbd..aad86570b59c 100644
+--- a/drivers/staging/rtl8723bs/hal/HalBtcOutSrc.h
++++ b/drivers/staging/rtl8723bs/hal/HalBtcOutSrc.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef	__HALBTC_OUT_SRC_H__
+ #define __HALBTC_OUT_SRC_H__
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.c b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.c
+index 951585467ab1..bae59e515348 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.c
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #include <linux/kernel.h>
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.h b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.h
+index 41fe0ba16914..c1fbe91cd4f3 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.h
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_BB.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #ifndef __INC_MP_BB_HW_IMG_8723B_H
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.c b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.c
+index 7f8afa1be1ca..3c8e26aba406 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.c
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #include <linux/kernel.h>
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.h b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.h
+index ae5dd3ccf939..788fdca1337b 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.h
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_MAC.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #ifndef __INC_MP_MAC_HW_IMG_8723B_H
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.c b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.c
+index fadfcbd91858..ba42b4d2a9c4 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.c
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #include <linux/kernel.h>
+diff --git a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.h b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.h
+index 98aa2ba97fa9..36a47437f974 100644
+--- a/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.h
++++ b/drivers/staging/rtl8723bs/hal/HalHWImg8723B_RF.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+-* This program is free software; you can redistribute it and/or modify it
+-* under the terms of version 2 of the GNU General Public License as
+-* published by the Free Software Foundation.
+-*
+-* This program is distributed in the hope that it will be useful, but WITHOUT
+-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+-* more details.
+-*
+ ******************************************************************************/
+ 
+ #ifndef __INC_MP_RF_HW_IMG_8723B_H
+diff --git a/drivers/staging/rtl8723bs/hal/HalPhyRf.c b/drivers/staging/rtl8723bs/hal/HalPhyRf.c
+index 9adcc3098463..beb4002a40e1 100644
+--- a/drivers/staging/rtl8723bs/hal/HalPhyRf.c
++++ b/drivers/staging/rtl8723bs/hal/HalPhyRf.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ /* include "Mp_Precomp.h" */
+diff --git a/drivers/staging/rtl8723bs/hal/HalPhyRf.h b/drivers/staging/rtl8723bs/hal/HalPhyRf.h
+index bd7462d4ed91..3d6f68bc61d7 100644
+--- a/drivers/staging/rtl8723bs/hal/HalPhyRf.h
++++ b/drivers/staging/rtl8723bs/hal/HalPhyRf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+  #ifndef __HAL_PHY_RF_H__
+diff --git a/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.c b/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.c
+index a99a863be656..2ee25b2471de 100644
+--- a/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.c
++++ b/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include <drv_types.h>
+diff --git a/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.h b/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.h
+index ae4eca144606..a4d5150007be 100644
+--- a/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.h
++++ b/drivers/staging/rtl8723bs/hal/HalPhyRf_8723B.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __HAL_PHY_RF_8723B_H__
+diff --git a/drivers/staging/rtl8723bs/hal/HalPwrSeqCmd.c b/drivers/staging/rtl8723bs/hal/HalPwrSeqCmd.c
+index 334d680b9b1c..c24156873fed 100644
+--- a/drivers/staging/rtl8723bs/hal/HalPwrSeqCmd.c
++++ b/drivers/staging/rtl8723bs/hal/HalPwrSeqCmd.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*++
+ Copyright (c) Realtek Semiconductor Corp. All rights reserved.
+diff --git a/drivers/staging/rtl8723bs/hal/Mp_Precomp.h b/drivers/staging/rtl8723bs/hal/Mp_Precomp.h
+index 248b9fb3886a..3ed1142a9896 100644
+--- a/drivers/staging/rtl8723bs/hal/Mp_Precomp.h
++++ b/drivers/staging/rtl8723bs/hal/Mp_Precomp.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __MP_PRECOMP_H__
+ #define __MP_PRECOMP_H__
+diff --git a/drivers/staging/rtl8723bs/hal/hal_btcoex.c b/drivers/staging/rtl8723bs/hal/hal_btcoex.c
+index 7d4df5a8832e..14284b1867f3 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_btcoex.c
++++ b/drivers/staging/rtl8723bs/hal/hal_btcoex.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define __HAL_BTCOEX_C__
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/hal_com.c b/drivers/staging/rtl8723bs/hal/hal_com.c
+index 1cef1d77977c..7f8ec55b08f1 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_com.c
++++ b/drivers/staging/rtl8723bs/hal/hal_com.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HAL_COM_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/hal_com_phycfg.c b/drivers/staging/rtl8723bs/hal/hal_com_phycfg.c
+index 93d6cc478706..3922d0308a81 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_com_phycfg.c
++++ b/drivers/staging/rtl8723bs/hal/hal_com_phycfg.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HAL_COM_PHYCFG_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/hal_intf.c b/drivers/staging/rtl8723bs/hal/hal_intf.c
+index 3463f40d6a31..4a4d17b44ba6 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_intf.c
++++ b/drivers/staging/rtl8723bs/hal/hal_intf.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #define _HAL_INTF_C_
+diff --git a/drivers/staging/rtl8723bs/hal/hal_phy.c b/drivers/staging/rtl8723bs/hal/hal_phy.c
+index c0a899df7aaf..ebaefcaf5f2a 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_phy.c
++++ b/drivers/staging/rtl8723bs/hal/hal_phy.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HAL_PHY_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/hal_sdio.c b/drivers/staging/rtl8723bs/hal/hal_sdio.c
+index e147c69e7222..2d61b09ebce6 100644
+--- a/drivers/staging/rtl8723bs/hal/hal_sdio.c
++++ b/drivers/staging/rtl8723bs/hal/hal_sdio.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HAL_SDIO_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/odm.c b/drivers/staging/rtl8723bs/hal/odm.c
+index ff43bb26950b..7de5161e2ac4 100644
+--- a/drivers/staging/rtl8723bs/hal/odm.c
++++ b/drivers/staging/rtl8723bs/hal/odm.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm.h b/drivers/staging/rtl8723bs/hal/odm.h
+index 1037b88e8f08..a4153a660d32 100644
+--- a/drivers/staging/rtl8723bs/hal/odm.h
++++ b/drivers/staging/rtl8723bs/hal/odm.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/odm_AntDiv.c b/drivers/staging/rtl8723bs/hal/odm_AntDiv.c
+index e0b20562ccd6..d5415eecdd7f 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_AntDiv.c
++++ b/drivers/staging/rtl8723bs/hal/odm_AntDiv.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ //============================================================
+diff --git a/drivers/staging/rtl8723bs/hal/odm_AntDiv.h b/drivers/staging/rtl8723bs/hal/odm_AntDiv.h
+index 92cdad55b7a4..c9496d561c91 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_AntDiv.h
++++ b/drivers/staging/rtl8723bs/hal/odm_AntDiv.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODMANTDIV_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_CfoTracking.c b/drivers/staging/rtl8723bs/hal/odm_CfoTracking.c
+index 178aaab3f76c..a73304639226 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_CfoTracking.c
++++ b/drivers/staging/rtl8723bs/hal/odm_CfoTracking.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_CfoTracking.h b/drivers/staging/rtl8723bs/hal/odm_CfoTracking.h
+index 0c92899d9967..81db63efe286 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_CfoTracking.h
++++ b/drivers/staging/rtl8723bs/hal/odm_CfoTracking.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODMCFOTRACK_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DIG.c b/drivers/staging/rtl8723bs/hal/odm_DIG.c
+index f02eb63a45ce..a12fdce77eae 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DIG.c
++++ b/drivers/staging/rtl8723bs/hal/odm_DIG.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DIG.h b/drivers/staging/rtl8723bs/hal/odm_DIG.h
+index e27a69126086..f6777e97a24a 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DIG.h
++++ b/drivers/staging/rtl8723bs/hal/odm_DIG.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __ODMDIG_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.c b/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.c
+index 6af017562539..e18c9d65eee2 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.c
++++ b/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.h b/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.h
+index b435cae4ab63..dba19271d526 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.h
++++ b/drivers/staging/rtl8723bs/hal/odm_DynamicBBPowerSaving.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODMDYNAMICBBPOWERSAVING_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.c b/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.c
+index d24e5f712c20..17f90f4cc1ad 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.c
++++ b/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.h b/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.h
+index 35cdbab6d965..e2d244324ebe 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.h
++++ b/drivers/staging/rtl8723bs/hal/odm_DynamicTxPower.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODMDYNAMICTXPOWER_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
+index 8d53cb73cea5..acc64fa8f166 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
++++ b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.h b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.h
+index b0590abe87f0..bc574d2ad065 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.h
++++ b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __ODMEDCATURBOCHECK_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_HWConfig.c b/drivers/staging/rtl8723bs/hal/odm_HWConfig.c
+index 9e161f080c57..ee2c293e4f59 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_HWConfig.c
++++ b/drivers/staging/rtl8723bs/hal/odm_HWConfig.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_HWConfig.h b/drivers/staging/rtl8723bs/hal/odm_HWConfig.h
+index fdb4f8579ff9..d3af1caaa73c 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_HWConfig.h
++++ b/drivers/staging/rtl8723bs/hal/odm_HWConfig.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.c b/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.c
+index af7b44e29092..6ca799816c08 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.c
++++ b/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.h b/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.h
+index 3f650912f4ab..a7f13a85559c 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.h
++++ b/drivers/staging/rtl8723bs/hal/odm_NoiseMonitor.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  *****************************************************************************/
+ #ifndef	__ODMNOISEMONITOR_H__
+ #define __ODMNOISEMONITOR_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_PathDiv.c b/drivers/staging/rtl8723bs/hal/odm_PathDiv.c
+index 2735ebfb6be3..4d22360934f6 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_PathDiv.c
++++ b/drivers/staging/rtl8723bs/hal/odm_PathDiv.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_PathDiv.h b/drivers/staging/rtl8723bs/hal/odm_PathDiv.h
+index becde2e2a9ee..7a5bc00c3682 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_PathDiv.h
++++ b/drivers/staging/rtl8723bs/hal/odm_PathDiv.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODMPATHDIV_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_RTL8723B.c b/drivers/staging/rtl8723bs/hal/odm_RTL8723B.c
+index 0e4ce2741737..ecf0045fcad9 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_RTL8723B.c
++++ b/drivers/staging/rtl8723bs/hal/odm_RTL8723B.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_RTL8723B.h b/drivers/staging/rtl8723bs/hal/odm_RTL8723B.h
+index 0700351a2b74..96ef1cc41a96 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_RTL8723B.h
++++ b/drivers/staging/rtl8723bs/hal/odm_RTL8723B.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef	__ODM_RTL8723B_H__
+ #define __ODM_RTL8723B_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.c b/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.c
+index cdc9f38438d1..39f989bf3410 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.c
++++ b/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.h b/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.h
+index a6b3d21e6463..12dfc58a6da0 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.h
++++ b/drivers/staging/rtl8723bs/hal/odm_RegConfig8723B.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __INC_ODM_REGCONFIG_H_8723B
+ #define __INC_ODM_REGCONFIG_H_8723B
+diff --git a/drivers/staging/rtl8723bs/hal/odm_RegDefine11N.h b/drivers/staging/rtl8723bs/hal/odm_RegDefine11N.h
+index dc20e6165911..f2c0707aad4c 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_RegDefine11N.h
++++ b/drivers/staging/rtl8723bs/hal/odm_RegDefine11N.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODM_REGDEFINE11N_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_debug.c b/drivers/staging/rtl8723bs/hal/odm_debug.c
+index 28cf0a66ff93..b92422c8fb8e 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_debug.c
++++ b/drivers/staging/rtl8723bs/hal/odm_debug.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include "odm_precomp.h"
+diff --git a/drivers/staging/rtl8723bs/hal/odm_debug.h b/drivers/staging/rtl8723bs/hal/odm_debug.h
+index ff131361248c..3e58cb806c8c 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_debug.h
++++ b/drivers/staging/rtl8723bs/hal/odm_debug.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __ODM_DBG_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_interface.h b/drivers/staging/rtl8723bs/hal/odm_interface.h
+index 8ad0a0afca57..63f374f0bda7 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_interface.h
++++ b/drivers/staging/rtl8723bs/hal/odm_interface.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/odm_precomp.h b/drivers/staging/rtl8723bs/hal/odm_precomp.h
+index f543bdb31a89..b5b0c0ed02fc 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_precomp.h
++++ b/drivers/staging/rtl8723bs/hal/odm_precomp.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef	__ODM_PRECOMP_H__
+diff --git a/drivers/staging/rtl8723bs/hal/odm_reg.h b/drivers/staging/rtl8723bs/hal/odm_reg.h
+index 2496dcef7a9f..1ec6ffd69dbe 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_reg.h
++++ b/drivers/staging/rtl8723bs/hal/odm_reg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*  File Name: odm_reg.h */
+ /*  Description: */
+diff --git a/drivers/staging/rtl8723bs/hal/odm_types.h b/drivers/staging/rtl8723bs/hal/odm_types.h
+index 9e3d072b03db..28f42c9c3dd7 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_types.h
++++ b/drivers/staging/rtl8723bs/hal/odm_types.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __ODM_TYPES_H__
+ #define __ODM_TYPES_H__
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_cmd.c b/drivers/staging/rtl8723bs/hal/rtl8723b_cmd.c
+index 69eed62b7c94..9f4a10aaa774 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_cmd.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_cmd.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTL8723B_CMD_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_dm.c b/drivers/staging/rtl8723bs/hal/rtl8723b_dm.c
+index b16255984f4e..6b6fc835c601 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_dm.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_dm.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*  Description: */
+ /*  This file is for 92CE/92CU dynamic mechanism only */
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
+index 0ce9b47d644d..c877408cde50 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_hal_init.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HAL_INIT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_phycfg.c b/drivers/staging/rtl8723bs/hal/rtl8723b_phycfg.c
+index e34d133075c0..50428f688859 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_phycfg.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_phycfg.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTL8723B_PHYCFG_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_rf6052.c b/drivers/staging/rtl8723bs/hal/rtl8723b_rf6052.c
+index f6aeb2630398..aa45a8421ebe 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_rf6052.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_rf6052.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /******************************************************************************
+  *
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723b_rxdesc.c b/drivers/staging/rtl8723bs/hal/rtl8723b_rxdesc.c
+index 14bfbe3be0ca..76c8e6e9e6bc 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723b_rxdesc.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723b_rxdesc.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTL8723B_REDESC_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723bs_recv.c b/drivers/staging/rtl8723bs/hal/rtl8723bs_recv.c
+index 5d5cd4d01156..85077947b9b8 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723bs_recv.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723bs_recv.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTL8723BS_RECV_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/rtl8723bs_xmit.c b/drivers/staging/rtl8723bs/hal/rtl8723bs_xmit.c
+index 6281dfa1a3ca..10b3f9733bad 100644
+--- a/drivers/staging/rtl8723bs/hal/rtl8723bs_xmit.c
++++ b/drivers/staging/rtl8723bs/hal/rtl8723bs_xmit.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RTL8723BS_XMIT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_halinit.c b/drivers/staging/rtl8723bs/hal/sdio_halinit.c
+index 1af77add6af4..3c65a9c02bbd 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_halinit.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_halinit.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _SDIO_HALINIT_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+index ab2ff53a8e57..d6b93e1f78d8 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  *******************************************************************************/
+ #define _SDIO_OPS_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/include/Hal8192CPhyReg.h b/drivers/staging/rtl8723bs/include/Hal8192CPhyReg.h
+index fbb83db4fb60..fb80901f0788 100644
+--- a/drivers/staging/rtl8723bs/include/Hal8192CPhyReg.h
++++ b/drivers/staging/rtl8723bs/include/Hal8192CPhyReg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*****************************************************************************
+  *
+diff --git a/drivers/staging/rtl8723bs/include/Hal8723BPhyCfg.h b/drivers/staging/rtl8723bs/include/Hal8723BPhyCfg.h
+index 22250411ed6c..640427f407e3 100644
+--- a/drivers/staging/rtl8723bs/include/Hal8723BPhyCfg.h
++++ b/drivers/staging/rtl8723bs/include/Hal8723BPhyCfg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __INC_HAL8723BPHYCFG_H__
+ #define __INC_HAL8723BPHYCFG_H__
+diff --git a/drivers/staging/rtl8723bs/include/Hal8723BPhyReg.h b/drivers/staging/rtl8723bs/include/Hal8723BPhyReg.h
+index 84a08e0092dd..b0b1ac1090fc 100644
+--- a/drivers/staging/rtl8723bs/include/Hal8723BPhyReg.h
++++ b/drivers/staging/rtl8723bs/include/Hal8723BPhyReg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __INC_HAL8723BPHYREG_H__
+ #define __INC_HAL8723BPHYREG_H__
+diff --git a/drivers/staging/rtl8723bs/include/HalPwrSeqCmd.h b/drivers/staging/rtl8723bs/include/HalPwrSeqCmd.h
+index 5bb9f5a04734..7040cfc507d8 100644
+--- a/drivers/staging/rtl8723bs/include/HalPwrSeqCmd.h
++++ b/drivers/staging/rtl8723bs/include/HalPwrSeqCmd.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HALPWRSEQCMD_H__
+ #define __HALPWRSEQCMD_H__
+diff --git a/drivers/staging/rtl8723bs/include/HalVerDef.h b/drivers/staging/rtl8723bs/include/HalVerDef.h
+index a9e8609303b9..160f34efbfd5 100644
+--- a/drivers/staging/rtl8723bs/include/HalVerDef.h
++++ b/drivers/staging/rtl8723bs/include/HalVerDef.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_VERSION_DEF_H__
+ #define __HAL_VERSION_DEF_H__
+diff --git a/drivers/staging/rtl8723bs/include/autoconf.h b/drivers/staging/rtl8723bs/include/autoconf.h
+index 09ed29f4efbd..196aca3aed7b 100644
+--- a/drivers/staging/rtl8723bs/include/autoconf.h
++++ b/drivers/staging/rtl8723bs/include/autoconf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/include/basic_types.h b/drivers/staging/rtl8723bs/include/basic_types.h
+index abadea07466d..bab9811aeb5f 100644
+--- a/drivers/staging/rtl8723bs/include/basic_types.h
++++ b/drivers/staging/rtl8723bs/include/basic_types.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __BASIC_TYPES_H__
+ #define __BASIC_TYPES_H__
+diff --git a/drivers/staging/rtl8723bs/include/cmd_osdep.h b/drivers/staging/rtl8723bs/include/cmd_osdep.h
+index 3ad3ace86fd4..0749936df032 100644
+--- a/drivers/staging/rtl8723bs/include/cmd_osdep.h
++++ b/drivers/staging/rtl8723bs/include/cmd_osdep.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __CMD_OSDEP_H_
+ #define __CMD_OSDEP_H_
+diff --git a/drivers/staging/rtl8723bs/include/drv_conf.h b/drivers/staging/rtl8723bs/include/drv_conf.h
+index 3e1ed0717ed8..7fc88b07a25e 100644
+--- a/drivers/staging/rtl8723bs/include/drv_conf.h
++++ b/drivers/staging/rtl8723bs/include/drv_conf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __DRV_CONF_H__
+ #define __DRV_CONF_H__
+diff --git a/drivers/staging/rtl8723bs/include/drv_types.h b/drivers/staging/rtl8723bs/include/drv_types.h
+index 16b81b1a3f33..c57f290f605a 100644
+--- a/drivers/staging/rtl8723bs/include/drv_types.h
++++ b/drivers/staging/rtl8723bs/include/drv_types.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*-------------------------------------------------------------------------------
+ 
+diff --git a/drivers/staging/rtl8723bs/include/drv_types_sdio.h b/drivers/staging/rtl8723bs/include/drv_types_sdio.h
+index aef9bf71ab25..23bf30ece2df 100644
+--- a/drivers/staging/rtl8723bs/include/drv_types_sdio.h
++++ b/drivers/staging/rtl8723bs/include/drv_types_sdio.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __DRV_TYPES_SDIO_H__
+ #define __DRV_TYPES_SDIO_H__
+diff --git a/drivers/staging/rtl8723bs/include/ethernet.h b/drivers/staging/rtl8723bs/include/ethernet.h
+index bd7099497b95..59899ab52aab 100644
+--- a/drivers/staging/rtl8723bs/include/ethernet.h
++++ b/drivers/staging/rtl8723bs/include/ethernet.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ /*! \file */
+ #ifndef __INC_ETHERNET_H
+diff --git a/drivers/staging/rtl8723bs/include/hal_btcoex.h b/drivers/staging/rtl8723bs/include/hal_btcoex.h
+index 7ee59c07fbf9..4066b0a1450c 100644
+--- a/drivers/staging/rtl8723bs/include/hal_btcoex.h
++++ b/drivers/staging/rtl8723bs/include/hal_btcoex.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_BTCOEX_H__
+ #define __HAL_BTCOEX_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_com.h b/drivers/staging/rtl8723bs/include/hal_com.h
+index 3e9ed3b66632..d1c5b3193043 100644
+--- a/drivers/staging/rtl8723bs/include/hal_com.h
++++ b/drivers/staging/rtl8723bs/include/hal_com.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_COMMON_H__
+ #define __HAL_COMMON_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_com_h2c.h b/drivers/staging/rtl8723bs/include/hal_com_h2c.h
+index 86b0c42295c2..7dbae5e2050e 100644
+--- a/drivers/staging/rtl8723bs/include/hal_com_h2c.h
++++ b/drivers/staging/rtl8723bs/include/hal_com_h2c.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __COMMON_H2C_H__
+ #define __COMMON_H2C_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_com_phycfg.h b/drivers/staging/rtl8723bs/include/hal_com_phycfg.h
+index bcd81f50581f..c5184315f82f 100644
+--- a/drivers/staging/rtl8723bs/include/hal_com_phycfg.h
++++ b/drivers/staging/rtl8723bs/include/hal_com_phycfg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_COM_PHYCFG_H__
+ #define __HAL_COM_PHYCFG_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_com_reg.h b/drivers/staging/rtl8723bs/include/hal_com_reg.h
+index fbf33dba1757..31a187b35810 100644
+--- a/drivers/staging/rtl8723bs/include/hal_com_reg.h
++++ b/drivers/staging/rtl8723bs/include/hal_com_reg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_COMMON_REG_H__
+ #define __HAL_COMMON_REG_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_data.h b/drivers/staging/rtl8723bs/include/hal_data.h
+index 74a1db1eac38..7d782659a84f 100644
+--- a/drivers/staging/rtl8723bs/include/hal_data.h
++++ b/drivers/staging/rtl8723bs/include/hal_data.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_DATA_H__
+ #define __HAL_DATA_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_intf.h b/drivers/staging/rtl8723bs/include/hal_intf.h
+index 276089ad4864..19ceb4aa753e 100644
+--- a/drivers/staging/rtl8723bs/include/hal_intf.h
++++ b/drivers/staging/rtl8723bs/include/hal_intf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_INTF_H__
+ #define __HAL_INTF_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_pg.h b/drivers/staging/rtl8723bs/include/hal_pg.h
+index ba2a0b0c5b2f..0b7a8adf5c74 100644
+--- a/drivers/staging/rtl8723bs/include/hal_pg.h
++++ b/drivers/staging/rtl8723bs/include/hal_pg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __HAL_PG_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_phy.h b/drivers/staging/rtl8723bs/include/hal_phy.h
+index 15f192697957..c6b9bf139ef6 100644
+--- a/drivers/staging/rtl8723bs/include/hal_phy.h
++++ b/drivers/staging/rtl8723bs/include/hal_phy.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_PHY_H__
+ #define __HAL_PHY_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_phy_reg.h b/drivers/staging/rtl8723bs/include/hal_phy_reg.h
+index 518095269497..682cdd6655ab 100644
+--- a/drivers/staging/rtl8723bs/include/hal_phy_reg.h
++++ b/drivers/staging/rtl8723bs/include/hal_phy_reg.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_PHY_REG_H__
+ #define __HAL_PHY_REG_H__
+diff --git a/drivers/staging/rtl8723bs/include/hal_sdio.h b/drivers/staging/rtl8723bs/include/hal_sdio.h
+index 691a02e980a3..3fc8acb430e5 100644
+--- a/drivers/staging/rtl8723bs/include/hal_sdio.h
++++ b/drivers/staging/rtl8723bs/include/hal_sdio.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __HAL_SDIO_H_
+ #define __HAL_SDIO_H_
+diff --git a/drivers/staging/rtl8723bs/include/ieee80211.h b/drivers/staging/rtl8723bs/include/ieee80211.h
+index c8e5251c2760..974e922f54fa 100644
+--- a/drivers/staging/rtl8723bs/include/ieee80211.h
++++ b/drivers/staging/rtl8723bs/include/ieee80211.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __IEEE80211_H
+ #define __IEEE80211_H
+diff --git a/drivers/staging/rtl8723bs/include/ioctl_cfg80211.h b/drivers/staging/rtl8723bs/include/ioctl_cfg80211.h
+index 2d42e0c2deff..931599d8b08a 100644
+--- a/drivers/staging/rtl8723bs/include/ioctl_cfg80211.h
++++ b/drivers/staging/rtl8723bs/include/ioctl_cfg80211.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __IOCTL_CFG80211_H__
+ #define __IOCTL_CFG80211_H__
+diff --git a/drivers/staging/rtl8723bs/include/mlme_osdep.h b/drivers/staging/rtl8723bs/include/mlme_osdep.h
+index 69fd5543a3b1..f0d19637fb0f 100644
+--- a/drivers/staging/rtl8723bs/include/mlme_osdep.h
++++ b/drivers/staging/rtl8723bs/include/mlme_osdep.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef	__MLME_OSDEP_H_
+ #define __MLME_OSDEP_H_
+diff --git a/drivers/staging/rtl8723bs/include/osdep_intf.h b/drivers/staging/rtl8723bs/include/osdep_intf.h
+index cd738da3bec9..0ea91a111da3 100644
+--- a/drivers/staging/rtl8723bs/include/osdep_intf.h
++++ b/drivers/staging/rtl8723bs/include/osdep_intf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef __OSDEP_INTF_H_
+diff --git a/drivers/staging/rtl8723bs/include/osdep_service.h b/drivers/staging/rtl8723bs/include/osdep_service.h
+index e62ed71e1d80..76d619585046 100644
+--- a/drivers/staging/rtl8723bs/include/osdep_service.h
++++ b/drivers/staging/rtl8723bs/include/osdep_service.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __OSDEP_SERVICE_H_
+ #define __OSDEP_SERVICE_H_
+diff --git a/drivers/staging/rtl8723bs/include/osdep_service_linux.h b/drivers/staging/rtl8723bs/include/osdep_service_linux.h
+index 711863d74a01..58d1e1019241 100644
+--- a/drivers/staging/rtl8723bs/include/osdep_service_linux.h
++++ b/drivers/staging/rtl8723bs/include/osdep_service_linux.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __OSDEP_LINUX_SERVICE_H_
+ #define __OSDEP_LINUX_SERVICE_H_
+diff --git a/drivers/staging/rtl8723bs/include/recv_osdep.h b/drivers/staging/rtl8723bs/include/recv_osdep.h
+index a480874a2f2a..6fea0e948271 100644
+--- a/drivers/staging/rtl8723bs/include/recv_osdep.h
++++ b/drivers/staging/rtl8723bs/include/recv_osdep.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RECV_OSDEP_H_
+ #define __RECV_OSDEP_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtl8192c_recv.h b/drivers/staging/rtl8723bs/include/rtl8192c_recv.h
+index 3e1be0092df4..c77d172de7d0 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8192c_recv.h
++++ b/drivers/staging/rtl8723bs/include/rtl8192c_recv.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTL8192C_RECV_H_
+ #define _RTL8192C_RECV_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtl8192c_rf.h b/drivers/staging/rtl8723bs/include/rtl8192c_rf.h
+index 97900a31b326..ad684add8dd6 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8192c_rf.h
++++ b/drivers/staging/rtl8723bs/include/rtl8192c_rf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTL8192C_RF_H_
+ #define _RTL8192C_RF_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_cmd.h b/drivers/staging/rtl8723bs/include/rtl8723b_cmd.h
+index 8d610646ad17..ecfd2d383ac2 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_cmd.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_cmd.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_CMD_H__
+ #define __RTL8723B_CMD_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_dm.h b/drivers/staging/rtl8723bs/include/rtl8723b_dm.h
+index cc64b38ead2a..1d2da5286e7c 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_dm.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_dm.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_DM_H__
+ #define __RTL8723B_DM_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_hal.h b/drivers/staging/rtl8723bs/include/rtl8723b_hal.h
+index adaeea115e4d..98408e8e33f2 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_hal.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_hal.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_HAL_H__
+ #define __RTL8723B_HAL_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_recv.h b/drivers/staging/rtl8723bs/include/rtl8723b_recv.h
+index 7218424dae99..31ae83f2557f 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_recv.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_recv.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_RECV_H__
+ #define __RTL8723B_RECV_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_rf.h b/drivers/staging/rtl8723bs/include/rtl8723b_rf.h
+index f5aa1b09a608..1c16183caf9b 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_rf.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_rf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_RF_H__
+ #define __RTL8723B_RF_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_spec.h b/drivers/staging/rtl8723bs/include/rtl8723b_spec.h
+index 1906ff2038f5..9149fe598545 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_spec.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_spec.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  *******************************************************************************/
+ #ifndef __RTL8723B_SPEC_H__
+ #define __RTL8723B_SPEC_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtl8723b_xmit.h b/drivers/staging/rtl8723bs/include/rtl8723b_xmit.h
+index 3bea5d5dd82b..23a6069c3e5d 100644
+--- a/drivers/staging/rtl8723bs/include/rtl8723b_xmit.h
++++ b/drivers/staging/rtl8723bs/include/rtl8723b_xmit.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTL8723B_XMIT_H__
+ #define __RTL8723B_XMIT_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_ap.h b/drivers/staging/rtl8723bs/include/rtw_ap.h
+index 3c2d1e912a9d..fd56c9db16a9 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_ap.h
++++ b/drivers/staging/rtl8723bs/include/rtw_ap.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_AP_H_
+ #define __RTW_AP_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_beamforming.h b/drivers/staging/rtl8723bs/include/rtw_beamforming.h
+index 69711e41c50b..031496c8c02c 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_beamforming.h
++++ b/drivers/staging/rtl8723bs/include/rtw_beamforming.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_BEAMFORMING_H_
+ #define __RTW_BEAMFORMING_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_br_ext.h b/drivers/staging/rtl8723bs/include/rtw_br_ext.h
+index c942535a7961..5eaeb3c9a97c 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_br_ext.h
++++ b/drivers/staging/rtl8723bs/include/rtw_br_ext.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_BR_EXT_H_
+ #define _RTW_BR_EXT_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_btcoex.h b/drivers/staging/rtl8723bs/include/rtw_btcoex.h
+index 9a5c3f40bddb..53f49c6b2fcd 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_btcoex.h
++++ b/drivers/staging/rtl8723bs/include/rtw_btcoex.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_BTCOEX_H__
+ #define __RTW_BTCOEX_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_byteorder.h b/drivers/staging/rtl8723bs/include/rtw_byteorder.h
+index ffbbcec77a0d..f76fbfbed4c7 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_byteorder.h
++++ b/drivers/staging/rtl8723bs/include/rtw_byteorder.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTL871X_BYTEORDER_H_
+ #define _RTL871X_BYTEORDER_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_cmd.h b/drivers/staging/rtl8723bs/include/rtw_cmd.h
+index 286d329b7a4f..1530d0ea1d51 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_cmd.h
++++ b/drivers/staging/rtl8723bs/include/rtw_cmd.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_CMD_H_
+ #define __RTW_CMD_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_debug.h b/drivers/staging/rtl8723bs/include/rtw_debug.h
+index 625e2a39a861..216d9492575e 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_debug.h
++++ b/drivers/staging/rtl8723bs/include/rtw_debug.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_DEBUG_H__
+ #define __RTW_DEBUG_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_eeprom.h b/drivers/staging/rtl8723bs/include/rtw_eeprom.h
+index 2e292bf9cf51..1fcd79fa1c21 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_eeprom.h
++++ b/drivers/staging/rtl8723bs/include/rtw_eeprom.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_EEPROM_H__
+ #define __RTW_EEPROM_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_efuse.h b/drivers/staging/rtl8723bs/include/rtw_efuse.h
+index 5d3778a3204b..9d9a5a3e336d 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_efuse.h
++++ b/drivers/staging/rtl8723bs/include/rtw_efuse.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_EFUSE_H__
+ #define __RTW_EFUSE_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_event.h b/drivers/staging/rtl8723bs/include/rtw_event.h
+index 2bf23de7e516..ee80aa21eb10 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_event.h
++++ b/drivers/staging/rtl8723bs/include/rtw_event.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_EVENT_H_
+ #define _RTW_EVENT_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_ht.h b/drivers/staging/rtl8723bs/include/rtw_ht.h
+index 20ca0b7b481c..952c804dd0fd 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_ht.h
++++ b/drivers/staging/rtl8723bs/include/rtw_ht.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_HT_H_
+ #define _RTW_HT_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_io.h b/drivers/staging/rtl8723bs/include/rtw_io.h
+index 0341d0d35375..4f8be55da65d 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_io.h
++++ b/drivers/staging/rtl8723bs/include/rtw_io.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #ifndef _RTW_IO_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_ioctl.h b/drivers/staging/rtl8723bs/include/rtw_ioctl.h
+index c19e179fc426..7179591cb01d 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_ioctl.h
++++ b/drivers/staging/rtl8723bs/include/rtw_ioctl.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_IOCTL_H_
+ #define _RTW_IOCTL_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_ioctl_set.h b/drivers/staging/rtl8723bs/include/rtw_ioctl_set.h
+index ebf233559f67..f0457e91d00f 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_ioctl_set.h
++++ b/drivers/staging/rtl8723bs/include/rtw_ioctl_set.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_IOCTL_SET_H_
+ #define __RTW_IOCTL_SET_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_mlme.h b/drivers/staging/rtl8723bs/include/rtw_mlme.h
+index 2e4f12b54929..1ea9ea0e8d2e 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_mlme.h
++++ b/drivers/staging/rtl8723bs/include/rtw_mlme.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_MLME_H_
+ #define __RTW_MLME_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_mlme_ext.h b/drivers/staging/rtl8723bs/include/rtw_mlme_ext.h
+index 6613dea2b283..4c3141882143 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_mlme_ext.h
++++ b/drivers/staging/rtl8723bs/include/rtw_mlme_ext.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_MLME_EXT_H_
+ #define __RTW_MLME_EXT_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_mp.h b/drivers/staging/rtl8723bs/include/rtw_mp.h
+index 88ace11e42e9..839084733201 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_mp.h
++++ b/drivers/staging/rtl8723bs/include/rtw_mp.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_MP_H_
+ #define _RTW_MP_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_odm.h b/drivers/staging/rtl8723bs/include/rtw_odm.h
+index 961ae2c218f9..263e92cfea96 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_odm.h
++++ b/drivers/staging/rtl8723bs/include/rtw_odm.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_ODM_H__
+ #define __RTW_ODM_H__
+diff --git a/drivers/staging/rtl8723bs/include/rtw_pwrctrl.h b/drivers/staging/rtl8723bs/include/rtw_pwrctrl.h
+index faf91022f54a..3cf0ba3f8f0d 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_pwrctrl.h
++++ b/drivers/staging/rtl8723bs/include/rtw_pwrctrl.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_PWRCTRL_H_
+ #define __RTW_PWRCTRL_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_qos.h b/drivers/staging/rtl8723bs/include/rtw_qos.h
+index ce6d9142bc5a..1f28837f6c27 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_qos.h
++++ b/drivers/staging/rtl8723bs/include/rtw_qos.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/include/rtw_recv.h b/drivers/staging/rtl8723bs/include/rtw_recv.h
+index d4986f5685c5..1f53c1c7b0da 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_recv.h
++++ b/drivers/staging/rtl8723bs/include/rtw_recv.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_RECV_H_
+ #define _RTW_RECV_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_rf.h b/drivers/staging/rtl8723bs/include/rtw_rf.h
+index f9becab7f7ad..d3a8e4b7069a 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_rf.h
++++ b/drivers/staging/rtl8723bs/include/rtw_rf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef	__RTW_RF_H_
+ #define __RTW_RF_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_security.h b/drivers/staging/rtl8723bs/include/rtw_security.h
+index d5af72b2335d..bea184452edd 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_security.h
++++ b/drivers/staging/rtl8723bs/include/rtw_security.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_SECURITY_H_
+ #define __RTW_SECURITY_H_
+diff --git a/drivers/staging/rtl8723bs/include/rtw_version.h b/drivers/staging/rtl8723bs/include/rtw_version.h
+index 628d987c3e86..55e907b097ae 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_version.h
++++ b/drivers/staging/rtl8723bs/include/rtw_version.h
+@@ -1,2 +1,3 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ #define DRIVERVERSION	"v4.3.5.5_12290.20140916_BTCOEX20140507-4E40"
+ #define BTCOEXVERSION	"BTCOEX20140507-4E40"
+diff --git a/drivers/staging/rtl8723bs/include/rtw_xmit.h b/drivers/staging/rtl8723bs/include/rtw_xmit.h
+index 11571649cd2c..a75b668d09a6 100644
+--- a/drivers/staging/rtl8723bs/include/rtw_xmit.h
++++ b/drivers/staging/rtl8723bs/include/rtw_xmit.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _RTW_XMIT_H_
+ #define _RTW_XMIT_H_
+diff --git a/drivers/staging/rtl8723bs/include/sdio_hal.h b/drivers/staging/rtl8723bs/include/sdio_hal.h
+index 8fd8bbeda2d8..6fae19dd0cbd 100644
+--- a/drivers/staging/rtl8723bs/include/sdio_hal.h
++++ b/drivers/staging/rtl8723bs/include/sdio_hal.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __SDIO_HAL_H__
+ #define __SDIO_HAL_H__
+diff --git a/drivers/staging/rtl8723bs/include/sdio_ops.h b/drivers/staging/rtl8723bs/include/sdio_ops.h
+index 8fffc652cf0c..0f117ff1fbbe 100644
+--- a/drivers/staging/rtl8723bs/include/sdio_ops.h
++++ b/drivers/staging/rtl8723bs/include/sdio_ops.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __SDIO_OPS_H__
+ #define __SDIO_OPS_H__
+diff --git a/drivers/staging/rtl8723bs/include/sdio_ops_linux.h b/drivers/staging/rtl8723bs/include/sdio_ops_linux.h
+index bd62caec409f..16a03adbc2cf 100644
+--- a/drivers/staging/rtl8723bs/include/sdio_ops_linux.h
++++ b/drivers/staging/rtl8723bs/include/sdio_ops_linux.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __SDIO_OPS_LINUX_H__
+ #define __SDIO_OPS_LINUX_H__
+diff --git a/drivers/staging/rtl8723bs/include/sdio_osintf.h b/drivers/staging/rtl8723bs/include/sdio_osintf.h
+index 86673682fb4f..146b44f95e29 100644
+--- a/drivers/staging/rtl8723bs/include/sdio_osintf.h
++++ b/drivers/staging/rtl8723bs/include/sdio_osintf.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __SDIO_OSINTF_H__
+ #define __SDIO_OSINTF_H__
+diff --git a/drivers/staging/rtl8723bs/include/sta_info.h b/drivers/staging/rtl8723bs/include/sta_info.h
+index 84fa116fc5da..b9df42d0677e 100644
+--- a/drivers/staging/rtl8723bs/include/sta_info.h
++++ b/drivers/staging/rtl8723bs/include/sta_info.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __STA_INFO_H_
+ #define __STA_INFO_H_
+diff --git a/drivers/staging/rtl8723bs/include/wifi.h b/drivers/staging/rtl8723bs/include/wifi.h
+index 530d698f50d9..1034bfd5abf3 100644
+--- a/drivers/staging/rtl8723bs/include/wifi.h
++++ b/drivers/staging/rtl8723bs/include/wifi.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef _WIFI_H_
+ #define _WIFI_H_
+diff --git a/drivers/staging/rtl8723bs/include/wlan_bssdef.h b/drivers/staging/rtl8723bs/include/wlan_bssdef.h
+index af78d97980fa..bdb14a84e5a5 100644
+--- a/drivers/staging/rtl8723bs/include/wlan_bssdef.h
++++ b/drivers/staging/rtl8723bs/include/wlan_bssdef.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __WLAN_BSSDEF_H__
+ #define __WLAN_BSSDEF_H__
+diff --git a/drivers/staging/rtl8723bs/include/xmit_osdep.h b/drivers/staging/rtl8723bs/include/xmit_osdep.h
+index 46909ff7339c..377b453de199 100644
+--- a/drivers/staging/rtl8723bs/include/xmit_osdep.h
++++ b/drivers/staging/rtl8723bs/include/xmit_osdep.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __XMIT_OSDEP_H_
+ #define __XMIT_OSDEP_H_
+diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+index 75d8a16f54c6..02178e25fbb8 100644
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define  _IOCTL_CFG80211_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c b/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
+index b26533983864..39502156f652 100644
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_linux.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _IOCTL_LINUX_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/mlme_linux.c b/drivers/staging/rtl8723bs/os_dep/mlme_linux.c
+index a4ef5789d794..da4bd5292b0a 100644
+--- a/drivers/staging/rtl8723bs/os_dep/mlme_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/mlme_linux.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/os_intfs.c b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+index fc5e3d4739c0..ace68f023b49 100644
+--- a/drivers/staging/rtl8723bs/os_dep/os_intfs.c
++++ b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _OS_INTFS_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/osdep_service.c b/drivers/staging/rtl8723bs/os_dep/osdep_service.c
+index f4221952dd1b..e14d7cc411c9 100644
+--- a/drivers/staging/rtl8723bs/os_dep/osdep_service.c
++++ b/drivers/staging/rtl8723bs/os_dep/osdep_service.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/recv_linux.c b/drivers/staging/rtl8723bs/os_dep/recv_linux.c
+index b43e24c3a23a..67ec336264e5 100644
+--- a/drivers/staging/rtl8723bs/os_dep/recv_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/recv_linux.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _RECV_OSDEP_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/rtw_proc.c b/drivers/staging/rtl8723bs/os_dep/rtw_proc.c
+index 49c8684dc25b..d8e7ad1ed842 100644
+--- a/drivers/staging/rtl8723bs/os_dep/rtw_proc.c
++++ b/drivers/staging/rtl8723bs/os_dep/rtw_proc.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ 
+ #include <drv_types.h>
+diff --git a/drivers/staging/rtl8723bs/os_dep/rtw_proc.h b/drivers/staging/rtl8723bs/os_dep/rtw_proc.h
+index f633663fa790..c7e6f62b61ef 100644
+--- a/drivers/staging/rtl8723bs/os_dep/rtw_proc.h
++++ b/drivers/staging/rtl8723bs/os_dep/rtw_proc.h
+@@ -1,16 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2013 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #ifndef __RTW_PROC_H__
+ #define __RTW_PROC_H__
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index 99c407ba0874..22191c9584ad 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _HCI_INTF_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_ops_linux.c b/drivers/staging/rtl8723bs/os_dep/sdio_ops_linux.c
+index 3108a625ada3..43a9d922e3aa 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_ops_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_ops_linux.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  *******************************************************************************/
+ #define _SDIO_OPS_LINUX_C_
+ 
+diff --git a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
+index 21e1b811f997..4da0c6f323d1 100644
+--- a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
+@@ -1,16 +1,8 @@
++// SPDX-License-Identifier: GPL-2.0
+ /******************************************************************************
+  *
+  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
+  *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms of version 2 of the GNU General Public License as
+- * published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope that it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+- * more details.
+- *
+  ******************************************************************************/
+ #define _XMIT_OSDEP_C_
+ 
+-- 
+2.17.0
+
