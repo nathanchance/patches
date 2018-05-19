@@ -1,0 +1,29 @@
+From 3d03aaadce235fe2aa6fb8cd419f7dea30328368 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 19 May 2018 10:52:50 -0700
+Subject: [PATCH] scripts/dtc: Do not show warnings
+
+There are apparently a LOT of them for the provided dtb overlays and I
+am not going to go through and fix them all.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/dtc/checks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/dtc/checks.c b/scripts/dtc/checks.c
+index c07ba4da9e36..661a0a9bde8e 100644
+--- a/scripts/dtc/checks.c
++++ b/scripts/dtc/checks.c
+@@ -66,7 +66,7 @@ struct check {
+ 		.prereq = nm_##_prereqs, \
+ 	};
+ #define WARNING(nm_, fn_, d_, ...) \
+-	CHECK_ENTRY(nm_, fn_, d_, true, false, __VA_ARGS__)
++	CHECK_ENTRY(nm_, fn_, d_, false, false, __VA_ARGS__)
+ #define ERROR(nm_, fn_, d_, ...) \
+ 	CHECK_ENTRY(nm_, fn_, d_, false, true, __VA_ARGS__)
+ #define CHECK(nm_, fn_, d_, ...) \
+-- 
+2.17.0
+
