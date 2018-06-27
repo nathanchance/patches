@@ -1,0 +1,91 @@
+From e5e903ad8476ffed93f4ed65e29dda3d1beec67f Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Wed, 27 Jun 2018 00:28:42 +0900
+Subject: [PATCH 25/26] kernel: Boost all CPUs to the max when userspace
+ launches an app
+
+Zygote is Android's application process, and it only forks when launching
+a new app for the first time. To accelerate app launches, boost all CPUs
+to the max for 1250 ms when zygote decides to fork.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/exec.c               | 18 ++++++++++++++++++
+ include/linux/binfmts.h |  1 +
+ kernel/fork.c           |  5 +++++
+ 3 files changed, 24 insertions(+)
+
+diff --git a/fs/exec.c b/fs/exec.c
+index 09cedfaea69c..ce7f4e7f1aae 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -72,6 +72,17 @@ int suid_dumpable = 0;
+ static LIST_HEAD(formats);
+ static DEFINE_RWLOCK(binfmt_lock);
+ 
++#define ZYGOTE32_BIN	"/system/bin/app_process32"
++#define ZYGOTE64_BIN	"/system/bin/app_process64"
++static atomic_t zygote32_pid;
++static atomic_t zygote64_pid;
++
++bool is_zygote_pid(pid_t pid)
++{
++	return atomic_read(&zygote32_pid) == pid ||
++		atomic_read(&zygote64_pid) == pid;
++}
++
+ void __register_binfmt(struct linux_binfmt * fmt, int insert)
+ {
+ 	BUG_ON(!fmt);
+@@ -1567,6 +1578,13 @@ static int do_execve_common(struct filename *filename,
+ 	if (retval < 0)
+ 		goto out;
+ 
++	if (capable(CAP_SYS_ADMIN)) {
++		if (unlikely(!strcmp(filename->name, ZYGOTE32_BIN)))
++			atomic_set(&zygote32_pid, current->pid);
++		else if (unlikely(!strcmp(filename->name, ZYGOTE64_BIN)))
++			atomic_set(&zygote64_pid, current->pid);
++	}
++
+ 	/* execve succeeded */
+ 	current->fs->in_exec = 0;
+ 	current->in_execve = 0;
+diff --git a/include/linux/binfmts.h b/include/linux/binfmts.h
+index 61f29e5ea840..d7ecda32701b 100644
+--- a/include/linux/binfmts.h
++++ b/include/linux/binfmts.h
+@@ -115,5 +115,6 @@ extern int prepare_bprm_creds(struct linux_binprm *bprm);
+ extern void install_exec_creds(struct linux_binprm *bprm);
+ extern void set_binfmt(struct linux_binfmt *new);
+ extern ssize_t read_code(struct file *, unsigned long, loff_t, size_t);
++extern bool is_zygote_pid(pid_t pid);
+ 
+ #endif /* _LINUX_BINFMTS_H */
+diff --git a/kernel/fork.c b/kernel/fork.c
+index c3061638a6c7..77d764274b60 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -76,6 +76,7 @@
+ #include <linux/aio.h>
+ #include <linux/compiler.h>
+ #include <linux/kcov.h>
++#include <linux/cpu_input_boost.h>
+ 
+ #include <asm/pgtable.h>
+ #include <asm/pgalloc.h>
+@@ -1677,6 +1678,10 @@ long do_fork(unsigned long clone_flags,
+ 	int trace = 0;
+ 	long nr;
+ 
++	/* Boost CPU to the max for 1250 ms when userspace launches an app */
++	if (is_zygote_pid(current->pid))
++		cpu_input_boost_kick_max(1250);
++
+ 	/*
+ 	 * Determine whether and which event to report to ptracer.  When
+ 	 * called from kernel_thread or CLONE_UNTRACED is explicitly
+-- 
+2.18.0
+

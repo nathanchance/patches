@@ -1,0 +1,354 @@
+From 43db8750026e44ba3529d1dfe248081ca78610f7 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 29 May 2018 17:43:25 -0700
+Subject: [PATCH 13/26] kernel: Add API to mark IRQs and kthreads as
+ performance critical
+
+On devices with a CPU that contains heterogeneous cores (e.g., big.LITTLE),
+it can be beneficial to place some performance-critical IRQs and kthreads
+onto the performance CPU cluster in order to improve performance.
+
+This commit adds the following APIs:
+-kthread_run_perf_critical() to create and start a perf-critical kthread
+-IRQF_PERF_CRITICAL to schedule an IRQ and any threads it may have onto
+ performance CPUs
+-PF_PERF_CRITICAL to mark a process (mainly kthread) as performance
+ critical (this is used by kthread_run_perf_critical())
+
+In order to accomodate this new API, the following changes are made:
+-Performance-critical IRQs have their affinities reaffined upon exit from
+ suspend (since the affinities are broken when non-boot CPUs are disabled)
+-Performance-critical IRQs and their threads have their affinities reset
+ upon entering suspend, so that upon immediate suspend exit (when only the
+ boot CPU is online), interrupts can be processed and interrupt threads
+ can be scheduled onto an online CPU (otherwise we'd hit a kernel BUG)
+-Global cpu_lp_mask and cpu_perf_mask symbols are added to provide
+ a cpumask of low-power and performance CPUs, respectively. This is
+ set to the big.LITTLE layout used on msm8998 by default.
+-do_set_cpus_allowed() and __set_cpus_allowed_ptr() are modified to enforce
+ a performance-critical kthread's affinity
+-Mark perf-critical IRQs with IRQD_AFFINITY_MANAGED so userspace can't mess
+ with their affinity
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/cpumask.h   |  4 ++
+ include/linux/interrupt.h |  5 +++
+ include/linux/kthread.h   | 17 ++++++++
+ include/linux/sched.h     |  1 +
+ kernel/cpu.c              | 25 +++++++++++
+ kernel/irq/manage.c       | 87 ++++++++++++++++++++++++++++++++++++++-
+ kernel/sched/core.c       | 14 +++++++
+ 7 files changed, 152 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
+index 5e8ee19bc4a6..93910bfd3103 100644
+--- a/include/linux/cpumask.h
++++ b/include/linux/cpumask.h
+@@ -53,6 +53,8 @@ extern int nr_cpu_ids;
+  *     cpu_online_mask  - has bit 'cpu' set iff cpu available to scheduler
+  *     cpu_active_mask  - has bit 'cpu' set iff cpu available to migration
+  *     cpu_isolated_mask- has bit 'cpu' set iff cpu isolated
++ *     cpu_lp_mask      - has bit 'cpu' set iff cpu is part of little cluster
++ *     cpu_perf_mask    - has bit 'cpu' set iff cpu is part of big cluster
+  *
+  *  If !CONFIG_HOTPLUG_CPU, present == possible, and active == online.
+  *
+@@ -90,6 +92,8 @@ extern const struct cpumask *const cpu_online_mask;
+ extern const struct cpumask *const cpu_present_mask;
+ extern const struct cpumask *const cpu_active_mask;
+ extern const struct cpumask *const cpu_isolated_mask;
++extern const struct cpumask *const cpu_lp_mask;
++extern const struct cpumask *const cpu_perf_mask;
+ 
+ #if NR_CPUS > 1
+ #define num_online_cpus()	cpumask_weight(cpu_online_mask)
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index e18370d5453b..11d74267aede 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -61,6 +61,8 @@
+  *                interrupt handler after suspending interrupts. For system
+  *                wakeup devices users need to implement wakeup detection in
+  *                their interrupt handlers.
++ * IRQF_PERF_CRITICAL - Interrupt is critical to the overall performance of the
++ * 		  system and should be processed on a fast CPU.
+  */
+ #define IRQF_DISABLED		0x00000020
+ #define IRQF_SHARED		0x00000080
+@@ -75,6 +77,7 @@
+ #define IRQF_NO_THREAD		0x00010000
+ #define IRQF_EARLY_RESUME	0x00020000
+ #define IRQF_COND_SUSPEND	0x00040000
++#define IRQF_PERF_CRITICAL	0x00080000
+ 
+ #define IRQF_TIMER		(__IRQF_TIMER | IRQF_NO_SUSPEND | IRQF_NO_THREAD)
+ 
+@@ -200,6 +203,8 @@ extern void irq_wake_thread(unsigned int irq, void *dev_id);
+ /* The following three functions are for the core kernel use only. */
+ extern void suspend_device_irqs(void);
+ extern void resume_device_irqs(void);
++extern void unaffine_perf_irqs(void);
++extern void reaffine_perf_irqs(void);
+ 
+ /**
+  * struct irq_affinity_notify - context for notification of IRQ affinity changes
+diff --git a/include/linux/kthread.h b/include/linux/kthread.h
+index 869b21dcf503..e298cd726c12 100644
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -37,6 +37,23 @@ struct task_struct *kthread_create_on_cpu(int (*threadfn)(void *data),
+ 	__k;								   \
+ })
+ 
++/**
++ * kthread_run_perf_critical - create and wake a performance-critical thread.
++ *
++ * Same as kthread_create().
++ */
++#define kthread_run_perf_critical(threadfn, data, namefmt, ...)		   \
++({									   \
++	struct task_struct *__k						   \
++		= kthread_create(threadfn, data, namefmt, ## __VA_ARGS__); \
++	if (!IS_ERR(__k)) {						   \
++		__k->flags |= PF_PERF_CRITICAL;				   \
++		kthread_bind_mask(__k, cpu_perf_mask);			   \
++		wake_up_process(__k);					   \
++	}								   \
++	__k;								   \
++})
++
+ void kthread_bind(struct task_struct *k, unsigned int cpu);
+ void kthread_bind_mask(struct task_struct *k, const struct cpumask *mask);
+ int kthread_stop(struct task_struct *k);
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 9c767090f7d9..68e8bf25f66e 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -2098,6 +2098,7 @@ extern int task_free_unregister(struct notifier_block *n);
+ #define PF_KTHREAD	0x00200000	/* I am a kernel thread */
+ #define PF_RANDOMIZE	0x00400000	/* randomize virtual address space */
+ #define PF_SWAPWRITE	0x00800000	/* Allowed to write to swap */
++#define PF_PERF_CRITICAL 0x01000000	/* Thread is performance-critical */
+ #define PF_NO_SETAFFINITY 0x04000000	/* Userland is not allowed to meddle with cpus_allowed */
+ #define PF_MCE_EARLY    0x08000000      /* Early kill for mce process policy */
+ #define PF_MUTEX_TESTER	0x20000000	/* Thread belongs to the rt mutex tester */
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index d335c9ed86bb..7f3af2891b78 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -410,8 +410,16 @@ out_release:
+ 
+ int __ref cpu_down(unsigned int cpu)
+ {
++	struct cpumask newmask;
+ 	int err;
+ 
++	cpumask_andnot(&newmask, cpu_online_mask, cpumask_of(cpu));
++
++	/* One big cluster CPU and one little cluster CPU must remain online */
++	if (!cpumask_intersects(&newmask, cpu_perf_mask) ||
++		!cpumask_intersects(&newmask, cpu_lp_mask))
++		return -EINVAL;
++
+ 	cpu_maps_update_begin();
+ 
+ 	if (cpu_hotplug_disabled) {
+@@ -550,6 +558,7 @@ int disable_nonboot_cpus(void)
+ 	int cpu, first_cpu, error = 0;
+ 
+ 	cpu_maps_update_begin();
++	unaffine_perf_irqs();
+ 	first_cpu = cpumask_first(cpu_online_mask);
+ 	/*
+ 	 * We take down all of the non-boot CPUs in one shot to avoid races
+@@ -626,6 +635,7 @@ void __ref enable_nonboot_cpus(void)
+ 	arch_enable_nonboot_cpus_end();
+ 
+ 	cpumask_clear(frozen_cpus);
++	reaffine_perf_irqs();
+ out:
+ 	cpu_maps_update_done();
+ }
+@@ -761,6 +771,21 @@ static DECLARE_BITMAP(cpu_isolated_bits, CONFIG_NR_CPUS) __read_mostly;
+ const struct cpumask *const cpu_isolated_mask = to_cpumask(cpu_isolated_bits);
+ EXPORT_SYMBOL(cpu_isolated_mask);
+ 
++/*
++ * This assumes that half of the CPUs are little and that they have lower
++ * CPU numbers than the big CPUs (e.g., on an 8-core system, CPUs 0-3 would be
++ * little and CPUs 4-7 would be big).
++ */
++#define LITTLE_CPU_MASK	((1UL << (NR_CPUS / 2)) - 1)
++#define BIG_CPU_MASK	(((1UL << NR_CPUS) - 1) & ~LITTLE_CPU_MASK)
++static const unsigned long little_cluster_cpus = LITTLE_CPU_MASK;
++const struct cpumask *const cpu_lp_mask = to_cpumask(&little_cluster_cpus);
++EXPORT_SYMBOL(cpu_lp_mask);
++
++static const unsigned long big_cluster_cpus = BIG_CPU_MASK;
++const struct cpumask *const cpu_perf_mask = to_cpumask(&big_cluster_cpus);
++EXPORT_SYMBOL(cpu_perf_mask);
++
+ void set_cpu_possible(unsigned int cpu, bool possible)
+ {
+ 	if (possible)
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index e023c5c20a29..bb81a8b8d34a 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -21,6 +21,15 @@
+ 
+ #include "internals.h"
+ 
++struct irq_desc_list {
++	struct list_head list;
++	struct irq_desc *desc;
++} perf_crit_irqs = {
++	.list = LIST_HEAD_INIT(perf_crit_irqs.list)
++};
++
++static DEFINE_RAW_SPINLOCK(perf_irqs_lock);
++
+ #ifdef CONFIG_IRQ_FORCED_THREADING
+ __read_mostly bool force_irqthreads;
+ 
+@@ -1073,6 +1082,72 @@ setup_irq_thread(struct irqaction *new, unsigned int irq, bool secondary)
+ 	return 0;
+ }
+ 
++static void add_desc_to_perf_list(struct irq_desc *desc)
++{
++	struct irq_desc_list *item;
++	unsigned long flags;
++
++	item = kmalloc(sizeof(*item), GFP_ATOMIC);
++	if (WARN_ON(!item))
++		return;
++
++	item->desc = desc;
++
++	raw_spin_lock_irqsave(&perf_irqs_lock, flags);
++	list_add(&item->list, &perf_crit_irqs.list);
++	raw_spin_unlock_irqrestore(&perf_irqs_lock, flags);
++}
++
++static void affine_one_perf_thread(struct task_struct *t)
++{
++	t->flags |= PF_PERF_CRITICAL;
++	set_cpus_allowed_ptr(t, cpu_perf_mask);
++}
++
++static void unaffine_one_perf_thread(struct task_struct *t)
++{
++	t->flags &= ~PF_PERF_CRITICAL;
++	set_cpus_allowed_ptr(t, cpu_all_mask);
++}
++
++void unaffine_perf_irqs(void)
++{
++	struct irq_desc_list *data;
++	unsigned long outer_flags;
++
++	raw_spin_lock_irqsave(&perf_irqs_lock, outer_flags);
++	list_for_each_entry(data, &perf_crit_irqs.list, list) {
++		struct irq_desc *desc = data->desc;
++		unsigned long flags;
++
++		raw_spin_lock_irqsave(&desc->lock, flags);
++		irq_set_affinity_locked(&desc->irq_data, cpu_all_mask, true);
++		if (desc->action->thread)
++			unaffine_one_perf_thread(desc->action->thread);
++		raw_spin_unlock_irqrestore(&desc->lock, flags);
++	}
++	raw_spin_unlock_irqrestore(&perf_irqs_lock, outer_flags);
++}
++
++void reaffine_perf_irqs(void)
++{
++	struct irq_desc_list *data;
++	unsigned long outer_flags;
++
++	raw_spin_lock_irqsave(&perf_irqs_lock, outer_flags);
++	list_for_each_entry(data, &perf_crit_irqs.list, list) {
++		struct irq_desc *desc = data->desc;
++		unsigned long flags;
++
++		raw_spin_lock_irqsave(&desc->lock, flags);
++		irq_set_affinity_locked(&desc->irq_data, cpu_perf_mask, true);
++		if (desc->action->thread)
++			affine_one_perf_thread(desc->action->thread);
++		raw_spin_unlock_irqrestore(&desc->lock, flags);
++	}
++	raw_spin_unlock_irqrestore(&perf_irqs_lock, outer_flags);
++}
++
+ /*
+  * Internal function to register an irqaction - typically used to
+  * allocate special interrupts that are part of the architecture.
+@@ -1133,6 +1208,9 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 			if (ret)
+ 				goto out_thread;
+ 		}
++
++		if (new->flags & IRQF_PERF_CRITICAL)
++			affine_one_perf_thread(new->thread);
+ 	}
+ 
+ 	if (!alloc_cpumask_var(&mask, GFP_KERNEL)) {
+@@ -1295,7 +1373,14 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 		}
+ 
+ 		/* Set default affinity mask once everything is setup */
+-		setup_affinity(desc, mask);
++		if (new->flags & IRQF_PERF_CRITICAL) {
++			add_desc_to_perf_list(desc);
++			irqd_set(&desc->irq_data, IRQD_AFFINITY_MANAGED);
++			irq_set_affinity_locked(&desc->irq_data,
++				cpu_perf_mask, true);
++		} else {
++			setup_affinity(desc, mask);
++		}
+ 
+ 	} else if (new->flags & IRQF_TRIGGER_MASK) {
+ 		unsigned int nmsk = new->flags & IRQF_TRIGGER_MASK;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a3fc870c0d4d..a72f82bf7ae1 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1201,11 +1201,23 @@ void set_cpus_allowed_common(struct task_struct *p, const struct cpumask *new_ma
+ 	p->nr_cpus_allowed = cpumask_weight(new_mask);
+ }
+ 
++static const struct cpumask *get_adjusted_cpumask(const struct task_struct *p,
++	const struct cpumask *req_mask)
++{
++	/* Force all performance-critical kthreads onto the big cluster */
++	if (p->flags & PF_PERF_CRITICAL)
++		return cpu_perf_mask;
++
++	return req_mask;
++}
++
+ void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask)
+ {
+ 	struct rq *rq = task_rq(p);
+ 	bool queued, running;
+ 
++	new_mask = get_adjusted_cpumask(p, new_mask);
++
+ 	lockdep_assert_held(&p->pi_lock);
+ 
+ 	queued = task_on_rq_queued(p);
+@@ -1247,6 +1259,8 @@ static int __set_cpus_allowed_ptr(struct task_struct *p,
+ 	unsigned int dest_cpu;
+ 	int ret = 0;
+ 
++	new_mask = get_adjusted_cpumask(p, new_mask);
++
+ 	rq = task_rq_lock(p, &flags);
+ 
+ 	/*
+-- 
+2.18.0
+

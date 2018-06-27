@@ -1,0 +1,118 @@
+From 5e275d9eb98a453f4a95c861a7e7a3bdb05a0b81 Mon Sep 17 00:00:00 2001
+From: Olav Haugan <ohaugan@codeaurora.org>
+Date: Sun, 29 May 2016 19:56:37 -0700
+Subject: [PATCH 03/26] cpumask: Add cpu isolation support
+
+Add bitmask and corresponding supporting functions for cpu isolation.
+
+Change-Id: Ice1a9503666a2b720bdb324289ca55ceb33097cd
+Signed-off-by: Olav Haugan <ohaugan@codeaurora.org>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/cpumask.h |  8 ++++++++
+ kernel/cpu.c            | 17 +++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
+index c73c9a57afc2..5e8ee19bc4a6 100644
+--- a/include/linux/cpumask.h
++++ b/include/linux/cpumask.h
+@@ -52,6 +52,7 @@ extern int nr_cpu_ids;
+  *     cpu_present_mask - has bit 'cpu' set iff cpu is populated
+  *     cpu_online_mask  - has bit 'cpu' set iff cpu available to scheduler
+  *     cpu_active_mask  - has bit 'cpu' set iff cpu available to migration
++ *     cpu_isolated_mask- has bit 'cpu' set iff cpu isolated
+  *
+  *  If !CONFIG_HOTPLUG_CPU, present == possible, and active == online.
+  *
+@@ -88,25 +89,30 @@ extern const struct cpumask *const cpu_possible_mask;
+ extern const struct cpumask *const cpu_online_mask;
+ extern const struct cpumask *const cpu_present_mask;
+ extern const struct cpumask *const cpu_active_mask;
++extern const struct cpumask *const cpu_isolated_mask;
+ 
+ #if NR_CPUS > 1
+ #define num_online_cpus()	cpumask_weight(cpu_online_mask)
+ #define num_possible_cpus()	cpumask_weight(cpu_possible_mask)
+ #define num_present_cpus()	cpumask_weight(cpu_present_mask)
+ #define num_active_cpus()	cpumask_weight(cpu_active_mask)
++#define num_isolated_cpus()	cpumask_weight(cpu_isolated_mask)
+ #define cpu_online(cpu)		cpumask_test_cpu((cpu), cpu_online_mask)
+ #define cpu_possible(cpu)	cpumask_test_cpu((cpu), cpu_possible_mask)
+ #define cpu_present(cpu)	cpumask_test_cpu((cpu), cpu_present_mask)
+ #define cpu_active(cpu)		cpumask_test_cpu((cpu), cpu_active_mask)
++#define cpu_isolated(cpu)	cpumask_test_cpu((cpu), cpu_isolated_mask)
+ #else
+ #define num_online_cpus()	1U
+ #define num_possible_cpus()	1U
+ #define num_present_cpus()	1U
+ #define num_active_cpus()	1U
++#define num_isolated_cpus()	0U
+ #define cpu_online(cpu)		((cpu) == 0)
+ #define cpu_possible(cpu)	((cpu) == 0)
+ #define cpu_present(cpu)	((cpu) == 0)
+ #define cpu_active(cpu)		((cpu) == 0)
++#define cpu_isolated(cpu)	((cpu) == 0)
+ #endif
+ 
+ /* verify cpu argument to cpumask_* operators */
+@@ -746,12 +752,14 @@ extern const DECLARE_BITMAP(cpu_all_bits, NR_CPUS);
+ #define for_each_possible_cpu(cpu) for_each_cpu((cpu), cpu_possible_mask)
+ #define for_each_online_cpu(cpu)   for_each_cpu((cpu), cpu_online_mask)
+ #define for_each_present_cpu(cpu)  for_each_cpu((cpu), cpu_present_mask)
++#define for_each_isolated_cpu(cpu) for_each_cpu((cpu), cpu_isolated_mask)
+ 
+ /* Wrappers for arch boot code to manipulate normally-constant masks */
+ void set_cpu_possible(unsigned int cpu, bool possible);
+ void set_cpu_present(unsigned int cpu, bool present);
+ void set_cpu_online(unsigned int cpu, bool online);
+ void set_cpu_active(unsigned int cpu, bool active);
++void set_cpu_isolated(unsigned int cpu, bool isolated);
+ void init_cpu_present(const struct cpumask *src);
+ void init_cpu_possible(const struct cpumask *src);
+ void init_cpu_online(const struct cpumask *src);
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index d249cf826321..d335c9ed86bb 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -757,6 +757,10 @@ static DECLARE_BITMAP(cpu_active_bits, CONFIG_NR_CPUS) __read_mostly;
+ const struct cpumask *const cpu_active_mask = to_cpumask(cpu_active_bits);
+ EXPORT_SYMBOL(cpu_active_mask);
+ 
++static DECLARE_BITMAP(cpu_isolated_bits, CONFIG_NR_CPUS) __read_mostly;
++const struct cpumask *const cpu_isolated_mask = to_cpumask(cpu_isolated_bits);
++EXPORT_SYMBOL(cpu_isolated_mask);
++
+ void set_cpu_possible(unsigned int cpu, bool possible)
+ {
+ 	if (possible)
+@@ -791,6 +795,14 @@ void set_cpu_active(unsigned int cpu, bool active)
+ 		cpumask_clear_cpu(cpu, to_cpumask(cpu_active_bits));
+ }
+ 
++void set_cpu_isolated(unsigned int cpu, bool isolated)
++{
++	if (isolated)
++		cpumask_set_cpu(cpu, to_cpumask(cpu_isolated_bits));
++	else
++		cpumask_clear_cpu(cpu, to_cpumask(cpu_isolated_bits));
++}
++
+ void init_cpu_present(const struct cpumask *src)
+ {
+ 	cpumask_copy(to_cpumask(cpu_present_bits), src);
+@@ -806,6 +818,11 @@ void init_cpu_online(const struct cpumask *src)
+ 	cpumask_copy(to_cpumask(cpu_online_bits), src);
+ }
+ 
++void init_cpu_isolated(const struct cpumask *src)
++{
++	cpumask_copy(to_cpumask(cpu_isolated_bits), src);
++}
++
+ static ATOMIC_NOTIFIER_HEAD(idle_notifier);
+ 
+ void idle_notifier_register(struct notifier_block *n)
+-- 
+2.18.0
+

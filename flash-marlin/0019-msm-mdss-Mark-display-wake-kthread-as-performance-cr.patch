@@ -1,0 +1,32 @@
+From 29ee86151e9522776adbd5d9aba45f1aa823fe80 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 5 Jun 2018 22:23:20 -0700
+Subject: [PATCH 19/26] msm: mdss: Mark display-wake kthread as performance
+ critical
+
+This kthread is responsible for powering on the display, so it needs to
+run as soon as possible to minimize lag when turning the display on.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/video/msm/mdss/mdss_dsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/video/msm/mdss/mdss_dsi.c b/drivers/video/msm/mdss/mdss_dsi.c
+index c7e9cceb1762..4c820409a368 100644
+--- a/drivers/video/msm/mdss/mdss_dsi.c
++++ b/drivers/video/msm/mdss/mdss_dsi.c
+@@ -1717,7 +1717,8 @@ static void mdss_dsi_start_wake_thread(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
+ 	if (ctrl_pdata->wake_thread)
+ 		return;
+ 
+-	ctrl_pdata->wake_thread = kthread_run(mdss_dsi_disp_wake_thread,
++	ctrl_pdata->wake_thread =
++			kthread_run_perf_critical(mdss_dsi_disp_wake_thread,
+ 						&ctrl_pdata->panel_data,
+ 						"mdss_disp_wake");
+ 	if (IS_ERR(ctrl_pdata->wake_thread)) {
+-- 
+2.18.0
+

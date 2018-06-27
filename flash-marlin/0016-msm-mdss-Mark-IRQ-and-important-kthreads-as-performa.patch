@@ -1,0 +1,46 @@
+From 799fb41b50e166d57eb4f5c2a341c3cf1f7b875f Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 29 May 2018 17:19:45 -0700
+Subject: [PATCH 16/26] msm: mdss: Mark IRQ and important kthreads as
+ performance critical
+
+These items are in the critical path for rendering frames to the display
+(they exhibit increased CPU usage when heavy frame rendering takes place),
+so mark them as performance-critical.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/video/msm/mdss/mdss_fb.c          | 2 +-
+ drivers/video/msm/mdss/mdss_mdp_overlay.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/video/msm/mdss/mdss_fb.c b/drivers/video/msm/mdss/mdss_fb.c
+index df2b23f2d92e..9c21ad59506c 100644
+--- a/drivers/video/msm/mdss/mdss_fb.c
++++ b/drivers/video/msm/mdss/mdss_fb.c
+@@ -1721,7 +1721,7 @@ static int mdss_fb_start_disp_thread(struct msm_fb_data_type *mfd)
+ 	mdss_fb_get_split(mfd);
+ 
+ 	atomic_set(&mfd->commits_pending, 0);
+-	mfd->disp_thread = kthread_run(__mdss_fb_display_thread,
++	mfd->disp_thread = kthread_run_perf_critical(__mdss_fb_display_thread,
+ 				mfd, "mdss_fb%d", mfd->index);
+ 
+ 	if (IS_ERR(mfd->disp_thread)) {
+diff --git a/drivers/video/msm/mdss/mdss_mdp_overlay.c b/drivers/video/msm/mdss/mdss_mdp_overlay.c
+index 9a6598261e14..c66f97286487 100644
+--- a/drivers/video/msm/mdss/mdss_mdp_overlay.c
++++ b/drivers/video/msm/mdss/mdss_mdp_overlay.c
+@@ -5567,7 +5567,7 @@ static int __vsync_retire_setup(struct msm_fb_data_type *mfd)
+ 	init_kthread_worker(&mdp5_data->worker);
+ 	init_kthread_work(&mdp5_data->vsync_work, __vsync_retire_work_handler);
+ 
+-	mdp5_data->thread = kthread_run(kthread_worker_fn,
++	mdp5_data->thread = kthread_run_perf_critical(kthread_worker_fn,
+ 					&mdp5_data->worker, "vsync_retire_work");
+ 
+ 	if (IS_ERR(mdp5_data->thread)) {
+-- 
+2.18.0
+

@@ -1,0 +1,30 @@
+From 61c27430dd93bc1f1af6afc42844f3554cbc40cf Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 29 May 2018 17:24:10 -0700
+Subject: [PATCH 17/26] input: fpc1020: Mark IRQ as performance critical
+
+In order to improve fingerprint wake performance, mark the fingerprint
+reader's IRQ as performance-critical.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/misc/fpr_FingerprintCard/fpc1020_tee.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/misc/fpr_FingerprintCard/fpc1020_tee.c b/drivers/misc/fpr_FingerprintCard/fpc1020_tee.c
+index 65f7f8d8df80..2f101c15df49 100755
+--- a/drivers/misc/fpr_FingerprintCard/fpc1020_tee.c
++++ b/drivers/misc/fpr_FingerprintCard/fpc1020_tee.c
+@@ -286,7 +286,7 @@ static int fpc1020_probe(struct platform_device *pdev)
+ 
+ 	fpc1020->wakeup_enabled = false;
+ 
+-	irqf = IRQF_TRIGGER_RISING | IRQF_ONESHOT;
++	irqf = IRQF_TRIGGER_RISING | IRQF_ONESHOT | IRQF_PERF_CRITICAL;
+ 	mutex_init(&fpc1020->lock);
+ 	rc = devm_request_threaded_irq(dev, gpio_to_irq(fpc1020->irq_gpio),
+ 			NULL, fpc1020_irq_handler, irqf,
+-- 
+2.18.0
+

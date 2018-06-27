@@ -1,0 +1,201 @@
+From 85b85c9af3afaf4b525b251094bda9dc4803aa4b Mon Sep 17 00:00:00 2001
+From: Peter Zijlstra <peterz@infradead.org>
+Date: Fri, 15 May 2015 17:43:35 +0200
+Subject: [PATCH 06/26] UPSTREAM: sched: Make sched_class::set_cpus_allowed()
+ unconditional
+
+Give every class a set_cpus_allowed() method, this enables some small
+optimization in the RT,DL implementation by avoiding a double
+cpumask_weight() call.
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mike Galbraith <efault@gmx.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: dedekind1@gmail.com
+Cc: juri.lelli@arm.com
+Cc: mgorman@suse.de
+Cc: riel@redhat.com
+Cc: rostedt@goodmis.org
+Link: http://lkml.kernel.org/r/20150515154833.614517487@infradead.org
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+(cherry picked from commit c5b2803840817115e9b568d5054e5007ae36176b)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/sched/core.c      | 17 +++++++++++------
+ kernel/sched/deadline.c  | 20 ++++++++++++--------
+ kernel/sched/fair.c      |  1 +
+ kernel/sched/idle_task.c |  1 +
+ kernel/sched/rt.c        | 12 ++++++++----
+ kernel/sched/sched.h     |  2 ++
+ kernel/sched/stop_task.c |  1 +
+ 7 files changed, 36 insertions(+), 18 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 41a38919e068..96fd685b9933 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1191,17 +1191,22 @@ static int migration_cpu_stop(void *data)
+ 	return 0;
+ }
+ 
+-void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask)
++/*
++ * sched_class::set_cpus_allowed must do the below, but is not required to
++ * actually call this function.
++ */
++void set_cpus_allowed_common(struct task_struct *p, const struct cpumask *new_mask)
+ {
+-	lockdep_assert_held(&p->pi_lock);
+-
+-	if (p->sched_class->set_cpus_allowed)
+-		p->sched_class->set_cpus_allowed(p, new_mask);
+-
+ 	cpumask_copy(&p->cpus_allowed, new_mask);
+ 	p->nr_cpus_allowed = cpumask_weight(new_mask);
+ }
+ 
++void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask)
++{
++	lockdep_assert_held(&p->pi_lock);
++	p->sched_class->set_cpus_allowed(p, new_mask);
++}
++
+ /*
+  * Change a given task's CPU affinity. Migrate the thread to a
+  * proper CPU and schedule it away if the CPU it's executing on
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 0f8d80329408..b6d77c5975bf 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1663,13 +1663,6 @@ static void set_cpus_allowed_dl(struct task_struct *p,
+ 		raw_spin_unlock(&src_dl_b->lock);
+ 	}
+ 
+-	/*
+-	 * Update only if the task is actually running (i.e.,
+-	 * it is on the rq AND it is not throttled).
+-	 */
+-	if (!on_dl_rq(&p->dl))
+-		return;
+-
+ 	weight = cpumask_weight(new_mask);
+ 
+ 	/*
+@@ -1677,7 +1670,14 @@ static void set_cpus_allowed_dl(struct task_struct *p,
+ 	 * can migrate or not.
+ 	 */
+ 	if ((p->nr_cpus_allowed > 1) == (weight > 1))
+-		return;
++		goto done;
++
++	/*
++	 * Update only if the task is actually running (i.e.,
++	 * it is on the rq AND it is not throttled).
++	 */
++	if (!on_dl_rq(&p->dl))
++		goto done;
+ 
+ 	/*
+ 	 * The process used to be able to migrate OR it can now migrate
+@@ -1694,6 +1694,10 @@ static void set_cpus_allowed_dl(struct task_struct *p,
+ 	}
+ 
+ 	update_dl_migration(&rq->dl);
++
++done:
++	cpumask_copy(&p->cpus_allowed, new_mask);
++	p->nr_cpus_allowed = weight;
+ }
+ 
+ /* Assumes rq->lock is held */
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 4f0287f6471a..2548a528a961 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9252,6 +9252,7 @@ const struct sched_class fair_sched_class = {
+ 
+ 	.task_waking		= task_waking_fair,
+ 	.task_dead		= task_dead_fair,
++	.set_cpus_allowed	= set_cpus_allowed_common,
+ #endif
+ 
+ 	.set_curr_task          = set_curr_task_fair,
+diff --git a/kernel/sched/idle_task.c b/kernel/sched/idle_task.c
+index c65dac8c97cd..c4ae0f1fdf9b 100644
+--- a/kernel/sched/idle_task.c
++++ b/kernel/sched/idle_task.c
+@@ -96,6 +96,7 @@ const struct sched_class idle_sched_class = {
+ 
+ #ifdef CONFIG_SMP
+ 	.select_task_rq		= select_task_rq_idle,
++	.set_cpus_allowed	= set_cpus_allowed_common,
+ #endif
+ 
+ 	.set_curr_task          = set_curr_task_idle,
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 691858e70bae..f0d7d52e042b 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2406,9 +2406,6 @@ static void set_cpus_allowed_rt(struct task_struct *p,
+ 
+ 	BUG_ON(!rt_task(p));
+ 
+-	if (!task_on_rq_queued(p))
+-		return;
+-
+ 	weight = cpumask_weight(new_mask);
+ 
+ 	/*
+@@ -2416,7 +2413,10 @@ static void set_cpus_allowed_rt(struct task_struct *p,
+ 	 * can migrate or not.
+ 	 */
+ 	if ((p->nr_cpus_allowed > 1) == (weight > 1))
+-		return;
++		goto done;
++
++	if (!task_on_rq_queued(p))
++		goto done;
+ 
+ 	rq = task_rq(p);
+ 
+@@ -2435,6 +2435,10 @@ static void set_cpus_allowed_rt(struct task_struct *p,
+ 	}
+ 
+ 	update_rt_migration(&rq->rt);
++
++done:
++	cpumask_copy(&p->cpus_allowed, new_mask);
++	p->nr_cpus_allowed = weight;
+ }
+ 
+ /* Assumes rq->lock is held */
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index db566dbd2380..7775d3525d1c 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1300,6 +1300,8 @@ extern void trigger_load_balance(struct rq *rq);
+ extern void idle_enter_fair(struct rq *this_rq);
+ extern void idle_exit_fair(struct rq *this_rq);
+ 
++extern void set_cpus_allowed_common(struct task_struct *p, const struct cpumask *new_mask);
++
+ #else
+ 
+ static inline void idle_enter_fair(struct rq *rq) { }
+diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
+index 65e8c17cc219..61f852d46858 100644
+--- a/kernel/sched/stop_task.c
++++ b/kernel/sched/stop_task.c
+@@ -126,6 +126,7 @@ const struct sched_class stop_sched_class = {
+ 
+ #ifdef CONFIG_SMP
+ 	.select_task_rq		= select_task_rq_stop,
++	.set_cpus_allowed	= set_cpus_allowed_common,
+ #endif
+ 
+ 	.set_curr_task          = set_curr_task_stop,
+-- 
+2.18.0
+

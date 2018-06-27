@@ -1,0 +1,33 @@
+From 4003d035d6750c1783e62770f36dfbc71d3e73bf Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Sat, 16 Jun 2018 15:51:07 -0700
+Subject: [PATCH 23/26] cpufreq: Kill userspace CPU boosting entirely
+
+Kernel-based CPU boosting is used now, so stop userspace from messing with
+it by turning scaling_min_freq into a no-op. Note that this is done instead
+of making scaling_min_freq read-only so that userspace doesn't spit out
+error messages when it can't do its boosting.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/cpufreq/cpufreq.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index e401ccb0e487..1c2c7ce72608 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -613,6 +613,9 @@ static ssize_t store_##file_name					\
+ 	int ret;							\
+ 	struct cpufreq_policy new_policy;				\
+ 									\
++	if (&policy->object == &policy->min)				\
++		return count;						\
++									\
+ 	ret = cpufreq_get_policy(&new_policy, policy->cpu);		\
+ 	if (ret)							\
+ 		return -EINVAL;						\
+-- 
+2.18.0
+

@@ -1,0 +1,142 @@
+From c55a1d86fed26bc3d36e4f9b868b9fdf47f76450 Mon Sep 17 00:00:00 2001
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Date: Fri, 27 Feb 2015 00:07:55 +0100
+Subject: [PATCH 02/26] UPSTREAM: genirq / PM: Add flag for shared NO_SUSPEND
+ interrupt lines
+
+It currently is required that all users of NO_SUSPEND interrupt
+lines pass the IRQF_NO_SUSPEND flag when requesting the IRQ or the
+WARN_ON_ONCE() in irq_pm_install_action() will trigger.  That is
+done to warn about situations in which unprepared interrupt handlers
+may be run unnecessarily for suspended devices and may attempt to
+access those devices by mistake.  However, it may cause drivers
+that have no technical reasons for using IRQF_NO_SUSPEND to set
+that flag just because they happen to share the interrupt line
+with something like a timer.
+
+Moreover, the generic handling of wakeup interrupts introduced by
+commit 9ce7a25849e8 (genirq: Simplify wakeup mechanism) only works
+for IRQs without any NO_SUSPEND users, so the drivers of wakeup
+devices needing to use shared NO_SUSPEND interrupt lines for
+signaling system wakeup generally have to detect wakeup in their
+interrupt handlers.  Thus if they happen to share an interrupt line
+with a NO_SUSPEND user, they also need to request that their
+interrupt handlers be run after suspend_device_irqs().
+
+In both cases the reason for using IRQF_NO_SUSPEND is not because
+the driver in question has a genuine need to run its interrupt
+handler after suspend_device_irqs(), but because it happens to
+share the line with some other NO_SUSPEND user.  Otherwise, the
+driver would do without IRQF_NO_SUSPEND just fine.
+
+To make it possible to specify that condition explicitly, introduce
+a new IRQ action handler flag for shared IRQs, IRQF_COND_SUSPEND,
+that, when set, will indicate to the IRQ core that the interrupt
+user is generally fine with suspending the IRQ, but it also can
+tolerate handler invocations after suspend_device_irqs() and, in
+particular, it is capable of detecting system wakeup and triggering
+it as appropriate from its interrupt handler.
+
+That will allow us to work around a problem with a shared timer
+interrupt line on at91 platforms.
+
+Link: http://marc.info/?l=linux-kernel&m=142252777602084&w=2
+Link: http://marc.info/?t=142252775300011&r=1&w=2
+Link: https://lkml.org/lkml/2014/12/15/552
+Reported-by: Boris Brezillon <boris.brezillon@free-electrons.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+(cherry picked from commit 17f480342026e54000731acaa69bf32787ce46cb)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/interrupt.h | 5 +++++
+ include/linux/irqdesc.h   | 1 +
+ kernel/irq/manage.c       | 7 ++++++-
+ kernel/irq/pm.c           | 7 ++++++-
+ 4 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index 0428cfdd14fa..e18370d5453b 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -57,6 +57,10 @@
+  * IRQF_NO_THREAD - Interrupt cannot be threaded
+  * IRQF_EARLY_RESUME - Resume IRQ early during syscore instead of at device
+  *                resume time.
++ * IRQF_COND_SUSPEND - If the IRQ is shared with a NO_SUSPEND user, execute this
++ *                interrupt handler after suspending interrupts. For system
++ *                wakeup devices users need to implement wakeup detection in
++ *                their interrupt handlers.
+  */
+ #define IRQF_DISABLED		0x00000020
+ #define IRQF_SHARED		0x00000080
+@@ -70,6 +74,7 @@
+ #define IRQF_FORCE_RESUME	0x00008000
+ #define IRQF_NO_THREAD		0x00010000
+ #define IRQF_EARLY_RESUME	0x00020000
++#define IRQF_COND_SUSPEND	0x00040000
+ 
+ #define IRQF_TIMER		(__IRQF_TIMER | IRQF_NO_SUSPEND | IRQF_NO_THREAD)
+ 
+diff --git a/include/linux/irqdesc.h b/include/linux/irqdesc.h
+index 8fe3aafdc0a7..4c9403439008 100644
+--- a/include/linux/irqdesc.h
++++ b/include/linux/irqdesc.h
+@@ -78,6 +78,7 @@ struct irq_desc {
+ #ifdef CONFIG_PM_SLEEP
+ 	unsigned int		nr_actions;
+ 	unsigned int		no_suspend_depth;
++	unsigned int		cond_suspend_depth;
+ 	unsigned int		force_resume_depth;
+ #endif
+ #ifdef CONFIG_PROC_FS
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index c02f7dcb35d1..9546812ba7bd 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1577,8 +1577,13 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
+ 	 * otherwise we'll have trouble later trying to figure out
+ 	 * which interrupt is which (messes up the interrupt freeing
+ 	 * logic etc).
++	 *
++	 * Also IRQF_COND_SUSPEND only makes sense for shared interrupts and
++	 * it cannot be set along with IRQF_NO_SUSPEND.
+ 	 */
+-	if ((irqflags & IRQF_SHARED) && !dev_id)
++	if (((irqflags & IRQF_SHARED) && !dev_id) ||
++	    (!(irqflags & IRQF_SHARED) && (irqflags & IRQF_COND_SUSPEND)) ||
++	    ((irqflags & IRQF_NO_SUSPEND) && (irqflags & IRQF_COND_SUSPEND)))
+ 		return -EINVAL;
+ 
+ 	desc = irq_to_desc(irq);
+diff --git a/kernel/irq/pm.c b/kernel/irq/pm.c
+index e7a9246a1e3f..9927e146bd90 100644
+--- a/kernel/irq/pm.c
++++ b/kernel/irq/pm.c
+@@ -43,9 +43,12 @@ void irq_pm_install_action(struct irq_desc *desc, struct irqaction *action)
+ 
+ 	if (action->flags & IRQF_NO_SUSPEND)
+ 		desc->no_suspend_depth++;
++	else if (action->flags & IRQF_COND_SUSPEND)
++		desc->cond_suspend_depth++;
+ 
+ 	WARN_ON_ONCE(desc->no_suspend_depth &&
+-		     desc->no_suspend_depth != desc->nr_actions);
++		     (desc->no_suspend_depth +
++			desc->cond_suspend_depth) != desc->nr_actions);
+ }
+ 
+ /*
+@@ -61,6 +64,8 @@ void irq_pm_remove_action(struct irq_desc *desc, struct irqaction *action)
+ 
+ 	if (action->flags & IRQF_NO_SUSPEND)
+ 		desc->no_suspend_depth--;
++	else if (action->flags & IRQF_COND_SUSPEND)
++		desc->cond_suspend_depth--;
+ }
+ 
+ static bool suspend_device_irq(struct irq_desc *desc, int irq)
+-- 
+2.18.0
+

@@ -1,0 +1,40 @@
+From 1955a0a900a5e01d3ceaa4c44cae49aad7c9e71f Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Sat, 16 Jun 2018 15:48:27 -0700
+Subject: [PATCH 22/26] msm: mdss: Boost CPU when a new frame is ready to be
+ committed
+
+In order to reduce jank, request a CPU boost whenever a new frame is
+ready to be rendered to the display. The CPU boost should be sufficient
+enough to render 60 FPS without any dropped frames while there is no
+significant external source of CPU load.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/video/msm/mdss/mdss_fb.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/video/msm/mdss/mdss_fb.c b/drivers/video/msm/mdss/mdss_fb.c
+index 9c21ad59506c..e6e9896c9984 100644
+--- a/drivers/video/msm/mdss/mdss_fb.c
++++ b/drivers/video/msm/mdss/mdss_fb.c
+@@ -49,6 +49,7 @@
+ #include <linux/kthread.h>
+ #include <linux/dma-buf.h>
+ #include <linux/power/htc_battery.h>
++#include <linux/cpu_input_boost.h>
+ #include "mdss_fb.h"
+ #include "mdss_mdp_splash_logo.h"
+ #define CREATE_TRACE_POINTS
+@@ -4816,6 +4817,7 @@ int mdss_fb_do_ioctl(struct fb_info *info, unsigned int cmd,
+ 		break;
+ 
+ 	case MSMFB_ATOMIC_COMMIT:
++		cpu_input_boost_kick();
+ 		ret = mdss_fb_atomic_commit_ioctl(info, argp, file);
+ 		break;
+ 
+-- 
+2.18.0
+

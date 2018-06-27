@@ -1,0 +1,36 @@
+From 925b15f318a9d9c6fe922d421963d7334bf9e220 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 29 May 2018 17:57:40 -0700
+Subject: [PATCH 14/26] kernel: Force trivial, unbound kthreads onto low-power
+ CPUs
+
+In order to reduce power consumption, force all non-perf-critical, unbound
+kthreads onto the low-power CPUs. Note that init (pid == 1) must be
+explicitly excluded from this so that all processes forked from init have a
+sane default CPU affinity mask.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/sched/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a72f82bf7ae1..6fa76ec78b82 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1208,6 +1208,11 @@ static const struct cpumask *get_adjusted_cpumask(const struct task_struct *p,
+ 	if (p->flags & PF_PERF_CRITICAL)
+ 		return cpu_perf_mask;
+ 
++	/* Force all trivial, unbound kthreads onto the little cluster */
++	if (p->flags & PF_KTHREAD && p->pid != 1 &&
++		cpumask_equal(req_mask, cpu_all_mask))
++		return cpu_lp_mask;
++
+ 	return req_mask;
+ }
+ 
+-- 
+2.18.0
+

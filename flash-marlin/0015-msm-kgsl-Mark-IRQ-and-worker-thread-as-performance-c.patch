@@ -1,0 +1,41 @@
+From c3e9aa916988949570621bef4bcb0733df5a2141 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultanxda@gmail.com>
+Date: Tue, 29 May 2018 17:11:29 -0700
+Subject: [PATCH 15/26] msm: kgsl: Mark IRQ and worker thread as performance
+ critical
+
+These items are in the critical path for rendering frames to the display,
+so mark them as performance-critical.
+
+Signed-off-by: Sultan Alsawaf <sultanxda@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/msm/kgsl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/msm/kgsl.c b/drivers/gpu/msm/kgsl.c
+index 5f302d0559b0..8784cd6df6df 100644
+--- a/drivers/gpu/msm/kgsl.c
++++ b/drivers/gpu/msm/kgsl.c
+@@ -3859,7 +3859,8 @@ int kgsl_device_platform_probe(struct kgsl_device *device)
+ 	}
+ 
+ 	status = devm_request_irq(device->dev, device->pwrctrl.interrupt_num,
+-				  kgsl_irq_handler, IRQF_TRIGGER_HIGH,
++				  kgsl_irq_handler,
++				  IRQF_TRIGGER_HIGH | IRQF_PERF_CRITICAL,
+ 				  device->name, device);
+ 	if (status) {
+ 		KGSL_DRV_ERR(device, "request_irq(%d) failed: %d\n",
+@@ -4083,7 +4084,7 @@ static int __init kgsl_core_init(void)
+ 
+ 	init_kthread_worker(&kgsl_driver.worker);
+ 
+-	kgsl_driver.worker_thread = kthread_run(kthread_worker_fn,
++	kgsl_driver.worker_thread = kthread_run_perf_critical(kthread_worker_fn,
+ 		&kgsl_driver.worker, "kgsl_worker_thread");
+ 
+ 	if (IS_ERR(kgsl_driver.worker_thread)) {
+-- 
+2.18.0
+

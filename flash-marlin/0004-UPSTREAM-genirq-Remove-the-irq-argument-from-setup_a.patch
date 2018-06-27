@@ -1,0 +1,82 @@
+From b5aea3bd0066d991d76b50c6d83ef40a477ea7be Mon Sep 17 00:00:00 2001
+From: Jiang Liu <jiang.liu@linux.intel.com>
+Date: Thu, 4 Jun 2015 12:13:30 +0800
+Subject: [PATCH 04/26] UPSTREAM: genirq: Remove the irq argument from
+ setup_affinity()
+
+Unused except for the alpha wrapper, which can retrieve if from the
+irq descriptor.
+
+Signed-off-by: Jiang Liu <jiang.liu@linux.intel.com>
+Cc: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Yinghai Lu <yinghai@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Link: http://lkml.kernel.org/r/1433391238-19471-21-git-send-email-jiang.liu@linux.intel.com
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+(cherry picked from commit a8a98eac7b238beb49b479c164303651d5a37eb6)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/irq/manage.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 9546812ba7bd..7a15f4b08d11 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -322,8 +322,7 @@ EXPORT_SYMBOL_GPL(irq_set_affinity_notifier);
+ /*
+  * Generic version of the affinity autoselector.
+  */
+-static int
+-setup_affinity(unsigned int irq, struct irq_desc *desc, struct cpumask *mask)
++static int setup_affinity(struct irq_desc *desc, struct cpumask *mask)
+ {
+ 	struct cpumask *set = irq_default_affinity;
+ 	int node = desc->irq_data.node;
+@@ -356,10 +355,10 @@ setup_affinity(unsigned int irq, struct irq_desc *desc, struct cpumask *mask)
+ 	return 0;
+ }
+ #else
+-static inline int
+-setup_affinity(unsigned int irq, struct irq_desc *d, struct cpumask *mask)
++/* Wrapper for ALPHA specific affinity selector magic */
++static inline int setup_affinity(struct irq_desc *d, struct cpumask *mask)
+ {
+-	return irq_select_affinity(irq);
++	return irq_select_affinity(irq_desc_get_irq(d));
+ }
+ #endif
+ 
+@@ -373,14 +372,14 @@ int irq_select_affinity_usr(unsigned int irq, struct cpumask *mask)
+ 	int ret;
+ 
+ 	raw_spin_lock_irqsave(&desc->lock, flags);
+-	ret = setup_affinity(irq, desc, mask);
++	ret = setup_affinity(desc, mask);
+ 	raw_spin_unlock_irqrestore(&desc->lock, flags);
+ 	return ret;
+ }
+ 
+ #else
+ static inline int
+-setup_affinity(unsigned int irq, struct irq_desc *desc, struct cpumask *mask)
++setup_affinity(struct irq_desc *desc, struct cpumask *mask)
+ {
+ 	return 0;
+ }
+@@ -1279,7 +1278,7 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 		}
+ 
+ 		/* Set default affinity mask once everything is setup */
+-		setup_affinity(irq, desc, mask);
++		setup_affinity(desc, mask);
+ 
+ 	} else if (new->flags & IRQF_TRIGGER_MASK) {
+ 		unsigned int nmsk = new->flags & IRQF_TRIGGER_MASK;
+-- 
+2.18.0
+
