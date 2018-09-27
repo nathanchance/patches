@@ -1,0 +1,46 @@
+From 8e055612fa4b814048b66f58e499ff5f55a01588 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 24 Sep 2018 10:33:44 -0700
+Subject: [PATCH 01/46] cachefiles: Explicitly cast enumerated type in
+ put_object
+
+Clang warns when one enumerated type is implicitly converted to another.
+
+fs/cachefiles/namei.c:247:50: warning: implicit conversion from
+enumeration type 'enum cachefiles_obj_ref_trace' to different
+enumeration type 'enum fscache_obj_ref_trace' [-Wenum-conversion]
+        cache->cache.ops->put_object(&xobject->fscache,
+cachefiles_obj_put_wait_retry);
+
+Silence this warning by explicitly casting to fscache_obj_ref_trace,
+which is also done in put_object.
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/cachefiles/namei.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
+index af2b17b21b94..15e5988a83de 100644
+--- a/fs/cachefiles/namei.c
++++ b/fs/cachefiles/namei.c
+@@ -244,11 +244,13 @@ static int cachefiles_mark_object_active(struct cachefiles_cache *cache,
+ 
+ 	ASSERT(!test_bit(CACHEFILES_OBJECT_ACTIVE, &xobject->flags));
+ 
+-	cache->cache.ops->put_object(&xobject->fscache, cachefiles_obj_put_wait_retry);
++	cache->cache.ops->put_object(&xobject->fscache,
++		(enum fscache_obj_ref_trace)cachefiles_obj_put_wait_retry);
+ 	goto try_again;
+ 
+ requeue:
+-	cache->cache.ops->put_object(&xobject->fscache, cachefiles_obj_put_wait_timeo);
++	cache->cache.ops->put_object(&xobject->fscache,
++		(enum fscache_obj_ref_trace)cachefiles_obj_put_wait_timeo);
+ 	_leave(" = -ETIMEDOUT");
+ 	return -ETIMEDOUT;
+ }
+-- 
+2.19.0
+

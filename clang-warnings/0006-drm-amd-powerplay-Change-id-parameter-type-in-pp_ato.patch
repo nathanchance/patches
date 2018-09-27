@@ -1,0 +1,57 @@
+From 89187fbf2cd2d4cbddb64b3da62560b53128bc53 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Sep 2018 14:01:06 -0700
+Subject: [PATCH 06/46] drm/amd/powerplay: Change id parameter type in
+ pp_atomfwctrl_get_clk_information_by_clkid
+
+Clang generates warnings when one enumerated type is implicitly
+converted to another.
+
+drivers/gpu/drm/amd/amdgpu/../powerplay/hwmgr/ppatomfwctrl.c:532:57:
+warning: implicit conversion from enumeration type 'enum
+atom_smu11_syspll0_clock_id' to different enumeration type 'BIOS_CLKID'
+      (aka 'enum atom_smu9_syspll0_clock_id') [-Wenum-conversion]
+        if (!pp_atomfwctrl_get_clk_information_by_clkid(hwmgr,
+SMU11_SYSPLL0_SOCCLK_ID, &frequency))
+
+In this case, that is expected behavior. To make that clear to Clang
+without explicitly casting these values, change id's type to uint8_t
+in pp_atomfwctrl_get_clk_information_by_clkid so no conversion happens.
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.c | 3 ++-
+ drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.h | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.c
+index d27c1c9df286..4588bddf8b33 100644
+--- a/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.c
++++ b/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.c
+@@ -488,7 +488,8 @@ int pp_atomfwctrl_get_gpio_information(struct pp_hwmgr *hwmgr,
+ 	return 0;
+ }
+ 
+-int pp_atomfwctrl_get_clk_information_by_clkid(struct pp_hwmgr *hwmgr, BIOS_CLKID id, uint32_t *frequency)
++int pp_atomfwctrl_get_clk_information_by_clkid(struct pp_hwmgr *hwmgr,
++					       uint8_t id, uint32_t *frequency)
+ {
+ 	struct amdgpu_device *adev = hwmgr->adev;
+ 	struct atom_get_smu_clock_info_parameters_v3_1   parameters;
+diff --git a/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.h b/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.h
+index 22e21668c93a..fe9e8ceef50e 100644
+--- a/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.h
++++ b/drivers/gpu/drm/amd/powerplay/hwmgr/ppatomfwctrl.h
+@@ -236,7 +236,7 @@ int pp_atomfwctrl_get_vbios_bootup_values(struct pp_hwmgr *hwmgr,
+ int pp_atomfwctrl_get_smc_dpm_information(struct pp_hwmgr *hwmgr,
+ 			struct pp_atomfwctrl_smc_dpm_parameters *param);
+ int pp_atomfwctrl_get_clk_information_by_clkid(struct pp_hwmgr *hwmgr,
+-					BIOS_CLKID id, uint32_t *frequency);
++					uint8_t id, uint32_t *frequency);
+ 
+ #endif
+ 
+-- 
+2.19.0
+

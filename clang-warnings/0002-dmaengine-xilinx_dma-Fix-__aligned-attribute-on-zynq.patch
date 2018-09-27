@@ -1,0 +1,44 @@
+From ecad4b4707f62a6ebb4e5be635047b380d8f3546 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Sep 2018 16:05:33 -0700
+Subject: [PATCH 02/46] dmaengine: xilinx_dma: Fix __aligned attribute on
+ zynqmp_dma_desc_ll
+
+Clang warns:
+
+drivers/dma/xilinx/zynqmp_dma.c:166:4: warning: attribute 'aligned' is
+ignored, place it after "struct" to apply attribute to type declaration
+[-Wignored-attributes]
+}; __aligned(64)
+   ^
+./include/linux/compiler_types.h:200:38: note: expanded from macro
+'__aligned'
+#define __aligned(x)            __attribute__((aligned(x)))
+                                               ^
+1 warning generated.
+
+Place __aligned before the semicolon.
+
+Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/dma/xilinx/zynqmp_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index c74a88b65039..dc19d67cb8c1 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -163,7 +163,7 @@ struct zynqmp_dma_desc_ll {
+ 	u32 ctrl;
+ 	u64 nxtdscraddr;
+ 	u64 rsvd;
+-}; __aligned(64)
++} __aligned(64);
+ 
+ /**
+  * struct zynqmp_dma_desc_sw - Per Transaction structure
+-- 
+2.19.0
+
