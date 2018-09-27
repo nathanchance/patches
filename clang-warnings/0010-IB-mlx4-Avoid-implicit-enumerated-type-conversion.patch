@@ -1,4 +1,4 @@
-From 1098d6e4a3a42c53da8721808a1b98bdf9f53ca5 Mon Sep 17 00:00:00 2001
+From 87e5f8c717da6fa6ea75df9eb0f4b1ca69eb9609 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 12:57:16 -0700
 Subject: [PATCH 10/46] IB/mlx4: Avoid implicit enumerated type conversion
@@ -19,7 +19,7 @@ type 'enum ib_qp_create_flags' [-Wenum-conversion]
 
 The type mlx4_ib_qp_flags explicitly provides supplemental values to the
 type ib_qp_create_flags. Make that clear to Clang by changing the
-create_flags type to u32.
+create_flags type to int.
 
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 0d822a9db300..4706b462b8b5 100644
+index 0d822a9db300..e5ec04e844cd 100644
 --- a/include/rdma/ib_verbs.h
 +++ b/include/rdma/ib_verbs.h
 @@ -1151,7 +1151,7 @@ struct ib_qp_init_attr {
@@ -36,7 +36,7 @@ index 0d822a9db300..4706b462b8b5 100644
  	enum ib_sig_type	sq_sig_type;
  	enum ib_qp_type		qp_type;
 -	enum ib_qp_create_flags	create_flags;
-+	u32			create_flags;
++	int			create_flags;
  
  	/*
  	 * Only needed for special QP types, or when using the RW API.
