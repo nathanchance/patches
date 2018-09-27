@@ -1,4 +1,4 @@
-From 955952126dac58b87f6c15bcd4a179628e7a7644 Mon Sep 17 00:00:00 2001
+From 077532af5b4ff59bdc5d375a7b17e61106216776 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 21:49:52 -0700
 Subject: [PATCH 38/46] scsi: bfa: Avoid implicit enum conversion in
@@ -20,14 +20,29 @@ function.
 
 Given that this doesn't appear to be a problem since cat helps with
 differentiating the events, just change evt's type to int so that no
-conversion needs to happen and Clang won't warn.
+conversion needs to happen and Clang won't warn. Update aen_type's type
+in bfa_aen_entry_s as members that hold enumerated types should be int.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/147
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/scsi/bfa/bfad_im.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/bfa/bfa_defs_svc.h | 2 +-
+ drivers/scsi/bfa/bfad_im.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/scsi/bfa/bfa_defs_svc.h b/drivers/scsi/bfa/bfa_defs_svc.h
+index 3d0c96a5c873..c19c26e0e405 100644
+--- a/drivers/scsi/bfa/bfa_defs_svc.h
++++ b/drivers/scsi/bfa/bfa_defs_svc.h
+@@ -1453,7 +1453,7 @@ union bfa_aen_data_u {
+ struct bfa_aen_entry_s {
+ 	struct list_head	qe;
+ 	enum bfa_aen_category   aen_category;
+-	u32                     aen_type;
++	int                     aen_type;
+ 	union bfa_aen_data_u    aen_data;
+ 	u64			aen_tv_sec;
+ 	u64			aen_tv_usec;
 diff --git a/drivers/scsi/bfa/bfad_im.h b/drivers/scsi/bfa/bfad_im.h
 index e61ed8dad0b4..bd4ac187fd8e 100644
 --- a/drivers/scsi/bfa/bfad_im.h
