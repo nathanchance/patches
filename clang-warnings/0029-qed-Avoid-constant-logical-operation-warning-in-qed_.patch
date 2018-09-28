@@ -1,7 +1,7 @@
 From 085856cd7a6702e140702cbb7818c23982ed559b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 15:17:03 -0700
-Subject: [PATCH 29/46] qed: Avoid constant logical operation warning in
+Subject: [PATCH 29/47] qed: Avoid constant logical operation warning in
  qed_vf_pf_acquire
 
 Clang warns when a constant is used in a boolean context as it thinks a

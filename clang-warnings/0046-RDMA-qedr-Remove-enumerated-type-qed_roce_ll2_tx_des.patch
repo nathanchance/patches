@@ -1,7 +1,7 @@
 From ca878d5edf66c9c8346866605d9090d9d998f911 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 18:16:15 -0700
-Subject: [PATCH 46/46] RDMA/qedr: Remove enumerated type qed_roce_ll2_tx_dest
+Subject: [PATCH 46/47] RDMA/qedr: Remove enumerated type qed_roce_ll2_tx_dest
 
 Clang warns when one enumerated type is explicitly converted to another.
 

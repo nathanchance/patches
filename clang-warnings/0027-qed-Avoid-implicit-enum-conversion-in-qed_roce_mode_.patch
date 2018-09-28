@@ -1,7 +1,7 @@
 From d6ea8688b79dbb432e622bbfb83cd76f3599dadb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 14:34:53 -0700
-Subject: [PATCH 27/46] qed: Avoid implicit enum conversion in
+Subject: [PATCH 27/47] qed: Avoid implicit enum conversion in
  qed_roce_mode_to_flavor
 
 Clang warns when one enumerated type is implicitly converted to another.
