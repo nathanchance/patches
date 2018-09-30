@@ -1,7 +1,7 @@
 From 0167ec4f97b98b4d2635cd5161c1404a215e1975 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 12:32:36 -0700
-Subject: [PATCH 30/47] ath5k: Remove unused BUG_ON
+Subject: [PATCH 30/49] ath5k: Remove unused BUG_ON
 
 Clang warns that the address of a pointer will always evaluated as true
 in a boolean context:
