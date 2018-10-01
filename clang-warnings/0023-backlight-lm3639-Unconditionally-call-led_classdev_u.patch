@@ -1,7 +1,7 @@
 From 338fa682f6a374804929894e24cf4d5a12978088 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 13:21:31 -0700
-Subject: [PATCH 23/49] backlight: lm3639: Unconditionally call
+Subject: [PATCH 23/52] backlight: lm3639: Unconditionally call
  led_classdev_unregister
 
 Clang warns that the address of a pointer will always evaluated as true
