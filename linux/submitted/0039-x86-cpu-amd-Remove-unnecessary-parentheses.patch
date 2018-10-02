@@ -1,0 +1,45 @@
+From 0dc498923a801f8764a0586227b213ea53890393 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 2 Oct 2018 15:42:36 -0700
+Subject: [PATCH 39/39] x86/cpu/amd: Remove unnecessary parentheses
+
+Clang warns when multiple pairs of parentheses are used for a single
+conditional statement.
+
+arch/x86/kernel/cpu/amd.c:925:14: warning: equality comparison with
+extraneous parentheses [-Wparentheses-equality]
+        if ((c->x86 == 6)) {
+             ~~~~~~~^~~~
+arch/x86/kernel/cpu/amd.c:925:14: note: remove extraneous parentheses
+around the comparison to silence this warning
+        if ((c->x86 == 6)) {
+            ~       ^   ~
+arch/x86/kernel/cpu/amd.c:925:14: note: use '=' to turn this equality
+comparison into an assignment
+        if ((c->x86 == 6)) {
+                    ^~
+                    =
+1 warning generated.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/187
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/kernel/cpu/amd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 22ab408177b2..eeea634bee0a 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -922,7 +922,7 @@ static void init_amd(struct cpuinfo_x86 *c)
+ static unsigned int amd_size_cache(struct cpuinfo_x86 *c, unsigned int size)
+ {
+ 	/* AMD errata T13 (order #21922) */
+-	if ((c->x86 == 6)) {
++	if (c->x86 == 6) {
+ 		/* Duron Rev A0 */
+ 		if (c->x86_model == 3 && c->x86_stepping == 0)
+ 			size = 64;
+-- 
+2.19.0
+

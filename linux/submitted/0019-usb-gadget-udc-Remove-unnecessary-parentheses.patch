@@ -1,0 +1,45 @@
+From f1ca69b2f6cb02079a1cc7400d127f0162bb8439 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 20 Sep 2018 13:28:13 -0700
+Subject: [PATCH 19/39] usb: gadget: udc: Remove unnecessary parentheses
+
+Clang warns when multiple pairs of parentheses are used for a single
+conditional statement.
+
+drivers/usb/gadget/udc/mv_udc_core.c:188:33: warning: equality
+comparison with extraneous parentheses [-Wparentheses-equality]
+        while ((curr_dqh->curr_dtd_ptr == curr_dtd->td_dma)) {
+                ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+drivers/usb/gadget/udc/mv_udc_core.c:188:33: note: remove extraneous
+parentheses around the comparison to silence this warning
+        while ((curr_dqh->curr_dtd_ptr == curr_dtd->td_dma)) {
+               ~                       ^                  ~
+drivers/usb/gadget/udc/mv_udc_core.c:188:33: note: use '=' to turn this
+equality comparison into an assignment
+        while ((curr_dqh->curr_dtd_ptr == curr_dtd->td_dma)) {
+                                       ^~
+                                       =
+1 warning generated.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/120
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/usb/gadget/udc/mv_udc_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/gadget/udc/mv_udc_core.c b/drivers/usb/gadget/udc/mv_udc_core.c
+index 95f52232493b..cafde053788b 100644
+--- a/drivers/usb/gadget/udc/mv_udc_core.c
++++ b/drivers/usb/gadget/udc/mv_udc_core.c
+@@ -185,7 +185,7 @@ static int process_ep_req(struct mv_udc *udc, int index,
+ 	else
+ 		bit_pos = 1 << (16 + curr_req->ep->ep_num);
+ 
+-	while ((curr_dqh->curr_dtd_ptr == curr_dtd->td_dma)) {
++	while (curr_dqh->curr_dtd_ptr == curr_dtd->td_dma) {
+ 		if (curr_dtd->dtd_next == EP_QUEUE_HEAD_NEXT_TERMINATE) {
+ 			while (readl(&udc->op_regs->epstatus) & bit_pos)
+ 				udelay(1);
+-- 
+2.19.0
+
