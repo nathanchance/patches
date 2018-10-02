@@ -1,0 +1,59 @@
+From 09349cbdbb0bbd6bba38eb52cb3fe0139a1b0270 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 25 Sep 2018 13:32:33 -0700
+Subject: [PATCH 1/5] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile                          | 5 -----
+ arch/x86/Makefile                 | 3 +--
+ arch/x86/boot/compressed/Makefile | 3 +++
+ 3 files changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6c3da3e10f07..f15a43ef1241 100644
+--- a/Makefile
++++ b/Makefile
+@@ -952,11 +952,6 @@ ifdef CONFIG_STACK_VALIDATION
+   ifeq ($(has_libelf),1)
+     objtool_target := tools/objtool FORCE
+   else
+-    ifdef CONFIG_UNWINDER_ORC
+-      $(error "Cannot generate ORC metadata for CONFIG_UNWINDER_ORC=y, please install libelf-dev, libelf-devel or elfutils-libelf-devel")
+-    else
+-      $(warning "Cannot use CONFIG_STACK_VALIDATION=y, please install libelf-dev, libelf-devel or elfutils-libelf-devel")
+-    endif
+     SKIP_STACK_VALIDATION := 1
+     export SKIP_STACK_VALIDATION
+   endif
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 8f6e7eb8ae9f..4874286c5815 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -299,8 +299,7 @@ vdso_install:
+ archprepare: checkbin
+ checkbin:
+ ifndef CC_HAVE_ASM_GOTO
+-	@echo Compiler lacks asm-goto support.
+-	@exit 1
++KBUILD_CFLAGS += "-D __BPF_TRACING__"
+ endif
+ 
+ archclean:
+diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
+index 28764dacf018..9bfbc71b2f55 100644
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -37,6 +37,9 @@ KBUILD_CFLAGS += $(call cc-option,-ffreestanding)
+ KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
+ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
++ifndef CC_HAVE_ASM_GOTO
++KBUILD_CFLAGS += "-D __BPF_TRACING__"
++endif
+ 
+ KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ GCOV_PROFILE := n
+-- 
+2.19.0
+

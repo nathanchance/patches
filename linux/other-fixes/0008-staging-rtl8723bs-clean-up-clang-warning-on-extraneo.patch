@@ -1,0 +1,58 @@
+From 3fb11a24d1337d8dafe882a1596a7cfb6a545eb3 Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Mon, 1 Oct 2018 00:10:51 +0100
+Subject: [PATCH 8/8] staging: rtl8723bs: clean up clang warning on extraneous
+ parentheses
+
+There are extraneous parantheses that are causing clang to produce a
+warning so remove these.
+
+Clean up 3 clang warnings:
+equality comparison with extraneous parentheses [-Wparentheses-equality]
+
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/staging/rtl8723bs/core/rtw_security.c      | 5 ++---
+ drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c | 2 +-
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/staging/rtl8723bs/core/rtw_security.c b/drivers/staging/rtl8723bs/core/rtw_security.c
+index 6c8ac9e86c9f..240818b4a2c9 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1543,7 +1543,7 @@ u32 rtw_aes_encrypt(struct adapter *padapter, u8 *pxmitframe)
+ 	pframe = ((struct xmit_frame *)pxmitframe)->buf_addr + hw_hdr_offset;
+ 
+ 	/* 4 start to encrypt each fragment */
+-	if ((pattrib->encrypt == _AES_)) {
++	if (pattrib->encrypt == _AES_) {
+ 		RT_TRACE(_module_rtl871x_security_c_, _drv_err_, ("rtw_aes_encrypt: stainfo!= NULL!!!\n"));
+ 
+ 		if (IS_MCAST(pattrib->ra))
+@@ -1866,8 +1866,7 @@ u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
+ 
+ 	pframe = (unsigned char *)((union recv_frame *)precvframe)->u.hdr.rx_data;
+ 	/* 4 start to encrypt each fragment */
+-	if ((prxattrib->encrypt == _AES_)) {
+-
++	if (prxattrib->encrypt == _AES_) {
+ 		stainfo = rtw_get_stainfo(&padapter->stapriv, &prxattrib->ta[0]);
+ 		if (stainfo != NULL) {
+ 			RT_TRACE(_module_rtl871x_security_c_, _drv_err_, ("rtw_aes_decrypt: stainfo!= NULL!!!\n"));
+diff --git a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
+index acc64fa8f166..0e674f39ef03 100644
+--- a/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
++++ b/drivers/staging/rtl8723bs/hal/odm_EdcaTurboCheck.c
+@@ -97,7 +97,7 @@ void odm_EdcaTurboCheckCE(void *pDM_VOID)
+ 		return;
+ 	}
+ 
+-	if ((pregpriv->wifi_spec == 1)) {
++	if (pregpriv->wifi_spec == 1) {
+ 		precvpriv->bIsAnyNonBEPkts = false;
+ 		return;
+ 	}
+-- 
+2.19.0
+

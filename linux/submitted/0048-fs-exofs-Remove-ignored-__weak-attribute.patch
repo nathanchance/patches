@@ -1,0 +1,56 @@
+From 8a8d09d60b01e9333bd250405b6c6bc8860d8c01 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 26 Sep 2018 19:11:33 -0700
+Subject: [PATCH 48/56] fs/exofs: Remove ignored __weak attribute
+
+Clang warns that the __weak attribute is going to be ignored on
+g_attr_inode_data because it's not in the correct location (needs to be
+after the type).
+
+In file included from fs/exofs/dir.c:35:
+In file included from fs/exofs/exofs.h:41:
+fs/exofs/common.h:186:21: warning: 'weak' attribute only applies to
+variables, functions, and classes [-Wignored-attributes]
+static const struct __weak osd_attr g_attr_inode_data = ATTR_DEF(
+                    ^
+
+Turns out that GCC ignores the attribute too albeit silently because
+moving the attribute after either osd_attr or g_attr_inode_data like
+all other uses of __weak on variables in the kernel causes a build
+error on both GCC and Clang because static variables cannot be weak
+since weak definitions rely on not having internal linkage:
+
+In file included from fs/exofs/namei.c:34:
+In file included from fs/exofs/exofs.h:41:
+fs/exofs/common.h:186:30: error: weak declaration cannot have internal
+linkage
+static const struct osd_attr __weak g_attr_inode_data = ATTR_DEF(
+                             ^
+
+Just remove the attribute because it hasn't been correct since the
+initial addition of this file in commit b14f8ab28449 ("exofs: Kbuild,
+Headers and osd utils").
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/exofs/common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/exofs/common.h b/fs/exofs/common.h
+index 7d88ef566213..45da96a1528d 100644
+--- a/fs/exofs/common.h
++++ b/fs/exofs/common.h
+@@ -183,7 +183,7 @@ struct exofs_fcb {
+ #define EXOFS_INO_ATTR_SIZE	sizeof(struct exofs_fcb)
+ 
+ /* This is the Attribute the fcb is stored in */
+-static const struct __weak osd_attr g_attr_inode_data = ATTR_DEF(
++static const struct osd_attr g_attr_inode_data = ATTR_DEF(
+ 	EXOFS_APAGE_FS_DATA,
+ 	EXOFS_ATTR_INODE_DATA,
+ 	EXOFS_INO_ATTR_SIZE);
+-- 
+2.19.0
+

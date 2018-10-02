@@ -1,0 +1,34 @@
+From 9b02787247e26081102cce56439027190872ad2c Mon Sep 17 00:00:00 2001
+From: Varsha Rao <rvarsha016@gmail.com>
+Date: Wed, 25 Jul 2018 21:00:07 +0200
+Subject: [PATCH 7/8] cw1200: Remove extra parentheses
+
+Remove unnecessary parentheses to fix the extraneous parentheses clang
+warning.
+
+Signed-off-by: Varsha Rao <rvarsha016@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/st/cw1200/txrx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/st/cw1200/txrx.c b/drivers/net/wireless/st/cw1200/txrx.c
+index f7b1b0062db3..8c800ef23159 100644
+--- a/drivers/net/wireless/st/cw1200/txrx.c
++++ b/drivers/net/wireless/st/cw1200/txrx.c
+@@ -624,9 +624,9 @@ cw1200_tx_h_bt(struct cw1200_common *priv,
+ 			priority = WSM_EPTA_PRIORITY_ACTION;
+ 		else if (ieee80211_is_mgmt(t->hdr->frame_control))
+ 			priority = WSM_EPTA_PRIORITY_MGT;
+-		else if ((wsm->queue_id == WSM_QUEUE_VOICE))
++		else if (wsm->queue_id == WSM_QUEUE_VOICE)
+ 			priority = WSM_EPTA_PRIORITY_VOICE;
+-		else if ((wsm->queue_id == WSM_QUEUE_VIDEO))
++		else if (wsm->queue_id == WSM_QUEUE_VIDEO)
+ 			priority = WSM_EPTA_PRIORITY_VIDEO;
+ 		else
+ 			priority = WSM_EPTA_PRIORITY_DATA;
+-- 
+2.19.0
+
