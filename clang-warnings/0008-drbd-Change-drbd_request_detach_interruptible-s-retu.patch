@@ -1,7 +1,7 @@
-From 0b8a844778fd855c31edfc198ea99f0c716e9125 Mon Sep 17 00:00:00 2001
+From c6a2c2eb9b0f3a1b5875f0eccf18fa7572d81e8f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Sep 2018 22:00:47 -0700
-Subject: [PATCH 08/53] drbd: Change drbd_request_detach_interruptible's return
+Subject: [PATCH 08/55] drbd: Change drbd_request_detach_interruptible's return
  type to int
 
 Clang warns when an implicit conversion is done between enumerated
@@ -18,6 +18,7 @@ statement of adm_detach, which returns an int. Change the return type of
 drbd_request_detach_interruptible to match, silencing Clang's warning.
 
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/block/drbd/drbd_state.c | 6 ++----

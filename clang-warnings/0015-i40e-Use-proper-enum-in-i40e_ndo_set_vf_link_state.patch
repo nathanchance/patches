@@ -1,7 +1,7 @@
-From 2ec3434659face6591b36ff5894441a69c3ced8e Mon Sep 17 00:00:00 2001
+From 1d21af4622a35f4d5b728b461845cc0822bc4b95 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 03:13:59 -0700
-Subject: [PATCH 15/53] i40e: Use proper enum in i40e_ndo_set_vf_link_state
+Subject: [PATCH 15/55] i40e: Use proper enum in i40e_ndo_set_vf_link_state
 
 Clang warns when one enumerated type is converted implicitly to another.
 

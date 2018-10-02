@@ -1,7 +1,7 @@
-From 2d61cf8fa0a9c60de5625bae00203ac6adedc623 Mon Sep 17 00:00:00 2001
+From e027f2c74b65e6331c159e1952d2c3b34f7feda1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 20 Sep 2018 17:22:21 -0700
-Subject: [PATCH 36/53] staging: rtl8188eu: Simplify memcmp logical checks
+Subject: [PATCH 36/55] staging: rtl8188eu: Simplify memcmp logical checks
 
 Clang generates a warning when it sees a logical not followed by a
 conditional operator like ==, >, or < because it thinks that the logical
