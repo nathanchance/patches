@@ -1,7 +1,7 @@
 From d7401e42ffa435032e922b74cbcaac763325d018 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 14:05:27 -0700
-Subject: [PATCH 26/52] qed: Fix mask parameter in qed_vf_prep_tunn_req_tlv
+Subject: [PATCH 26/53] qed: Fix mask parameter in qed_vf_prep_tunn_req_tlv
 
 Clang complains when one enumerated type is implicitly converted to
 another.

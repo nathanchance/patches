@@ -1,7 +1,7 @@
 From 33f7104fe0072322c9fcebd47646d0c5ac466568 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 20:49:39 -0700
-Subject: [PATCH 51/52] cxgb4: Use proper enum in cxgb4_dcb_handle_fw_update
+Subject: [PATCH 51/53] cxgb4: Use proper enum in cxgb4_dcb_handle_fw_update
 
 Clang warns when one enumerated type is implicitly converted to another.
 
