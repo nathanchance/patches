@@ -1,0 +1,32 @@
+From 328823adf9746ae7672b36c622c4b03828b7ea3a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 14:31:35 -0700
+Subject: [PATCH 7/8] DO-NOT-UPSTREAM: Disable -Wswitch
+
+These warnings are related to use of the _IOC macro to define certain
+values for switch statements which then overflow because the type is int
+when it really should be unsigned int. There will need to be some
+discussion about how to solve that in the scsi subsystem and until that
+happens, this is just noise.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues?q=label:-Wswitch
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index 5f9c95493df2..76e03e1d6740 100644
+--- a/Makefile
++++ b/Makefile
+@@ -704,6 +704,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
+ KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
+ KBUILD_CFLAGS += $(call cc-disable-warning, empty-body)
++KBUILD_CFLAGS += $(call cc-disable-warning, switch)
+ # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
+ # source of a reference will be _MergedGlobals and not on of the whitelisted names.
+ # See modpost pattern 2
+-- 
+2.19.0
+

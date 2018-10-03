@@ -1,8 +1,13 @@
-From 09349cbdbb0bbd6bba38eb52cb3fe0139a1b0270 Mon Sep 17 00:00:00 2001
+From 1f51c603d311404f0256b8af3241739cf98151c8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 1/5] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
+Subject: [PATCH 1/8] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
 
+This isn't strictly right now and it prevents us from building with
+Clang. It's supposedly in the works though, progress can be tracked
+below.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/6
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  Makefile                          | 5 -----

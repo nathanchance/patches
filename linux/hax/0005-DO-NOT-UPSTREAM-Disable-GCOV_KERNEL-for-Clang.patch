@@ -1,10 +1,11 @@
-From 8a3ba6d4f8fddd4e8c9871ad875d041cf9e8a084 Mon Sep 17 00:00:00 2001
+From 6301db29c3e501806ad0178c2db4fc7a8380ee41 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:35:46 -0700
-Subject: [PATCH 5/5] DO-NOT-UPSTREAM: Disable GCOV_KERNEL for Clang
+Subject: [PATCH 5/8] DO-NOT-UPSTREAM: Disable GCOV_KERNEL for Clang
 
 Patches currently in testing.
 
+Link: https://github.com/ClangBuiltLinux/linux/issues/17
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  kernel/gcov/Kconfig | 2 +-
