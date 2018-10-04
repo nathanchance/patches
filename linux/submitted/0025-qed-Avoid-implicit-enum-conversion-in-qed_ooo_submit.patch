@@ -1,7 +1,7 @@
 From bb8cdd815c717fea35b6a7e53e8f173a79177962 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 4 Oct 2018 09:35:41 -0700
-Subject: [PATCH 25/30] qed: Avoid implicit enum conversion in
+Subject: [PATCH 25/31] qed: Avoid implicit enum conversion in
  qed_ooo_submit_tx_buffers
 
 Clang warns when one enumerated type is implicitly converted to another.
