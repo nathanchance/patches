@@ -1,7 +1,7 @@
-From 704aca8dbd62c1537d81db4ec8b7b03da34510d4 Mon Sep 17 00:00:00 2001
+From 62b2ad0c356d8cf1efe79050acbcbc93dc2a93e2 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 1 Feb 2017 17:55:02 +0100
-Subject: [PATCH 1/8] drbd: avoid clang warning about pointless switch
+Subject: [PATCH 01/10] drbd: avoid clang warning about pointless switch
  statement
 
 The drbd code causes warnings that we cannot easily disable when building with clang:

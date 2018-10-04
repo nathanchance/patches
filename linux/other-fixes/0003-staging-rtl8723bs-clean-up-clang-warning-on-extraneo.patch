@@ -1,8 +1,8 @@
-From 3fb11a24d1337d8dafe882a1596a7cfb6a545eb3 Mon Sep 17 00:00:00 2001
+From e57bfef0620bd6d0a81853c007372e8f2dbbe301 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Mon, 1 Oct 2018 00:10:51 +0100
-Subject: [PATCH 8/8] staging: rtl8723bs: clean up clang warning on extraneous
- parentheses
+Subject: [PATCH 03/10] staging: rtl8723bs: clean up clang warning on
+ extraneous parentheses
 
 There are extraneous parantheses that are causing clang to produce a
 warning so remove these.

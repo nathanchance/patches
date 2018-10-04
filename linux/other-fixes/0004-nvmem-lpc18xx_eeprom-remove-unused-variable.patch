@@ -1,0 +1,29 @@
+From dc99dc54162a1c93c1e8680bc082e2afa13c32d4 Mon Sep 17 00:00:00 2001
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date: Wed, 3 Oct 2018 09:24:30 +0200
+Subject: [PATCH 04/10] nvmem: lpc18xx_eeprom: remove unused variable
+
+Remove a variable that's no longer used from lpc18xx_eeprom_remove().
+
+Signed-off-by: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/nvmem/lpc18xx_eeprom.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/nvmem/lpc18xx_eeprom.c b/drivers/nvmem/lpc18xx_eeprom.c
+index b42dbaddb419..66cff1e2147a 100644
+--- a/drivers/nvmem/lpc18xx_eeprom.c
++++ b/drivers/nvmem/lpc18xx_eeprom.c
+@@ -255,7 +255,6 @@ static int lpc18xx_eeprom_probe(struct platform_device *pdev)
+ static int lpc18xx_eeprom_remove(struct platform_device *pdev)
+ {
+ 	struct lpc18xx_eeprom_dev *eeprom = platform_get_drvdata(pdev);
+-	int ret;
+ 
+ 	clk_disable_unprepare(eeprom->clk);
+ 
+-- 
+2.19.0
+

@@ -1,0 +1,56 @@
+From 8ab75a148e61183ca65fc5acf060b4bbde257a89 Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Sun, 30 Sep 2018 23:57:15 +0100
+Subject: [PATCH 06/10] mt76: fix header guard macro define names
+
+The header guards that are #defined are different from those being
+checked.  Fix this by #defining them to the correct name.
+
+Fixes clang warnings:
+drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h:17:9:
+warning: '__MT76x02_MCU_H' is used as a header guard here, followed
+by #define of a different macro [-Wheader-guard]
+
+drivers/net/wireless/mediatek/mt76/mt76x02_usb.h:17:9:
+warning: '__MT76x02_USB_H' is used as a header guard here, followed
+by #define of a different macro [-Wheader-guard]
+
+Fixes: 905db7470199 ("mt76: usb: move mt76x02 mcu code in mt76x02-usb module")
+Fixes: edaa580bc830 ("mt76: move shared mcu_calibrate routine in mt76x02-lib module")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt76x02_usb.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
+index 2f5af3dad2bb..6e178bec07d8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
+@@ -15,7 +15,7 @@
+  */
+ 
+ #ifndef __MT76x02_MCU_H
+-#define __MT76x0x_MCU_H
++#define __MT76x02_MCU_H
+ 
+ #define MT_MCU_RESET_CTL		0x070C
+ #define MT_MCU_INT_LEVEL		0x0718
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_usb.h b/drivers/net/wireless/mediatek/mt76/mt76x02_usb.h
+index 2482f9761fcd..39dcfeee39f2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_usb.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_usb.h
+@@ -15,7 +15,7 @@
+  */
+ 
+ #ifndef __MT76x02_USB_H
+-#define __MT76x0x_USB_H
++#define __MT76x02_USB_H
+ 
+ #include "mt76.h"
+ 
+-- 
+2.19.0
+

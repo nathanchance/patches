@@ -1,0 +1,500 @@
+From 45eebbbcb8306652d1c4e710724536d666b1b989 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 15:34:49 -0700
+Subject: [PATCH 07/10] Revert "XXX PCI/AER: Remove
+ pci_cleanup_aer_uncorrect_error_status() calls"
+
+This version has a few unused variable warnings, use the updated
+version.
+
+This reverts commit 6dcde3e574b2ca57abcc2db48d7a50d09bf41484.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/crypto/qat/qat_common/adf_aer.c              | 1 +
+ drivers/dma/ioat/init.c                              | 6 ++++++
+ drivers/infiniband/hw/hfi1/pcie.c                    | 1 +
+ drivers/infiniband/hw/qib/qib_pcie.c                 | 1 +
+ drivers/net/ethernet/atheros/alx/main.c              | 2 ++
+ drivers/net/ethernet/broadcom/bnx2.c                 | 7 +++++++
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c     | 8 ++++++++
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c            | 7 +++++++
+ drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c      | 1 +
+ drivers/net/ethernet/emulex/benet/be_main.c          | 1 +
+ drivers/net/ethernet/intel/e1000e/netdev.c           | 2 ++
+ drivers/net/ethernet/intel/fm10k/fm10k_pci.c         | 2 ++
+ drivers/net/ethernet/intel/i40e/i40e_main.c          | 8 ++++++++
+ drivers/net/ethernet/intel/igb/igb_main.c            | 9 +++++++++
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c        | 9 +++++++++
+ drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c | 6 ++++++
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c  | 1 +
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c     | 1 +
+ drivers/net/ethernet/sfc/efx.c                       | 7 +++++++
+ drivers/net/ethernet/sfc/falcon/efx.c                | 7 +++++++
+ drivers/nvme/host/pci.c                              | 1 +
+ drivers/scsi/aacraid/linit.c                         | 2 ++
+ drivers/scsi/be2iscsi/be_main.c                      | 1 +
+ drivers/scsi/bfa/bfad.c                              | 2 ++
+ drivers/scsi/csiostor/csio_init.c                    | 1 +
+ drivers/scsi/lpfc/lpfc_init.c                        | 8 ++++++++
+ drivers/scsi/mpt3sas/mpt3sas_scsih.c                 | 1 +
+ drivers/scsi/qla2xxx/qla_os.c                        | 2 ++
+ drivers/scsi/qla4xxx/ql4_os.c                        | 1 +
+ 29 files changed, 106 insertions(+)
+
+diff --git a/drivers/crypto/qat/qat_common/adf_aer.c b/drivers/crypto/qat/qat_common/adf_aer.c
+index f5e960d23a7a..9225d060e18f 100644
+--- a/drivers/crypto/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/qat/qat_common/adf_aer.c
+@@ -198,6 +198,7 @@ static pci_ers_result_t adf_slot_reset(struct pci_dev *pdev)
+ 		pr_err("QAT: Can't find acceleration device\n");
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 	}
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	if (adf_dev_aer_schedule_reset(accel_dev, ADF_DEV_RESET_SYNC))
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 80c475fb8ede..4fa4c06c9edb 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -1267,6 +1267,12 @@ static pci_ers_result_t ioat_pcie_error_slot_reset(struct pci_dev *pdev)
+ 		pci_wake_from_d3(pdev, false);
+ 	}
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		dev_err(&pdev->dev,
++			"AER uncorrect error status clear failed: %#x\n", err);
++	}
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/infiniband/hw/hfi1/pcie.c b/drivers/infiniband/hw/hfi1/pcie.c
+index c96d193bb236..e616cae54931 100644
+--- a/drivers/infiniband/hw/hfi1/pcie.c
++++ b/drivers/infiniband/hw/hfi1/pcie.c
+@@ -623,6 +623,7 @@ pci_resume(struct pci_dev *pdev)
+ 	struct hfi1_devdata *dd = pci_get_drvdata(pdev);
+ 
+ 	dd_dev_info(dd, "HFI1 resume function called\n");
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	/*
+ 	 * Running jobs will fail, since it's asynchronous
+ 	 * unlike sysfs-requested reset.   Better than
+diff --git a/drivers/infiniband/hw/qib/qib_pcie.c b/drivers/infiniband/hw/qib/qib_pcie.c
+index 30595b358d8f..5ac7b31c346b 100644
+--- a/drivers/infiniband/hw/qib/qib_pcie.c
++++ b/drivers/infiniband/hw/qib/qib_pcie.c
+@@ -597,6 +597,7 @@ qib_pci_resume(struct pci_dev *pdev)
+ 	struct qib_devdata *dd = pci_get_drvdata(pdev);
+ 
+ 	qib_devinfo(pdev, "QIB resume function called\n");
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	/*
+ 	 * Running jobs will fail, since it's asynchronous
+ 	 * unlike sysfs-requested reset.   Better than
+diff --git a/drivers/net/ethernet/atheros/alx/main.c b/drivers/net/ethernet/atheros/alx/main.c
+index 7968c644ad86..6d3221134927 100644
+--- a/drivers/net/ethernet/atheros/alx/main.c
++++ b/drivers/net/ethernet/atheros/alx/main.c
+@@ -1964,6 +1964,8 @@ static pci_ers_result_t alx_pci_error_slot_reset(struct pci_dev *pdev)
+ 	if (!alx_reset_mac(hw))
+ 		rc = PCI_ERS_RESULT_RECOVERED;
+ out:
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	rtnl_unlock();
+ 
+ 	return rc;
+diff --git a/drivers/net/ethernet/broadcom/bnx2.c b/drivers/net/ethernet/broadcom/bnx2.c
+index bbb247116045..122fdb80a789 100644
+--- a/drivers/net/ethernet/broadcom/bnx2.c
++++ b/drivers/net/ethernet/broadcom/bnx2.c
+@@ -8793,6 +8793,13 @@ static pci_ers_result_t bnx2_io_slot_reset(struct pci_dev *pdev)
+ 	if (!(bp->flags & BNX2_FLAG_AER_ENABLED))
+ 		return result;
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		dev_err(&pdev->dev,
++			"pci_cleanup_aer_uncorrect_error_status failed 0x%0x\n",
++			 err); /* non-fatal, continue */
++	}
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+index 95309b27c7d1..40093d88353f 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+@@ -14380,6 +14380,14 @@ static pci_ers_result_t bnx2x_io_slot_reset(struct pci_dev *pdev)
+ 
+ 	rtnl_unlock();
+ 
++	/* If AER, perform cleanup of the PCIe registers */
++	if (bp->flags & AER_ENABLED) {
++		if (pci_cleanup_aer_uncorrect_error_status(pdev))
++			BNX2X_ERR("pci_cleanup_aer_uncorrect_error_status failed\n");
++		else
++			DP(NETIF_MSG_HW, "pci_cleanup_aer_uncorrect_error_status succeeded\n");
++	}
++
+ 	return PCI_ERS_RESULT_RECOVERED;
+ }
+ 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 157e506f2e50..0478e562abac 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -9225,6 +9225,13 @@ static pci_ers_result_t bnxt_io_slot_reset(struct pci_dev *pdev)
+ 
+ 	rtnl_unlock();
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		dev_err(&pdev->dev,
++			"pci_cleanup_aer_uncorrect_error_status failed 0x%0x\n",
++			 err); /* non-fatal, continue */
++	}
++
+ 	return PCI_ERS_RESULT_RECOVERED;
+ }
+ 
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
+index f89edaedc038..1a93efa60e71 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
+@@ -4767,6 +4767,7 @@ static pci_ers_result_t eeh_slot_reset(struct pci_dev *pdev)
+ 	pci_set_master(pdev);
+ 	pci_restore_state(pdev);
+ 	pci_save_state(pdev);
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 
+ 	if (t4_wait_dev_ready(adap->regs) < 0)
+ 		return PCI_ERS_RESULT_DISCONNECT;
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 544e2e3655d1..74d122616e76 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -6151,6 +6151,7 @@ static pci_ers_result_t be_eeh_reset(struct pci_dev *pdev)
+ 	if (status)
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	be_clear_error(adapter, BE_CLEAR_ALL);
+ 	return PCI_ERS_RESULT_RECOVERED;
+ }
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 16a73bd9f4cb..c0f9faca70c4 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6854,6 +6854,8 @@ static pci_ers_result_t e1000_io_slot_reset(struct pci_dev *pdev)
+ 		result = PCI_ERS_RESULT_RECOVERED;
+ 	}
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pci.c b/drivers/net/ethernet/intel/fm10k/fm10k_pci.c
+index 02345d381303..c859ababeed5 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pci.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pci.c
+@@ -2440,6 +2440,8 @@ static pci_ers_result_t fm10k_io_slot_reset(struct pci_dev *pdev)
+ 		result = PCI_ERS_RESULT_RECOVERED;
+ 	}
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 4654ac69dfb6..330bafe6a689 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -14573,6 +14573,14 @@ static pci_ers_result_t i40e_pci_error_slot_reset(struct pci_dev *pdev)
+ 			result = PCI_ERS_RESULT_DISCONNECT;
+ 	}
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		dev_info(&pdev->dev,
++			 "pci_cleanup_aer_uncorrect_error_status failed 0x%0x\n",
++			 err);
++		/* non-fatal, continue */
++	}
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 5df88ad8ac81..0d29df8accd8 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -9086,6 +9086,7 @@ static pci_ers_result_t igb_io_slot_reset(struct pci_dev *pdev)
+ 	struct igb_adapter *adapter = netdev_priv(netdev);
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	pci_ers_result_t result;
++	int err;
+ 
+ 	if (pci_enable_device_mem(pdev)) {
+ 		dev_err(&pdev->dev,
+@@ -9109,6 +9110,14 @@ static pci_ers_result_t igb_io_slot_reset(struct pci_dev *pdev)
+ 		result = PCI_ERS_RESULT_RECOVERED;
+ 	}
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		dev_err(&pdev->dev,
++			"pci_cleanup_aer_uncorrect_error_status failed 0x%0x\n",
++			err);
++		/* non-fatal, continue */
++	}
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 9bee51d900ac..140e87a10ff5 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -11091,6 +11091,8 @@ static pci_ers_result_t ixgbe_io_error_detected(struct pci_dev *pdev,
+ 			/* Free device reference count */
+ 			pci_dev_put(vfdev);
+ 		}
++
++		pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	}
+ 
+ 	/*
+@@ -11160,6 +11162,13 @@ static pci_ers_result_t ixgbe_io_slot_reset(struct pci_dev *pdev)
+ 		result = PCI_ERS_RESULT_RECOVERED;
+ 	}
+ 
++	err = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (err) {
++		e_dev_err("pci_cleanup_aer_uncorrect_error_status "
++			  "failed 0x%0x\n", err);
++		/* non-fatal, continue */
++	}
++
+ 	return result;
+ }
+ 
+diff --git a/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c b/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
+index 7d9819d80e44..59c70be22a84 100644
+--- a/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
++++ b/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
+@@ -1784,6 +1784,11 @@ static pci_ers_result_t netxen_io_slot_reset(struct pci_dev *pdev)
+ 	return err ? PCI_ERS_RESULT_DISCONNECT : PCI_ERS_RESULT_RECOVERED;
+ }
+ 
++static void netxen_io_resume(struct pci_dev *pdev)
++{
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++}
++
+ static void netxen_nic_shutdown(struct pci_dev *pdev)
+ {
+ 	struct netxen_adapter *adapter = pci_get_drvdata(pdev);
+@@ -3460,6 +3465,7 @@ netxen_free_ip_list(struct netxen_adapter *adapter, bool master)
+ static const struct pci_error_handlers netxen_err_handler = {
+ 	.error_detected = netxen_io_error_detected,
+ 	.slot_reset = netxen_io_slot_reset,
++	.resume = netxen_io_resume,
+ };
+ 
+ static struct pci_driver netxen_driver = {
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+index 2a533280b124..a79d84f99102 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+@@ -4233,6 +4233,7 @@ static void qlcnic_83xx_io_resume(struct pci_dev *pdev)
+ {
+ 	struct qlcnic_adapter *adapter = pci_get_drvdata(pdev);
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	if (test_and_clear_bit(__QLCNIC_AER, &adapter->state))
+ 		qlcnic_83xx_aer_start_poll_work(adapter);
+ }
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+index d42ba2293d8c..dbd48012224f 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+@@ -3930,6 +3930,7 @@ static void qlcnic_82xx_io_resume(struct pci_dev *pdev)
+ 	u32 state;
+ 	struct qlcnic_adapter *adapter = pci_get_drvdata(pdev);
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	state = QLC_SHARED_REG_RD32(adapter, QLCNIC_CRB_DEV_STATE);
+ 	if (state == QLCNIC_DEV_READY && test_and_clear_bit(__QLCNIC_AER,
+ 							    &adapter->state))
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index ec941ca967b3..3d0dd39c289e 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -3829,6 +3829,13 @@ static pci_ers_result_t efx_io_slot_reset(struct pci_dev *pdev)
+ 		status =  PCI_ERS_RESULT_DISCONNECT;
+ 	}
+ 
++	rc = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (rc) {
++		netif_err(efx, hw, efx->net_dev,
++		"pci_cleanup_aer_uncorrect_error_status failed (%d)\n", rc);
++		/* Non-fatal error. Continue. */
++	}
++
+ 	return status;
+ }
+ 
+diff --git a/drivers/net/ethernet/sfc/falcon/efx.c b/drivers/net/ethernet/sfc/falcon/efx.c
+index 9b728efd71a4..03e2455c502e 100644
+--- a/drivers/net/ethernet/sfc/falcon/efx.c
++++ b/drivers/net/ethernet/sfc/falcon/efx.c
+@@ -3168,6 +3168,13 @@ static pci_ers_result_t ef4_io_slot_reset(struct pci_dev *pdev)
+ 		status =  PCI_ERS_RESULT_DISCONNECT;
+ 	}
+ 
++	rc = pci_cleanup_aer_uncorrect_error_status(pdev);
++	if (rc) {
++		netif_err(efx, hw, efx->net_dev,
++		"pci_cleanup_aer_uncorrect_error_status failed (%d)\n", rc);
++		/* Non-fatal error. Continue. */
++	}
++
+ 	return status;
+ }
+ 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 8991e79b2b87..d668682f91df 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2649,6 +2649,7 @@ static void nvme_error_resume(struct pci_dev *pdev)
+ 	struct nvme_dev *dev = pci_get_drvdata(pdev);
+ 
+ 	flush_work(&dev->ctrl.reset_work);
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ }
+ 
+ static const struct pci_error_handlers nvme_err_handler = {
+diff --git a/drivers/scsi/aacraid/linit.c b/drivers/scsi/aacraid/linit.c
+index 1bcdd50786f1..04443577d48b 100644
+--- a/drivers/scsi/aacraid/linit.c
++++ b/drivers/scsi/aacraid/linit.c
+@@ -2055,6 +2055,8 @@ static void aac_pci_resume(struct pci_dev *pdev)
+ 	struct scsi_device *sdev = NULL;
+ 	struct aac_dev *aac = (struct aac_dev *)shost_priv(shost);
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	if (aac_adapter_ioremap(aac, aac->base_size)) {
+ 
+ 		dev_err(&pdev->dev, "aacraid: ioremap failed\n");
+diff --git a/drivers/scsi/be2iscsi/be_main.c b/drivers/scsi/be2iscsi/be_main.c
+index 92982c422a63..d544453aa466 100644
+--- a/drivers/scsi/be2iscsi/be_main.c
++++ b/drivers/scsi/be2iscsi/be_main.c
+@@ -5527,6 +5527,7 @@ static pci_ers_result_t beiscsi_eeh_reset(struct pci_dev *pdev)
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 	}
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	return PCI_ERS_RESULT_RECOVERED;
+ }
+ 
+diff --git a/drivers/scsi/bfa/bfad.c b/drivers/scsi/bfa/bfad.c
+index 911efc98d1fd..bd7e6a6fc1f1 100644
+--- a/drivers/scsi/bfa/bfad.c
++++ b/drivers/scsi/bfa/bfad.c
+@@ -1569,6 +1569,8 @@ bfad_pci_slot_reset(struct pci_dev *pdev)
+ 		if (pci_set_dma_mask(bfad->pcidev, DMA_BIT_MASK(32)) != 0)
+ 			goto out_disable_device;
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	if (restart_bfa(bfad) == -1)
+ 		goto out_disable_device;
+ 
+diff --git a/drivers/scsi/csiostor/csio_init.c b/drivers/scsi/csiostor/csio_init.c
+index 66b230bee7bc..ed2dae657964 100644
+--- a/drivers/scsi/csiostor/csio_init.c
++++ b/drivers/scsi/csiostor/csio_init.c
+@@ -1102,6 +1102,7 @@ csio_pci_slot_reset(struct pci_dev *pdev)
+ 	pci_set_master(pdev);
+ 	pci_restore_state(pdev);
+ 	pci_save_state(pdev);
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 
+ 	/* Bring HW s/m to ready state.
+ 	 * but don't resume IOs.
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 0bd3ae99c4a6..054072cbfa3c 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -11364,6 +11364,10 @@ lpfc_io_resume_s3(struct pci_dev *pdev)
+ 
+ 	/* Bring device online, it will be no-op for non-fatal error resume */
+ 	lpfc_online(phba);
++
++	/* Clean up Advanced Error Reporting (AER) if needed */
++	if (phba->hba_flag & HBA_AER_ENABLED)
++		pci_cleanup_aer_uncorrect_error_status(pdev);
+ }
+ 
+ /**
+@@ -12179,6 +12183,10 @@ lpfc_io_resume_s4(struct pci_dev *pdev)
+ 		/* Bring the device back online */
+ 		lpfc_online(phba);
+ 	}
++
++	/* Clean up Advanced Error Reporting (AER) if needed */
++	if (phba->hba_flag & HBA_AER_ENABLED)
++		pci_cleanup_aer_uncorrect_error_status(pdev);
+ }
+ 
+ /**
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+index 86eaa893adfc..53133cfd420f 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
+@@ -10828,6 +10828,7 @@ scsih_pci_resume(struct pci_dev *pdev)
+ 
+ 	pr_info(MPT3SAS_FMT "PCI error: resume callback!!\n", ioc->name);
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	mpt3sas_base_start_watchdog(ioc);
+ 	scsi_unblock_requests(ioc->shost);
+ }
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 8794e54f43a9..dba672f87cb2 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -6939,6 +6939,8 @@ qla2xxx_pci_resume(struct pci_dev *pdev)
+ 		    "The device failed to resume I/O from slot/link_reset.\n");
+ 	}
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
++
+ 	ha->flags.eeh_busy = 0;
+ }
+ 
+diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
+index ab3a924e3e11..0e13349dce57 100644
+--- a/drivers/scsi/qla4xxx/ql4_os.c
++++ b/drivers/scsi/qla4xxx/ql4_os.c
+@@ -9824,6 +9824,7 @@ qla4xxx_pci_resume(struct pci_dev *pdev)
+ 		     __func__);
+ 	}
+ 
++	pci_cleanup_aer_uncorrect_error_status(pdev);
+ 	clear_bit(AF_EEH_BUSY, &ha->flags);
+ }
+ 
+-- 
+2.19.0
+
