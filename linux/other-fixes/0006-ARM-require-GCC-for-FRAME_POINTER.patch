@@ -1,7 +1,7 @@
-From 3e921acf82b6e38683bec9a8de7b2e07eaa07bf7 Mon Sep 17 00:00:00 2001
+From 9a12400d1caec2964f9a4de5b09cdd68d2d3efdc Mon Sep 17 00:00:00 2001
 From: Stefan Agner <stefan@agner.ch>
 Date: Sat, 11 Aug 2018 11:52:35 +0200
-Subject: [PATCH 7/7] ARM: require GCC for FRAME_POINTER
+Subject: [PATCH 6/6] ARM: require GCC for FRAME_POINTER
 
 To produce a meaningful backtrace with FRAME_POINTER enabled the
 kernel needs a specific function prologue:
