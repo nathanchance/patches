@@ -1,7 +1,7 @@
 From b43ced1c7dbbcdd2d93b8ffa9858c15831cdf14b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 12:39:07 -0700
-Subject: [PATCH 07/15] i40e: Remove unnecessary print statement
+Subject: [PATCH 07/16] i40e: Remove unnecessary print statement
 
 Clang warns that the address of a pointer will always evaluated as true
 in a boolean context.
