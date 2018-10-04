@@ -1,0 +1,26 @@
+From 626b3ee639d0a8709e28aac0d7a1e58afb4e6ae0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 20:22:55 -0700
+Subject: [PATCH 09/13] DO-NOT-UPSTREAM: soc: rockchip: Disable
+ -Wshift-count-negative for pm_domains.o
+
+GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/92
+LLVM bug: https://bugs.llvm.org/show_bug.cgi?id=38789
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/soc/rockchip/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/soc/rockchip/Makefile b/drivers/soc/rockchip/Makefile
+index c851fa0056d0..8373e23534f8 100644
+--- a/drivers/soc/rockchip/Makefile
++++ b/drivers/soc/rockchip/Makefile
+@@ -3,3 +3,5 @@
+ #
+ obj-$(CONFIG_ROCKCHIP_GRF) += grf.o
+ obj-$(CONFIG_ROCKCHIP_PM_DOMAINS) += pm_domains.o
++
++CFLAGS_pm_domains.o += $(call cc-disable-warning, shift-count-negative)
+-- 
+2.19.0
+
