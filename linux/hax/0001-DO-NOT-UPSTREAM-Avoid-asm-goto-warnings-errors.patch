@@ -1,11 +1,11 @@
-From 6e8bf62241579888496193df669a4f77c92b0b29 Mon Sep 17 00:00:00 2001
+From 81f16d3a18bfbe9e88342d0d1c23e0cbfd8ef4f4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
 
-This isn't strictly right now and it prevents us from building with
-Clang. It's supposedly in the works though, progress can be tracked
-below.
+This isn't strictly required right now and it prevents us from building
+with Clang on x86. It's supposedly in the works though, progress can be
+tracked below.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/6
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0ac8bb650554..e186d868f866 100644
+index f827993f613f..c50b41cfc0cf 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -959,11 +959,6 @@ ifdef CONFIG_STACK_VALIDATION
+@@ -962,11 +962,6 @@ ifdef CONFIG_STACK_VALIDATION
    ifeq ($(has_libelf),1)
      objtool_target := tools/objtool FORCE
    else

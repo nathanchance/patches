@@ -1,21 +1,21 @@
-From d580c708ff6abc75c41cdf71f7b9dc816a4c78da Mon Sep 17 00:00:00 2001
+From f3dc54d02b9db89869fc295d7130af4a0355355e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:51:22 -0700
 Subject: [PATCH 03/13] DO-NOT-UPSTREAM: Disable -Wduplicate-decl-specifier for
  Clang
 
-Clang currently warns on 'const typeof'. This will be fixed upstream
-shortly; in the meantime, disable this warning.
+Clang currently warns on 'const typeof'. This has been fixed upstream
+and this patch will be dropped when I get a chance to rebuild my
+toolchain.
 
-GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/52
-LLVM bug: https://bugs.llvm.org/show_bug.cgi?id=32985
+Link: https://github.com/ClangBuiltLinux/linux/issues/52
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  Makefile | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index e186d868f866..135acbdf4af9 100644
+index c50b41cfc0cf..6493bb87dd50 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -709,6 +709,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)

@@ -1,7 +1,7 @@
-From efbf22730b90cf127812e1026f3a2947d5fe643e Mon Sep 17 00:00:00 2001
+From d38b1224cf9bcdf89588bcb6095c545bc23b23dd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:31:35 -0700
-Subject: [PATCH 07/13] DO-NOT-UPSTREAM: Disable -Wswitch
+Subject: [PATCH 10/13] DO-NOT-UPSTREAM: Disable -Wswitch
 
 These warnings are related to use of the _IOC macro to define certain
 values for switch statements which then overflow because the type is int
@@ -16,13 +16,13 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index 19a6fac3d880..c99bb787f7ae 100644
+index 6493bb87dd50..4f08e99c267c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -711,6 +711,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+@@ -710,6 +710,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ # Quiet clang warning: comparison of unsigned expression < 0 is always false
  KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
  KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
- KBUILD_CFLAGS += $(call cc-disable-warning, empty-body)
 +KBUILD_CFLAGS += $(call cc-disable-warning, switch)
  # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
