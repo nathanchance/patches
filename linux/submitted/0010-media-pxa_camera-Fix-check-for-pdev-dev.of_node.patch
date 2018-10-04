@@ -1,7 +1,7 @@
 From 6bc07798b6a6859b3d0cd671b632cb6f66f8b228 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 03:00:45 -0700
-Subject: [PATCH 10/44] media: pxa_camera: Fix check for pdev->dev.of_node
+Subject: [PATCH 10/45] media: pxa_camera: Fix check for pdev->dev.of_node
 
 Clang warns that the address of a pointer will always evaluated as true
 in a boolean context.

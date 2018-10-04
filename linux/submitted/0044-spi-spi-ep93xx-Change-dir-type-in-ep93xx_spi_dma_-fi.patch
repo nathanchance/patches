@@ -1,7 +1,7 @@
 From d273767a89d848c548e43ec37eb529424b02ee75 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 19:36:23 -0700
-Subject: [PATCH 44/44] spi: spi-ep93xx: Change dir type in
+Subject: [PATCH 44/45] spi: spi-ep93xx: Change dir type in
  ep93xx_spi_dma_{finish,prepare}
 
 Clang warns when one enumerated type is implicitly converted to another.

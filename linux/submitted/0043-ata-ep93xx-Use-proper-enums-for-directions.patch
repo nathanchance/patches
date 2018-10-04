@@ -1,7 +1,7 @@
 From 2d25bd4a6286b94ae67f0a1dc467ab8d195608e4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 19:20:22 -0700
-Subject: [PATCH 43/44] ata: ep93xx: Use proper enums for directions
+Subject: [PATCH 43/45] ata: ep93xx: Use proper enums for directions
 
 Clang warns when one enumerated type is implicitly converted to another.
 
