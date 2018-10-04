@@ -1,7 +1,7 @@
-From 1f588719b29e35e3c9f706de23805f7a5351ee7c Mon Sep 17 00:00:00 2001
+From c9a2fd4be9ea2cd6c10493e5f80c045402d1501f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 4 Oct 2018 13:05:30 -0700
-Subject: [PATCH 31/31] drbd: Avoid Clang warning about pointless switch
+Subject: [PATCH 30/30] drbd: Avoid Clang warning about pointless switch
  statment
 
 There are several warnings from Clang about no case statement matching
