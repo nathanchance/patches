@@ -1,7 +1,7 @@
-From 38857eb1ce9efdb6613922123a4989cc92d1a5d4 Mon Sep 17 00:00:00 2001
+From 50f00fe700456d95f6e396cfb8812567df2cc8d1 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <yamada.masahiro@socionext.com>
 Date: Sun, 26 Aug 2018 03:16:29 +0900
-Subject: [PATCH 02/10] compiler.h: give up __compiletime_assert_fallback()
+Subject: [PATCH 2/7] compiler.h: give up __compiletime_assert_fallback()
 
 __compiletime_assert_fallback() is supposed to stop building earlier
 by using the negative-array-size method in case the compiler does not

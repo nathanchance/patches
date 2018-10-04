@@ -1,7 +1,7 @@
-From 8739de10bce4804fa3ec5a6f0ee675e144a78702 Mon Sep 17 00:00:00 2001
+From 045a798dbb9a1104dc7d2dd613f55fb62424f177 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 2 Oct 2018 23:15:44 +0200
-Subject: [PATCH 05/10] pinctrl: qcom: fix 'const' pointer handling
+Subject: [PATCH 4/7] pinctrl: qcom: fix 'const' pointer handling
 
 The 'tiles' array is initialized to a constant pointers to constant
 strings, but the declaration is only half as constant:
