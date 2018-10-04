@@ -1,7 +1,7 @@
 From 9facac064ae441f1c41163e525bd54180283f037 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Sep 2018 22:00:47 -0700
-Subject: [PATCH 07/40] drbd: Change drbd_request_detach_interruptible's return
+Subject: [PATCH 07/42] drbd: Change drbd_request_detach_interruptible's return
  type to int
 
 Clang warns when an implicit conversion is done between enumerated
