@@ -1,4 +1,4 @@
-From 1d5fc4c38ec5dbe809dcfe7b9dcaa53ef67ae54e Mon Sep 17 00:00:00 2001
+From 23b0d41ed2a17e4ce2d1d25c2937060ef3f79f54 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:39:42 -0700
 Subject: [PATCH 08/13] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 2 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 76e03e1d6740..31e8be881419 100644
+index c99bb787f7ae..0f08362d67bb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -705,6 +705,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
+@@ -712,6 +712,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
  KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
  KBUILD_CFLAGS += $(call cc-disable-warning, empty-body)
  KBUILD_CFLAGS += $(call cc-disable-warning, switch)

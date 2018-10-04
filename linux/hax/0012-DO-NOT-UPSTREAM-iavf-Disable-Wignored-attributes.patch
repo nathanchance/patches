@@ -1,7 +1,7 @@
-From 65b52f9937171d2b23cfcc3e12be2620a41f2939 Mon Sep 17 00:00:00 2001
+From 3c2148e7f2c94a973db61587318c12641975fa7a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:43:13 -0700
-Subject: [PATCH 12/13] DO-NOT-UPSTREAM: i40evf: Disable -Wignored-attributes
+Subject: [PATCH 12/13] DO-NOT-UPSTREAM: iavf: Disable -Wignored-attributes
 
 Should be easy to tackle when Miguel Ojeda's compiler attributes
 patchset hits -next.
@@ -9,13 +9,13 @@ patchset hits -next.
 Link: https://github.com/ClangBuiltLinux/linux/issues/111
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/net/ethernet/intel/i40evf/Makefile | 2 +-
+ drivers/net/ethernet/intel/iavf/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40evf/Makefile b/drivers/net/ethernet/intel/i40evf/Makefile
-index 3c5c6e962280..6d821268263b 100644
---- a/drivers/net/ethernet/intel/i40evf/Makefile
-+++ b/drivers/net/ethernet/intel/i40evf/Makefile
+diff --git a/drivers/net/ethernet/intel/iavf/Makefile b/drivers/net/ethernet/intel/iavf/Makefile
+index 9cbb5743ed12..d73b018d4944 100644
+--- a/drivers/net/ethernet/intel/iavf/Makefile
++++ b/drivers/net/ethernet/intel/iavf/Makefile
 @@ -7,7 +7,7 @@
  #
  
@@ -23,7 +23,7 @@ index 3c5c6e962280..6d821268263b 100644
 -subdir-ccflags-y += -I$(src)
 +subdir-ccflags-y += -I$(src) $(call cc-disable-warning, ignored-attributes)
  
- obj-$(CONFIG_I40EVF) += i40evf.o
+ obj-$(CONFIG_IAVF) += iavf.o
  
 -- 
 2.19.0

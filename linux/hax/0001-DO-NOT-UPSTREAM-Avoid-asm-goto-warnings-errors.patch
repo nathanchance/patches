@@ -1,4 +1,4 @@
-From 1f51c603d311404f0256b8af3241739cf98151c8 Mon Sep 17 00:00:00 2001
+From 6e8bf62241579888496193df669a4f77c92b0b29 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6c3da3e10f07..f15a43ef1241 100644
+index 0ac8bb650554..e186d868f866 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -952,11 +952,6 @@ ifdef CONFIG_STACK_VALIDATION
+@@ -959,11 +959,6 @@ ifdef CONFIG_STACK_VALIDATION
    ifeq ($(has_libelf),1)
      objtool_target := tools/objtool FORCE
    else

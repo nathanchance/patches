@@ -1,4 +1,4 @@
-From 40747cd8046a093033eba07a0ceb2be8d475bbd7 Mon Sep 17 00:00:00 2001
+From 94c54905dc86f4ad804d9d7cb673beb725058048 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:44:48 -0700
 Subject: [PATCH 13/13] DO-NOT-UPSTREAM: regulator: Disable -Wdivision-by-zero
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/regulator/Makefile b/drivers/regulator/Makefile
-index 801d9a34a203..f4b46e94d087 100644
+index eac4d794f3b8..798ba2d78e10 100644
 --- a/drivers/regulator/Makefile
 +++ b/drivers/regulator/Makefile
 @@ -130,3 +130,5 @@ obj-$(CONFIG_REGULATOR_WM8400) += wm8400-regulator.o

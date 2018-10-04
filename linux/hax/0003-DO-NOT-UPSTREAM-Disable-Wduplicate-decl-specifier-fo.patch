@@ -1,4 +1,4 @@
-From 2fea00c9ad8638179069805c0828eb14772695a1 Mon Sep 17 00:00:00 2001
+From d580c708ff6abc75c41cdf71f7b9dc816a4c78da Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:51:22 -0700
 Subject: [PATCH 03/13] DO-NOT-UPSTREAM: Disable -Wduplicate-decl-specifier for
@@ -15,10 +15,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index f15a43ef1241..cc85f2d50c82 100644
+index e186d868f866..135acbdf4af9 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -702,6 +702,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
+@@ -709,6 +709,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
  KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
  # Quiet clang warning: comparison of unsigned expression < 0 is always false
  KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
