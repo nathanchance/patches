@@ -1,12 +1,12 @@
-From 1b87092e363397010beb55220b6953d129aa9c3b Mon Sep 17 00:00:00 2001
+From 4c40b6fa85e131990320da3980ff0d639f9dad0d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:28:57 -0700
 Subject: [PATCH 06/13] DO-NOT-UPSTREAM: Kbuild: Hide Clang's -Wempty-body
  behind W=1
 
-This doesn't happen often but the few times that it has, it's just
-noise. I believe the intention of the warning is to avoid situations
-like this:
+There are only a few instances of this warning in an arm64 allyesconfig
+build but none of them appear useful. I believe the intention of the
+warning is to avoid situations like this:
 
 if (condition);
         statement;
@@ -16,26 +16,38 @@ where the user really intended
 if (condition)
         statement;
 
-However, GCC's -Wmisleading-indention should have caught any issues of
-this form and the remaining warnings are just conditional statements
-being used as shortcuts. For example:
+However, these instances have already been caught by GCC's warning about
+misleading indentation so the remaining warnings are about loops that
+fall into one of three categories:
+
+1. Execute a function unconditionally (avoiding a useless variable to
+   hold the return value):
+
+drivers/isdn/hisax/hfc_pci.c:131:34: warning: if statement has empty body
+[-Wempty-body]
+        if (Read_hfc(cs, HFCPCI_INT_S1));
+                                        ^
+
+2. Advancing a value to be used later on in the function like a pointer
+   or a count:
 
 drivers/atm/eni.c:244:48: warning: for loop has empty body
 [-Wempty-body]
         for (order = 0; (1 << order) < *size; order++);
                                                       ^
 
-Which is just used to get order to the correct size. Another one:
+3. Busy waiting:
 
 drivers/atm/zatm.c:513:7: warning: while loop has empty body
 [-Wempty-body]
         zwait;
              ^
 
-Which is just used to wait while busy. Moving the semi-colon to another
-line defeats the purpose of the compact nature of these constructs so
-just hide the warning behind W=1 so its use can still be audited but it
-won't polute the build.
+None of these uses are problematic or need to be addressed. Clang
+suggests moving the semi-colon to the next line to silence these
+warnings but that defeats the purpose of the compact nature of these
+constructs so just hide the warning behind W=1 so its use can still be
+audited but it won't polute a regular build.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/42
 Link: https://github.com/ClangBuiltLinux/linux/issues/66
