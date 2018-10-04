@@ -1,8 +1,25 @@
-From 5887db995e70e400f53fa870de95d9d5517846b2 Mon Sep 17 00:00:00 2001
+From 46609ecb19fedbfd57497e60de28e9029c1fe3a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 21:33:49 -0700
-Subject: [PATCH 2/3] phonet: Fix array bounds warnings
+Subject: [PATCH 2/2] phonet: Fix array bounds warnings
 
+Clang currently warns:
+
+net/phonet/pep.c:281:10: warning: array index 1 is past the end of the
+array (which contains 1 element) [-Warray-bounds]
+        switch (hdr->data[1]) {
+                ^         ~
+./include/net/phonet/pep.h:66:3: note: array 'data' declared here
+                u8              data[1];
+                ^
+
+pnp_hdr populates struct pep_sock with the contents of struct sk_buff,
+which has a member data of type unsigned char *. Make that change here
+to make it clear to Clang that the data being modified has been passed
+along from sk_buff.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/115
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  include/net/phonet/pep.h | 2 +-
