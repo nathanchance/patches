@@ -1,7 +1,7 @@
-From 4aaecc00f35564999f3056b6cd66af49723d5398 Mon Sep 17 00:00:00 2001
+From 083e27902b55c3e5c1af70ebf573c4ae7fb64941 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 12:57:16 -0700
-Subject: [PATCH 03/16] IB/mlx4: Avoid implicit enumerated type conversion
+Subject: [PATCH 2/7] IB/mlx4: Avoid implicit enumerated type conversion
 
 Clang warns when one enumerated type is implicitly converted to another.
 

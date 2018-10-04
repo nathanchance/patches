@@ -1,8 +1,7 @@
-From 655e67f097ae8758f5c15a9127adff3f66b59ffe Mon Sep 17 00:00:00 2001
+From 953f589ca0a2da6e18622b38f4b4e1fbebf629bd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Sep 2018 16:20:25 -0700
-Subject: [PATCH 04/16] dmaengine: timb_dma: Use proper enum in
- td_prep_slave_sg
+Subject: [PATCH 3/7] dmaengine: timb_dma: Use proper enum in td_prep_slave_sg
 
 Clang warns when implicitly converting from one enumerated type to
 another. Avoid this by using the equivalent value from the expected
