@@ -1,0 +1,128 @@
+From be8c0e7087031cf34d4ad5d8645ac471f2b92554 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 26 Sep 2018 22:09:44 -0700
+Subject: [PATCH 20/31] IB/rxe: Remove unnecessary enum values
+
+Clang warns when an emumerated type is implicitly converted to another.
+
+drivers/infiniband/sw/rxe/rxe.c:106:27: warning: implicit conversion
+from enumeration type 'enum rxe_device_param' to different enumeration
+type 'enum ib_atomic_cap' [-Wenum-conversion]
+        rxe->attr.atomic_cap                    = RXE_ATOMIC_CAP;
+                                                ~ ^~~~~~~~~~~~~~
+drivers/infiniband/sw/rxe/rxe.c:131:22: warning: implicit conversion
+from enumeration type 'enum rxe_port_param' to different enumeration
+type 'enum ib_port_state' [-Wenum-conversion]
+        port->attr.state                = RXE_PORT_STATE;
+                                        ~ ^~~~~~~~~~~~~~
+drivers/infiniband/sw/rxe/rxe.c:132:24: warning: implicit conversion
+from enumeration type 'enum rxe_port_param' to different enumeration
+type 'enum ib_mtu' [-Wenum-conversion]
+        port->attr.max_mtu              = RXE_PORT_MAX_MTU;
+                                        ~ ^~~~~~~~~~~~~~~~
+drivers/infiniband/sw/rxe/rxe.c:133:27: warning: implicit conversion
+from enumeration type 'enum rxe_port_param' to different enumeration
+type 'enum ib_mtu' [-Wenum-conversion]
+        port->attr.active_mtu           = RXE_PORT_ACTIVE_MTU;
+                                        ~ ^~~~~~~~~~~~~~~~~~~
+drivers/infiniband/sw/rxe/rxe.c:151:24: warning: implicit conversion
+from enumeration type 'enum rxe_port_param' to different enumeration
+type 'enum ib_mtu' [-Wenum-conversion]
+                                ib_mtu_enum_to_int(RXE_PORT_ACTIVE_MTU);
+                                ~~~~~~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~~~
+5 warnings generated.
+
+Use the appropriate values from the expected enumerated type so no
+conversion needs to happen then remove the unneeded definitions.
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/infiniband/sw/rxe/rxe.c       | 13 ++++++-------
+ drivers/infiniband/sw/rxe/rxe_loc.h   |  2 +-
+ drivers/infiniband/sw/rxe/rxe_param.h |  4 ----
+ 3 files changed, 7 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
+index 10999fa69281..383e65c7bbc0 100644
+--- a/drivers/infiniband/sw/rxe/rxe.c
++++ b/drivers/infiniband/sw/rxe/rxe.c
+@@ -103,7 +103,7 @@ static void rxe_init_device_param(struct rxe_dev *rxe)
+ 	rxe->attr.max_res_rd_atom		= RXE_MAX_RES_RD_ATOM;
+ 	rxe->attr.max_qp_init_rd_atom		= RXE_MAX_QP_INIT_RD_ATOM;
+ 	rxe->attr.max_ee_init_rd_atom		= RXE_MAX_EE_INIT_RD_ATOM;
+-	rxe->attr.atomic_cap			= RXE_ATOMIC_CAP;
++	rxe->attr.atomic_cap			= IB_ATOMIC_HCA;
+ 	rxe->attr.max_ee			= RXE_MAX_EE;
+ 	rxe->attr.max_rdd			= RXE_MAX_RDD;
+ 	rxe->attr.max_mw			= RXE_MAX_MW;
+@@ -128,9 +128,9 @@ static void rxe_init_device_param(struct rxe_dev *rxe)
+ /* initialize port attributes */
+ static int rxe_init_port_param(struct rxe_port *port)
+ {
+-	port->attr.state		= RXE_PORT_STATE;
+-	port->attr.max_mtu		= RXE_PORT_MAX_MTU;
+-	port->attr.active_mtu		= RXE_PORT_ACTIVE_MTU;
++	port->attr.state		= IB_PORT_DOWN;
++	port->attr.max_mtu		= IB_MTU_4096;
++	port->attr.active_mtu		= IB_MTU_256;
+ 	port->attr.gid_tbl_len		= RXE_PORT_GID_TBL_LEN;
+ 	port->attr.port_cap_flags	= RXE_PORT_PORT_CAP_FLAGS;
+ 	port->attr.max_msg_sz		= RXE_PORT_MAX_MSG_SZ;
+@@ -147,8 +147,7 @@ static int rxe_init_port_param(struct rxe_port *port)
+ 	port->attr.active_width		= RXE_PORT_ACTIVE_WIDTH;
+ 	port->attr.active_speed		= RXE_PORT_ACTIVE_SPEED;
+ 	port->attr.phys_state		= RXE_PORT_PHYS_STATE;
+-	port->mtu_cap			=
+-				ib_mtu_enum_to_int(RXE_PORT_ACTIVE_MTU);
++	port->mtu_cap			= ib_mtu_enum_to_int(IB_MTU_256);
+ 	port->subnet_prefix		= cpu_to_be64(RXE_PORT_SUBNET_PREFIX);
+ 
+ 	return 0;
+@@ -300,7 +299,7 @@ void rxe_set_mtu(struct rxe_dev *rxe, unsigned int ndev_mtu)
+ 	mtu = eth_mtu_int_to_enum(ndev_mtu);
+ 
+ 	/* Make sure that new MTU in range */
+-	mtu = mtu ? min_t(enum ib_mtu, mtu, RXE_PORT_MAX_MTU) : IB_MTU_256;
++	mtu = mtu ? min_t(enum ib_mtu, mtu, IB_MTU_4096) : IB_MTU_256;
+ 
+ 	port->attr.active_mtu = mtu;
+ 	port->mtu_cap = ib_mtu_enum_to_int(mtu);
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index 8e305422adbb..afd53f57a62b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -195,7 +195,7 @@ static inline int qp_mtu(struct rxe_qp *qp)
+ 	if (qp->ibqp.qp_type == IB_QPT_RC || qp->ibqp.qp_type == IB_QPT_UC)
+ 		return qp->attr.path_mtu;
+ 	else
+-		return RXE_PORT_MAX_MTU;
++		return IB_MTU_4096;
+ }
+ 
+ static inline int rcv_wqe_size(int max_sge)
+diff --git a/drivers/infiniband/sw/rxe/rxe_param.h b/drivers/infiniband/sw/rxe/rxe_param.h
+index 4555510d86c4..bdea899a58ac 100644
+--- a/drivers/infiniband/sw/rxe/rxe_param.h
++++ b/drivers/infiniband/sw/rxe/rxe_param.h
+@@ -90,7 +90,6 @@ enum rxe_device_param {
+ 	RXE_MAX_RES_RD_ATOM		= 0x3f000,
+ 	RXE_MAX_QP_INIT_RD_ATOM		= 128,
+ 	RXE_MAX_EE_INIT_RD_ATOM		= 0,
+-	RXE_ATOMIC_CAP			= 1,
+ 	RXE_MAX_EE			= 0,
+ 	RXE_MAX_RDD			= 0,
+ 	RXE_MAX_MW			= 0,
+@@ -139,9 +138,6 @@ enum rxe_device_param {
+ 
+ /* default/initial rxe port parameters */
+ enum rxe_port_param {
+-	RXE_PORT_STATE			= IB_PORT_DOWN,
+-	RXE_PORT_MAX_MTU		= IB_MTU_4096,
+-	RXE_PORT_ACTIVE_MTU		= IB_MTU_256,
+ 	RXE_PORT_GID_TBL_LEN		= 1024,
+ 	RXE_PORT_PORT_CAP_FLAGS		= RDMA_CORE_CAP_PROT_ROCE_UDP_ENCAP,
+ 	RXE_PORT_MAX_MSG_SZ		= 0x800000,
+-- 
+2.19.0
+
