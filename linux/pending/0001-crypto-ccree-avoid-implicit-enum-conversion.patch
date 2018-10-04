@@ -1,0 +1,37 @@
+From f7e1fa3d472d99b5a994de64718ae31a2a069ef4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 21:31:29 -0700
+Subject: [PATCH 1/3] crypto: ccree - avoid implicit enum conversion
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/crypto/ccree/cc_hw_queue_defs.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/crypto/ccree/cc_hw_queue_defs.h b/drivers/crypto/ccree/cc_hw_queue_defs.h
+index a091ae57f902..45985b955d2c 100644
+--- a/drivers/crypto/ccree/cc_hw_queue_defs.h
++++ b/drivers/crypto/ccree/cc_hw_queue_defs.h
+@@ -449,8 +449,7 @@ static inline void set_flow_mode(struct cc_hw_desc *pdesc,
+  * @pdesc: pointer HW descriptor struct
+  * @mode:  Any one of the modes defined in [CC7x-DESC]
+  */
+-static inline void set_cipher_mode(struct cc_hw_desc *pdesc,
+-				   enum drv_cipher_mode mode)
++static inline void set_cipher_mode(struct cc_hw_desc *pdesc, int mode)
+ {
+ 	pdesc->word[4] |= FIELD_PREP(WORD4_CIPHER_MODE, mode);
+ }
+@@ -461,8 +460,7 @@ static inline void set_cipher_mode(struct cc_hw_desc *pdesc,
+  * @pdesc: pointer HW descriptor struct
+  * @mode: Any one of the modes defined in [CC7x-DESC]
+  */
+-static inline void set_cipher_config0(struct cc_hw_desc *pdesc,
+-				      enum drv_crypto_direction mode)
++static inline void set_cipher_config0(struct cc_hw_desc *pdesc, int mode)
+ {
+ 	pdesc->word[4] |= FIELD_PREP(WORD4_CIPHER_CONF0, mode);
+ }
+-- 
+2.19.0
+
