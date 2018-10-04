@@ -1,0 +1,40 @@
+From be0c6d3eddc54e731a769365e2576dbe0d58384c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 24 Sep 2018 11:19:30 -0700
+Subject: [PATCH 01/15] ocfs2/dlm: Remove unnecessary parentheses
+
+Clang warns when more than one set of parentheses is used for a
+single conditional statement:
+
+fs/ocfs2/dlm/dlmthread.c:534:18: warning: equality comparison with extraneous
+      parentheses [-Wparentheses-equality]
+        if ((res->owner == dlm->node_num)) {
+             ~~~~~~~~~~~^~~~~~~~~~~~~~~~
+fs/ocfs2/dlm/dlmthread.c:534:18: note: remove extraneous parentheses around the
+      comparison to silence this warning
+        if ((res->owner == dlm->node_num)) {
+            ~           ^               ~
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/ocfs2/dlm/dlmthread.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/ocfs2/dlm/dlmthread.c b/fs/ocfs2/dlm/dlmthread.c
+index 838a06d4066a..074d5de17bb2 100644
+--- a/fs/ocfs2/dlm/dlmthread.c
++++ b/fs/ocfs2/dlm/dlmthread.c
+@@ -531,7 +531,7 @@ void __dlm_dirty_lockres(struct dlm_ctxt *dlm, struct dlm_lock_resource *res)
+ 	assert_spin_locked(&res->spinlock);
+ 
+ 	/* don't shuffle secondary queues */
+-	if ((res->owner == dlm->node_num)) {
++	if (res->owner == dlm->node_num) {
+ 		if (res->state & (DLM_LOCK_RES_MIGRATING |
+ 				  DLM_LOCK_RES_BLOCK_DIRTY))
+ 		    return;
+-- 
+2.19.0
+

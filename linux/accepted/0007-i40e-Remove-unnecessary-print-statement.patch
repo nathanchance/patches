@@ -1,0 +1,45 @@
+From b43ced1c7dbbcdd2d93b8ffa9858c15831cdf14b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Sep 2018 12:39:07 -0700
+Subject: [PATCH 07/15] i40e: Remove unnecessary print statement
+
+Clang warns that the address of a pointer will always evaluated as true
+in a boolean context.
+
+drivers/net/ethernet/intel/i40e/i40e_debugfs.c:136:9: warning: address
+of array 'vsi->active_vlans' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+                 vsi->active_vlans ? "<valid>" : "<null>");
+                 ~~~~~^~~~~~~~~~~~ ~
+./include/linux/device.h:1431:33: note: expanded from macro 'dev_info'
+        _dev_info(dev, dev_fmt(fmt), ##__VA_ARGS__)
+                                       ^~~~~~~~~~~
+1 warning generated.
+
+Given that the statement shows that active_vlans is always valid, just
+remove the statement since it's not giving any useful information.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/82
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Tested-by: Andrew Bowers <andrewx.bowers@intel.com>
+Signed-off-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+---
+ drivers/net/ethernet/intel/i40e/i40e_debugfs.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index 56b911a5dd8b..a20d1cf058ad 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -132,8 +132,6 @@ static void i40e_dbg_dump_vsi_seid(struct i40e_pf *pf, int seid)
+ 		dev_info(&pf->pdev->dev, "        vlan_features = 0x%08lx\n",
+ 			 (unsigned long int)nd->vlan_features);
+ 	}
+-	dev_info(&pf->pdev->dev, "    active_vlans is %s\n",
+-		 vsi->active_vlans ? "<valid>" : "<null>");
+ 	dev_info(&pf->pdev->dev,
+ 		 "    flags = 0x%08lx, netdev_registered = %i, current_netdev_flags = 0x%04x\n",
+ 		 vsi->flags, vsi->netdev_registered, vsi->current_netdev_flags);
+-- 
+2.19.0
+
