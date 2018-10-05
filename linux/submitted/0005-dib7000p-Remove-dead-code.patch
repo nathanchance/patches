@@ -1,7 +1,7 @@
-From ec9a857bef351139d4e14d881f46cf12700605c5 Mon Sep 17 00:00:00 2001
+From e901f87362894497384055db0f85d8b93d38fb66 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 14 Sep 2018 22:47:39 -0700
-Subject: [PATCH 05/30] dib7000p: Remove dead code
+Subject: [PATCH 05/29] dib7000p: Remove dead code
 
 Clang warns that 'interleaving' is assigned to itself in this function.
 
