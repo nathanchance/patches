@@ -1,4 +1,4 @@
-From 4fe633684985a750f6089b91a2dacbe1437a598f Mon Sep 17 00:00:00 2001
+From bb3d4400380a2bf239e9bbd62b2cf56b7a584182 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Sun, 30 Sep 2018 23:57:15 +0100
 Subject: [PATCH 4/5] mt76: fix header guard macro define names
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
-index 2f5af3dad2bb..6e178bec07d8 100644
+index d30a58b5df29..ce664f8b1c94 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
 +++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mcu.h
 @@ -15,7 +15,7 @@
