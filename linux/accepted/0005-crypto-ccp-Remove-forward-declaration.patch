@@ -1,7 +1,7 @@
-From 04e2f412720b8c5cf04745cf2e8701ffd295cd01 Mon Sep 17 00:00:00 2001
+From 0cca4ba2bd01d9dd12645c3288939cdac4239803 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 10:26:15 -0700
-Subject: [PATCH 10/10] crypto: ccp - Remove forward declaration
+Subject: [PATCH 5/5] crypto: ccp - Remove forward declaration
 
 Clang emits a warning about this construct:
 
