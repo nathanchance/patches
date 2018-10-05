@@ -1,4 +1,4 @@
-From 81f16d3a18bfbe9e88342d0d1c23e0cbfd8ef4f4 Mon Sep 17 00:00:00 2001
+From b58e1633656c3844e17f8ee37a15c9afaf3b43e1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f827993f613f..c50b41cfc0cf 100644
+index a44501230aff..3ab7faacf2c9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -962,11 +962,6 @@ ifdef CONFIG_STACK_VALIDATION
