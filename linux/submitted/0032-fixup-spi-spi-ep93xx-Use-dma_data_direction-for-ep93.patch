@@ -1,0 +1,28 @@
+From 78b3d519b3ff7ae5b18b3b8ecc1c9fb9c1797819 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 5 Oct 2018 13:49:45 -0700
+Subject: [PATCH 32/32] fixup! spi: spi-ep93xx: Use dma_data_direction for
+ ep93xx_spi_dma_{finish,prepare}
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/spi/spi-ep93xx.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
+index 667da7964d63..79fc3940245a 100644
+--- a/drivers/spi/spi-ep93xx.c
++++ b/drivers/spi/spi-ep93xx.c
+@@ -356,8 +356,7 @@ ep93xx_spi_dma_prepare(struct spi_master *master,
+ 	if (!nents)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	txd = dmaengine_prep_slave_sg(chan, sgt->sgl, nents,
+-				      ep93xx_dma_data_to_trans_dir(dir),
++	txd = dmaengine_prep_slave_sg(chan, sgt->sgl, nents, conf.direction,
+ 				      DMA_CTRL_ACK);
+ 	if (!txd) {
+ 		dma_unmap_sg(chan->device->dev, sgt->sgl, sgt->nents, dir);
+-- 
+2.19.0
+
