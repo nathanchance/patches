@@ -1,7 +1,7 @@
 From 90dbb3bf4f49f3587b4c5bf4fa0cbd70c57025ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 21:31:29 -0700
-Subject: [PATCH 1/4] crypto: ccree - avoid implicit enum conversion
+Subject: [PATCH 1/5] crypto: ccree - avoid implicit enum conversion
 
 Clang warns when one enumerated type is implicitly converted to another
 and this happens in several locations in this driver, ultimately related
