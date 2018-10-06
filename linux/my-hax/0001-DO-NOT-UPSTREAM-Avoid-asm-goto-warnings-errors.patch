@@ -1,7 +1,7 @@
 From b58e1633656c3844e17f8ee37a15c9afaf3b43e1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
+Subject: [PATCH 01/12] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
 
 This isn't strictly required right now and it prevents us from building
 with Clang on x86. It's supposedly in the works though, progress can be

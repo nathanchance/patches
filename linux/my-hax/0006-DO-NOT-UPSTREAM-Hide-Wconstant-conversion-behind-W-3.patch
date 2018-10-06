@@ -1,7 +1,7 @@
-From 0ed4841383be90049fe4e7b883a22ce484823a2b Mon Sep 17 00:00:00 2001
+From c5e70e4af0f947438ab01c9b0808fc3b9bcfc830 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:39:42 -0700
-Subject: [PATCH 07/13] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
+Subject: [PATCH 06/12] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
 
 There are a few of these warnings sprinkled throughout the kernel and
 there is some pushback on fixing them. Joe Perches suggested that this
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 6003e69adff9..e5d50130339b 100644
+index 24b2fb1d1297..502d9feeab24 100644
 --- a/scripts/Makefile.extrawarn
 +++ b/scripts/Makefile.extrawarn
 @@ -11,6 +11,7 @@
@@ -24,10 +24,10 @@ index 6003e69adff9..e5d50130339b 100644
  # ==========================================================================
  
 +KBUILD_CFLAGS += $(call cc-disable-warning, constant-conversion)
- KBUILD_CFLAGS += $(call cc-disable-warning, empty-body)
  KBUILD_CFLAGS += $(call cc-disable-warning, packed-not-aligned)
  
-@@ -48,6 +49,7 @@ warning-2 += $(call cc-option, -Wunused-macros)
+ ifeq ("$(origin W)", "command line")
+@@ -46,6 +47,7 @@ warning-2 += $(call cc-option, -Wunused-macros)
  warning-3 := -Wbad-function-cast
  warning-3 += -Wcast-qual
  warning-3 += -Wconversion

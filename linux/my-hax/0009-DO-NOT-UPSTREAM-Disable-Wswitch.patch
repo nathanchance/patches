@@ -1,7 +1,7 @@
-From cf1d2f81c211edf5c4be1f694785de68d318ba25 Mon Sep 17 00:00:00 2001
+From b9b29cb59c53d32a2c02590a59ce879c088da0d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:31:35 -0700
-Subject: [PATCH 10/13] DO-NOT-UPSTREAM: Disable -Wswitch
+Subject: [PATCH 09/12] DO-NOT-UPSTREAM: Disable -Wswitch
 
 These warnings are related to use of the _IOC macro to define certain
 values for switch statements which then overflow because the type is int
