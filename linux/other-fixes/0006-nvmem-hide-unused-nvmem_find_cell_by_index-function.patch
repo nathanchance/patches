@@ -1,0 +1,72 @@
+From 6dbbe76479ea688b20660e71c0a9fad4ae11333c Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 2 Oct 2018 23:11:12 +0200
+Subject: [PATCH 6/6] nvmem: hide unused nvmem_find_cell_by_index function
+
+nvmem_find_cell_by_index() is only called from inside an #ifdef,
+so we get a build warning without CONFIG_OF:
+
+drivers/nvmem/core.c:496:1: error: 'nvmem_find_cell_by_index' defined but not used [-Werror=unused-function]
+
+Move it into the same #ifdef as the caller to avoid the warning.
+
+Fixes: e888d445ac33 ("nvmem: resolve cells from DT at registration time")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/nvmem/core.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index cc815bb2eebd..f99fb74a646e 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -492,22 +492,6 @@ static int nvmem_add_cells_from_table(struct nvmem_device *nvmem)
+ 	return rval;
+ }
+ 
+-static struct nvmem_cell *
+-nvmem_find_cell_by_index(struct nvmem_device *nvmem, int index)
+-{
+-	struct nvmem_cell *cell = NULL;
+-	int i = 0;
+-
+-	mutex_lock(&nvmem_mutex);
+-	list_for_each_entry(cell, &nvmem->cells, node) {
+-		if (index == i++)
+-			break;
+-	}
+-	mutex_unlock(&nvmem_mutex);
+-
+-	return cell;
+-}
+-
+ static struct nvmem_cell *
+ nvmem_find_cell_by_name(struct nvmem_device *nvmem, const char *cell_id)
+ {
+@@ -972,6 +956,22 @@ nvmem_cell_get_from_lookup(struct device *dev, const char *con_id)
+ }
+ 
+ #if IS_ENABLED(CONFIG_OF)
++static struct nvmem_cell *
++nvmem_find_cell_by_index(struct nvmem_device *nvmem, int index)
++{
++	struct nvmem_cell *cell = NULL;
++	int i = 0;
++
++	mutex_lock(&nvmem_mutex);
++	list_for_each_entry(cell, &nvmem->cells, node) {
++		if (index == i++)
++			break;
++	}
++	mutex_unlock(&nvmem_mutex);
++
++	return cell;
++}
++
+ /**
+  * of_nvmem_cell_get() - Get a nvmem cell from given device node and cell id
+  *
+-- 
+2.19.0
+

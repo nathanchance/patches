@@ -1,7 +1,7 @@
 From bb3d4400380a2bf239e9bbd62b2cf56b7a584182 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Sun, 30 Sep 2018 23:57:15 +0100
-Subject: [PATCH 4/5] mt76: fix header guard macro define names
+Subject: [PATCH 4/6] mt76: fix header guard macro define names
 
 The header guards that are #defined are different from those being
 checked.  Fix this by #defining them to the correct name.
