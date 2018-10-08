@@ -1,7 +1,7 @@
-From a7adcb1ca3c77c3318012f3511b00adfeeeba797 Mon Sep 17 00:00:00 2001
+From 14e400945d80fa5a9482d525f0e3f5a281fa413f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 01/12] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
+Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
 
 This isn't strictly required right now and it prevents us from building
 with Clang on x86. It's supposedly in the works though, progress can be
@@ -10,10 +10,11 @@ tracked below.
 Link: https://github.com/ClangBuiltLinux/linux/issues/6
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- Makefile                          | 5 -----
- arch/x86/Makefile                 | 3 +--
- arch/x86/boot/compressed/Makefile | 3 +++
- 3 files changed, 4 insertions(+), 7 deletions(-)
+ Makefile                              | 5 -----
+ arch/x86/Makefile                     | 3 +--
+ arch/x86/boot/compressed/Makefile     | 3 +++
+ drivers/firmware/efi/libstub/Makefile | 2 +-
+ 4 files changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/Makefile b/Makefile
 index 0dfe83384600..a17e3907f59f 100644
@@ -32,7 +33,7 @@ index 0dfe83384600..a17e3907f59f 100644
      export SKIP_STACK_VALIDATION
    endif
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 5b562e464009..21981ab112bc 100644
+index 5b562e464009..73f4831283ac 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
 @@ -305,8 +305,7 @@ vdso_install:
@@ -41,12 +42,12 @@ index 5b562e464009..21981ab112bc 100644
  ifndef CC_HAVE_ASM_GOTO
 -	@echo Compiler lacks asm-goto support.
 -	@exit 1
-+KBUILD_CFLAGS += "-D __BPF_TRACING__"
++KBUILD_CFLAGS += -D__BPF_TRACING__
  endif
  
  archclean:
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 28764dacf018..9bfbc71b2f55 100644
+index 28764dacf018..9cf6417f8114 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -37,6 +37,9 @@ KBUILD_CFLAGS += $(call cc-option,-ffreestanding)
@@ -54,11 +55,24 @@ index 28764dacf018..9bfbc71b2f55 100644
  KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
  KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
 +ifndef CC_HAVE_ASM_GOTO
-+KBUILD_CFLAGS += "-D __BPF_TRACING__"
++KBUILD_CFLAGS += -D__BPF_TRACING__
 +endif
  
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index c51627660dbb..7eb1bf753bbf 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -25,7 +25,7 @@ KBUILD_CFLAGS			:= $(cflags-y) -DDISABLE_BRANCH_PROFILING \
+ 				   -D__NO_FORTIFY \
+ 				   $(call cc-option,-ffreestanding) \
+ 				   $(call cc-option,-fno-stack-protector) \
+-				   -D__DISABLE_EXPORTS
++				   -D__DISABLE_EXPORTS -D__BPF_TRACING__
+ 
+ GCOV_PROFILE			:= n
+ KASAN_SANITIZE			:= n
 -- 
 2.19.0
 
