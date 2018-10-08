@@ -1,6 +1,6 @@
-From 325e7aceb74145774dc07628b831f1c07de676b2 Mon Sep 17 00:00:00 2001
+From a5426d3a9261939ad47427f44317c25d29e78fcc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 8 Oct 2018 14:53:11 -0700
+Date: Mon, 8 Oct 2018 14:56:41 -0700
 Subject: [PATCH 6/6] mtd: rawnand: toshiba: Remove unused mtd variables
 
 After commit fe8b76ec9886 ("mtd: rawnand: toshiba: Pass a single
@@ -18,6 +18,9 @@ drivers/mtd/nand/raw/nand_toshiba.c:68:19: warning: unused variable
 
 The variables were moved into toshiba_nand_benand_eccstatus so they are
 no longer needed in their respective functions.
+
+I was going to submit this upstream but Miquel said he would take care
+of it soon: https://lore.kernel.org/lkml/20181008095334.6850f033@xps13/
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
