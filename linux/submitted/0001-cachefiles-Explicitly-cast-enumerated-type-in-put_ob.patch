@@ -1,7 +1,7 @@
-From 0fe53245d98bdbeba9d2afb71e043055c537f803 Mon Sep 17 00:00:00 2001
+From cc64f30ab3e7becb1e30b90b8c37815f7f0a73e8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 10:33:44 -0700
-Subject: [PATCH 01/33] cachefiles: Explicitly cast enumerated type in
+Subject: [PATCH 01/29] cachefiles: Explicitly cast enumerated type in
  put_object
 
 Clang warns when one enumerated type is implicitly converted to another.
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
-index af2b17b21b94..15e5988a83de 100644
+index 95983c744164..5ab411d4bc59 100644
 --- a/fs/cachefiles/namei.c
 +++ b/fs/cachefiles/namei.c
 @@ -244,11 +244,13 @@ static int cachefiles_mark_object_active(struct cachefiles_cache *cache,
