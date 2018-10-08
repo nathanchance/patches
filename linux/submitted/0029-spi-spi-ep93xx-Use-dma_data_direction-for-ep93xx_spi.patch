@@ -1,7 +1,7 @@
 From 568a62e609b4b8bb86b5540798675609314aa270 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 19:36:23 -0700
-Subject: [PATCH 29/29] spi: spi-ep93xx: Use dma_data_direction for
+Subject: [PATCH 29/31] spi: spi-ep93xx: Use dma_data_direction for
  ep93xx_spi_dma_{finish,prepare}
 
 Clang warns when one enumerated type is implicitly converted to another.

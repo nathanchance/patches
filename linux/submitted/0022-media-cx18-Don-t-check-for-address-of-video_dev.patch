@@ -1,7 +1,7 @@
 From f752417048ec7130cb43dbfd4692e4b8882c863a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 12:57:37 -0700
-Subject: [PATCH 22/29] media: cx18: Don't check for address of video_dev
+Subject: [PATCH 22/31] media: cx18: Don't check for address of video_dev
 
 Clang warns that the address of a pointer will always evaluated as true
 in a boolean context.
