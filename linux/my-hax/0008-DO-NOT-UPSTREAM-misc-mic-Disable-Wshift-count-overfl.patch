@@ -1,0 +1,26 @@
+From 7d8d252d194db5bcf9bc0449182c1fb248c4cd77 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 20:22:55 -0700
+Subject: [PATCH 08/12] DO-NOT-UPSTREAM: misc: mic: Disable
+ -Wshift-count-overflow for mic_x100.o
+
+GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/92
+LLVM bug: https://bugs.llvm.org/show_bug.cgi?id=38789
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/misc/mic/card/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/misc/mic/card/Makefile b/drivers/misc/mic/card/Makefile
+index 921a7e7e0fbd..26408b00e181 100644
+--- a/drivers/misc/mic/card/Makefile
++++ b/drivers/misc/mic/card/Makefile
+@@ -9,3 +9,5 @@ obj-$(CONFIG_INTEL_MIC_CARD) += mic_card.o
+ mic_card-y += mic_x100.o
+ mic_card-y += mic_device.o
+ mic_card-y += mic_debugfs.o
++
++CFLAGS_mic_card.o += $(call cc-disable-warning, shift-count-overflow)
+-- 
+2.19.0
+
