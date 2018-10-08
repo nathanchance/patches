@@ -1,4 +1,4 @@
-From b58e1633656c3844e17f8ee37a15c9afaf3b43e1 Mon Sep 17 00:00:00 2001
+From a7adcb1ca3c77c3318012f3511b00adfeeeba797 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 01/11] DO-NOT-UPSTREAM: Avoid asm goto warnings/errors
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index a44501230aff..3ab7faacf2c9 100644
+index 0dfe83384600..a17e3907f59f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -962,11 +962,6 @@ ifdef CONFIG_STACK_VALIDATION
@@ -32,10 +32,10 @@ index a44501230aff..3ab7faacf2c9 100644
      export SKIP_STACK_VALIDATION
    endif
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 8f6e7eb8ae9f..4874286c5815 100644
+index 5b562e464009..21981ab112bc 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -299,8 +299,7 @@ vdso_install:
+@@ -305,8 +305,7 @@ vdso_install:
  archprepare: checkbin
  checkbin:
  ifndef CC_HAVE_ASM_GOTO

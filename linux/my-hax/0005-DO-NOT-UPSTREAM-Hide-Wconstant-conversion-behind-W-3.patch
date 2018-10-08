@@ -1,4 +1,4 @@
-From c6d7710d658a611416225799c4e2c3203b917de4 Mon Sep 17 00:00:00 2001
+From 22110e9a4541690f39a6cb87ae131fbf2e65ecaf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:39:42 -0700
 Subject: [PATCH 05/11] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 24b2fb1d1297..502d9feeab24 100644
+index cf6cd0ef6975..2a21755f37bb 100644
 --- a/scripts/Makefile.extrawarn
 +++ b/scripts/Makefile.extrawarn
 @@ -11,6 +11,7 @@
@@ -27,7 +27,7 @@ index 24b2fb1d1297..502d9feeab24 100644
  KBUILD_CFLAGS += $(call cc-disable-warning, packed-not-aligned)
  
  ifeq ("$(origin W)", "command line")
-@@ -46,6 +47,7 @@ warning-2 += $(call cc-option, -Wunused-macros)
+@@ -47,6 +48,7 @@ warning-2 += $(call cc-option, -Wunused-macros)
  warning-3 := -Wbad-function-cast
  warning-3 += -Wcast-qual
  warning-3 += -Wconversion
