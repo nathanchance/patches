@@ -1,7 +1,7 @@
 From 45505d62fb0a4b5af15abad95c4e147f403364c3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 5 Oct 2018 17:42:24 -0700
-Subject: [PATCH 22/22] drm/i915: Convert _print_param to a macro
+Subject: [PATCH 22/23] drm/i915: Convert _print_param to a macro
 
 When building the kernel with Clang with defconfig and CONFIG_64BIT
 disabled, vmlinux fails to link because of the BUILD_BUG in
