@@ -1,7 +1,7 @@
-From 31afa215d194a91fb1f0820ef3fe802eb2072561 Mon Sep 17 00:00:00 2001
+From ec9cbc1f9ae639fe44fc51d222ecc2bed2998d54 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 1 Oct 2018 23:32:45 -0700
-Subject: [PATCH 2/3] drm/scheduler: Simplify spsc_queue_count check in
+Subject: [PATCH 2/8] drm/scheduler: Simplify spsc_queue_count check in
  drm_sched_entity_select_rq
 
 Clang generates a warning when it sees a logical not followed by a
