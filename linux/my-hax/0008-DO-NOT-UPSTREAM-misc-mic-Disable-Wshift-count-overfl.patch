@@ -1,4 +1,4 @@
-From b2c5c3f6e9f7488ef4a5ca4130a351fd13d69ebf Mon Sep 17 00:00:00 2001
+From f045658579d2d0c7045498935d322ee54c7270d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:22:55 -0700
 Subject: [PATCH 08/15] DO-NOT-UPSTREAM: misc: mic: Disable
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/misc/mic/card/Makefile b/drivers/misc/mic/card/Makefile
-index 921a7e7e0fbd..26408b00e181 100644
+index 921a7e7e0fbd..4546d0fbc73d 100644
 --- a/drivers/misc/mic/card/Makefile
 +++ b/drivers/misc/mic/card/Makefile
 @@ -9,3 +9,5 @@ obj-$(CONFIG_INTEL_MIC_CARD) += mic_card.o
@@ -20,7 +20,7 @@ index 921a7e7e0fbd..26408b00e181 100644
  mic_card-y += mic_device.o
  mic_card-y += mic_debugfs.o
 +
-+CFLAGS_mic_card.o += $(call cc-disable-warning, shift-count-overflow)
++CFLAGS_mic_x100.o += $(call cc-disable-warning, shift-count-overflow)
 -- 
 2.19.0
 
