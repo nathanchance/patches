@@ -1,0 +1,38 @@
+From 191bfb44313ba931c1596953510e0c334c1da47a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 9 Oct 2018 09:43:00 -0700
+Subject: [PATCH 15/15] DO-NOT-UPSTREAM: drm/amdpu: Remove #warning messages
+
+I'm not running this on actual hardware, I don't need to see this in an
+allyesconfig build.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index fb26039beeba..f610b3226e0c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -536,8 +536,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+ #if defined(CONFIG_DRM_AMD_DC)
+ 		else if (amdgpu_device_has_dc_support(adev))
+ 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
+-#else
+-#	warning "Enable CONFIG_DRM_AMD_DC for display support on SOC15."
+ #endif
+ 		amdgpu_device_ip_block_add(adev, &gfx_v9_0_ip_block);
+ 		amdgpu_device_ip_block_add(adev, &sdma_v4_0_ip_block);
+@@ -557,8 +555,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+ #if defined(CONFIG_DRM_AMD_DC)
+ 		else if (amdgpu_device_has_dc_support(adev))
+ 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
+-#else
+-#	warning "Enable CONFIG_DRM_AMD_DC for display support on SOC15."
+ #endif
+ 		amdgpu_device_ip_block_add(adev, &gfx_v9_0_ip_block);
+ 		amdgpu_device_ip_block_add(adev, &sdma_v4_0_ip_block);
+-- 
+2.19.0
+
