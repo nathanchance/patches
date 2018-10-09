@@ -1,7 +1,7 @@
-From 478ee089b7d3ef2cfc2bb15237c5ea6c79bd9878 Mon Sep 17 00:00:00 2001
+From fdb40d25eed1007b619bbaa7d2b0f902900ded79 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 8 Oct 2018 15:10:18 -0700
-Subject: [PATCH 30/31] media: tc358743: Remove unnecessary self assignment
+Subject: [PATCH 20/21] media: tc358743: Remove unnecessary self assignment
 
 Clang warns when a variable is assigned to itself.
 
