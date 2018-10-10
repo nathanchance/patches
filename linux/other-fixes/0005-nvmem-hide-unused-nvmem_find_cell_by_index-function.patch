@@ -1,7 +1,7 @@
-From 7edacc084e66099102051055b779dc33b7921dd3 Mon Sep 17 00:00:00 2001
+From 8288ad29af468d3ff410f719fa2067d315ecd77e Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 2 Oct 2018 23:11:12 +0200
-Subject: [PATCH 5/7] nvmem: hide unused nvmem_find_cell_by_index function
+Subject: [PATCH 5/5] nvmem: hide unused nvmem_find_cell_by_index function
 
 nvmem_find_cell_by_index() is only called from inside an #ifdef,
 so we get a build warning without CONFIG_OF:
@@ -68,5 +68,5 @@ index cc815bb2eebd..f99fb74a646e 100644
   * of_nvmem_cell_get() - Get a nvmem cell from given device node and cell id
   *
 -- 
-2.19.0
+2.19.1
 
