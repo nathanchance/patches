@@ -1,4 +1,4 @@
-From 05019d776e745a725e84e97d8bf9fcc2a4b21727 Mon Sep 17 00:00:00 2001
+From cab08bd64f4992168357bd6149210be7c6ab83b6 Mon Sep 17 00:00:00 2001
 From: David Woodhouse <dwmw2@infradead.org>
 Date: Fri, 9 Feb 2018 16:18:33 +0000
 Subject: [PATCH] Make clang hate percpu.h less in 32-bit mode
@@ -101,5 +101,5 @@ index e9202a0de8f0..7c6d905847b9 100644
  	case 2:						\
  		asm(op "w "__percpu_arg(P1)",%0"	\
 -- 
-2.19.0
+2.19.1
 
