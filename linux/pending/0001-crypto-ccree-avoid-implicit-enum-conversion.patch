@@ -1,4 +1,4 @@
-From 474b350a495cfb0ddd24ddf640aec111b93901fd Mon Sep 17 00:00:00 2001
+From e33b0276f4fb52a337ba053a9eb4ec679d5d4040 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 21:31:29 -0700
 Subject: [PATCH 1/5] crypto: ccree - avoid implicit enum conversion
@@ -46,5 +46,5 @@ index a091ae57f902..45985b955d2c 100644
  	pdesc->word[4] |= FIELD_PREP(WORD4_CIPHER_CONF0, mode);
  }
 -- 
-2.19.0
+2.19.1
 

@@ -1,4 +1,4 @@
-From 2d5fefce151e819b9fa731af3095868a7c3e7168 Mon Sep 17 00:00:00 2001
+From 92e53dd7e4570323ff66e915d6ae233d94465ec1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Oct 2018 09:45:01 -0700
 Subject: [PATCH 5/5] x86/time: Correct jiffies' declaration
@@ -22,5 +22,5 @@ index b23f5420b26a..0e14f6c0d35e 100644
  
  unsigned long profile_pc(struct pt_regs *regs)
 -- 
-2.19.0
+2.19.1
 
