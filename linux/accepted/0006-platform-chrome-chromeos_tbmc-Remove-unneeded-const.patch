@@ -1,0 +1,41 @@
+From be65eb0f7326a26e68e29a8efa762ba789c8d76b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 8 Oct 2018 15:20:41 -0700
+Subject: [PATCH 6/6] platform/chrome: chromeos_tbmc - Remove unneeded const
+
+Clang warns:
+
+drivers/platform/chrome/chromeos_tbmc.c:102:14: warning: duplicate
+'const' declaration specifier [-Wduplicate-decl-specifier]
+static const SIMPLE_DEV_PM_OPS(chromeos_tbmc_pm_ops, NULL,
+             ^
+./include/linux/pm.h:365:56: note: expanded from macro
+'SIMPLE_DEV_PM_OPS'
+                                                       ^
+1 warning generated.
+
+SIMPLE_DEV_PM_OPS is already declared as const, this one is unnecessary
+so remove it.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Benson Leung <bleung@chromium.org>
+---
+ drivers/platform/chrome/chromeos_tbmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/platform/chrome/chromeos_tbmc.c b/drivers/platform/chrome/chromeos_tbmc.c
+index 1e81f8144c0d..ce259ec9f990 100644
+--- a/drivers/platform/chrome/chromeos_tbmc.c
++++ b/drivers/platform/chrome/chromeos_tbmc.c
+@@ -99,7 +99,7 @@ static const struct acpi_device_id chromeos_tbmc_acpi_device_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(acpi, chromeos_tbmc_acpi_device_ids);
+ 
+-static const SIMPLE_DEV_PM_OPS(chromeos_tbmc_pm_ops, NULL,
++static SIMPLE_DEV_PM_OPS(chromeos_tbmc_pm_ops, NULL,
+ 		chromeos_tbmc_resume);
+ 
+ static struct acpi_driver chromeos_tbmc_driver = {
+-- 
+2.19.1
+

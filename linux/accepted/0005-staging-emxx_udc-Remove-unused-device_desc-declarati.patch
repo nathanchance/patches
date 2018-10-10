@@ -1,7 +1,7 @@
-From b3a376a67785de9e2766e098a105f1e20ca1706d Mon Sep 17 00:00:00 2001
+From 7345139fe8a2c6aebeb4de58bc18a744558a8006 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 22:56:00 -0700
-Subject: [PATCH 7/8] staging: emxx_udc: Remove unused device_desc declaration
+Subject: [PATCH 5/6] staging: emxx_udc: Remove unused device_desc declaration
 
 Clang warns:
 
@@ -56,5 +56,5 @@ index 0e8d3f232fe9..65cc3d9af972 100644
  static void _nbu2ss_set_test_mode(struct nbu2ss_udc *udc, u32 mode)
  {
 -- 
-2.19.0
+2.19.1
 

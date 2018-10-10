@@ -1,7 +1,7 @@
-From fd5371fefb846926429189afed05a5f6463e9b99 Mon Sep 17 00:00:00 2001
+From a3556b290ae70875825be4e0405f504a1c037d42 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 18:21:25 -0700
-Subject: [PATCH 5/8] staging: rtlwifi: Remove unnecessary parentheses
+Subject: [PATCH 3/6] staging: rtlwifi: Remove unnecessary parentheses
 
 Clang warns when multiple pairs of parentheses are used for a single
 conditional statement.
@@ -42,5 +42,5 @@ index 42020101380a..d6cea73fa185 100644
  
  			trig_mode = (u8)var1[1];
 -- 
-2.19.0
+2.19.1
 

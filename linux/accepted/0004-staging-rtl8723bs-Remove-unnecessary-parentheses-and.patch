@@ -1,7 +1,7 @@
-From 156a7730b49be3be9589dcec0dbb9ed9b3d66b24 Mon Sep 17 00:00:00 2001
+From 0c08e0afb4f633e23673a19958b148f07bf05179 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 18:32:51 -0700
-Subject: [PATCH 6/8] staging: rtl8723bs: Remove unnecessary parentheses and
+Subject: [PATCH 4/6] staging: rtl8723bs: Remove unnecessary parentheses and
  dead commented code
 
 Clang warns when multiple pairs of parentheses are used for a single
@@ -34,5 +34,5 @@ index 592917fc00aa..c7e55618b9a8 100644
  			rtw_write8(padapter, REG_BCN_CTRL, DIS_TSF_UDT|EN_BCN_FUNCTION|DIS_BCNQ_SUB);
  		} else if (mode == _HW_STATE_AP_) {
 -- 
-2.19.0
+2.19.1
 

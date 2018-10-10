@@ -1,7 +1,7 @@
-From ffb2b8f655fda0d1e6783cc7297e51f018aa42f6 Mon Sep 17 00:00:00 2001
+From e6c5cacbdb5d18925d52cc80e9808a917a5c5917 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Sep 2018 14:55:05 -0700
-Subject: [PATCH 1/8] drm/amd/display: Use proper enums in
+Subject: [PATCH 1/6] drm/amd/display: Use proper enums in
  process_channel_reply
 
 Clang warns when one enumerated type is implicitly converted to another.
@@ -57,5 +57,5 @@ index 8eee8ace1259..59c3ed43d609 100644
  	}
  
 -- 
-2.19.0
+2.19.1
 

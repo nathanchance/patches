@@ -1,7 +1,7 @@
-From ec9cbc1f9ae639fe44fc51d222ecc2bed2998d54 Mon Sep 17 00:00:00 2001
+From 9d479bc3f09318d425b187363b0068b7f0ce5cdb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 1 Oct 2018 23:32:45 -0700
-Subject: [PATCH 2/8] drm/scheduler: Simplify spsc_queue_count check in
+Subject: [PATCH 2/6] drm/scheduler: Simplify spsc_queue_count check in
  drm_sched_entity_select_rq
 
 Clang generates a warning when it sees a logical not followed by a
@@ -60,5 +60,5 @@ index 4e5e95c0cab5..3e22a54a99c2 100644
  
  	fence = READ_ONCE(entity->last_scheduled);
 -- 
-2.19.0
+2.19.1
 
