@@ -1,7 +1,7 @@
-From 8b4bb205806192281238450d5293307712c4a365 Mon Sep 17 00:00:00 2001
+From cdc7ba5bae9621187bf84178c4e485bcfd4aaa3d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 16:48:18 -0700
-Subject: [PATCH 13/23] scsi: isci: Use proper enumerated type in
+Subject: [PATCH 13/22] scsi: isci: Use proper enumerated type in
  atapi_d2h_reg_frame_handler
 
 Clang warns when one enumerated type is implicitly converted to another.
@@ -46,5 +46,5 @@ index ed197bc8e801..2f151708b59a 100644
  
  	if (status != SCI_SUCCESS) {
 -- 
-2.19.0
+2.19.1
 

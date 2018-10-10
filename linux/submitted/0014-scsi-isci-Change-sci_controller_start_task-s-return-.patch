@@ -1,7 +1,7 @@
-From e6b2bf2ebe4311c6de3f1224c4ec4843c08f8784 Mon Sep 17 00:00:00 2001
+From ae921a3cb39b8b0d6f2cf30998d43c2309a7926a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 17:11:04 -0700
-Subject: [PATCH 14/23] scsi: isci: Change sci_controller_start_task's return
+Subject: [PATCH 14/22] scsi: isci: Change sci_controller_start_task's return
  type to sci_status
 
 Clang warns when an enumerated type is implicitly converted to another.
@@ -97,5 +97,5 @@ index 6dcaed0c1fc8..fb6eba331ac6 100644
  			 "%s: start_io failed - status = 0x%x, request = %p\n",
  			 __func__,
 -- 
-2.19.0
+2.19.1
 

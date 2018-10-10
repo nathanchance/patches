@@ -1,7 +1,7 @@
-From fb0d89bd7ad372e9f3374773f6d358bbc9de1d7f Mon Sep 17 00:00:00 2001
+From b9b443e2cd1186c25bd970cdd7060d8511a3c456 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 8 Oct 2018 15:59:05 -0700
-Subject: [PATCH 23/23] isdn/hisax: amd7930_fn: Remove unnecessary parentheses
+Subject: [PATCH 22/22] isdn/hisax: amd7930_fn: Remove unnecessary parentheses
 
 Clang warns when multiple sets of parentheses are used for a single
 conditional statement.
@@ -40,5 +40,5 @@ index 77debda2221b..6c336366128c 100644
  			 * change to F3 */
  			Amd7930_ph_command(cs, 0x20, "HW_RESET REQUEST"); //LMR1 bit 5
 -- 
-2.19.0
+2.19.1
 

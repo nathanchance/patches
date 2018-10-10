@@ -1,7 +1,7 @@
-From 262b30cac1789c34b520b61f9e1e1b9c2fa27725 Mon Sep 17 00:00:00 2001
+From 0151d9946ef64f10b287ef16fcffb477a583d0d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 20 Sep 2018 16:02:12 -0700
-Subject: [PATCH 10/23] scsi: bfa: Remove unused functions
+Subject: [PATCH 10/22] scsi: bfa: Remove unused functions
 
 Clang warns when a variable is assigned to itself.
 
@@ -229,5 +229,5 @@ index b109a8813401..ac08d0b5b89a 100644
  		__be16 ox_id, u32 reason_code, u32 reason_expl);
  
 -- 
-2.19.0
+2.19.1
 

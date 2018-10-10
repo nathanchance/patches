@@ -1,7 +1,7 @@
-From 2b760dc8e55e0d3199c9436b8222b2b39f431ca0 Mon Sep 17 00:00:00 2001
+From 224511562b000c70724abda99f1c4724ec1897bc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 22:09:44 -0700
-Subject: [PATCH 15/23] IB/rxe: Remove unnecessary enum values
+Subject: [PATCH 15/22] IB/rxe: Remove unnecessary enum values
 
 Clang warns when an emumerated type is implicitly converted to another.
 
@@ -124,5 +124,5 @@ index 4555510d86c4..bdea899a58ac 100644
  	RXE_PORT_PORT_CAP_FLAGS		= RDMA_CORE_CAP_PROT_ROCE_UDP_ENCAP,
  	RXE_PORT_MAX_MSG_SZ		= 0x800000,
 -- 
-2.19.0
+2.19.1
 
