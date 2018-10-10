@@ -1,7 +1,7 @@
-From 666dcd364185bf1b668f14d542f0fd46dcc89df0 Mon Sep 17 00:00:00 2001
+From 12e543f769770725533be74679a2e4ca2c335860 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:28:57 -0700
-Subject: [PATCH 4/5] Kbuild: Hide Clang's -Wempty-body behind W=1
+Subject: [PATCH 3/4] Kbuild: Hide Clang's -Wempty-body behind W=1
 
 There are only a few instances of this warning in an arm64 allyesconfig
 build but none of them appear useful. I believe the intention of the
