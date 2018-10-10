@@ -1,4 +1,4 @@
-From 971fd325decb0a2525b01b0dd5553cff5eaf90f5 Mon Sep 17 00:00:00 2001
+From d3f2e15ea229dc9cbb61a6d4edb49d7b7bc4c144 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 8 Oct 2018 15:42:15 -0700
 Subject: [PATCH 13/15] DO-NOT-UPSTREAM: efi/libstub: Add missing compiler
@@ -34,5 +34,5 @@ index 7eb1bf753bbf..e433d5ee633a 100644
  # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
  # disable the stackleak plugin
 -- 
-2.19.0
+2.19.1
 

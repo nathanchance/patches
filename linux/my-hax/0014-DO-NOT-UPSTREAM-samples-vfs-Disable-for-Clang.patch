@@ -1,4 +1,4 @@
-From 2f2c401448910e104e1c4f972afbcc5448733ef1 Mon Sep 17 00:00:00 2001
+From e789ae73db19494a5d428247e9a2b186f998c055 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Oct 2018 09:44:02 -0700
 Subject: [PATCH 14/15] DO-NOT-UPSTREAM: samples: vfs: Disable for Clang
@@ -38,10 +38,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/samples/Kconfig b/samples/Kconfig
-index 8df1c012820f..0fde211b020b 100644
+index 0dbe4ce46742..67943dc5f04a 100644
 --- a/samples/Kconfig
 +++ b/samples/Kconfig
-@@ -148,7 +148,7 @@ config SAMPLE_VFIO_MDEV_MBOCHS
+@@ -149,7 +149,7 @@ config SAMPLE_VFIO_MDEV_MBOCHS
  
  config SAMPLE_VFS
  	bool "Build example programs that use new VFS system calls"
@@ -51,5 +51,5 @@ index 8df1c012820f..0fde211b020b 100644
  	  Build example userspace programs that use new VFS system calls such
  	  as mount API and statx().  Note that this is restricted to the x86
 -- 
-2.19.0
+2.19.1
 

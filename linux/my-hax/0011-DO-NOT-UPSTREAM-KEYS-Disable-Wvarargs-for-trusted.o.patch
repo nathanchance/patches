@@ -1,4 +1,4 @@
-From 3588f99d78fd251d5f057bacbc36f0f4fc9f420e Mon Sep 17 00:00:00 2001
+From 5326736cc4404c947720e38f06f2fcfba23bdb10 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:33:54 -0700
 Subject: [PATCH 11/15] DO-NOT-UPSTREAM: KEYS: Disable -Wvarargs for trusted.o
@@ -12,15 +12,15 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/security/keys/Makefile b/security/keys/Makefile
-index ef1581b337a3..0cde086e3eac 100644
+index 9cef54064f60..f8023063cbfe 100644
 --- a/security/keys/Makefile
 +++ b/security/keys/Makefile
-@@ -29,3 +29,5 @@ obj-$(CONFIG_KEY_DH_OPERATIONS) += dh.o
+@@ -30,3 +30,5 @@ obj-$(CONFIG_ASYMMETRIC_KEY_TYPE) += keyctl_pkey.o
  obj-$(CONFIG_BIG_KEYS) += big_key.o
  obj-$(CONFIG_TRUSTED_KEYS) += trusted.o
  obj-$(CONFIG_ENCRYPTED_KEYS) += encrypted-keys/
 +
 +CFLAGS_trusted.o += $(call cc-disable-warning, varargs)
 -- 
-2.19.0
+2.19.1
 

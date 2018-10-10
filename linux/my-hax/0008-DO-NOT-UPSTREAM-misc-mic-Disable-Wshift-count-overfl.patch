@@ -1,4 +1,4 @@
-From f045658579d2d0c7045498935d322ee54c7270d6 Mon Sep 17 00:00:00 2001
+From af86f12f4e9a512887e21420bdc01ad6118881a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:22:55 -0700
 Subject: [PATCH 08/15] DO-NOT-UPSTREAM: misc: mic: Disable
@@ -22,5 +22,5 @@ index 921a7e7e0fbd..4546d0fbc73d 100644
 +
 +CFLAGS_mic_x100.o += $(call cc-disable-warning, shift-count-overflow)
 -- 
-2.19.0
+2.19.1
 
