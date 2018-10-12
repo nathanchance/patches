@@ -1,0 +1,26 @@
+From 815ec276a1ebf76660770ec668c98d9c0ab2c21f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 20:44:48 -0700
+Subject: [PATCH 03/10] DO-NOT-UPSTREAM: regulator: Disable -Wdivision-by-zero
+ for da903x.o
+
+GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/92
+LLVM bug: https://bugs.llvm.org/show_bug.cgi?id=38789
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/regulator/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/regulator/Makefile b/drivers/regulator/Makefile
+index 300bc4ce01d6..22a2be001ef2 100644
+--- a/drivers/regulator/Makefile
++++ b/drivers/regulator/Makefile
+@@ -131,3 +131,5 @@ obj-$(CONFIG_REGULATOR_WM8400) += wm8400-regulator.o
+ obj-$(CONFIG_REGULATOR_WM8994) += wm8994-regulator.o
+ 
+ ccflags-$(CONFIG_REGULATOR_DEBUG) += -DDEBUG
++
++CFLAGS_da903x.o += $(call cc-disable-warning, division-by-zero)
+-- 
+2.19.1
+

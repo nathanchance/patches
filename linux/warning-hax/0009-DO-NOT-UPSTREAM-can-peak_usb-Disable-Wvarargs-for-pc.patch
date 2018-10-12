@@ -1,0 +1,26 @@
+From c57fc7be220c40af6cceedc524ecd41dd7d86551 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 20:36:59 -0700
+Subject: [PATCH 09/10] DO-NOT-UPSTREAM: can: peak_usb: Disable -Wvarargs for
+ pcan_usb_pro.o
+
+Documented with no clear way to solve it, hide it for now.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/109
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/can/usb/peak_usb/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/can/usb/peak_usb/Makefile b/drivers/net/can/usb/peak_usb/Makefile
+index 1839e9ca62e7..4639e87a2afd 100644
+--- a/drivers/net/can/usb/peak_usb/Makefile
++++ b/drivers/net/can/usb/peak_usb/Makefile
+@@ -1,2 +1,4 @@
+ obj-$(CONFIG_CAN_PEAK_USB) += peak_usb.o
+ peak_usb-y = pcan_usb_core.o pcan_usb.o pcan_usb_pro.o pcan_usb_fd.o
++
++CFLAGS_pcan_usb_pro.o += $(call cc-disable-warning, varargs)
+-- 
+2.19.1
+
