@@ -1,7 +1,7 @@
-From 4fd742acdda257b4e42ce493c1bb58a418d85db9 Mon Sep 17 00:00:00 2001
+From 76831f2f6e3b753e1201a294dfa807d78deb80a1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 20 Sep 2018 17:27:23 -0700
-Subject: [PATCH 06/23] scsi: qla2xxx: Simplify conditional check
+Subject: [PATCH 06/20] scsi: qla2xxx: Simplify conditional check
 
 Clang generates a warning when it sees a logical not followed by a
 conditional operator like ==, >, or < because it thinks that the logical
