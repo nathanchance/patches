@@ -1,7 +1,7 @@
-From d3f2e15ea229dc9cbb61a6d4edb49d7b7bc4c144 Mon Sep 17 00:00:00 2001
+From e632e0e3ba76aa2a78681c590cbaeaeb666f4fa4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 8 Oct 2018 15:42:15 -0700
-Subject: [PATCH 13/15] DO-NOT-UPSTREAM: efi/libstub: Add missing compiler
+Subject: [PATCH 13/16] DO-NOT-UPSTREAM: efi/libstub: Add missing compiler
  flags to hide warnings on x86_64
 
 -Wpointer-sign has been disabled since the beginning of git history.
