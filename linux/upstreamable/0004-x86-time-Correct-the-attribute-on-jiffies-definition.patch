@@ -1,0 +1,51 @@
+From 01e24f04a7884109946c2805218f02b4abb1da11 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 9 Oct 2018 09:45:01 -0700
+Subject: [PATCH 4/6] x86/time: Correct the attribute on jiffies' definition
+
+Clang warns that the declaration of jiffies in include/linux/jiffies.h
+doesn't match the definition in arch/x86/time/kernel.c:
+
+arch/x86/kernel/time.c:29:42: warning: section does not match previous declaration [-Wsection]
+__visible volatile unsigned long jiffies __cacheline_aligned = INITIAL_JIFFIES;
+                                         ^
+./include/linux/cache.h:49:4: note: expanded from macro '__cacheline_aligned'
+                 __section__(".data..cacheline_aligned")))
+                 ^
+./include/linux/jiffies.h:81:31: note: previous attribute is here
+extern unsigned long volatile __cacheline_aligned_in_smp __jiffy_arch_data jiffies;
+                              ^
+./arch/x86/include/asm/cache.h:20:2: note: expanded from macro '__cacheline_aligned_in_smp'
+        __page_aligned_data
+        ^
+./include/linux/linkage.h:39:29: note: expanded from macro '__page_aligned_data'
+\#define __page_aligned_data     __section(.data..page_aligned) __aligned(PAGE_SIZE)
+                                ^
+./include/linux/compiler_attributes.h:233:56: note: expanded from macro '__section'
+\#define __section(S)                    __attribute__((__section__(#S)))
+                                                       ^
+1 warning generated.
+
+Make the declaration and definiton match.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/kernel/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/time.c b/arch/x86/kernel/time.c
+index b23f5420b26a..0e14f6c0d35e 100644
+--- a/arch/x86/kernel/time.c
++++ b/arch/x86/kernel/time.c
+@@ -26,7 +26,7 @@
+ #include <asm/time.h>
+ 
+ #ifdef CONFIG_X86_64
+-__visible volatile unsigned long jiffies __cacheline_aligned = INITIAL_JIFFIES;
++__visible volatile unsigned long jiffies __cacheline_aligned_in_smp = INITIAL_JIFFIES;
+ #endif
+ 
+ unsigned long profile_pc(struct pt_regs *regs)
+-- 
+2.19.1
+

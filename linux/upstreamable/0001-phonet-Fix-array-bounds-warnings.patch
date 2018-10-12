@@ -1,0 +1,43 @@
+From b0655f2aa00633d4b11592e01bde6f6063de108d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 21:33:49 -0700
+Subject: [PATCH 1/6] phonet: Fix array bounds warnings
+
+Clang currently warns:
+
+net/phonet/pep.c:281:10: warning: array index 1 is past the end of the
+array (which contains 1 element) [-Warray-bounds]
+        switch (hdr->data[1]) {
+                ^         ~
+./include/net/phonet/pep.h:66:3: note: array 'data' declared here
+                u8              data[1];
+                ^
+
+pnp_hdr populates struct pep_sock with the contents of struct sk_buff,
+which has a member data of type unsigned char *. Make that change here
+to make it clear to Clang that the data being modified has been passed
+along from sk_buff.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/115
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/net/phonet/pep.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/net/phonet/pep.h b/include/net/phonet/pep.h
+index b669fe6dbc3b..4348b1f0ab71 100644
+--- a/include/net/phonet/pep.h
++++ b/include/net/phonet/pep.h
+@@ -63,7 +63,7 @@ struct pnpipehdr {
+ 		u8		state_after_reset;	/* reset request */
+ 		u8		error_code;		/* any response */
+ 		u8		pep_type;		/* status indication */
+-		u8		data[1];
++		u8		*data;
+ 	};
+ };
+ #define other_pep_type		data[1]
+-- 
+2.19.1
+

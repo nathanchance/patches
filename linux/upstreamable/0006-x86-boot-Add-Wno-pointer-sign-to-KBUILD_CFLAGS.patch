@@ -1,0 +1,28 @@
+From 921faea11aee4e6a5b65f73ad0e5471f68030ded Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 11 Oct 2018 18:31:35 -0700
+Subject: [PATCH 6/6] x86/boot: Add -Wno-pointer-sign to KBUILD_CFLAGS
+
+It has been disabled for the whole kernel since the beginning of git
+history.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/compressed/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
+index 28764dacf018..466f66c8a7f8 100644
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -37,6 +37,7 @@ KBUILD_CFLAGS += $(call cc-option,-ffreestanding)
+ KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
+ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
++KBUILD_CFLAGS += -Wno-pointer-sign
+ 
+ KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ GCOV_PROFILE := n
+-- 
+2.19.1
+
