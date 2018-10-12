@@ -1,0 +1,45 @@
+From 6b44e68767703268a5fc29b30eb9dd8a9f77528c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 8 Oct 2018 15:59:05 -0700
+Subject: [PATCH 5/5] isdn/hisax: amd7930_fn: Remove unnecessary parentheses
+
+Clang warns when multiple sets of parentheses are used for a single
+conditional statement.
+
+drivers/isdn/hisax/amd7930_fn.c:628:32: warning: equality comparison
+with extraneous parentheses [-Wparentheses-equality]
+                if ((cs->dc.amd7930.ph_state == 8)) {
+                     ~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+drivers/isdn/hisax/amd7930_fn.c:628:32: note: remove extraneous
+parentheses around the comparison to silence this warning
+                if ((cs->dc.amd7930.ph_state == 8)) {
+                    ~                        ^   ~
+drivers/isdn/hisax/amd7930_fn.c:628:32: note: use '=' to turn this
+equality comparison into an assignment
+                if ((cs->dc.amd7930.ph_state == 8)) {
+                                             ^~
+                                             =
+1 warning generated.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+---
+ drivers/isdn/hisax/amd7930_fn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/isdn/hisax/amd7930_fn.c b/drivers/isdn/hisax/amd7930_fn.c
+index 77debda2221b..6c336366128c 100644
+--- a/drivers/isdn/hisax/amd7930_fn.c
++++ b/drivers/isdn/hisax/amd7930_fn.c
+@@ -625,7 +625,7 @@ Amd7930_l1hw(struct PStack *st, int pr, void *arg)
+ 		break;
+ 	case (HW_RESET | REQUEST):
+ 		spin_lock_irqsave(&cs->lock, flags);
+-		if ((cs->dc.amd7930.ph_state == 8)) {
++		if (cs->dc.amd7930.ph_state == 8) {
+ 			/* b-channels off, PH-AR cleared
+ 			 * change to F3 */
+ 			Amd7930_ph_command(cs, 0x20, "HW_RESET REQUEST"); //LMR1 bit 5
+-- 
+2.19.1
+
