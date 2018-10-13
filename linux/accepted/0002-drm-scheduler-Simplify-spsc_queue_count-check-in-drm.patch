@@ -1,8 +1,11 @@
-From b3682ea8fd0093da13a50353f49bacd1f7c93515 Mon Sep 17 00:00:00 2001
+From bbdaffe9f4411d7784dac25c667df548f3b0ebb5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 1 Oct 2018 23:32:45 -0700
+Date: Mon, 1 Oct 2018 23:41:24 -0700
 Subject: [PATCH 2/2] drm/scheduler: Simplify spsc_queue_count check in
  drm_sched_entity_select_rq
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Clang generates a warning when it sees a logical not followed by a
 conditional operator like ==, >, or <.
@@ -41,6 +44,8 @@ Simplify this comparison so that Clang doesn't complain.
 
 Fixes: 35e160e781a0 ("drm/scheduler: change entities rq even earlier")
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 ---
  drivers/gpu/drm/scheduler/sched_entity.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)

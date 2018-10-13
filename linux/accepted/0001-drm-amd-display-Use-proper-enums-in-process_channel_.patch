@@ -1,6 +1,6 @@
-From 2c16e499679baf06a8f6fa652cb52d1de142b276 Mon Sep 17 00:00:00 2001
+From 65761fcea401a79e73f3bf263ca365b26cef2194 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Fri, 21 Sep 2018 14:55:05 -0700
+Date: Thu, 27 Sep 2018 11:06:33 -0700
 Subject: [PATCH 1/2] drm/amd/display: Use proper enums in
  process_channel_reply
 
@@ -25,6 +25,9 @@ so use AUX_TRANSACTION_REPLY_HPD_DISCON.
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 ---
  drivers/gpu/drm/amd/display/dc/dce/dce_aux.c                    | 2 +-
  .../gpu/drm/amd/display/dc/i2caux/dce110/aux_engine_dce110.c    | 2 +-
