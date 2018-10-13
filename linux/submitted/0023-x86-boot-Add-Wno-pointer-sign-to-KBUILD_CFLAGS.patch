@@ -1,7 +1,7 @@
 From 961578b75572f8585aad814627f59a27a23d1604 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 17:27:47 -0700
-Subject: [PATCH 23/23] x86/boot: Add -Wno-pointer-sign to KBUILD_CFLAGS
+Subject: [PATCH 23/24] x86/boot: Add -Wno-pointer-sign to KBUILD_CFLAGS
 
 When compiling the kernel with Clang, this warning appears even though
 it is disabled for the whole kernel because this folder has its own set

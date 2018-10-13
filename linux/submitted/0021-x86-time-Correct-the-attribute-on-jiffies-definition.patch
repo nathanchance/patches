@@ -1,7 +1,7 @@
 From dba079550fff01d329a8764ac22b2d804fb73ea3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 17:25:43 -0700
-Subject: [PATCH 21/23] x86/time: Correct the attribute on jiffies' definition
+Subject: [PATCH 21/24] x86/time: Correct the attribute on jiffies' definition
 
 Clang warns that the declaration of jiffies in include/linux/jiffies.h
 doesn't match the definition in arch/x86/time/kernel.c:
