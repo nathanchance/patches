@@ -1,0 +1,33 @@
+From 6172ea89562d2854b38575ca4938e2bfb8d2f1c9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 15 Oct 2018 08:42:21 -0700
+Subject: [PATCH 4/4] x86/mm: Remove unused variable in do_user_addr_fault
+
+Clang warns:
+
+arch/x86/mm/fault.c:1240:6: error: unused variable 'pkey'
+[-Werror,-Wunused-variable]
+        u32 pkey;
+            ^
+1 error generated.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/mm/fault.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+index 9f9743e05861..20b0faeeb1e3 100644
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -1237,7 +1237,6 @@ void do_user_addr_fault(struct pt_regs *regs,
+ 	struct mm_struct *mm;
+ 	vm_fault_t fault, major = 0;
+ 	unsigned int flags = FAULT_FLAG_ALLOW_RETRY | FAULT_FLAG_KILLABLE;
+-	u32 pkey;
+ 
+ 	tsk = current;
+ 	mm = tsk->mm;
+-- 
+2.19.1
+
