@@ -1,4 +1,4 @@
-From c232727b2ab9e5370a8feef61bce6a6d20d3452d Mon Sep 17 00:00:00 2001
+From a76b259022bf9420f459fc8ea8f924b598d928d3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 1/7] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -48,13 +48,13 @@ index 5b562e464009..73f4831283ac 100644
  
  archclean:
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 28764dacf018..9cf6417f8114 100644
+index 466f66c8a7f8..deb2a7fef08c 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
-@@ -37,6 +37,9 @@ KBUILD_CFLAGS += $(call cc-option,-ffreestanding)
- KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
+@@ -38,6 +38,9 @@ KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
  KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
  KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
+ KBUILD_CFLAGS += -Wno-pointer-sign
 +ifndef CC_HAVE_ASM_GOTO
 +KBUILD_CFLAGS += -D__BPF_TRACING__
 +endif
