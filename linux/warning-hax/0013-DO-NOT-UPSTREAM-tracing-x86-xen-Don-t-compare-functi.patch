@@ -1,0 +1,28 @@
+From 39f6252c9fc4da5933394eecf684be196cae8562 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 15 Oct 2018 16:18:04 -0700
+Subject: [PATCH 13/13] DO-NOT-UPSTREAM: tracing/x86/xen: Don't compare
+ function pointers
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/97
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/trace/events/xen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/trace/events/xen.h b/include/trace/events/xen.h
+index fdcf88bcf0ea..74a49efc0741 100644
+--- a/include/trace/events/xen.h
++++ b/include/trace/events/xen.h
+@@ -66,7 +66,7 @@ TRACE_EVENT(xen_mc_callback,
+ 	    TP_PROTO(xen_mc_callback_fn_t fn, void *data),
+ 	    TP_ARGS(fn, data),
+ 	    TP_STRUCT__entry(
+-		    __field(xen_mc_callback_fn_t, fn)
++		    __field(void *, fn)
+ 		    __field(void *, data)
+ 		    ),
+ 	    TP_fast_assign(
+-- 
+2.19.1
+

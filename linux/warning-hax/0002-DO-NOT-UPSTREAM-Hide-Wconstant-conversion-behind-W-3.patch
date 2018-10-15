@@ -1,7 +1,7 @@
 From 271381b6295f48658b306c4a731dfb196f92c1b5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:39:42 -0700
-Subject: [PATCH 02/11] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
+Subject: [PATCH 02/13] DO-NOT-UPSTREAM: Hide -Wconstant-conversion behind W=3
 
 There are a few of these warnings sprinkled throughout the kernel and
 there is some pushback on fixing them. Joe Perches suggested that this

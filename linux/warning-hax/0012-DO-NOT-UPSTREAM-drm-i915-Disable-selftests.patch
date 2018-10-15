@@ -1,0 +1,27 @@
+From 0f2f061d62968eadf7a7511aeafe7802b2a10ab5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 15 Oct 2018 16:14:38 -0700
+Subject: [PATCH 12/13] DO-NOT-UPSTREAM: drm/i915: Disable selftests
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/220
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/i915/Kconfig.debug | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/Kconfig.debug b/drivers/gpu/drm/i915/Kconfig.debug
+index 9e36ffb5eb7c..56e5f575815c 100644
+--- a/drivers/gpu/drm/i915/Kconfig.debug
++++ b/drivers/gpu/drm/i915/Kconfig.debug
+@@ -117,7 +117,7 @@ config DRM_I915_DEBUG_GUC
+ 
+ config DRM_I915_SELFTEST
+ 	bool "Enable selftests upon driver load"
+-	depends on DRM_I915
++	depends on DRM_I915 && !CC_IS_CLANG
+ 	default n
+ 	select FAULT_INJECTION
+ 	select PRIME_NUMBERS
+-- 
+2.19.1
+
