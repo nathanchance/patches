@@ -1,7 +1,7 @@
 From 0223e0733b27f9af279914d161a85f0b4211ccc5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 21:49:52 -0700
-Subject: [PATCH 07/20] scsi: bfa: Avoid implicit enum conversion in
+Subject: [PATCH 07/19] scsi: bfa: Avoid implicit enum conversion in
  bfad_im_post_vendor_event
 
 Clang warns when one enumerated type is implicitly converted to another.
