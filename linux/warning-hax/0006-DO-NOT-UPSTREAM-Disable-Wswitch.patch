@@ -1,4 +1,4 @@
-From 340aec618d36fd269f52de622580c0e8365f2df6 Mon Sep 17 00:00:00 2001
+From 49df6d612c2ac3529d256efaa3933d43890b1480 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 14:31:35 -0700
 Subject: [PATCH 06/13] DO-NOT-UPSTREAM: Disable -Wswitch
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index 0dfe83384600..2292f6d35e70 100644
+index 6a9d446fb68a..222e8a1b214f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -709,6 +709,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
