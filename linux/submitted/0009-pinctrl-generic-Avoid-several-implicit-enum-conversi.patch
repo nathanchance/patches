@@ -1,7 +1,7 @@
 From 4dfae015f1d73445e4ad8731ebeafb2e8e57975f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 23:11:20 -0700
-Subject: [PATCH 09/22] pinctrl: generic: Avoid several implicit enum
+Subject: [PATCH 09/23] pinctrl: generic: Avoid several implicit enum
  conversions
 
 Clang warns when one enumerated type is implicitly converted to another,
