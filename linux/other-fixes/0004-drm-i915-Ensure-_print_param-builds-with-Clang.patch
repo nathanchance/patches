@@ -1,0 +1,55 @@
+From d507e4f3d77c9aa54ae3872b88b745926c2f1d26 Mon Sep 17 00:00:00 2001
+From: Jani Nikula <jani.nikula@intel.com>
+Date: Tue, 16 Oct 2018 15:29:37 +0300
+Subject: [PATCH 4/5] drm/i915: Ensure _print_param() builds with Clang
+
+When building the kernel with Clang with defconfig and CONFIG_64BIT
+disabled, vmlinux fails to link because of the BUILD_BUG in
+_print_param.
+
+ld: drivers/gpu/drm/i915/i915_params.o: in function `i915_params_dump':
+i915_params.c:(.text+0x56): undefined reference to
+`__compiletime_assert_191'
+
+This function is semantically invalid unless the code is first inlined
+then constant folded, which doesn't work for Clang because semantic
+analysis happens before optimization/inlining.
+
+[The above written by Nathan Chancellor <natechancellor@gmail.com>]
+
+Use WARN_ONCE() instead of BUILD_BUG() to avoid the problem. The
+WARN_ONCE() should get optimized away unless there's a type that's not
+handled by _print_param().
+
+References: https://github.com/ClangBuiltLinux/linux/issues/191
+References: http://mid.mail-archive.com/20181009171401.14980-1-natechancellor@gmail.com
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <natechancellor@gmail.com>
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Chris Wilson <chris@chris-wilson.co.uk>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+---
+ drivers/gpu/drm/i915/i915_params.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/i915_params.c b/drivers/gpu/drm/i915/i915_params.c
+index 295e981e4a39..8a188f36719b 100644
+--- a/drivers/gpu/drm/i915/i915_params.c
++++ b/drivers/gpu/drm/i915/i915_params.c
+@@ -188,7 +188,8 @@ static __always_inline void _print_param(struct drm_printer *p,
+ 	else if (!__builtin_strcmp(type, "char *"))
+ 		drm_printf(p, "i915.%s=%s\n", name, *(const char **)x);
+ 	else
+-		BUILD_BUG();
++		WARN_ONCE(1, "no printer defined for param type %s (i915.%s)\n",
++			  type, name);
+ }
+ 
+ /**
+-- 
+2.19.1
+
