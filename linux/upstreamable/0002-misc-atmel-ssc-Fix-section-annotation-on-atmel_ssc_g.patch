@@ -1,0 +1,38 @@
+From c22cbbafca99088511a5ee25d956427029645aa3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 15 Oct 2018 21:43:56 -0700
+Subject: [PATCH 2/3] misc: atmel-ssc: Fix section annotation on
+ atmel_ssc_get_driver_data
+
+After building the kernel with Clang, the following section mismatch
+warning appears:
+
+WARNING: vmlinux.o(.text+0x3bf19a6): Section mismatch in reference from
+the function ssc_probe() to the function
+.init.text:atmel_ssc_get_driver_data()
+The function ssc_probe() references
+the function __init atmel_ssc_get_driver_data().
+This is often because ssc_probe lacks a __init
+annotation or the annotation of atmel_ssc_get_driver_data is wrong.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/misc/atmel-ssc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/misc/atmel-ssc.c b/drivers/misc/atmel-ssc.c
+index b2a0340f277e..d8e3cc2dc747 100644
+--- a/drivers/misc/atmel-ssc.c
++++ b/drivers/misc/atmel-ssc.c
+@@ -132,7 +132,7 @@ static const struct of_device_id atmel_ssc_dt_ids[] = {
+ MODULE_DEVICE_TABLE(of, atmel_ssc_dt_ids);
+ #endif
+ 
+-static inline const struct atmel_ssc_platform_data * __init
++static inline const struct atmel_ssc_platform_data *
+ 	atmel_ssc_get_driver_data(struct platform_device *pdev)
+ {
+ 	if (pdev->dev.of_node) {
+-- 
+2.19.1
+
