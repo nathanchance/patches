@@ -1,0 +1,30 @@
+From 3878fee4ea2e69b55951559852c52a83c6a7bdcf Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 17 Oct 2018 16:46:04 -0700
+Subject: [PATCH 15/15] DO-NOT-UPSTREAM: net/core: Increase frame-larger-than
+ for ethtool.o
+
+For easy compiling with -Werror.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/206
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ net/core/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/net/core/Makefile b/net/core/Makefile
+index fccd31e0e7f7..c9500ed6609e 100644
+--- a/net/core/Makefile
++++ b/net/core/Makefile
+@@ -13,6 +13,8 @@ obj-y		     += dev.o ethtool.o dev_addr_lists.o dst.o netevent.o \
+ 			sock_diag.o dev_ioctl.o tso.o sock_reuseport.o \
+ 			fib_notifier.o xdp.o
+ 
++CFLAGS_ethtool.o += $(call cc-option, -Wframe-larger-than=1280)
++
+ obj-y += net-sysfs.o
+ obj-$(CONFIG_PAGE_POOL) += page_pool.o
+ obj-$(CONFIG_PROC_FS) += net-procfs.o
+-- 
+2.19.1
+

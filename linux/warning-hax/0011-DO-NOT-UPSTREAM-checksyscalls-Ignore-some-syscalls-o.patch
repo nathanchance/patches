@@ -1,10 +1,10 @@
-From fe458fcd95382dc1d2a94c52cce41f4d7ee89104 Mon Sep 17 00:00:00 2001
+From 9eecb51a5eabd3da4f9e3fc89c428af206c63ffc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 14 Oct 2018 13:43:59 -0700
-Subject: [PATCH 11/13] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
- arm64
+Subject: [PATCH 11/15] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
+ arm{,64}
 
-So that I can compile with -Werror
+So that I can compile with -Werror.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index ee3dfb5be6cd..7a96ee1082fe 100755
+index ee3dfb5be6cd..a161ca8f1015 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
 @@ -199,6 +199,17 @@ cat << EOF
@@ -21,7 +21,7 @@ index ee3dfb5be6cd..7a96ee1082fe 100755
  #define __IGNORE_vserver
 +
 +/* arm64 whitelist */
-+#ifdef CONFIG_ARM64
++#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
 +#define __IGNORE_fsconfig
 +#define __IGNORE_fsinfo
 +#define __IGNORE_fsmount

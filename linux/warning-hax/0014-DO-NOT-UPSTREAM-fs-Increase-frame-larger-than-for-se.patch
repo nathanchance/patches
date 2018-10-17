@@ -1,0 +1,30 @@
+From fda11bc2d70aa337ca23480337802d7023defc57 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 17 Oct 2018 16:41:46 -0700
+Subject: [PATCH 14/15] DO-NOT-UPSTREAM: fs: Increase frame-larger-than for
+ select.o
+
+For easy compiling with -Werror.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/200
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fs/Makefile b/fs/Makefile
+index e3ea8093b178..d897b1951ac8 100644
+--- a/fs/Makefile
++++ b/fs/Makefile
+@@ -21,6 +21,8 @@ else
+ obj-y +=	no-block.o
+ endif
+ 
++CFLAGS_select.o += $(call cc-option, -Wframe-larger-than=1280)
++
+ obj-$(CONFIG_PROC_FS) += proc_namespace.o
+ 
+ obj-y				+= notify/
+-- 
+2.19.1
+
