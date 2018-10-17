@@ -1,7 +1,7 @@
-From 84ce9e290182ed41a2f9a7ecccfbbfb9a99da14f Mon Sep 17 00:00:00 2001
+From 1282faebc2b4fd513aa236db4a8d047c06be4d09 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 20 Sep 2018 15:17:06 -0700
-Subject: [PATCH 2/6] scsi: qla2xxx: Remove unnecessary self assignment
+Subject: [PATCH 2/8] scsi: qla2xxx: Remove unnecessary self assignment
 
 Clang warns when a variable is assigned to itself.
 
