@@ -1,7 +1,7 @@
 From b5241da3ea09c45e72fae7789d68018c497c6f65 Mon Sep 17 00:00:00 2001
 From: Jani Nikula <jani.nikula@intel.com>
 Date: Tue, 16 Oct 2018 15:29:38 +0300
-Subject: [PATCH 3/3] drm/i915: Ensure intel_engine_init_execlist() builds with
+Subject: [PATCH 3/4] drm/i915: Ensure intel_engine_init_execlist() builds with
  Clang
 
 Clang build with UBSAN enabled leads to the following build error:
