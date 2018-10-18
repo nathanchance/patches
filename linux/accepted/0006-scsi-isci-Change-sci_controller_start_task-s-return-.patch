@@ -1,7 +1,7 @@
 From 0c57ae3f74c5d9c5337b9de105bdcb7a3f5432f4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 17:11:04 -0700
-Subject: [PATCH 6/8] scsi: isci: Change sci_controller_start_task's return
+Subject: [PATCH 6/9] scsi: isci: Change sci_controller_start_task's return
  type to sci_status
 
 Clang warns when an enumerated type is implicitly converted to another.
