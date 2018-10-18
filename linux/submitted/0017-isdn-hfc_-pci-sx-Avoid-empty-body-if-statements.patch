@@ -1,8 +1,7 @@
-From 92e398367e70c99f1787cf3b6e8ef01fa15253d4 Mon Sep 17 00:00:00 2001
+From e61cfdfd0ca15d19c37c669e27adbd84c895199a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 10:56:46 -0700
-Subject: [PATCH 18/22] isdn: hfc_{pci,sx}: Avoid empty body if statements and
- use proper register accessors
+Subject: [PATCH 17/21] isdn: hfc_{pci,sx}: Avoid empty body if statements
 
 Clang warns:
 
@@ -13,12 +12,18 @@ drivers/isdn/hisax/hfc_pci.c:131:34: error: if statement has empty body
 drivers/isdn/hisax/hfc_pci.c:131:34: note: put the semicolon on a
 separate line to silence this warning
 
-Use the format found in drivers/isdn/hardware/mISDN/hfcpci.c of casting
-the return of Read_hfc to void, instead of using an empty if statement.
+In my attempt to hide the warnings because I thought they didn't serve
+any purpose[1], Masahiro Yamada pointed out that {Read,Write}_hfc in
+hci_pci.c should be using a standard register access method; otherwise,
+the compiler will just remove the if statements.
 
-While we're at it, Masahiro Yamada pointed out that {Read,Write}_hfc
-should be using a standard access method in hfc_pci.h. Use the one found
-in drivers/isdn/hardware/mISDN/hfc_pci.h.
+For hfc_pci, use the versions of {Read,Write}_hfc found in
+drivers/isdn/hardware/mISDN/hfc_pCI.h then remove the empty if statements.
+
+For hfc_sx, {Read,Write}_hfc are already use a proper register accessor
+(inb, outb) so just remove the unnecessary if statements.
+
+[1]: https://lore.kernel.org/lkml/20181016021454.11953-1-natechancellor@gmail.com/
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/66
 Suggested-by: Masahiro Yamada <yamada.masahiro@socionext.com>
@@ -30,7 +35,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/isdn/hisax/hfc_pci.c b/drivers/isdn/hisax/hfc_pci.c
-index 8e5b03161b2f..a63b9155b697 100644
+index 8e5b03161b2f..7bcd104e9dfe 100644
 --- a/drivers/isdn/hisax/hfc_pci.c
 +++ b/drivers/isdn/hisax/hfc_pci.c
 @@ -128,7 +128,7 @@ reset_hfcpci(struct IsdnCardState *cs)
@@ -38,7 +43,7 @@ index 8e5b03161b2f..a63b9155b697 100644
  
  	/* Clear already pending ints */
 -	if (Read_hfc(cs, HFCPCI_INT_S1));
-+	(void) Read_hfc(cs, HFCPCI_INT_S1);
++	Read_hfc(cs, HFCPCI_INT_S1);
  
  	Write_hfc(cs, HFCPCI_STATES, HFCPCI_LOAD_STATE | 2);	/* HFC ST 2 */
  	udelay(10);
@@ -47,7 +52,7 @@ index 8e5b03161b2f..a63b9155b697 100644
  	cs->hw.hfcpci.int_m2 = HFCPCI_IRQ_ENABLE;
  	Write_hfc(cs, HFCPCI_INT_M2, cs->hw.hfcpci.int_m2);
 -	if (Read_hfc(cs, HFCPCI_INT_S1));
-+	(void) Read_hfc(cs, HFCPCI_INT_S1);
++	Read_hfc(cs, HFCPCI_INT_S1);
  }
  
  /***************************************************/
@@ -56,7 +61,7 @@ index 8e5b03161b2f..a63b9155b697 100644
  					Write_hfc(cs, HFCPCI_INT_M1, cs->hw.hfcpci.int_m1);
  					/* Clear already pending ints */
 -					if (Read_hfc(cs, HFCPCI_INT_S1));
-+					(void) Read_hfc(cs, HFCPCI_INT_S1);
++					Read_hfc(cs, HFCPCI_INT_S1);
  					Write_hfc(cs, HFCPCI_STATES, 4 | HFCPCI_LOAD_STATE);
  					udelay(10);
  					Write_hfc(cs, HFCPCI_STATES, 4);
@@ -76,7 +81,7 @@ index 4e58700a3e61..4c3b3ba35726 100644
  extern void main_irq_hcpci(struct BCState *bcs);
  extern void releasehfcpci(struct IsdnCardState *cs);
 diff --git a/drivers/isdn/hisax/hfc_sx.c b/drivers/isdn/hisax/hfc_sx.c
-index 4d3b4b2f2612..c4f3f37adfc8 100644
+index 4d3b4b2f2612..12af628d9b2c 100644
 --- a/drivers/isdn/hisax/hfc_sx.c
 +++ b/drivers/isdn/hisax/hfc_sx.c
 @@ -381,7 +381,7 @@ reset_hfcsx(struct IsdnCardState *cs)
@@ -84,7 +89,7 @@ index 4d3b4b2f2612..c4f3f37adfc8 100644
  
  	/* Clear already pending ints */
 -	if (Read_hfc(cs, HFCSX_INT_S1));
-+	(void) Read_hfc(cs, HFCSX_INT_S1);
++	Read_hfc(cs, HFCSX_INT_S1);
  
  	Write_hfc(cs, HFCSX_STATES, HFCSX_LOAD_STATE | 2);	/* HFC ST 2 */
  	udelay(10);
@@ -93,7 +98,7 @@ index 4d3b4b2f2612..c4f3f37adfc8 100644
  	cs->hw.hfcsx.int_m2 = HFCSX_IRQ_ENABLE;
  	Write_hfc(cs, HFCSX_INT_M2, cs->hw.hfcsx.int_m2);
 -	if (Read_hfc(cs, HFCSX_INT_S2));
-+	(void) Read_hfc(cs, HFCSX_INT_S2);
++	Read_hfc(cs, HFCSX_INT_S2);
  }
  
  /***************************************************/
@@ -102,7 +107,7 @@ index 4d3b4b2f2612..c4f3f37adfc8 100644
  					Write_hfc(cs, HFCSX_INT_M1, cs->hw.hfcsx.int_m1);
  					/* Clear already pending ints */
 -					if (Read_hfc(cs, HFCSX_INT_S1));
-+					(void) Read_hfc(cs, HFCSX_INT_S1);
++					Read_hfc(cs, HFCSX_INT_S1);
  
  					Write_hfc(cs, HFCSX_STATES, 4 | HFCSX_LOAD_STATE);
  					udelay(10);
