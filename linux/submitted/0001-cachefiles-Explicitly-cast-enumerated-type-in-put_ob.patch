@@ -1,7 +1,7 @@
 From 0d539f23d4bd95e69f88bfc4c4823f8cfc7f7fdc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 10:33:44 -0700
-Subject: [PATCH 01/18] cachefiles: Explicitly cast enumerated type in
+Subject: [PATCH 01/22] cachefiles: Explicitly cast enumerated type in
  put_object
 
 Clang warns when one enumerated type is implicitly converted to another.

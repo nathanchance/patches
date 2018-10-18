@@ -1,7 +1,7 @@
 From 92e398367e70c99f1787cf3b6e8ef01fa15253d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 10:56:46 -0700
-Subject: [PATCH 18/18] isdn: hfc_{pci,sx}: Avoid empty body if statements and
+Subject: [PATCH 18/22] isdn: hfc_{pci,sx}: Avoid empty body if statements and
  use proper register accessors
 
 Clang warns:

@@ -1,7 +1,7 @@
 From b9ea46d0ae7cb9858a9285542191765da1b30536 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 18:01:40 -0700
-Subject: [PATCH 09/18] scsi: iscsi_tcp: Explicitly cast param in
+Subject: [PATCH 09/22] scsi: iscsi_tcp: Explicitly cast param in
  iscsi_sw_tcp_host_get_param
 
 Clang warns when one enumerated type is implicitly converted to another.
