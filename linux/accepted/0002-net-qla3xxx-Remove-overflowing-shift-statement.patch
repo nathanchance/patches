@@ -1,7 +1,7 @@
-From 0fff06b6da295af9c12061d4d7d4b1d0165a2306 Mon Sep 17 00:00:00 2001
+From c4b52db2623ab6a8a38aee903ae1a5c6e5528069 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 19:14:58 -0700
-Subject: [PATCH 9/9] net: qla3xxx: Remove overflowing shift statement
+Subject: [PATCH 2/2] net: qla3xxx: Remove overflowing shift statement
 
 Clang currently warns:
 
