@@ -1,4 +1,4 @@
-From bf31ca19d38a5444f676ee399c2815a734657187 Mon Sep 17 00:00:00 2001
+From 4a71ca773847e532142af50c0392caaeda773822 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 16:41:46 -0700
 Subject: [PATCH 14/15] DO-NOT-UPSTREAM: fs: Increase frame-larger-than for
@@ -9,18 +9,20 @@ For easy compiling with -Werror.
 Link: https://github.com/ClangBuiltLinux/linux/issues/200
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- fs/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/fs/Makefile b/fs/Makefile
-index e3ea8093b178..d897b1951ac8 100644
+index e3ea8093b178..8c52ad36bb8c 100644
 --- a/fs/Makefile
 +++ b/fs/Makefile
-@@ -21,6 +21,8 @@ else
+@@ -21,6 +21,10 @@ else
  obj-y +=	no-block.o
  endif
  
++ifneq ($(CONFIG_64BIT),y)
 +CFLAGS_select.o += $(call cc-option, -Wframe-larger-than=1280)
++endif
 +
  obj-$(CONFIG_PROC_FS) += proc_namespace.o
  

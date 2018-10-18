@@ -1,4 +1,4 @@
-From 94ad4b06e4ebca66e812edf198b11fc55694e42e Mon Sep 17 00:00:00 2001
+From af7a991114d44174b1e6a6f4591cbbd9df52de89 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 16:46:04 -0700
 Subject: [PATCH 15/15] DO-NOT-UPSTREAM: net/core: Increase frame-larger-than
@@ -9,18 +9,20 @@ For easy compiling with -Werror.
 Link: https://github.com/ClangBuiltLinux/linux/issues/206
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- net/core/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/net/core/Makefile b/net/core/Makefile
-index fccd31e0e7f7..c9500ed6609e 100644
+index fccd31e0e7f7..863f4dddf6f7 100644
 --- a/net/core/Makefile
 +++ b/net/core/Makefile
-@@ -13,6 +13,8 @@ obj-y		     += dev.o ethtool.o dev_addr_lists.o dst.o netevent.o \
+@@ -13,6 +13,10 @@ obj-y		     += dev.o ethtool.o dev_addr_lists.o dst.o netevent.o \
  			sock_diag.o dev_ioctl.o tso.o sock_reuseport.o \
  			fib_notifier.o xdp.o
  
++ifneq ($(CONFIG_64BIT),y)
 +CFLAGS_ethtool.o += $(call cc-option, -Wframe-larger-than=1280)
++endif
 +
  obj-y += net-sysfs.o
  obj-$(CONFIG_PAGE_POOL) += page_pool.o
