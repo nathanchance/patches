@@ -1,0 +1,43 @@
+From fdc398eda18a0db120f61cbfee2cd275f019ef68 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 17 Oct 2018 11:03:34 -0700
+Subject: [PATCH 4/5] atm: eni: Move semicolon to a new line after empty for
+ loop
+
+Clang warns:
+
+drivers/atm/eni.c:244:48: error: for loop has empty body
+[-Werror,-Wempty-body]
+        for (order = 0; (1 << order) < *size; order++);
+                                                      ^
+drivers/atm/eni.c:244:48: note: put the semicolon on a separate line to
+silence this warning
+
+In this case, that loop is expected to be empty so silence the warning
+in the way that Clang suggests.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/42
+Suggested-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+---
+ drivers/atm/eni.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/atm/eni.c b/drivers/atm/eni.c
+index 6470e3c4c990..f8c703426c90 100644
+--- a/drivers/atm/eni.c
++++ b/drivers/atm/eni.c
+@@ -241,7 +241,8 @@ static void __iomem *eni_alloc_mem(struct eni_dev *eni_dev, unsigned long *size)
+ 	len = eni_dev->free_len;
+ 	if (*size < MID_MIN_BUF_SIZE) *size = MID_MIN_BUF_SIZE;
+ 	if (*size > MID_MAX_BUF_SIZE) return NULL;
+-	for (order = 0; (1 << order) < *size; order++);
++	for (order = 0; (1 << order) < *size; order++)
++		;
+ 	DPRINTK("trying: %ld->%d\n",*size,order);
+ 	best_order = 65; /* we don't have more than 2^64 of anything ... */
+ 	index = 0; /* silence GCC */
+-- 
+2.19.1
+

@@ -1,7 +1,7 @@
 From 1b8aaf58f3a59b8db8ffa94ef81da5dcae79601a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 18 Oct 2018 12:13:40 -0700
-Subject: [PATCH 3/3] clk: s2mps11: Add used attribute to s2mps11_dt_match
+Subject: [PATCH 3/5] clk: s2mps11: Add used attribute to s2mps11_dt_match
 
 Clang warns after commit 8985167ecf57 ("clk: s2mps11: Fix matching when
 built as module and DT node contains compatible"):
