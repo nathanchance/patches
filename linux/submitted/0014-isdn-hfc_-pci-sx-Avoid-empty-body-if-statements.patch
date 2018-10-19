@@ -1,7 +1,7 @@
-From e61cfdfd0ca15d19c37c669e27adbd84c895199a Mon Sep 17 00:00:00 2001
+From 2e8944140d18b575c4973b26eae5a326dfeec90b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 10:56:46 -0700
-Subject: [PATCH 17/24] isdn: hfc_{pci,sx}: Avoid empty body if statements
+Subject: [PATCH 14/21] isdn: hfc_{pci,sx}: Avoid empty body if statements
 
 Clang warns:
 
@@ -18,7 +18,9 @@ hci_pci.c should be using a standard register access method; otherwise,
 the compiler will just remove the if statements.
 
 For hfc_pci, use the versions of {Read,Write}_hfc found in
-drivers/isdn/hardware/mISDN/hfc_pCI.h then remove the empty if statements.
+drivers/isdn/hardware/mISDN/hfc_pCI.h while converting pci_io to be
+'void __iomem *' (and clean up ioremap) then remove the empty if
+statements.
 
 For hfc_sx, {Read,Write}_hfc are already use a proper register accessor
 (inb, outb) so just remove the unnecessary if statements.
@@ -29,15 +31,25 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/66
 Suggested-by: Masahiro Yamada <yamada.masahiro@socionext.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/isdn/hisax/hfc_pci.c | 6 +++---
- drivers/isdn/hisax/hfc_pci.h | 4 ++--
- drivers/isdn/hisax/hfc_sx.c  | 6 +++---
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/isdn/hisax/hfc_pci.c | 11 +++++------
+ drivers/isdn/hisax/hfc_pci.h |  4 ++--
+ drivers/isdn/hisax/hfc_sx.c  |  6 +++---
+ drivers/isdn/hisax/hisax.h   |  2 +-
+ 4 files changed, 11 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/isdn/hisax/hfc_pci.c b/drivers/isdn/hisax/hfc_pci.c
-index 8e5b03161b2f..7bcd104e9dfe 100644
+index 8e5b03161b2f..ea0e4c6de3fb 100644
 --- a/drivers/isdn/hisax/hfc_pci.c
 +++ b/drivers/isdn/hisax/hfc_pci.c
+@@ -86,7 +86,7 @@ release_io_hfcpci(struct IsdnCardState *cs)
+ 	pci_free_consistent(cs->hw.hfcpci.dev, 0x8000,
+ 			    cs->hw.hfcpci.fifos, cs->hw.hfcpci.dma);
+ 	cs->hw.hfcpci.fifos = NULL;
+-	iounmap((void *)cs->hw.hfcpci.pci_io);
++	iounmap(cs->hw.hfcpci.pci_io);
+ }
+ 
+ /********************************************************************************/
 @@ -128,7 +128,7 @@ reset_hfcpci(struct IsdnCardState *cs)
  	Write_hfc(cs, HFCPCI_INT_M1, cs->hw.hfcpci.int_m1);
  
@@ -65,6 +77,23 @@ index 8e5b03161b2f..7bcd104e9dfe 100644
  					Write_hfc(cs, HFCPCI_STATES, 4 | HFCPCI_LOAD_STATE);
  					udelay(10);
  					Write_hfc(cs, HFCPCI_STATES, 4);
+@@ -1692,7 +1692,7 @@ setup_hfcpci(struct IsdnCard *card)
+ 		printk(KERN_WARNING "HFC-PCI: No IRQ for PCI card found\n");
+ 		return (0);
+ 	}
+-	cs->hw.hfcpci.pci_io = (char *)(unsigned long)dev_hfcpci->resource[1].start;
++	cs->hw.hfcpci.pci_io = ioremap(dev_hfcpci->resource[1].start, 256);
+ 	printk(KERN_INFO "HiSax: HFC-PCI card manufacturer: %s card name: %s\n", id_list[i].vendor_name, id_list[i].card_name);
+ 
+ 	if (!cs->hw.hfcpci.pci_io) {
+@@ -1716,7 +1716,6 @@ setup_hfcpci(struct IsdnCard *card)
+ 		return 0;
+ 	}
+ 	pci_write_config_dword(cs->hw.hfcpci.dev, 0x80, (u32)cs->hw.hfcpci.dma);
+-	cs->hw.hfcpci.pci_io = ioremap((ulong) cs->hw.hfcpci.pci_io, 256);
+ 	printk(KERN_INFO
+ 	       "HFC-PCI: defined at mem %p fifo %p(%lx) IRQ %d HZ %d\n",
+ 	       cs->hw.hfcpci.pci_io,
 diff --git a/drivers/isdn/hisax/hfc_pci.h b/drivers/isdn/hisax/hfc_pci.h
 index 4e58700a3e61..4c3b3ba35726 100644
 --- a/drivers/isdn/hisax/hfc_pci.h
@@ -111,6 +140,19 @@ index 4d3b4b2f2612..12af628d9b2c 100644
  
  					Write_hfc(cs, HFCSX_STATES, 4 | HFCSX_LOAD_STATE);
  					udelay(10);
+diff --git a/drivers/isdn/hisax/hisax.h b/drivers/isdn/hisax/hisax.h
+index 338d0408b377..40080e06421c 100644
+--- a/drivers/isdn/hisax/hisax.h
++++ b/drivers/isdn/hisax/hisax.h
+@@ -703,7 +703,7 @@ struct hfcPCI_hw {
+ 	unsigned char nt_mode;
+ 	int nt_timer;
+ 	struct pci_dev *dev;
+-	unsigned char *pci_io; /* start of PCI IO memory */
++	void __iomem *pci_io; /* start of PCI IO memory */
+ 	dma_addr_t dma; /* dma handle for Fifos */
+ 	void *fifos; /* FIFO memory */
+ 	int last_bfifo_cnt[2]; /* marker saving last b-fifo frame count */
 -- 
 2.19.1
 

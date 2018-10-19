@@ -1,7 +1,7 @@
-From e659e11f8fa5d69b3c55efa1cad693cd39beaa34 Mon Sep 17 00:00:00 2001
+From e4990372c62002ce6b6ebaf164e84cd182108fba Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 18 Oct 2018 14:39:33 -0700
-Subject: [PATCH 24/24] scsi: 3w-{sas,9xxx}: Use unsigned char for cdb
+Subject: [PATCH 21/21] scsi: 3w-{sas,9xxx}: Use unsigned char for cdb
 
 Clang warns a few times:
 

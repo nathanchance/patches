@@ -1,7 +1,7 @@
-From d907e7197294cb5ca68f5d122a29090e03d5a87b Mon Sep 17 00:00:00 2001
+From d918b979410145345181d001d237c27add73b676 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 18 Oct 2018 13:28:27 -0700
-Subject: [PATCH 23/24] rtc: s35390a: Make buf an unsigned char in s35390a_init
+Subject: [PATCH 20/21] rtc: s35390a: Make buf an unsigned char in s35390a_init
 
 Clang warns:
 
