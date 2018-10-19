@@ -1,7 +1,7 @@
-From d918b979410145345181d001d237c27add73b676 Mon Sep 17 00:00:00 2001
+From 2913ea7719293867f7d58e03d44f24afcde69f07 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 18 Oct 2018 13:28:27 -0700
-Subject: [PATCH 20/26] rtc: s35390a: Make buf an unsigned char in s35390a_init
+Subject: [PATCH 20/24] rtc: s35390a: Change buf's type to u8 in s35390a_init
 
 Clang warns:
 
@@ -11,8 +11,8 @@ drivers/rtc/rtc-s35390a.c:124:27: warning: implicit conversion from
             ~ ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
 1 warning generated.
 
-Update buf to be an unsigned char, which matches the size and signedness
-of the buf member in struct i2c_msg (__u8).
+Update buf to be an unsigned 8-bit integer, which matches the buf member
+in struct i2c_msg.
 
 https://github.com/ClangBuiltLinux/linux/issues/145
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -21,7 +21,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-index 77feb603cd4c..9fd51337cfae 100644
+index 77feb603cd4c..3c64dbb08109 100644
 --- a/drivers/rtc/rtc-s35390a.c
 +++ b/drivers/rtc/rtc-s35390a.c
 @@ -108,7 +108,7 @@ static int s35390a_get_reg(struct s35390a *s35390a, int reg, char *buf, int len)
@@ -29,7 +29,7 @@ index 77feb603cd4c..9fd51337cfae 100644
  static int s35390a_init(struct s35390a *s35390a)
  {
 -	char buf;
-+	unsigned char buf;
++	u8 buf;
  	int ret;
  	unsigned initcount = 0;
  
