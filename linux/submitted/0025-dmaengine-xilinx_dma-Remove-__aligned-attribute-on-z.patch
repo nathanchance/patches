@@ -1,7 +1,7 @@
-From 6b3c50ac3ffd743509785221178791060192b00c Mon Sep 17 00:00:00 2001
+From c8af75a13297a8e2f989fcdc7c20a901b99eea37 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 11 Sep 2018 16:05:33 -0700
-Subject: [PATCH 02/25] dmaengine: xilinx_dma: Fix __aligned attribute on
+Date: Thu, 25 Oct 2018 11:00:27 -0700
+Subject: [PATCH 25/25] dmaengine: xilinx_dma: Remove __aligned attribute on
  zynqmp_dma_desc_ll
 
 Clang warns:
@@ -17,17 +17,20 @@ ignored, place it after "struct" to apply attribute to type declaration
                                                ^
 1 warning generated.
 
-Place __aligned before the semicolon.
+As Nick pointed out in the previous version of this patch, the author
+likely intended for this struct to be 8-byte (64-bit) aligned, not
+64-byte, which is the default. Remove the hanging __aligned attribute.
 
 Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/dma/xilinx/zynqmp_dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index c74a88b65039..dc19d67cb8c1 100644
+index c74a88b65039..73de6a6179fc 100644
 --- a/drivers/dma/xilinx/zynqmp_dma.c
 +++ b/drivers/dma/xilinx/zynqmp_dma.c
 @@ -163,7 +163,7 @@ struct zynqmp_dma_desc_ll {
@@ -35,7 +38,7 @@ index c74a88b65039..dc19d67cb8c1 100644
  	u64 nxtdscraddr;
  	u64 rsvd;
 -}; __aligned(64)
-+} __aligned(64);
++};
  
  /**
   * struct zynqmp_dma_desc_sw - Per Transaction structure
