@@ -1,7 +1,7 @@
 From a38d7ee4db0676a85d13e59bb7bf87536d34a32e Mon Sep 17 00:00:00 2001
 From: Jani Nikula <jani.nikula@intel.com>
 Date: Tue, 16 Oct 2018 15:29:37 +0300
-Subject: [PATCH 2/4] drm/i915: Ensure _print_param() builds with Clang
+Subject: [PATCH 2/5] drm/i915: Ensure _print_param() builds with Clang
 
 When building the kernel with Clang with defconfig and CONFIG_64BIT
 disabled, vmlinux fails to link because of the BUILD_BUG in
