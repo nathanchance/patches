@@ -1,7 +1,7 @@
-From 421dfaeb2a506781a0bf5c70e2a5f2a4498e1a95 Mon Sep 17 00:00:00 2001
+From 2e739f91c375af566ce301b4eb695bd16b526149 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:47:47 -0700
-Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
+Subject: [PATCH 01/11] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
  with KASAN
 
 This is an LLVM issue, all of the warnings don't happen with KASAN
