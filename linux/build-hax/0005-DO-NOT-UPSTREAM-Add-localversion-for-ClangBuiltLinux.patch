@@ -1,0 +1,21 @@
+From cf11ea66a6a1a92e70ab60b97f98fb53a599ac7d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 29 Oct 2018 04:37:32 -0700
+Subject: [PATCH 5/5] DO-NOT-UPSTREAM: Add localversion for ClangBuiltLinux
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ localversion-cbl | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 localversion-cbl
+
+diff --git a/localversion-cbl b/localversion-cbl
+new file mode 100644
+index 000000000000..f434206111f4
+--- /dev/null
++++ b/localversion-cbl
+@@ -0,0 +1 @@
++-cbl
+-- 
+2.19.1
+
