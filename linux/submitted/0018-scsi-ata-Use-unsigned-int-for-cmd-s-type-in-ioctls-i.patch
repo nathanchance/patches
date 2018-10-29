@@ -1,7 +1,7 @@
-From 0abc9dc594f2429787160adb0baefd81749f4c05 Mon Sep 17 00:00:00 2001
+From d6fe9cb9e3ac461c0f2c3cbc4475e87f57766163 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 23/26] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 18/21] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
