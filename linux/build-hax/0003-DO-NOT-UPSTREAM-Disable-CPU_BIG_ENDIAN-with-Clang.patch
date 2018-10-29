@@ -1,7 +1,7 @@
-From c7a0f6cf82d0b084364e5774bee38875275b90d0 Mon Sep 17 00:00:00 2001
+From efc16cf141969ef7f3a67af62f0a51f96456b018 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
-Subject: [PATCH 3/5] DO-NOT-UPSTREAM: Disable CPU_BIG_ENDIAN with Clang
+Subject: [PATCH 3/4] DO-NOT-UPSTREAM: Disable CPU_BIG_ENDIAN with Clang
 
 This is currently broken and requires disabling it to build anyways.
 
@@ -26,10 +26,10 @@ index b169e580bf82..63fdc70552aa 100644
  	  Say Y if you plan on running a kernel in big-endian mode.
  	  Note that your board must be properly built and your board
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 0d43034ef731..06d5aa124a00 100644
+index 6444e69beb21..fff013412f27 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -712,6 +712,7 @@ config ARM64_PA_BITS
+@@ -716,6 +716,7 @@ config ARM64_PA_BITS
  
  config CPU_BIG_ENDIAN
         bool "Build big-endian kernel"

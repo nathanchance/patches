@@ -1,7 +1,7 @@
-From f9ceee0ae74f80e2c45c0151ac708dee2a7323f3 Mon Sep 17 00:00:00 2001
+From f0e6ee5052e0dc70f39dd21b9238be5dc8d8dd49 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 1/5] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
+Subject: [PATCH 1/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
  of asm goto
 
 This isn't strictly required right now and it prevents us from building
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6a9d446fb68a..1a26ee290a2b 100644
+index 9aa352b38815..7845466da1d4 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -962,11 +962,6 @@ ifdef CONFIG_STACK_VALIDATION
