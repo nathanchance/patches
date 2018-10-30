@@ -1,4 +1,4 @@
-From f0e6ee5052e0dc70f39dd21b9238be5dc8d8dd49 Mon Sep 17 00:00:00 2001
+From 883c22cb43f45687ae712bbbc1bf3b2e5fa8ce30 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 1/5] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -18,10 +18,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 9aa352b38815..7845466da1d4 100644
+index 0a42d0679d0a..33cde2df7c81 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -962,11 +962,6 @@ ifdef CONFIG_STACK_VALIDATION
+@@ -973,11 +973,6 @@ ifdef CONFIG_STACK_VALIDATION
    ifeq ($(has_libelf),1)
      objtool_target := tools/objtool FORCE
    else
