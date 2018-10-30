@@ -1,4 +1,4 @@
-From 767419949c8e49b1519ec6f089dd0c6d4e2e6c2c Mon Sep 17 00:00:00 2001
+From aaf0e89c02c55290d99c18461be6ac3943a63e09 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 29 Oct 2018 03:51:58 -0700
 Subject: [PATCH 3/3] hinic: Fix l4_type parameter in hinic_task_set_tunnel_l4
@@ -21,6 +21,7 @@ Fixes: cc18a7543d2f ("net-next/hinic: add checksum offload and TSO support")
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/net/ethernet/huawei/hinic/hinic_hw_qp.c | 2 +-
  drivers/net/ethernet/huawei/hinic/hinic_hw_qp.h | 2 +-
