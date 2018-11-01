@@ -1,4 +1,4 @@
-From 07792206cfbd8e41901f399d68f212f018351801 Mon Sep 17 00:00:00 2001
+From 1e867ac968d683c169f554ef8d8e923dc2332350 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:29:44 -0700
 Subject: [PATCH 22/24] pinctrl: lpc18xx: Use define directive for
@@ -31,24 +31,26 @@ same thing here so that Clang no longer warns.
 Link: https://github.com/ClangBuiltLinux/linux/issues/140
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/pinctrl/pinctrl-lpc18xx.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-lpc18xx.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-lpc18xx.c b/drivers/pinctrl/pinctrl-lpc18xx.c
-index a14bc5e5fc24..4bee606088e1 100644
+index a14bc5e5fc24..06be55dab341 100644
 --- a/drivers/pinctrl/pinctrl-lpc18xx.c
 +++ b/drivers/pinctrl/pinctrl-lpc18xx.c
-@@ -631,13 +631,10 @@ static const struct pinctrl_pin_desc lpc18xx_pins[] = {
+@@ -630,14 +630,8 @@ static const struct pinctrl_pin_desc lpc18xx_pins[] = {
+ 	LPC18XX_PIN(i2c0_sda, PIN_I2C0_SDA),
  };
  
- /**
+-/**
 - * enum lpc18xx_pin_config_param - possible pin configuration parameters
-  * @PIN_CONFIG_GPIO_PIN_INT: route gpio to the gpio pin interrupt
-  * 	controller.
-  */
+- * @PIN_CONFIG_GPIO_PIN_INT: route gpio to the gpio pin interrupt
+- * 	controller.
+- */
 -enum lpc18xx_pin_config_param {
 -	PIN_CONFIG_GPIO_PIN_INT = PIN_CONFIG_END + 1,
 -};
++/* PIN_CONFIG_GPIO_PIN_INT: route gpio to the gpio pin interrupt controller */
 +#define PIN_CONFIG_GPIO_PIN_INT		(PIN_CONFIG_END + 1)
  
  static const struct pinconf_generic_params lpc18xx_params[] = {
