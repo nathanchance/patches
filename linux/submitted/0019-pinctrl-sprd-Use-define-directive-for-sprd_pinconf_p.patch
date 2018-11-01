@@ -1,0 +1,51 @@
+From 547a008d25989456f3fed0d27efb0eb9e6a27c46 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 31 Oct 2018 17:05:53 -0700
+Subject: [PATCH 19/24] pinctrl: sprd: Use define directive for
+ sprd_pinconf_params values
+
+Clang warns when one enumerated type is implicitly converted to another:
+
+drivers/pinctrl/sprd/pinctrl-sprd.c:845:19: warning: implicit conversion
+from enumeration type 'enum sprd_pinconf_params' to different
+enumeration type 'enum pin_config_param' [-Wenum-conversion]
+        {"sprd,control", SPRD_PIN_CONFIG_CONTROL, 0},
+        ~                ^~~~~~~~~~~~~~~~~~~~~~~
+drivers/pinctrl/sprd/pinctrl-sprd.c:846:22: warning: implicit conversion
+from enumeration type 'enum sprd_pinconf_params' to different
+enumeration type 'enum pin_config_param' [-Wenum-conversion]
+        {"sprd,sleep-mode", SPRD_PIN_CONFIG_SLEEP_MODE, 0},
+        ~                   ^~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is expected that pinctrl drivers can extend pin_config_param because
+of the gap between PIN_CONFIG_END and PIN_CONFIG_MAX so this conversion
+isn't an issue. Most drivers that take advantage of this define the
+PIN_CONFIG variables as constants, rather than enumerated values. Do the
+same thing here so that Clang no longer warns.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/138
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/pinctrl/sprd/pinctrl-sprd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pinctrl/sprd/pinctrl-sprd.c b/drivers/pinctrl/sprd/pinctrl-sprd.c
+index 4537b5453996..7d9a44bd0047 100644
+--- a/drivers/pinctrl/sprd/pinctrl-sprd.c
++++ b/drivers/pinctrl/sprd/pinctrl-sprd.c
+@@ -159,10 +159,8 @@ struct sprd_pinctrl {
+ 	struct sprd_pinctrl_soc_info *info;
+ };
+ 
+-enum sprd_pinconf_params {
+-	SPRD_PIN_CONFIG_CONTROL = PIN_CONFIG_END + 1,
+-	SPRD_PIN_CONFIG_SLEEP_MODE = PIN_CONFIG_END + 2,
+-};
++#define SPRD_PIN_CONFIG_CONTROL		(PIN_CONFIG_END + 1)
++#define SPRD_PIN_CONFIG_SLEEP_MODE	(PIN_CONFIG_END + 2)
+ 
+ static int sprd_pinctrl_get_id_by_name(struct sprd_pinctrl *sprd_pctl,
+ 				       const char *name)
+-- 
+2.19.1
+
