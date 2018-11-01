@@ -1,7 +1,7 @@
-From 95c364d64c870f3196c662a9be78e7c9737a33b4 Mon Sep 17 00:00:00 2001
+From 668b8d4aecf439afe7ab1daf7a8ba181ef9ea04f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 17:41:29 -0700
-Subject: [PATCH 2/3] mfd: db8500-prcmu: Fix some section annotations
+Subject: [PATCH 2/2] mfd: db8500-prcmu: Fix some section annotations
 
 When building the kernel with Clang, the following section mismatch
 warnings appear:
