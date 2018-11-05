@@ -1,7 +1,7 @@
-From 6a1e8edfd58b14b35717eba600750e82473fbfcb Mon Sep 17 00:00:00 2001
+From 2470364f00d48310b414cd6dec7bdd9a108418ed Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:05:53 -0700
-Subject: [PATCH 19/24] pinctrl: sprd: Use define directive for
+Subject: [PATCH 17/22] pinctrl: sprd: Use define directive for
  sprd_pinconf_params values
 
 Clang warns when one enumerated type is implicitly converted to another:
