@@ -1,4 +1,4 @@
-From 035aaa7304d2000661e52b423f302165f28bb3b7 Mon Sep 17 00:00:00 2001
+From 66f4d484ac4958e1ee076fda9bed8dc121551d16 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:20:41 -0700
 Subject: [PATCH 18/22] pinctrl: bcm2835: Use define directive for
@@ -25,7 +25,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-index fa530913a2c8..b035c3fc0471 100644
+index 08925d24180b..1bd3c10ce189 100644
 --- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
 +++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
 @@ -72,10 +72,8 @@
