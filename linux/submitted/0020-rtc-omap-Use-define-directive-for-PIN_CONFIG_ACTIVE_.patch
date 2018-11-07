@@ -1,7 +1,7 @@
-From 4fbca10d77dc7a9b7b81de1a3f2209a26df40c7e Mon Sep 17 00:00:00 2001
+From c6c7680e39b266f82cda39b24e589285a12b5621 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:33:44 -0700
-Subject: [PATCH 21/22] rtc: omap: Use define directive for
+Subject: [PATCH 20/21] rtc: omap: Use define directive for
  PIN_CONFIG_ACTIVE_HIGH
 
 Clang warns when one enumerated type is implicitly converted to another:
