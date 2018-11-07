@@ -1,4 +1,4 @@
-From b71007f6685c966c72f5ae4590b5c069ee05869e Mon Sep 17 00:00:00 2001
+From 6be8dab4909e2d7b744525e01fd697d85bdf69c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:37:51 -0700
 Subject: [PATCH 21/21] pinctrl: zynq: Use define directive for
@@ -30,19 +30,22 @@ same thing here so that Clang no longer warns.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/pinctrl/pinctrl-zynq.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-zynq.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-zynq.c b/drivers/pinctrl/pinctrl-zynq.c
-index a0daf27042bd..57046c221756 100644
+index a0daf27042bd..90fd37e8207b 100644
 --- a/drivers/pinctrl/pinctrl-zynq.c
 +++ b/drivers/pinctrl/pinctrl-zynq.c
-@@ -972,14 +972,11 @@ enum zynq_io_standards {
+@@ -971,15 +971,12 @@ enum zynq_io_standards {
+ 	zynq_iostd_max
  };
  
- /**
+-/**
 - * enum zynq_pin_config_param - possible pin configuration parameters
-  * @PIN_CONFIG_IOSTANDARD: if the pin can select an IO standard, the argument to
+- * @PIN_CONFIG_IOSTANDARD: if the pin can select an IO standard, the argument to
++/*
++ * PIN_CONFIG_IOSTANDARD: if the pin can select an IO standard, the argument to
   *	this parameter (on a custom format) tells the driver which alternative
   *	IO standard to use.
   */
