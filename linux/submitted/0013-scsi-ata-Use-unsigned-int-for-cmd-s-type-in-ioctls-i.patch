@@ -1,4 +1,4 @@
-From aaa43e57cd600386b158fa99bb0a022eed9fdb01 Mon Sep 17 00:00:00 2001
+From fea096e49580bedbb30d56f1ec59e99425f7b4d2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 13/21] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -373,7 +373,7 @@ index 33229348dcb6..4eeaafbe0504 100644
  	struct domain_device *dev = sdev_to_domain_dev(sdev);
  
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 60bcc6df97a9..4c513651c95f 100644
+index 4740f1e9dd17..198df2455494 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
 @@ -836,7 +836,8 @@ static void mk_sense_invalid_opcode(struct scsi_cmnd *scp)
@@ -387,10 +387,10 @@ index 60bcc6df97a9..4c513651c95f 100644
  	if (sdebug_verbose) {
  		if (0x1261 == cmd)
 diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index a25a07a0b7f0..498bdfbbebfa 100644
+index bac084260d80..de3b100b480d 100644
 --- a/drivers/scsi/smartpqi/smartpqi_init.c
 +++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5572,7 +5572,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
+@@ -5573,7 +5573,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
  	return rc;
  }
  
@@ -433,10 +433,10 @@ index 3de3b10da19a..70461264d6e7 100644
  
  extern void sas_ssp_task_response(struct device *dev, struct sas_task *task,
 diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 5ea06d310a25..5c1df26e1d4f 100644
+index aa760df8c6b3..7fa38ae7b806 100644
 --- a/include/scsi/scsi_host.h
 +++ b/include/scsi/scsi_host.h
-@@ -65,7 +65,8 @@ struct scsi_host_template {
+@@ -63,7 +63,8 @@ struct scsi_host_template {
  	 *
  	 * Status: OPTIONAL
  	 */
@@ -446,7 +446,7 @@ index 5ea06d310a25..5c1df26e1d4f 100644
  
  
  #ifdef CONFIG_COMPAT
-@@ -75,7 +76,8 @@ struct scsi_host_template {
+@@ -73,7 +74,8 @@ struct scsi_host_template {
  	 *
  	 * Status: OPTIONAL
  	 */
