@@ -1,7 +1,7 @@
-From e10cddcb15a451c614ba2a9c2332c693f4fc0863 Mon Sep 17 00:00:00 2001
+From 0dcb15877baca55b1fbb30fbc5b7ad1a9f0a4fe1 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Mon, 22 Oct 2018 16:43:57 -0700
-Subject: [PATCH 4/6] KEYS: trusted: fix -Wvarags warning
+Subject: [PATCH 4/5] KEYS: trusted: fix -Wvarags warning
 
 Fixes the warning reported by Clang:
 security/keys/trusted.c:146:17: warning: passing an object that
