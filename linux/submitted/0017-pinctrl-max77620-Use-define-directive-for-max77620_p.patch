@@ -1,7 +1,7 @@
-From ce3ca9f4cafea2983425bc790cfd50a2999e89d5 Mon Sep 17 00:00:00 2001
+From 668dfa74832d7a7dc71bb034e45656ffb3aa87a7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:26:09 -0700
-Subject: [PATCH 18/21] pinctrl: max77620: Use define directive for
+Subject: [PATCH 17/20] pinctrl: max77620: Use define directive for
  max77620_pinconf_param values
 
 Clang warns when one enumerated type is implicitly converted to another:

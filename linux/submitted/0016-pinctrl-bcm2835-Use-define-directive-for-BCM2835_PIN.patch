@@ -1,7 +1,7 @@
-From 84d992b22a8e01313102a41f603b4a945a7e3213 Mon Sep 17 00:00:00 2001
+From c1a3827a4280885ca17f74a3b381bdca49e5a3b9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:20:41 -0700
-Subject: [PATCH 17/21] pinctrl: bcm2835: Use define directive for
+Subject: [PATCH 16/20] pinctrl: bcm2835: Use define directive for
  BCM2835_PINCONF_PARAM_PULL
 
 Clang warns when one enumerated type is implicitly converted to another:

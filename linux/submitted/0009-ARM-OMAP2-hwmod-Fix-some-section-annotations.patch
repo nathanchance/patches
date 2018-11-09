@@ -1,7 +1,7 @@
-From 87e4066da533e128bc333be3305ca7f82bbb6f6c Mon Sep 17 00:00:00 2001
+From 9d45b8f45524bc2c9f1b2df5a730f11d5dce4191 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 17:24:53 -0700
-Subject: [PATCH 09/21] ARM: OMAP2+: hwmod: Fix some section annotations
+Subject: [PATCH 09/20] ARM: OMAP2+: hwmod: Fix some section annotations
 
 When building the kernel with Clang, the following section mismatch
 warnings appears:
