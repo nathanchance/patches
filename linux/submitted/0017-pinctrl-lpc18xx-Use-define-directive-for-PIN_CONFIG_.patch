@@ -1,7 +1,7 @@
-From 11813779627800f159a5b4571feccd50f29259cb Mon Sep 17 00:00:00 2001
+From 355d17214ad531cf120cbd0d8f8d247df6ea3649 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:29:44 -0700
-Subject: [PATCH 18/20] pinctrl: lpc18xx: Use define directive for
+Subject: [PATCH 17/19] pinctrl: lpc18xx: Use define directive for
  PIN_CONFIG_GPIO_PIN_INT
 
 Clang warns when one enumerated type is implicitly converted to another:
