@@ -1,7 +1,7 @@
-From 5cc09f3fa765316fe375bae485f8921f42d97279 Mon Sep 17 00:00:00 2001
+From 08cca10394be97bb29661c50a7a391e3504d1c05 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 6 Nov 2018 23:24:50 -0700
-Subject: [PATCH 5/5] media: imx214: Remove unnecessary self assignment in for
+Subject: [PATCH 4/4] media: imx214: Remove unnecessary self assignment in for
  loop
 
 Clang warns when a variable is assigned to itself:
