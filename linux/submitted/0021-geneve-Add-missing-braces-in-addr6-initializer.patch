@@ -1,0 +1,35 @@
+From 0fb0227b3f6ffdfbb3279cb94381bb89d85766c5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 12 Nov 2018 14:53:24 -0700
+Subject: [PATCH 21/21] geneve: Add missing braces in addr6 initializer
+
+Clang warns:
+
+drivers/net/geneve.c:428:29: error: suggest braces around initialization
+of subobject [-Werror,-Wmissing-braces]
+                struct in6_addr addr6 = { 0 };
+                                          ^
+                                          {}
+
+Fixes: a07966447f39 ("geneve: ICMP error lookup handler")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/geneve.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 7c53e06b31c3..224d8b0bb5de 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -425,7 +425,7 @@ static int geneve_udp_encap_err_lookup(struct sock *sk, struct sk_buff *skb)
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (geneve_get_sk_family(gs) == AF_INET6) {
+ 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
+-		struct in6_addr addr6 = { 0 };
++		struct in6_addr addr6 = { { 0 } };
+ 
+ 		if (!gs->collect_md) {
+ 			vni = geneve_hdr(skb)->vni;
+-- 
+2.19.1
+
