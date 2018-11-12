@@ -1,4 +1,4 @@
-From 53bde0199b628dc9c872fd78c87763b6cfb532b6 Mon Sep 17 00:00:00 2001
+From dee920da8f48c523b415ec35eac42a63da6bb883 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 1/7] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 93315eb42d30..f32ddeb0ff15 100644
+index ecc812834abc..836cc449bfa7 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -973,11 +973,6 @@ ifdef CONFIG_STACK_VALIDATION
@@ -34,10 +34,10 @@ index 93315eb42d30..f32ddeb0ff15 100644
      export SKIP_STACK_VALIDATION
    endif
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 5b562e464009..73f4831283ac 100644
+index 88398fdf8129..672c689c1faa 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -305,8 +305,7 @@ vdso_install:
+@@ -303,8 +303,7 @@ vdso_install:
  archprepare: checkbin
  checkbin:
  ifndef CC_HAVE_ASM_GOTO
