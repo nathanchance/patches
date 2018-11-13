@@ -1,7 +1,7 @@
-From 8e84cf7665eb8cf7c49ed0e1afbe03c15be22345 Mon Sep 17 00:00:00 2001
+From 0247c5f50b85f7c165f52bff97b0590705fe11c0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:37:51 -0700
-Subject: [PATCH 19/21] pinctrl: zynq: Use define directive for
+Subject: [PATCH 18/20] pinctrl: zynq: Use define directive for
  PIN_CONFIG_IO_STANDARD
 
 Clang warns when one enumerated type is implicitly converted to another:
