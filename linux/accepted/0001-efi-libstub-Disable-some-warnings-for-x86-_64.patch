@@ -1,7 +1,7 @@
-From 1327cbd4a1181e1da503b2bbec1795bcb491b33b Mon Sep 17 00:00:00 2001
+From dca5aeab1fb117b2b24286bdf3d40b1d27072167 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 18:03:49 -0700
-Subject: [PATCH 3/4] efi/libstub: Disable some warnings for x86{,_64}
+Subject: [PATCH 1/2] efi/libstub: Disable some warnings for x86{,_64}
 
 When building the kernel with Clang, some disabled warnings appear
 because this Makefile overrides KBUILD_CFLAGS for x86{,_64}. Add them to
