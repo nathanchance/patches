@@ -1,7 +1,7 @@
-From ca396dbbb13862044701e3aaf04c3334ea9ccc5c Mon Sep 17 00:00:00 2001
+From 50f212c63359317f00efdac3e64c1619a6bbaae9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 11/20] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 11/19] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -360,11 +360,11 @@ index 271990bc065b..97fcc881f9f1 100644
  	struct ipr_resource_entry *res;
  
 diff --git a/drivers/scsi/libsas/sas_scsi_host.c b/drivers/scsi/libsas/sas_scsi_host.c
-index 33229348dcb6..4eeaafbe0504 100644
+index c43a00a9d819..b775445892af 100644
 --- a/drivers/scsi/libsas/sas_scsi_host.c
 +++ b/drivers/scsi/libsas/sas_scsi_host.c
-@@ -805,7 +805,7 @@ void sas_scsi_recover_host(struct Scsi_Host *shost)
- 		    shost->host_failed, tries);
+@@ -799,7 +799,7 @@ void sas_scsi_recover_host(struct Scsi_Host *shost)
+ 		  shost->host_failed, tries);
  }
  
 -int sas_ioctl(struct scsi_device *sdev, int cmd, void __user *arg)
@@ -457,5 +457,5 @@ index aa760df8c6b3..7fa38ae7b806 100644
  
  	/*
 -- 
-2.19.1
+2.20.0.rc0
 

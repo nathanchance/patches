@@ -1,7 +1,7 @@
-From f9f1390303fd8abeec999d4ba24ec737d9dc0ee4 Mon Sep 17 00:00:00 2001
+From 5f089fa49d66a9769b36e39cf38b551085582e6a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 12 Nov 2018 14:57:56 -0700
-Subject: [PATCH 19/20] bpf: Remove unused variable in nsim_bpf
+Subject: [PATCH 19/19] bpf: Remove unused variable in nsim_bpf
 
 Clang warns:
 
@@ -32,5 +32,5 @@ index 6a5b7bd9a1f9..a1b29173ca1c 100644
  
  	ASSERT_RTNL();
 -- 
-2.19.1
+2.20.0.rc0
 

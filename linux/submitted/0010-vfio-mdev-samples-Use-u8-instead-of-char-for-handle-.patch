@@ -1,7 +1,7 @@
-From 70a333dc8f62695721a6047270ce143f42c8d6c1 Mon Sep 17 00:00:00 2001
+From eb415dc9a6884dcf74858e25ca454001edfc2414 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 09:31:48 -0700
-Subject: [PATCH 10/20] vfio-mdev/samples: Use u8 instead of char for handle
+Subject: [PATCH 10/19] vfio-mdev/samples: Use u8 instead of char for handle
  functions
 
 Clang warns:
@@ -143,5 +143,5 @@ index 7abb79d8313d..f6732aa16bb1 100644
  			if (ret <= 0)
  				goto write_err;
 -- 
-2.19.1
+2.20.0.rc0
 

@@ -1,7 +1,7 @@
-From a5fed707ec625cadb5dec17bdad714253d991cf9 Mon Sep 17 00:00:00 2001
+From 000a6461a4523d2575158a6e5a6a6e8cf8e4098e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:05:53 -0700
-Subject: [PATCH 14/20] pinctrl: sprd: Use define directive for
+Subject: [PATCH 14/19] pinctrl: sprd: Use define directive for
  sprd_pinconf_params values
 
 Clang warns when one enumerated type is implicitly converted to another:
@@ -47,5 +47,5 @@ index 4537b5453996..7d9a44bd0047 100644
  static int sprd_pinctrl_get_id_by_name(struct sprd_pinctrl *sprd_pctl,
  				       const char *name)
 -- 
-2.19.1
+2.20.0.rc0
 

@@ -1,7 +1,7 @@
-From bb1c6b49f805e05710273e068836b32acd9745d5 Mon Sep 17 00:00:00 2001
+From 14ac71c9f9544646be5ccad4bf827bc58d9cd77d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 17:24:53 -0700
-Subject: [PATCH 08/20] ARM: OMAP2+: hwmod: Fix some section annotations
+Subject: [PATCH 08/19] ARM: OMAP2+: hwmod: Fix some section annotations
 
 When building the kernel with Clang, the following section mismatch
 warnings appears:
@@ -68,5 +68,5 @@ index 083dcd9942ce..921c9aaee63f 100644
  	u8 postsetup_state;
  
 -- 
-2.19.1
+2.20.0.rc0
 

@@ -1,7 +1,7 @@
-From 72eba596dde21718c6a62797a6bce7aef592db54 Mon Sep 17 00:00:00 2001
+From 08b27d30a75c1ae5d2c8114a069f29754781c1ff Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 17 Oct 2018 17:20:23 -0700
-Subject: [PATCH 07/20] ARM: dts: omap3-gta04: Fix comment block
+Subject: [PATCH 07/19] ARM: dts: omap3-gta04: Fix comment block
 
 When compiling the kernel with Clang, the following warning appears:
 
@@ -30,5 +30,5 @@ index d5fe55392230..e53d32691308 100644
  			OMAP3_CORE1_IOPAD(0x2198, PIN_INPUT | MUX_MODE0)	/* mcbsp1_clkx.mcbsp1_clkx */
  		>;
 -- 
-2.19.1
+2.20.0.rc0
 

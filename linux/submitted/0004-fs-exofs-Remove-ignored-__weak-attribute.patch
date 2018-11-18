@@ -1,7 +1,7 @@
-From f6327dcaa8217f1d4c1e75042b31534dbc9c24d6 Mon Sep 17 00:00:00 2001
+From 04bfb3bc98b4fd9c80eefcddd79362af0ab6c600 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 19:11:33 -0700
-Subject: [PATCH 04/20] fs/exofs: Remove ignored __weak attribute
+Subject: [PATCH 04/19] fs/exofs: Remove ignored __weak attribute
 
 Clang warns that the __weak attribute is going to be ignored on
 g_attr_inode_data because it's not in the correct location (needs to be
@@ -52,5 +52,5 @@ index 7d88ef566213..45da96a1528d 100644
  	EXOFS_ATTR_INODE_DATA,
  	EXOFS_INO_ATTR_SIZE);
 -- 
-2.19.1
+2.20.0.rc0
 

@@ -1,7 +1,7 @@
-From 8aac827203ca57c9e89d8a60ff1129051adac375 Mon Sep 17 00:00:00 2001
+From 95c1c7a319c1da99670984d72479168ba6c53037 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 17:29:44 -0700
-Subject: [PATCH 17/20] pinctrl: lpc18xx: Use define directive for
+Subject: [PATCH 17/19] pinctrl: lpc18xx: Use define directive for
  PIN_CONFIG_GPIO_PIN_INT
 
 Clang warns when one enumerated type is implicitly converted to another:
@@ -56,5 +56,5 @@ index a14bc5e5fc24..06be55dab341 100644
  static const struct pinconf_generic_params lpc18xx_params[] = {
  	{"nxp,gpio-pin-interrupt", PIN_CONFIG_GPIO_PIN_INT, 0},
 -- 
-2.19.1
+2.20.0.rc0
 
