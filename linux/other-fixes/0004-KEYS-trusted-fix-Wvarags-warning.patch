@@ -1,7 +1,7 @@
-From 9c91072248843218ba2c540e6b4b6b605432fce1 Mon Sep 17 00:00:00 2001
+From d442c21f8bf3a2b7091bdaf7780674801ed7f9e5 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Mon, 22 Oct 2018 16:43:57 -0700
-Subject: [PATCH 4/5] KEYS: trusted: fix -Wvarags warning
+Subject: [PATCH 4/4] KEYS: trusted: fix -Wvarags warning
 
 Fixes the warning reported by Clang:
 security/keys/trusted.c:146:17: warning: passing an object that
@@ -49,7 +49,7 @@ index adbcb6817826..0071298b9b28 100644
  			  const uint32_t command,
  			  const unsigned char *ononce,
 diff --git a/security/keys/trusted.c b/security/keys/trusted.c
-index ff6789365a12..335ce6d1cf6b 100644
+index 2d4f16b2a7c5..272b2ecd30b4 100644
 --- a/security/keys/trusted.c
 +++ b/security/keys/trusted.c
 @@ -123,7 +123,7 @@ static int TSS_rawhmac(unsigned char *digest, const unsigned char *key,
@@ -71,5 +71,5 @@ index ff6789365a12..335ce6d1cf6b 100644
  	if (ret < 0)
  		goto out;
 -- 
-2.19.1
+2.20.0.rc0
 
