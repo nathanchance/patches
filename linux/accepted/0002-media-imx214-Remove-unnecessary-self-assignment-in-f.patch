@@ -1,4 +1,4 @@
-From 5ab751397cfe6314dc45d3b71c04dbcfa739e3fb Mon Sep 17 00:00:00 2001
+From 5331aaa818a89817b31b8cf1f1bb5c9a255daaf4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 6 Nov 2018 23:24:50 -0700
 Subject: [PATCH 2/2] media: imx214: Remove unnecessary self assignment in for
@@ -33,5 +33,5 @@ index 284b9b49ebde..ec3d1b855f62 100644
  			usleep_range(table->val * 1000,
  				     table->val * 1000 + 500);
 -- 
-2.19.1
+2.20.0.rc0
 
