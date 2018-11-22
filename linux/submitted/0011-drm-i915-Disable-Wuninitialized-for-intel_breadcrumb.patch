@@ -1,7 +1,7 @@
-From e54af8bb63de677cdba681fc3b6a7cb81ded8e6e Mon Sep 17 00:00:00 2001
+From 28d7a7f92d8cbbf5ecb5f768e2dfee7ba71611fd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 25 Oct 2018 12:31:58 -0700
-Subject: [PATCH 11/11] drm/i915: Disable -Wuninitialized for
+Subject: [PATCH 11/12] drm/i915: Disable -Wuninitialized for
  intel_breadcrumbs.o
 
 This warning is disabled by default in scripts/Makefile.extrawarn when
@@ -49,5 +49,5 @@ index 0ff878c994e2..648c6e614fbf 100644
  
  subdir-ccflags-y += \
 -- 
-2.20.0.rc0
+2.20.0.rc1
 

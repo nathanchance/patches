@@ -1,7 +1,7 @@
-From 69258de4725e578a1331406cc4375961480f1f23 Mon Sep 17 00:00:00 2001
+From 7a3824cda890ff0bf6c25eb6b676c0759c124eaf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 24 Sep 2018 10:33:44 -0700
-Subject: [PATCH 01/11] cachefiles: Explicitly cast enumerated type in
+Subject: [PATCH 01/12] cachefiles: Explicitly cast enumerated type in
  put_object
 
 Clang warns when one enumerated type is implicitly converted to another.
@@ -42,5 +42,5 @@ index 95983c744164..5ab411d4bc59 100644
  	return -ETIMEDOUT;
  }
 -- 
-2.20.0.rc0
+2.20.0.rc1
 

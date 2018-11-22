@@ -1,7 +1,7 @@
-From 080caa7c77b12327afeeaf3cddbbfa91d38c500c Mon Sep 17 00:00:00 2001
+From 0dddfacc03f08fd3c75e6efbc3d53794c1b92481 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 25 Oct 2018 11:00:27 -0700
-Subject: [PATCH 10/11] dmaengine: xilinx_dma: Remove __aligned attribute on
+Subject: [PATCH 10/12] dmaengine: xilinx_dma: Remove __aligned attribute on
  zynqmp_dma_desc_ll
 
 Clang warns:
@@ -43,5 +43,5 @@ index c74a88b65039..73de6a6179fc 100644
  /**
   * struct zynqmp_dma_desc_sw - Per Transaction structure
 -- 
-2.20.0.rc0
+2.20.0.rc1
 

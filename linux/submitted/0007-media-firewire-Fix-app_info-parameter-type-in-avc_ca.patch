@@ -1,7 +1,7 @@
-From 067be15e6771cd2332b0932d6ee15439960d0349 Mon Sep 17 00:00:00 2001
+From 40631741672eb6437d52f0c6398095b5817862f1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 18 Oct 2018 12:58:45 -0700
-Subject: [PATCH 07/11] media: firewire: Fix app_info parameter type in
+Subject: [PATCH 07/12] media: firewire: Fix app_info parameter type in
  avc_ca{,_app}_info
 
 Clang warns:
@@ -81,5 +81,5 @@ index 876cdec8329b..009905a19947 100644
  int avc_ca_pmt(struct firedtv *fdtv, char *app_info, int length);
  int avc_ca_get_time_date(struct firedtv *fdtv, int *interval);
 -- 
-2.20.0.rc0
+2.20.0.rc1
 
