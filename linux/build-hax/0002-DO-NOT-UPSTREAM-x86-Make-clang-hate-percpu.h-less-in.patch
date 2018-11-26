@@ -1,4 +1,4 @@
-From 59dcd5b22e4c3a95ca214e172beebfe592106d02 Mon Sep 17 00:00:00 2001
+From 512ddafc2afd0b85549ce2ce624df35d40c80b52 Mon Sep 17 00:00:00 2001
 From: David Woodhouse <dwmw2@infradead.org>
 Date: Fri, 9 Feb 2018 16:18:33 +0000
 Subject: [PATCH 2/7] DO-NOT-UPSTREAM: x86: Make clang hate percpu.h less in
@@ -103,5 +103,5 @@ index 1a19d11cfbbd..014285605a8f 100644
  	case 2:						\
  		asm(op "w "__percpu_arg(P1)",%0"	\
 -- 
-2.20.0.rc0
+2.20.0.rc1
 
