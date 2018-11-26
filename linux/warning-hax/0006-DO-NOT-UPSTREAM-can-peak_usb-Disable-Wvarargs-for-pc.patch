@@ -1,4 +1,4 @@
-From fea2963a5f0b99ae13d25e6a1d013cf73d5d523f Mon Sep 17 00:00:00 2001
+From d6d3807a9bad6b152f06a8298b1396d9f3f2fb1e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:36:59 -0700
 Subject: [PATCH 06/11] DO-NOT-UPSTREAM: can: peak_usb: Disable -Wvarargs for
@@ -22,5 +22,5 @@ index 1839e9ca62e7..4639e87a2afd 100644
 +
 +CFLAGS_pcan_usb_pro.o += $(call cc-disable-warning, varargs)
 -- 
-2.20.0.rc0
+2.20.0.rc1
 
