@@ -1,7 +1,7 @@
-From d5863b68b50ecbf76f2f194e287745c101f385ad Mon Sep 17 00:00:00 2001
+From bc76368d13f10b6b19867e0c7ada95e58c79d89f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 18:03:49 -0700
-Subject: [PATCH 1/2] efi/libstub: Disable some warnings for x86{,_64}
+Subject: [PATCH] efi/libstub: Disable some warnings for x86{,_64}
 
 When building the kernel with Clang, some disabled warnings appear
 because this Makefile overrides KBUILD_CFLAGS for x86{,_64}. Add them to
@@ -46,5 +46,5 @@ index c51627660dbb..d9845099635e 100644
  # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
  # disable the stackleak plugin
 -- 
-2.20.0.rc0
+2.20.0.rc1
 
