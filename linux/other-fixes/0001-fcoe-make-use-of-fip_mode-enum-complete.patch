@@ -1,4 +1,4 @@
-From 9e3b4c595a5817a6d2891aca605b8c9d8a75542a Mon Sep 17 00:00:00 2001
+From c7059a633d5fb753a7249b54137c5ed3ee590202 Mon Sep 17 00:00:00 2001
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Date: Thu, 6 Sep 2018 06:36:42 +0200
 Subject: [PATCH 1/4] fcoe: make use of fip_mode enum complete
@@ -137,5 +137,5 @@ index cb8a273732cf..10d6d92b4d28 100644
  void fcoe_ctlr_link_up(struct fcoe_ctlr *);
  int fcoe_ctlr_link_down(struct fcoe_ctlr *);
 -- 
-2.20.0.rc0
+2.20.0.rc1
 
