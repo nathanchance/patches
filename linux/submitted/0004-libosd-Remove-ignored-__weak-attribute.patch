@@ -1,7 +1,7 @@
-From 2767829c3e4c27d0b931172e2a18b72d8c39abe0 Mon Sep 17 00:00:00 2001
+From c81a0d5980d4af51c1ad0ffb9d5041c57973265c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 19:30:26 -0700
-Subject: [PATCH 05/10] libosd: Remove ignored __weak attribute
+Subject: [PATCH 4/9] libosd: Remove ignored __weak attribute
 
 Clang warns that the __weak attribute is going to be ignored on
 osd_root_object because it's not in the correct location (needs to be

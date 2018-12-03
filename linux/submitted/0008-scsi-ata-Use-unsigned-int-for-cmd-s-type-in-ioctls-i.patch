@@ -1,7 +1,7 @@
-From 0431c3514d7bf8d40417a85fec0b65ffabc8468e Mon Sep 17 00:00:00 2001
+From 0c4164abff7838fafcb36f94de97f0efa0d1c433 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 09/10] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 8/9] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -76,10 +76,10 @@ index 3d4887d0e84a..6291f1dbf342 100644
  	return ata_sas_scsi_ioctl(ata_shost_to_port(scsidev->host),
  				scsidev, cmd, arg);
 diff --git a/drivers/scsi/aacraid/aachba.c b/drivers/scsi/aacraid/aachba.c
-index bd7f352c28f3..a6399fac3333 100644
+index 75ab5ff6b78c..6085aa087a2f 100644
 --- a/drivers/scsi/aacraid/aachba.c
 +++ b/drivers/scsi/aacraid/aachba.c
-@@ -3452,7 +3452,7 @@ static int delete_disk(struct aac_dev *dev, void __user *arg)
+@@ -3455,7 +3455,7 @@ static int delete_disk(struct aac_dev *dev, void __user *arg)
  	}
  }
  
@@ -121,7 +121,7 @@ index 25f6600d6c09..fd8a10871598 100644
  	int status;
  
 diff --git a/drivers/scsi/aacraid/linit.c b/drivers/scsi/aacraid/linit.c
-index 2d4e4ddc5ace..cd2efb44f62c 100644
+index 42defee90eb2..501f4f3c2ea9 100644
 --- a/drivers/scsi/aacraid/linit.c
 +++ b/drivers/scsi/aacraid/linit.c
 @@ -616,7 +616,8 @@ static struct device_attribute *aac_dev_attrs[] = {
@@ -134,7 +134,7 @@ index 2d4e4ddc5ace..cd2efb44f62c 100644
  {
  	struct aac_dev *dev = (struct aac_dev *)sdev->host->hostdata;
  	if (!capable(CAP_SYS_RAWIO))
-@@ -1205,7 +1206,8 @@ static long aac_compat_do_ioctl(struct aac_dev *dev, unsigned cmd, unsigned long
+@@ -1206,7 +1207,8 @@ static long aac_compat_do_ioctl(struct aac_dev *dev, unsigned cmd, unsigned long
  	return ret;
  }
  
@@ -290,7 +290,7 @@ index c07118617d89..25dc8d44ed8e 100644
  
  static void __exit esas2r_exit(void)
 diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index c9cccf35e9d7..c9d41d3b50f1 100644
+index bc64e8a0449d..83efe40f01ab 100644
 --- a/drivers/scsi/hpsa.c
 +++ b/drivers/scsi/hpsa.c
 @@ -251,10 +251,11 @@ static int number_of_controllers;
@@ -307,7 +307,7 @@ index c9cccf35e9d7..c9d41d3b50f1 100644
  	void __user *arg);
  #endif
  
-@@ -6123,7 +6124,7 @@ static void cmd_free(struct ctlr_info *h, struct CommandList *c)
+@@ -6128,7 +6129,7 @@ static void cmd_free(struct ctlr_info *h, struct CommandList *c)
  
  #ifdef CONFIG_COMPAT
  
@@ -316,7 +316,7 @@ index c9cccf35e9d7..c9d41d3b50f1 100644
  	void __user *arg)
  {
  	IOCTL32_Command_struct __user *arg32 =
-@@ -6160,7 +6161,7 @@ static int hpsa_ioctl32_passthru(struct scsi_device *dev, int cmd,
+@@ -6165,7 +6166,7 @@ static int hpsa_ioctl32_passthru(struct scsi_device *dev, int cmd,
  }
  
  static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
@@ -325,7 +325,7 @@ index c9cccf35e9d7..c9d41d3b50f1 100644
  {
  	BIG_IOCTL32_Command_struct __user *arg32 =
  	    (BIG_IOCTL32_Command_struct __user *) arg;
-@@ -6197,7 +6198,8 @@ static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
+@@ -6202,7 +6203,8 @@ static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
  	return err;
  }
  
@@ -335,7 +335,7 @@ index c9cccf35e9d7..c9d41d3b50f1 100644
  {
  	switch (cmd) {
  	case CCISS_GETPCIINFO:
-@@ -6517,7 +6519,8 @@ static void check_ioctl_unit_attention(struct ctlr_info *h,
+@@ -6522,7 +6524,8 @@ static void check_ioctl_unit_attention(struct ctlr_info *h,
  /*
   * ioctl
   */
