@@ -1,4 +1,4 @@
-From d0d250e0c864c3ef3fad319f2ec1083a7e495223 Mon Sep 17 00:00:00 2001
+From 99013a4b96be601c2ae739193326d9f79fae0f94 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 1/7] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e1db85a20573..67090fcef598 100644
+index a6ce3d8375a2..ab6c30c22c37 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -977,11 +977,6 @@ ifdef CONFIG_STACK_VALIDATION
