@@ -1,0 +1,55 @@
+From c7ef122f97a43d57f44699eb067035400c8ad829 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 10 Dec 2018 18:16:25 -0700
+Subject: [PATCH 8/9] DO-NOT-UPSTREAM: arm hax for neon
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/287
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm/lib/xor-neon.c      | 4 ----
+ lib/raid6/neon.uc            | 1 +
+ lib/raid6/recov_neon_inner.c | 1 +
+ 3 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
+index 2c40aeab3eaa..9e0a03f308b4 100644
+--- a/arch/arm/lib/xor-neon.c
++++ b/arch/arm/lib/xor-neon.c
+@@ -13,10 +13,6 @@
+ 
+ MODULE_LICENSE("GPL");
+ 
+-#ifndef __ARM_NEON__
+-#error You should compile this file with '-mfloat-abi=softfp -mfpu=neon'
+-#endif
+-
+ /*
+  * Pull in the reference implementations while instructing GCC (through
+  * -ftree-vectorize) to attempt to exploit implicit parallelism and emit
+diff --git a/lib/raid6/neon.uc b/lib/raid6/neon.uc
+index d5242f544551..2b4418fd0d7f 100644
+--- a/lib/raid6/neon.uc
++++ b/lib/raid6/neon.uc
+@@ -24,6 +24,7 @@
+  * This file is postprocessed using unroll.awk
+  */
+ 
++#define __ARM_NEON
+ #include <arm_neon.h>
+ 
+ typedef uint8x16_t unative_t;
+diff --git a/lib/raid6/recov_neon_inner.c b/lib/raid6/recov_neon_inner.c
+index 8cd20c9f834a..915021b816c7 100644
+--- a/lib/raid6/recov_neon_inner.c
++++ b/lib/raid6/recov_neon_inner.c
+@@ -8,6 +8,7 @@
+  * of the License.
+  */
+ 
++#define __ARM_NEON
+ #include <arm_neon.h>
+ 
+ static const uint8x16_t x0f = {
+-- 
+2.20.0
+
