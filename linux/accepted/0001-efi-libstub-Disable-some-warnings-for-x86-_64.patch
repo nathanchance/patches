@@ -1,4 +1,4 @@
-From bc76368d13f10b6b19867e0c7ada95e58c79d89f Mon Sep 17 00:00:00 2001
+From b39df52dba909e54f21f60de159f78d106c4557b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Oct 2018 18:03:49 -0700
 Subject: [PATCH] efi/libstub: Disable some warnings for x86{,_64}
@@ -46,5 +46,5 @@ index c51627660dbb..d9845099635e 100644
  # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
  # disable the stackleak plugin
 -- 
-2.20.0.rc1
+2.20.0
 
