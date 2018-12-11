@@ -1,7 +1,7 @@
-From 9e91f22148f4e02d87162dc8e58a4f0227fd2029 Mon Sep 17 00:00:00 2001
+From e1270bc4cd3cad15ce8f2ea046a46db180c9397f Mon Sep 17 00:00:00 2001
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Date: Thu, 6 Sep 2018 06:36:42 +0200
-Subject: [PATCH 1/4] fcoe: make use of fip_mode enum complete
+Subject: [PATCH 1/5] fcoe: make use of fip_mode enum complete
 
 commit 1917d42d14b7 ("fcoe: use enum for fip_mode") introduces a separate
 enum for the fip_mode that shall be used during initialisation handling
@@ -37,7 +37,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  6 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/scsi/bnx2fc/bnx2fc_fcoe.c b/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
-index cd160f2ec75d..50bf0634ae7c 100644
+index bcd30e2374f1..e467d1397bc9 100644
 --- a/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
 +++ b/drivers/scsi/bnx2fc/bnx2fc_fcoe.c
 @@ -1438,7 +1438,7 @@ static struct bnx2fc_hba *bnx2fc_hba_create(struct cnic_dev *cnic)
@@ -98,7 +98,7 @@ index f4909cd206d3..b381ab066b9c 100644
  	mutex_lock(&ft_mutex);
  
 diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index d5a4f17fce51..b3a5b6554f3f 100644
+index 12e6e5dfae6e..a18d3b8eaaad 100644
 --- a/drivers/scsi/qedf/qedf_main.c
 +++ b/drivers/scsi/qedf/qedf_main.c
 @@ -1418,7 +1418,7 @@ static struct libfc_function_template qedf_lport_template = {
@@ -137,5 +137,5 @@ index cb8a273732cf..10d6d92b4d28 100644
  void fcoe_ctlr_link_up(struct fcoe_ctlr *);
  int fcoe_ctlr_link_down(struct fcoe_ctlr *);
 -- 
-2.20.0.rc1
+2.20.0
 

@@ -1,7 +1,7 @@
-From 8d62c7f8acc537a48a823dbfd0b3e03b93a2c969 Mon Sep 17 00:00:00 2001
+From a95a1121651f901eabf390481d17298afb354a03 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Mon, 22 Oct 2018 16:43:57 -0700
-Subject: [PATCH 4/4] KEYS: trusted: fix -Wvarags warning
+Subject: [PATCH 4/5] KEYS: trusted: fix -Wvarags warning
 
 Fixes the warning reported by Clang:
 security/keys/trusted.c:146:17: warning: passing an object that
@@ -71,5 +71,5 @@ index 2d4f16b2a7c5..272b2ecd30b4 100644
  	if (ret < 0)
  		goto out;
 -- 
-2.20.0.rc1
+2.20.0
 
