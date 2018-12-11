@@ -1,7 +1,8 @@
-From c60967bd40f5e9ba99c5918bc0b158768ab33f99 Mon Sep 17 00:00:00 2001
+From c7a01fff107681fe113bc56e423f595982e34f71 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 4 Oct 2018 13:05:30 -0700
-Subject: [PATCH 5/9] drbd: Avoid Clang warning about pointless switch statment
+Subject: [PATCH 05/17] drbd: Avoid Clang warning about pointless switch
+ statment
 
 There are several warnings from Clang about no case statement matching
 the constant 0:
@@ -64,5 +65,5 @@ index 5972e4969197..eeae59d3ceb7 100644
  	}								\
  }
 -- 
-2.20.0.rc1
+2.20.0
 

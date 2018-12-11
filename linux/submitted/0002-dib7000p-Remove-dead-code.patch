@@ -1,7 +1,7 @@
-From fa10e6fbe0cfc3f591bfd304fa6328f63a55e8ee Mon Sep 17 00:00:00 2001
+From 5664131a28362ad69d1c1a7ef0e077fe48eca0e6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 14 Sep 2018 22:47:39 -0700
-Subject: [PATCH 2/9] dib7000p: Remove dead code
+Subject: [PATCH 02/17] dib7000p: Remove dead code
 
 Clang warns that 'interleaving' is assigned to itself in this function.
 
@@ -20,11 +20,11 @@ dib8000, which this code was copied from in commit 041ad449683b
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/media/dvb-frontends/dib7000p.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index 58387860b62d..25843658fc68 100644
+index 2818e8def1b3..437729849db7 100644
 --- a/drivers/media/dvb-frontends/dib7000p.c
 +++ b/drivers/media/dvb-frontends/dib7000p.c
 @@ -1800,9 +1800,8 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
@@ -39,16 +39,7 @@ index 58387860b62d..25843658fc68 100644
  
  	switch (c->guard_interval) {
  	case GUARD_INTERVAL_1_4:
-@@ -1871,8 +1870,6 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
- 		break;
- 	}
- 
--	interleaving = interleaving;
--
- 	denom = bits_per_symbol * rate_num * fft_div * 384;
- 
- 	/* If calculus gets wrong, wait for 1s for the next stats */
-@@ -1887,9 +1884,6 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
+@@ -1890,9 +1889,6 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
  	time_us += denom / 2;
  	do_div(time_us, denom);
  
@@ -59,5 +50,5 @@ index 58387860b62d..25843658fc68 100644
  }
  
 -- 
-2.20.0.rc1
+2.20.0
 

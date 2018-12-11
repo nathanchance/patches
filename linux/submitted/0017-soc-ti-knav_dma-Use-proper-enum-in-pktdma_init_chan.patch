@@ -1,0 +1,39 @@
+From f7231fdf5c6ad81f8d1ff37bb7443e1c39ac8854 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 10 Dec 2018 17:28:46 -0700
+Subject: [PATCH 17/17] soc: ti: knav_dma: Use proper enum in pktdma_init_chan
+
+Clang warns when one enumerated type is implicitly converted to another:
+
+drivers/soc/ti/knav_dma.c:601:20: warning: implicit conversion from
+enumeration type 'enum dma_data_direction' to different enumeration type
+'enum dma_transfer_direction' [-Wenum-conversion]
+        chan->direction = DMA_NONE;
+                        ~ ^~~~~~~~
+1 warning generated.
+
+While DMA_NONE and DMA_TRANS_NONE have different values, there is no
+functional change because direction is never checked against DMA_NONE,
+only against DMA_MEM_TO_DEV and DMA_DEV_TO_MEM.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/soc/ti/knav_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/ti/knav_dma.c b/drivers/soc/ti/knav_dma.c
+index e05ab16d9a9e..6285cd8efb21 100644
+--- a/drivers/soc/ti/knav_dma.c
++++ b/drivers/soc/ti/knav_dma.c
+@@ -598,7 +598,7 @@ static int pktdma_init_chan(struct knav_dma_device *dma,
+ 
+ 	INIT_LIST_HEAD(&chan->list);
+ 	chan->dma	= dma;
+-	chan->direction	= DMA_NONE;
++	chan->direction	= DMA_TRANS_NONE;
+ 	atomic_set(&chan->ref_count, 0);
+ 	spin_lock_init(&chan->lock);
+ 
+-- 
+2.20.0
+

@@ -1,0 +1,54 @@
+From 36fdbb35ecc40fb9be248fc8f096cc90e7587d7d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 10 Dec 2018 15:34:45 -0700
+Subject: [PATCH 11/17] x86/pgtable: Always inline p4d_index
+
+When building an allyesconfig build with Clang, the kernel fails to link
+arch/x86/platform/efi/efi_64.o because of a failed BUILD_BUG_ON:
+
+ld: arch/x86/platform/efi/efi_64.o: in function `efi_sync_low_kernel_mappings':
+(.text+0x8e5): undefined reference to `__compiletime_assert_277'
+
+Since there are several BUILD_BUG_ONs in efi_64.c, I isolated it down to
+the following:
+
+    BUILD_BUG_ON(p4d_index(EFI_VA_END) != p4d_index(MODULES_END));
+
+After some research, it turns out that there is a new config option
+called NO_AUTO_INLINE, which adds '-fno-inline-functions' to
+KBUILD_CFLAGS so that the compiler does not auto inline small functions,
+which causes this BUILD_BUG_ON to fail because p4d_index is no longer an
+integer constant expression.
+
+According to the help text of the config, functions explicitly marked
+inline should still be inlined. As it turns out, GCC and Clang both
+support '-fno-inline-functions' but Clang only inlines functions when
+they are marked with an always inline annotation[1].
+
+Since it's expected that p4d_index should always be inlined so that its
+value can be evaluated at build time, mark it as __always_inline.
+
+[1]: https://github.com/llvm-mirror/clang/blob/master/lib/Frontend/CompilerInvocation.cpp#L637-L656
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/256
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/include/asm/pgtable.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
+index 40616e805292..f78e53382498 100644
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -918,7 +918,7 @@ static inline int p4d_bad(p4d_t p4d)
+ }
+ #endif  /* CONFIG_PGTABLE_LEVELS > 3 */
+ 
+-static inline unsigned long p4d_index(unsigned long address)
++static __always_inline unsigned long p4d_index(unsigned long address)
+ {
+ 	return (address >> P4D_SHIFT) & (PTRS_PER_P4D - 1);
+ }
+-- 
+2.20.0
+
