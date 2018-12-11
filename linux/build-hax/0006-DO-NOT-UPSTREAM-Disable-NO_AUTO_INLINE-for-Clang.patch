@@ -1,4 +1,4 @@
-From 9a8b6642bd36e358bcafd9b84fe8c8a7b6aee2fc Mon Sep 17 00:00:00 2001
+From 173bccb36b0cfd32a9c9dd5185d723bc15156583 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 18:03:51 -0700
 Subject: [PATCH 6/7] DO-NOT-UPSTREAM: Disable NO_AUTO_INLINE for Clang
@@ -24,5 +24,5 @@ index d31218806bc1..85f6bb13d662 100644
  	  This will prevent the compiler from optimizing the kernel by
  	  auto-inlining functions not marked with the inline keyword.
 -- 
-2.20.0.rc1
+2.20.0
 
