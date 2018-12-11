@@ -1,7 +1,7 @@
 From b5010528fb17a95a7f575fd1e9264d95f076eddf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 13:59:10 -0700
-Subject: [PATCH 09/18] media: ddbridge: Move asm includes after linux ones
+Subject: [PATCH 09/19] media: ddbridge: Move asm includes after linux ones
 
 Without this, cpumask_t and bool are not defined:
 

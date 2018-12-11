@@ -1,7 +1,7 @@
 From 96935fa735398cc01b4b2f3b301fed9b14d16251 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 14:13:53 -0700
-Subject: [PATCH 16/18] pinctrl: aspeed: Wrap -Woverride-init with cc-option
+Subject: [PATCH 16/19] pinctrl: aspeed: Wrap -Woverride-init with cc-option
 
 Clang does not support this option:
 
