@@ -1,7 +1,7 @@
-From 9cd8b9c0dfb4652b1de31b0b07947b4fc57d1106 Mon Sep 17 00:00:00 2001
+From 37aae8c09092c9ac40502cd76aa2360b528ecd27 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 9 Dec 2018 21:36:58 -0700
-Subject: [PATCH 13/19] crypto: ux500 - Use proper enum in
+Subject: [PATCH 11/15] crypto: ux500 - Use proper enum in
  hash_set_dma_transfer
 
 Clang warns when one enumerated type is implicitly converted to another:
@@ -39,5 +39,5 @@ index 633321a8dd03..a0bb8a6eec3f 100644
  		dev_err(ctx->device->dev,
  			"%s: dmaengine_prep_slave_sg() failed!\n", __func__);
 -- 
-2.20.0
+2.20.1
 

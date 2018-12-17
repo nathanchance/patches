@@ -1,7 +1,7 @@
-From 87928c5860366a431acfddebdc87d70ad45cccaf Mon Sep 17 00:00:00 2001
+From cf88417a24d2031b2673d17a3d0afbe0705d7c97 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 07/19] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 06/15] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -89,10 +89,10 @@ index 75ab5ff6b78c..6085aa087a2f 100644
  	switch (cmd) {
  	case FSACTL_QUERY_DISK:
 diff --git a/drivers/scsi/aacraid/aacraid.h b/drivers/scsi/aacraid/aacraid.h
-index 39eb415987fc..1965072ab673 100644
+index 3291d1c16864..1df5171594b8 100644
 --- a/drivers/scsi/aacraid/aacraid.h
 +++ b/drivers/scsi/aacraid/aacraid.h
-@@ -2705,12 +2705,12 @@ void aac_set_intx_mode(struct aac_dev *dev);
+@@ -2706,12 +2706,12 @@ void aac_set_intx_mode(struct aac_dev *dev);
  int aac_get_config_status(struct aac_dev *dev, int commit_flag);
  int aac_get_containers(struct aac_dev *dev);
  int aac_scsi_cmd(struct scsi_cmnd *cmd);
@@ -108,10 +108,10 @@ index 39eb415987fc..1965072ab673 100644
  int aac_rkt_init(struct aac_dev *dev);
  int aac_nark_init(struct aac_dev *dev);
 diff --git a/drivers/scsi/aacraid/commctrl.c b/drivers/scsi/aacraid/commctrl.c
-index 25f6600d6c09..fd8a10871598 100644
+index e2899ff7913e..f0ff40332753 100644
 --- a/drivers/scsi/aacraid/commctrl.c
 +++ b/drivers/scsi/aacraid/commctrl.c
-@@ -1061,7 +1061,7 @@ static int aac_send_reset_adapter(struct aac_dev *dev, void __user *arg)
+@@ -1060,7 +1060,7 @@ static int aac_send_reset_adapter(struct aac_dev *dev, void __user *arg)
  	return retval;
  }
  
@@ -121,7 +121,7 @@ index 25f6600d6c09..fd8a10871598 100644
  	int status;
  
 diff --git a/drivers/scsi/aacraid/linit.c b/drivers/scsi/aacraid/linit.c
-index 42defee90eb2..501f4f3c2ea9 100644
+index 1c5d54c2f031..0a57595c8f8d 100644
 --- a/drivers/scsi/aacraid/linit.c
 +++ b/drivers/scsi/aacraid/linit.c
 @@ -616,7 +616,8 @@ static struct device_attribute *aac_dev_attrs[] = {
@@ -457,5 +457,5 @@ index aa760df8c6b3..7fa38ae7b806 100644
  
  	/*
 -- 
-2.20.0
+2.20.1
 

@@ -1,7 +1,7 @@
-From 1d696521c0018ce09a99f8a3d858609b926f214e Mon Sep 17 00:00:00 2001
+From 9a930d9ed309ca11b1e522174740bafd9a2c2cf8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 30 Nov 2018 22:31:38 -0700
-Subject: [PATCH 18/19] ARM: Remove '-p' from LDFLAGS
+Subject: [PATCH 15/15] ARM: Remove '-p' from LDFLAGS
 
 This option is not supported by lld:
 
@@ -20,7 +20,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 05a91d8b89f3..e2a0baf36766 100644
+index 0436002d5091..1d48c8ed5f89 100644
 --- a/arch/arm/Makefile
 +++ b/arch/arm/Makefile
 @@ -10,7 +10,7 @@
@@ -33,10 +33,10 @@ index 05a91d8b89f3..e2a0baf36766 100644
  LDFLAGS_vmlinux	+= --be8
  KBUILD_LDFLAGS_MODULE	+= --be8
 diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
-index 1f5a5ffe7fcf..dcd07bd24b85 100644
+index 01bf2585a0fa..ecfa4ca320a7 100644
 --- a/arch/arm/boot/compressed/Makefile
 +++ b/arch/arm/boot/compressed/Makefile
-@@ -131,8 +131,6 @@ endif
+@@ -132,8 +132,6 @@ endif
  ifeq ($(CONFIG_CPU_ENDIAN_BE8),y)
  LDFLAGS_vmlinux += --be8
  endif
@@ -46,5 +46,5 @@ index 1f5a5ffe7fcf..dcd07bd24b85 100644
  LDFLAGS_vmlinux += --no-undefined
  # Delete all temporary local symbols
 -- 
-2.20.0
+2.20.1
 

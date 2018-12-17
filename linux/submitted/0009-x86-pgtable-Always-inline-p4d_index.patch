@@ -1,7 +1,7 @@
-From 36fdbb35ecc40fb9be248fc8f096cc90e7587d7d Mon Sep 17 00:00:00 2001
+From 12583205a1204d9760c0be74b1ef48245640964e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 15:34:45 -0700
-Subject: [PATCH 11/19] x86/pgtable: Always inline p4d_index
+Subject: [PATCH 09/15] x86/pgtable: Always inline p4d_index
 
 When building an allyesconfig build with Clang, the kernel fails to link
 arch/x86/platform/efi/efi_64.o because of a failed BUILD_BUG_ON:
@@ -50,5 +50,5 @@ index 40616e805292..f78e53382498 100644
  	return (address >> P4D_SHIFT) & (PTRS_PER_P4D - 1);
  }
 -- 
-2.20.0
+2.20.1
 

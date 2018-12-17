@@ -1,7 +1,7 @@
-From 83bd18071846520ab4b56dbe18e47f7a70da18af Mon Sep 17 00:00:00 2001
+From 8ae39b1e70277cdbc637e3d592c564e299536e85 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 26 Sep 2018 19:30:26 -0700
-Subject: [PATCH 04/19] libosd: Remove ignored __weak attribute
+Subject: [PATCH 03/15] libosd: Remove ignored __weak attribute
 
 Clang warns that the __weak attribute is going to be ignored on
 osd_root_object because it's not in the correct location (needs to be
@@ -48,5 +48,5 @@ index 48e8a165e136..6b6fdcafa6cc 100644
  struct osd_attr {
  	u32 attr_page;
 -- 
-2.20.0
+2.20.1
 

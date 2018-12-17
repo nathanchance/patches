@@ -1,7 +1,7 @@
-From dc62fc5686a3f3822f5d00683599600c5951d83b Mon Sep 17 00:00:00 2001
+From 2ee6673334dac62036337f1f26a00fdfa7806b09 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 9 Dec 2018 21:42:49 -0700
-Subject: [PATCH 14/19] scsi: nsp32: Remove unnecessary self assignment in
+Subject: [PATCH 12/15] scsi: nsp32: Remove unnecessary self assignment in
  nsp32_set_sync_entry
 
 Clang warns:
@@ -29,5 +29,5 @@ index 5aac3e801903..7ce6e7acf2f3 100644
  
  	target->syncreg    = TO_SYNCREG(period, offset);
 -- 
-2.20.0
+2.20.1
 

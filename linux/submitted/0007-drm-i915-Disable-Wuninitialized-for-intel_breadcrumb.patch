@@ -1,7 +1,7 @@
-From 40dbbaa6a988e58e78125fadd635fc812b57a50e Mon Sep 17 00:00:00 2001
+From a413ad43e3f08bbd772c9d03544b03366cd88b2f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 25 Oct 2018 12:31:58 -0700
-Subject: [PATCH 08/19] drm/i915: Disable -Wuninitialized for
+Subject: [PATCH 07/15] drm/i915: Disable -Wuninitialized for
  intel_breadcrumbs.o
 
 This warning is disabled by default in scripts/Makefile.extrawarn when
@@ -37,7 +37,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index c34bee16730d..7c50ddc3ca93 100644
+index 19b5fe5016bf..106d0c5340bc 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -26,6 +26,7 @@ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
@@ -49,5 +49,5 @@ index c34bee16730d..7c50ddc3ca93 100644
  
  subdir-ccflags-y += \
 -- 
-2.20.0
+2.20.1
 
