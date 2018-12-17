@@ -1,7 +1,7 @@
-From 3a05e6773fded5e4d22551daa1e78bb4220ed3fa Mon Sep 17 00:00:00 2001
+From 97915db8086958f6b2609224228ae9d8ce6e068d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 23:30:49 -0700
-Subject: [PATCH 05/11] DO-NOT-UPSTREAM: iavf: Disable -Wignored-attributes
+Subject: [PATCH 05/13] DO-NOT-UPSTREAM: iavf: Disable -Wignored-attributes
 
 Should be easy to tackle when Miguel Ojeda's compiler attributes
 patchset hits -next.
@@ -26,5 +26,5 @@ index 9cbb5743ed12..0f3456cf5e30 100644
  obj-$(CONFIG_IAVF) += iavf.o
  
 -- 
-2.20.0.rc1
+2.20.1
 

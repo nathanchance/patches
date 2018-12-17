@@ -1,7 +1,7 @@
-From 03493695b10964d7357b1042e2f43b7e27bc3e9f Mon Sep 17 00:00:00 2001
+From 2183085f59da2b6fbf2074a1a05a70bfafc33d74 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:36:59 -0700
-Subject: [PATCH 06/11] DO-NOT-UPSTREAM: can: peak_usb: Disable -Wvarargs for
+Subject: [PATCH 06/13] DO-NOT-UPSTREAM: can: peak_usb: Disable -Wvarargs for
  pcan_usb_pro.o
 
 Documented with no clear way to solve it, hide it for now.
@@ -22,5 +22,5 @@ index 1839e9ca62e7..4639e87a2afd 100644
 +
 +CFLAGS_pcan_usb_pro.o += $(call cc-disable-warning, varargs)
 -- 
-2.20.0.rc1
+2.20.1
 

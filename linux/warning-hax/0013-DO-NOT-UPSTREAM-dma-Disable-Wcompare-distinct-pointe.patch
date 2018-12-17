@@ -1,0 +1,27 @@
+From 8623bbb05c879e967a7a454cfae4b739ff93180d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 17 Dec 2018 10:44:55 -0700
+Subject: [PATCH 13/13] DO-NOT-UPSTREAM: dma: Disable
+ -Wcompare-distinct-pointer-types for imx-dma.o
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/296
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/dma/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
+index 6126e1c3a875..551105fb6343 100644
+--- a/drivers/dma/Makefile
++++ b/drivers/dma/Makefile
+@@ -38,6 +38,7 @@ obj-$(CONFIG_FSL_RAID) += fsl_raid.o
+ obj-$(CONFIG_HSU_DMA) += hsu/
+ obj-$(CONFIG_IMG_MDC_DMA) += img-mdc-dma.o
+ obj-$(CONFIG_IMX_DMA) += imx-dma.o
++CFLAGS_imx-dma.o += $(call cc-disable-warning,compare-distinct-pointer-types)
+ obj-$(CONFIG_IMX_SDMA) += imx-sdma.o
+ obj-$(CONFIG_INTEL_IDMA64) += idma64.o
+ obj-$(CONFIG_INTEL_IOATDMA) += ioat/
+-- 
+2.20.1
+

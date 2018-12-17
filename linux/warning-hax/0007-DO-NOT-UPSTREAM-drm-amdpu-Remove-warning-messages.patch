@@ -1,7 +1,7 @@
-From c3530260e92fd6610bab040a67adfa52816a39fc Mon Sep 17 00:00:00 2001
+From 652ef47dafcbdcf542df9a82b33b873e3df082e9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Oct 2018 09:43:00 -0700
-Subject: [PATCH 07/11] DO-NOT-UPSTREAM: drm/amdpu: Remove #warning messages
+Subject: [PATCH 07/13] DO-NOT-UPSTREAM: drm/amdpu: Remove #warning messages
 
 I'm not running this on actual hardware, I don't need to see this in an
 allyesconfig build.
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
-index 4cc0dcb1a187..a0df08071cc1 100644
+index 83624e150ca7..aa598e149dc2 100644
 --- a/drivers/gpu/drm/amd/amdgpu/soc15.c
 +++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
 @@ -545,8 +545,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
@@ -34,5 +34,5 @@ index 4cc0dcb1a187..a0df08071cc1 100644
  		amdgpu_device_ip_block_add(adev, &vcn_v1_0_ip_block);
  		break;
 -- 
-2.20.0.rc1
+2.20.1
 

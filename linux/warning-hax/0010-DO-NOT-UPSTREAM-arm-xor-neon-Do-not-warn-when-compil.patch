@@ -1,0 +1,27 @@
+From d5e36ef986b46cb0923d0d6b9c4e71edb9c02483 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 10 Dec 2018 20:53:12 -0700
+Subject: [PATCH 10/13] DO-NOT-UPSTREAM: arm: xor-neon: Do not warn when
+ compiled with Clang
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm/lib/xor-neon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
+index 2c40aeab3eaa..a6741a895189 100644
+--- a/arch/arm/lib/xor-neon.c
++++ b/arch/arm/lib/xor-neon.c
+@@ -24,7 +24,7 @@ MODULE_LICENSE("GPL");
+  */
+ #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)
+ #pragma GCC optimize "tree-vectorize"
+-#else
++#elif !defined(__clang__)
+ /*
+  * While older versions of GCC do not generate incorrect code, they fail to
+  * recognize the parallel nature of these functions, and emit plain ARM code,
+-- 
+2.20.1
+

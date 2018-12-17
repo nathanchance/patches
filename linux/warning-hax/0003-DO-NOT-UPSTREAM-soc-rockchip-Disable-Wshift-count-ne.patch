@@ -1,7 +1,7 @@
-From 3549ca3e2247cd443e93d1c097614cc9462cbc68 Mon Sep 17 00:00:00 2001
+From b57caafeb910dfa71b9613f24a34ac3969121a1c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:22:55 -0700
-Subject: [PATCH 03/11] DO-NOT-UPSTREAM: soc: rockchip: Disable
+Subject: [PATCH 03/13] DO-NOT-UPSTREAM: soc: rockchip: Disable
  -Wshift-count-negative for pm_domains.o
 
 GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/92
@@ -22,5 +22,5 @@ index c851fa0056d0..8373e23534f8 100644
 +
 +CFLAGS_pm_domains.o += $(call cc-disable-warning, shift-count-negative)
 -- 
-2.20.0.rc1
+2.20.1
 
