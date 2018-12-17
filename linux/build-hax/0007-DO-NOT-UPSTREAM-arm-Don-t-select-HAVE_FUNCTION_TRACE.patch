@@ -1,7 +1,7 @@
-From 024a19c609f617924b3d2e64bda98dba43566f66 Mon Sep 17 00:00:00 2001
+From 4e884002df9d60e00fd2866454b2f301e5b5ebb6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 17:59:43 -0700
-Subject: [PATCH 7/9] DO-NOT-UPSTREAM: arm: Don't select HAVE_FUNCTION_TRACER
+Subject: [PATCH 7/8] DO-NOT-UPSTREAM: arm: Don't select HAVE_FUNCTION_TRACER
  with Clang
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/35
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 22e2ca6f01cf..9d92650aa3e1 100644
+index c1227757817b..dd3c954589d4 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
-@@ -71,7 +71,7 @@ config ARM
+@@ -70,7 +70,7 @@ config ARM
  	select HAVE_EXIT_THREAD
  	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
  	select HAVE_FUNCTION_GRAPH_TRACER if !THUMB2_KERNEL
@@ -24,5 +24,5 @@ index 22e2ca6f01cf..9d92650aa3e1 100644
  	select HAVE_GENERIC_DMA_COHERENT
  	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
 -- 
-2.20.0
+2.20.1
 

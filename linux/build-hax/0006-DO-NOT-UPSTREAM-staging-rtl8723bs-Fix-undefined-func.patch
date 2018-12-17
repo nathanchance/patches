@@ -1,7 +1,7 @@
-From 4b09206632e8b631c85b1bb002bf67d57f3317b5 Mon Sep 17 00:00:00 2001
+From fd8071e4a7ae009066fd93ef894a318bd2640acb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 9 Dec 2018 01:27:18 -0700
-Subject: [PATCH 6/9] DO-NOT-UPSTREAM: staging: rtl8723bs: Fix undefined
+Subject: [PATCH 6/8] DO-NOT-UPSTREAM: staging: rtl8723bs: Fix undefined
  function references
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -36,5 +36,5 @@ index bcc8dfa8e672..ebccccc3fd43 100644
  	return ((addr[0] == 0x00) && (addr[1] == 0x00) && (addr[2] == 0x00) &&   \
  		(addr[3] == 0x00) && (addr[4] == 0x00) && (addr[5] == 0x00));
 -- 
-2.20.0
+2.20.1
 

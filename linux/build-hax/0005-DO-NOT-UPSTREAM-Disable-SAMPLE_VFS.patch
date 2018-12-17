@@ -1,7 +1,7 @@
-From 61e7b10a3f1d013e150cad6be20d5ef913d351a5 Mon Sep 17 00:00:00 2001
+From 8f50aedd31e0ebb04088364f90fe06d78526bbe9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 31 Oct 2018 18:02:35 -0700
-Subject: [PATCH 5/9] DO-NOT-UPSTREAM: Disable SAMPLE_VFS
+Subject: [PATCH 5/8] DO-NOT-UPSTREAM: Disable SAMPLE_VFS
 
 It's broken for me and I don't care enough to look into it.
 
@@ -23,5 +23,5 @@ index dc4eb5355fad..c83741b9d87e 100644
  	  Build example userspace programs that use new VFS system calls such
  	  as mount API and statx().  Note that this is restricted to the x86
 -- 
-2.20.0
+2.20.1
 
