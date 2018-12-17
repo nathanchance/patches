@@ -1,7 +1,7 @@
-From baff5703c945f4f8022f0969c71255fe80db7e44 Mon Sep 17 00:00:00 2001
+From 9f09daf8ea5b2c098fc9009fe9d7e576c3f7b17f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Sep 2018 17:25:59 -0700
-Subject: [PATCH 3/6] drm/amdgpu: Add braces to initialize task_info subojects
+Subject: [PATCH 3/4] drm/amdgpu: Add braces to initialize task_info subojects
 
 Clang warns if there are missing braces around a subobject
 initializer.
@@ -41,10 +41,10 @@ index 1ad7e6b8ed1d..9dc05853ddb5 100644
  		amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
  
 diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-index 3a4e5d8d5162..0418f275cd8b 100644
+index ce150de723c9..a0f84ec5c990 100644
 --- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -261,7 +261,7 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
+@@ -320,7 +320,7 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
  	}
  
  	if (printk_ratelimit()) {
@@ -54,5 +54,5 @@ index 3a4e5d8d5162..0418f275cd8b 100644
  		amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
  
 -- 
-2.20.0
+2.20.1
 
