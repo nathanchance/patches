@@ -1,7 +1,7 @@
-From cf88417a24d2031b2673d17a3d0afbe0705d7c97 Mon Sep 17 00:00:00 2001
+From 15d03f5e01420fa5c2fc6ed2c41dc56a7cf0d31f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 06/16] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 05/15] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -121,7 +121,7 @@ index e2899ff7913e..f0ff40332753 100644
  	int status;
  
 diff --git a/drivers/scsi/aacraid/linit.c b/drivers/scsi/aacraid/linit.c
-index 1c5d54c2f031..0a57595c8f8d 100644
+index 634ddb90e7aa..17bcad701cf0 100644
 --- a/drivers/scsi/aacraid/linit.c
 +++ b/drivers/scsi/aacraid/linit.c
 @@ -616,7 +616,8 @@ static struct device_attribute *aac_dev_attrs[] = {
@@ -277,10 +277,10 @@ index 34bcc8c04ff4..916b9adf4921 100644
  	return esas2r_ioctl_handler(sd->host->hostdata, cmd, arg);
  }
 diff --git a/drivers/scsi/esas2r/esas2r_main.c b/drivers/scsi/esas2r/esas2r_main.c
-index c07118617d89..25dc8d44ed8e 100644
+index 64397d441bae..fdbda5c05aa0 100644
 --- a/drivers/scsi/esas2r/esas2r_main.c
 +++ b/drivers/scsi/esas2r/esas2r_main.c
-@@ -624,7 +624,7 @@ static int esas2r_proc_major;
+@@ -623,7 +623,7 @@ static int esas2r_proc_major;
  long esas2r_proc_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
  {
  	return esas2r_ioctl_handler(esas2r_proc_host->hostdata,
@@ -290,7 +290,7 @@ index c07118617d89..25dc8d44ed8e 100644
  
  static void __exit esas2r_exit(void)
 diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index bc64e8a0449d..83efe40f01ab 100644
+index ff67ef5d5347..28cfd3d01c5a 100644
 --- a/drivers/scsi/hpsa.c
 +++ b/drivers/scsi/hpsa.c
 @@ -251,10 +251,11 @@ static int number_of_controllers;
@@ -307,7 +307,7 @@ index bc64e8a0449d..83efe40f01ab 100644
  	void __user *arg);
  #endif
  
-@@ -6128,7 +6129,7 @@ static void cmd_free(struct ctlr_info *h, struct CommandList *c)
+@@ -6127,7 +6128,7 @@ static void cmd_free(struct ctlr_info *h, struct CommandList *c)
  
  #ifdef CONFIG_COMPAT
  
@@ -316,7 +316,7 @@ index bc64e8a0449d..83efe40f01ab 100644
  	void __user *arg)
  {
  	IOCTL32_Command_struct __user *arg32 =
-@@ -6165,7 +6166,7 @@ static int hpsa_ioctl32_passthru(struct scsi_device *dev, int cmd,
+@@ -6164,7 +6165,7 @@ static int hpsa_ioctl32_passthru(struct scsi_device *dev, int cmd,
  }
  
  static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
@@ -325,7 +325,7 @@ index bc64e8a0449d..83efe40f01ab 100644
  {
  	BIG_IOCTL32_Command_struct __user *arg32 =
  	    (BIG_IOCTL32_Command_struct __user *) arg;
-@@ -6202,7 +6203,8 @@ static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
+@@ -6201,7 +6202,8 @@ static int hpsa_ioctl32_big_passthru(struct scsi_device *dev,
  	return err;
  }
  
@@ -335,7 +335,7 @@ index bc64e8a0449d..83efe40f01ab 100644
  {
  	switch (cmd) {
  	case CCISS_GETPCIINFO:
-@@ -6522,7 +6524,8 @@ static void check_ioctl_unit_attention(struct ctlr_info *h,
+@@ -6521,7 +6523,8 @@ static void check_ioctl_unit_attention(struct ctlr_info *h,
  /*
   * ioctl
   */
@@ -346,7 +346,7 @@ index bc64e8a0449d..83efe40f01ab 100644
  	struct ctlr_info *h;
  	void __user *argp = (void __user *)arg;
 diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index 271990bc065b..97fcc881f9f1 100644
+index d1b4025a4503..6d053e220153 100644
 --- a/drivers/scsi/ipr.c
 +++ b/drivers/scsi/ipr.c
 @@ -6696,7 +6696,8 @@ static int ipr_queuecommand(struct Scsi_Host *shost,
@@ -373,7 +373,7 @@ index c43a00a9d819..b775445892af 100644
  	struct domain_device *dev = sdev_to_domain_dev(sdev);
  
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 4740f1e9dd17..198df2455494 100644
+index 661512bec3ac..e0f949b7d947 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
 @@ -836,7 +836,8 @@ static void mk_sense_invalid_opcode(struct scsi_cmnd *scp)
@@ -387,10 +387,10 @@ index 4740f1e9dd17..198df2455494 100644
  	if (sdebug_verbose) {
  		if (0x1261 == cmd)
 diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index bac084260d80..de3b100b480d 100644
+index 56344cc820f6..e57fbff08f03 100644
 --- a/drivers/scsi/smartpqi/smartpqi_init.c
 +++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -5573,7 +5573,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
+@@ -6041,7 +6041,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
  	return rc;
  }
  
@@ -401,10 +401,10 @@ index bac084260d80..de3b100b480d 100644
  	int rc;
  	struct pqi_ctrl_info *ctrl_info;
 diff --git a/include/linux/libata.h b/include/linux/libata.h
-index 38c95d66ab12..263ca4f05c24 100644
+index 68133842e6d7..c9419c05a90a 100644
 --- a/include/linux/libata.h
 +++ b/include/linux/libata.h
-@@ -1123,10 +1123,11 @@ extern int ata_host_activate(struct ata_host *host, int irq,
+@@ -1122,10 +1122,11 @@ extern int ata_host_activate(struct ata_host *host, int irq,
  extern void ata_host_detach(struct ata_host *host);
  extern void ata_host_init(struct ata_host *, struct device *, struct ata_port_operations *);
  extern int ata_scsi_detect(struct scsi_host_template *sht);
@@ -433,10 +433,10 @@ index 3de3b10da19a..70461264d6e7 100644
  
  extern void sas_ssp_task_response(struct device *dev, struct sas_task *task,
 diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index aa760df8c6b3..7fa38ae7b806 100644
+index 6ca954e9f752..4047d68d1b08 100644
 --- a/include/scsi/scsi_host.h
 +++ b/include/scsi/scsi_host.h
-@@ -63,7 +63,8 @@ struct scsi_host_template {
+@@ -60,7 +60,8 @@ struct scsi_host_template {
  	 *
  	 * Status: OPTIONAL
  	 */
@@ -446,7 +446,7 @@ index aa760df8c6b3..7fa38ae7b806 100644
  
  
  #ifdef CONFIG_COMPAT
-@@ -73,7 +74,8 @@ struct scsi_host_template {
+@@ -70,7 +71,8 @@ struct scsi_host_template {
  	 *
  	 * Status: OPTIONAL
  	 */

@@ -1,7 +1,7 @@
-From c5792897ede6f0c68f1c2af7e6308b4a0003780d Mon Sep 17 00:00:00 2001
+From bea4892b4a6beb576b82a5a64008fc894ffe2da3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 9 Dec 2018 21:45:39 -0700
-Subject: [PATCH 13/16] pcmcia: Remove unnecessary parentheses
+Subject: [PATCH 12/15] pcmcia: Remove unnecessary parentheses
 
 Clang warns:
 
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/scsi/pcmcia/nsp_cs.c b/drivers/scsi/pcmcia/nsp_cs.c
-index f3230494a8c9..f28105b144fc 100644
+index 1bd6825a4f14..a81748e6e8fb 100644
 --- a/drivers/scsi/pcmcia/nsp_cs.c
 +++ b/drivers/scsi/pcmcia/nsp_cs.c
 @@ -1134,7 +1134,8 @@ static irqreturn_t nspintr(int irq, void *dev_id)
