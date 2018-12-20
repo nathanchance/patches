@@ -1,7 +1,7 @@
-From 9f09daf8ea5b2c098fc9009fe9d7e576c3f7b17f Mon Sep 17 00:00:00 2001
+From 172da984b7d7b9d7ced7d8b5ed34da2ba94a8efa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Sep 2018 17:25:59 -0700
-Subject: [PATCH 3/4] drm/amdgpu: Add braces to initialize task_info subojects
+Subject: [PATCH 3/5] drm/amdgpu: Add braces to initialize task_info subojects
 
 Clang warns if there are missing braces around a subobject
 initializer.
