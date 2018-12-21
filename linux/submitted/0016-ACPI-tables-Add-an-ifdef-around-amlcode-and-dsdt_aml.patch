@@ -1,0 +1,45 @@
+From 41859f1fba7005214f8d0829720f6c40a208ea87 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 20 Dec 2018 12:38:56 -0700
+Subject: [PATCH 16/16] ACPI / tables: Add an ifdef around amlcode and
+ dsdt_amlcode
+
+Clang warns:
+
+drivers/acpi/tables.c:715:14: warning: unused variable 'amlcode'
+[-Wunused-variable]
+static void *amlcode __attribute__ ((weakref("AmlCode")));
+             ^
+drivers/acpi/tables.c:716:14: warning: unused variable 'dsdt_amlcode'
+[-Wunused-variable]
+static void *dsdt_amlcode __attribute__ ((weakref("dsdt_aml_code")));
+             ^
+2 warnings generated.
+
+The only uses of these variables are hiddem behind CONFIG_ACPI_CUSTOM_DSDT
+so do the same thing here.
+
+Fixes: 82e4eb4e9653 ("ACPI / tables: add DSDT AmlCode new declaration name support")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/acpi/tables.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index ccb90eff00e5..48eabb6c2d4f 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -712,8 +712,10 @@ acpi_os_physical_table_override(struct acpi_table_header *existing_table,
+ 					  table_length);
+ }
+ 
++#ifdef CONFIG_ACPI_CUSTOM_DSDT
+ static void *amlcode __attribute__ ((weakref("AmlCode")));
+ static void *dsdt_amlcode __attribute__ ((weakref("dsdt_aml_code")));
++#endif
+ 
+ acpi_status
+ acpi_os_table_override(struct acpi_table_header *existing_table,
+-- 
+2.20.1
+
