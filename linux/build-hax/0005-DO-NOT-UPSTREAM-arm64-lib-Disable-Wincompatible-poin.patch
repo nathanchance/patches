@@ -1,0 +1,28 @@
+From 4b352973527414763576c414b521b9b233cec679 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Dec 2018 21:31:28 -0700
+Subject: [PATCH 5/6] DO-NOT-UPSTREAM: arm64: lib: Disable
+ -Wincompatible-pointer-types for xor-neon.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/283
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm64/lib/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/lib/Makefile b/arch/arm64/lib/Makefile
+index 5540a1638baf..e6e980d96d75 100644
+--- a/arch/arm64/lib/Makefile
++++ b/arch/arm64/lib/Makefile
+@@ -8,7 +8,7 @@ lib-y		:= clear_user.o delay.o copy_from_user.o		\
+ ifeq ($(CONFIG_KERNEL_MODE_NEON), y)
+ obj-$(CONFIG_XOR_BLOCKS)	+= xor-neon.o
+ CFLAGS_REMOVE_xor-neon.o	+= -mgeneral-regs-only
+-CFLAGS_xor-neon.o		+= -ffreestanding
++CFLAGS_xor-neon.o		+= -ffreestanding $(call cc-disable-warning,incompatible-pointer-types)
+ endif
+ 
+ # Tell the compiler to treat all general purpose registers (with the
+-- 
+2.20.1
+

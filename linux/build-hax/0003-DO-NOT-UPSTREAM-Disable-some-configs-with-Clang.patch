@@ -1,0 +1,94 @@
+From 1a870ee63d3b2577aa757dd9dd6c088c738da937 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 30 Sep 2018 18:32:55 -0700
+Subject: [PATCH 3/6] DO-NOT-UPSTREAM: Disable some configs with Clang
+
+* CPU_BIG_ENDIAN: Not concerned with big endian at this point and it
+  causes some additional warnings.
+  Links: https://github.com/ClangBuiltLinux/linux/issues/36
+         https://github.com/ClangBuiltLinux/linux/issues/214
+
+* GCOV_KERNEL: Patches currently in testing, just don't want to add
+  them to my stack.
+  Link: https://github.com/ClangBuiltLinux/linux/issues/17
+
+* SAMPLE_VFS: It's broken for me and I don't care enough to look at it.
+
+* HAVE_FUNCTION_TRACER on arm: Broken with Clang.
+  Link: https://github.com/ClangBuiltLinux/linux/issues/35
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm/Kconfig    | 2 +-
+ arch/arm/mm/Kconfig | 2 +-
+ arch/arm64/Kconfig  | 1 +
+ kernel/gcov/Kconfig | 2 +-
+ samples/Kconfig     | 1 +
+ 5 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index c1227757817b..dd3c954589d4 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -70,7 +70,7 @@ config ARM
+ 	select HAVE_EXIT_THREAD
+ 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
+ 	select HAVE_FUNCTION_GRAPH_TRACER if !THUMB2_KERNEL
+-	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
++	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !CC_IS_CLANG
+ 	select HAVE_GCC_PLUGINS
+ 	select HAVE_GENERIC_DMA_COHERENT
+ 	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
+diff --git a/arch/arm/mm/Kconfig b/arch/arm/mm/Kconfig
+index b169e580bf82..63fdc70552aa 100644
+--- a/arch/arm/mm/Kconfig
++++ b/arch/arm/mm/Kconfig
+@@ -741,7 +741,7 @@ config SWP_EMULATE
+ 
+ config CPU_BIG_ENDIAN
+ 	bool "Build big-endian kernel"
+-	depends on ARCH_SUPPORTS_BIG_ENDIAN
++	depends on ARCH_SUPPORTS_BIG_ENDIAN && !CC_IS_CLANG
+ 	help
+ 	  Say Y if you plan on running a kernel in big-endian mode.
+ 	  Note that your board must be properly built and your board
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index a4168d366127..b0e9e1907ba2 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -772,6 +772,7 @@ config ARM64_PA_BITS
+ 
+ config CPU_BIG_ENDIAN
+        bool "Build big-endian kernel"
++       depends on !CC_IS_CLANG
+        help
+          Say Y if you plan on running a kernel in big-endian mode.
+ 
+diff --git a/kernel/gcov/Kconfig b/kernel/gcov/Kconfig
+index 1e3823fa799b..8d3dc2303618 100644
+--- a/kernel/gcov/Kconfig
++++ b/kernel/gcov/Kconfig
+@@ -2,7 +2,7 @@ menu "GCOV-based kernel profiling"
+ 
+ config GCOV_KERNEL
+ 	bool "Enable gcov-based kernel profiling"
+-	depends on DEBUG_FS
++	depends on DEBUG_FS && !CC_IS_CLANG
+ 	select CONSTRUCTORS if !UML
+ 	default n
+ 	---help---
+diff --git a/samples/Kconfig b/samples/Kconfig
+index dc4eb5355fad..c83741b9d87e 100644
+--- a/samples/Kconfig
++++ b/samples/Kconfig
+@@ -149,6 +149,7 @@ config SAMPLE_VFIO_MDEV_MBOCHS
+ 
+ config SAMPLE_VFS
+ 	bool "Build example programs that use new VFS system calls"
++	depends on BROKEN
+ 	help
+ 	  Build example userspace programs that use new VFS system calls such
+ 	  as mount API and statx().  Note that this is restricted to the x86
+-- 
+2.20.1
+
