@@ -1,7 +1,7 @@
-From 15d03f5e01420fa5c2fc6ed2c41dc56a7cf0d31f Mon Sep 17 00:00:00 2001
+From 6c82fc42ad8f860d1c7bc426df34d9adc7a9a7dd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 05/16] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 03/11] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -387,10 +387,10 @@ index 661512bec3ac..e0f949b7d947 100644
  	if (sdebug_verbose) {
  		if (0x1261 == cmd)
 diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 56344cc820f6..e57fbff08f03 100644
+index e2fa3f476227..f6eaea2eadd1 100644
 --- a/drivers/scsi/smartpqi/smartpqi_init.c
 +++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -6041,7 +6041,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
+@@ -6043,7 +6043,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
  	return rc;
  }
  
