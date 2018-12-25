@@ -1,7 +1,7 @@
-From 1417fc2d6896f4ac3f6866570a49b04a08f8908c Mon Sep 17 00:00:00 2001
+From b944b1b28ca5536d5bd830b21850f8c2312feab5 Mon Sep 17 00:00:00 2001
 From: Matthias Kaehlcke <mka@chromium.org>
 Date: Tue, 19 Jun 2018 12:25:04 -0700
-Subject: [PATCH 2/6] kvm: x86: mmu: Add cast to negated bitmasks in
+Subject: [PATCH 2/4] kvm: x86: mmu: Add cast to negated bitmasks in
  update_permission_bitmask()
 
 update_permission_bitmask() negates u8 bitmask values and assigns them
@@ -27,10 +27,10 @@ Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
  1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu.c b/arch/x86/kvm/mmu.c
-index 7c03c0f35444..1bd7647b6f9b 100644
+index ce770b446238..dfb3f0d46ddd 100644
 --- a/arch/x86/kvm/mmu.c
 +++ b/arch/x86/kvm/mmu.c
-@@ -4513,8 +4513,9 @@ static void update_permission_bitmask(struct kvm_vcpu *vcpu,
+@@ -4551,8 +4551,9 @@ static void update_permission_bitmask(struct kvm_vcpu *vcpu,
  {
  	unsigned byte;
  
@@ -42,7 +42,7 @@ index 7c03c0f35444..1bd7647b6f9b 100644
  	const u8 u = BYTE_MASK(ACC_USER_MASK);
  
  	bool cr4_smep = kvm_read_cr4_bits(vcpu, X86_CR4_SMEP) != 0;
-@@ -4530,11 +4531,11 @@ static void update_permission_bitmask(struct kvm_vcpu *vcpu,
+@@ -4568,11 +4569,11 @@ static void update_permission_bitmask(struct kvm_vcpu *vcpu,
  		 */
  
  		/* Faults from writes to non-writable pages */
