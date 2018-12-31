@@ -1,4 +1,4 @@
-From 4566846dcaeb1bf8c15540a5eb111d13bebad901 Mon Sep 17 00:00:00 2001
+From a1f93d3c71268539e6060e8a7b24965c6988c061 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 30 Nov 2018 22:31:38 -0700
 Subject: [PATCH 10/11] ARM: Remove '-p' from LDFLAGS
@@ -14,10 +14,15 @@ around so just remove it. Commit 1a381d4a0a9a ("arm64: remove no-op -p
 linker flag") did the same for arm64.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Acked-by: Nicolas Pitre <nico@linaro.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Stefan Agner <stefan@agner.ch>
 ---
  arch/arm/Makefile                 | 2 +-
+ arch/arm/boot/bootp/Makefile      | 2 +-
  arch/arm/boot/compressed/Makefile | 2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm/Makefile b/arch/arm/Makefile
 index 0436002d5091..1d48c8ed5f89 100644
@@ -32,6 +37,19 @@ index 0436002d5091..1d48c8ed5f89 100644
  ifeq ($(CONFIG_CPU_ENDIAN_BE8),y)
  LDFLAGS_vmlinux	+= --be8
  KBUILD_LDFLAGS_MODULE	+= --be8
+diff --git a/arch/arm/boot/bootp/Makefile b/arch/arm/boot/bootp/Makefile
+index 83e1a076a5d6..981a8d03f064 100644
+--- a/arch/arm/boot/bootp/Makefile
++++ b/arch/arm/boot/bootp/Makefile
+@@ -8,7 +8,7 @@
+ 
+ GCOV_PROFILE	:= n
+ 
+-LDFLAGS_bootp	:=-p --no-undefined -X \
++LDFLAGS_bootp	:= --no-undefined -X \
+ 		 --defsym initrd_phys=$(INITRD_PHYS) \
+ 		 --defsym params_phys=$(PARAMS_PHYS) -T
+ AFLAGS_initrd.o :=-DINITRD=\"$(INITRD)\"
 diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
 index 01bf2585a0fa..ecfa4ca320a7 100644
 --- a/arch/arm/boot/compressed/Makefile
