@@ -1,4 +1,4 @@
-From 935c23fa4fec1f7306916c6766d40037de6e1a0f Mon Sep 17 00:00:00 2001
+From 4ca6160720a8cb218f89fa7f6f9015109e82b089 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Sep 2018 17:25:59 -0700
 Subject: [PATCH 3/4] drm/amdgpu: Add braces to initialize task_info subojects
@@ -41,7 +41,7 @@ index 1ad7e6b8ed1d..9dc05853ddb5 100644
  		amdgpu_vm_get_task_info(adev, entry->pasid, &task_info);
  
 diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-index ce150de723c9..a0f84ec5c990 100644
+index bacdaef77b6c..ea071c58bf46 100644
 --- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
 @@ -320,7 +320,7 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
