@@ -1,4 +1,4 @@
-From 8bd8b359b50344bfaa9846f6189442e280b56179 Mon Sep 17 00:00:00 2001
+From dff0bde9977a8af6b98a97659e4388e329336d90 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 21:00:32 -0700
 Subject: [PATCH 11/11] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= with
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 0ff72a533721..3526b12a5df1 100644
+index 42f883441bf4..8bd933703b55 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -243,6 +243,7 @@ config FRAME_WARN
+@@ -260,6 +260,7 @@ config FRAME_WARN
  	default 3072 if KASAN_EXTRA
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
  	default 1280 if (!64BIT && PARISC)
