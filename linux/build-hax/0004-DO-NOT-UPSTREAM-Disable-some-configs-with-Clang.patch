@@ -1,4 +1,4 @@
-From 2dd53850226eacbb4940a49af56030076f441b36 Mon Sep 17 00:00:00 2001
+From 7c6fd03aaaa3c7e8bd36702499ea03187fe36081 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
 Subject: [PATCH 4/7] DO-NOT-UPSTREAM: Disable some configs with Clang
@@ -50,7 +50,7 @@ index b169e580bf82..63fdc70552aa 100644
  	  Say Y if you plan on running a kernel in big-endian mode.
  	  Note that your board must be properly built and your board
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index a4168d366127..b0e9e1907ba2 100644
+index cfbf307d6dc4..9c0213ff45c7 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
 @@ -772,6 +772,7 @@ config ARM64_PA_BITS
