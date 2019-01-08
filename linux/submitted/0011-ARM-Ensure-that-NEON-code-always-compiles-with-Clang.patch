@@ -1,7 +1,7 @@
-From f90ffef72e331f3f2af3f798328f7b4b263cb275 Mon Sep 17 00:00:00 2001
+From 2316efdb9f5dfa89d10ec5024fd0b02ba881f815 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 15 Dec 2018 14:23:05 -0700
-Subject: [PATCH 11/11] ARM: Ensure that NEON code always compiles with Clang
+Subject: [PATCH 11/13] ARM: Ensure that NEON code always compiles with Clang
 
 While building arm32 allyesconfig, I ran into the following errors:
 
@@ -97,10 +97,10 @@ index 2c40aeab3eaa..c691b901092f 100644
  
  /*
 diff --git a/lib/raid6/Makefile b/lib/raid6/Makefile
-index 7ed43eaa02ef..5e0d55c54100 100644
+index 4e90d443d1b0..e723eacf7868 100644
 --- a/lib/raid6/Makefile
 +++ b/lib/raid6/Makefile
-@@ -40,7 +40,7 @@ endif
+@@ -39,7 +39,7 @@ endif
  ifeq ($(CONFIG_KERNEL_MODE_NEON),y)
  NEON_FLAGS := -ffreestanding
  ifeq ($(ARCH),arm)

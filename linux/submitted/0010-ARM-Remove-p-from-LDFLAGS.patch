@@ -1,7 +1,7 @@
-From 7f2b8f54f4f7c7a0841e191510c44fd86aa43f3c Mon Sep 17 00:00:00 2001
+From 4e159c7a1791114082b7ba61fc7f14fba98da369 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 30 Nov 2018 22:31:38 -0700
-Subject: [PATCH 10/11] ARM: Remove '-p' from LDFLAGS
+Subject: [PATCH 10/13] ARM: Remove '-p' from LDFLAGS
 
 This option is not supported by lld:
 
@@ -51,7 +51,7 @@ index 83e1a076a5d6..981a8d03f064 100644
  		 --defsym params_phys=$(PARAMS_PHYS) -T
  AFLAGS_initrd.o :=-DINITRD=\"$(INITRD)\"
 diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
-index 01bf2585a0fa..ecfa4ca320a7 100644
+index 6114ae6ea466..9219389bbe61 100644
 --- a/arch/arm/boot/compressed/Makefile
 +++ b/arch/arm/boot/compressed/Makefile
 @@ -132,8 +132,6 @@ endif

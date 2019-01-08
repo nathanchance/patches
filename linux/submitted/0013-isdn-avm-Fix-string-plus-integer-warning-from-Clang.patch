@@ -1,0 +1,41 @@
+From 5f42e0e39f46080e20df5120c4d2e9d3ab4e0f06 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 4 Jan 2019 20:15:05 -0700
+Subject: [PATCH 13/13] isdn: avm: Fix string plus integer warning from Clang
+
+A recent commit in Clang expanded the -Wstring-plus-int warning, showing
+some odd behavior in this file.
+
+drivers/isdn/hardware/avm/b1.c:426:30: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+                cinfo->version[j] = "\0\0" + 1;
+                                    ~~~~~~~^~~
+drivers/isdn/hardware/avm/b1.c:426:30: note: use array indexing to silence this warning
+                cinfo->version[j] = "\0\0" + 1;
+                                           ^
+                                    &      [  ]
+1 warning generated.
+
+This is equivalent to just "\0" so fix it to clean up the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/309
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/isdn/hardware/avm/b1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/isdn/hardware/avm/b1.c b/drivers/isdn/hardware/avm/b1.c
+index 4ac378e48902..7fa8141e2019 100644
+--- a/drivers/isdn/hardware/avm/b1.c
++++ b/drivers/isdn/hardware/avm/b1.c
+@@ -423,7 +423,7 @@ void b1_parse_version(avmctrl_info *cinfo)
+ 	int i, j;
+ 
+ 	for (j = 0; j < AVM_MAXVERSION; j++)
+-		cinfo->version[j] = "\0\0" + 1;
++		cinfo->version[j] = "\0";
+ 	for (i = 0, j = 0;
+ 	     j < AVM_MAXVERSION && i < cinfo->versionlen;
+ 	     j++, i += cinfo->versionbuf[i] + 1)
+-- 
+2.20.1
+
