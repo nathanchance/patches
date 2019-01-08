@@ -1,0 +1,43 @@
+From a64ba24c80eb251a06538553f625493706778b9e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 7 Jan 2019 19:06:19 -0700
+Subject: [PATCH 3/3] Add __gnu_printf attribute
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/iavf/iavf_osdep.h | 2 +-
+ include/linux/compiler_attributes.h          | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_osdep.h b/drivers/net/ethernet/intel/iavf/iavf_osdep.h
+index e6e0b0328706..a1cfabdd452c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_osdep.h
++++ b/drivers/net/ethernet/intel/iavf/iavf_osdep.h
+@@ -46,7 +46,7 @@ struct iavf_virt_mem {
+ 
+ #define iavf_debug(h, m, s, ...)  iavf_debug_d(h, m, s, ##__VA_ARGS__)
+ extern void iavf_debug_d(void *hw, u32 mask, char *fmt_str, ...)
+-	__attribute__ ((format(gnu_printf, 3, 4)));
++	__gnu_printf(3, 4);
+ 
+ typedef enum iavf_status_code iavf_status;
+ #endif /* _IAVF_OSDEP_H_ */
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index f8c400ba1929..56daeb032804 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -143,6 +143,11 @@
+  */
+ #define __printf(a, b)                  __attribute__((__format__(printf, a, b)))
+ #define __scanf(a, b)                   __attribute__((__format__(scanf, a, b)))
++#ifdef CONFIG_CC_IS_GCC
++# define __gnu_printf(a, b)             __attribute__((__format__(gnu_printf, a, b)))
++#else
++# define __gnu_printf(a, b)
++#endif
+ 
+ /*
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-gnu_005finline-function-attribute
+-- 
+2.20.1
+

@@ -1,7 +1,7 @@
 From 75116bb1afa9572008468d8b4bf9eb9fda76e014 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 20 Dec 2018 11:22:34 -0700
-Subject: [PATCH 2/2] dma: imx-dma: Cast sg_dma_len() to size_t
+Subject: [PATCH 2/3] dma: imx-dma: Cast sg_dma_len() to size_t
 
 Avoids Clang warning:
 
