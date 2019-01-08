@@ -1,4 +1,4 @@
-From 0369a26141cecb4bb97d337d1ff4bb1f5b2bd928 Mon Sep 17 00:00:00 2001
+From e592f19832179fcb43e36bc8f1e2653121e37192 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 11 Dec 2018 14:34:35 +0100
 Subject: [PATCH 4/5] kasan: fix kasan_check_read/write definitions
@@ -40,7 +40,7 @@ index d314150658a4..a61dc075e2ce 100644
  void kasan_check_write(const volatile void *p, unsigned int size);
  #else
 diff --git a/mm/kasan/common.c b/mm/kasan/common.c
-index 03d5d1374ca7..51a7932c33a3 100644
+index 73c9cbfdedf4..e8fa32368d88 100644
 --- a/mm/kasan/common.c
 +++ b/mm/kasan/common.c
 @@ -14,6 +14,8 @@
