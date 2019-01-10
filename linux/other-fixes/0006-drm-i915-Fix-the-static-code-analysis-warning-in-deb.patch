@@ -1,0 +1,33 @@
+From 1540ea3eafed99bc94fa51d312a6e14c692f5990 Mon Sep 17 00:00:00 2001
+From: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Date: Wed, 9 Jan 2019 13:14:14 -0800
+Subject: [PATCH 6/6] drm/i915: Fix the static code analysis warning in debugfs
+
+intel_dp->dsc_dpcd is defined as an array making the if check redundant.
+
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Reviewed-by: Manasi Navare <manasi.d.navare@intel.com>
+---
+ drivers/gpu/drm/i915/i915_debugfs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
+index d460ef522d9c..5a9b51c44f61 100644
+--- a/drivers/gpu/drm/i915/i915_debugfs.c
++++ b/drivers/gpu/drm/i915/i915_debugfs.c
+@@ -4951,9 +4951,8 @@ static int i915_dsc_fec_support_show(struct seq_file *m, void *data)
+ 		crtc_state = to_intel_crtc_state(crtc->state);
+ 		seq_printf(m, "DSC_Enabled: %s\n",
+ 			   yesno(crtc_state->dsc_params.compression_enable));
+-		if (intel_dp->dsc_dpcd)
+-			seq_printf(m, "DSC_Sink_Support: %s\n",
+-				   yesno(drm_dp_sink_supports_dsc(intel_dp->dsc_dpcd)));
++		seq_printf(m, "DSC_Sink_Support: %s\n",
++			   yesno(drm_dp_sink_supports_dsc(intel_dp->dsc_dpcd)));
+ 		if (!intel_dp_is_edp(intel_dp))
+ 			seq_printf(m, "FEC_Sink_Support: %s\n",
+ 				   yesno(drm_dp_sink_supports_fec(intel_dp->fec_capable)));
+-- 
+2.20.1
+
