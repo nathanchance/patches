@@ -1,4 +1,4 @@
-From 0eb6f531a3212fe3e4d70f53b207900a65c38ebf Mon Sep 17 00:00:00 2001
+From ffe319040a50221b5a1c3d67db3914e6db5e764a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 4 Jan 2019 20:15:05 -0700
 Subject: [PATCH 13/14] isdn: avm: Fix string plus integer warning from Clang
@@ -15,16 +15,19 @@ drivers/isdn/hardware/avm/b1.c:426:30: note: use array indexing to silence this 
                                     &      [  ]
 1 warning generated.
 
-This is equivalent to just "\0" so fix it to clean up the warning.
+This is equivalent to just "\0". Nick pointed out that it is smarter to
+use "" instead of "\0" because "" is used elsewhere in the kernel and
+can be deduplicated at the linking stage.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/309
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/isdn/hardware/avm/b1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/isdn/hardware/avm/b1.c b/drivers/isdn/hardware/avm/b1.c
-index 4ac378e48902..7fa8141e2019 100644
+index 4ac378e48902..40ca1e8fa09f 100644
 --- a/drivers/isdn/hardware/avm/b1.c
 +++ b/drivers/isdn/hardware/avm/b1.c
 @@ -423,7 +423,7 @@ void b1_parse_version(avmctrl_info *cinfo)
@@ -32,7 +35,7 @@ index 4ac378e48902..7fa8141e2019 100644
  
  	for (j = 0; j < AVM_MAXVERSION; j++)
 -		cinfo->version[j] = "\0\0" + 1;
-+		cinfo->version[j] = "\0";
++		cinfo->version[j] = "";
  	for (i = 0, j = 0;
  	     j < AVM_MAXVERSION && i < cinfo->versionlen;
  	     j++, i += cinfo->versionbuf[i] + 1)
