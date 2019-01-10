@@ -1,7 +1,7 @@
-From faa96709704cce6e1d3b7dcb4be964cfbd1f02a2 Mon Sep 17 00:00:00 2001
+From bee62eb66ea0c3757fe73d42ad36f6ff19080060 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 9 Dec 2018 21:42:49 -0700
-Subject: [PATCH 07/13] scsi: nsp32: Remove unnecessary self assignment in
+Subject: [PATCH 07/14] scsi: nsp32: Remove unnecessary self assignment in
  nsp32_set_sync_entry
 
 Clang warns:
