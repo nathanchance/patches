@@ -1,4 +1,4 @@
-From f5f2f2916e492747def792271005d87ea02795e2 Mon Sep 17 00:00:00 2001
+From cfca5046d368d4b9910f2dac830a427a48efe7ea Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 21:00:32 -0700
 Subject: [PATCH 04/10] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 35ca00e2b3bb..8631dd687351 100644
+index 8ed3fc793b53..0f0ddd38b0f8 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -243,6 +243,7 @@ config FRAME_WARN
