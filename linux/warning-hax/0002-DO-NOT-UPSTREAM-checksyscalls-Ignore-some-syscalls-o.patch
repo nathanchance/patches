@@ -1,4 +1,4 @@
-From 44c0b527d4b9841eb4984aa9bef97fa0788b6c91 Mon Sep 17 00:00:00 2001
+From 5dbab2fc00c839b65b4dc37f7fdad28386a5c854 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 14 Oct 2018 13:43:59 -0700
 Subject: [PATCH 02/10] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
@@ -8,14 +8,14 @@ So that I can compile with -Werror.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- scripts/checksyscalls.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ scripts/checksyscalls.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index cf931003395f..cae6f4143459 100755
+index cf931003395f..0c58df82c4f5 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -200,6 +200,18 @@ cat << EOF
+@@ -200,6 +200,20 @@ cat << EOF
  #define __IGNORE_getpmsg
  #define __IGNORE_putpmsg
  #define __IGNORE_vserver
@@ -29,6 +29,8 @@ index cf931003395f..cae6f4143459 100755
 +#define __IGNORE_fspick
 +#define __IGNORE_move_mount
 +#define __IGNORE_open_tree
++#endif
++#if defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
 +#define __IGNORE_pidfd_send_signal
 +#endif
  EOF
