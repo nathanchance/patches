@@ -1,4 +1,4 @@
-From 8d65e0176f72de022acb5dbd24f4c323fc25265b Mon Sep 17 00:00:00 2001
+From c392f93a469f9d896ece254316868c9fbebf88f6 Mon Sep 17 00:00:00 2001
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Date: Thu, 6 Sep 2018 06:36:42 +0200
 Subject: [PATCH 1/6] fcoe: make use of fip_mode enum complete
@@ -98,10 +98,10 @@ index f4909cd206d3..b381ab066b9c 100644
  	mutex_lock(&ft_mutex);
  
 diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index edcaf4b0cb0b..d43342b327ac 100644
+index 9bbc19fc190b..9f9431a4cc0e 100644
 --- a/drivers/scsi/qedf/qedf_main.c
 +++ b/drivers/scsi/qedf/qedf_main.c
-@@ -1417,7 +1417,7 @@ static struct libfc_function_template qedf_lport_template = {
+@@ -1418,7 +1418,7 @@ static struct libfc_function_template qedf_lport_template = {
  
  static void qedf_fcoe_ctlr_setup(struct qedf_ctx *qedf)
  {
