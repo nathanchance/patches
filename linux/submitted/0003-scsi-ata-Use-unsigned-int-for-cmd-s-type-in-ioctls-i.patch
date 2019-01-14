@@ -1,4 +1,4 @@
-From 06f3b1c89fc7d613edb53b9e166d55d7881feed5 Mon Sep 17 00:00:00 2001
+From 67e2bd45d7f176bc2cb3f96b988aa126ef66b4f7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 03/14] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -38,6 +38,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  drivers/scsi/aacraid/commctrl.c       |  2 +-
  drivers/scsi/aacraid/linit.c          |  6 ++++--
  drivers/scsi/cxlflash/common.h        |  3 ++-
+ drivers/scsi/cxlflash/main.c          |  2 +-
  drivers/scsi/cxlflash/superpipe.c     | 12 +++++-------
  drivers/scsi/esas2r/esas2r.h          |  4 ++--
  drivers/scsi/esas2r/esas2r_ioctl.c    | 13 ++++++-------
@@ -50,7 +51,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  include/linux/libata.h                |  5 +++--
  include/scsi/libsas.h                 |  3 ++-
  include/scsi/scsi_host.h              |  6 ++++--
- 18 files changed, 52 insertions(+), 41 deletions(-)
+ 19 files changed, 53 insertions(+), 42 deletions(-)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
 index 3d4887d0e84a..6291f1dbf342 100644
@@ -158,6 +159,19 @@ index 8908a20065c8..4d90106fcb37 100644
  void cxlflash_stop_term_user_contexts(struct cxlflash_cfg *cfg);
  int cxlflash_mark_contexts_error(struct cxlflash_cfg *cfg);
  void cxlflash_term_local_luns(struct cxlflash_cfg *cfg);
+diff --git a/drivers/scsi/cxlflash/main.c b/drivers/scsi/cxlflash/main.c
+index bfa13e3b191c..a0ea2dea7518 100644
+--- a/drivers/scsi/cxlflash/main.c
++++ b/drivers/scsi/cxlflash/main.c
+@@ -3282,7 +3282,7 @@ static int cxlflash_chr_open(struct inode *inode, struct file *file)
+  *
+  * Return: A string identifying the decoded host ioctl.
+  */
+-static char *decode_hioctl(int cmd)
++static char *decode_hioctl(unsigned int cmd)
+ {
+ 	switch (cmd) {
+ 	case HT_CXLFLASH_LUN_PROVISION:
 diff --git a/drivers/scsi/cxlflash/superpipe.c b/drivers/scsi/cxlflash/superpipe.c
 index acac6152f50b..1a94a469051e 100644
 --- a/drivers/scsi/cxlflash/superpipe.c
