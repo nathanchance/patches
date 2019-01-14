@@ -1,7 +1,7 @@
-From 67e2bd45d7f176bc2cb3f96b988aa126ef66b4f7 Mon Sep 17 00:00:00 2001
+From 54ff566a4715468f63d4a0b9c4f87a30cd297b17 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 03/14] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 03/13] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -401,7 +401,7 @@ index 661512bec3ac..e0f949b7d947 100644
  	if (sdebug_verbose) {
  		if (0x1261 == cmd)
 diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 40f58238ce4a..8baaf35da935 100644
+index f564af8949e8..5d9ccbab7581 100644
 --- a/drivers/scsi/smartpqi/smartpqi_init.c
 +++ b/drivers/scsi/smartpqi/smartpqi_init.c
 @@ -6043,7 +6043,8 @@ static int pqi_passthru_ioctl(struct pqi_ctrl_info *ctrl_info, void __user *arg)
@@ -433,10 +433,10 @@ index 68133842e6d7..c9419c05a90a 100644
  extern struct ata_port *ata_sas_port_alloc(struct ata_host *,
  					   struct ata_port_info *, struct Scsi_Host *);
 diff --git a/include/scsi/libsas.h b/include/scsi/libsas.h
-index 3de3b10da19a..70461264d6e7 100644
+index 857086cf7ebf..56b2dba7d911 100644
 --- a/include/scsi/libsas.h
 +++ b/include/scsi/libsas.h
-@@ -709,7 +709,8 @@ int sas_eh_target_reset_handler(struct scsi_cmnd *cmd);
+@@ -707,7 +707,8 @@ int sas_eh_target_reset_handler(struct scsi_cmnd *cmd);
  
  extern void sas_target_destroy(struct scsi_target *);
  extern int sas_slave_alloc(struct scsi_device *);
