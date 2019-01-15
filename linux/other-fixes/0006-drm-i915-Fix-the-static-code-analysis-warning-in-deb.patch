@@ -1,4 +1,4 @@
-From f758637f701bc9859c86066cf3a92e20368765ff Mon Sep 17 00:00:00 2001
+From 9c356d741b9bc382c05153424c8bbfaa883d9dd7 Mon Sep 17 00:00:00 2001
 From: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
 Date: Wed, 9 Jan 2019 13:14:14 -0800
 Subject: [PATCH 6/6] drm/i915: Fix the static code analysis warning in debugfs
@@ -13,10 +13,10 @@ Reviewed-by: Manasi Navare <manasi.d.navare@intel.com>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
-index d460ef522d9c..5a9b51c44f61 100644
+index da6d2581cb0e..8d738e6ca7b5 100644
 --- a/drivers/gpu/drm/i915/i915_debugfs.c
 +++ b/drivers/gpu/drm/i915/i915_debugfs.c
-@@ -4951,9 +4951,8 @@ static int i915_dsc_fec_support_show(struct seq_file *m, void *data)
+@@ -4966,9 +4966,8 @@ static int i915_dsc_fec_support_show(struct seq_file *m, void *data)
  		crtc_state = to_intel_crtc_state(crtc->state);
  		seq_printf(m, "DSC_Enabled: %s\n",
  			   yesno(crtc_state->dsc_params.compression_enable));
