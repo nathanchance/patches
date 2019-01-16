@@ -1,4 +1,4 @@
-From e0520173eeeaddbb24eae3a246414bc3ff26733f Mon Sep 17 00:00:00 2001
+From bfc8580e30c08666b2e280c9276fc97630fbe039 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 15:34:45 -0700
 Subject: [PATCH 06/14] x86/pgtable: Always inline p4d_index
@@ -28,10 +28,11 @@ they are marked with an always inline annotation[1].
 Since it's expected that p4d_index should always be inlined so that its
 value can be evaluated at build time, mark it as __always_inline.
 
-[1]: https://github.com/llvm-mirror/clang/blob/master/lib/Frontend/CompilerInvocation.cpp#L637-L656
+[1]: https://github.com/llvm/llvm-project/blob/84cecfcb3db7/clang/lib/Frontend/CompilerInvocation.cpp#L638-L657
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/256
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 ---
  arch/x86/include/asm/pgtable.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
