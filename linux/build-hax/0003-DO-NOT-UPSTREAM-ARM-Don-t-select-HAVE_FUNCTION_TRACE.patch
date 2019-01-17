@@ -1,7 +1,7 @@
-From c9dee0f568f6c277da728c30f358cc124b2f411d Mon Sep 17 00:00:00 2001
+From 94c92ad2bd322cf965b4675847a371dacf882388 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
-Subject: [PATCH 4/6] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
+Subject: [PATCH 3/5] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
  on arm
 
 It's broken with Clang.
