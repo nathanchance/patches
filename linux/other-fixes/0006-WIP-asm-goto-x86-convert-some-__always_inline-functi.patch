@@ -1,4 +1,4 @@
-From 7ed305b30e06ef71bb3183fd695426d50131622e Mon Sep 17 00:00:00 2001
+From 0ba64847d03a0c9cd4fea8bff3fb6a27b32fcda3 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Thu, 6 Sep 2018 15:49:04 -0700
 Subject: [PATCH 6/6] WIP: asm goto: x86: convert some __always_inline
@@ -34,10 +34,10 @@ scoped) in functions that call these new macros multiple times, we take
 advantage of local labels, a GNU C extension.
 ---
  arch/x86/include/asm/cpufeature.h | 92 ++++++++++++++++---------------
- arch/x86/include/asm/jump_label.h | 70 ++++++++++++-----------
+ arch/x86/include/asm/jump_label.h | 72 +++++++++++++-----------
  include/linux/jump_label.h        | 12 ++--
  include/linux/perf_event.h        | 10 ++--
- 4 files changed, 96 insertions(+), 88 deletions(-)
+ 4 files changed, 98 insertions(+), 88 deletions(-)
 
 diff --git a/arch/x86/include/asm/cpufeature.h b/arch/x86/include/asm/cpufeature.h
 index ce95b8cbd229..82125ba04ace 100644
@@ -143,10 +143,10 @@ index ce95b8cbd229..82125ba04ace 100644
  #define static_cpu_has(bit)					\
  (								\
 diff --git a/arch/x86/include/asm/jump_label.h b/arch/x86/include/asm/jump_label.h
-index 65191ce8e1cf..70c093c35bbd 100644
+index 65191ce8e1cf..57803d397ce5 100644
 --- a/arch/x86/include/asm/jump_label.h
 +++ b/arch/x86/include/asm/jump_label.h
-@@ -18,38 +18,46 @@
+@@ -18,38 +18,48 @@
  #include <linux/stringify.h>
  #include <linux/types.h>
  
@@ -163,7 +163,7 @@ index 65191ce8e1cf..70c093c35bbd 100644
 +#define arch_static_branch(key, branch) ({ \
 +	__label__ l_yes; \
 +	__label__ l_done; \
-+	bool ret = false; \
++	bool ret; \
 +	asm_volatile_goto("1:" \
 +		".byte " __stringify(STATIC_KEY_INIT_NOP) "\n\t" \
 +		".pushsection __jump_table,  \"aw\" \n\t" \
@@ -173,6 +173,7 @@ index 65191ce8e1cf..70c093c35bbd 100644
 +		".popsection \n\t"\
 +		: :  "i" (key), "i" (branch) : : l_yes); \
 +\
++	ret = false; \
 +	goto l_done; \
 +l_yes: \
 +	ret = true; \
@@ -204,7 +205,7 @@ index 65191ce8e1cf..70c093c35bbd 100644
 +#define arch_static_branch_jump(key, branch) ({ \
 +	__label__ l_yes; \
 +	__label__ l_done; \
-+	bool ret = false; \
++	bool ret; \
 +	asm_volatile_goto("1:" \
 +		".byte 0xe9\n\t .long %l[l_yes] - 2f\n\t" \
 +		"2:\n\t" \
@@ -215,6 +216,7 @@ index 65191ce8e1cf..70c093c35bbd 100644
 +		".popsection \n\t" \
 +		: :  "i" (key), "i" (branch) : : l_yes); \
 +\
++	ret = false; \
 +	goto l_done; \
 +l_yes: \
 +	ret = true; \
