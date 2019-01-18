@@ -1,7 +1,7 @@
-From d68da2915fe78d1c5896a36a946db81f8a2c9eaf Mon Sep 17 00:00:00 2001
+From ae6cdfa6b8fd54def4428a4fc57b07fd753514ea Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 4 Jan 2019 20:15:05 -0700
-Subject: [PATCH 11/11] isdn: avm: Fix string plus integer warning from Clang
+Subject: [PATCH 11/12] isdn: avm: Fix string plus integer warning from Clang
 
 A recent commit in Clang expanded the -Wstring-plus-int warning, showing
 some odd behavior in this file.
