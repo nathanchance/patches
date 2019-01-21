@@ -1,4 +1,4 @@
-From d1c75227d0d8fa8358cb6a89faf09dc6d5008c12 Mon Sep 17 00:00:00 2001
+From 30d0bd68f376ca75c48b9639a55ebbeaee6c3c8f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 14 Oct 2018 13:43:59 -0700
 Subject: [PATCH 02/10] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
@@ -12,10 +12,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 14 insertions(+)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index cf931003395f..0c58df82c4f5 100755
+index 45aac9dac53b..608e32450626 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -200,6 +200,20 @@ cat << EOF
+@@ -240,6 +240,20 @@ cat << EOF
  #define __IGNORE_getpmsg
  #define __IGNORE_putpmsg
  #define __IGNORE_vserver
