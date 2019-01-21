@@ -1,4 +1,4 @@
-From bbb68f45337e78129091cc751acea8cff3a386e6 Mon Sep 17 00:00:00 2001
+From 2a70e078ec40adf2db7a48081b5c54cebec8aec2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 5 Jan 2019 11:51:39 -0700
 Subject: [PATCH 1/5] DO-NOT-UPSTREAM: x86: Revert two commits that break the
@@ -17,7 +17,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 42 insertions(+), 39 deletions(-)
 
 diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index a77445d1b034..a87ab5290ab4 100644
+index 780f2b42c8ef..122e42319acc 100644
 --- a/arch/x86/include/asm/uaccess.h
 +++ b/arch/x86/include/asm/uaccess.h
 @@ -186,14 +186,19 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
