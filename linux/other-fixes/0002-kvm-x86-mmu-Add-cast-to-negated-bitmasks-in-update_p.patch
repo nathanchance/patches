@@ -1,7 +1,7 @@
-From 550c00dd8a2723205079ead777aacf83dedc2117 Mon Sep 17 00:00:00 2001
+From 4d45a4adf373bf417a282e4cedaab5aa73828bb7 Mon Sep 17 00:00:00 2001
 From: Matthias Kaehlcke <mka@chromium.org>
 Date: Tue, 19 Jun 2018 12:25:04 -0700
-Subject: [PATCH 2/5] kvm: x86: mmu: Add cast to negated bitmasks in
+Subject: [PATCH 2/6] kvm: x86: mmu: Add cast to negated bitmasks in
  update_permission_bitmask()
 
 update_permission_bitmask() negates u8 bitmask values and assigns them
