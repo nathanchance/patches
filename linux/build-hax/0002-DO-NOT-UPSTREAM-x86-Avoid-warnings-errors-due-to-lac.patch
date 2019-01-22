@@ -1,4 +1,4 @@
-From 12241ac990382c79b15e502cdfe7ee113477b4d3 Mon Sep 17 00:00:00 2001
+From 0faf87dc233983be566e74adaa458a2cbfa2c446 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -36,28 +36,28 @@ index 9c5a67d1b9c1..a6ee6381f302 100644
  ifdef CONFIG_RETPOLINE
  ifeq ($(RETPOLINE_CFLAGS),)
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index f0515ac895a4..d6e04a32b87f 100644
+index f0515ac895a4..24cca31995ae 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -38,6 +38,9 @@ KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
  KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
  KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
  KBUILD_CFLAGS += -Wno-pointer-sign
-+ifndef CONFIG_CC_HAVE_ASM_GOTO
++ifndef CONFIG_CC_HAS_ASM_GOTO
 +KBUILD_CFLAGS += -D__BPF_TRACING__
 +endif
  
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
 diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index d9845099635e..0d2817edc8ab 100644
+index d9845099635e..68ff33dc075d 100644
 --- a/drivers/firmware/efi/libstub/Makefile
 +++ b/drivers/firmware/efi/libstub/Makefile
 @@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst -pg,,$(KBUILD_CFLAGS)) \
  
  cflags-$(CONFIG_EFI_ARMSTUB)	+= -I$(srctree)/scripts/dtc/libfdt
  
-+ifndef CONFIG_CC_HAVE_ASM_GOTO
++ifndef CONFIG_CC_HAS_ASM_GOTO
 +cflags-$(CONFIG_X86)		+= -D__BPF_TRACING__
 +endif
 +
