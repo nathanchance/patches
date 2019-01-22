@@ -1,0 +1,28 @@
+From 1e22cdbfec8d6548e00d0f859aec2ff1bb2511df Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Oct 2018 21:33:49 -0700
+Subject: [PATCH 11/11] DO-NOT-UPSTREAM: phonet: Fix array bounds warnings
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/115
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/net/phonet/pep.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/net/phonet/pep.h b/include/net/phonet/pep.h
+index b669fe6dbc3b..4348b1f0ab71 100644
+--- a/include/net/phonet/pep.h
++++ b/include/net/phonet/pep.h
+@@ -63,7 +63,7 @@ struct pnpipehdr {
+ 		u8		state_after_reset;	/* reset request */
+ 		u8		error_code;		/* any response */
+ 		u8		pep_type;		/* status indication */
+-		u8		data[1];
++		u8		*data;
+ 	};
+ };
+ #define other_pep_type		data[1]
+-- 
+2.20.1
+
