@@ -1,7 +1,7 @@
-From a77d23440d4e14d0e7e5dc1f4ab12f63da4dcc81 Mon Sep 17 00:00:00 2001
+From 190b072fb00d16e49a11b69f0021b705985ab65e Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 11 Dec 2018 14:34:35 +0100
-Subject: [PATCH 4/6] kasan: fix kasan_check_read/write definitions
+Subject: [PATCH 4/5] kasan: fix kasan_check_read/write definitions
 
 Building little-endian allmodconfig kernels on arm64 started failing
 with the generated atomic.h implementation, since we now try to call
