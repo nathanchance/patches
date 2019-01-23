@@ -1,7 +1,7 @@
-From 6532fda56db8fe868f70494fe6f2df2b89252b9f Mon Sep 17 00:00:00 2001
+From d3e6592500092d115b2032d368df62d3058f5369 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 17:28:46 -0700
-Subject: [PATCH 08/12] soc: ti: knav_dma: Use proper enum in pktdma_init_chan
+Subject: [PATCH 08/11] soc: ti: knav_dma: Use proper enum in pktdma_init_chan
 
 Clang warns when one enumerated type is implicitly converted to another:
 
