@@ -1,4 +1,4 @@
-From 752a5ec87c6d013922b423f1e1d1b30c1f3a8d68 Mon Sep 17 00:00:00 2001
+From 5dbf2a817fea3e0680b7174f97720dddaa46fdfb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 03/11] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -122,7 +122,7 @@ index e2899ff7913e..f0ff40332753 100644
  	int status;
  
 diff --git a/drivers/scsi/aacraid/linit.c b/drivers/scsi/aacraid/linit.c
-index 634ddb90e7aa..17bcad701cf0 100644
+index 7e56a11836c1..cbd955bb8674 100644
 --- a/drivers/scsi/aacraid/linit.c
 +++ b/drivers/scsi/aacraid/linit.c
 @@ -616,7 +616,8 @@ static struct device_attribute *aac_dev_attrs[] = {
