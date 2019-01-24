@@ -1,4 +1,4 @@
-From 218d8ac812217284f95911ba1c40f9689080c9c7 Mon Sep 17 00:00:00 2001
+From 9658cc53f2291a5d3263968da723c36fc1e9b009 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -16,25 +16,38 @@ asm goto can be tracked at the below link.
 Link: https://github.com/ClangBuiltLinux/linux/issues/6
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- arch/x86/Makefile                     | 3 +--
+ arch/x86/Makefile                     | 9 +++++----
  arch/x86/boot/compressed/Makefile     | 3 +++
  drivers/firmware/efi/libstub/Makefile | 4 ++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 9c5a67d1b9c1..a6ee6381f302 100644
+index 9c5a67d1b9c1..95baa56c2de0 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -290,8 +290,7 @@ vdso_install:
+@@ -219,6 +219,11 @@ ifdef CONFIG_RETPOLINE
+   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
+ endif
+ 
++# Avoid warnings in arch/x86/include/asm/cpufeature.h when building with Clang
++ifndef CONFIG_CC_HAS_ASM_GOTO
++  KBUILD_CFLAGS += -D__BPF_TRACING__
++endif
++
+ archscripts: scripts_basic
+ 	$(Q)$(MAKE) $(build)=arch/x86/tools relocs
+ 
+@@ -289,10 +294,6 @@ vdso_install:
+ 
  archprepare: checkbin
  checkbin:
- ifndef CONFIG_CC_HAS_ASM_GOTO
+-ifndef CONFIG_CC_HAS_ASM_GOTO
 -	@echo Compiler lacks asm-goto support.
 -	@exit 1
-+KBUILD_CFLAGS += -D__BPF_TRACING__
- endif
+-endif
  ifdef CONFIG_RETPOLINE
  ifeq ($(RETPOLINE_CFLAGS),)
+ 	@echo "You are building kernel with non-retpoline compiler." >&2
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
 index f0515ac895a4..24cca31995ae 100644
 --- a/arch/x86/boot/compressed/Makefile
