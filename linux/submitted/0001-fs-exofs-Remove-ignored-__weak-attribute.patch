@@ -1,6 +1,6 @@
-From 935c1e522ebf2d4cd3a30663d831d6b90970fa50 Mon Sep 17 00:00:00 2001
+From 13fb6f0e54ae8a45d2e6b93cd424f42690d7f4e0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 26 Sep 2018 19:11:33 -0700
+Date: Fri, 25 Jan 2019 23:42:02 -0700
 Subject: [PATCH 01/12] fs/exofs: Remove ignored __weak attribute
 
 Clang warns that the __weak attribute is going to be ignored on
@@ -34,6 +34,7 @@ Headers and osd utils").
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Boaz Harrosh <ooo@electrozaur.com>
 ---
  fs/exofs/common.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

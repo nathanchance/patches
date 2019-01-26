@@ -1,4 +1,4 @@
-From 94b896e82011ebeed87f20a41591d4532013030a Mon Sep 17 00:00:00 2001
+From 933cf175d41ff5dc3c6bf4fa35ab35b6fd4673f9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 03/12] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -31,6 +31,7 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/85
 Link: https://github.com/ClangBuiltLinux/linux/issues/154
 Link: https://github.com/ClangBuiltLinux/linux/issues/157
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 ---
  drivers/ata/libata-scsi.c             |  5 +++--
  drivers/scsi/aacraid/aachba.c         |  2 +-
@@ -41,7 +42,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  drivers/scsi/cxlflash/main.c          |  2 +-
  drivers/scsi/cxlflash/superpipe.c     | 12 +++++-------
  drivers/scsi/esas2r/esas2r.h          |  4 ++--
- drivers/scsi/esas2r/esas2r_ioctl.c    | 13 ++++++-------
+ drivers/scsi/esas2r/esas2r_ioctl.c    | 16 +++++++---------
  drivers/scsi/esas2r/esas2r_main.c     |  2 +-
  drivers/scsi/hpsa.c                   | 15 +++++++++------
  drivers/scsi/ipr.c                    |  3 ++-
@@ -51,7 +52,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  include/linux/libata.h                |  5 +++--
  include/scsi/libsas.h                 |  3 ++-
  include/scsi/scsi_host.h              |  6 ++++--
- 19 files changed, 53 insertions(+), 42 deletions(-)
+ 19 files changed, 54 insertions(+), 44 deletions(-)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
 index 3d4887d0e84a..6291f1dbf342 100644
@@ -239,7 +240,7 @@ index 858c3b33db78..7f43b95f4e94 100644
  		    struct atto_ioctl *ioctl_hba);
  int esas2r_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd);
 diff --git a/drivers/scsi/esas2r/esas2r_ioctl.c b/drivers/scsi/esas2r/esas2r_ioctl.c
-index 34bcc8c04ff4..916b9adf4921 100644
+index 34bcc8c04ff4..3d130523c288 100644
 --- a/drivers/scsi/esas2r/esas2r_ioctl.c
 +++ b/drivers/scsi/esas2r/esas2r_ioctl.c
 @@ -1274,7 +1274,7 @@ int esas2r_write_params(struct esas2r_adapter *a, struct esas2r_request *rq,
@@ -251,16 +252,19 @@ index 34bcc8c04ff4..916b9adf4921 100644
  {
  	struct atto_express_ioctl *ioctl = NULL;
  	struct esas2r_adapter *a;
-@@ -1292,7 +1292,7 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
+@@ -1292,9 +1292,8 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
  	ioctl = memdup_user(arg, sizeof(struct atto_express_ioctl));
  	if (IS_ERR(ioctl)) {
  		esas2r_log(ESAS2R_LOG_WARN,
 -			   "ioctl_handler access_ok failed for cmd %d, "
-+			   "ioctl_handler access_ok failed for cmd %u, "
- 			   "address %p", cmd,
- 			   arg);
+-			   "address %p", cmd,
+-			   arg);
++			   "ioctl_handler access_ok failed for cmd %u, address %p",
++			   cmd, arg);
  		return PTR_ERR(ioctl);
-@@ -1493,7 +1493,7 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
+ 	}
+ 
+@@ -1493,7 +1492,7 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
  ioctl_done:
  
  	if (err < 0) {
@@ -269,7 +273,7 @@ index 34bcc8c04ff4..916b9adf4921 100644
  			   cmd);
  
  		switch (err) {
-@@ -1518,9 +1518,8 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
+@@ -1518,9 +1517,8 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
  	err = __copy_to_user(arg, ioctl, sizeof(struct atto_express_ioctl));
  	if (err != 0) {
  		esas2r_log(ESAS2R_LOG_WARN,
@@ -281,7 +285,7 @@ index 34bcc8c04ff4..916b9adf4921 100644
  		kfree(ioctl);
  
  		return -EFAULT;
-@@ -1531,7 +1530,7 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
+@@ -1531,7 +1529,7 @@ int esas2r_ioctl_handler(void *hostdata, int cmd, void __user *arg)
  	return 0;
  }
  

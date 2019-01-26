@@ -1,8 +1,7 @@
-From 285938548f29fba4bee3bb482fca070ad6cbe850 Mon Sep 17 00:00:00 2001
+From 8de9e8dc32e0524309df83a6121ddb115f4c676b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 25 Oct 2018 12:31:58 -0700
-Subject: [PATCH 04/12] drm/i915: Disable -Wuninitialized for
- intel_breadcrumbs.o
+Date: Sat, 26 Jan 2019 00:11:23 -0700
+Subject: [PATCH 04/12] drm/i915: Disable -Wuninitialized
 
 This warning is disabled by default in scripts/Makefile.extrawarn when
 W= is not provided but this Makefile adds -Wall after this warning is
@@ -24,11 +23,8 @@ variable 'wq' is uninitialized when used within its own initialization
                                        ^~~~
 1 error generated.
 
-This warning looks to be a false positive given that init_waitqueue_head
-initializes name before it is used. Rather than disable the warning for
-the full folder like commit 46e2068081e9 ("drm/i915: Disable some extra
-clang warnings"), just disable it for the one problematic file because
-it could be a useful warning for other cases.
+Explicitly disable the warning like commit 46e2068081e9 ("drm/i915:
+Disable some extra clang warnings").
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/220
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -37,17 +33,17 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 8300efe60fe1..f2d91e8fc009 100644
+index 8300efe60fe1..210d0e8777b6 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
-@@ -26,6 +26,7 @@ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
+@@ -22,6 +22,7 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
+ subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
+ subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
++subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
+ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
  # Fine grained warnings disable
- CFLAGS_i915_pci.o = $(call cc-disable-warning, override-init)
-+CFLAGS_intel_breadcrumbs.o = $(call cc-disable-warning, uninitialized)
- CFLAGS_intel_fbdev.o = $(call cc-disable-warning, override-init)
- 
- subdir-ccflags-y += \
 -- 
 2.20.1
 
