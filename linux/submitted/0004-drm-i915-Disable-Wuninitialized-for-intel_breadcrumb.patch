@@ -1,4 +1,4 @@
-From a1f2550df29f27dd6c140db6042427f63da5fba4 Mon Sep 17 00:00:00 2001
+From 285938548f29fba4bee3bb482fca070ad6cbe850 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 25 Oct 2018 12:31:58 -0700
 Subject: [PATCH 04/12] drm/i915: Disable -Wuninitialized for
@@ -37,7 +37,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index f050759686ca..09aebdfcc706 100644
+index 8300efe60fe1..f2d91e8fc009 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -26,6 +26,7 @@ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
