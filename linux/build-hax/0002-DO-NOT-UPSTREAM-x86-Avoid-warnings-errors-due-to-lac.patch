@@ -1,4 +1,4 @@
-From 98562eeaeebb9dcf9d56fb849a63978d82ccfa09 Mon Sep 17 00:00:00 2001
+From 45c330be8ed8c48bc1840b6012505b5440c33b3d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -22,10 +22,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 9c5a67d1b9c1..95baa56c2de0 100644
+index 76bc4dc03d5e..764dea7e08cf 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -219,6 +219,11 @@ ifdef CONFIG_RETPOLINE
+@@ -218,6 +218,11 @@ ifdef CONFIG_RETPOLINE
    KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
  endif
  
@@ -37,7 +37,7 @@ index 9c5a67d1b9c1..95baa56c2de0 100644
  archscripts: scripts_basic
  	$(Q)$(MAKE) $(build)=arch/x86/tools relocs
  
-@@ -289,10 +294,6 @@ vdso_install:
+@@ -288,10 +293,6 @@ vdso_install:
  
  archprepare: checkbin
  checkbin:
