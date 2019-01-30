@@ -1,4 +1,4 @@
-From 737b15afef2114ac90c02580238dbe4937e2a720 Mon Sep 17 00:00:00 2001
+From cb35b7f478e8bcbb336f2799854c0a0b726b85d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 03/10] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -308,7 +308,7 @@ index 64397d441bae..fdbda5c05aa0 100644
  
  static void __exit esas2r_exit(void)
 diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index ff67ef5d5347..28cfd3d01c5a 100644
+index 5284444fdd10..f044e7d10d63 100644
 --- a/drivers/scsi/hpsa.c
 +++ b/drivers/scsi/hpsa.c
 @@ -251,10 +251,11 @@ static int number_of_controllers;
@@ -391,7 +391,7 @@ index c43a00a9d819..b775445892af 100644
  	struct domain_device *dev = sdev_to_domain_dev(sdev);
  
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 661512bec3ac..e0f949b7d947 100644
+index e27f4df24021..83c2d559e0b1 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
 @@ -836,7 +836,8 @@ static void mk_sense_invalid_opcode(struct scsi_cmnd *scp)
