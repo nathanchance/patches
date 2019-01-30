@@ -1,7 +1,7 @@
-From 08790cc7284fb02b0338fdc5be8f743ec4d270db Mon Sep 17 00:00:00 2001
+From b97f1c4ba83699c428fe2b8bd17f921c3a8ae409 Mon Sep 17 00:00:00 2001
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Date: Thu, 6 Sep 2018 06:36:42 +0200
-Subject: [PATCH 1/5] fcoe: make use of fip_mode enum complete
+Subject: [PATCH 1/4] fcoe: make use of fip_mode enum complete
 
 commit 1917d42d14b7 ("fcoe: use enum for fip_mode") introduces a separate
 enum for the fip_mode that shall be used during initialisation handling
@@ -85,10 +85,10 @@ index 54da3166da8d..a52d3ad94876 100644
  		default:
  			LIBFCOE_FIP_DBG(fip, "invalid mode %d\n", fip->mode);
 diff --git a/drivers/scsi/fcoe/fcoe_transport.c b/drivers/scsi/fcoe/fcoe_transport.c
-index f4909cd206d3..b381ab066b9c 100644
+index 6d3949b687ef..ac7e1649b93f 100644
 --- a/drivers/scsi/fcoe/fcoe_transport.c
 +++ b/drivers/scsi/fcoe/fcoe_transport.c
-@@ -873,7 +873,7 @@ static int fcoe_transport_create(const char *buffer,
+@@ -872,7 +872,7 @@ static int fcoe_transport_create(const char *buffer,
  	int rc = -ENODEV;
  	struct net_device *netdev = NULL;
  	struct fcoe_transport *ft = NULL;
