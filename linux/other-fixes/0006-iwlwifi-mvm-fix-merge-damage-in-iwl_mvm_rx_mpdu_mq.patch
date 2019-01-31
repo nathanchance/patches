@@ -1,0 +1,39 @@
+From 161e96291227a87f77ca8fdf28882ffb8f4287c7 Mon Sep 17 00:00:00 2001
+From: Luca Coelho <luciano.coelho@intel.com>
+Date: Wed, 30 Jan 2019 14:38:11 +0200
+Subject: [PATCH 6/6] iwlwifi: mvm: fix merge damage in iwl_mvm_rx_mpdu_mq()
+
+A call to iwl_mvm_add_rtap_sniffer_config() was missing due to a merge
+damage when I submitted the patch mentioned below.  And this causes
+the following compilation warning:
+
+drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c:195:13: warning: 'iwl_mvm_add_rtap_sniffer_config' defined but not used [-Wunused-function]
+ static void iwl_mvm_add_rtap_sniffer_config(struct iwl_mvm *mvm,
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fix it by adding the if block that calls this function.
+
+Fixes: 9bf13bee2d74 ("iwlwifi: mvm: include configured sniffer AID in radiotap")
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+---
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index 79860f6ac7ca..2c56f73d688e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -1476,6 +1476,9 @@ void iwl_mvm_rx_mpdu_mq(struct iwl_mvm *mvm, struct napi_struct *napi,
+ 		rx_status->ampdu_reference = mvm->ampdu_ref;
+ 	}
+ 
++	if (unlikely(mvm->monitor_on))
++		iwl_mvm_add_rtap_sniffer_config(mvm, skb);
++
+ 	rcu_read_lock();
+ 
+ 	if (desc->status & cpu_to_le16(IWL_RX_MPDU_STATUS_SRC_STA_FOUND)) {
+-- 
+2.20.1
+
