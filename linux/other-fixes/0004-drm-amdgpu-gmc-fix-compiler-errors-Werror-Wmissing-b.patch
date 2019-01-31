@@ -1,7 +1,7 @@
 From 7dd193a286e5bd759c6abd066abb5d93ff949f1d Mon Sep 17 00:00:00 2001
 From: Shirish S <shirish.s@amd.com>
 Date: Thu, 20 Dec 2018 16:04:35 +0530
-Subject: [PATCH 4/4] drm/amdgpu/gmc: fix compiler errors
+Subject: [PATCH 4/5] drm/amdgpu/gmc: fix compiler errors
  [-Werror,-Wmissing-braces] (V2)
 
 Initializing structures with { } is known to be problematic since

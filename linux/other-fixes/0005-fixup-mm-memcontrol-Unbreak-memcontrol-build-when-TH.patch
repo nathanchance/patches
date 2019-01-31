@@ -1,0 +1,73 @@
+From 1a29c3b86d04b1856b729e2c9d3bc772e627d727 Mon Sep 17 00:00:00 2001
+From: Chris Down <chris@chrisdown.name>
+Date: Thu, 31 Jan 2019 11:08:02 -0500
+Subject: [PATCH 5/5] fixup: mm: memcontrol: Unbreak memcontrol build when THP
+ is disabled
+
+This can be folded into "mm: memcontrol: Expose THP events on a
+per-memcg basis"
+(mm-memcontrol-expose-thp-events-on-a-per-memcg-basis.patch).
+
+kbuild points out that this patch can't be built with
+CONFIG_TRANSPARENT_HUGEPAGE not set. I had originally worried about
+this, but had only checked NR_ANON_THPS (which is not ifdeffed), not the
+event counters.
+
+NR_ANON_THPS is not #ifdeffed in node_stat_item, so we don't need to
+also guard MEMCG_RSS_HUGE to futureproof it.
+
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Roman Gushchin <guro@fb.com>
+Cc: linux-kernel@vger.kernel.org
+Cc: cgroups@vger.kernel.org
+Cc: linux-mm@kvack.org
+Cc: kernel-team@fb.com
+---
+ Documentation/admin-guide/cgroup-v2.rst | 8 +++++---
+ mm/memcontrol.c                         | 2 ++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+index 89fdeaa0e12f..ab9f3ee4ca33 100644
+--- a/Documentation/admin-guide/cgroup-v2.rst
++++ b/Documentation/admin-guide/cgroup-v2.rst
+@@ -1261,12 +1261,14 @@ PAGE_SIZE multiple when read back.
+ 	  thp_fault_alloc
+ 
+ 		Number of transparent hugepages which were allocated to satisfy
+-		a page fault, including COW faults
++		a page fault, including COW faults. This counter is not present
++		when CONFIG_TRANSPARENT_HUGEPAGE is not set.
+ 
+ 	  thp_collapse_alloc
+ 
+-		Number of transparent hugepages which were allocated to
+-		allow collapsing an existing range of pages
++		Number of transparent hugepages which were allocated to allow
++		collapsing an existing range of pages. This counter is not
++		present when CONFIG_TRANSPARENT_HUGEPAGE is not set.
+ 
+   memory.swap.current
+ 	A read-only single value file which exists on non-root
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index fe7ad190f63f..eda0e5b4e5b2 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5626,9 +5626,11 @@ static int memory_stat_show(struct seq_file *m, void *v)
+ 	seq_printf(m, "pglazyfree %lu\n", acc.events[PGLAZYFREE]);
+ 	seq_printf(m, "pglazyfreed %lu\n", acc.events[PGLAZYFREED]);
+ 
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	seq_printf(m, "thp_fault_alloc %lu\n", acc.events[THP_FAULT_ALLOC]);
+ 	seq_printf(m, "thp_collapse_alloc %lu\n",
+ 		   acc.events[THP_COLLAPSE_ALLOC]);
++#endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+ 
+ 	return 0;
+ }
+-- 
+2.20.1
+
