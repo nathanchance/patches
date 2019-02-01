@@ -1,7 +1,7 @@
-From 04d35055ff0e0efd8f3a6df9456255b40565dc2e Mon Sep 17 00:00:00 2001
+From 0fc1ca1bea8b31e0440c2e9c5360df8947c17185 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 14:43:01 -0700
-Subject: [PATCH 4/9] drm/amd/display: Pass app_tf by value rather than by
+Subject: [PATCH 4/8] drm/amd/display: Pass app_tf by value rather than by
  reference
 
 Clang warns when an expression that equals zero is used as a null
@@ -44,10 +44,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-index 1544ed3f1747..945e845f3358 100644
+index 94a84bc57c7a..bfd27f10879e 100644
 --- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
 +++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-@@ -656,7 +656,7 @@ static void build_vrr_infopacket_v1(enum signal_type signal,
+@@ -724,7 +724,7 @@ static void build_vrr_infopacket_v1(enum signal_type signal,
  
  static void build_vrr_infopacket_v2(enum signal_type signal,
  		const struct mod_vrr_params *vrr,
@@ -56,7 +56,7 @@ index 1544ed3f1747..945e845f3358 100644
  		struct dc_info_packet *infopacket)
  {
  	unsigned int payload_size = 0;
-@@ -664,8 +664,7 @@ static void build_vrr_infopacket_v2(enum signal_type signal,
+@@ -732,8 +732,7 @@ static void build_vrr_infopacket_v2(enum signal_type signal,
  	build_vrr_infopacket_header_v2(signal, infopacket, &payload_size);
  	build_vrr_infopacket_data(vrr, infopacket);
  
@@ -66,7 +66,7 @@ index 1544ed3f1747..945e845f3358 100644
  
  	build_vrr_infopacket_checksum(&payload_size, infopacket);
  
-@@ -676,7 +675,7 @@ void mod_freesync_build_vrr_infopacket(struct mod_freesync *mod_freesync,
+@@ -757,7 +756,7 @@ void mod_freesync_build_vrr_infopacket(struct mod_freesync *mod_freesync,
  		const struct dc_stream_state *stream,
  		const struct mod_vrr_params *vrr,
  		enum vrr_packet_type packet_type,
@@ -74,9 +74,9 @@ index 1544ed3f1747..945e845f3358 100644
 +		enum color_transfer_func app_tf,
  		struct dc_info_packet *infopacket)
  {
- 	/* SPD info packet for FreeSync */
+ 	/* SPD info packet for FreeSync
 diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h b/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
-index 949a8b62aa98..063af6258fd9 100644
+index 4222e403b151..dcef85994c45 100644
 --- a/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
 +++ b/drivers/gpu/drm/amd/display/modules/inc/mod_freesync.h
 @@ -145,7 +145,7 @@ void mod_freesync_build_vrr_infopacket(struct mod_freesync *mod_freesync,
