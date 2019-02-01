@@ -1,0 +1,37 @@
+From c3656bdfcd813f9fb46361eaf808eaa8052c2bb9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 21 Jan 2019 16:52:15 -0700
+Subject: [PATCH 2/2] drm/amdkfd: Fix if preprocessor statement above
+ kfd_fill_iolink_info_for_cpu
+
+Clang warns:
+
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_crat.c:866:5: warning:
+'CONFIG_X86_64' is not defined, evaluates to 0 [-Wundef]
+    ^
+1 warning generated.
+
+Fixes: d1c234e2cd10 ("drm/amdkfd: Allow building KFD on ARM64 (v2)")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+---
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+index 5d85ff341385..2e7c44955f43 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+@@ -863,7 +863,7 @@ static int kfd_fill_mem_info_for_cpu(int numa_node_id, int *avail_size,
+ 	return 0;
+ }
+ 
+-#if CONFIG_X86_64
++#ifdef CONFIG_X86_64
+ static int kfd_fill_iolink_info_for_cpu(int numa_node_id, int *avail_size,
+ 				uint32_t *num_entries,
+ 				struct crat_subtype_iolink *sub_type_hdr)
+-- 
+2.20.1
+
