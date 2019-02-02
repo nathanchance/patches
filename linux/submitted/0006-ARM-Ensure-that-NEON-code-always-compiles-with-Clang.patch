@@ -1,7 +1,7 @@
-From 0504c43297e7dab6a62930691d6fd35169b8263f Mon Sep 17 00:00:00 2001
+From 9c6398c8a64e1ec0295bb4f082d746fb72cd0ae2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 15 Dec 2018 14:23:05 -0700
-Subject: [PATCH 06/12] ARM: Ensure that NEON code always compiles with Clang
+Subject: [PATCH 6/9] ARM: Ensure that NEON code always compiles with Clang
 
 While building arm32 allyesconfig, I ran into the following errors:
 
@@ -41,6 +41,9 @@ armv7.
 Link: https://github.com/ClangBuiltLinux/linux/issues/287
 Suggested-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Nicolas Pitre <nico@linaro.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Stefan Agner <stefan@agner.ch>
 ---
  Documentation/arm/kernel_mode_neon.txt | 4 ++--
  arch/arm/lib/Makefile                  | 2 +-
