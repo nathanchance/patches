@@ -1,0 +1,55 @@
+From 0732bece5f55f0f760c4501e2490dcdc528e9a05 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 1 Feb 2019 13:12:26 -0700
+Subject: [PATCH 3/5] drm/amd/display: Use memset to initialize variables in
+ fill_plane_dcc_attributes
+
+Clang warns:
+
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:2314:38:
+warning: suggest braces around initialization of subobject
+[-Wmissing-braces]
+        struct dc_surface_dcc_cap output = {0};
+                                            ^
+                                            {}
+
+Previous efforts to fix this type of warning by adding or removing
+braces have been met with some pushback in favor of using memset [1][2].
+Do that here, mirroring commit 05794eff1aa6 ("drm/amdgpu/gmc: fix
+compiler errors [-Werror,-Wmissing-braces] (V2)") in this tree.
+
+[1]: https://lore.kernel.org/lkml/022e41c0-8465-dc7a-a45c-64187ecd9684@amd.com/
+[2]: https://lore.kernel.org/lkml/20181128.215241.702406654469517539.davem@davemloft.net/
+
+Fixes: 7df7e505e82a ("drm/amd/display: Set requested plane state DCC params for GFX9")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index dccad2d207ce..1c1c162c4eee 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2310,12 +2310,15 @@ static bool fill_plane_dcc_attributes(struct amdgpu_device *adev,
+ 				      uint64_t info)
+ {
+ 	struct dc *dc = adev->dm.dc;
+-	struct dc_dcc_surface_param input = {0};
+-	struct dc_surface_dcc_cap output = {0};
++	struct dc_dcc_surface_param input;
++	struct dc_surface_dcc_cap output;
+ 	uint32_t offset = AMDGPU_TILING_GET(info, DCC_OFFSET_256B);
+ 	uint32_t i64b = AMDGPU_TILING_GET(info, DCC_INDEPENDENT_64B) != 0;
+ 	uint64_t dcc_address;
+ 
++	memset(&input, 0, sizeof(input));
++	memset(&output, 0, sizeof(output));
++
+ 	if (!offset)
+ 		return false;
+ 
+-- 
+2.20.1
+
