@@ -1,4 +1,4 @@
-From 7dfbf256c6c585fa45683010c428caa1309f2204 Mon Sep 17 00:00:00 2001
+From 9e9d8fd3da223e4ad7e5cd94e57669a86a6667d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
 Subject: [PATCH 3/4] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
@@ -13,7 +13,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 664e918e2624..73e970f2bf75 100644
+index 813d0428b37b..fd10eac83cc2 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
 @@ -70,7 +70,7 @@ config ARM
