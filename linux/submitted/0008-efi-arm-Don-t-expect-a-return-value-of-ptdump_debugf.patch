@@ -1,7 +1,7 @@
-From e39c381ab92d76ee2ed0f47cdcea6c5a824d14be Mon Sep 17 00:00:00 2001
+From 70118b9bbeee1b2794cb781bee5685cf0a75c995 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 1 Feb 2019 12:09:57 -0700
-Subject: [PATCH 9/9] efi/arm: Don't expect a return value of
+Subject: [PATCH 8/8] efi/arm: Don't expect a return value of
  ptdump_debugfs_register
 
 As of commit e2a2e56e4082 ("arm64: dump: no need to check return value
@@ -27,10 +27,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/firmware/efi/arm-runtime.c b/drivers/firmware/efi/arm-runtime.c
-index 23ea1ed409d1..7ae3b797caf8 100644
+index 352bd2473162..b308f5bb3737 100644
 --- a/drivers/firmware/efi/arm-runtime.c
 +++ b/drivers/firmware/efi/arm-runtime.c
-@@ -45,10 +45,10 @@ static struct ptdump_info efi_ptdump_info = {
+@@ -46,10 +46,10 @@ static struct ptdump_info efi_ptdump_info = {
  
  static int __init ptdump_init(void)
  {
