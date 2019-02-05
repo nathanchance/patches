@@ -1,4 +1,4 @@
-From 42ef15f8129f9f22d3ee56e669fea996b2c0ac80 Mon Sep 17 00:00:00 2001
+From ba76107297a8f34267e86b1d871d8570f1d561a9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 1 Feb 2019 13:14:28 -0700
 Subject: [PATCH 4/5] drm/amd/display: Use memset to initialize variables in
@@ -29,10 +29,10 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 1c1c162c4eee..f70f4bbde665 100644
+index e921b71aca40..b646a183ea9d 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5089,10 +5089,13 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+@@ -5110,10 +5110,13 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
  		struct dm_connector_state *dm_new_con_state = to_dm_connector_state(new_con_state);
  		struct dm_connector_state *dm_old_con_state = to_dm_connector_state(old_con_state);
  		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);

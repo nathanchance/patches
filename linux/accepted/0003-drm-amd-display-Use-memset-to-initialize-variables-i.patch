@@ -1,4 +1,4 @@
-From 664c653f84c67a043edae97a9ea4cf57f10e81e9 Mon Sep 17 00:00:00 2001
+From 7acee80b39cbd5c6b7aeba1cdba18d717826b441 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 1 Feb 2019 13:12:26 -0700
 Subject: [PATCH 3/5] drm/amd/display: Use memset to initialize variables in
@@ -29,7 +29,7 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index dccad2d207ce..1c1c162c4eee 100644
+index 15508aeac512..e921b71aca40 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 @@ -2310,12 +2310,15 @@ static bool fill_plane_dcc_attributes(struct amdgpu_device *adev,
