@@ -1,7 +1,7 @@
-From 985bcbe7b4ddf861bdcb1ddf151fca485d11030d Mon Sep 17 00:00:00 2001
+From 971734b9a2c55295bbdb78c6603b40567f3a2f0d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 15 Dec 2018 14:23:05 -0700
-Subject: [PATCH 5/8] ARM: Ensure that NEON code always compiles with Clang
+Subject: [PATCH 5/7] ARM: Ensure that NEON code always compiles with Clang
 
 While building arm32 allyesconfig, I ran into the following errors:
 
