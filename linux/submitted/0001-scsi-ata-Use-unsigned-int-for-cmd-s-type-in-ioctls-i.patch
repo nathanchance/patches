@@ -1,7 +1,7 @@
-From 3cc1353bb98624e4fec21a9e19a838260cfa6319 Mon Sep 17 00:00:00 2001
+From 889bdd5ef16354f11df89f91cc016d216507e59e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
-Subject: [PATCH 3/6] scsi/ata: Use unsigned int for cmd's type in ioctls in
+Subject: [PATCH 1/3] scsi/ata: Use unsigned int for cmd's type in ioctls in
  scsi_host_template
 
 Clang warns several times in the scsi subsystem (trimmed for brevity):
@@ -391,10 +391,10 @@ index c43a00a9d819..b775445892af 100644
  	struct domain_device *dev = sdev_to_domain_dev(sdev);
  
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index e27f4df24021..83c2d559e0b1 100644
+index d4aede324e84..3eb47207c7b0 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
-@@ -836,7 +836,8 @@ static void mk_sense_invalid_opcode(struct scsi_cmnd *scp)
+@@ -832,7 +832,8 @@ static void mk_sense_invalid_opcode(struct scsi_cmnd *scp)
  	mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_OPCODE, 0);
  }
  
