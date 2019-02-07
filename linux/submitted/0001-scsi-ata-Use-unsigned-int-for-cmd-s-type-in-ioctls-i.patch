@@ -1,4 +1,4 @@
-From 889bdd5ef16354f11df89f91cc016d216507e59e Mon Sep 17 00:00:00 2001
+From 86d98368ed0d2e657e646d2f926bff91fb64ebec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 19 Oct 2018 10:26:19 -0700
 Subject: [PATCH 1/3] scsi/ata: Use unsigned int for cmd's type in ioctls in
@@ -16,22 +16,25 @@ switch condition type (2147762694 to 18446744071562347014) [-Wswitch]
              ^
 
 The root cause is that the _IOC macro can generate really large numbers,
-which don't find into type 'int', which is used for the cmd paremeter in
+which don't fit into type 'int', which is used for the cmd parameter in
 the ioctls in scsi_host_template. My research into how GCC and Clang are
 handling this at a low level didn't prove fruitful. However, looking at
 the rest of the kernel tree, all ioctls use an 'unsigned int' for the
 cmd parameter, which will fit all of the _IOC values in the scsi/ata
 subsystems.
 
-Make that change because none of the ioctls expect to take a negative
-value, it brings the ioctls inline with the reset of the kernel, and it
-removes ambiguity, which is never good when dealing with compilers.
+Make that change because none of the ioctls expect a negative value for
+any command, it brings the ioctls inline with the reset of the kernel,
+and it removes ambiguity, which is never good when dealing with compilers.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/85
 Link: https://github.com/ClangBuiltLinux/linux/issues/154
 Link: https://github.com/ClangBuiltLinux/linux/issues/157
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Bradley Grove <bgrove@attotech.com>
+Acked-by: Don Brace <don.brace@microsemi.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 ---
  drivers/ata/libata-scsi.c             |  5 +++--
  drivers/scsi/aacraid/aachba.c         |  2 +-
