@@ -1,7 +1,7 @@
-From 82f6ba736ca0b435931108a47351456ba0c6edf6 Mon Sep 17 00:00:00 2001
+From eabe62ef8cb7b4ac7a9fe40e5674932254f0beb2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
+Subject: [PATCH 2/5] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
  of asm goto
 
 We don't want to see an inordinate amount of warning spam from
@@ -63,7 +63,7 @@ index 6b84afdd7538..c7265084dd78 100644
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
 diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index d9845099635e..68ff33dc075d 100644
+index b0103e16fc1b..d8019c714b4d 100644
 --- a/drivers/firmware/efi/libstub/Makefile
 +++ b/drivers/firmware/efi/libstub/Makefile
 @@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst -pg,,$(KBUILD_CFLAGS)) \

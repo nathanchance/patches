@@ -1,7 +1,7 @@
-From fb3f94c1bdc6b52be199d930c9af5effefb064ef Mon Sep 17 00:00:00 2001
+From 45e77f97e5b77074c8a0392506b07252db96eebc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 5 Jan 2019 11:51:39 -0700
-Subject: [PATCH 1/4] DO-NOT-UPSTREAM: x86: Revert two commits that break the
+Subject: [PATCH 1/5] DO-NOT-UPSTREAM: x86: Revert two commits that break the
  build with Clang
 
 * 4a789213c9a5 ("x86 uaccess: Introduce __put_user_goto")
@@ -17,7 +17,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 42 insertions(+), 39 deletions(-)
 
 diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index 780f2b42c8ef..122e42319acc 100644
+index 7a1778de0bbf..d788335f3828 100644
 --- a/arch/x86/include/asm/uaccess.h
 +++ b/arch/x86/include/asm/uaccess.h
 @@ -186,14 +186,19 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
