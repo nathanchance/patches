@@ -1,0 +1,41 @@
+From 209c5df6edb936e452eef1d527f1bd03c711ba3b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 8 Feb 2019 09:53:04 -0700
+Subject: [PATCH 12/12] DO-NOT-UPSTREAM: igc: Ignore
+ -Wunneeded-internal-declaration for igc_priv_flags_strings
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/355
+Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/igc/igc_ethtool.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+index eff37a6c0afa..156ea581a2ed 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
++++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
+@@ -6,11 +6,20 @@
+ 
+ #include "igc.h"
+ 
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wunneeded-internal-declaration"
++#endif
++
+ static const char igc_priv_flags_strings[][ETH_GSTRING_LEN] = {
+ #define IGC_PRIV_FLAGS_LEGACY_RX	BIT(0)
+ 	"legacy-rx",
+ };
+ 
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic pop
++#endif
++
+ #define IGC_PRIV_FLAGS_STR_LEN ARRAY_SIZE(igc_priv_flags_strings)
+ 
+ static void igc_get_drvinfo(struct net_device *netdev,
+-- 
+2.20.1
+
