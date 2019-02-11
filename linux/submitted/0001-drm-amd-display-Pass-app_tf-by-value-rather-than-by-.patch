@@ -1,7 +1,7 @@
-From 90fb68127608acb6efb2915e910311e95af3d3bc Mon Sep 17 00:00:00 2001
+From 23cafe19339aa5701c2a91a0790c7ba4ed322d33 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 14:43:01 -0700
-Subject: [PATCH 2/5] drm/amd/display: Pass app_tf by value rather than by
+Subject: [PATCH 1/2] drm/amd/display: Pass app_tf by value rather than by
  reference
 
 Clang warns when an expression that equals zero is used as a null
