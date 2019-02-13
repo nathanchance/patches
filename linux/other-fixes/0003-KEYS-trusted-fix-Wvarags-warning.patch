@@ -1,4 +1,4 @@
-From f1b7e3c4ca12485f2635fb134bcf67fb372aebf9 Mon Sep 17 00:00:00 2001
+From 05ab2e9b72eccd483516043f1685e7846d4c7513 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Mon, 22 Oct 2018 16:43:57 -0700
 Subject: [PATCH 3/3] KEYS: trusted: fix -Wvarags warning
@@ -71,5 +71,5 @@ index bcc9c6ead7fd..ecec672d3a77 100644
  	if (ret < 0)
  		goto out;
 -- 
-2.20.1
+2.21.0.rc0
 
