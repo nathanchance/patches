@@ -1,4 +1,4 @@
-From 1d066ea91925a42f8b6e70e579c2a6af4fd1ba05 Mon Sep 17 00:00:00 2001
+From cbd55e828092e4911a1cacb3c23fa63801b74769 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 20:53:12 -0700
 Subject: [PATCH 10/12] DO-NOT-UPSTREAM: arm: xor-neon: Do not warn when
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
-index 2c40aeab3eaa..a6741a895189 100644
+index c691b901092f..4600b62d845f 100644
 --- a/arch/arm/lib/xor-neon.c
 +++ b/arch/arm/lib/xor-neon.c
 @@ -24,7 +24,7 @@ MODULE_LICENSE("GPL");
@@ -23,5 +23,5 @@ index 2c40aeab3eaa..a6741a895189 100644
   * While older versions of GCC do not generate incorrect code, they fail to
   * recognize the parallel nature of these functions, and emit plain ARM code,
 -- 
-2.20.1
+2.21.0.rc0
 
