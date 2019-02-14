@@ -1,4 +1,4 @@
-From 333fe9d603f8eaf8d5ab2b673bd45e869c860491 Mon Sep 17 00:00:00 2001
+From e395fe6f2c3a077fe3699948a775b7cb1a999684 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
 Subject: [PATCH 3/5] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
@@ -13,10 +13,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 813d0428b37b..fd10eac83cc2 100644
+index 102c3748a800..7cc18c213bc4 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
-@@ -70,7 +70,7 @@ config ARM
+@@ -72,7 +72,7 @@ config ARM
  	select HAVE_EXIT_THREAD
  	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
  	select HAVE_FUNCTION_GRAPH_TRACER if !THUMB2_KERNEL
