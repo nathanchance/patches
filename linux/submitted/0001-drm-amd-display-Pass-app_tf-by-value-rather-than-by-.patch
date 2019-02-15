@@ -1,7 +1,7 @@
-From 9aec6e06b29400e848e96bc4a247dbddaa6e01d2 Mon Sep 17 00:00:00 2001
+From 5e9f8d5b38ff3c0908908f51672a00bd25a9a76b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 14:43:01 -0700
-Subject: [PATCH] drm/amd/display: Pass app_tf by value rather than by
+Subject: [PATCH 1/2] drm/amd/display: Pass app_tf by value rather than by
  reference
 
 Clang warns when an expression that equals zero is used as a null
@@ -89,5 +89,5 @@ index 4222e403b151..dcef85994c45 100644
  
  void mod_freesync_build_vrr_params(struct mod_freesync *mod_freesync,
 -- 
-2.21.0.rc0
+2.21.0.rc1
 
