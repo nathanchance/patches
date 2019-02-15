@@ -1,7 +1,7 @@
-From 60379049b99c22fa00e73939ea90149c94f698d9 Mon Sep 17 00:00:00 2001
+From a6ecd9a6dc9dbbd7e4cc5fc6dd0877a9a9328beb Mon Sep 17 00:00:00 2001
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Date: Thu, 6 Sep 2018 06:36:42 +0200
-Subject: [PATCH 1/3] fcoe: make use of fip_mode enum complete
+Subject: [PATCH 1/2] fcoe: make use of fip_mode enum complete
 
 commit 1917d42d14b7 ("fcoe: use enum for fip_mode") introduces a separate
 enum for the fip_mode that shall be used during initialisation handling
@@ -137,5 +137,5 @@ index cb8a273732cf..10d6d92b4d28 100644
  void fcoe_ctlr_link_up(struct fcoe_ctlr *);
  int fcoe_ctlr_link_down(struct fcoe_ctlr *);
 -- 
-2.21.0.rc0
+2.21.0.rc1
 
