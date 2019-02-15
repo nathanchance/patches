@@ -1,7 +1,7 @@
 From e395fe6f2c3a077fe3699948a775b7cb1a999684 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 30 Sep 2018 18:32:55 -0700
-Subject: [PATCH 3/5] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
+Subject: [PATCH 3/4] DO-NOT-UPSTREAM: ARM: Don't select HAVE_FUNCTION_TRACER
  on arm
 
 It's broken with Clang.
@@ -26,5 +26,5 @@ index 102c3748a800..7cc18c213bc4 100644
  	select HAVE_GENERIC_DMA_COHERENT
  	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
 -- 
-2.21.0.rc0
+2.21.0.rc1
 
