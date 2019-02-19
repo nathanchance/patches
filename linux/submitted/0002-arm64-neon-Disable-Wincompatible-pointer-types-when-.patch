@@ -1,7 +1,7 @@
-From 0101a30dbfe26958b01c95a1efe899dc9ee5a2f0 Mon Sep 17 00:00:00 2001
+From 562e3ecb31961aa3b04ef2276a2feec2aae48577 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 14 Feb 2019 18:11:21 -0700
-Subject: [PATCH 2/2] arm64/neon: Disable -Wincompatible-pointer-types when
+Subject: [PATCH 2/3] arm64/neon: Disable -Wincompatible-pointer-types when
  building with Clang
 
 After commit cc9f8349cb33 ("arm64: crypto: add NEON accelerated XOR

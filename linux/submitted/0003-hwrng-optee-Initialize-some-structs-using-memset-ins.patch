@@ -1,0 +1,87 @@
+From d5b5c2f3ca8997f529621fd629e8b415e7068464 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 18 Feb 2019 20:18:23 -0700
+Subject: [PATCH 3/3] hwrng: optee: Initialize some structs using memset
+ instead of braces
+
+Clang warns:
+
+drivers/char/hw_random/optee-rng.c:80:31: warning: suggest braces around
+initialization of subobject [-Wmissing-braces]
+        struct tee_param param[4] = {0};
+                                     ^
+                                     {}
+drivers/char/hw_random/optee-rng.c:177:31: warning: suggest braces
+around initialization of subobject [-Wmissing-braces]
+        struct tee_param param[4] = {0};
+                                     ^
+                                     {}
+drivers/char/hw_random/optee-rng.c:212:48: warning: suggest braces
+around initialization of subobject [-Wmissing-braces]
+        struct tee_ioctl_open_session_arg sess_arg = {0};
+                                                      ^
+                                                      {}
+3 warnings generated.
+
+One way to fix these warnings is to add additional braces like Clang
+suggests; however, there has been a bit of push back from some
+maintainers, who just prefer memset as it is unambiguous, doesn't
+depend on a particular compiler version, and properly initializes all
+subobjects [1][2]. Do that here so there are no more warnings.
+
+[1]: https://lore.kernel.org/lkml/022e41c0-8465-dc7a-a45c-64187ecd9684@amd.com/
+[2]: https://lore.kernel.org/lkml/20181128.215241.702406654469517539.davem@davemloft.net/
+
+Fixes: 5fe8b1cc6a03 ("hwrng: add OP-TEE based rng driver")
+Link: https://github.com/ClangBuiltLinux/linux/issues/369
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/char/hw_random/optee-rng.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/char/hw_random/optee-rng.c b/drivers/char/hw_random/optee-rng.c
+index 2b9fc8ac5500..46f4bcd28c41 100644
+--- a/drivers/char/hw_random/optee-rng.c
++++ b/drivers/char/hw_random/optee-rng.c
+@@ -76,8 +76,11 @@ static size_t get_optee_rng_data(struct optee_rng_private *pvt_data,
+ 	u32 ret = 0;
+ 	u8 *rng_data = NULL;
+ 	size_t rng_size = 0;
+-	struct tee_ioctl_invoke_arg inv_arg = {0};
+-	struct tee_param param[4] = {0};
++	struct tee_ioctl_invoke_arg inv_arg;
++	struct tee_param param[4];
++
++	memset(&inv_arg, 0, sizeof(inv_arg));
++	memset(&param, 0, sizeof(param));
+ 
+ 	/* Invoke TA_CMD_GET_ENTROPY function of Trusted App */
+ 	inv_arg.func = TA_CMD_GET_ENTROPY;
+@@ -173,8 +176,11 @@ static struct optee_rng_private pvt_data = {
+ static int get_optee_rng_info(struct device *dev)
+ {
+ 	u32 ret = 0;
+-	struct tee_ioctl_invoke_arg inv_arg = {0};
+-	struct tee_param param[4] = {0};
++	struct tee_ioctl_invoke_arg inv_arg;
++	struct tee_param param[4];
++
++	memset(&inv_arg, 0, sizeof(inv_arg));
++	memset(&param, 0, sizeof(param));
+ 
+ 	/* Invoke TA_CMD_GET_RNG_INFO function of Trusted App */
+ 	inv_arg.func = TA_CMD_GET_RNG_INFO;
+@@ -209,7 +215,9 @@ static int optee_rng_probe(struct device *dev)
+ {
+ 	struct tee_client_device *rng_device = to_tee_client_device(dev);
+ 	int ret = 0, err = -ENODEV;
+-	struct tee_ioctl_open_session_arg sess_arg = {0};
++	struct tee_ioctl_open_session_arg sess_arg;
++
++	memset(&sess_arg, 0, sizeof(sess_arg));
+ 
+ 	/* Open context with TEE driver */
+ 	pvt_data.ctx = tee_client_open_context(NULL, optee_ctx_match, NULL,
+-- 
+2.21.0.rc1
+
