@@ -1,7 +1,7 @@
-From d5b5c2f3ca8997f529621fd629e8b415e7068464 Mon Sep 17 00:00:00 2001
+From 9685022e36cd7142aad3500251b57d70f0d9c793 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 18 Feb 2019 20:18:23 -0700
-Subject: [PATCH 3/3] hwrng: optee: Initialize some structs using memset
+Subject: [PATCH 2/3] hwrng: optee: Initialize some structs using memset
  instead of braces
 
 Clang warns:
