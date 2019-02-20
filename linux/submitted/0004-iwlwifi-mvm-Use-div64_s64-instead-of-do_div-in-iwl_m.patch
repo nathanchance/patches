@@ -1,0 +1,45 @@
+From dbf72efc6c7b83ef6732c76dbca49a3622d97881 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 19 Feb 2019 11:19:04 -0700
+Subject: [PATCH 4/4] iwlwifi: mvm: Use div64_s64 instead of do_div in
+ iwl_mvm_debug_range_resp
+
+Clang warns:
+
+drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c:465:2: warning:
+comparison of distinct pointer types ('typeof ((rtt_avg)) *' (aka 'long
+long *') and 'uint64_t *' (aka 'unsigned long long *'))
+[-Wcompare-distinct-pointer-types]
+        do_div(rtt_avg, 6666);
+        ^~~~~~~~~~~~~~~~~~~~~
+include/asm-generic/div64.h:222:28: note: expanded from macro 'do_div'
+        (void)(((typeof((n)) *)0) == ((uint64_t *)0));  \
+               ~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~
+1 warning generated.
+
+do_div expects an unsigned dividend. Use div64_s64, which expects a
+signed dividend.
+
+Fixes: 937b10c0de68 ("iwlwifi: mvm: add debug prints for FTM")
+Link: https://github.com/ClangBuiltLinux/linux/issues/372
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
+index e9822a3ec373..92b22250eb7d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
+@@ -462,7 +462,7 @@ static void iwl_mvm_debug_range_resp(struct iwl_mvm *mvm, u8 index,
+ {
+ 	s64 rtt_avg = res->ftm.rtt_avg * 100;
+ 
+-	do_div(rtt_avg, 6666);
++	div64_s64(rtt_avg, 6666);
+ 
+ 	IWL_DEBUG_INFO(mvm, "entry %d\n", index);
+ 	IWL_DEBUG_INFO(mvm, "\tstatus: %d\n", res->status);
+-- 
+2.21.0.rc1
+

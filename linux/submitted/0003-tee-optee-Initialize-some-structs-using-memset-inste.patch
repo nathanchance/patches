@@ -1,7 +1,7 @@
 From cc9a79cf79591f1e0de54f28464ba855060ea52f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 18 Feb 2019 20:18:23 -0700
-Subject: [PATCH 3/3] tee: optee: Initialize some structs using memset instead
+Subject: [PATCH 3/4] tee: optee: Initialize some structs using memset instead
  of braces
 
 Clang warns:
