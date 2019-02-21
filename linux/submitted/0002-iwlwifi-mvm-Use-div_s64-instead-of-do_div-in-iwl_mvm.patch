@@ -1,7 +1,7 @@
 From 258a564c24e44cb9be661e1f8d147af74cbbf503 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 19 Feb 2019 11:19:04 -0700
-Subject: [PATCH 2/2] iwlwifi: mvm: Use div_s64 instead of do_div in
+Subject: [PATCH 2/3] iwlwifi: mvm: Use div_s64 instead of do_div in
  iwl_mvm_debug_range_resp
 
 Clang warns:
