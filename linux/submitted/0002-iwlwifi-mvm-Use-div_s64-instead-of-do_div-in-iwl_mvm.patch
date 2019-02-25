@@ -1,7 +1,7 @@
-From 258a564c24e44cb9be661e1f8d147af74cbbf503 Mon Sep 17 00:00:00 2001
+From fab5ed4c8ef9d3c9ca86b9b9486aa4c9907e85c7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 19 Feb 2019 11:19:04 -0700
-Subject: [PATCH 2/3] iwlwifi: mvm: Use div_s64 instead of do_div in
+Subject: [PATCH 2/2] iwlwifi: mvm: Use div_s64 instead of do_div in
  iwl_mvm_debug_range_resp
 
 Clang warns:
@@ -44,5 +44,5 @@ index e9822a3ec373..94132cfd1f56 100644
  	IWL_DEBUG_INFO(mvm, "entry %d\n", index);
  	IWL_DEBUG_INFO(mvm, "\tstatus: %d\n", res->status);
 -- 
-2.21.0.rc1
+2.21.0
 
