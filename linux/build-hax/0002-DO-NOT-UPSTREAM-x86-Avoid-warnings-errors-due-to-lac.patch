@@ -1,4 +1,4 @@
-From a88dc81519d46f90eb0e8c820f283b34c0f5bfed Mon Sep 17 00:00:00 2001
+From 85baf6f33eae98342d45032e1b20ef9c7cf74f20 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -22,11 +22,11 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 76bc4dc03d5e..764dea7e08cf 100644
+index 2d8b9d8ca4f8..2329b1af60f9 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -218,6 +218,11 @@ ifdef CONFIG_RETPOLINE
-   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
+@@ -223,6 +223,11 @@ ifdef CONFIG_RETPOLINE
+   KBUILD_CFLAGS += $(call cc-option,--param=case-values-threshold=20)
  endif
  
 +# Avoid warnings in arch/x86/include/asm/cpufeature.h when building with Clang
@@ -37,7 +37,7 @@ index 76bc4dc03d5e..764dea7e08cf 100644
  archscripts: scripts_basic
  	$(Q)$(MAKE) $(build)=arch/x86/tools relocs
  
-@@ -288,10 +293,6 @@ vdso_install:
+@@ -293,10 +298,6 @@ vdso_install:
  
  archprepare: checkbin
  checkbin:
@@ -78,5 +78,5 @@ index b0103e16fc1b..d8019c714b4d 100644
  				   -D__NO_FORTIFY \
  				   $(call cc-option,-ffreestanding) \
 -- 
-2.21.0.rc1
+2.21.0
 
