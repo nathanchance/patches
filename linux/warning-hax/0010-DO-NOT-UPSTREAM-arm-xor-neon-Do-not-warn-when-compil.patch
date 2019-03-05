@@ -1,4 +1,4 @@
-From a727fcf3f9190dfee775876abab69a9b80bee28c Mon Sep 17 00:00:00 2001
+From 155b8171d2c3529d0dd08377ea243f48fca75bec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 20:53:12 -0700
 Subject: [PATCH 10/12] DO-NOT-UPSTREAM: arm: xor-neon: Do not warn when
@@ -23,5 +23,5 @@ index c691b901092f..4600b62d845f 100644
   * While older versions of GCC do not generate incorrect code, they fail to
   * recognize the parallel nature of these functions, and emit plain ARM code,
 -- 
-2.21.0.rc1
+2.21.0
 

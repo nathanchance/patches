@@ -1,7 +1,7 @@
-From 50894d7b3b6280261db8cd565a50661a36d1e0fe Mon Sep 17 00:00:00 2001
+From b3aee485d14975ccfb0830b2d2c1f96c9616f101 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 8 Feb 2019 09:53:04 -0700
-Subject: [PATCH 12/12] DO-NOT-UPSTREAM: igc: Ignore
+Subject: [PATCH 11/12] DO-NOT-UPSTREAM: igc: Ignore
  -Wunneeded-internal-declaration for igc_priv_flags_strings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/355
@@ -37,5 +37,5 @@ index eff37a6c0afa..156ea581a2ed 100644
  
  static void igc_get_drvinfo(struct net_device *netdev,
 -- 
-2.21.0.rc1
+2.21.0
 
