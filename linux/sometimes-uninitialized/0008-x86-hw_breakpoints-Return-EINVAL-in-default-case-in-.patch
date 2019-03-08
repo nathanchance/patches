@@ -1,0 +1,39 @@
+From bf84e09b9489ec0a86a0af680c917f49ca5e7b5f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 7 Mar 2019 14:21:01 -0700
+Subject: [PATCH 08/20] x86/hw_breakpoints: Return -EINVAL in default case in
+ hw_breakpoint_arch_parse
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+arch/x86/kernel/hw_breakpoint.c:355:2: warning: variable 'align' is used
+uninitialized whenever switch default is taken
+[-Wsometimes-uninitialized]
+
+It's not wrong but we can see that arch_build_bp_info will only ever
+initialize hw->len to one of the specified switch cases. We can easily
+silence Clang by just returning -EINVAL in the default case so that we
+can never use align without initializing it first.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/392
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/kernel/hw_breakpoint.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/x86/kernel/hw_breakpoint.c b/arch/x86/kernel/hw_breakpoint.c
+index ff9bfd40429e..d73083021002 100644
+--- a/arch/x86/kernel/hw_breakpoint.c
++++ b/arch/x86/kernel/hw_breakpoint.c
+@@ -354,6 +354,7 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
+ #endif
+ 	default:
+ 		WARN_ON_ONCE(1);
++		return -EINVAL;
+ 	}
+ 
+ 	/*
+-- 
+2.21.0
+

@@ -1,0 +1,52 @@
+From 5e49ba47f0ba3b8b923c345486bf6ff56b38b8cf Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 7 Mar 2019 09:48:06 -0700
+Subject: [PATCH 03/20] net: atm: Use IS_ENABLED in atm_dev_ioctl
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+net/atm/resources.c:256:6: warning: variable 'number' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+net/atm/resources.c:212:7: warning: variable 'iobuf_len' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+
+Clang won't realize that compat is 0 when CONFIG_COMPAT is not set until
+the constant folding stage, which happens after this semantic analysis.
+Use IS_ENABLED instead so that the zero is present at the semantic
+analysis stage, which eliminates this warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/386
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ net/atm/resources.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/net/atm/resources.c b/net/atm/resources.c
+index bada395ecdb1..3e9f6391319e 100644
+--- a/net/atm/resources.c
++++ b/net/atm/resources.c
+@@ -203,13 +203,9 @@ int atm_dev_ioctl(unsigned int cmd, void __user *arg, int compat)
+ 	int __user *sioc_len;
+ 	int __user *iobuf_len;
+ 
+-#ifndef CONFIG_COMPAT
+-	compat = 0; /* Just so the compiler _knows_ */
+-#endif
+-
+ 	switch (cmd) {
+ 	case ATM_GETNAMES:
+-		if (compat) {
++		if (IS_ENABLED(CONFIG_COMPAT) && compat) {
+ #ifdef CONFIG_COMPAT
+ 			struct compat_atm_iobuf __user *ciobuf = arg;
+ 			compat_uptr_t cbuf;
+@@ -253,7 +249,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *arg, int compat)
+ 		break;
+ 	}
+ 
+-	if (compat) {
++	if (IS_ENABLED(CONFIG_COMPAT) && compat) {
+ #ifdef CONFIG_COMPAT
+ 		struct compat_atmif_sioc __user *csioc = arg;
+ 		compat_uptr_t carg;
+-- 
+2.21.0
+

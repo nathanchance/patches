@@ -1,0 +1,39 @@
+From 36abcd16647c161ef7e6fc816a13f16f501c2b8c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 7 Mar 2019 15:18:55 -0700
+Subject: [PATCH 11/20] drm/vmwgfx: Zero initialize handle in
+ vmw_execbuf_process
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c:3964:7: warning: variable
+'handle' is used uninitialized whenever '?:' condition is false
+[-Wsometimes-uninitialized]
+
+It's not wrong; however, in practice, this is never an issue because
+the value of handle isn't used when user_fence_rep is NULL because
+vmw_execbuf_copy_fence_user returns immediately when that is the case.
+Just zero initialize this variable so that Clang no longer warns.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/397
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 88b8178d4687..4ba06c2828a1 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -3829,7 +3829,7 @@ int vmw_execbuf_process(struct drm_file *file_priv,
+ 	struct vmw_sw_context *sw_context = &dev_priv->ctx;
+ 	struct vmw_fence_obj *fence = NULL;
+ 	struct vmw_cmdbuf_header *header;
+-	uint32_t handle;
++	uint32_t handle = 0;
+ 	int ret;
+ 	int32_t out_fence_fd = -1;
+ 	struct sync_file *sync_file = NULL;
+-- 
+2.21.0
+

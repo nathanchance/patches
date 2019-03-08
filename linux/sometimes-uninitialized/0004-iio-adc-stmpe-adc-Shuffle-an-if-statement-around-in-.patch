@@ -1,0 +1,48 @@
+From 8b3e443081d5daa453e8670130f24794144f01ee Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 7 Mar 2019 10:11:05 -0700
+Subject: [PATCH 04/20] iio: adc: stmpe-adc: Shuffle an if statement around in
+ stmpe_adc_isr
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+drivers/iio/adc/stmpe-adc.c:204:13: warning: variable 'data' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+
+Clang can't tell that data will never be used uninitialized because the
+two if statements take care of all cases. Remove the first if statement
+and make it the else branch of the second one so that it is apparent to
+Clang that all cases are covered.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/387
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/iio/adc/stmpe-adc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/iio/adc/stmpe-adc.c b/drivers/iio/adc/stmpe-adc.c
+index 37f4b74a5d32..7921f827c6ec 100644
+--- a/drivers/iio/adc/stmpe-adc.c
++++ b/drivers/iio/adc/stmpe-adc.c
+@@ -184,9 +184,6 @@ static irqreturn_t stmpe_adc_isr(int irq, void *dev_id)
+ 	struct stmpe_adc *info = (struct stmpe_adc *)dev_id;
+ 	u16 data;
+ 
+-	if (info->channel > STMPE_TEMP_CHANNEL)
+-		return IRQ_NONE;
+-
+ 	if (info->channel <= STMPE_ADC_LAST_NR) {
+ 		int int_sta;
+ 
+@@ -205,6 +202,8 @@ static irqreturn_t stmpe_adc_isr(int irq, void *dev_id)
+ 		/* Read value */
+ 		stmpe_block_read(info->stmpe, STMPE_REG_TEMP_DATA, 2,
+ 				(u8 *) &data);
++	} else {
++		return IRQ_NONE;
+ 	}
+ 
+ 	info->value = (u32) be16_to_cpu(data);
+-- 
+2.21.0
+

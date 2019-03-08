@@ -1,0 +1,37 @@
+From 9d2c73e2e7be93f4ff49b6bf30e65728dfc94437 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 7 Mar 2019 15:33:50 -0700
+Subject: [PATCH 12/20] pwm: img: Turn final 'else if' into 'else' in
+ img_pwm_config
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+drivers/pwm/pwm-img.c:126:13: error: variable 'timebase' is used
+uninitialized whenever 'if' condition is false
+[-Werror,-Wsometimes-uninitialized]
+
+The final else if functions as an else; make that explicit so that Clang
+understands that timebase cannot be used uninitialized.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/400
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/pwm/pwm-img.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/pwm/pwm-img.c b/drivers/pwm/pwm-img.c
+index 815f5333bb8f..1cc5fbe1e1d3 100644
+--- a/drivers/pwm/pwm-img.c
++++ b/drivers/pwm/pwm-img.c
+@@ -123,7 +123,7 @@ static int img_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	} else if (mul <= max_timebase * 512) {
+ 		div = PWM_CTRL_CFG_SUB_DIV0_DIV1;
+ 		timebase = DIV_ROUND_UP(mul, 512);
+-	} else if (mul > max_timebase * 512) {
++	} else {
+ 		dev_err(chip->dev,
+ 			"failed to configure timebase steps/divider value\n");
+ 		return -EINVAL;
+-- 
+2.21.0
+
