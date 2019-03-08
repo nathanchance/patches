@@ -1,4 +1,4 @@
-From c2ad49bad11a0e253fe743a0efa8d803d8d9a81a Mon Sep 17 00:00:00 2001
+From bed7b6e998b7132714172df4c256d71347424e57 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 5 Jan 2019 11:51:39 -0700
 Subject: [PATCH 1/4] DO-NOT-UPSTREAM: x86: Revert two commits that break the
@@ -20,10 +20,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 41 insertions(+), 39 deletions(-)
 
 diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index 6b318a6ed5c5..96832333d5dd 100644
+index 1954dd5552a2..fd49f32afdbc 100644
 --- a/arch/x86/include/asm/uaccess.h
 +++ b/arch/x86/include/asm/uaccess.h
-@@ -183,14 +183,19 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
+@@ -182,14 +182,19 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
  
  
  #ifdef CONFIG_X86_32
@@ -51,7 +51,7 @@ index 6b318a6ed5c5..96832333d5dd 100644
  
  #define __put_user_asm_ex_u64(x, addr)					\
  	asm volatile("\n"						\
-@@ -205,8 +210,8 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
+@@ -204,8 +209,8 @@ __typeof__(__builtin_choose_expr(sizeof(x) > sizeof(0UL), 0ULL, 0UL))
  	asm volatile("call __put_user_8" : "=a" (__ret_pu)	\
  		     : "A" ((typeof(*(ptr)))(x)), "c" (ptr) : "ebx")
  #else
@@ -62,7 +62,7 @@ index 6b318a6ed5c5..96832333d5dd 100644
  #define __put_user_asm_ex_u64(x, addr)	\
  	__put_user_asm_ex(x, addr, "q", "", "er")
  #define __put_user_x8(x, ptr, __ret_pu) __put_user_x(8, x, ptr, __ret_pu)
-@@ -267,21 +272,22 @@ extern void __put_user_8(void);
+@@ -266,21 +271,22 @@ extern void __put_user_8(void);
  	__builtin_expect(__ret_pu, 0);				\
  })
  
@@ -90,7 +90,7 @@ index 6b318a6ed5c5..96832333d5dd 100644
  		break;							\
  	default:							\
  		__put_user_bad();					\
-@@ -426,14 +432,11 @@ do {									\
+@@ -425,14 +431,11 @@ do {									\
  
  #define __put_user_nocheck(x, ptr, size)			\
  ({								\
@@ -103,11 +103,11 @@ index 6b318a6ed5c5..96832333d5dd 100644
 -	__put_user_size(__pu_val, (ptr), (size), __pu_label);	\
 -	__pu_err = 0;						\
 -__pu_label:							\
-+	__put_user_size(__pu_val, (ptr), (size), __pu_err, -EFAULT);	\
++	__put_user_size(__pu_val, (ptr), (size), __pu_err, -EFAULT);\
  	__uaccess_end();					\
  	__builtin_expect(__pu_err, 0);				\
  })
-@@ -458,23 +461,17 @@ struct __large_struct { unsigned long buf[100]; };
+@@ -457,23 +460,17 @@ struct __large_struct { unsigned long buf[100]; };
   * we do not write to any memory gcc knows about, so there are no
   * aliasing issues.
   */
@@ -142,7 +142,7 @@ index 6b318a6ed5c5..96832333d5dd 100644
  
  #define __put_user_asm_ex(x, addr, itype, rtype, ltype)			\
  	asm volatile("1:	mov"itype" %"rtype"0,%1\n"		\
-@@ -716,8 +713,13 @@ static __must_check inline bool user_access_begin(const void __user *ptr, size_t
+@@ -715,8 +712,13 @@ static __must_check inline bool user_access_begin(const void __user *ptr, size_t
  #define user_access_begin(a,b)	user_access_begin(a,b)
  #define user_access_end()	__uaccess_end()
  
