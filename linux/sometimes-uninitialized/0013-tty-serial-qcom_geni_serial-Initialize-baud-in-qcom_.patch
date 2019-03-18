@@ -1,0 +1,38 @@
+From d66b97381547e1228757cafe1ef8d33fc680f3ca Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 8 Mar 2019 11:29:25 -0700
+Subject: [PATCH 13/14] tty: serial: qcom_geni_serial: Initialize baud in
+ qcom_geni_console_setup
+
+When building with -Wsometimes-uninitialized, Clang warns:
+
+drivers/tty/serial/qcom_geni_serial.c:1079:6: warning: variable 'baud'
+is used uninitialized whenever 'if' condition is false
+[-Wsometimes-uninitialized]
+
+It's not wrong; when options is NULL, baud has no default value. Use
+9600 as that is a sane default.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/395
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/tty/serial/qcom_geni_serial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 3bcec1c20219..35e5f9c5d5be 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1050,7 +1050,7 @@ static int __init qcom_geni_console_setup(struct console *co, char *options)
+ {
+ 	struct uart_port *uport;
+ 	struct qcom_geni_serial_port *port;
+-	int baud;
++	int baud = 9600;
+ 	int bits = 8;
+ 	int parity = 'n';
+ 	int flow = 'n';
+-- 
+2.21.0
+

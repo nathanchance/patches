@@ -1,7 +1,7 @@
-From db5beb62f9489ef1a97b266aabbb13c44d7c9a7b Mon Sep 17 00:00:00 2001
+From aec128ec0271f84e61ea67a389c5ed0ae5b5717c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 14:36:25 -0700
-Subject: [PATCH 09/20] iio: common: ssp_sensors: Initialize calculated_time in
+Subject: [PATCH 05/14] iio: common: ssp_sensors: Initialize calculated_time in
  ssp_common_process_data
 
 When building with -Wsometimes-uninitialized, Clang warns:

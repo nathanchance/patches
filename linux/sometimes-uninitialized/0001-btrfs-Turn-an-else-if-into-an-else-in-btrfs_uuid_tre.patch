@@ -1,7 +1,7 @@
-From 7774e2b9c15457439dd6fd6916742d82455845fd Mon Sep 17 00:00:00 2001
+From 409947e4e71306598a238f9127e3979ae77abb29 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 09:32:13 -0700
-Subject: [PATCH 02/20] btrfs: Turn an 'else if' into an 'else' in
+Subject: [PATCH 01/14] btrfs: Turn an 'else if' into an 'else' in
  btrfs_uuid_tree_add
 
 When building with -Wsometimes-uninitialized, Clang warns:

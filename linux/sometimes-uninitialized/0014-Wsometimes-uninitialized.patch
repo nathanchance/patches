@@ -1,16 +1,16 @@
-From 997246827d2a913fd169b93d9a820402bc614c77 Mon Sep 17 00:00:00 2001
+From 2156bec52da5b35667e712421ed6f12702c80e19 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 18:24:40 -0700
-Subject: [PATCH 20/20] -Wsometimes-uninitialized
+Subject: [PATCH 14/14] -Wsometimes-uninitialized
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/i915/Makefile             | 1 +
+ drivers/gpu/drm/i915/i915_request.c       | 3 ++-
  drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
- drivers/tty/serial/qcom_geni_serial.c     | 2 +-
  net/tipc/node.c                           | 1 +
  scripts/Makefile.extrawarn                | 1 +
- 5 files changed, 5 insertions(+), 2 deletions(-)
+ 5 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
 index 1787e1299b1b..f3912825bb2f 100644
@@ -24,6 +24,21 @@ index 1787e1299b1b..f3912825bb2f 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
  # Fine grained warnings disable
+diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
+index c2a5c48c7541..5b90b5c35c8b 100644
+--- a/drivers/gpu/drm/i915/i915_request.c
++++ b/drivers/gpu/drm/i915/i915_request.c
+@@ -1028,8 +1028,9 @@ static unsigned long local_clock_us(unsigned int *cpu)
+ static bool busywait_stop(unsigned long timeout, unsigned int cpu)
+ {
+ 	unsigned int this_cpu;
++	unsigned long local_clock = local_clock_us(&this_cpu);
+ 
+-	if (time_after(local_clock_us(&this_cpu), timeout))
++	if (time_after(local_clock, timeout))
+ 		return true;
+ 
+ 	return this_cpu != cpu;
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 index 0bb9d7b3a2b6..56d8d1e8f0de 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
@@ -37,19 +52,6 @@ index 0bb9d7b3a2b6..56d8d1e8f0de 100644
  	u8 *data_ptr, agg_bufs, cmp_type;
  	dma_addr_t dma_addr;
  	struct sk_buff *skb;
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 3bcec1c20219..d91271bb2d4e 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1050,7 +1050,7 @@ static int __init qcom_geni_console_setup(struct console *co, char *options)
- {
- 	struct uart_port *uport;
- 	struct qcom_geni_serial_port *port;
--	int baud;
-+	int baud = 0;
- 	int bits = 8;
- 	int parity = 'n';
- 	int flow = 'n';
 diff --git a/net/tipc/node.c b/net/tipc/node.c
 index 2dc4919ab23c..c660d421de4b 100644
 --- a/net/tipc/node.c

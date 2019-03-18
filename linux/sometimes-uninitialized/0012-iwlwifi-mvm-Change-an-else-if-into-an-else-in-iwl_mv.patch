@@ -1,7 +1,7 @@
-From e3d5937dc2126753a43fef13e8e9dd012e9076fa Mon Sep 17 00:00:00 2001
+From 828f9caa753183b78a00dd093c1fa85eba9772cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 17:01:10 -0700
-Subject: [PATCH 17/20] iwlwifi: mvm: Change an 'else if' into an 'else' in
+Subject: [PATCH 12/14] iwlwifi: mvm: Change an 'else if' into an 'else' in
  iwl_mvm_send_add_bcast_sta
 
 When building with -Wsometimes-uninitialized, Clang warns:
