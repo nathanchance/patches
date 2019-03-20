@@ -1,4 +1,4 @@
-From c192b057929169923e5e538ba94db9914251dcd2 Mon Sep 17 00:00:00 2001
+From 9653ac3f8484d20eb89e3d7401c8c31088b9efd0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 18:24:40 -0700
 Subject: [PATCH 14/14] -Wsometimes-uninitialized
@@ -53,10 +53,10 @@ index 0bb9d7b3a2b6..56d8d1e8f0de 100644
  	dma_addr_t dma_addr;
  	struct sk_buff *skb;
 diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 2dc4919ab23c..c38a4a1e38b7 100644
+index 2717893e9dbe..eff5693c854d 100644
 --- a/net/tipc/node.c
 +++ b/net/tipc/node.c
-@@ -828,6 +828,7 @@ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
+@@ -846,6 +846,7 @@ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
  	__skb_queue_head_init(&xmitq);
  
  	tipc_node_write_lock(n);
