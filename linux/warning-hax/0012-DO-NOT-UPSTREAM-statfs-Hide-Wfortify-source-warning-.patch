@@ -1,0 +1,49 @@
+From e72a036770cda2bd452b8ab60c7bd21b89ad1f82 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 19 Mar 2019 21:49:33 -0700
+Subject: [PATCH 12/12] DO-NOT-UPSTREAM: statfs: Hide -Wfortify-source warning
+ with pragmas
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/423
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/statfs.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/fs/statfs.c b/fs/statfs.c
+index eea7af6f2f22..41ce43a8930e 100644
+--- a/fs/statfs.c
++++ b/fs/statfs.c
+@@ -126,7 +126,14 @@ static int do_statfs_native(struct kstatfs *st, struct statfs __user *p)
+ 	struct statfs buf;
+ 
+ 	if (sizeof(buf) == sizeof(*st))
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wfortify-source"
++#endif
+ 		memcpy(&buf, st, sizeof(*st));
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic pop
++#endif
+ 	else {
+ 		if (sizeof buf.f_blocks == 4) {
+ 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
+@@ -167,7 +174,14 @@ static int do_statfs64(struct kstatfs *st, struct statfs64 __user *p)
+ {
+ 	struct statfs64 buf;
+ 	if (sizeof(buf) == sizeof(*st))
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wfortify-source"
++#endif
+ 		memcpy(&buf, st, sizeof(*st));
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic pop
++#endif
+ 	else {
+ 		buf.f_type = st->f_type;
+ 		buf.f_bsize = st->f_bsize;
+-- 
+2.21.0
+
