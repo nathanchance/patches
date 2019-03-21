@@ -1,7 +1,7 @@
-From fb956cd40e59f4a279750607a42d8df158b3f141 Mon Sep 17 00:00:00 2001
+From 67283869a8e3980c4564a5a3cfcc114a7efb513f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 19 Mar 2019 17:56:37 -0700
-Subject: [PATCH 13/14] drm/amd/powerplay: Zero initialize num_of_levels in
+Subject: [PATCH 13/15] drm/amd/powerplay: Zero initialize num_of_levels in
  vega20_set_single_dpm_table
 
 When building with -Wsometimes-uninitialized, Clang warns:

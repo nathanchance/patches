@@ -1,7 +1,7 @@
-From 5b673942936a9073aac4210764874e7b9ae44de2 Mon Sep 17 00:00:00 2001
+From 6eb22664de7ea077e525cbfc406839566090eaf2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 15:33:50 -0700
-Subject: [PATCH 08/14] pwm: img: Turn final 'else if' into 'else' in
+Subject: [PATCH 08/15] pwm: img: Turn final 'else if' into 'else' in
  img_pwm_config
 
 When building with -Wsometimes-uninitialized, Clang warns:
