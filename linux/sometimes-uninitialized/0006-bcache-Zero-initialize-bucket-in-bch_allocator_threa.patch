@@ -1,7 +1,7 @@
-From 4b153e49c9aa09f6e83639eef09dd6cd894bbad6 Mon Sep 17 00:00:00 2001
+From 7b6ed9b16847482e289b14296ccc30608056343a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 15:02:07 -0700
-Subject: [PATCH 06/15] bcache: Zero initialize bucket in bch_allocator_thread
+Subject: [PATCH 06/12] bcache: Zero initialize bucket in bch_allocator_thread
 
 When building with -Wsometimes-uninitialized, Clang warns:
 

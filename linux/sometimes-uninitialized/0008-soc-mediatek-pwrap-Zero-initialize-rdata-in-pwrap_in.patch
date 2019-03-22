@@ -1,7 +1,7 @@
-From c3615ea16b028829e66b0dd1dd7fec53be433c01 Mon Sep 17 00:00:00 2001
+From 367bdc49a842d55d3386be8caf61254451a6eab4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 15:53:45 -0700
-Subject: [PATCH 09/15] soc: mediatek: pwrap: Zero initialize rdata in
+Subject: [PATCH 08/12] soc: mediatek: pwrap: Zero initialize rdata in
  pwrap_init_cipher
 
 When building with -Wsometimes-uninitialized, Clang warns:

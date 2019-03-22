@@ -1,7 +1,7 @@
-From a37257cb169f2956b7eb2e7b9528859a5a9dee19 Mon Sep 17 00:00:00 2001
+From 4118cd641c2f7f961a8ade14c6035f338ae80e3d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 16:13:06 -0700
-Subject: [PATCH 03/15] scsi: qla4xxx: Don't call dma_free_coherent when buf is
+Subject: [PATCH 03/12] scsi: qla4xxx: Don't call dma_free_coherent when buf is
  NULL
 
 When building with -Wsometimes-uninitialized, Clang warns:
