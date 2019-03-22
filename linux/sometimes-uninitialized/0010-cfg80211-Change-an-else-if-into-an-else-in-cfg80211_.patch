@@ -1,7 +1,7 @@
-From 845f5d94b526b7e0b62ebe6a3d31e33093d0a807 Mon Sep 17 00:00:00 2001
+From 7aa6d52c032b85dceaf0e3ec7b03a472371c11ae Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 16:52:04 -0700
-Subject: [PATCH 10/12] cfg80211: Change an 'else if' into an 'else' in
+Subject: [PATCH 10/13] cfg80211: Change an 'else if' into an 'else' in
  cfg80211_calculate_bitrate_he
 
 When building with -Wsometimes-uninitialized, Clang warns:

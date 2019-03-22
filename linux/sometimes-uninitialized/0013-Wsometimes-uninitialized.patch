@@ -1,16 +1,15 @@
-From 1e35ebacc353dff0f6c3ffcc90435b47652b2963 Mon Sep 17 00:00:00 2001
+From 023707a3ebe097313e2fdb709f26bd8f31ab7bdf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 7 Mar 2019 18:24:40 -0700
-Subject: [PATCH 12/12] -Wsometimes-uninitialized
+Date: Fri, 22 Mar 2019 09:13:17 -0700
+Subject: [PATCH 13/13] -Wsometimes-uninitialized
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/i915/Makefile             | 1 +
  drivers/gpu/drm/i915/i915_request.c       | 3 ++-
  drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
- net/tipc/node.c                           | 1 +
  scripts/Makefile.extrawarn                | 1 +
- 5 files changed, 6 insertions(+), 2 deletions(-)
+ 4 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
 index 68fecf355471..0fc00b2baa32 100644
@@ -52,18 +51,6 @@ index 0bb9d7b3a2b6..56d8d1e8f0de 100644
  	u8 *data_ptr, agg_bufs, cmp_type;
  	dma_addr_t dma_addr;
  	struct sk_buff *skb;
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 2717893e9dbe..eff5693c854d 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -846,6 +846,7 @@ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
- 	__skb_queue_head_init(&xmitq);
- 
- 	tipc_node_write_lock(n);
-+	memset(maddr, 0, sizeof(*maddr));
- 	if (!tipc_link_is_establishing(l)) {
- 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
- 	} else {
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
 index 768306add591..f4332981ea85 100644
 --- a/scripts/Makefile.extrawarn

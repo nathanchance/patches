@@ -1,7 +1,7 @@
 From 12c62a5afecca21e6d58ebe53356439c28027ee1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 10:11:05 -0700
-Subject: [PATCH 02/12] iio: adc: stmpe-adc: Shuffle an if statement around in
+Subject: [PATCH 02/13] iio: adc: stmpe-adc: Shuffle an if statement around in
  stmpe_adc_isr
 
 When building with -Wsometimes-uninitialized, Clang warns:

@@ -1,0 +1,52 @@
+From b4efe6672178d61fa79cc7ad9c247e697c0e8b89 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Fri, 22 Mar 2019 15:18:13 +0100
+Subject: [PATCH 12/13] tipc: avoid a clang -Wuninitialized warning
+
+clang notices that we pass 'maddr' into the tipc_bearer_xmit() function
+without having initialized it first:
+
+net/tipc/node.c:831:6: error: variable 'maddr' is used uninitialized whenever 'if' condition is false
+      [-Werror,-Wsometimes-uninitialized]
+        if (!tipc_link_is_establishing(l)) {
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+net/tipc/node.c:847:46: note: uninitialized use occurs here
+        tipc_bearer_xmit(n->net, bearer_id, &xmitq, maddr);
+                                                    ^~~~~
+net/tipc/node.c:831:2: note: remove the 'if' if its condition is always true
+        if (!tipc_link_is_establishing(l)) {
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+net/tipc/node.c:821:31: note: initialize the variable 'maddr' to silence this warning
+        struct tipc_media_addr *maddr;
+                                     ^
+                                      = NULL
+
+This is harmless because it won't use 'maddr' if the
+queue is empty, but it's better to make that explicit
+and not even call the function in that case.
+
+As clang is able to inline the check, it then notices that
+the code is safe.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ net/tipc/node.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 2717893e9dbe..ea41bca8e340 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -862,7 +862,8 @@ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
+ 	tipc_node_write_unlock(n);
+ 	if (delete)
+ 		tipc_mon_remove_peer(n->net, n->addr, old_bearer_id);
+-	tipc_bearer_xmit(n->net, bearer_id, &xmitq, maddr);
++	if (!skb_queue_empty(&xmitq))
++		tipc_bearer_xmit(n->net, bearer_id, &xmitq, maddr);
+ 	tipc_sk_rcv(n->net, &le->inputq);
+ }
+ 
+-- 
+2.21.0
+
