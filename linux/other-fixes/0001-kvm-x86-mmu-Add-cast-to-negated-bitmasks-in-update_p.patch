@@ -1,4 +1,4 @@
-From 50ad0ae25375ac99a47c5123fb5d56aa03fe6827 Mon Sep 17 00:00:00 2001
+From 60e31685328a618b19c1a92c619f7dc9b1939dcc Mon Sep 17 00:00:00 2001
 From: Matthias Kaehlcke <mka@chromium.org>
 Date: Tue, 19 Jun 2018 12:25:04 -0700
 Subject: [PATCH 1/2] kvm: x86: mmu: Add cast to negated bitmasks in
@@ -27,7 +27,7 @@ Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
  1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu.c b/arch/x86/kvm/mmu.c
-index 8c0d2243e2d3..48add5c977a0 100644
+index 7837ab001d80..9501c5bc6a1e 100644
 --- a/arch/x86/kvm/mmu.c
 +++ b/arch/x86/kvm/mmu.c
 @@ -4562,8 +4562,9 @@ static void update_permission_bitmask(struct kvm_vcpu *vcpu,
