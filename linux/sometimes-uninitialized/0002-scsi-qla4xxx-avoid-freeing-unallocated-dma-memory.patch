@@ -1,7 +1,7 @@
-From 8436ea0a57476d83bf53289940422601d9f4ce70 Mon Sep 17 00:00:00 2001
+From 102f363e0473f37b0a0152b5103403d010903700 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 22 Mar 2019 15:25:03 +0100
-Subject: [PATCH 03/13] scsi: qla4xxx: avoid freeing unallocated dma memory
+Subject: [PATCH 02/10] scsi: qla4xxx: avoid freeing unallocated dma memory
 
 Clang -Wuninitialized notices that on is_qla40XX we never allocate
 any DMA memory in get_fw_boot_info() but attempt to free it anyway:

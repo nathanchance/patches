@@ -1,7 +1,7 @@
-From 1edd409bf2eb7cb1afbe04d3c232bc7260dceb45 Mon Sep 17 00:00:00 2001
+From db51cf7f3d22caaf7c8b1b0e72bb24bcc17844e0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 15:18:55 -0700
-Subject: [PATCH 07/13] drm/vmwgfx: Zero initialize handle in
+Subject: [PATCH 05/10] drm/vmwgfx: Zero initialize handle in
  vmw_execbuf_process
 
 When building with -Wsometimes-uninitialized, Clang warns:

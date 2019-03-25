@@ -1,7 +1,7 @@
-From dc64530c5e8d25792c4dc710b6f2fc63a1f33028 Mon Sep 17 00:00:00 2001
+From e89eae46f05c93851ac918ca36040326ac80ede0 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 22 Mar 2019 15:35:00 +0100
-Subject: [PATCH 06/13] bcache: avoid clang -Wunintialized warning
+Subject: [PATCH 04/10] bcache: avoid clang -Wunintialized warning
 
 clang has identified a code path in which it thinks a
 variable may be unused:

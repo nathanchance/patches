@@ -1,7 +1,7 @@
-From 9a9120db93ac9860fc91e7f00d9b26ed16bd3b21 Mon Sep 17 00:00:00 2001
+From b764a79fc6fd31f48f9848536a914cf3ef2048e6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 16:07:27 -0700
-Subject: [PATCH 09/13] scsi: gdth: Only call dma_free_coherent when buf is not
+Subject: [PATCH 07/10] scsi: gdth: Only call dma_free_coherent when buf is not
  NULL in ioc_general
 
 When building with -Wsometimes-uninitialized, Clang warns:
