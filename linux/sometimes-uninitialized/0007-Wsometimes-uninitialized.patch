@@ -1,7 +1,7 @@
-From 7ec54afd682b4342a768b68b33d66bdf0b26f264 Mon Sep 17 00:00:00 2001
+From eafae908572a8b268adecfcffd7f41dc1100646e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 22 Mar 2019 09:13:17 -0700
-Subject: [PATCH 8/8] -Wsometimes-uninitialized
+Subject: [PATCH 7/7] -Wsometimes-uninitialized
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -39,7 +39,7 @@ index e9c2094ab8ea..ad7b40b986e5 100644
  
  	return this_cpu != cpu;
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 0bb9d7b3a2b6..56d8d1e8f0de 100644
+index 35e34e23ba33..a6fe913e4763 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 @@ -1537,7 +1537,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,

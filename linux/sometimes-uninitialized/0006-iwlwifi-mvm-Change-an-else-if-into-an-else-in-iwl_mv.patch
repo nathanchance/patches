@@ -1,7 +1,7 @@
-From a6fcc2a13f6bf723f5cf6db5a4e0d56bf10f508d Mon Sep 17 00:00:00 2001
+From 6208591d5656da2f42deb9a1f8a16b87d9a842d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 7 Mar 2019 17:01:10 -0700
-Subject: [PATCH 7/8] iwlwifi: mvm: Change an 'else if' into an 'else' in
+Subject: [PATCH 6/7] iwlwifi: mvm: Change an 'else if' into an 'else' in
  iwl_mvm_send_add_bcast_sta
 
 When building with -Wsometimes-uninitialized, Clang warns:
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 498c315291cf..360724ec41a6 100644
+index db26f0041a81..faf94877485f 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
 @@ -2111,8 +2111,10 @@ int iwl_mvm_send_add_bcast_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
