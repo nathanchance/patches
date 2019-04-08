@@ -1,4 +1,4 @@
-From fb4db71f33697d7c7a43afc6c3847b8959fdbe0c Mon Sep 17 00:00:00 2001
+From 73f0efb739d710a49e7d0830ec7d739e27e61dbd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -22,11 +22,11 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 2d8b9d8ca4f8..2329b1af60f9 100644
+index a587805c6687..2f1105de56cf 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -223,6 +223,11 @@ ifdef CONFIG_RETPOLINE
-   KBUILD_CFLAGS += $(call cc-option,--param=case-values-threshold=20)
+@@ -227,6 +227,11 @@ ifdef CONFIG_RETPOLINE
+   endif
  endif
  
 +# Avoid warnings in arch/x86/include/asm/cpufeature.h when building with Clang
@@ -37,7 +37,7 @@ index 2d8b9d8ca4f8..2329b1af60f9 100644
  archscripts: scripts_basic
  	$(Q)$(MAKE) $(build)=arch/x86/tools relocs
  
-@@ -293,10 +298,6 @@ vdso_install:
+@@ -297,10 +302,6 @@ vdso_install:
  
  archprepare: checkbin
  checkbin:
@@ -63,7 +63,7 @@ index 6b84afdd7538..c7265084dd78 100644
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
 diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index b0103e16fc1b..d8019c714b4d 100644
+index b1f7b64652db..28e24c3de474 100644
 --- a/drivers/firmware/efi/libstub/Makefile
 +++ b/drivers/firmware/efi/libstub/Makefile
 @@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst -pg,,$(KBUILD_CFLAGS)) \
