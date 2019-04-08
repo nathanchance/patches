@@ -1,4 +1,4 @@
-From 8851e331bf3c3f427f34a17e9d5aa0d336414c14 Mon Sep 17 00:00:00 2001
+From 811ca5b8d69d5368d61ceafd083802061d7fd236 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 4 Mar 2019 19:18:52 -0700
 Subject: [PATCH 10/10] DO-NOT-UPSTREAM: spi: Disable -Wshift-count-overflow
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/spi/Makefile b/drivers/spi/Makefile
-index 369f29a8a6af..1330367c7d6d 100644
+index f2f78d03dc28..40c574bf7e63 100644
 --- a/drivers/spi/Makefile
 +++ b/drivers/spi/Makefile
 @@ -95,6 +95,7 @@ obj-$(CONFIG_SPI_SC18IS602)		+= spi-sc18is602.o
