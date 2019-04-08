@@ -1,4 +1,4 @@
-From 266b23e32ec44df2379d93b8e01fe48306b2eb97 Mon Sep 17 00:00:00 2001
+From a3b40fac4e7cdf11765ade91462739024e9858d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/2] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -22,10 +22,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 9c5a67d1b9c1..a6ee6381f302 100644
+index a587805c6687..fd80bd776ca4 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -290,8 +290,7 @@ vdso_install:
+@@ -298,8 +298,7 @@ vdso_install:
  archprepare: checkbin
  checkbin:
  ifndef CONFIG_CC_HAS_ASM_GOTO
@@ -36,7 +36,7 @@ index 9c5a67d1b9c1..a6ee6381f302 100644
  ifdef CONFIG_RETPOLINE
  ifeq ($(RETPOLINE_CFLAGS),)
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index f0515ac895a4..d6e04a32b87f 100644
+index 6b84afdd7538..0821a934b433 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -38,6 +38,9 @@ KBUILD_CFLAGS += $(call cc-option,-fno-stack-protector)
@@ -50,7 +50,7 @@ index f0515ac895a4..d6e04a32b87f 100644
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
 diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index d9845099635e..0d2817edc8ab 100644
+index b0103e16fc1b..0378810731e1 100644
 --- a/drivers/firmware/efi/libstub/Makefile
 +++ b/drivers/firmware/efi/libstub/Makefile
 @@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst -pg,,$(KBUILD_CFLAGS)) \
@@ -65,5 +65,5 @@ index d9845099635e..0d2817edc8ab 100644
  				   -D__NO_FORTIFY \
  				   $(call cc-option,-ffreestanding) \
 -- 
-2.20.1
+2.21.0
 
