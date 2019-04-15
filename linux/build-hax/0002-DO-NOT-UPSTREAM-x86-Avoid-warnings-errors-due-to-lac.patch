@@ -1,4 +1,4 @@
-From 576e7bc9c64bb61c1759b135aa77c7151a07fa1b Mon Sep 17 00:00:00 2001
+From fdd79fe62ad7170ba301686ff66750959d6d53f1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index a587805c6687..2f1105de56cf 100644
+index 56e748a7679f..9237af36280b 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
 @@ -227,6 +227,11 @@ ifdef CONFIG_RETPOLINE
@@ -63,10 +63,10 @@ index 6b84afdd7538..c7265084dd78 100644
  KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
  GCOV_PROFILE := n
 diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index b1f7b64652db..28e24c3de474 100644
+index 0460c7581220..315f43ea5b0c 100644
 --- a/drivers/firmware/efi/libstub/Makefile
 +++ b/drivers/firmware/efi/libstub/Makefile
-@@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst -pg,,$(KBUILD_CFLAGS)) \
+@@ -24,6 +24,10 @@ cflags-$(CONFIG_ARM)		:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) \
  
  cflags-$(CONFIG_EFI_ARMSTUB)	+= -I$(srctree)/scripts/dtc/libfdt
  
