@@ -1,7 +1,7 @@
-From f2ae08b100f00b3262a8443a3175bc5ac7d1caab Mon Sep 17 00:00:00 2001
+From 3279b58637aa5fe6414625f4c34b1609f6788b1b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 22 Mar 2019 09:13:17 -0700
-Subject: [PATCH 5/5] -Wsometimes-uninitialized
+Subject: [PATCH 3/3] -Wsometimes-uninitialized
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -24,10 +24,10 @@ index fbcb0904f4a8..3418ecb93ad2 100644
  
  # Fine grained warnings disable
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 7f8a4eba98b8..de2e6b5fc597 100644
+index b1f00b59bb95..55d9a344cfd4 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1205,8 +1205,9 @@ static unsigned long local_clock_us(unsigned int *cpu)
+@@ -1236,8 +1236,9 @@ static unsigned long local_clock_us(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
@@ -39,7 +39,7 @@ index 7f8a4eba98b8..de2e6b5fc597 100644
  
  	return this_cpu != cpu;
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 4feac114b779..7beb9117ae02 100644
+index fa8cb6fc6e3d..a7c46ca90868 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 @@ -1537,7 +1537,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
