@@ -1,0 +1,49 @@
+From a9d87959f4f5b82f8e12f9b8bc0a48564fed96b5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 24 Apr 2019 11:23:44 -0700
+Subject: [PATCH 1/2] thunderbolt: Make priority unsigned in struct tb_path
+
+Clang warns:
+
+drivers/thunderbolt/tunnel.c:504:17: warning: implicit truncation from
+'int' to bit-field changes value from 5 to -3
+[-Wbitfield-constant-conversion]
+        path->priority = 5;
+                       ^ ~
+1 warning generated.
+
+The priority member in struct tb_path is only ever assigned a positive
+number:
+
+$ rg -n priority drivers/thunderbolt/path.c
+drivers/thunderbolt/tunnel.c:99:        path->priority = 3;
+drivers/thunderbolt/tunnel.c:308:       path->priority = 2;
+drivers/thunderbolt/tunnel.c:323:       path->priority = 1;
+drivers/thunderbolt/tunnel.c:504:       path->priority = 5;
+
+Furthmore, that value is only assigned to an unsigned integer in
+tb_path_activate (the priority member in struct tb_regs_hop).
+
+Fixes: 44242d6c9703 ("thunderbolt: Add support for DMA tunnels")
+Link: https://github.com/ClangBuiltLinux/linux/issues/454
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/thunderbolt/tb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/thunderbolt/tb.h b/drivers/thunderbolt/tb.h
+index 15d225dcb403..b12c8f33d89c 100644
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -225,7 +225,7 @@ struct tb_path {
+ 	enum tb_path_port ingress_fc_enable;
+ 	enum tb_path_port egress_fc_enable;
+ 
+-	int priority:3;
++	unsigned int priority:3;
+ 	int weight:4;
+ 	bool drop_packages;
+ 	bool activated;
+-- 
+2.21.0
+

@@ -1,0 +1,81 @@
+From eb77901a8e86a954e1560ef6442c079fe15ecaef Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 24 Apr 2019 11:55:58 -0700
+Subject: [PATCH 2/2] staging: kpc2000: Use memset to initialize resources
+
+Clang warns:
+
+drivers/staging/kpc2000/kpc2000/cell_probe.c:96:38: warning: suggest
+braces around initialization of subobject [-Wmissing-braces]
+    struct resource  resources[2] = {0};
+                                     ^
+                                     {}
+drivers/staging/kpc2000/kpc2000/cell_probe.c:314:38: warning: suggest
+braces around initialization of subobject [-Wmissing-braces]
+    struct resource  resources[2] = {0};
+                                     ^
+                                     {}
+2 warnings generated.
+
+One way to fix these warnings is to add additional braces like Clang
+suggests; however, there has been a bit of push back from some
+maintainers, who just prefer memset as it is unambiguous, doesn't
+depend on a particular compiler version, and properly initializes all
+subobjects [1][2]. Do that here so there are no more warnings.
+
+[1]: https://lore.kernel.org/lkml/022e41c0-8465-dc7a-a45c-64187ecd9684@amd.com/
+[2]: https://lore.kernel.org/lkml/20181128.215241.702406654469517539.davem@davemloft.net/
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/455
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/staging/kpc2000/kpc2000/cell_probe.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/staging/kpc2000/kpc2000/cell_probe.c b/drivers/staging/kpc2000/kpc2000/cell_probe.c
+index ad2cc0a3bfa1..13f544f3c0b9 100644
+--- a/drivers/staging/kpc2000/kpc2000/cell_probe.c
++++ b/drivers/staging/kpc2000/kpc2000/cell_probe.c
+@@ -93,8 +93,8 @@ void parse_core_table_entry(struct core_table_entry *cte, const u64 read_val, co
+ int  probe_core_basic(unsigned int core_num, struct kp2000_device *pcard, char *name, const struct core_table_entry cte)
+ {
+     struct mfd_cell  cell = {0};
+-    struct resource  resources[2] = {0};
+-    
++    struct resource  resources[2];
++
+     struct kpc_core_device_platdata  core_pdata = {
+         .card_id           = pcard->card_id,
+         .build_version     = pcard->build_version,
+@@ -112,6 +112,8 @@ int  probe_core_basic(unsigned int core_num, struct kp2000_device *pcard, char *
+     cell.id = core_num;
+     cell.num_resources = 2;
+     
++    memset(&resources, 0, sizeof(resources));
++
+     resources[0].start = cte.offset;
+     resources[0].end   = cte.offset + (cte.length - 1);
+     resources[0].flags = IORESOURCE_MEM;
+@@ -311,8 +313,8 @@ int  probe_core_uio(unsigned int core_num, struct kp2000_device *pcard, char *na
+ static int  create_dma_engine_core(struct kp2000_device *pcard, size_t engine_regs_offset, int engine_num, int irq_num)
+ {
+     struct mfd_cell  cell = {0};
+-    struct resource  resources[2] = {0};
+-    
++    struct resource  resources[2];
++
+     dev_dbg(&pcard->pdev->dev, "create_dma_core(pcard = [%p], engine_regs_offset = %zx, engine_num = %d)\n", pcard, engine_regs_offset, engine_num);
+     
+     cell.platform_data = NULL;
+@@ -321,6 +323,8 @@ static int  create_dma_engine_core(struct kp2000_device *pcard, size_t engine_re
+     cell.name = KP_DRIVER_NAME_DMA_CONTROLLER;
+     cell.num_resources = 2;
+     
++    memset(&resources, 0, sizeof(resources));
++
+     resources[0].start = engine_regs_offset;
+     resources[0].end   = engine_regs_offset + (KPC_DMA_ENGINE_SIZE - 1);
+     resources[0].flags = IORESOURCE_MEM;
+-- 
+2.21.0
+
