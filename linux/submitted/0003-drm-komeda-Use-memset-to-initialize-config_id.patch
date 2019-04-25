@@ -1,0 +1,49 @@
+From 7d7658dba1c3dbdcff1d782b2248319924e480b7 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 24 Apr 2019 23:20:00 -0700
+Subject: [PATCH 3/3] drm/komeda: Use memset to initialize config_id
+
+Clang warns:
+
+drivers/gpu/drm/arm/display/komeda/komeda_dev.c:76:38: warning: suggest
+braces around initialization of subobject [-Wmissing-braces]
+        union komeda_config_id config_id = {0,};
+                                            ^
+                                            {}
+1 warning generated.
+
+One way to fix these warnings is to add additional braces like Clang
+suggests; however, there has been a bit of push back from some
+maintainers, who just prefer memset as it is unambiguous, doesn't
+depend on a particular compiler version, and properly initializes all
+subobjects [1][2]. Do that here so there are no more warnings.
+
+[1]: https://lore.kernel.org/lkml/022e41c0-8465-dc7a-a45c-64187ecd9684@amd.com/
+[2]: https://lore.kernel.org/lkml/20181128.215241.702406654469517539.davem@davemloft.net/
+
+Fixes: 4cc734cb79a8 ("drm/komeda: Add sysfs attribute: core_id and config_id")
+Link: https://github.com/ClangBuiltLinux/linux/issues/457
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/arm/display/komeda/komeda_dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+index 9d6c31cca875..e605a518f59a 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+@@ -73,9 +73,10 @@ config_id_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+ 	struct komeda_dev *mdev = dev_to_mdev(dev);
+ 	struct komeda_pipeline *pipe = mdev->pipelines[0];
+-	union komeda_config_id config_id = {0,};
++	union komeda_config_id config_id;
+ 	int i;
+ 
++	memset(&config_id, 0, sizeof(config_id));
+ 	config_id.max_line_sz = pipe->layers[0]->hsize_in.end;
+ 	config_id.n_pipelines = mdev->n_pipelines;
+ 	config_id.n_scalers = pipe->n_scalers;
+-- 
+2.21.0
+
