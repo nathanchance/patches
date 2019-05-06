@@ -1,4 +1,4 @@
-From daa686e64f13071790e2e86417933429806e8194 Mon Sep 17 00:00:00 2001
+From 503905731de73a659b9b5e845e92e74234e8ffbf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:47:47 -0700
 Subject: [PATCH 03/10] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
@@ -14,10 +14,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 323ad14fbcac..8be13f3f88cd 100644
+index 2a75cfef2e20..75438af2950f 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -249,6 +249,7 @@ config ENABLE_MUST_CHECK
+@@ -252,6 +252,7 @@ config ENABLE_MUST_CHECK
  config FRAME_WARN
  	int "Warn for stack frames larger than (needs gcc 4.4)"
  	range 0 8192

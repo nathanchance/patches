@@ -1,4 +1,4 @@
-From d44795411b4418c52404510541db51b4d13d3fb4 Mon Sep 17 00:00:00 2001
+From 842a27a7493ecee99e83e7b69f2d421be6dafa12 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 14 Oct 2018 13:43:59 -0700
 Subject: [PATCH 02/10] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
@@ -8,20 +8,20 @@ So that I can compile with -Werror.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- scripts/checksyscalls.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ scripts/checksyscalls.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index a18b47695f55..4e2f3bc620d6 100755
+index a18b47695f55..8c5f4508b52d 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -249,6 +249,26 @@ cat << EOF
+@@ -249,6 +249,19 @@ cat << EOF
  #define __IGNORE_getpmsg
  #define __IGNORE_putpmsg
  #define __IGNORE_vserver
 +
 +/* arm{,64} whitelist */
-+#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
++#if defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
 +#define __IGNORE_fsconfig
 +#define __IGNORE_fsinfo
 +#define __IGNORE_fsmount
@@ -29,15 +29,8 @@ index a18b47695f55..4e2f3bc620d6 100755
 +#define __IGNORE_fspick
 +#define __IGNORE_move_mount
 +#define __IGNORE_open_tree
-+#endif
-+#if defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
 +#define __IGNORE_pidfd_send_signal
 +#define __IGNORE_pidctl
-+#endif
-+#if defined(CONFIG_ARM) || defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
-+#define __IGNORE_io_uring_setup
-+#define __IGNORE_io_uring_enter
-+#define __IGNORE_io_uring_register
 +#endif
  EOF
  }

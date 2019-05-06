@@ -1,4 +1,4 @@
-From 4da4c327a71adcd809697bf3812c2ee2de3303cc Mon Sep 17 00:00:00 2001
+From 5cf2ef71f435c0a6e03edcd89b1e2c0a9e1e68da Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Oct 2018 09:43:00 -0700
 Subject: [PATCH 01/10] DO-NOT-UPSTREAM: drm/amdpu: Remove #warning messages
@@ -12,10 +12,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
-index bdb5ad93990d..831d8729851d 100644
+index 78b27c03b8c2..a868d4175d18 100644
 --- a/drivers/gpu/drm/amd/amdgpu/soc15.c
 +++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
-@@ -620,8 +620,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+@@ -628,8 +628,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
  #if defined(CONFIG_DRM_AMD_DC)
  		else if (amdgpu_device_has_dc_support(adev))
  			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -24,7 +24,7 @@ index bdb5ad93990d..831d8729851d 100644
  #endif
  		if (!(adev->asic_type == CHIP_VEGA20 && amdgpu_sriov_vf(adev))) {
  			amdgpu_device_ip_block_add(adev, &uvd_v7_0_ip_block);
-@@ -642,8 +640,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+@@ -650,8 +648,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
  #if defined(CONFIG_DRM_AMD_DC)
  		else if (amdgpu_device_has_dc_support(adev))
  			amdgpu_device_ip_block_add(adev, &dm_ip_block);
