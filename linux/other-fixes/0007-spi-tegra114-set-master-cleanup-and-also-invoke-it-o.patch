@@ -1,7 +1,7 @@
 From 9fa0d9a79b910d8acbf1d0fba034e2f12dbd5773 Mon Sep 17 00:00:00 2001
 From: Sowjanya Komatineni <skomatineni@nvidia.com>
 Date: Wed, 22 May 2019 18:29:04 -0700
-Subject: [PATCH 7/7] spi: tegra114: set master cleanup and also invoke it on
+Subject: [PATCH 7/8] spi: tegra114: set master cleanup and also invoke it on
  probe error
 
 This patch sets master cleanup and also invokes tegra spi clean on

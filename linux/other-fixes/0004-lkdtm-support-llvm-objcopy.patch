@@ -1,7 +1,7 @@
 From 7c66ff30ed8440e0a83918b105b0d1442290d94a Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 15 May 2019 11:24:41 -0700
-Subject: [PATCH 4/7] lkdtm: support llvm-objcopy
+Subject: [PATCH 4/8] lkdtm: support llvm-objcopy
 
 With CONFIG_LKDTM=y and make OBJCOPY=llvm-objcopy, llvm-objcopy errors:
 llvm-objcopy: error: --set-section-flags=.text conflicts with
