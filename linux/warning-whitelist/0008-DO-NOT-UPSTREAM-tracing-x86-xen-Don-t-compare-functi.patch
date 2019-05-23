@@ -1,8 +1,8 @@
-From f1c2d6fa8ff287ef8f5f623709d7607f62927449 Mon Sep 17 00:00:00 2001
+From cee0d31080aafb51cadc0821da2bb2e9643f2efb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 15 Oct 2018 16:18:04 -0700
-Subject: [PATCH 08/10] DO-NOT-UPSTREAM: tracing/x86/xen: Don't compare
- function pointers
+Subject: [PATCH 8/9] DO-NOT-UPSTREAM: tracing/x86/xen: Don't compare function
+ pointers
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/97
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -24,5 +24,5 @@ index 9a0e8af21310..f75b77414ac1 100644
  		    ),
  	    TP_fast_assign(
 -- 
-2.21.0
+2.22.0.rc1
 

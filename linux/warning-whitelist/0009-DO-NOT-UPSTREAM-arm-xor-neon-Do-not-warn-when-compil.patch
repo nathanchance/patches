@@ -1,8 +1,8 @@
-From b3724848794d39233ab69e7a07b447589744b5f6 Mon Sep 17 00:00:00 2001
+From 5e9e2f2dea3bfb1a08cbc2fcc1e304bd6120a7ad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 10 Dec 2018 20:53:12 -0700
-Subject: [PATCH 09/10] DO-NOT-UPSTREAM: arm: xor-neon: Do not warn when
- compiled with Clang
+Subject: [PATCH 9/9] DO-NOT-UPSTREAM: arm: xor-neon: Do not warn when compiled
+ with Clang
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -23,5 +23,5 @@ index c691b901092f..4600b62d845f 100644
   * While older versions of GCC do not generate incorrect code, they fail to
   * recognize the parallel nature of these functions, and emit plain ARM code,
 -- 
-2.21.0
+2.22.0.rc1
 

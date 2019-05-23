@@ -1,7 +1,7 @@
-From 69d010d75ab72e5e8769f568ff52ea022a42345d Mon Sep 17 00:00:00 2001
+From 581f76643d39f7c35c9a51046f2ffdf0aafd0ece Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:22:55 -0700
-Subject: [PATCH 06/10] DO-NOT-UPSTREAM: soc: rockchip: Disable
+Subject: [PATCH 6/9] DO-NOT-UPSTREAM: soc: rockchip: Disable
  -Wshift-count-negative for pm_domains.o
 
 GitHub issue: https://github.com/ClangBuiltLinux/linux/issues/92
@@ -12,15 +12,15 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/soc/rockchip/Makefile b/drivers/soc/rockchip/Makefile
-index c851fa0056d0..8373e23534f8 100644
+index afca0a4c4b72..79cfdbd6336b 100644
 --- a/drivers/soc/rockchip/Makefile
 +++ b/drivers/soc/rockchip/Makefile
-@@ -3,3 +3,5 @@
+@@ -4,3 +4,5 @@
  #
  obj-$(CONFIG_ROCKCHIP_GRF) += grf.o
  obj-$(CONFIG_ROCKCHIP_PM_DOMAINS) += pm_domains.o
 +
 +CFLAGS_pm_domains.o += $(call cc-disable-warning, shift-count-negative)
 -- 
-2.21.0
+2.22.0.rc1
 
