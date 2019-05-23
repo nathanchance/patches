@@ -1,0 +1,35 @@
+From 37df546dfbec770adbf05536af80c0c9008c0388 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 10 May 2019 18:21:55 -0700
+Subject: [PATCH 1/2] mfd: stmfx: Fix macro definition spelling
+
+Clang warns:
+
+In file included from drivers/mfd/stmfx.c:13:
+include/linux/mfd/stmfx.h:7:9: warning: 'MFD_STMFX_H' is used as a
+header guard here, followed by #define of a different macro
+[-Wheader-guard]
+
+Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
+Link: https://github.com/ClangBuiltLinux/linux/issues/475
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/mfd/stmfx.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/mfd/stmfx.h b/include/linux/mfd/stmfx.h
+index d890595b89b6..3c67983678ec 100644
+--- a/include/linux/mfd/stmfx.h
++++ b/include/linux/mfd/stmfx.h
+@@ -5,7 +5,7 @@
+  */
+ 
+ #ifndef MFD_STMFX_H
+-#define MFX_STMFX_H
++#define MFD_STMFX_H
+ 
+ #include <linux/regmap.h>
+ 
+-- 
+2.22.0.rc1
+
