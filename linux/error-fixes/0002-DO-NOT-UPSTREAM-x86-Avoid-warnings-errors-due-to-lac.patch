@@ -1,7 +1,7 @@
-From 56e62253c63fb931eaac310bd6e76cadfc6e46ac Mon Sep 17 00:00:00 2001
+From 2b53fd320196e3a6fcf32dd3ccd8ed21ee9e9f44 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
-Subject: [PATCH 2/4] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
+Subject: [PATCH 2/5] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
  of asm goto
 
 We don't want to see an inordinate amount of warning spam from
@@ -78,5 +78,5 @@ index 0460c7581220..315f43ea5b0c 100644
  				   -D__NO_FORTIFY \
  				   $(call cc-option,-ffreestanding) \
 -- 
-2.21.0
+2.22.0.rc1
 

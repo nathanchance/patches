@@ -1,0 +1,32 @@
+From 7fc8d8bef981659c3208f466cdb68e27ba1f33b4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 14 May 2019 17:33:17 -0700
+Subject: [PATCH 5/5] Makefile: Provide HOSTLDFLAGS to HOSTCC in has_libelf
+ check
+
+If the default linker is not available (or we want to use a different
+one), -fuse-ld can be provided to HOSTCC via HOSTLDFLAGS. Ensure this
+check uses the requested linker via HOSTLDFLAGS.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/479
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index a45f84a7e811..89843dbb0537 100644
+--- a/Makefile
++++ b/Makefile
+@@ -979,7 +979,7 @@ HOST_LIBELF_LIBS = $(shell pkg-config libelf --libs 2>/dev/null || echo -lelf)
+ 
+ ifdef CONFIG_STACK_VALIDATION
+   has_libelf := $(call try-run,\
+-		echo "int main() {}" | $(HOSTCC) -xc -o /dev/null $(HOST_LIBELF_LIBS) -,1,0)
++		echo "int main() {}" | $(HOSTCC) -xc -o /dev/null $(HOSTLDFLAGS) $(HOST_LIBELF_LIBS) -,1,0)
+   ifeq ($(has_libelf),1)
+     objtool_target := tools/objtool FORCE
+   else
+-- 
+2.22.0.rc1
+

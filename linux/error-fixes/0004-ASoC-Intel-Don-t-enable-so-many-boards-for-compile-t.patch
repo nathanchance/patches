@@ -1,0 +1,77 @@
+From b903d509a060100e36ea2b487b8bb70c7484509f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 3 May 2019 07:31:09 -0700
+Subject: [PATCH 4/5] ASoC: Intel: Don't enable so many boards for compile
+ testing
+
+All of these fail to build when CONFIG_X86 is not set because
+cpu_device_id.h is only available in arch/x86/include/asm.
+
+Fixes: 164a263bf8d0 ("ASoC: Intel: Make boards more available for compile test")
+References: https://lore.kernel.org/lkml/46dc0767-bb21-2b98-90f2-34dd4bcad7c0@infradead.org/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/soc/intel/boards/Kconfig | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index 5407d217228e..e8781f1ef6b4 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -87,7 +87,7 @@ if SND_SST_ATOM_HIFI2_PLATFORM || SND_SOC_SOF_BAYTRAIL
+ config SND_SOC_INTEL_BYTCR_RT5640_MACH
+ 	tristate "Baytrail and Baytrail-CR with RT5640 codec"
+ 	depends on I2C && ACPI
+-	depends on X86_INTEL_LPSS || COMPILE_TEST
++	depends on X86_INTEL_LPSS
+ 	select SND_SOC_ACPI
+ 	select SND_SOC_RT5640
+ 	help
+@@ -99,7 +99,7 @@ config SND_SOC_INTEL_BYTCR_RT5640_MACH
+ config SND_SOC_INTEL_BYTCR_RT5651_MACH
+ 	tristate "Baytrail and Baytrail-CR with RT5651 codec"
+ 	depends on I2C && ACPI
+-	depends on X86_INTEL_LPSS || COMPILE_TEST
++	depends on X86_INTEL_LPSS
+ 	select SND_SOC_ACPI
+ 	select SND_SOC_RT5651
+ 	help
+@@ -123,7 +123,7 @@ config SND_SOC_INTEL_CHT_BSW_RT5672_MACH
+ config SND_SOC_INTEL_CHT_BSW_RT5645_MACH
+ 	tristate "Cherrytrail & Braswell with RT5645/5650 codec"
+ 	depends on I2C && ACPI
+-	depends on X86_INTEL_LPSS || COMPILE_TEST
++	depends on X86_INTEL_LPSS
+ 	select SND_SOC_ACPI
+ 	select SND_SOC_RT5645
+ 	help
+@@ -159,7 +159,7 @@ config SND_SOC_INTEL_CHT_BSW_NAU8824_MACH
+ config SND_SOC_INTEL_BYT_CHT_DA7213_MACH
+ 	tristate "Baytrail & Cherrytrail with DA7212/7213 codec"
+ 	depends on I2C && ACPI
+-	depends on X86_INTEL_LPSS || COMPILE_TEST
++	depends on X86_INTEL_LPSS
+ 	select SND_SOC_ACPI
+ 	select SND_SOC_DA7213
+ 	help
+@@ -171,7 +171,7 @@ config SND_SOC_INTEL_BYT_CHT_DA7213_MACH
+ config SND_SOC_INTEL_BYT_CHT_ES8316_MACH
+ 	tristate "Baytrail & Cherrytrail with ES8316 codec"
+ 	depends on I2C && ACPI
+-	depends on X86_INTEL_LPSS || COMPILE_TEST
++	depends on X86_INTEL_LPSS
+ 	select SND_SOC_ACPI
+ 	select SND_SOC_ES8316
+ 	help
+@@ -249,7 +249,7 @@ if SND_SOC_INTEL_APL
+ config SND_SOC_INTEL_BXT_DA7219_MAX98357A_MACH
+ 	tristate "Broxton with DA7219 and MAX98357A in I2S Mode"
+ 	depends on I2C && ACPI
+-	depends on MFD_INTEL_LPSS || COMPILE_TEST
++	depends on MFD_INTEL_LPSS
+ 	select SND_SOC_DA7219
+ 	select SND_SOC_MAX98357A
+ 	select SND_SOC_DMIC
+-- 
+2.22.0.rc1
+
