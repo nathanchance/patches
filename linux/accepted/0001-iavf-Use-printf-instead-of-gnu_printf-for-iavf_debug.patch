@@ -1,4 +1,4 @@
-From cd97c87e3252ee053272ee670eb066f50d418205 Mon Sep 17 00:00:00 2001
+From b660fc009b1ebd40e8fc3e03a9f729d981232bad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 9 Jan 2019 21:09:24 -0700
 Subject: [PATCH] iavf: Use printf instead of gnu_printf for iavf_debug_d
@@ -60,5 +60,5 @@ index e6e0b0328706..c90cafb526d0 100644
  typedef enum iavf_status_code iavf_status;
  #endif /* _IAVF_OSDEP_H_ */
 -- 
-2.20.1
+2.22.0.rc1
 
