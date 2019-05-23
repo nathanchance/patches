@@ -1,0 +1,37 @@
+From 0b1c788ee41ded235f31caa4e98249db0ca0bea9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 23 May 2019 13:05:50 -0700
+Subject: [PATCH 5/8] sched/wait: Apply Arnd's __WAIT_QUEUE_HEAD_INIT_ONSTACK
+ workaround
+
+Ripped from https://lore.kernel.org/lkml/CAK8P3a20t1f6Fmjd7HcGVSXCxx9SP2q7_WpZyj16MgnJe8m8zQ@mail.gmail.com/.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/wait.h | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/wait.h b/include/linux/wait.h
+index b6f77cf60dd7..3a070960fe60 100644
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -68,8 +68,14 @@ extern void __init_waitqueue_head(struct wait_queue_head *wq_head, const char *n
+ 	} while (0)
+ 
+ #ifdef CONFIG_LOCKDEP
+-# define __WAIT_QUEUE_HEAD_INIT_ONSTACK(name) \
+-	({ init_waitqueue_head(&name); name; })
++# define __WAIT_QUEUE_HEAD_INIT_ONSTACK(name) {					\
++	.lock		= __SPIN_LOCK_UNLOCKED(name.lock),			\
++	.head		= ({							\
++		static struct lock_class_key __key;				\
++		lockdep_set_class_and_name(&(name).lock, &__key, #name);	\
++		(struct list_head){ &(name).head, &(name).head };		\
++	}),									\
++}
+ # define DECLARE_WAIT_QUEUE_HEAD_ONSTACK(name) \
+ 	struct wait_queue_head name = __WAIT_QUEUE_HEAD_INIT_ONSTACK(name)
+ #else
+-- 
+2.22.0.rc1
+

@@ -1,0 +1,40 @@
+From 0c015cb8ae928d435a5e7eb734a721cf62d1666c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 23 May 2019 09:01:14 -0700
+Subject: [PATCH 4/8] misc: sgi-xp: Properly initialize buf in
+ xpc_get_rsvd_page_pa
+
+Clang warns:
+
+drivers/misc/sgi-xp/xpc_partition.c:73:14: warning: variable 'buf' is
+uninitialized when used within its own initialization [-Wuninitialized]
+        void *buf = buf;
+              ~~~   ^~~
+1 warning generated.
+
+Initialize it to NULL, which is more deterministic.
+
+Fixes: 279290294662 ("[IA64-SGI] cleanup the way XPC locates the reserved page")
+Link: https://github.com/ClangBuiltLinux/linux/issues/466
+Suggested-by: Stephen Hines <srhines@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/misc/sgi-xp/xpc_partition.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/misc/sgi-xp/xpc_partition.c b/drivers/misc/sgi-xp/xpc_partition.c
+index 3eba1c420cc0..782ce95d3f17 100644
+--- a/drivers/misc/sgi-xp/xpc_partition.c
++++ b/drivers/misc/sgi-xp/xpc_partition.c
+@@ -70,7 +70,7 @@ xpc_get_rsvd_page_pa(int nasid)
+ 	unsigned long rp_pa = nasid;	/* seed with nasid */
+ 	size_t len = 0;
+ 	size_t buf_len = 0;
+-	void *buf = buf;
++	void *buf = NULL;
+ 	void *buf_base = NULL;
+ 	enum xp_retval (*get_partition_rsvd_page_pa)
+ 		(void *, u64 *, unsigned long *, size_t *) =
+-- 
+2.22.0.rc1
+

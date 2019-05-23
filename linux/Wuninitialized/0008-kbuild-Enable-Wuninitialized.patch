@@ -1,0 +1,33 @@
+From beaeb87016be30072d99503d277df5730f848e07 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 23 May 2019 13:04:41 -0700
+Subject: [PATCH 8/8] kbuild: Enable -Wuninitialized
+
+This helps fine very dodgy behavior through both -Wuninitialized and
+-Wsometimes-uninitialized. We have missed out on the later because the
+former has been disabled since commit 26ea6bb1fef0 ("kbuild, LLVMLinux:
+Supress warnings unless W=1-3").
+
+These warnings catch things that GCC doesn't such as:
+https://lore.kernel.org/lkml/86649ee4-9794-77a3-502c-f4cd10019c36@lca.pw/
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/381
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/Makefile.extrawarn | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 3ab8d1a303cd..145f2f45cf88 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -72,6 +72,5 @@ KBUILD_CFLAGS += -Wno-unused-value
+ KBUILD_CFLAGS += -Wno-format
+ KBUILD_CFLAGS += -Wno-sign-compare
+ KBUILD_CFLAGS += -Wno-format-zero-length
+-KBUILD_CFLAGS += -Wno-uninitialized
+ endif
+ endif
+-- 
+2.22.0.rc1
+
