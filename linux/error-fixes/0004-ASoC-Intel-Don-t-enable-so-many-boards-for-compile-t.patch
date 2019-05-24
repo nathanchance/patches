@@ -1,4 +1,4 @@
-From b903d509a060100e36ea2b487b8bb70c7484509f Mon Sep 17 00:00:00 2001
+From f9be47204c03c5f8d769080402bd1e9e854c3d52 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 3 May 2019 07:31:09 -0700
 Subject: [PATCH 4/5] ASoC: Intel: Don't enable so many boards for compile
@@ -15,7 +15,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index 5407d217228e..e8781f1ef6b4 100644
+index c81f0b685108..75bac4a7302b 100644
 --- a/sound/soc/intel/boards/Kconfig
 +++ b/sound/soc/intel/boards/Kconfig
 @@ -87,7 +87,7 @@ if SND_SST_ATOM_HIFI2_PLATFORM || SND_SOC_SOF_BAYTRAIL
@@ -45,7 +45,7 @@ index 5407d217228e..e8781f1ef6b4 100644
  	select SND_SOC_ACPI
  	select SND_SOC_RT5645
  	help
-@@ -159,7 +159,7 @@ config SND_SOC_INTEL_CHT_BSW_NAU8824_MACH
+@@ -170,7 +170,7 @@ config SND_SOC_INTEL_BYT_CHT_CX2072X_MACH
  config SND_SOC_INTEL_BYT_CHT_DA7213_MACH
  	tristate "Baytrail & Cherrytrail with DA7212/7213 codec"
  	depends on I2C && ACPI
@@ -54,7 +54,7 @@ index 5407d217228e..e8781f1ef6b4 100644
  	select SND_SOC_ACPI
  	select SND_SOC_DA7213
  	help
-@@ -171,7 +171,7 @@ config SND_SOC_INTEL_BYT_CHT_DA7213_MACH
+@@ -182,7 +182,7 @@ config SND_SOC_INTEL_BYT_CHT_DA7213_MACH
  config SND_SOC_INTEL_BYT_CHT_ES8316_MACH
  	tristate "Baytrail & Cherrytrail with ES8316 codec"
  	depends on I2C && ACPI
@@ -63,7 +63,7 @@ index 5407d217228e..e8781f1ef6b4 100644
  	select SND_SOC_ACPI
  	select SND_SOC_ES8316
  	help
-@@ -249,7 +249,7 @@ if SND_SOC_INTEL_APL
+@@ -260,7 +260,7 @@ if SND_SOC_INTEL_APL
  config SND_SOC_INTEL_BXT_DA7219_MAX98357A_MACH
  	tristate "Broxton with DA7219 and MAX98357A in I2S Mode"
  	depends on I2C && ACPI
