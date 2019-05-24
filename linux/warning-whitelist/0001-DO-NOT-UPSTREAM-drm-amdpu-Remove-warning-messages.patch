@@ -1,4 +1,4 @@
-From 09cd4c5d2a42d999b17904ab28db9fa3599ccfd1 Mon Sep 17 00:00:00 2001
+From 38ca2e148e4fef8e121f8b6772213362fb4d2374 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Oct 2018 09:43:00 -0700
 Subject: [PATCH 1/9] DO-NOT-UPSTREAM: drm/amdpu: Remove #warning messages
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
-index 32dc5a128249..c978522c1e4c 100644
+index 78bd4fc07bab..36f9319baaf4 100644
 --- a/drivers/gpu/drm/amd/amdgpu/soc15.c
 +++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
 @@ -657,8 +657,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
