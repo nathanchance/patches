@@ -1,7 +1,7 @@
-From 1ee12fc369d8224f608d53a36418eaf3e764c6fc Mon Sep 17 00:00:00 2001
+From d0eb50d07187e71042fff69eafa10c623e16581c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:13:09 -0700
-Subject: [PATCH 7/8] drm/i915: Enable -Wuninitialized
+Subject: [PATCH 6/7] drm/i915: Enable -Wuninitialized
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/220
 Link: https://github.com/ClangBuiltLinux/linux/issues/381
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 68106fe35a04..58c1fbe30e85 100644
+index 139a0fc19390..da829061e751 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -22,7 +22,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)

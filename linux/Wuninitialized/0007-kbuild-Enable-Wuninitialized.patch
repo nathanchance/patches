@@ -1,7 +1,7 @@
-From da5ddcf95174c235bd15d36df16db6ffa9203e9b Mon Sep 17 00:00:00 2001
+From 9bb113b61b52c2f5524c05c25251e30aed859cca Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:04:41 -0700
-Subject: [PATCH 8/8] kbuild: Enable -Wuninitialized
+Subject: [PATCH 7/7] kbuild: Enable -Wuninitialized
 
 This helps fine very dodgy behavior through both -Wuninitialized and
 -Wsometimes-uninitialized. We have missed out on the later because the
