@@ -1,7 +1,7 @@
-From 21231b43902bff8b7cf4dc4ef3f367ce33d1aedd Mon Sep 17 00:00:00 2001
+From 8a7ebb94de8d46bef11b0f83c25a573c0838bbbb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 22 May 2019 18:32:35 -0700
-Subject: [PATCH 3/7] scsi: hpsa: Avoid using dev uninitialized in
+Subject: [PATCH 2/6] scsi: hpsa: Avoid using dev uninitialized in
  hpsa_eh_device_reset_handler
 
 Clang warns:

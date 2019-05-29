@@ -1,7 +1,7 @@
-From 0cdd438d28e74757b477f798c882ed970a470a0c Mon Sep 17 00:00:00 2001
+From 13353d4c17245ff772c232c2d42d27c4dd7b1937 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 2 May 2019 09:29:22 -0700
-Subject: [PATCH 2/7] kasan: Initialize tag to 0xff in __kasan_kmalloc
+Subject: [PATCH 1/6] kasan: Initialize tag to 0xff in __kasan_kmalloc
 
 When building with -Wuninitialized and CONFIG_KASAN_SW_TAGS unset, Clang
 warns:
