@@ -1,7 +1,7 @@
 From d9ebbc8224b58880464a645099af034b3af40d46 Mon Sep 17 00:00:00 2001
 From: Michal Kubecek <mkubecek@suse.cz>
 Date: Mon, 20 May 2019 13:19:02 +0200
-Subject: [PATCH 4/5] mlx5: avoid 64-bit division
+Subject: [PATCH 4/6] mlx5: avoid 64-bit division
 
 Commit 25c13324d03d ("IB/mlx5: Add steering SW ICM device memory type")
 breaks i386 build by introducing three 64-bit divisions. As the divisor
