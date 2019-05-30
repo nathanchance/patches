@@ -1,11 +1,14 @@
-From 4781726093330b513e3f8034baa579bc73461c36 Mon Sep 17 00:00:00 2001
+From 03647ece34db53fd93fe94d0265d78cd268d03c8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 23 May 2019 13:13:09 -0700
-Subject: [PATCH 5/6] drm/i915: Enable -Wuninitialized
+Date: Wed, 29 May 2019 14:18:36 -0700
+Subject: [PATCH 4/5] Revert "drm/i915: Disable -Wuninitialized"
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/220
+This will be turned on for the whole kernel, as we want to catch these
+cases.
+
+This reverts commit c5627461490e4b913e8747d3b06541e5264a50d7.
+
 Link: https://github.com/ClangBuiltLinux/linux/issues/381
-Link: https://github.com/ClangBuiltLinux/linux/issues/415
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/i915/Makefile | 1 -
