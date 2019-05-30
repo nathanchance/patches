@@ -1,4 +1,4 @@
-From b162638c2e2f7ebec60e1799a12105dbe0199a62 Mon Sep 17 00:00:00 2001
+From 081f490b48ab0e87874470de611d5abb167caf28 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 3 May 2019 07:31:09 -0700
 Subject: [PATCH 4/6] ASoC: Intel: Don't enable so many boards for compile
@@ -15,7 +15,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index c81f0b685108..75bac4a7302b 100644
+index e7381965cf69..4bdf27a85a26 100644
 --- a/sound/soc/intel/boards/Kconfig
 +++ b/sound/soc/intel/boards/Kconfig
 @@ -87,7 +87,7 @@ if SND_SST_ATOM_HIFI2_PLATFORM || SND_SOC_SOF_BAYTRAIL
