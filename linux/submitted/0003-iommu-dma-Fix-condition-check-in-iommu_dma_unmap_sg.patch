@@ -1,0 +1,58 @@
+From dcbbc29f382da80e1723a2ca22c279eeab61865b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 29 May 2019 01:07:59 -0700
+Subject: [PATCH 3/3] iommu/dma: Fix condition check in iommu_dma_unmap_sg
+
+Clang warns:
+
+drivers/iommu/dma-iommu.c:897:6: warning: logical not is only applied to
+the left hand side of this comparison [-Wlogical-not-parentheses]
+        if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
+            ^                                 ~~
+drivers/iommu/dma-iommu.c:897:6: note: add parentheses after the '!' to
+evaluate the comparison first
+        if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
+            ^
+             (                                    )
+drivers/iommu/dma-iommu.c:897:6: note: add parentheses around left hand
+side expression to silence this warning
+        if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
+            ^
+            (                                )
+1 warning generated.
+
+Judging from the rest of the commit and the conditional in
+iommu_dma_map_sg, either
+
+    if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
+
+or
+    if ((attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
+
+was intended, not a combination of the two.
+
+I personally think that the former is easier to understand so use that.
+
+Fixes: 06d60728ff5c ("iommu/dma: move the arm64 wrappers to common code")
+Link: https://github.com/ClangBuiltLinux/linux/issues/497
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/iommu/dma-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 0cd49c2d3770..0dee374fc64a 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -894,7 +894,7 @@ static void iommu_dma_unmap_sg(struct device *dev, struct scatterlist *sg,
+ 	struct scatterlist *tmp;
+ 	int i;
+ 
+-	if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
++	if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
+ 		iommu_dma_sync_sg_for_cpu(dev, sg, nents, dir);
+ 
+ 	/*
+-- 
+2.22.0.rc1
+
