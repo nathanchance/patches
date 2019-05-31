@@ -1,7 +1,7 @@
-From 05e044b18ea11b9bd0de8ecc3325b085564f6a4d Mon Sep 17 00:00:00 2001
+From 4d6266388fc10831b85c7291de4738f9cf9d7978 Mon Sep 17 00:00:00 2001
 From: Shaokun Zhang <zhangshaokun@hisilicon.com>
 Date: Mon, 20 May 2019 19:32:53 +0800
-Subject: [PATCH 2/6] intel_th: msu: Fix unused variable warning on arm64
+Subject: [PATCH 2/5] intel_th: msu: Fix unused variable warning on arm64
  platform
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -107,5 +107,5 @@ index 81bb54fa3ce8..49e64ca760e6 100644
  	__msc_buffer_win_free(msc, win);
  
 -- 
-2.22.0.rc1
+2.22.0.rc2
 
