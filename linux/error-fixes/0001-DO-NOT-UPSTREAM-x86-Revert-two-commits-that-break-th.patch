@@ -1,4 +1,4 @@
-From 6219285aabf1fa1ea82049fb1ae2de41100ebc07 Mon Sep 17 00:00:00 2001
+From 0fa5da433e072e8f9b0801dab70c9926eb7f97d7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 5 Jan 2019 11:51:39 -0700
 Subject: [PATCH 1/6] DO-NOT-UPSTREAM: x86: Revert two commits that break the
@@ -162,5 +162,5 @@ index 9c4435307ff8..d5047b68ccd3 100644
  #define unsafe_get_user(x, ptr, err_label)					\
  do {										\
 -- 
-2.22.0.rc1
+2.22.0.rc2
 

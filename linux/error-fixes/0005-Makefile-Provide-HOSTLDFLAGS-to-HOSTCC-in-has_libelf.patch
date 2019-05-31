@@ -1,4 +1,4 @@
-From df9dff65af0974ecccdf9ffaf6a5214c17b1a371 Mon Sep 17 00:00:00 2001
+From 5ebb28f46974930a58b88a074748eb526efe2617 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 14 May 2019 17:33:17 -0700
 Subject: [PATCH 5/6] Makefile: Provide HOSTLDFLAGS to HOSTCC in has_libelf
@@ -28,5 +28,5 @@ index 11358153d8f2..823400ea16b3 100644
      objtool_target := tools/objtool FORCE
    else
 -- 
-2.22.0.rc1
+2.22.0.rc2
 
