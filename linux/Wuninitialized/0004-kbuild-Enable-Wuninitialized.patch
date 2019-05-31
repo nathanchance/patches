@@ -1,7 +1,7 @@
-From ddb59b82bedd3d7462f8176fe49dd93c77697325 Mon Sep 17 00:00:00 2001
+From 97d623c293239ba7d9bd83a3e320c0434926e353 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:04:41 -0700
-Subject: [PATCH 5/5] kbuild: Enable -Wuninitialized
+Subject: [PATCH 4/4] kbuild: Enable -Wuninitialized
 
 This helps fine very dodgy behavior through both -Wuninitialized and
 -Wsometimes-uninitialized. We have missed out on the later because the
@@ -29,5 +29,5 @@ index 3ab8d1a303cd..145f2f45cf88 100644
  endif
  endif
 -- 
-2.22.0.rc1
+2.22.0.rc2
 
