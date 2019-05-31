@@ -1,4 +1,4 @@
-From 89b33265c76f64e5e729f4341c08ca0813bfbeee Mon Sep 17 00:00:00 2001
+From faabe2637bc60c744d490623300c0daf2b8cd766 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 25 Sep 2018 13:32:33 -0700
 Subject: [PATCH 2/2] DO-NOT-UPSTREAM: x86: Avoid warnings/errors due to lack
@@ -78,5 +78,5 @@ index 0460c7581220..315f43ea5b0c 100644
  				   -D__NO_FORTIFY \
  				   $(call cc-option,-ffreestanding) \
 -- 
-2.22.0.rc1
+2.22.0.rc2
 
