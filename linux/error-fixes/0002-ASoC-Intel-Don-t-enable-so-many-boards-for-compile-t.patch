@@ -1,7 +1,7 @@
-From c67b97843eb8a39d00a1d5112520074e0fb3cfca Mon Sep 17 00:00:00 2001
+From b7948f0adced4a7e9dead195c0dc1047ad320b7d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 3 May 2019 07:31:09 -0700
-Subject: [PATCH 4/7] ASoC: Intel: Don't enable so many boards for compile
+Subject: [PATCH 2/6] ASoC: Intel: Don't enable so many boards for compile
  testing
 
 All of these fail to build when CONFIG_X86 is not set because
