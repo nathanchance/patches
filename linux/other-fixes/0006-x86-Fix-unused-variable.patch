@@ -1,0 +1,36 @@
+From f5a747fc9c02378c6f692d736bb69c85d8ff79f6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 30 May 2019 08:05:07 -0700
+Subject: [PATCH 6/6] x86: Fix unused variable
+
+arch/x86/mm/fault.c:1017:22: error: unused variable 'tsk' [-Werror,-Wunused-variable]
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/mm/fault.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+index 46ac96aa7c81..fb4e39c4e0a9 100644
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -1014,8 +1014,6 @@ static void
+ do_sigbus(struct pt_regs *regs, unsigned long error_code, unsigned long address,
+ 	  vm_fault_t fault)
+ {
+-	struct task_struct *tsk = current;
+-
+ 	/* Kernel mode? Handle exceptions or die: */
+ 	if (!(error_code & X86_PF_USER)) {
+ 		no_context(regs, error_code, address, SIGBUS, BUS_ADRERR);
+@@ -1030,6 +1028,7 @@ do_sigbus(struct pt_regs *regs, unsigned long error_code, unsigned long address,
+ 
+ #ifdef CONFIG_MEMORY_FAILURE
+ 	if (fault & (VM_FAULT_HWPOISON|VM_FAULT_HWPOISON_LARGE)) {
++		struct task_struct *tsk = current;
+ 		unsigned lsb = 0;
+ 
+ 		pr_err(
+-- 
+2.22.0.rc2
+
