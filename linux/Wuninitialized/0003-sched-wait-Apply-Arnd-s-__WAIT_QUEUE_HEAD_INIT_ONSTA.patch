@@ -1,4 +1,4 @@
-From 4760b59ae508dc183a551d0b3d8762c3f41508ff Mon Sep 17 00:00:00 2001
+From e7438d1d3360892506fd28f02178426b48d4b13d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:05:50 -0700
 Subject: [PATCH 3/6] sched/wait: Apply Arnd's __WAIT_QUEUE_HEAD_INIT_ONSTACK
@@ -33,5 +33,5 @@ index b6f77cf60dd7..3a070960fe60 100644
  	struct wait_queue_head name = __WAIT_QUEUE_HEAD_INIT_ONSTACK(name)
  #else
 -- 
-2.22.0.rc2
+2.22.0.rc3
 
