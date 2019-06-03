@@ -1,7 +1,7 @@
 From d70928b76dc679a4face332cab8ae1b38f336009 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 01:07:59 -0700
-Subject: [PATCH 3/3] iommu/dma: Fix condition check in iommu_dma_unmap_sg
+Subject: [PATCH 3/4] iommu/dma: Fix condition check in iommu_dma_unmap_sg
 
 Clang warns:
 
@@ -54,5 +54,5 @@ index 0cd49c2d3770..0dee374fc64a 100644
  
  	/*
 -- 
-2.22.0.rc2
+2.22.0.rc3
 
