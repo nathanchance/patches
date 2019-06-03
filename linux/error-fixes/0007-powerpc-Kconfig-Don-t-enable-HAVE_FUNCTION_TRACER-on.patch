@@ -1,0 +1,28 @@
+From 13352696125856e7bd9ce5ff9f6d23c391ed12be Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 31 May 2019 22:23:32 -0700
+Subject: [PATCH 7/7] powerpc: Kconfig: Don't enable HAVE_FUNCTION_TRACER on
+ ppc64 big endian
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/35#issuecomment-450854189
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index 1120ff8ac715..ec733678d0b2 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -188,7 +188,7 @@ config PPC
+ 	select HAVE_FTRACE_MCOUNT_RECORD
+ 	select HAVE_FUNCTION_ERROR_INJECTION
+ 	select HAVE_FUNCTION_GRAPH_TRACER
+-	select HAVE_FUNCTION_TRACER
++	select HAVE_FUNCTION_TRACER		if !(PPC64 && CPU_BIG_ENDIAN)
+ 	select HAVE_GCC_PLUGINS			if GCC_VERSION >= 50200   # plugin support on gcc <= 5.1 is buggy on PPC
+ 	select HAVE_GENERIC_GUP
+ 	select HAVE_HW_BREAKPOINT		if PERF_EVENTS && (PPC_BOOK3S || PPC_8xx)
+-- 
+2.22.0.rc2
+
