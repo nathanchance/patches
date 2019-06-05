@@ -1,7 +1,7 @@
-From 8273626a71b4fbda2a5f83af4795c1033a3bbe85 Mon Sep 17 00:00:00 2001
+From c26042cf3b4a3a82f0a9cc0ca39b79614d5a59de Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:04:41 -0700
-Subject: [PATCH 6/6] kbuild: Enable -Wuninitialized
+Subject: [PATCH 5/5] kbuild: Enable -Wuninitialized
 
 This helps fine very dodgy behavior through both -Wuninitialized and
 -Wsometimes-uninitialized. We have missed out on the later because the
@@ -18,10 +18,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 3ab8d1a303cd..145f2f45cf88 100644
+index 98081ab300e5..699683a7c116 100644
 --- a/scripts/Makefile.extrawarn
 +++ b/scripts/Makefile.extrawarn
-@@ -72,6 +72,5 @@ KBUILD_CFLAGS += -Wno-unused-value
+@@ -71,6 +71,5 @@ KBUILD_CFLAGS += -Wno-unused-value
  KBUILD_CFLAGS += -Wno-format
  KBUILD_CFLAGS += -Wno-sign-compare
  KBUILD_CFLAGS += -Wno-format-zero-length
