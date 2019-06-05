@@ -1,7 +1,7 @@
-From 9c92e9a2ad1ed05c2965755e971b85527d5ea7cd Mon Sep 17 00:00:00 2001
+From 43805cac16a2a71ec6b1e1fa2144eb4c6023acca Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 14 May 2019 17:33:17 -0700
-Subject: [PATCH 5/6] Makefile: Provide HOSTLDFLAGS to HOSTCC in has_libelf
+Subject: [PATCH 4/5] Makefile: Provide HOSTLDFLAGS to HOSTCC in has_libelf
  check
 
 If the default linker is not available (or we want to use a different
