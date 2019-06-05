@@ -1,7 +1,7 @@
-From 83a54bcdb0cb0c7c300275ce4755b150269b6f68 Mon Sep 17 00:00:00 2001
+From e75ce9b5d33a348ae097db6cd09203283a4bdf7c Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 11:35:50 +0100
-Subject: [PATCH 5/6] ARM: omap2: remove incorrect __init annotation
+Subject: [PATCH 5/5] ARM: omap2: remove incorrect __init annotation
 
 omap3xxx_prm_enable_io_wakeup() is marked __init, but its caller is not, so
 we get a warning with clang-8:
@@ -36,5 +36,5 @@ index 05858f966f7d..dfa65fc2c82b 100644
  	if (prm_features & PRM_HAS_IO_WAKEUP)
  		omap2_prm_set_mod_reg_bits(OMAP3430_EN_IO_MASK, WKUP_MOD,
 -- 
-2.22.0.rc2
+2.22.0.rc3
 
