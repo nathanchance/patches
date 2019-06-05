@@ -1,4 +1,4 @@
-From 2ebc2c825708b0066f53ed301ba3e94e44511604 Mon Sep 17 00:00:00 2001
+From 2baff116380ce7c86ccaf46ae7d3558ed2a63602 Mon Sep 17 00:00:00 2001
 From: Tri Vo <trong@android.com>
 Date: Wed, 22 May 2019 17:56:57 -0700
 Subject: [PATCH 1/6] ARM: disable FUNCTION_TRACER when building with Clang
@@ -40,5 +40,5 @@ index 6bfdc78ee627..946d0f0fdca4 100644
  	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
  	select HAVE_IDE if PCI || ISA || PCMCIA
 -- 
-2.22.0.rc2
+2.22.0.rc3
 

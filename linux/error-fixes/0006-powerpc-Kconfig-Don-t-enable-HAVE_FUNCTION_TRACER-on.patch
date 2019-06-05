@@ -1,4 +1,4 @@
-From 2d18890af0025c3442864e1afdc4ef9618291c61 Mon Sep 17 00:00:00 2001
+From cc7a8a6df2494a4ea077d75b7476262967c10c28 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 3 Jun 2019 10:48:04 -0700
 Subject: [PATCH 6/6] powerpc: Kconfig: Don't enable HAVE_FUNCTION_TRACER on
@@ -26,5 +26,5 @@ index 1120ff8ac715..6b3ece2cb135 100644
  	select HAVE_GENERIC_GUP
  	select HAVE_HW_BREAKPOINT		if PERF_EVENTS && (PPC_BOOK3S || PPC_8xx)
 -- 
-2.22.0.rc2
+2.22.0.rc3
 

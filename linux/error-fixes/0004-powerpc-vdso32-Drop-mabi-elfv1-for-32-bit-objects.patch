@@ -1,4 +1,4 @@
-From 191ad73c3bcc98ddd07f4e34e87fbd5dda49027f Mon Sep 17 00:00:00 2001
+From ea0ccaf5f7ba095dbdaa8a4b546e6ca58f5d20e3 Mon Sep 17 00:00:00 2001
 From: Daniel Axtens <dja@axtens.net>
 Date: Thu, 10 Jan 2019 12:42:58 +1100
 Subject: [PATCH 4/6] powerpc/vdso32: Drop -mabi=elfv1 for 32 bit objects
@@ -42,5 +42,5 @@ index 06f54d947057..d50978ec2ee5 100644
  $(obj)/vdso32_wrapper.o : $(obj)/vdso32.so
  
 -- 
-2.22.0.rc2
+2.22.0.rc3
 
