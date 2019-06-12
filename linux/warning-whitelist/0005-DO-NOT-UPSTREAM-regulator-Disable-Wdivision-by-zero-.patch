@@ -1,4 +1,4 @@
-From bb11d61ff4d601fdff2ebee3632a9c1e09502273 Mon Sep 17 00:00:00 2001
+From 525e973594177a33b1e8a34054b14ae68a9efa72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:44:48 -0700
 Subject: [PATCH 5/9] DO-NOT-UPSTREAM: regulator: Disable -Wdivision-by-zero
@@ -22,5 +22,5 @@ index 76e78fa449a2..376b5205a09c 100644
 +
 +CFLAGS_da903x.o += $(call cc-disable-warning, division-by-zero)
 -- 
-2.22.0.rc2
+2.22.0
 

@@ -1,4 +1,4 @@
-From 9566700996ad4ff3e5c852118c3dad3baa75474e Mon Sep 17 00:00:00 2001
+From ea8af604f6ddba10f27d555afa8d93240111e4d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Oct 2018 20:22:55 -0700
 Subject: [PATCH 6/9] DO-NOT-UPSTREAM: soc: rockchip: Disable
@@ -22,5 +22,5 @@ index afca0a4c4b72..79cfdbd6336b 100644
 +
 +CFLAGS_pm_domains.o += $(call cc-disable-warning, shift-count-negative)
 -- 
-2.22.0.rc2
+2.22.0
 
