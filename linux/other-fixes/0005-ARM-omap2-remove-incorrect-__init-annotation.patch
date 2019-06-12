@@ -1,4 +1,4 @@
-From 5f5d7b9a54c8a8c59081779e1347a40200bf901a Mon Sep 17 00:00:00 2001
+From 6697de3717533a55fecf8b821e347c24cb01144d Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 11:35:50 +0100
 Subject: [PATCH 5/5] ARM: omap2: remove incorrect __init annotation
@@ -36,5 +36,5 @@ index 05858f966f7d..dfa65fc2c82b 100644
  	if (prm_features & PRM_HAS_IO_WAKEUP)
  		omap2_prm_set_mod_reg_bits(OMAP3430_EN_IO_MASK, WKUP_MOD,
 -- 
-2.22.0.rc3
+2.22.0
 

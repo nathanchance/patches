@@ -1,4 +1,4 @@
-From 2b0b6e797f48ff83b941feb556ab808dc3554e27 Mon Sep 17 00:00:00 2001
+From 5d0de784040f72c9cf6f1a15f75aac4e75438479 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 10 Dec 2018 14:31:32 -0800
 Subject: [PATCH 3/5] ARM: VDSO: Drop implicit common-page-size linker flag
@@ -33,5 +33,5 @@ index fadf554d9391..db1754438267 100644
  	    $(call ld-option, --build-id) \
  	    -T
 -- 
-2.22.0.rc3
+2.22.0
 

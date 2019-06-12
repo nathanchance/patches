@@ -1,4 +1,4 @@
-From 9c8e4decb63c7848f20d267805da354fe744ac89 Mon Sep 17 00:00:00 2001
+From 48b7a02a929ed64ce77aa76dea9fd7f655619377 Mon Sep 17 00:00:00 2001
 From: Shaokun Zhang <zhangshaokun@hisilicon.com>
 Date: Mon, 20 May 2019 19:32:53 +0800
 Subject: [PATCH 2/5] intel_th: msu: Fix unused variable warning on arm64
@@ -107,5 +107,5 @@ index 81bb54fa3ce8..49e64ca760e6 100644
  	__msc_buffer_win_free(msc, win);
  
 -- 
-2.22.0.rc3
+2.22.0
 
