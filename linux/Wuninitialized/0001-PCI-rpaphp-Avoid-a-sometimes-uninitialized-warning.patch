@@ -1,4 +1,4 @@
-From c3f3ec3c854c20ed9136399a346e45658b37dcbd Mon Sep 17 00:00:00 2001
+From c11222db4501ab0bae5fec9324c180ce7318a5fa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 3 Jun 2019 15:04:36 -0700
 Subject: [PATCH 1/5] PCI: rpaphp: Avoid a sometimes-uninitialized warning
@@ -74,5 +74,5 @@ index bcd5d357ca23..c3899ee1db99 100644
  	if (((drc_name == NULL) ||
  	     (drc_name && !strcmp(drc_name, cell_drc_name))) &&
 -- 
-2.22.0.rc3
+2.22.0
 
