@@ -1,15 +1,18 @@
-From 4d4aacaf2e7de67ec130c8bf90b13541f79e0a06 Mon Sep 17 00:00:00 2001
+From 51705f5f7aa5304e364e856d422643e0760db83b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:04:41 -0700
 Subject: [PATCH 5/5] kbuild: Enable -Wuninitialized
 
-This helps fine very dodgy behavior through both -Wuninitialized and
--Wsometimes-uninitialized. We have missed out on the later because the
-former has been disabled since commit 26ea6bb1fef0 ("kbuild, LLVMLinux:
-Supress warnings unless W=1-3").
+This helps fine very dodgy behavior through both -Wuninitialized
+(warning that a variable is always uninitialized) and
+-Wsometimes-uninitialized (warning that a variable is sometimes
+uninitialized, like GCC's -Wmaybe-uninitialized). These warnings
+catch things that GCC doesn't such as:
 
-These warnings catch things that GCC doesn't such as:
 https://lore.kernel.org/lkml/86649ee4-9794-77a3-502c-f4cd10019c36@lca.pw/
+
+We very much want to catch these so turn this warning on so that CI is
+aware of it.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/381
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
