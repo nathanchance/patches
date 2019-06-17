@@ -1,4 +1,4 @@
-From 375b08bed6594d1fd37fa7254e641d17a38390c6 Mon Sep 17 00:00:00 2001
+From fa81c36b5f0f331a966121240581227cac5c97c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 14 May 2019 17:33:17 -0700
 Subject: [PATCH 4/5] Makefile: Provide HOSTLDFLAGS to HOSTCC in has_libelf
@@ -15,7 +15,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index b81e17261250..daeec62673d9 100644
+index 9514dac2660a..00cacd0e4954 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -979,7 +979,7 @@ HOST_LIBELF_LIBS = $(shell pkg-config libelf --libs 2>/dev/null || echo -lelf)
