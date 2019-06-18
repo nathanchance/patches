@@ -1,11 +1,12 @@
-From 283729afcf986ca279fabaaaeae49ca750cc9295 Mon Sep 17 00:00:00 2001
+From 4a669445525c8eb5ac90ba876e05bb390b304f64 Mon Sep 17 00:00:00 2001
 From: Will Deacon <will.deacon@arm.com>
-Date: Tue, 18 Jun 2019 12:56:49 +0100
-Subject: [PATCH 5/8] genksyms: Teach parse about __uint128_t built-in type
+Date: Tue, 18 Jun 2019 14:10:48 +0100
+Subject: [PATCH 5/8] genksyms: Teach parser about 128-bit built-in types
 
 __uint128_t crops up in a few files that export symbols to modules, so
-teach genksyms about it so that we don't end up skipping the CRC
-generation for some symbols due to the parser failing to spot them:
+teach genksyms about it and the other GCC built-in 128-bit integer types
+so that we don't end up skipping the CRC generation for some symbols due
+to the parser failing to spot them:
 
   | WARNING: EXPORT symbol "kernel_neon_begin" [vmlinux] version
   |          generation failed, symbol will not be versioned.
@@ -15,28 +16,33 @@ generation for some symbols due to the parser failing to spot them:
   | ld: arch/arm64/kernel/fpsimd.o:(.data+0x0): dangerous relocation:
   |     unsupported relocation
 
+Cc: Richard Henderson <rth@twiddle.net>
+Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
 Cc: Ard Biesheuvel <ard.biesheuvel@linaro.org>
 Reported-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Will Deacon <will.deacon@arm.com>
-(am from https://lore.kernel.org/lkml/20190618120259.GA31041@fuggles.cambridge.arm.com/)
+(am from https://lore.kernel.org/lkml/20190618131048.543-1-will.deacon@arm.com/)
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- scripts/genksyms/keywords.c | 1 +
+ scripts/genksyms/keywords.c | 4 ++++
  scripts/genksyms/parse.y    | 2 ++
- 2 files changed, 3 insertions(+)
+ 2 files changed, 6 insertions(+)
 
 diff --git a/scripts/genksyms/keywords.c b/scripts/genksyms/keywords.c
-index e93336baaaed..115c927a3eb5 100644
+index e93336baaaed..c586d32dd2c3 100644
 --- a/scripts/genksyms/keywords.c
 +++ b/scripts/genksyms/keywords.c
-@@ -54,6 +54,7 @@ static struct resword {
- 	{ "struct", STRUCT_KEYW },
- 	{ "typedef", TYPEDEF_KEYW },
- 	{ "typeof", TYPEOF_KEYW },
+@@ -25,6 +25,10 @@ static struct resword {
+ 	{ "__volatile__", VOLATILE_KEYW },
+ 	{ "__builtin_va_list", VA_LIST_KEYW },
+ 
++	{ "__int128", BUILTIN_INT_KEYW },
++	{ "__int128_t", BUILTIN_INT_KEYW },
 +	{ "__uint128_t", BUILTIN_INT_KEYW },
- 	{ "union", UNION_KEYW },
- 	{ "unsigned", UNSIGNED_KEYW },
- 	{ "void", VOID_KEYW },
++
+ 	// According to rth, c99 defines "_Bool", __restrict", __restrict__", "restrict".  KAO
+ 	{ "_Bool", BOOL_KEYW },
+ 	{ "_restrict", RESTRICT_KEYW },
 diff --git a/scripts/genksyms/parse.y b/scripts/genksyms/parse.y
 index 00a6d7e54971..1ebcf52cd0f9 100644
 --- a/scripts/genksyms/parse.y
