@@ -1,7 +1,7 @@
-From b564e870f548bb3bb31a66e0b6b28177066f0eea Mon Sep 17 00:00:00 2001
+From d43f0ef1c1a8008011029d9f13c08f29db75ba1f Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 10 Dec 2018 14:31:32 -0800
-Subject: [PATCH 3/5] ARM: VDSO: Drop implicit common-page-size linker flag
+Subject: [PATCH 3/8] ARM: VDSO: Drop implicit common-page-size linker flag
 
 GNU linker's -z common-page-size's default value is based on the target
 architecture. arch/arm/vdso/Makefile sets it to the architecture

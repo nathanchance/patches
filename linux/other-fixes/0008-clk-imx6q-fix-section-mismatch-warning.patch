@@ -1,0 +1,41 @@
+From 9632426f01fdde4af3ce1a23ba62d15dc6657821 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Mon, 17 Jun 2019 13:11:35 +0200
+Subject: [PATCH 8/8] clk: imx6q: fix section mismatch warning
+
+The imx6q_obtain_fixed_clk_hw lacks an __init marker, which
+leads to this otherwise harmless warning:
+
+WARNING: vmlinux.o(.text+0x495358): Section mismatch in reference from the function imx6q_obtain_fixed_clk_hw() to the function .init.text:imx_obtain_fixed_clock_hw()
+The function imx6q_obtain_fixed_clk_hw() references
+the function __init imx_obtain_fixed_clock_hw().
+This is often because imx6q_obtain_fixed_clk_hw lacks a __init
+annotation or the annotation of imx_obtain_fixed_clock_hw is wrong.
+
+Fixes: 992b703b5b38 ("clk: imx6q: Switch to clk_hw based API")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(am from https://lore.kernel.org/lkml/20190617111159.2124152-1-arnd@arndb.de/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/clk/imx/clk-imx6q.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/imx/clk-imx6q.c b/drivers/clk/imx/clk-imx6q.c
+index 2caa71e91119..a875d0bc12ee 100644
+--- a/drivers/clk/imx/clk-imx6q.c
++++ b/drivers/clk/imx/clk-imx6q.c
+@@ -418,8 +418,9 @@ static void disable_anatop_clocks(void __iomem *anatop_base)
+ 	writel_relaxed(reg, anatop_base + CCM_ANALOG_PLL_VIDEO);
+ }
+ 
+-static struct clk_hw *imx6q_obtain_fixed_clk_hw(struct device_node *np,
+-						const char *name, unsigned long rate)
++static struct clk_hw * __init imx6q_obtain_fixed_clk_hw(struct device_node *np,
++							const char *name,
++							unsigned long rate)
+ {
+ 	struct clk *clk = of_clk_get_by_name(np, name);
+ 	struct clk_hw *hw;
+-- 
+2.22.0
+
