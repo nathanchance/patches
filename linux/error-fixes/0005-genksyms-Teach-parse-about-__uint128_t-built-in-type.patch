@@ -1,0 +1,62 @@
+From 283729afcf986ca279fabaaaeae49ca750cc9295 Mon Sep 17 00:00:00 2001
+From: Will Deacon <will.deacon@arm.com>
+Date: Tue, 18 Jun 2019 12:56:49 +0100
+Subject: [PATCH 5/8] genksyms: Teach parse about __uint128_t built-in type
+
+__uint128_t crops up in a few files that export symbols to modules, so
+teach genksyms about it so that we don't end up skipping the CRC
+generation for some symbols due to the parser failing to spot them:
+
+  | WARNING: EXPORT symbol "kernel_neon_begin" [vmlinux] version
+  |          generation failed, symbol will not be versioned.
+  | ld: arch/arm64/kernel/fpsimd.o: relocation R_AARCH64_ABS32 against
+  |     `__crc_kernel_neon_begin' can not be used when making a shared
+  |     object
+  | ld: arch/arm64/kernel/fpsimd.o:(.data+0x0): dangerous relocation:
+  |     unsupported relocation
+
+Cc: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Will Deacon <will.deacon@arm.com>
+(am from https://lore.kernel.org/lkml/20190618120259.GA31041@fuggles.cambridge.arm.com/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/genksyms/keywords.c | 1 +
+ scripts/genksyms/parse.y    | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/scripts/genksyms/keywords.c b/scripts/genksyms/keywords.c
+index e93336baaaed..115c927a3eb5 100644
+--- a/scripts/genksyms/keywords.c
++++ b/scripts/genksyms/keywords.c
+@@ -54,6 +54,7 @@ static struct resword {
+ 	{ "struct", STRUCT_KEYW },
+ 	{ "typedef", TYPEDEF_KEYW },
+ 	{ "typeof", TYPEOF_KEYW },
++	{ "__uint128_t", BUILTIN_INT_KEYW },
+ 	{ "union", UNION_KEYW },
+ 	{ "unsigned", UNSIGNED_KEYW },
+ 	{ "void", VOID_KEYW },
+diff --git a/scripts/genksyms/parse.y b/scripts/genksyms/parse.y
+index 00a6d7e54971..1ebcf52cd0f9 100644
+--- a/scripts/genksyms/parse.y
++++ b/scripts/genksyms/parse.y
+@@ -76,6 +76,7 @@ static void record_compound(struct string_list **keyw,
+ %token ATTRIBUTE_KEYW
+ %token AUTO_KEYW
+ %token BOOL_KEYW
++%token BUILTIN_INT_KEYW
+ %token CHAR_KEYW
+ %token CONST_KEYW
+ %token DOUBLE_KEYW
+@@ -263,6 +264,7 @@ simple_type_specifier:
+ 	| VOID_KEYW
+ 	| BOOL_KEYW
+ 	| VA_LIST_KEYW
++	| BUILTIN_INT_KEYW
+ 	| TYPE			{ (*$1)->tag = SYM_TYPEDEF; $$ = $1; }
+ 	;
+ 
+-- 
+2.22.0
+

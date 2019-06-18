@@ -1,0 +1,44 @@
+From 3a1609b59c75ef30ec32236a3c112f9ecde72d8c Mon Sep 17 00:00:00 2001
+From: Qian Cai <cai@lca.pw>
+Date: Tue, 11 Jun 2019 08:59:04 -0400
+Subject: [PATCH 6/8] efi/tpm: fix a compilation warning
+
+The linux-next "tpm: Reserve the TPM final events table" [1] introduced
+a compilation warning,
+
+drivers/firmware/efi/tpm.c: In function 'efi_tpm_eventlog_init':
+drivers/firmware/efi/tpm.c:80:10: warning: passing argument 1 of
+'tpm2_calc_event_log_size' makes pointer from integer without a cast
+[-Wint-conversion]
+  tbl_size = tpm2_calc_event_log_size(efi.tpm_final_log
+drivers/firmware/efi/tpm.c:19:43: note: expected 'void *' but argument
+is of type 'long unsigned int'
+
+Fix it by making a necessary cast for the argument 1 of
+tpm2_calc_event_log_size().
+
+[1] https://lore.kernel.org/linux-efi/20190520205501.177637-3-matthewgarrett@google.com/
+
+Signed-off-by: Qian Cai <cai@lca.pw>
+(am from https://lore.kernel.org/lkml/20190611125904.1013-1-cai@lca.pw/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/firmware/efi/tpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
+index 74d0cd1647b8..1d3f5ca3eaaf 100644
+--- a/drivers/firmware/efi/tpm.c
++++ b/drivers/firmware/efi/tpm.c
+@@ -75,7 +75,7 @@ int __init efi_tpm_eventlog_init(void)
+ 		goto out;
+ 	}
+ 
+-	tbl_size = tpm2_calc_event_log_size(efi.tpm_final_log
++	tbl_size = tpm2_calc_event_log_size((void *)efi.tpm_final_log
+ 					    + sizeof(final_tbl->version)
+ 					    + sizeof(final_tbl->nr_events),
+ 					    final_tbl->nr_events,
+-- 
+2.22.0
+
