@@ -1,21 +1,21 @@
-From 22eaff40703598e448ef8cdea8199b5842ba7edb Mon Sep 17 00:00:00 2001
+From 2f24c147649882fcf1c520d0b9509e387ed0497f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 14 Oct 2018 13:43:59 -0700
-Subject: [PATCH 02/10] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
+Subject: [PATCH 2/9] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls on
  arm{,64}
 
 So that I can compile with -Werror.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- scripts/checksyscalls.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ scripts/checksyscalls.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index a18b47695f55..8c5f4508b52d 100755
+index a18b47695f55..dcc61be81ec2 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -249,6 +249,19 @@ cat << EOF
+@@ -249,6 +249,22 @@ cat << EOF
  #define __IGNORE_getpmsg
  #define __IGNORE_putpmsg
  #define __IGNORE_vserver
@@ -31,6 +31,9 @@ index a18b47695f55..8c5f4508b52d 100755
 +#define __IGNORE_open_tree
 +#define __IGNORE_pidfd_send_signal
 +#define __IGNORE_pidctl
++#endif
++#if defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
++#define __IGNORE_clone3
 +#endif
  EOF
  }
