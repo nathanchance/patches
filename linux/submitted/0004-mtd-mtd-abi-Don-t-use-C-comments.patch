@@ -1,0 +1,48 @@
+From b9186d42051604119e3e9a9fac1304d658664270 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 20 Jun 2019 08:54:08 -0700
+Subject: [PATCH 4/4] mtd: mtd-abi: Don't use C++ comments
+
+When compiled standalone after commit b91976b7c0e3 ("kbuild:
+compile-test UAPI headers to ensure they are self-contained"),
+a warning about the C++ comments appears:
+
+  In file included from usr/include/mtd/mtd-user.hdrtest.c:1:
+  In file included from ./usr/include/mtd/mtd-user.h:25:
+  ./usr/include/mtd/mtd-abi.h:116:28: warning: // comments are not
+  allowed in this language [-Wcomment]
+  #define MTD_NANDECC_OFF         0       // Switch off ECC (Not recommended)
+                                          ^
+  1 warning generated.
+
+Replace them with standard C comments so this warning no longer occurs.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/uapi/mtd/mtd-abi.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/include/uapi/mtd/mtd-abi.h b/include/uapi/mtd/mtd-abi.h
+index aff5b5e59845..3fe9237f723a 100644
+--- a/include/uapi/mtd/mtd-abi.h
++++ b/include/uapi/mtd/mtd-abi.h
+@@ -113,11 +113,11 @@ struct mtd_write_req {
+ #define MTD_CAP_NVRAM		(MTD_WRITEABLE | MTD_BIT_WRITEABLE | MTD_NO_ERASE)
+ 
+ /* Obsolete ECC byte placement modes (used with obsolete MEMGETOOBSEL) */
+-#define MTD_NANDECC_OFF		0	// Switch off ECC (Not recommended)
+-#define MTD_NANDECC_PLACE	1	// Use the given placement in the structure (YAFFS1 legacy mode)
+-#define MTD_NANDECC_AUTOPLACE	2	// Use the default placement scheme
+-#define MTD_NANDECC_PLACEONLY	3	// Use the given placement in the structure (Do not store ecc result on read)
+-#define MTD_NANDECC_AUTOPL_USR 	4	// Use the given autoplacement scheme rather than using the default
++#define MTD_NANDECC_OFF		0	/* Switch off ECC (Not recommended) */
++#define MTD_NANDECC_PLACE	1	/* Use the given placement in the structure (YAFFS1 legacy mode) */
++#define MTD_NANDECC_AUTOPLACE	2	/* Use the default placement scheme */
++#define MTD_NANDECC_PLACEONLY	3	/* Use the given placement in the structure (Do not store ecc result on read) */
++#define MTD_NANDECC_AUTOPL_USR	4	/* Use the given autoplacement scheme rather than using the default */
+ 
+ /* OTP mode selection */
+ #define MTD_OTP_OFF		0
+-- 
+2.22.0
+
