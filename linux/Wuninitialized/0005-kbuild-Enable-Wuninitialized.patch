@@ -1,7 +1,7 @@
-From 163c3bf6f410e1cd114679a787c65078065a439f Mon Sep 17 00:00:00 2001
+From 935f65bc7ef7257e526123ea93731bd4cd41e58b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:04:41 -0700
-Subject: [PATCH 6/6] kbuild: Enable -Wuninitialized
+Subject: [PATCH 5/5] kbuild: Enable -Wuninitialized
 
 This helps fine very dodgy behavior through both -Wuninitialized
 (warning that a variable is always uninitialized) and
