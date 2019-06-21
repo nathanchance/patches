@@ -1,7 +1,7 @@
-From eec9aa97e5bb46ffe5b96c5f01b0936b7627e8b5 Mon Sep 17 00:00:00 2001
+From c18b324e73a06c812fb87500e6d1a494d9bbc795 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Mon, 17 Jun 2019 14:51:04 +0200
-Subject: [PATCH 6/6] drm/komeda: fix 32-bit komeda_crtc_update_clock_ratio
+Subject: [PATCH 5/5] drm/komeda: fix 32-bit komeda_crtc_update_clock_ratio
 
 clang points out a bug in the clock calculation on 32-bit, that leads
 to the clock_ratio always being zero:
