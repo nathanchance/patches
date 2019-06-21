@@ -1,7 +1,7 @@
-From 5270c47052f9d8e5f4e2a08a775c496c9ccea228 Mon Sep 17 00:00:00 2001
+From 00190b6befe6218ef9a111a2d95f5bd2406d33b8 Mon Sep 17 00:00:00 2001
 From: Tri Vo <trong@android.com>
 Date: Wed, 22 May 2019 17:56:57 -0700
-Subject: [PATCH 1/7] ARM: disable FUNCTION_TRACER when building with Clang
+Subject: [PATCH 1/9] ARM: disable FUNCTION_TRACER when building with Clang
 
 Clang needs "-meabi gnu" flag to emit calls to "__gnu_mcount_nc".
 Otherwise, it inserts calls to undefined "mcount".
