@@ -1,7 +1,7 @@
-From 5603f05eb9258edeca87e25bb2d95ae111e615b2 Mon Sep 17 00:00:00 2001
+From 01cb7af9e227ab2597baddea01de1ca981a2bba9 Mon Sep 17 00:00:00 2001
 From: Will Deacon <will.deacon@arm.com>
 Date: Tue, 18 Jun 2019 14:10:48 +0100
-Subject: [PATCH 5/9] genksyms: Teach parser about 128-bit built-in types
+Subject: [PATCH 5/8] genksyms: Teach parser about 128-bit built-in types
 
 __uint128_t crops up in a few files that export symbols to modules, so
 teach genksyms about it and the other GCC built-in 128-bit integer types

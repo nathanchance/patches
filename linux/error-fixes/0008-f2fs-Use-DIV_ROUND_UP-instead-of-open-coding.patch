@@ -1,7 +1,7 @@
-From ded733287937de0859f919456482a23f2adb3d7e Mon Sep 17 00:00:00 2001
+From 6e8d370994a5039b6c6bc127b84e9e22c4a07fe2 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Thu, 20 Jun 2019 16:42:08 +0200
-Subject: [PATCH 9/9] f2fs: Use DIV_ROUND_UP() instead of open-coding
+Subject: [PATCH 8/8] f2fs: Use DIV_ROUND_UP() instead of open-coding
 
 Replace the open-coded divisions with round-up by calls to the
 DIV_ROUND_UP() helper macro.

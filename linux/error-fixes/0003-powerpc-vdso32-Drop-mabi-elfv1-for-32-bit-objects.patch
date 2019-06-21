@@ -1,7 +1,7 @@
-From 1ab7676b45338b63ec44922e83d6bfc466feb007 Mon Sep 17 00:00:00 2001
+From 756c75f00b0e3a8cd16e5b2cb1cbac4ea6841453 Mon Sep 17 00:00:00 2001
 From: Daniel Axtens <dja@axtens.net>
 Date: Thu, 10 Jan 2019 12:42:58 +1100
-Subject: [PATCH 3/9] powerpc/vdso32: Drop -mabi=elfv1 for 32 bit objects
+Subject: [PATCH 3/8] powerpc/vdso32: Drop -mabi=elfv1 for 32 bit objects
 
 All 64-bit objects need to specify the flag to be compiled correctly, we
 just don't need it for 32-bit objects. GCC just ignored it, but clang

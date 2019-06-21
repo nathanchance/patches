@@ -1,7 +1,7 @@
-From d69eb63bce2b21a961ccf4670a4ff9dddd2a2a70 Mon Sep 17 00:00:00 2001
+From d466c7bf14e37ad235c2ac63ed65fc7803ce5ca0 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Thu, 20 Jun 2019 16:38:00 +0200
-Subject: [PATCH 8/9] f2fs: Use div_u64*() for 64-bit divisions
+Subject: [PATCH 7/8] f2fs: Use div_u64*() for 64-bit divisions
 
 On 32-bit (e.g. m68k):
 
