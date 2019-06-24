@@ -1,0 +1,38 @@
+From 1482dca06d5810c889db305b7d0ff03016e2f007 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Jun 2019 13:18:03 -0700
+Subject: [PATCH 5/5] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
+
+Clang warns when CONFIG_ACPI is unset:
+
+ drivers/pinctrl/qcom/pinctrl-sdm845.c:1320:5: warning: 'CONFIG_ACPI' is
+ not defined, evaluates to 0 [-Wundef]
+ #if CONFIG_ACPI
+     ^
+ 1 warning generated.
+
+Use ifdef instead of if to resolve this.
+
+Fixes: a229105d7a1e ("pinctrl: qcom: sdm845: Provide ACPI support")
+Link: https://github.com/ClangBuiltLinux/linux/issues/569
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-sdm845.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+index 06790e5ece6c..39f498c09906 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
++++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+@@ -1317,7 +1317,7 @@ static int sdm845_pinctrl_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-#if CONFIG_ACPI
++#ifdef CONFIG_ACPI
+ static const struct acpi_device_id sdm845_pinctrl_acpi_match[] = {
+ 	{ "QCOM0217"},
+ 	{ },
+-- 
+2.22.0
+

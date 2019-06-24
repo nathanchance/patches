@@ -1,7 +1,7 @@
-From 27a06aeb3d1e56cbafb44304b761d6ec4f72bba8 Mon Sep 17 00:00:00 2001
+From 05f527d41f15fb9ef3a78b7f8f3158e13963c707 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 28 May 2019 16:11:13 -0700
-Subject: [PATCH 2/4] ARM: xor-neon: Replace __GNUC__ checks with
+Subject: [PATCH 2/5] ARM: xor-neon: Replace __GNUC__ checks with
  CONFIG_CC_IS_GCC
 
 Currently, when compiling this code with clang, the following warning is
@@ -53,10 +53,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
-index c691b901092f..d532bc072ee4 100644
+index b99dd8e1c93f..e1e76186ec23 100644
 --- a/arch/arm/lib/xor-neon.c
 +++ b/arch/arm/lib/xor-neon.c
-@@ -22,15 +22,8 @@ MODULE_LICENSE("GPL");
+@@ -19,15 +19,8 @@ MODULE_LICENSE("GPL");
   * -ftree-vectorize) to attempt to exploit implicit parallelism and emit
   * NEON instructions.
   */
