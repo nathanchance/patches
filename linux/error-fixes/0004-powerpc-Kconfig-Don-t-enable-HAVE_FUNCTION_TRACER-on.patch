@@ -1,7 +1,7 @@
-From e7967836cd56873fb7cd99eff477406fc4213a1a Mon Sep 17 00:00:00 2001
+From 5d6684091870369016f12f5b16f44899beea4ca4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 3 Jun 2019 10:48:04 -0700
-Subject: [PATCH 4/8] powerpc: Kconfig: Don't enable HAVE_FUNCTION_TRACER on
+Subject: [PATCH 4/5] powerpc: Kconfig: Don't enable HAVE_FUNCTION_TRACER on
  ppc64 big endian
 
 Broken with clang.
