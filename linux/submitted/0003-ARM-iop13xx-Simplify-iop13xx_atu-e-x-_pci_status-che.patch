@@ -1,7 +1,7 @@
-From 5cf1428a11bd6416a2eea63d05fcc5e5cfa0d5e8 Mon Sep 17 00:00:00 2001
+From 40b51e32b4ddd3fe2c6f49e8f9f3a5fff7c85641 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 17 Jun 2019 18:54:16 -0700
-Subject: [PATCH 3/5] ARM: iop13xx: Simplify iop13xx_atu{e,x}_pci_status checks
+Subject: [PATCH 3/7] ARM: iop13xx: Simplify iop13xx_atu{e,x}_pci_status checks
 
 clang warns:
 
@@ -19,6 +19,7 @@ makes the code more readable.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/543
 Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/arm/mach-iop13xx/pci.c | 4 ++--

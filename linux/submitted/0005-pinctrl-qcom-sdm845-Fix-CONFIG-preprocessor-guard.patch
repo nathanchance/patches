@@ -1,7 +1,7 @@
-From 37117bff599022edc7589456125d687a4157252b Mon Sep 17 00:00:00 2001
+From 43c37ac10f92429c67d29d80d9070250df2a935b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Jun 2019 13:18:03 -0700
-Subject: [PATCH 5/5] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
+Subject: [PATCH 5/7] pinctrl: qcom: sdm845: Fix CONFIG preprocessor guard
 
 Clang warns when CONFIG_ACPI is unset:
 
