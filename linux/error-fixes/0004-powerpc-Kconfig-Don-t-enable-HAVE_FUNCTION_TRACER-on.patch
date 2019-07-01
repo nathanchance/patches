@@ -1,4 +1,4 @@
-From b4307970c8e0eefea7f77338aad8363039947c1d Mon Sep 17 00:00:00 2001
+From f92212f8e69ce55f91582d31a57c1cd58244dcb4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 3 Jun 2019 10:48:04 -0700
 Subject: [PATCH 4/4] powerpc: Kconfig: Don't enable HAVE_FUNCTION_TRACER on
@@ -13,10 +13,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 2d269b056c58..3aaafe8e41f6 100644
+index 55192e03bffd..6a0a903667ca 100644
 --- a/arch/powerpc/Kconfig
 +++ b/arch/powerpc/Kconfig
-@@ -192,7 +192,7 @@ config PPC
+@@ -191,7 +191,7 @@ config PPC
  	select HAVE_FTRACE_MCOUNT_RECORD
  	select HAVE_FUNCTION_ERROR_INJECTION
  	select HAVE_FUNCTION_GRAPH_TRACER
