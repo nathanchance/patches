@@ -1,0 +1,28 @@
+From 1508077444a9e20342fc357d64ca1204be30eae1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jul 2019 11:13:03 -0700
+Subject: [PATCH 5/5] ath10k: Avoid -Wsometimes-uninitialized in
+ ath10k_mac_op_set_bitrate_mask
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/581
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/ath/ath10k/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index e43a566eef77..0b9275713ffc 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -7480,7 +7480,7 @@ static int ath10k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 	int single_nss;
+ 	int ret;
+ 	int vht_num_rates, allow_pfr;
+-	u8 vht_pfr;
++	u8 vht_pfr = 0;
+ 	bool update_bitrate_mask = true;
+ 
+ 	if (ath10k_mac_vif_chan(vif, &def))
+-- 
+2.22.0
+
