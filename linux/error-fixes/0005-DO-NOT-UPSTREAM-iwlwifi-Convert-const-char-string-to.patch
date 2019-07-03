@@ -1,0 +1,78 @@
+From 943cc4a3bdbc18e596286805dd973f61ddbae3db Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jul 2019 11:12:17 -0700
+Subject: [PATCH 5/5] DO-NOT-UPSTREAM: iwlwifi: Convert const char string to a
+ macro
+
+This is gross and I feel gross...
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/580
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index e411ac98290d..b2b2e6d20bf9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -2438,20 +2438,20 @@ static void iwl_fw_dbg_info_apply(struct iwl_fw_runtime *fwrt,
+ {
+ 	u32 img_name_len = le32_to_cpu(dbg_info->img_name_len);
+ 	u32 dbg_cfg_name_len = le32_to_cpu(dbg_info->dbg_cfg_name_len);
+-	const char err_str[] =
+-		"WRT: ext=%d. Invalid %s name length %d, expected %d\n";
++#define ERR_STR "WRT: ext=%d. Invalid %s name length %d, expected %d\n"
+ 
+ 	if (img_name_len != IWL_FW_INI_MAX_IMG_NAME_LEN) {
+-		IWL_WARN(fwrt, err_str, ext, "image", img_name_len,
++		IWL_WARN(fwrt, ERR_STR, ext, "image", img_name_len,
+ 			 IWL_FW_INI_MAX_IMG_NAME_LEN);
+ 		return;
+ 	}
+ 
+ 	if (dbg_cfg_name_len != IWL_FW_INI_MAX_DBG_CFG_NAME_LEN) {
+-		IWL_WARN(fwrt, err_str, ext, "debug cfg", dbg_cfg_name_len,
++		IWL_WARN(fwrt, ERR_STR, ext, "debug cfg", dbg_cfg_name_len,
+ 			 IWL_FW_INI_MAX_DBG_CFG_NAME_LEN);
+ 		return;
+ 	}
++#undef ERR_STR
+ 
+ 	if (ext) {
+ 		memcpy(fwrt->dump.external_dbg_cfg_name, dbg_info->dbg_cfg_name,
+@@ -2775,8 +2775,7 @@ static void _iwl_fw_dbg_apply_point(struct iwl_fw_runtime *fwrt,
+ 		struct iwl_ucode_tlv *tlv = iter;
+ 		void *ini_tlv = (void *)tlv->data;
+ 		u32 type = le32_to_cpu(tlv->type);
+-		const char invalid_ap_str[] =
+-			"WRT: ext=%d. Invalid apply point %d for %s\n";
++#define INVALID_AP_STR "WRT: ext=%d. Invalid apply point %d for %s\n"
+ 
+ 		switch (type) {
+ 		case IWL_UCODE_TLV_TYPE_DEBUG_INFO:
+@@ -2786,7 +2785,7 @@ static void _iwl_fw_dbg_apply_point(struct iwl_fw_runtime *fwrt,
+ 			struct iwl_fw_ini_allocation_data *buf_alloc = ini_tlv;
+ 
+ 			if (pnt != IWL_FW_INI_APPLY_EARLY) {
+-				IWL_ERR(fwrt, invalid_ap_str, ext, pnt,
++				IWL_ERR(fwrt, INVALID_AP_STR, ext, pnt,
+ 					"buffer allocation");
+ 				goto next;
+ 			}
+@@ -2797,10 +2796,11 @@ static void _iwl_fw_dbg_apply_point(struct iwl_fw_runtime *fwrt,
+ 		}
+ 		case IWL_UCODE_TLV_TYPE_HCMD:
+ 			if (pnt < IWL_FW_INI_APPLY_AFTER_ALIVE) {
+-				IWL_ERR(fwrt, invalid_ap_str, ext, pnt,
++				IWL_ERR(fwrt, INVALID_AP_STR, ext, pnt,
+ 					"host command");
+ 				goto next;
+ 			}
++#undef INVALID_AP_STR
+ 			iwl_fw_dbg_send_hcmd(fwrt, tlv, ext);
+ 			break;
+ 		case IWL_UCODE_TLV_TYPE_REGIONS:
+-- 
+2.22.0
+
