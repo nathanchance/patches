@@ -1,34 +1,46 @@
-From 38bee6215edd80c19e02070817eccd8b2f6b8bee Mon Sep 17 00:00:00 2001
+From 2ba81672e8ccac74ed0b9f927a26002c3ebceb4b Mon Sep 17 00:00:00 2001
 From: Shaokun Zhang <zhangshaokun@hisilicon.com>
-Date: Mon, 20 May 2019 19:32:53 +0800
-Subject: [PATCH 2/4] intel_th: msu: Fix unused variable warning on arm64
+Date: Fri, 21 Jun 2019 19:19:27 +0300
+Subject: [PATCH 2/3] intel_th: msu: Fix unused variable warning on arm64
  platform
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-drivers/hwtracing/intel_th/msu.c: In function ‘msc_buffer_win_alloc’:
-drivers/hwtracing/intel_th/msu.c:783:21: warning: unused variable ‘i’ [-Wunused-variable]
-  int ret = -ENOMEM, i;
-                     ^
-drivers/hwtracing/intel_th/msu.c: In function ‘msc_buffer_win_free’:
-drivers/hwtracing/intel_th/msu.c:863:6: warning: unused variable ‘i’ [-Wunused-variable]
-  int i;
-      ^
-Fix this compiler warning on arm64 platform.
+Commit ba39bd8306057 ("intel_th: msu: Switch over to scatterlist")
+introduced the following warnings on non-x86 architectures, as a result
+of reordering the multi mode buffer allocation sequence:
 
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> drivers/hwtracing/intel_th/msu.c: In function ‘msc_buffer_win_alloc’:
+> drivers/hwtracing/intel_th/msu.c:783:21: warning: unused variable ‘i’
+> [-Wunused-variable]
+> int ret = -ENOMEM, i;
+>                    ^
+> drivers/hwtracing/intel_th/msu.c: In function ‘msc_buffer_win_free’:
+> drivers/hwtracing/intel_th/msu.c:863:6: warning: unused variable ‘i’
+> [-Wunused-variable]
+> int i;
+>     ^
+
+Fix this compiler warning by factoring out set_memory sequences and making
+them x86-only.
+
 Suggested-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Signed-off-by: Shaokun Zhang <zhangshaokun@hisilicon.com>
-(am from https://lore.kernel.org/lkml/1558351973-62643-1-git-send-email-zhangshaokun@hisilicon.com/)
+Fixes: ba39bd8306057 ("intel_th: msu: Switch over to scatterlist")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20190621161930.60785-2-alexander.shishkin@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(am from https://git.kernel.org/gregkh/char-misc/c/b96fb368b08f1637cbf780a6b83e36c2c5ed4ff5)
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/hwtracing/intel_th/msu.c | 40 +++++++++++++++++++++-----------
  1 file changed, 27 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/hwtracing/intel_th/msu.c b/drivers/hwtracing/intel_th/msu.c
-index 81bb54fa3ce8..49e64ca760e6 100644
+index 81bb54fa3ce8..8c568b5c8920 100644
 --- a/drivers/hwtracing/intel_th/msu.c
 +++ b/drivers/hwtracing/intel_th/msu.c
 @@ -767,6 +767,30 @@ static int __msc_buffer_win_alloc(struct msc_window *win,
@@ -54,8 +66,8 @@ index 81bb54fa3ce8..49e64ca760e6 100644
 +		set_memory_wb((unsigned long)msc_win_block(win, i), 1);
 +}
 +#else /* !X86 */
-+static inline void msc_buffer_set_uc(struct msc_window *win,
-+				     unsigned int nr_blocks) {}
++static inline void
++msc_buffer_set_uc(struct msc_window *win, unsigned int nr_blocks) {}
 +static inline void msc_buffer_set_wb(struct msc_window *win) {}
 +#endif /* CONFIG_X86 */
 +
