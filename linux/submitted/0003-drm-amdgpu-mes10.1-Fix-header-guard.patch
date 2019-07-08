@@ -1,0 +1,45 @@
+From 3b539363f0c10f9cf9c2fae46536eea363d7a437 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jul 2019 14:00:55 -0700
+Subject: [PATCH 3/9] drm/amdgpu/mes10.1: Fix header guard
+
+clang warns:
+
+ In file included from drivers/gpu/drm/amd/amdgpu/nv.c:53:
+ drivers/gpu/drm/amd/amdgpu/../amdgpu/mes_v10_1.h:24:9: warning:
+ '__MES_V10_1_H__' is used as a header guard here, followed by #define of
+ a different macro [-Wheader-guard]
+ #ifndef __MES_V10_1_H__
+         ^~~~~~~~~~~~~~~
+ drivers/gpu/drm/amd/amdgpu/../amdgpu/mes_v10_1.h:25:9: note:
+ '__MES_v10_1_H__' is defined here; did you mean '__MES_V10_1_H__'?
+ #define __MES_v10_1_H__
+         ^~~~~~~~~~~~~~~
+         __MES_V10_1_H__
+ 1 warning generated.
+
+Capitalize the V.
+
+Fixes: 886f82aa7a1d ("drm/amdgpu/mes10.1: add ip block mes10.1 (v2)")
+Link: https://github.com/ClangBuiltLinux/linux/issues/582
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/amdgpu/mes_v10_1.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v10_1.h b/drivers/gpu/drm/amd/amdgpu/mes_v10_1.h
+index 17b9b53fa892..9afd6ddb01e9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v10_1.h
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v10_1.h
+@@ -22,7 +22,7 @@
+  */
+ 
+ #ifndef __MES_V10_1_H__
+-#define __MES_v10_1_H__
++#define __MES_V10_1_H__
+ 
+ extern const struct amdgpu_ip_block_version mes_v10_1_ip_block;
+ 
+-- 
+2.22.0
+

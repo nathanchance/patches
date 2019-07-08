@@ -1,0 +1,43 @@
+From cf86ff9078b50d9e664aadb7f6efa4be90ccb2f9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jul 2019 22:20:17 -0700
+Subject: [PATCH 9/9] drm/amd/powerplay: Zero initialize current_rpm in
+ vega20_get_fan_speed_percent
+
+clang warns (trimmed for brevity):
+
+drivers/gpu/drm/amd/amdgpu/../powerplay/vega20_ppt.c:3023:8: warning:
+variable 'current_rpm' is used uninitialized whenever '?:' condition is
+false [-Wsometimes-uninitialized]
+        ret = smu_get_current_rpm(smu, &current_rpm);
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+smu_get_current_rpm expands to a ternary operator conditional on
+smu->funcs->get_current_rpm being not NULL. When this is false,
+current_rpm will be uninitialized. Zero initialize current_rpm to
+avoid using random stack values if that ever happens.
+
+Fixes: ee0db82027ee ("drm/amd/powerplay: move PPTable_t uses into asic level")
+Link: https://github.com/ClangBuiltLinux/linux/issues/588
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/powerplay/vega20_ppt.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/powerplay/vega20_ppt.c b/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
+index e62dd6919b24..e37b39987587 100644
+--- a/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
++++ b/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
+@@ -3016,8 +3016,7 @@ static int vega20_get_fan_speed_percent(struct smu_context *smu,
+ 					uint32_t *speed)
+ {
+ 	int ret = 0;
+-	uint32_t percent = 0;
+-	uint32_t current_rpm;
++	uint32_t current_rpm = 0, percent = 0;
+ 	PPTable_t *pptable = smu->smu_table.driver_pptable;
+ 
+ 	ret = smu_get_current_rpm(smu, &current_rpm);
+-- 
+2.22.0
+
