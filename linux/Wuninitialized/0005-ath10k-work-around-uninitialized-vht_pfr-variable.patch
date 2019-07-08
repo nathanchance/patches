@@ -1,0 +1,49 @@
+From 9c46a2fe612ef385bc5aced9476509f062a6d6d7 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Mon, 8 Jul 2019 14:50:06 +0200
+Subject: [PATCH 5/5] ath10k: work around uninitialized vht_pfr variable
+
+As clang points out, the vht_pfr is assigned to a struct member
+without being initialized in one case:
+
+drivers/net/wireless/ath/ath10k/mac.c:7528:7: error: variable 'vht_pfr' is used uninitialized whenever 'if' condition
+      is false [-Werror,-Wsometimes-uninitialized]
+                if (!ath10k_mac_can_set_bitrate_mask(ar, band, mask,
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/wireless/ath/ath10k/mac.c:7551:20: note: uninitialized use occurs here
+                arvif->vht_pfr = vht_pfr;
+                                 ^~~~~~~
+drivers/net/wireless/ath/ath10k/mac.c:7528:3: note: remove the 'if' if its condition is always true
+                if (!ath10k_mac_can_set_bitrate_mask(ar, band, mask,
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/wireless/ath/ath10k/mac.c:7483:12: note: initialize the variable 'vht_pfr' to silence this warning
+        u8 vht_pfr;
+
+Add an explicit but probably incorrect initialization here.
+I suspect we want a better fix here, but chose this approach to
+illustrate the issue.
+
+Fixes: 8b97b055dc9d ("ath10k: fix failure to set multiple fixed rate")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(am from https://lore.kernel.org/lkml/20190708125050.3689133-1-arnd@arndb.de/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/ath/ath10k/mac.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index e43a566eef77..0606416dc971 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -7541,6 +7541,8 @@ static int ath10k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 								&vht_nss,
+ 								true);
+ 			update_bitrate_mask = false;
++		} else {
++			vht_pfr = 0;
+ 		}
+ 
+ 		mutex_lock(&ar->conf_mutex);
+-- 
+2.22.0
+
