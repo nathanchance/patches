@@ -1,7 +1,7 @@
-From dfc9e5284769d8d4417ccbfa13675c7d5366b4a8 Mon Sep 17 00:00:00 2001
+From 8b051fd4bd614ebbf855f95f4b35a8ed8aa6beab Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 11:48:41 +0100
-Subject: [PATCH 3/3] dma-mapping: work around clang bug
+Subject: [PATCH 3/4] dma-mapping: work around clang bug
 
 Clang has a rather annoying behavior of checking for integer
 arithmetic problems in code paths that are discarded by gcc
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index 6309a721394b..5301b98a9404 100644
+index 8d13e28a8e07..a457eba76d0e 100644
 --- a/include/linux/dma-mapping.h
 +++ b/include/linux/dma-mapping.h
 @@ -138,7 +138,11 @@ struct dma_map_ops {
