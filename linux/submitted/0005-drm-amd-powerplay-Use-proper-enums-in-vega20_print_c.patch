@@ -1,7 +1,7 @@
-From 04871f97911b88468cfc4a45d07d00e6482a77b2 Mon Sep 17 00:00:00 2001
+From 9b93fa231542638f2da64f6195c6df946e041634 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Jul 2019 22:03:12 -0700
-Subject: [PATCH 8/9] drm/amd/powerplay: Use proper enums in
+Subject: [PATCH 5/6] drm/amd/powerplay: Use proper enums in
  vega20_print_clk_levels
 
 clang warns:
@@ -33,7 +33,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/powerplay/vega20_ppt.c b/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
-index 0f14fe14ecd8..e62dd6919b24 100644
+index a76a22a18eb4..9204e4e50d09 100644
 --- a/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
 +++ b/drivers/gpu/drm/amd/powerplay/vega20_ppt.c
 @@ -992,7 +992,7 @@ static int vega20_print_clk_levels(struct smu_context *smu,
