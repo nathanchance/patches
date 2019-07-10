@@ -1,0 +1,85 @@
+From bf05b9a83cb1af33478255ea095ef9316ad1b85f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 9 Jul 2019 21:34:52 -0700
+Subject: [PATCH 9/9] net/mlx5e: Convert single case statement switch
+ statements into if statements
+
+During the review of commit 1ff2f0fa450e ("net/mlx5e: Return in default
+case statement in tx_post_resync_params"), Leon and Nick pointed out
+that the switch statements can be converted to single if statements
+that return early so that the code is easier to follow.
+
+Suggested-by: Leon Romanovsky <leon@kernel.org>
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ .../mellanox/mlx5/core/en_accel/ktls_tx.c     | 34 ++++++-------------
+ 1 file changed, 11 insertions(+), 23 deletions(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
+index 5c08891806f0..ea032f54197e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
+@@ -25,23 +25,17 @@ static void
+ fill_static_params_ctx(void *ctx, struct mlx5e_ktls_offload_context_tx *priv_tx)
+ {
+ 	struct tls_crypto_info *crypto_info = priv_tx->crypto_info;
++	struct tls12_crypto_info_aes_gcm_128 *info;
+ 	char *initial_rn, *gcm_iv;
+ 	u16 salt_sz, rec_seq_sz;
+ 	char *salt, *rec_seq;
+ 	u8 tls_version;
+ 
+-	switch (crypto_info->cipher_type) {
+-	case TLS_CIPHER_AES_GCM_128: {
+-		struct tls12_crypto_info_aes_gcm_128 *info =
+-			(struct tls12_crypto_info_aes_gcm_128 *)crypto_info;
+-
+-		EXTRACT_INFO_FIELDS;
+-		break;
+-	}
+-	default:
+-		WARN_ON(1);
++	if (WARN_ON(crypto_info->cipher_type != TLS_CIPHER_AES_GCM_128))
+ 		return;
+-	}
++
++	info = (struct tls12_crypto_info_aes_gcm_128 *)crypto_info;
++	EXTRACT_INFO_FIELDS;
+ 
+ 	gcm_iv      = MLX5_ADDR_OF(tls_static_params, ctx, gcm_iv);
+ 	initial_rn  = MLX5_ADDR_OF(tls_static_params, ctx, initial_record_number);
+@@ -234,24 +228,18 @@ tx_post_resync_params(struct mlx5e_txqsq *sq,
+ 		      u64 rcd_sn)
+ {
+ 	struct tls_crypto_info *crypto_info = priv_tx->crypto_info;
++	struct tls12_crypto_info_aes_gcm_128 *info;
+ 	__be64 rn_be = cpu_to_be64(rcd_sn);
+ 	bool skip_static_post;
+ 	u16 rec_seq_sz;
+ 	char *rec_seq;
+ 
+-	switch (crypto_info->cipher_type) {
+-	case TLS_CIPHER_AES_GCM_128: {
+-		struct tls12_crypto_info_aes_gcm_128 *info =
+-			(struct tls12_crypto_info_aes_gcm_128 *)crypto_info;
+-
+-		rec_seq = info->rec_seq;
+-		rec_seq_sz = sizeof(info->rec_seq);
+-		break;
+-	}
+-	default:
+-		WARN_ON(1);
++	if (WARN_ON(crypto_info->cipher_type != TLS_CIPHER_AES_GCM_128))
+ 		return;
+-	}
++
++	info = (struct tls12_crypto_info_aes_gcm_128 *)crypto_info;
++	rec_seq = info->rec_seq;
++	rec_seq_sz = sizeof(info->rec_seq);
+ 
+ 	skip_static_post = !memcmp(rec_seq, &rn_be, rec_seq_sz);
+ 	if (!skip_static_post)
+-- 
+2.22.0
+

@@ -1,7 +1,7 @@
-From 6969d1e8e45ac431fe0e85b5114e5fbc0933250d Mon Sep 17 00:00:00 2001
+From d3468c3b1d119b1ce781b9866158e4936604891c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Jul 2019 21:26:05 -0700
-Subject: [PATCH 4/7] drm/amd/display: Use proper enum conversion functions
+Subject: [PATCH 4/9] drm/amd/display: Use proper enum conversion functions
 
 clang warns:
 
@@ -30,10 +30,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
-index eac09bfe3be2..0f76cfff9d9b 100644
+index 086a3bf83226..7e4f6da673fe 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
-@@ -333,7 +333,7 @@ bool dm_pp_get_clock_levels_by_type(
+@@ -334,7 +334,7 @@ bool dm_pp_get_clock_levels_by_type(
  		}
  	} else if (adev->smu.funcs && adev->smu.funcs->get_clock_by_type) {
  		if (smu_get_clock_by_type(&adev->smu,
@@ -42,7 +42,7 @@ index eac09bfe3be2..0f76cfff9d9b 100644
  					  &pp_clks)) {
  			get_default_clock_levels(clk_type, dc_clks);
  			return true;
-@@ -418,7 +418,7 @@ bool dm_pp_get_clock_levels_by_type_with_latency(
+@@ -419,7 +419,7 @@ bool dm_pp_get_clock_levels_by_type_with_latency(
  			return false;
  	} else if (adev->smu.ppt_funcs && adev->smu.ppt_funcs->get_clock_by_type_with_latency) {
  		if (smu_get_clock_by_type_with_latency(&adev->smu,
