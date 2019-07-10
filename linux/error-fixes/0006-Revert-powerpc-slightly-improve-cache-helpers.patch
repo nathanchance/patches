@@ -1,0 +1,51 @@
+From 6c8dca92df12291f2f1ae76f20219fd1fee02a06 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 8 Jul 2019 12:56:16 -0700
+Subject: [PATCH 6/6] Revert "powerpc: slightly improve cache helpers"
+
+Causes the following failure:
+
+https://travis-ci.com/ClangBuiltLinux/continuous-integration/jobs/213944668
+
+This reverts commit 6c5875843b87c3adea2beade9d1b8b3d4523900a.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/593
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/include/asm/cache.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/powerpc/include/asm/cache.h b/arch/powerpc/include/asm/cache.h
+index b3388d95f451..45e3137ccd71 100644
+--- a/arch/powerpc/include/asm/cache.h
++++ b/arch/powerpc/include/asm/cache.h
+@@ -107,22 +107,22 @@ extern void _set_L3CR(unsigned long);
+ 
+ static inline void dcbz(void *addr)
+ {
+-	__asm__ __volatile__ ("dcbz %y0" : : "Z"(*(u8 *)addr) : "memory");
++	__asm__ __volatile__ ("dcbz 0, %0" : : "r"(addr) : "memory");
+ }
+ 
+ static inline void dcbi(void *addr)
+ {
+-	__asm__ __volatile__ ("dcbi %y0" : : "Z"(*(u8 *)addr) : "memory");
++	__asm__ __volatile__ ("dcbi 0, %0" : : "r"(addr) : "memory");
+ }
+ 
+ static inline void dcbf(void *addr)
+ {
+-	__asm__ __volatile__ ("dcbf %y0" : : "Z"(*(u8 *)addr) : "memory");
++	__asm__ __volatile__ ("dcbf 0, %0" : : "r"(addr) : "memory");
+ }
+ 
+ static inline void dcbst(void *addr)
+ {
+-	__asm__ __volatile__ ("dcbst %y0" : : "Z"(*(u8 *)addr) : "memory");
++	__asm__ __volatile__ ("dcbst 0, %0" : : "r"(addr) : "memory");
+ }
+ #endif /* !__ASSEMBLY__ */
+ #endif /* __KERNEL__ */
+-- 
+2.22.0
+
