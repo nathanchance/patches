@@ -1,0 +1,36 @@
+From 5c34c7ff01f6e26edbd0bc03203410ebc0ff05e1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 10 Jul 2019 10:47:00 -0700
+Subject: [PATCH 8/8] rdma/siw: Use proper enumerated type in map_cqe_status
+
+clang warns several times:
+
+drivers/infiniband/sw/siw/siw_cq.c:31:4: warning: implicit conversion
+from enumeration type 'enum siw_wc_status' to different enumeration type
+'enum siw_opcode' [-Wenum-conversion]
+        { SIW_WC_SUCCESS, IB_WC_SUCCESS },
+        ~ ^~~~~~~~~~~~~~
+
+Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
+Link: https://github.com/ClangBuiltLinux/linux/issues/596
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/infiniband/sw/siw/siw_cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
+index e2a0ee40d5b5..e381ae9b7d62 100644
+--- a/drivers/infiniband/sw/siw/siw_cq.c
++++ b/drivers/infiniband/sw/siw/siw_cq.c
+@@ -25,7 +25,7 @@ static int map_wc_opcode[SIW_NUM_OPCODES] = {
+ };
+ 
+ static struct {
+-	enum siw_opcode siw;
++	enum siw_wc_status siw;
+ 	enum ib_wc_status ib;
+ } map_cqe_status[SIW_NUM_WC_STATUS] = {
+ 	{ SIW_WC_SUCCESS, IB_WC_SUCCESS },
+-- 
+2.22.0
+
