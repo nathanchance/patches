@@ -1,27 +1,25 @@
-From 724d00a0042a6287ff79a787f4cf0754ed02f28b Mon Sep 17 00:00:00 2001
+From 3d9f44b5b402c5fb8d6654f7f49bd9654f06a2ba Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 25 Sep 2018 13:47:47 -0700
-Subject: [PATCH 3/5] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
- with KASAN
+Date: Fri, 12 Jul 2019 11:23:32 -0700
+Subject: [PATCH 2/2] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
 
-This is an LLVM issue, all of the warnings don't happen with KASAN
-disabled: https://bugs.llvm.org/show_bug.cgi?id=38809
+There are a few of these warnings remaining but I don't want to see them
+at the moment.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/39
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  lib/Kconfig.debug | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 0954aca76e27..72450e041b61 100644
+index 0954aca76e27..d8e5a69a7c29 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -250,6 +250,7 @@ config ENABLE_MUST_CHECK
  config FRAME_WARN
  	int "Warn for stack frames larger than (needs gcc 4.4)"
  	range 0 8192
-+	default 0 if KASAN && CC_IS_CLANG
++	default 0 if CC_IS_CLANG
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
