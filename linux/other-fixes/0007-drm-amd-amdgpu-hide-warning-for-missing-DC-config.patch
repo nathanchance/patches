@@ -1,0 +1,59 @@
+From 162ccc2bef91305a18c909f4cb5a3b6c8409208a Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Fri, 12 Jul 2019 11:40:49 +0200
+Subject: [PATCH 7/7] drm/amd/amdgpu: hide #warning for missing DC config
+
+It is annoying to have #warnings that trigger in randconfig
+builds like
+
+drivers/gpu/drm/amd/amdgpu/soc15.c:653:3: error: "Enable CONFIG_DRM_AMD_DC for display support on SOC15."
+drivers/gpu/drm/amd/amdgpu/nv.c:400:3: error: "Enable CONFIG_DRM_AMD_DC for display support on navi."
+
+Remove these and rely on the users to turn these on.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(am from https://lore.kernel.org/lkml/20190712094118.1559434-1-arnd@arndb.de/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/amdgpu/nv.c    | 2 --
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 4 ----
+ 2 files changed, 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/nv.c b/drivers/gpu/drm/amd/amdgpu/nv.c
+index 9253c03d387a..10ec0e81ee58 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -396,8 +396,6 @@ int nv_set_ip_blocks(struct amdgpu_device *adev)
+ #if defined(CONFIG_DRM_AMD_DC)
+ 		else if (amdgpu_device_has_dc_support(adev))
+ 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
+-#else
+-#	warning "Enable CONFIG_DRM_AMD_DC for display support on navi."
+ #endif
+ 		amdgpu_device_ip_block_add(adev, &gfx_v10_0_ip_block);
+ 		amdgpu_device_ip_block_add(adev, &sdma_v5_0_ip_block);
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index 87152d8ef0df..90fb0149fbea 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -649,8 +649,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+ #if defined(CONFIG_DRM_AMD_DC)
+ 		else if (amdgpu_device_has_dc_support(adev))
+ 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
+-#else
+-#	warning "Enable CONFIG_DRM_AMD_DC for display support on SOC15."
+ #endif
+ 		if (!(adev->asic_type == CHIP_VEGA20 && amdgpu_sriov_vf(adev))) {
+ 			amdgpu_device_ip_block_add(adev, &uvd_v7_0_ip_block);
+@@ -671,8 +669,6 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
+ #if defined(CONFIG_DRM_AMD_DC)
+ 		else if (amdgpu_device_has_dc_support(adev))
+ 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
+-#else
+-#	warning "Enable CONFIG_DRM_AMD_DC for display support on SOC15."
+ #endif
+ 		amdgpu_device_ip_block_add(adev, &vcn_v1_0_ip_block);
+ 		break;
+-- 
+2.22.0
+

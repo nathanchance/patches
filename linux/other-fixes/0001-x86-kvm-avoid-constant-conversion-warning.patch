@@ -1,7 +1,7 @@
 From be757e4340867087520a05ef2491da490315f3f0 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 12 Jul 2019 11:12:30 +0200
-Subject: [PATCH 1/6] x86: kvm: avoid constant-conversion warning
+Subject: [PATCH 1/7] x86: kvm: avoid constant-conversion warning
 
 clang finds a contruct suspicious that converts an unsigned
 character to a signed integer and back, causing an overflow:

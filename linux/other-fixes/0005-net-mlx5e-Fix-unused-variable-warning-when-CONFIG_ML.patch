@@ -1,7 +1,7 @@
 From b9d3eba578d5c00d9b0352431b08f93c885c437d Mon Sep 17 00:00:00 2001
 From: Saeed Mahameed <saeedm@mellanox.com>
 Date: Thu, 11 Jul 2019 19:39:57 +0000
-Subject: [PATCH 5/6] net/mlx5e: Fix unused variable warning when
+Subject: [PATCH 5/7] net/mlx5e: Fix unused variable warning when
  CONFIG_MLX5_ESWITCH is off
 
 In mlx5e_setup_tc "priv" variable is not being used if
