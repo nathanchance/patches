@@ -1,7 +1,7 @@
-From ee4b31359924876c177d6aa91ea72d2089d57a72 Mon Sep 17 00:00:00 2001
+From 1b0336b26ed280f2ca52564dfce7d66b48436cd9 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Mon, 8 Jul 2019 14:50:06 +0200
-Subject: [PATCH 5/5] ath10k: work around uninitialized vht_pfr variable
+Subject: [PATCH 4/4] ath10k: work around uninitialized vht_pfr variable
 
 As clang points out, the vht_pfr is assigned to a struct member
 without being initialized in one case:
