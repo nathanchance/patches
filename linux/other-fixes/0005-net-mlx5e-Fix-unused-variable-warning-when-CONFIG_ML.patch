@@ -1,0 +1,53 @@
+From ee50e18c73848ba4b8198b85288fa8006e57f9c4 Mon Sep 17 00:00:00 2001
+From: Saeed Mahameed <saeedm@mellanox.com>
+Date: Thu, 11 Jul 2019 19:39:57 +0000
+Subject: [PATCH 5/5] net/mlx5e: Fix unused variable warning when
+ CONFIG_MLX5_ESWITCH is off
+
+In mlx5e_setup_tc "priv" variable is not being used if
+CONFIG_MLX5_ESWITCH is off, one way to fix this is to actually use it.
+
+mlx5e_setup_tc_mqprio also needs the "priv" variable and it extracts it
+on its own. We can simply pass priv to mlx5e_setup_tc_mqprio instead of
+netdev and avoid extracting the priv var, which will also resolve the
+compiler warning.
+
+Fixes: 4e95bc268b91 ("net: flow_offload: add flow_block_cb_setup_simple()")
+Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
+Reviewed-by: Mark Bloch <markb@mellanox.com>
+Reviewed-by: Tariq Toukan <tariqt@mellanox.com>
+CC: Nathan Chancellor <natechancellor@gmail.com>
+(am from https://lore.kernel.org/netdev/20190711193937.29802-3-saeedm@mellanox.com/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 6d0ae87c8ded..9163d6904741 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3390,10 +3390,9 @@ static int mlx5e_modify_channels_vsd(struct mlx5e_channels *chs, bool vsd)
+ 	return 0;
+ }
+ 
+-static int mlx5e_setup_tc_mqprio(struct net_device *netdev,
++static int mlx5e_setup_tc_mqprio(struct mlx5e_priv *priv,
+ 				 struct tc_mqprio_qopt *mqprio)
+ {
+-	struct mlx5e_priv *priv = netdev_priv(netdev);
+ 	struct mlx5e_channels new_channels = {};
+ 	u8 tc = mqprio->num_tc;
+ 	int err = 0;
+@@ -3475,7 +3474,7 @@ static int mlx5e_setup_tc(struct net_device *dev, enum tc_setup_type type,
+ 						  priv, priv, true);
+ #endif
+ 	case TC_SETUP_QDISC_MQPRIO:
+-		return mlx5e_setup_tc_mqprio(dev, type_data);
++		return mlx5e_setup_tc_mqprio(priv, type_data);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+-- 
+2.22.0
+

@@ -1,7 +1,7 @@
-From aca7c4b2d48b0b0f436fac67d2034dfbd095b561 Mon Sep 17 00:00:00 2001
+From a9cb786dbb99a86a99b5173af1f23911940ca25b Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 11:48:41 +0100
-Subject: [PATCH 3/4] dma-mapping: work around clang bug
+Subject: [PATCH 3/5] dma-mapping: work around clang bug
 
 Clang has a rather annoying behavior of checking for integer
 arithmetic problems in code paths that are discarded by gcc
