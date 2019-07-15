@@ -1,7 +1,7 @@
-From 858041b65936ae7044d678b9c78a0dd5eaa0b354 Mon Sep 17 00:00:00 2001
+From 31ccefcd1a8c3200a6c86e113ba8c95253e85679 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 12 Jul 2019 11:24:09 +0200
-Subject: [PATCH 3/7] mic: avoid statically declaring a 'struct device'.
+Subject: [PATCH 3/6] mic: avoid statically declaring a 'struct device'.
 
 Generally, declaring a platform device as a static variable is
 a bad idea and can cause all kinds of problems, in particular

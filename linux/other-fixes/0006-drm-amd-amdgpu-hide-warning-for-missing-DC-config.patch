@@ -1,7 +1,7 @@
-From 162ccc2bef91305a18c909f4cb5a3b6c8409208a Mon Sep 17 00:00:00 2001
+From e3c5ec7d4f5008a0427d23bdbae7e6b8cd0df497 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 12 Jul 2019 11:40:49 +0200
-Subject: [PATCH 7/7] drm/amd/amdgpu: hide #warning for missing DC config
+Subject: [PATCH 6/6] drm/amd/amdgpu: hide #warning for missing DC config
 
 It is annoying to have #warnings that trigger in randconfig
 builds like
@@ -20,10 +20,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/nv.c b/drivers/gpu/drm/amd/amdgpu/nv.c
-index 9253c03d387a..10ec0e81ee58 100644
+index ad430cbcd72f..662612f89c70 100644
 --- a/drivers/gpu/drm/amd/amdgpu/nv.c
 +++ b/drivers/gpu/drm/amd/amdgpu/nv.c
-@@ -396,8 +396,6 @@ int nv_set_ip_blocks(struct amdgpu_device *adev)
+@@ -392,8 +392,6 @@ int nv_set_ip_blocks(struct amdgpu_device *adev)
  #if defined(CONFIG_DRM_AMD_DC)
  		else if (amdgpu_device_has_dc_support(adev))
  			amdgpu_device_ip_block_add(adev, &dm_ip_block);
