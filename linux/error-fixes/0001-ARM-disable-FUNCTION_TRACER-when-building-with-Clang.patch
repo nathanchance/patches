@@ -1,4 +1,4 @@
-From 8550a4edb3757bbf243bd701ad4b061ecde4a8bb Mon Sep 17 00:00:00 2001
+From 80e56c1bd4e78e13f86ba207c5816339964f72a7 Mon Sep 17 00:00:00 2001
 From: Tri Vo <trong@android.com>
 Date: Wed, 22 May 2019 17:56:57 -0700
 Subject: [PATCH 1/6] ARM: disable FUNCTION_TRACER when building with Clang
@@ -27,7 +27,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index ade9feb7fd92..97aa6e1dbcd6 100644
+index 33b00579beff..548f8df46846 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
 @@ -78,7 +78,7 @@ config ARM
