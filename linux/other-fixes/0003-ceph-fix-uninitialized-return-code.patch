@@ -1,7 +1,7 @@
 From 31eb008a187bdc1d66f36d7d82ba7d2edac4dfff Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Mon, 8 Jul 2019 15:48:08 +0200
-Subject: [PATCH 3/4] ceph: fix uninitialized return code
+Subject: [PATCH 3/5] ceph: fix uninitialized return code
 
 clang points out a -Wsometimed-uninitized bug in the modified
 ceph_real_mount() function:
