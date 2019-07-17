@@ -1,7 +1,7 @@
-From dccbc1676ed3e1bd386f68acb2a0365759df88ac Mon Sep 17 00:00:00 2001
+From f5857442057b23c36db81d2bd6209081efdd09d0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 3 Jul 2019 21:26:05 -0700
-Subject: [PATCH 3/4] drm/amd/display: Use proper enum conversion functions
+Subject: [PATCH 3/3] drm/amd/display: Use proper enum conversion functions
 
 clang warns:
 
@@ -30,7 +30,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
-index 086a3bf83226..7e4f6da673fe 100644
+index 592fa499c9f8..9594c154664f 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
 @@ -334,7 +334,7 @@ bool dm_pp_get_clock_levels_by_type(
