@@ -1,0 +1,30 @@
+From 9c54d2acd9ae043d018d4a0d11be99cc3a70c481 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 12 Jul 2019 11:20:15 -0700
+Subject: [PATCH 16/18] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls
+
+So that I can compile with -Werror.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/checksyscalls.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
+index a18b47695f55..76ade22f7786 100755
+--- a/scripts/checksyscalls.sh
++++ b/scripts/checksyscalls.sh
+@@ -249,6 +249,10 @@ cat << EOF
+ #define __IGNORE_getpmsg
+ #define __IGNORE_putpmsg
+ #define __IGNORE_vserver
++
++#if defined(CONFIG_PPC32) || defined(CONFIG_PPC64)
++#define __IGNORE_clone3
++#endif
+ EOF
+ }
+ 
+-- 
+2.22.0
+

@@ -1,0 +1,35 @@
+From 741853995c9f9defdc7c5f2469a9e7a664abd8e2 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 28 Jul 2019 08:04:12 -0700
+Subject: [PATCH 07/18] Partially revert "powerpc: slightly improve cache
+ helpers"
+
+Causes the following failure:
+
+https://travis-ci.com/ClangBuiltLinux/continuous-integration/jobs/213944668
+
+This partially reverts commit 6c5875843b87c3adea2beade9d1b8b3d4523900a.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/593
+Link: https://llvm.org/pr42762
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/include/asm/cache.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/include/asm/cache.h b/arch/powerpc/include/asm/cache.h
+index b3388d95f451..ba76291b4d4d 100644
+--- a/arch/powerpc/include/asm/cache.h
++++ b/arch/powerpc/include/asm/cache.h
+@@ -107,7 +107,7 @@ extern void _set_L3CR(unsigned long);
+ 
+ static inline void dcbz(void *addr)
+ {
+-	__asm__ __volatile__ ("dcbz %y0" : : "Z"(*(u8 *)addr) : "memory");
++	__asm__ __volatile__ ("dcbz 0, %0" : : "r"(addr) : "memory");
+ }
+ 
+ static inline void dcbi(void *addr)
+-- 
+2.22.0
+

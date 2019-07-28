@@ -1,0 +1,44 @@
+From 5d271ed01ab594f55d215878dc4106049d3fe1f7 Mon Sep 17 00:00:00 2001
+From: Tri Vo <trong@android.com>
+Date: Wed, 22 May 2019 17:56:57 -0700
+Subject: [PATCH 02/18] ARM: disable FUNCTION_TRACER when building with Clang
+
+Clang needs "-meabi gnu" flag to emit calls to "__gnu_mcount_nc".
+Otherwise, it inserts calls to undefined "mcount".
+
+  kernel/softirq.o: In function `_local_bh_enable':
+  ...
+  undefined reference to `mcount'
+
+"-meabi gnu" resolves link failures.  However, Clang does not implement
+calls to "__gnu_mcount_nc" correctly.  It does not save the link
+register on the stack, which corrupts the stack.  The resulting kernel
+does not boot.
+
+Disable FUNCTION_TRACER support when building with Clang.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/35
+Suggested-by: Stefan Agner <stefan@agner.ch>
+Signed-off-by: Tri Vo <trong@android.com>
+(am from https://lore.kernel.org/lkml/20190523005657.170008-1-trong@android.com/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 33b00579beff..548f8df46846 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -78,7 +78,7 @@ config ARM
+ 	select HAVE_FAST_GUP if ARM_LPAE
+ 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
+ 	select HAVE_FUNCTION_GRAPH_TRACER if !THUMB2_KERNEL && !CC_IS_CLANG
+-	select HAVE_FUNCTION_TRACER if !XIP_KERNEL
++	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !CC_IS_CLANG
+ 	select HAVE_GCC_PLUGINS
+ 	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
+ 	select HAVE_IDE if PCI || ISA || PCMCIA
+-- 
+2.22.0
+
