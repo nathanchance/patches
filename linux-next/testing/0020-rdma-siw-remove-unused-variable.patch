@@ -1,0 +1,43 @@
+From aebeb437c6ebaaa164a50941760c1b74f3beb09c Mon Sep 17 00:00:00 2001
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Fri, 26 Jul 2019 11:25:40 +0200
+Subject: [PATCH 20/21] rdma: siw: remove unused variable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The variable 'p' si no longer used and the compiler rightly complains
+that it should be removed.
+
+../drivers/infiniband/sw/siw/siw_mem.c: In function ‘siw_free_plist’:
+../drivers/infiniband/sw/siw/siw_mem.c:66:16: warning: unused variable
+ ‘p’ [-Wunused-variable]
+  struct page **p = chunk->plist;
+                ^
+
+Rework to remove unused variable.
+
+Fixes: 8288d030447f ("mm/gup: add make_dirty arg to put_user_pages_dirty_lock()")
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+(am from https://lore.kernel.org/lkml/20190726092540.22467-1-anders.roxell@linaro.org/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/infiniband/sw/siw/siw_mem.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/infiniband/sw/siw/siw_mem.c b/drivers/infiniband/sw/siw/siw_mem.c
+index 358d440efa11..ab83a9cec562 100644
+--- a/drivers/infiniband/sw/siw/siw_mem.c
++++ b/drivers/infiniband/sw/siw/siw_mem.c
+@@ -63,8 +63,6 @@ struct siw_mem *siw_mem_id2obj(struct siw_device *sdev, int stag_index)
+ static void siw_free_plist(struct siw_page_chunk *chunk, int num_pages,
+ 			   bool dirty)
+ {
+-	struct page **p = chunk->plist;
+-
+ 	put_user_pages_dirty_lock(chunk->plist, num_pages, dirty);
+ }
+ 
+-- 
+2.22.0
+
