@@ -1,7 +1,7 @@
-From bbf6b9c556f39bec6381cfd398d40da2b21850dd Mon Sep 17 00:00:00 2001
+From bd71f876450d47e37a9f2c97018cc372cfce6794 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 3 Jun 2019 15:04:36 -0700
-Subject: [PATCH 13/18] PCI: rpaphp: Avoid a sometimes-uninitialized warning
+Date: Mon, 3 Jun 2019 15:11:58 -0700
+Subject: [PATCH 04/31] PCI: rpaphp: Avoid a sometimes-uninitialized warning
 
 When building with -Wsometimes-uninitialized, clang warns:
 
@@ -28,9 +28,15 @@ fndit is only used to gate a sprintf call, which can be moved into the
 loop to simplify the code and eliminate the local variable, which will
 fix this warning.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/504
 Fixes: 2fcf3ae508c2 ("hotplug/drc-info: Add code to search ibm,drc-info property")
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Acked-by: Joel Savitz <jsavitz@redhat.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://github.com/ClangBuiltLinux/linux/issues/504
+Link: https://lore.kernel.org/r/20190603221157.58502-1-natechancellor@gmail.com
+(am from https://git.kernel.org/powerpc/c/0df3e42167caaf9f8c7b64de3da40a459979afe8)
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/pci/hotplug/rpaphp_core.c | 18 +++++++-----------
@@ -74,5 +80,5 @@ index bcd5d357ca23..c3899ee1db99 100644
  	if (((drc_name == NULL) ||
  	     (drc_name && !strcmp(drc_name, cell_drc_name))) &&
 -- 
-2.22.0
+2.23.0
 

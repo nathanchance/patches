@@ -1,7 +1,7 @@
-From 06a40cf3e6e7f759ccbea373ed1a4467336fb58c Mon Sep 17 00:00:00 2001
+From 170d5b75e1a34205830d2b27ca90ffec358cd174 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:08:06 -0700
-Subject: [PATCH 14/18] drm/i915: Avoid false -Wsometimes-uninitialized warning
+Subject: [PATCH 26/31] drm/i915: Avoid false -Wsometimes-uninitialized warning
  in busywait_stop
 
 drivers/gpu/drm/i915/i915_request.c:1032:6: warning: variable 'this_cpu'
@@ -31,5 +31,5 @@ index a195a92d0105..be60e81799b3 100644
  
  	return this_cpu != cpu;
 -- 
-2.22.0
+2.23.0
 

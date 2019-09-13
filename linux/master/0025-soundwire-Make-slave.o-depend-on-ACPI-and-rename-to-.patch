@@ -1,0 +1,83 @@
+From 92cae6e776b17329bf70afe4fa9b3d79ce853623 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 13 Aug 2019 10:42:32 -0700
+Subject: [PATCH 25/31] soundwire: Make slave.o depend on ACPI and rename to
+ acpi_slave.o
+
+clang warns when CONFIG_ACPI is unset:
+
+../drivers/soundwire/slave.c:16:12: warning: unused function
+'sdw_slave_add' [-Wunused-function]
+static int sdw_slave_add(struct sdw_bus *bus,
+           ^
+1 warning generated.
+
+Before commit 8676b3ca4673 ("soundwire: fix regmap dependencies and
+align with other serial links"), this code would only be compiled when
+ACPI was set because it was only selected by SOUNDWIRE_INTEL, which
+depends on ACPI.
+
+Now, this code can be compiled without CONFIG_ACPI, which causes the
+above warning. The IS_ENABLED(CONFIG_ACPI) guard could be moved to avoid
+compiling the function; however, slave.c only contains three functions,
+two of which are static. Since slave.c is completetely dependent on
+ACPI, rename it to acpi_slave.c and only compile it when CONFIG_ACPI
+is set so sdw_acpi_find_slaves will actually be used. bus.h contains
+a stub for sdw_acpi_find_slaves so there will be no issues with an
+undefined function.
+
+This has been build tested with CONFIG_ACPI set and unset in combination
+with CONFIG_SOUNDWIRE unset, built in, and a module.
+
+Fixes: 8676b3ca4673 ("soundwire: fix regmap dependencies and align with other serial links")
+Link: https://github.com/ClangBuiltLinux/linux/issues/637
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/soundwire/Makefile                  | 6 +++++-
+ drivers/soundwire/{slave.c => acpi_slave.c} | 3 ---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+ rename drivers/soundwire/{slave.c => acpi_slave.c} (98%)
+
+diff --git a/drivers/soundwire/Makefile b/drivers/soundwire/Makefile
+index 45b7e5001653..718d8dd0ac79 100644
+--- a/drivers/soundwire/Makefile
++++ b/drivers/soundwire/Makefile
+@@ -4,9 +4,13 @@
+ #
+ 
+ #Bus Objs
+-soundwire-bus-objs := bus_type.o bus.o slave.o mipi_disco.o stream.o
++soundwire-bus-objs := bus_type.o bus.o mipi_disco.o stream.o
+ obj-$(CONFIG_SOUNDWIRE) += soundwire-bus.o
+ 
++ifdef CONFIG_ACPI
++soundwire-bus-objs += acpi_slave.o
++endif
++
+ #Cadence Objs
+ soundwire-cadence-objs := cadence_master.o
+ obj-$(CONFIG_SOUNDWIRE_CADENCE) += soundwire-cadence.o
+diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/acpi_slave.c
+similarity index 98%
+rename from drivers/soundwire/slave.c
+rename to drivers/soundwire/acpi_slave.c
+index f39a5815e25d..0dc188e6873b 100644
+--- a/drivers/soundwire/slave.c
++++ b/drivers/soundwire/acpi_slave.c
+@@ -60,7 +60,6 @@ static int sdw_slave_add(struct sdw_bus *bus,
+ 	return ret;
+ }
+ 
+-#if IS_ENABLED(CONFIG_ACPI)
+ /*
+  * sdw_acpi_find_slaves() - Find Slave devices in Master ACPI node
+  * @bus: SDW bus instance
+@@ -110,5 +109,3 @@ int sdw_acpi_find_slaves(struct sdw_bus *bus)
+ 
+ 	return 0;
+ }
+-
+-#endif
+-- 
+2.23.0
+

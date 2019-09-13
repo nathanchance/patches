@@ -1,7 +1,7 @@
-From 2b0f26166b1576708f5f04417141ad294286e98b Mon Sep 17 00:00:00 2001
+From 8a934baca6f32a608798de5efa10878d5a59b5f0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 17 Jun 2019 18:54:16 -0700
-Subject: [PATCH 12/18] ARM: iop13xx: Simplify iop13xx_atu{e,x}_pci_status
+Subject: [PATCH 05/31] ARM: iop13xx: Simplify iop13xx_atu{e,x}_pci_status
  checks
 
 clang warns:
@@ -49,5 +49,5 @@ index 46ea06e906cc..94d30bc7bba1 100644
  
  		where = (where & 3) * 8;
 -- 
-2.22.0
+2.23.0
 

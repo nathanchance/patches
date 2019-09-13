@@ -1,7 +1,7 @@
-From 3bdc892248e8d09e07e0ffb9336277af003fd7d2 Mon Sep 17 00:00:00 2001
+From 2422f90ce3de73b1bee0e8562ef140621b2a3149 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 3 Jul 2019 21:26:05 -0700
-Subject: [PATCH 01/18] drm/amd/display: Use proper enum conversion functions
+Date: Wed, 3 Jul 2019 22:52:16 -0700
+Subject: [PATCH 02/31] drm/amd/display: Use proper enum conversion functions
 
 clang warns:
 
@@ -24,6 +24,9 @@ them so there are no longer any warnings.
 Fixes: a43913ea50a5 ("drm/amd/powerplay: add function get_clock_by_type_with_latency for navi10")
 Fixes: e5e4e22391c2 ("drm/amd/powerplay: add interface to get clock by type with latency for display (v2)")
 Link: https://github.com/ClangBuiltLinux/linux/issues/586
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+(am from https://cgit.freedesktop.org/~agd5f/linux/commit/?id=1f9017cd5dbaa041c9905c3998ee5554f9bf2e67)
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c | 4 ++--
@@ -52,5 +55,5 @@ index 592fa499c9f8..9594c154664f 100644
  			return false;
  	}
 -- 
-2.22.0
+2.23.0
 
