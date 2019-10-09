@@ -1,7 +1,7 @@
-From 137ed2b6213319d908402dddd8a5fe0dd4447fad Mon Sep 17 00:00:00 2001
+From e84ba3b3dea9d03e32d62aa6b8a4503d62dd27d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 5 Sep 2019 08:40:20 -0700
-Subject: [PATCH 04/21] powerpc/prom_init: Use -ffreestanding to avoid a
+Subject: [PATCH 04/17] powerpc/prom_init: Use -ffreestanding to avoid a
  reference to bcmp
 
 r370454 gives LLVM the ability to convert certain loops into a reference
@@ -30,7 +30,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/kernel/Makefile b/arch/powerpc/kernel/Makefile
-index 19f19c8c874b..aa78b3f6271e 100644
+index f1f362146135..7f0ee465dfb6 100644
 --- a/arch/powerpc/kernel/Makefile
 +++ b/arch/powerpc/kernel/Makefile
 @@ -21,7 +21,7 @@ CFLAGS_prom_init.o += $(DISABLE_LATENT_ENTROPY_PLUGIN)

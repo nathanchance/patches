@@ -1,0 +1,51 @@
+From 45ec25a1ea36d3315ffb096169a5cda62f921f6a Mon Sep 17 00:00:00 2001
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Date: Sat, 18 May 2019 15:53:52 -0400
+Subject: [PATCH 10/17] treewide: fix awk regexp over-escaping
+
+Fix "warning: regexp escape sequence is not a known regexp operator" on
+gawk 5.0.0.
+
+Results found by:
+
+- grepping '\\[^\[\\^$.|?*+()a-z]' on *.awk
+- grepping 'awk.*\\[^\[\\^$.|?*+()a-z]'
+- running awk --lint -f </dev/null >/dev/null on *.awk
+
+Signed-off-by: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
+(am from https://lore.kernel.org/lkml/20190518195352.124018-1-alex_y_xu@yahoo.ca/)
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ lib/raid6/unroll.awk                           | 2 +-
+ tools/perf/arch/x86/tests/gen-insn-x86-dat.awk | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/raid6/unroll.awk b/lib/raid6/unroll.awk
+index c6aa03631df8..0809805a7e23 100644
+--- a/lib/raid6/unroll.awk
++++ b/lib/raid6/unroll.awk
+@@ -13,7 +13,7 @@ BEGIN {
+ 	for (i = 0; i < rep; ++i) {
+ 		tmp = $0
+ 		gsub(/\$\$/, i, tmp)
+-		gsub(/\$\#/, n, tmp)
++		gsub(/\$#/, n, tmp)
+ 		gsub(/\$\*/, "$", tmp)
+ 		print tmp
+ 	}
+diff --git a/tools/perf/arch/x86/tests/gen-insn-x86-dat.awk b/tools/perf/arch/x86/tests/gen-insn-x86-dat.awk
+index 1a29f6379bde..b44a8d74dd02 100644
+--- a/tools/perf/arch/x86/tests/gen-insn-x86-dat.awk
++++ b/tools/perf/arch/x86/tests/gen-insn-x86-dat.awk
+@@ -24,7 +24,7 @@ BEGIN {
+ 	going = 0
+ }
+ 
+-/^\s*[0-9a-fA-F]+\:/ {
++/^\s*[0-9a-fA-F]+:/ {
+ 	if (going) {
+ 		colon_pos = index($0, ":")
+ 		useful_line = substr($0, colon_pos + 1)
+-- 
+2.23.0
+
