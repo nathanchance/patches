@@ -1,7 +1,7 @@
-From 23e6533ac2e62b18cf050037cc28246bedbe8eb6 Mon Sep 17 00:00:00 2001
+From d64d01240e9431b39894e7c0d6b448cebe3469a8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 20 Aug 2019 16:29:22 -0700
-Subject: [PATCH 15/31] powerpc: Don't add -mabi= flags when building with
+Subject: [PATCH 02/18] powerpc: Don't add -mabi= flags when building with
  Clang
 
 When building pseries_defconfig, building vdso32 errors out:
@@ -64,10 +64,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index c345b79414a9..971b04bc753d 100644
+index 83522c9fc7b6..37ac731a556b 100644
 --- a/arch/powerpc/Makefile
 +++ b/arch/powerpc/Makefile
-@@ -93,11 +93,13 @@ MULTIPLEWORD	:= -mmultiple
+@@ -91,11 +91,13 @@ MULTIPLEWORD	:= -mmultiple
  endif
  
  ifdef CONFIG_PPC64
@@ -81,7 +81,7 @@ index c345b79414a9..971b04bc753d 100644
  
  ifndef CONFIG_CC_IS_CLANG
    cflags-$(CONFIG_CPU_LITTLE_ENDIAN)	+= -mno-strict-align
-@@ -144,6 +146,7 @@ endif
+@@ -141,6 +143,7 @@ endif
  endif
  
  CFLAGS-$(CONFIG_PPC64)	:= $(call cc-option,-mtraceback=no)
@@ -89,7 +89,7 @@ index c345b79414a9..971b04bc753d 100644
  ifdef CONFIG_CPU_LITTLE_ENDIAN
  CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mabi=elfv2,$(call cc-option,-mcall-aixdesc))
  AFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mabi=elfv2)
-@@ -152,6 +155,7 @@ CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mabi=elfv1)
+@@ -149,6 +152,7 @@ CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mabi=elfv1)
  CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mcall-aixdesc)
  AFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mabi=elfv1)
  endif
