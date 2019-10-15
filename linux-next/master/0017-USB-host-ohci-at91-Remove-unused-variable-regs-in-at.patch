@@ -1,0 +1,33 @@
+From d1157be40dc164fbb81cd2dbe0863ccfe5a9fed4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 11 Oct 2019 11:53:23 -0700
+Subject: [PATCH 17/17] USB: host: ohci-at91: Remove unused variable regs in
+ at91_stop_hc
+
+drivers/usb/host/ohci-at91.c:118:28: warning: unused variable 'regs'
+[-Wunused-variable]
+        struct ohci_regs __iomem *regs = hcd->regs;
+                                  ^
+1 warning generated.
+
+Fixes: 9c4567fa0a44 ("USB: host: ohci-at91: completely shutdown the controller in at91_stop_hc()")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/usb/host/ohci-at91.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/usb/host/ohci-at91.c b/drivers/usb/host/ohci-at91.c
+index 513e48397743..b635c6a1b1a9 100644
+--- a/drivers/usb/host/ohci-at91.c
++++ b/drivers/usb/host/ohci-at91.c
+@@ -115,7 +115,6 @@ static void at91_start_hc(struct platform_device *pdev)
+ static void at91_stop_hc(struct platform_device *pdev)
+ {
+ 	struct usb_hcd *hcd = platform_get_drvdata(pdev);
+-	struct ohci_regs __iomem *regs = hcd->regs;
+ 	struct ohci_at91_priv *ohci_at91 = hcd_to_ohci_at91_priv(hcd);
+ 
+ 	dev_dbg(&pdev->dev, "stop\n");
+-- 
+2.23.0
+
