@@ -1,6 +1,6 @@
-From 6f7d68dff225f00b40bcaf7c67719b4fe2f070c7 Mon Sep 17 00:00:00 2001
+From 705760a127f292424c4ff9f4d43f0007efac9fab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 11 Sep 2019 10:33:49 -0700
+Date: Sun, 13 Oct 2019 19:51:00 -0700
 Subject: [PATCH 03/17] powerpc: Avoid clang warnings around setjmp and longjmp
 
 Commit aea447141c7e ("powerpc: Disable -Wbuiltin-requires-header when
@@ -32,8 +32,11 @@ on these files.
 Cc: stable@vger.kernel.org # 4.14+
 Link: https://github.com/ClangBuiltLinux/linux/issues/625
 Link: https://github.com/llvm/llvm-project/commit/3be25e79477db2d31ac46493d97eca8c20592b07
+Link: https://godbolt.org/z/B2oQnl
 Suggested-by: Segher Boessenkool <segher@kernel.crashing.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lore.kernel.org/lkml/20191014025101.18567-3-natechancellor@gmail.com/
 ---
  arch/powerpc/kernel/Makefile | 4 ++--
  arch/powerpc/xmon/Makefile   | 4 ++--

@@ -1,7 +1,7 @@
-From d1157be40dc164fbb81cd2dbe0863ccfe5a9fed4 Mon Sep 17 00:00:00 2001
+From 4ef71cce53ed877607d893fa28d2528dd4bd173d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Fri, 11 Oct 2019 11:53:23 -0700
-Subject: [PATCH 17/17] USB: host: ohci-at91: Remove unused variable regs in
+Date: Fri, 11 Oct 2019 11:59:50 -0700
+Subject: [PATCH 16/17] USB: host: ohci-at91: Remove unused variable regs in
  at91_stop_hc
 
 drivers/usb/host/ohci-at91.c:118:28: warning: unused variable 'regs'
@@ -11,6 +11,11 @@ drivers/usb/host/ohci-at91.c:118:28: warning: unused variable 'regs'
 1 warning generated.
 
 Fixes: 9c4567fa0a44 ("USB: host: ohci-at91: completely shutdown the controller in at91_stop_hc()")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20191011185950.1470-1-natechancellor@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://git.kernel.org/gregkh/usb/c/be731286685af4de728851991b98cb8f579f58f6
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/usb/host/ohci-at91.c | 1 -
