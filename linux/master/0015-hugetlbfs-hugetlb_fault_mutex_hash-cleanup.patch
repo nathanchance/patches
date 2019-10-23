@@ -1,4 +1,4 @@
-From 6cc01d123db754b1f479aa6e22876885ead1cc4f Mon Sep 17 00:00:00 2001
+From dac13f2615fbfeb2b77aaba54b1522baefb08308 Mon Sep 17 00:00:00 2001
 From: Mike Kravetz <mike.kravetz@oracle.com>
 Date: Wed, 18 Sep 2019 18:18:47 -0700
 Subject: [PATCH 15/17] hugetlbfs: hugetlb_fault_mutex_hash cleanup
@@ -60,10 +60,10 @@ index 53fc34f930d0..d3814bd686ba 100644
  pte_t *huge_pmd_share(struct mm_struct *mm, unsigned long addr, pud_t *pud);
  
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index ef37c85423a5..b83b9f49d21e 100644
+index b45a95363a84..f8656a4a7f7d 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -3916,7 +3916,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
+@@ -3915,7 +3915,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
  			 * handling userfault.  Reacquire after handling
  			 * fault to make calling code simpler.
  			 */
@@ -72,7 +72,7 @@ index ef37c85423a5..b83b9f49d21e 100644
  			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
  			ret = handle_userfault(&vmf, VM_UFFD_MISSING);
  			mutex_lock(&hugetlb_fault_mutex_table[hash]);
-@@ -4044,7 +4044,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
+@@ -4043,7 +4043,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
  
  #ifdef CONFIG_SMP
  u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
@@ -81,7 +81,7 @@ index ef37c85423a5..b83b9f49d21e 100644
  {
  	unsigned long key[2];
  	u32 hash;
-@@ -4052,7 +4052,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
+@@ -4051,7 +4051,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
  	key[0] = (unsigned long) mapping;
  	key[1] = idx;
  
@@ -90,7 +90,7 @@ index ef37c85423a5..b83b9f49d21e 100644
  
  	return hash & (num_fault_mutexes - 1);
  }
-@@ -4062,7 +4062,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
+@@ -4061,7 +4061,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
   * return 0 and avoid the hashing overhead.
   */
  u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
@@ -99,7 +99,7 @@ index ef37c85423a5..b83b9f49d21e 100644
  {
  	return 0;
  }
-@@ -4106,7 +4106,7 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -4105,7 +4105,7 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  	 * get spurious allocation failures if two CPUs race to instantiate
  	 * the same page in the page cache.
  	 */
