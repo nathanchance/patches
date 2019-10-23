@@ -1,0 +1,49 @@
+From b324b1885c67c618f1e371715dc04bb3523914e0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 22 Oct 2019 09:31:55 -0700
+Subject: [PATCH 17/28] Revert "aio: Fix io_pgetevents() struct
+ __compat_aio_sigset layout"
+
+This reverts commit de80166a573dce5bf968e2e272765e27e50c8e47.
+
+Picking up v2 in the next commit.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/aio.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/fs/aio.c b/fs/aio.c
+index 1218a453d6db..507b67c8561b 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -2176,7 +2176,7 @@ SYSCALL_DEFINE5(io_getevents_time32, __u32, ctx_id,
+ #ifdef CONFIG_COMPAT
+ 
+ struct __compat_aio_sigset {
+-	compat_uptr_t		sigmask;
++	compat_sigset_t __user	*sigmask;
+ 	compat_size_t		sigsetsize;
+ };
+ 
+@@ -2201,7 +2201,7 @@ COMPAT_SYSCALL_DEFINE6(io_pgetevents,
+ 	if (usig && copy_from_user(&ksig, usig, sizeof(ksig)))
+ 		return -EFAULT;
+ 
+-	ret = set_compat_user_sigmask(compat_ptr(ksig.sigmask), ksig.sigsetsize);
++	ret = set_compat_user_sigmask(ksig.sigmask, ksig.sigsetsize);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -2236,7 +2236,7 @@ COMPAT_SYSCALL_DEFINE6(io_pgetevents_time64,
+ 	if (usig && copy_from_user(&ksig, usig, sizeof(ksig)))
+ 		return -EFAULT;
+ 
+-	ret = set_compat_user_sigmask(compat_ptr(ksig.sigmask), ksig.sigsetsize);
++	ret = set_compat_user_sigmask(ksig.sigmask, ksig.sigsetsize);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.23.0
+

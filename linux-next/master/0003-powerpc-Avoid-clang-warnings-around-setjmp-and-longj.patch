@@ -1,7 +1,7 @@
-From 8ae39a325cf6810fd69e373fff466738e6c49e7a Mon Sep 17 00:00:00 2001
+From f8861ac723e0e263cdaa6a5e1810df22d14a2c77 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:51:00 -0700
-Subject: [PATCH 03/15] powerpc: Avoid clang warnings around setjmp and longjmp
+Subject: [PATCH 03/28] powerpc: Avoid clang warnings around setjmp and longjmp
 
 Commit aea447141c7e ("powerpc: Disable -Wbuiltin-requires-header when
 setjmp is used") disabled -Wbuiltin-requires-header because of a warning
