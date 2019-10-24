@@ -1,7 +1,7 @@
-From a9090c7f2f777e0a119e9abfbd63adb7b1ed3584 Mon Sep 17 00:00:00 2001
+From 364fefcd14deb74eb92fd9fa50dc2e48e63620cc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 09:46:54 -0700
-Subject: [PATCH 19/28] clk: sunxi: Fix operator precedence in
+Subject: [PATCH 19/26] clk: sunxi: Fix operator precedence in
  sunxi_divs_clk_setup
 
 r375326 in Clang exposes an issue with operator precedence in
@@ -52,5 +52,5 @@ index d3a43381a792..27201fd26e44 100644
  		WARN_ON(IS_ERR(clk_data->clks[i]));
  	}
 -- 
-2.23.0
+2.24.0.rc1
 

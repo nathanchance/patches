@@ -1,7 +1,7 @@
-From b324b1885c67c618f1e371715dc04bb3523914e0 Mon Sep 17 00:00:00 2001
+From 589cf9336c04449f7daab167143d9debcf04751c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 09:31:55 -0700
-Subject: [PATCH 17/28] Revert "aio: Fix io_pgetevents() struct
+Subject: [PATCH 17/26] Revert "aio: Fix io_pgetevents() struct
  __compat_aio_sigset layout"
 
 This reverts commit de80166a573dce5bf968e2e272765e27e50c8e47.
@@ -45,5 +45,5 @@ index 1218a453d6db..507b67c8561b 100644
  		return ret;
  
 -- 
-2.23.0
+2.24.0.rc1
 

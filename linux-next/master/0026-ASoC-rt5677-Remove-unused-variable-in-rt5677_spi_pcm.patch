@@ -1,0 +1,26 @@
+From 7dedf3f4073a8dc03c99d63adf1e864d5e772363 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 23 Oct 2019 23:11:39 -0700
+Subject: [PATCH 26/26] ASoC: rt5677: Remove unused variable in
+ rt5677_spi_pcm_close
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/soc/codecs/rt5677-spi.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/sound/soc/codecs/rt5677-spi.c b/sound/soc/codecs/rt5677-spi.c
+index 36c02d200cfc..d73ae7c2105d 100644
+--- a/sound/soc/codecs/rt5677-spi.c
++++ b/sound/soc/codecs/rt5677-spi.c
+@@ -111,7 +111,6 @@ static int rt5677_spi_pcm_close(
+ 		struct snd_soc_component *component,
+ 		struct snd_pcm_substream *substream)
+ {
+-	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+ 	struct rt5677_dsp *rt5677_dsp =
+ 			snd_soc_component_get_drvdata(component);
+ 
+-- 
+2.24.0.rc1
+

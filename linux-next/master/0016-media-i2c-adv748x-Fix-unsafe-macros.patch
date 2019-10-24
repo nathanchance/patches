@@ -1,7 +1,7 @@
-From fc32abe63e37f0ba8ae62d4e49d5effe2fc16762 Mon Sep 17 00:00:00 2001
+From 76d966adb9ff1cf00f4d3aa5ae3bd18880e8326c Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 Date: Tue, 22 Oct 2019 08:25:22 -0500
-Subject: [PATCH 16/28] media: i2c: adv748x: Fix unsafe macros
+Subject: [PATCH 16/26] media: i2c: adv748x: Fix unsafe macros
 
 Enclose multiple macro parameters in parentheses in order to
 make such macros safer and fix the Clang warning below:
@@ -54,5 +54,5 @@ index 5042f9e94aee..fccb388ce179 100644
  #define tx_read(t, r) adv748x_read(t->state, t->page, r)
  #define tx_write(t, r, v) adv748x_write(t->state, t->page, r, v)
 -- 
-2.23.0
+2.24.0.rc1
 

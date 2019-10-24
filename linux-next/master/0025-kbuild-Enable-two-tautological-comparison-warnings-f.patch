@@ -1,7 +1,7 @@
-From 76ae5a2d2667e867cd45608e8af2715227ed9766 Mon Sep 17 00:00:00 2001
+From 0b0ec2c2d57082035b6e437b0830752c3fea076f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:51:25 -0700
-Subject: [PATCH 26/28] kbuild: Enable two tautological comparison warnings for
+Subject: [PATCH 25/26] kbuild: Enable two tautological comparison warnings for
  Clang
 
 Currently, we disable -Wtautological-compare, which in turn disables a
@@ -34,5 +34,5 @@ index e19482db73f1..d93cd117653f 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.23.0
+2.24.0.rc1
 

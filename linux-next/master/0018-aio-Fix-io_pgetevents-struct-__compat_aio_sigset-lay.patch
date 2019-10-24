@@ -1,7 +1,7 @@
-From ac5299d0ef4e03fd8a99c77b6556209d58527107 Mon Sep 17 00:00:00 2001
+From d62220c92ac8a27c9c315cc9a0d89234f3dce8dc Mon Sep 17 00:00:00 2001
 From: Guillem Jover <guillem@hadrons.org>
 Date: Tue, 22 Oct 2019 00:51:00 +0200
-Subject: [PATCH 18/28] aio: Fix io_pgetevents() struct __compat_aio_sigset
+Subject: [PATCH 18/26] aio: Fix io_pgetevents() struct __compat_aio_sigset
  layout
 
 This type is used to pass the sigset_t from userland to the kernel,
@@ -66,5 +66,5 @@ index 507b67c8561b..1218a453d6db 100644
  		return ret;
  
 -- 
-2.23.0
+2.24.0.rc1
 

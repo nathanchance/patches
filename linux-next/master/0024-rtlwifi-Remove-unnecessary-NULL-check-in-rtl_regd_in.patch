@@ -1,7 +1,7 @@
-From b014078796f9758487b84e7871f014d32bd27e31 Mon Sep 17 00:00:00 2001
+From 28192b0cb7733b8920eca6325f1263ed6f37dbad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:45:42 -0700
-Subject: [PATCH 25/28] rtlwifi: Remove unnecessary NULL check in rtl_regd_init
+Subject: [PATCH 24/26] rtlwifi: Remove unnecessary NULL check in rtl_regd_init
 
 When building with Clang + -Wtautological-pointer-compare:
 
@@ -44,5 +44,5 @@ index c10432cd703e..8be31e0ad878 100644
  
  	/* init country_code from efuse channel plan */
 -- 
-2.23.0
+2.24.0.rc1
 
