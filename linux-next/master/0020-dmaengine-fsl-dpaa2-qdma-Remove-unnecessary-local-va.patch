@@ -1,7 +1,7 @@
-From b488ea17d7a6d2dd6ee05fc10ec646e69f8c20fc Mon Sep 17 00:00:00 2001
+From c6a01509bb3f1616519ab232748620ec631af249 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 10:09:08 -0700
-Subject: [PATCH 20/26] dmaengine: fsl-dpaa2-qdma: Remove unnecessary local
+Subject: [PATCH 20/28] dmaengine: fsl-dpaa2-qdma: Remove unnecessary local
  variables in DPDMAI_CMD_CREATE macro
 
 Clang warns:

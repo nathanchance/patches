@@ -1,0 +1,34 @@
+From c6f1ac8110cde61e5db50d8227cc2956ffe98582 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 24 Oct 2019 09:48:58 -0700
+Subject: [PATCH 28/28] e1000e: Hide some functions behind CONFIG_PM_SLEEP
+
+Fixes: f15bb6dde738 ("e1000e: Add support for S0ix")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/e1000e/netdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 42f57ab8fb8e..7d8d9efa76ee 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6295,6 +6295,7 @@ static void e1000e_flush_lpic(struct pci_dev *pdev)
+ }
+ 
+ /* S0ix implementation */
++#ifdef CONFIG_PM_SLEEP
+ static void e1000e_s0ix_entry_flow(struct e1000_adapter *adapter)
+ {
+ 	struct e1000_hw *hw = &adapter->hw;
+@@ -6461,6 +6462,7 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
+ 	mac_data &= ~E1000_CTRL_EXT_FORCE_SMBUS;
+ 	ew32(CTRL_EXT, mac_data);
+ }
++#endif /* CONFIG_PM_SLEEP */
+ 
+ static int e1000e_pm_freeze(struct device *dev)
+ {
+-- 
+2.24.0.rc1
+

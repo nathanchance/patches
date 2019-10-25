@@ -1,7 +1,7 @@
-From b641c19a07353cdcd4029ad2460dc49cfad7475a Mon Sep 17 00:00:00 2001
+From 6a19fe03ca141da74736bc16a39488ca35cc1620 Mon Sep 17 00:00:00 2001
 From: Chaotian Jing <chaotian.jing@mediatek.com>
 Date: Thu, 5 Sep 2019 15:53:18 +0800
-Subject: [PATCH 22/26] mmc: block: Add CMD13 polling for MMC IOCTLS with R1B
+Subject: [PATCH 22/28] mmc: block: Add CMD13 polling for MMC IOCTLS with R1B
  response
 
 MMC IOCTLS with R1B responses may cause the card to enter the busy state,

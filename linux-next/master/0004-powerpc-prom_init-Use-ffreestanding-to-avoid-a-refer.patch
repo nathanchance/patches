@@ -1,7 +1,7 @@
-From edefd80de7b32527bfa3a9c78393f6d1a289fc7b Mon Sep 17 00:00:00 2001
+From 39b8b87265e2c3b31e60bafb9aa912c93de44e8a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:51:01 -0700
-Subject: [PATCH 04/26] powerpc/prom_init: Use -ffreestanding to avoid a
+Subject: [PATCH 04/28] powerpc/prom_init: Use -ffreestanding to avoid a
  reference to bcmp
 
 r374662 gives LLVM the ability to convert certain loops into a reference

@@ -1,8 +1,8 @@
-From 0b0ec2c2d57082035b6e437b0830752c3fea076f Mon Sep 17 00:00:00 2001
+From fa4b58d54b71f13400ddf0ba285a3d038ae8fd93 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:51:25 -0700
-Subject: [PATCH 25/26] kbuild: Enable two tautological comparison warnings for
- Clang
+Subject: [PATCH 26/28] kbuild: Enable some tautological comparison warnings
+ for Clang
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings. There are
@@ -17,18 +17,20 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/488
 Link: http://releases.llvm.org/9.0.0/tools/clang/docs/DiagnosticsReference.html#wtautological-compare
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index e19482db73f1..d93cd117653f 100644
+index a4319c8de151..4a4833bb8a66 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -744,6 +744,8 @@ KBUILD_CFLAGS += -Wno-format-invalid-specifier
+@@ -744,6 +744,10 @@ KBUILD_CFLAGS += -Wno-format-invalid-specifier
  KBUILD_CFLAGS += -Wno-gnu
  # Quiet clang warning: comparison of unsigned expression < 0 is always false
  KBUILD_CFLAGS += -Wno-tautological-compare
 +KBUILD_CFLAGS += -Wtautological-pointer-compare
++KBUILD_CFLAGS += -Wtautological-constant-compare
++KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
 +KBUILD_CFLAGS += $(call cc-option,-Wtautological-bitwise-compare)
  # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
