@@ -1,7 +1,7 @@
-From 71a3c594dfe849283ceb4c413cf7d75985fc4273 Mon Sep 17 00:00:00 2001
+From 8714714165d7759db2aad59dba451f4dd9681bcc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:50:59 -0700
-Subject: [PATCH 02/17] powerpc: Don't add -mabi= flags when building with
+Subject: [PATCH 02/19] powerpc: Don't add -mabi= flags when building with
  Clang
 
 When building pseries_defconfig, building vdso32 errors out:
@@ -99,5 +99,5 @@ index 83522c9fc7b6..37ac731a556b 100644
  CFLAGS-$(CONFIG_PPC64)	+= $(call cc-option,-mno-pointers-to-nested-functions)
  
 -- 
-2.23.0
+2.24.0.rc1
 

@@ -1,7 +1,7 @@
-From 1bd1b6251e595685b87f738e66a97e97be42099f Mon Sep 17 00:00:00 2001
+From cdeab22e673f9268ec5402c71ab853e66883eb3f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Oct 2019 15:39:08 -0700
-Subject: [PATCH 16/17] net: ethernet: Silence last two -Wsizeof-array-div
+Subject: [PATCH 16/19] net: ethernet: Silence last two -Wsizeof-array-div
  warnings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/655
@@ -38,5 +38,5 @@ index bf6c1c6779ff..859030ba85d1 100644
  	int ret;
  
 -- 
-2.23.0
+2.24.0.rc1
 

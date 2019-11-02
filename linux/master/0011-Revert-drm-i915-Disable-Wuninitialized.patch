@@ -1,7 +1,7 @@
-From e220b1f2d0012f83af8a6e5e3b0c5dc8b496e263 Mon Sep 17 00:00:00 2001
+From 641cab34d34f4fbe67bf3d89f67f6b952ded2d4e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
-Subject: [PATCH 11/17] Revert "drm/i915: Disable -Wuninitialized"
+Subject: [PATCH 11/19] Revert "drm/i915: Disable -Wuninitialized"
 
 This will be turned on for the whole kernel, as we want to catch these
 cases.
@@ -27,5 +27,5 @@ index 2587ea834f06..39f00fb0fc21 100644
  
  # Fine grained warnings disable
 -- 
-2.23.0
+2.24.0.rc1
 
