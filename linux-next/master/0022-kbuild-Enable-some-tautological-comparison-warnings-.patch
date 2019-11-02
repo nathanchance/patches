@@ -1,7 +1,7 @@
-From fa4b58d54b71f13400ddf0ba285a3d038ae8fd93 Mon Sep 17 00:00:00 2001
+From 12244f05d38e7477f0ed101f9b3687d024f3ccea Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:51:25 -0700
-Subject: [PATCH 26/28] kbuild: Enable some tautological comparison warnings
+Subject: [PATCH 22/25] kbuild: Enable some tautological comparison warnings
  for Clang
 
 Currently, we disable -Wtautological-compare, which in turn disables a
@@ -21,7 +21,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index a4319c8de151..4a4833bb8a66 100644
+index e1326abfa820..687b54853a21 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -744,6 +744,10 @@ KBUILD_CFLAGS += -Wno-format-invalid-specifier

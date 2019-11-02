@@ -1,7 +1,7 @@
-From 9c32cedc28a83b8bb26e71717e19febd5c82a585 Mon Sep 17 00:00:00 2001
+From 293a7e3a5320a52d82db28cb956c08b93eb5c58a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:50:59 -0700
-Subject: [PATCH 02/28] powerpc: Don't add -mabi= flags when building with
+Subject: [PATCH 02/25] powerpc: Don't add -mabi= flags when building with
  Clang
 
 When building pseries_defconfig, building vdso32 errors out:
@@ -65,7 +65,7 @@ Link: https://lore.kernel.org/lkml/20191014025101.18567-2-natechancellor@gmail.c
  1 file changed, 4 insertions(+)
 
 diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index 83522c9fc7b6..37ac731a556b 100644
+index a3ed4f168607..f35730548e42 100644
 --- a/arch/powerpc/Makefile
 +++ b/arch/powerpc/Makefile
 @@ -91,11 +91,13 @@ MULTIPLEWORD	:= -mmultiple

@@ -1,7 +1,7 @@
-From c6f1ac8110cde61e5db50d8227cc2956ffe98582 Mon Sep 17 00:00:00 2001
+From 49b4c746cbaa9589ea8ad24fe6e461bc2574b881 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 24 Oct 2019 09:48:58 -0700
-Subject: [PATCH 28/28] e1000e: Hide some functions behind CONFIG_PM_SLEEP
+Subject: [PATCH 23/25] e1000e: Hide some functions behind CONFIG_PM_SLEEP
 
 Fixes: f15bb6dde738 ("e1000e: Add support for S0ix")
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
