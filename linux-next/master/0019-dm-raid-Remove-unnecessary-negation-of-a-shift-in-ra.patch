@@ -1,7 +1,7 @@
-From 464a314de57eddc6f7a18400137657564e921a1f Mon Sep 17 00:00:00 2001
+From 30be69363ca95d7b1261e650bc5a660e4e2f23ea Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 24 Oct 2019 13:25:08 -0700
-Subject: [PATCH 21/25] dm raid: Remove unnecessary negation of a shift in
+Subject: [PATCH 19/21] dm raid: Remove unnecessary negation of a shift in
  raid10_format_to_md_layout
 
 When building with Clang + -Wtautological-constant-compare:
@@ -39,5 +39,5 @@ index b0aa595e4375..13fabc6779e5 100644
  			r |= RAID10_USE_FAR_SETS;
  
 -- 
-2.24.0.rc1
+2.24.0
 

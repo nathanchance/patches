@@ -1,7 +1,7 @@
-From 30c785ff654c8295092b7115a429a9dbab0a8509 Mon Sep 17 00:00:00 2001
+From f3202001e35d9a1901535d95f9d8d76fb11408ad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 24 Oct 2019 13:11:08 -0700
-Subject: [PATCH 20/25] media: v4l2-device.h: Explicitly compare grpmask to
+Subject: [PATCH 18/21] media: v4l2-device.h: Explicitly compare grpmask to
  zero in v4l2_device_mask_call_all
 
 When building with Clang + -Wtautological-constant-compare, several of
@@ -20,10 +20,11 @@ the ivtv drivers warn along the lines of:
 
 This is because the shift operation is implicitly converted to a boolean
 in v4l2_device_mask_call_all before being negated. This can be solved by
-just comparing the mask result to 0 explicity so that there is no
+just comparing the mask result to 0 explicitly so that there is no
 boolean conversion.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/752
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  include/media/v4l2-device.h | 4 ++--
@@ -45,5 +46,5 @@ index e0b8f2602670..8564b3227887 100644
  
  /**
 -- 
-2.24.0.rc1
+2.24.0
 
