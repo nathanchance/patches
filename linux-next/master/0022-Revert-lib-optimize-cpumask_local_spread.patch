@@ -1,0 +1,143 @@
+From e148d4367c529efe26ee682963315407d1bb3121 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 6 Nov 2019 09:40:30 -0700
+Subject: [PATCH 22/23] Revert "lib: optimize cpumask_local_spread()"
+
+This reverts commit 3d591f2836cf7ca16ed980f61a9a55d5d49d972d.
+
+Uses too much stack space.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ lib/cpumask.c | 93 +++++++--------------------------------------------
+ 1 file changed, 12 insertions(+), 81 deletions(-)
+
+diff --git a/lib/cpumask.c b/lib/cpumask.c
+index 15d8940f32a8..0cb672eb107c 100644
+--- a/lib/cpumask.c
++++ b/lib/cpumask.c
+@@ -192,83 +192,20 @@ void __init free_bootmem_cpumask_var(cpumask_var_t mask)
+ }
+ #endif
+ 
+-static void calc_node_distance(int *node_dist, int node)
+-{
+-	int i;
+-
+-	for (i = 0; i < nr_node_ids; i++)
+-		node_dist[i] = node_distance(node, i);
+-}
+-
+-static int find_nearest_node(int *node_dist, bool *used)
+-{
+-	int i, min_dist = node_dist[0], node_id = -1;
+-
+-	/* Choose the first unused node to compare */
+-	for (i = 0; i < nr_node_ids; i++) {
+-		if (used[i] == 0) {
+-			min_dist = node_dist[i];
+-			node_id = i;
+-			break;
+-		}
+-	}
+-
+-	/* Compare and return the nearest node */
+-	for (i = 0; i < nr_node_ids; i++) {
+-		if (node_dist[i] < min_dist && used[i] == 0) {
+-			min_dist = node_dist[i];
+-			node_id = i;
+-		}
+-	}
+-
+-	return node_id;
+-}
+-
+-static unsigned int __cpumask_local_spread(unsigned int i, int node)
+-{
+-	int cpu;
+-
+-	/* Wrap: we always want a cpu. */
+-	i %= num_online_cpus();
+-
+-	if (node == NUMA_NO_NODE) {
+-		for_each_cpu(cpu, cpu_online_mask)
+-			if (i-- == 0)
+-				return cpu;
+-	} else {
+-		/* NUMA first. */
+-		for_each_cpu_and(cpu, cpumask_of_node(node), cpu_online_mask)
+-			if (i-- == 0)
+-				return cpu;
+-
+-		for_each_cpu(cpu, cpu_online_mask) {
+-			/* Skip NUMA nodes, done above. */
+-			if (cpumask_test_cpu(cpu, cpumask_of_node(node)))
+-				continue;
+-
+-			if (i-- == 0)
+-				return cpu;
+-		}
+-	}
+-	BUG();
+-}
+-
+ /**
+  * cpumask_local_spread - select the i'th cpu with local numa cpu's first
+  * @i: index number
+  * @node: local numa_node
+  *
+  * This function selects an online CPU according to a numa aware policy;
+- * local cpus are returned first, followed by the nearest non-local ones,
+- * then it wraps around.
++ * local cpus are returned first, followed by non-local ones, then it
++ * wraps around.
+  *
+  * It's not very efficient, but useful for setup.
+  */
+ unsigned int cpumask_local_spread(unsigned int i, int node)
+ {
+-	int node_dist[MAX_NUMNODES] = {0};
+-	bool used[MAX_NUMNODES] = {0};
+-	int cpu, j, id;
++	int cpu;
+ 
+ 	/* Wrap: we always want a cpu. */
+ 	i %= num_online_cpus();
+@@ -278,25 +215,19 @@ unsigned int cpumask_local_spread(unsigned int i, int node)
+ 			if (i-- == 0)
+ 				return cpu;
+ 	} else {
+-		if (nr_node_ids > MAX_NUMNODES)
+-			return __cpumask_local_spread(i, node);
+-
+-		calc_node_distance(node_dist, node);
+-		for (j = 0; j < nr_node_ids; j++) {
+-			id = find_nearest_node(node_dist, used);
+-			if (id < 0)
+-				break;
++		/* NUMA first. */
++		for_each_cpu_and(cpu, cpumask_of_node(node), cpu_online_mask)
++			if (i-- == 0)
++				return cpu;
+ 
+-			for_each_cpu_and(cpu, cpumask_of_node(id),
+-					 cpu_online_mask)
+-				if (i-- == 0)
+-					return cpu;
+-			used[id] = 1;
+-		}
++		for_each_cpu(cpu, cpu_online_mask) {
++			/* Skip NUMA nodes, done above. */
++			if (cpumask_test_cpu(cpu, cpumask_of_node(node)))
++				continue;
+ 
+-		for_each_cpu(cpu, cpu_online_mask)
+ 			if (i-- == 0)
+ 				return cpu;
++		}
+ 	}
+ 	BUG();
+ }
+-- 
+2.24.0
+

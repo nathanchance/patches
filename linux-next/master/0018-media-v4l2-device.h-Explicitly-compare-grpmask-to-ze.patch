@@ -1,7 +1,7 @@
-From f3202001e35d9a1901535d95f9d8d76fb11408ad Mon Sep 17 00:00:00 2001
+From c2af305575b324145b977502a1aa0137e16b4134 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 24 Oct 2019 13:11:08 -0700
-Subject: [PATCH 18/21] media: v4l2-device.h: Explicitly compare grpmask to
+Subject: [PATCH 18/23] media: v4l2-device.h: Explicitly compare grpmask to
  zero in v4l2_device_mask_call_all
 
 When building with Clang + -Wtautological-constant-compare, several of
@@ -31,7 +31,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/include/media/v4l2-device.h b/include/media/v4l2-device.h
-index e0b8f2602670..8564b3227887 100644
+index 5f36e0d2ede6..b9853dec5212 100644
 --- a/include/media/v4l2-device.h
 +++ b/include/media/v4l2-device.h
 @@ -431,8 +431,8 @@ static inline bool v4l2_device_supports_requests(struct v4l2_device *v4l2_dev)
