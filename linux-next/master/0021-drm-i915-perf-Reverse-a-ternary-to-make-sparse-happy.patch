@@ -1,7 +1,7 @@
-From cc3e3047949c4ccffdb3868eec28f6b858593c43 Mon Sep 17 00:00:00 2001
+From 9e60a6e9ef43693a0add7951bb5b75cea8df36e0 Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Fri, 1 Nov 2019 19:21:16 +0000
-Subject: [PATCH 23/23] drm/i915/perf: Reverse a ternary to make sparse happy
+Subject: [PATCH 21/21] drm/i915/perf: Reverse a ternary to make sparse happy
 
 Avoid
 
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
-index a8c2318d3d5e..2c380aba1ce9 100644
+index 00317ea19a4a..507236bd41ae 100644
 --- a/drivers/gpu/drm/i915/i915_perf.c
 +++ b/drivers/gpu/drm/i915/i915_perf.c
 @@ -2428,6 +2428,13 @@ static int gen8_enable_metric_set(struct i915_perf_stream *stream)
