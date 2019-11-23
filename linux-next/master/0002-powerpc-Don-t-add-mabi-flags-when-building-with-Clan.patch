@@ -1,7 +1,7 @@
-From 5ab46da6d7b4d473d80300d9415eae9a93b1f8bb Mon Sep 17 00:00:00 2001
+From ca8316226cef0a8aa8fced3dd461cb78d6f9359a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:50:59 -0700
-Subject: [PATCH 02/21] powerpc: Don't add -mabi= flags when building with
+Subject: [PATCH 02/27] powerpc: Don't add -mabi= flags when building with
  Clang
 
 When building pseries_defconfig, building vdso32 errors out:

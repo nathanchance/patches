@@ -1,0 +1,44 @@
+From 996eb524986c45f867d992d95e66d9a947d603cf Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 23 Nov 2019 12:51:44 -0700
+Subject: [PATCH 25/27] drm/i915: Remove tautological compare in
+ eb_relocate_vma
+
+-Wtautological-compare was recently added to -Wall in LLVM, which
+exposed an if statement in i915 that is always false:
+
+../drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c:1485:22: warning:
+result of comparison of constant 576460752303423487 with expression of
+type 'unsigned int' is always false
+[-Wtautological-constant-out-of-range-compare]
+        if (unlikely(remain > N_RELOC(ULONG_MAX)))
+            ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+
+Since remain is an unsigned int, it can never be larger than UINT_MAX,
+which is less than ULONG_MAX / sizeof(struct drm_i915_gem_relocation_entry).
+Remove this statement to fix the warning.
+
+Fixes: 2889caa92321 ("drm/i915: Eliminate lots of iterations over the execobjects array")
+Link: https://github.com/ClangBuiltLinux/linux/issues/778
+Link: https://github.com/llvm/llvm-project/commit/9740f9f0b6e5d7d5104027aee7edc9c5202dd052
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+index f0998f1225af..9ed4379b4bc8 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -1482,8 +1482,6 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct i915_vma *vma)
+ 
+ 	urelocs = u64_to_user_ptr(entry->relocs_ptr);
+ 	remain = entry->relocation_count;
+-	if (unlikely(remain > N_RELOC(ULONG_MAX)))
+-		return -EINVAL;
+ 
+ 	/*
+ 	 * We must check that the entire relocation array is safe
+-- 
+2.24.0
+
