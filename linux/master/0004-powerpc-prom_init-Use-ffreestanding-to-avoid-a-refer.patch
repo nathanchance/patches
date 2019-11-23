@@ -1,4 +1,4 @@
-From 2970a43f3381ff9e0a17f97d001e266bd8ee1b10 Mon Sep 17 00:00:00 2001
+From c77d0e0c3ef3fcf4e94ce362f1ff9134b1c05e29 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:51:01 -0700
 Subject: [PATCH 04/19] powerpc/prom_init: Use -ffreestanding to avoid a
@@ -45,5 +45,5 @@ index f1f362146135..7f0ee465dfb6 100644
  ifdef CONFIG_FUNCTION_TRACER
  # Do not trace early boot code
 -- 
-2.24.0.rc1
+2.24.0
 

@@ -1,4 +1,4 @@
-From 123c883f42a1358fb35ae295c7fd86cf11f7027c Mon Sep 17 00:00:00 2001
+From f01565607f6d2841541f3bd06f8c9f2f23398a1b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 13 Oct 2019 19:51:00 -0700
 Subject: [PATCH 03/19] powerpc: Avoid clang warnings around setjmp and longjmp
@@ -73,5 +73,5 @@ index f142570ad860..c3842dbeb1b7 100644
  GCOV_PROFILE := n
  KCOV_INSTRUMENT := n
 -- 
-2.24.0.rc1
+2.24.0
 

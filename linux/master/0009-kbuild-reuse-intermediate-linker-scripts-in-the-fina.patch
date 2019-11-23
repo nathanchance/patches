@@ -1,4 +1,4 @@
-From 15d8c63b3d9d57c4d68517cdc5de9234fc605746 Mon Sep 17 00:00:00 2001
+From 0ffda370ec2f09914347fd69dc898a58a7069a1c Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
 Subject: [PATCH 09/19] kbuild: reuse intermediate linker scripts in the final
@@ -28,10 +28,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 79be70bf2899..9bbe2253c241 100644
+index 9cd289196267..0322b798170f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1029,6 +1029,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
+@@ -1032,6 +1032,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
  net-y		:= $(patsubst %/, %/built-in.a, $(net-y))
  libs-y1		:= $(patsubst %/, %/lib.a, $(libs-y))
  libs-y2		:= $(patsubst %/, %/built-in.a, $(filter-out %.a, $(libs-y)))
@@ -39,7 +39,7 @@ index 79be70bf2899..9bbe2253c241 100644
  virt-y		:= $(patsubst %/, %/built-in.a, $(virt-y))
  
  # Externally visible symbols (used by link-vmlinux.sh)
-@@ -1036,11 +1037,12 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
+@@ -1039,11 +1040,12 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
  			      $(drivers-y) $(net-y) $(virt-y)
  export KBUILD_VMLINUX_LIBS := $(libs-y1)
  export KBUILD_LDS          := arch/$(SRCARCH)/kernel/vmlinux.lds
@@ -114,5 +114,5 @@ index 06495379fcd8..b2a3792238fd 100755
  			-lutil -lrt -lpthread
  		rm -f linux
 -- 
-2.24.0.rc1
+2.24.0
 
