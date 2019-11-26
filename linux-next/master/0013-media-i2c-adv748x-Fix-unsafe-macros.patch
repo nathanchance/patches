@@ -1,7 +1,7 @@
-From 1b2e43d837778cc30717e9c2df15545054e92e2c Mon Sep 17 00:00:00 2001
+From 058c0b7f5287909ccf5b81744937597f315bcbd6 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 Date: Tue, 22 Oct 2019 08:25:22 -0500
-Subject: [PATCH 16/27] media: i2c: adv748x: Fix unsafe macros
+Subject: [PATCH 13/23] media: i2c: adv748x: Fix unsafe macros
 
 Enclose multiple macro parameters in parentheses in order to
 make such macros safer and fix the Clang warning below:

@@ -1,7 +1,7 @@
-From 7c1647468d920fcd10d8027fb4ea6283548c4c84 Mon Sep 17 00:00:00 2001
+From 794f9dd0e7ba494c70b0138afe186dae06f4336c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 23 Nov 2019 13:24:06 -0700
-Subject: [PATCH 27/27] To be reported or sent upstream
+Subject: [PATCH 23/23] To be reported or sent upstream
 
 powerpc: https://github.com/ClangBuiltLinux/linux/issues/775
 
@@ -13,34 +13,11 @@ flow_table_offload: TBD
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- arch/powerpc/kernel/vdso32/gettimeofday.S                  | 4 ++--
  drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c | 4 ++--
  include/net/flow_dissector.h                               | 2 +-
  net/netfilter/nf_flow_table_offload.c                      | 2 ++
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/vdso32/gettimeofday.S b/arch/powerpc/kernel/vdso32/gettimeofday.S
-index a7180b0f4aa1..c8e6902cb01b 100644
---- a/arch/powerpc/kernel/vdso32/gettimeofday.S
-+++ b/arch/powerpc/kernel/vdso32/gettimeofday.S
-@@ -190,7 +190,7 @@ V_FUNCTION_BEGIN(__kernel_time)
- 	bl	__get_datapage@local
- 	mr	r9, r3			/* datapage ptr in r9 */
- 
--	lwz	r3,STAMP_XTIME_SEC+LOWPART(r9)
-+	lwz	r3,STAMP_XTIME_SEC+LOPART(r9)
- 
- 	cmplwi	r11,0			/* check if t is NULL */
- 	beq	2f
-@@ -266,7 +266,7 @@ __do_get_tspec:
- 	 * as a 32.32 fixed-point number in r3 and r4.
- 	 * Load & add the xtime stamp.
- 	 */
--	lwz	r5,STAMP_XTIME_SEC+LOWPART(r9)
-+	lwz	r5,STAMP_XTIME_SEC+LOPART(r9)
- 	lwz	r6,STAMP_SEC_FRAC(r9)
- 	addc	r4,r4,r6
- 	adde	r3,r3,r5
 diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c
 index 110c8620907b..e0d6cb03c076 100644
 --- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c
@@ -64,10 +41,10 @@ index 110c8620907b..e0d6cb03c076 100644
  		if (!mod_hdcp_execute_and_set(poll_l_prime_available,
  				&input->l_prime_available_poll, &status,
 diff --git a/include/net/flow_dissector.h b/include/net/flow_dissector.h
-index f06b0239c32b..056bdd6f42f3 100644
+index b8c20e9f343e..1ac3864bfba9 100644
 --- a/include/net/flow_dissector.h
 +++ b/include/net/flow_dissector.h
-@@ -190,7 +190,7 @@ struct flow_dissector_key_eth_addrs {
+@@ -192,7 +192,7 @@ struct flow_dissector_key_eth_addrs {
   * @flags: flags
   */
  struct flow_dissector_key_tcp {
