@@ -1,0 +1,53 @@
+From 9cd0d5e7205a958e35b8fbd765628d870238f9bd Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 23 Nov 2019 13:24:06 -0700
+Subject: [PATCH 21/21] To be reported or sent upstream
+
+drm: https://lists.freedesktop.org/archives/amd-gfx/2019-November/043109.html
+
+flow_dissector: https://lore.kernel.org/lkml/20191121183404.6e183d06@canb.auug.org.au/
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c | 4 ++--
+ include/net/flow_dissector.h                               | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c
+index 110c8620907b..e0d6cb03c076 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp2_execution.c
+@@ -159,7 +159,7 @@ static enum mod_hdcp_status poll_l_prime_available(struct mod_hdcp *hdcp)
+ 		status = MOD_HDCP_STATUS_INVALID_OPERATION;
+ 	else
+ 		for (; num_polls; num_polls--) {
+-			udelay(wait_time);
++			 msleep(wait_time / 1000);
+ 
+ 			status = mod_hdcp_read_rxstatus(hdcp);
+ 			if (status != MOD_HDCP_STATUS_SUCCESS)
+@@ -472,7 +472,7 @@ static enum mod_hdcp_status locality_check(struct mod_hdcp *hdcp,
+ 			 hdcp, "lc_init_write"))
+ 		goto out;
+ 	if (is_dp_hdcp(hdcp))
+-		udelay(16000);
++		msleep(16);
+ 	else
+ 		if (!mod_hdcp_execute_and_set(poll_l_prime_available,
+ 				&input->l_prime_available_poll, &status,
+diff --git a/include/net/flow_dissector.h b/include/net/flow_dissector.h
+index b8c20e9f343e..1ac3864bfba9 100644
+--- a/include/net/flow_dissector.h
++++ b/include/net/flow_dissector.h
+@@ -192,7 +192,7 @@ struct flow_dissector_key_eth_addrs {
+  * @flags: flags
+  */
+ struct flow_dissector_key_tcp {
+-	__be16 flags;
++	__be32 flags;
+ };
+ 
+ /**
+-- 
+2.24.0
+

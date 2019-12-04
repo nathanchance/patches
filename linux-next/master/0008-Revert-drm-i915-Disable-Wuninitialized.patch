@@ -1,0 +1,31 @@
+From 186f24c90d46c766278148f42d78c6bbcfd1abf9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 29 May 2019 14:18:36 -0700
+Subject: [PATCH 08/21] Revert "drm/i915: Disable -Wuninitialized"
+
+This will be turned on for the whole kernel, as we want to catch these
+cases.
+
+This reverts commit c5627461490e4b913e8747d3b06541e5264a50d7.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/381
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/i915/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
+index 90dcf09f52cc..d96297736162 100644
+--- a/drivers/gpu/drm/i915/Makefile
++++ b/drivers/gpu/drm/i915/Makefile
+@@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
+ subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
+ subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
+-subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
+ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
+ 
+ # Fine grained warnings disable
+-- 
+2.24.0
+
