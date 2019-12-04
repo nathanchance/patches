@@ -1,7 +1,7 @@
 From e99c5370fff90907f4eda20374909a245f74a0c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 24 Oct 2019 13:11:08 -0700
-Subject: [PATCH 15/21] media: v4l2-device.h: Explicitly compare grpmask to
+Subject: [PATCH 15/22] media: v4l2-device.h: Explicitly compare grpmask to
  zero in v4l2_device_mask_call_all
 
 When building with Clang + -Wtautological-constant-compare, several of
