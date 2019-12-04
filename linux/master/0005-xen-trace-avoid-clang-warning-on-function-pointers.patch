@@ -1,7 +1,7 @@
-From f3a2e7e21fed653d6347fd1d17a2c8482a77d714 Mon Sep 17 00:00:00 2001
+From c7a985e0386f49b87fd891568caf5070f501ee95 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 12 Jul 2019 10:58:48 +0200
-Subject: [PATCH 08/19] xen/trace: avoid clang warning on function pointers
+Subject: [PATCH 05/17] xen/trace: avoid clang warning on function pointers
 
 clang-9 does not like the way that the is_signed_type() compares
 function pointers deep inside of the trace even macros:

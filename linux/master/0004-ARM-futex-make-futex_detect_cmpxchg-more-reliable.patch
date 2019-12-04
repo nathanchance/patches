@@ -1,7 +1,7 @@
-From 669ee8d4e3dff68b2ee97bc38b3a5ac333209e57 Mon Sep 17 00:00:00 2001
+From da1c44597209ef92cebed5a90e90a7aded8065ce Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:49 +0100
-Subject: [PATCH 07/19] ARM: futex: make futex_detect_cmpxchg more reliable
+Subject: [PATCH 04/17] ARM: futex: make futex_detect_cmpxchg more reliable
 
 Passing registers containing zero as both the address (NULL pointer)
 and data into cmpxchg_futex_value_locked() leads clang to assign
