@@ -1,4 +1,4 @@
-From d5033e703ba0c91a9a682243851e86fd564bc990 Mon Sep 17 00:00:00 2001
+From a27ce673925fdf7903104f6947cc0fb759c0cad5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 4 Nov 2019 16:57:32 -0700
 Subject: [PATCH 16/22] treewide: Cast arrays used in comparisons to unsigned
@@ -28,10 +28,10 @@ index f6920a11e28a..1bdf6ffb1e21 100644
  		sort_extable(__start___ex_table, __stop___ex_table);
  	}
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 02a23a6e5e00..216e25804319 100644
+index 6c75410f9698..317a59e6de33 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -9244,7 +9244,7 @@ __init static int tracer_alloc_buffers(void)
+@@ -9261,7 +9261,7 @@ __init static int tracer_alloc_buffers(void)
  		goto out_free_buffer_mask;
  
  	/* Only allocate trace_printk buffers if a trace_printk exists */
