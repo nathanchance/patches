@@ -1,0 +1,47 @@
+From a45f442e82c512f22ebb667409ddd35832520683 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 9 Dec 2019 13:37:43 -0700
+Subject: [PATCH 04/11] HID: core: Adjust indentation in hid_add_device
+
+Clang warns:
+
+../drivers/hid/hid-core.c:2378:3: warning: misleading indentation;
+statement is not part of the previous 'if' [-Wmisleading-indentation]
+         if (!hdev->ll_driver->raw_request) {
+         ^
+../drivers/hid/hid-core.c:2372:2: note: previous statement is here
+        if (hid_ignore(hdev))
+        ^
+1 warning generated.
+
+This warning occurs because there is a space after the tab on this line.
+Remove it so that the indentation is consistent with the Linux kernel
+coding style and clang no longer warns.
+
+Fixes: 3c86726cfe38 ("HID: make .raw_request mandatory")
+Link: https://github.com/ClangBuiltLinux/linux/issues/793
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/hid/hid-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index e0b241bd3070..9c7f03f23eca 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2375,10 +2375,10 @@ int hid_add_device(struct hid_device *hdev)
+ 	/*
+ 	 * Check for the mandatory transport channel.
+ 	 */
+-	 if (!hdev->ll_driver->raw_request) {
++	if (!hdev->ll_driver->raw_request) {
+ 		hid_err(hdev, "transport driver missing .raw_request()\n");
+ 		return -EINVAL;
+-	 }
++	}
+ 
+ 	/*
+ 	 * Read the device report descriptor once and use as template
+-- 
+2.24.0
+
