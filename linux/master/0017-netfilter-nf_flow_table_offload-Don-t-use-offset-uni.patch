@@ -1,7 +1,7 @@
-From 82b43a3efe89e10c9902292e2a21002fe6b1ecb5 Mon Sep 17 00:00:00 2001
+From a12089dba8b693dbdfbc030d7c72e13023080d6f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 26 Nov 2019 13:12:26 -0700
-Subject: [PATCH 17/17] netfilter: nf_flow_table_offload: Don't use offset
+Subject: [PATCH 17/19] netfilter: nf_flow_table_offload: Don't use offset
  uninitialized in flow_offload_port_{d,s}nat
 
 Clang warns (trimmed the second warning for brevity):

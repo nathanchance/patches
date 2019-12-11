@@ -1,7 +1,7 @@
-From 67ea3ef9d7a131b44fa285579820ce784fce5b05 Mon Sep 17 00:00:00 2001
+From 25fc0b4c1532def247fe9eb212cdb03305cbebe3 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
-Subject: [PATCH 06/17] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 06/19] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 999a197d67d2..9f7ec48bd500 100644
+index 73e3c2802927..c0f0640d9f0f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1032,6 +1032,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
@@ -67,7 +67,7 @@ index b734ac8a654e..fb413683dfb9 100644
  $(obj)/lib-ksyms.o: $(lib-target) FORCE
  	$(call if_changed,export_list)
 diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 06495379fcd8..b2a3792238fd 100755
+index 436379940356..19bd6479d515 100755
 --- a/scripts/link-vmlinux.sh
 +++ b/scripts/link-vmlinux.sh
 @@ -62,6 +62,7 @@ vmlinux_link()

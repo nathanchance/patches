@@ -1,0 +1,936 @@
+From 6aeb84c4f139d7e7145bbc5e77edf8c1b5731e34 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 10 Dec 2019 22:45:14 -0700
+Subject: [PATCH 19/19] Monolithic -Wmisleading-indentation
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/boot/4xx.c                       |  2 +-
+ drivers/block/xen-blkfront.c                  | 14 ++--
+ .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  |  2 +-
+ drivers/hid/hid-core.c                        |  4 +-
+ drivers/mtd/nand/onenand/onenand_base.c       | 82 +++++++++----------
+ drivers/net/ethernet/dec/tulip/dmfe.c         | 21 ++---
+ drivers/net/ethernet/dec/tulip/uli526x.c      | 14 ++--
+ drivers/net/ethernet/smsc/smc911x.c           |  2 +-
+ drivers/net/ppp/ppp_async.c                   | 18 ++--
+ .../net/wireless/intersil/hostap/hostap_ap.c  |  2 +-
+ drivers/nfc/pn544/pn544.c                     |  2 +-
+ drivers/pci/controller/pcie-altera.c          |  2 +-
+ drivers/phy/qualcomm/phy-qcom-apq8064-sata.c  |  2 +-
+ drivers/scsi/aic7xxx/aic7xxx_core.c           |  2 +-
+ drivers/scsi/csiostor/csio_scsi.c             |  2 +-
+ drivers/scsi/qla4xxx/ql4_os.c                 |  2 +-
+ drivers/staging/uwb/allocator.c               |  4 +-
+ drivers/tty/synclink.c                        | 50 +++++------
+ drivers/tty/synclink_gt.c                     | 10 +--
+ drivers/tty/synclinkmp.c                      | 14 ++--
+ drivers/video/fbdev/core/fbcon.c              | 26 +++---
+ drivers/video/fbdev/core/fbmem.c              | 36 ++++----
+ fs/cifs/smb2file.c                            |  2 +-
+ fs/ext2/super.c                               |  6 +-
+ fs/read_write.c                               |  2 +-
+ lib/scatterlist.c                             |  2 +-
+ mm/page_alloc.c                               |  4 +-
+ sound/usb/usx2y/usX2Yhwdep.c                  |  2 +-
+ 28 files changed, 166 insertions(+), 165 deletions(-)
+
+diff --git a/arch/powerpc/boot/4xx.c b/arch/powerpc/boot/4xx.c
+index 1699e9531552..00c4d843a023 100644
+--- a/arch/powerpc/boot/4xx.c
++++ b/arch/powerpc/boot/4xx.c
+@@ -228,7 +228,7 @@ void ibm4xx_denali_fixup_memsize(void)
+ 		dpath = 8; /* 64 bits */
+ 
+ 	/* get address pins (rows) */
+- 	val = SDRAM0_READ(DDR0_42);
++	val = SDRAM0_READ(DDR0_42);
+ 
+ 	row = DDR_GET_VAL(val, DDR_APIN, DDR_APIN_SHIFT);
+ 	if (row > max_row)
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index a74d03913822..dea434d7e258 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -1113,8 +1113,8 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
+ 	if (!VDEV_IS_EXTENDED(info->vdevice)) {
+ 		err = xen_translate_vdev(info->vdevice, &minor, &offset);
+ 		if (err)
+-			return err;		
+- 		nr_parts = PARTS_PER_DISK;
++			return err;
++		nr_parts = PARTS_PER_DISK;
+ 	} else {
+ 		minor = BLKIF_MINOR_EXT(info->vdevice);
+ 		nr_parts = PARTS_PER_EXT_DISK;
+@@ -1175,9 +1175,9 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
+ 
+ 	return 0;
+ 
+- release:
++release:
+ 	xlbd_release_minors(minor, nr_minors);
+- out:
++out:
+ 	return err;
+ }
+ 
+@@ -1557,7 +1557,7 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
+ 		return IRQ_HANDLED;
+ 
+ 	spin_lock_irqsave(&rinfo->ring_lock, flags);
+- again:
++again:
+ 	rp = rinfo->ring.sring->rsp_prod;
+ 	rmb(); /* Ensure we see queued responses up to 'rp'. */
+ 
+@@ -1883,11 +1883,11 @@ static int talk_to_blkback(struct xenbus_device *dev,
+ 
+ 	return 0;
+ 
+- abort_transaction:
++abort_transaction:
+ 	xenbus_transaction_end(xbt, 1);
+ 	if (message)
+ 		xenbus_dev_fatal(dev, err, "%s", message);
+- destroy_blkring:
++destroy_blkring:
+ 	blkif_free(info, 0);
+ 
+ 	mutex_lock(&blkfront_mutex);
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+index 772f0753ed38..aaf2f26f8505 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+@@ -121,7 +121,7 @@ static void mdp4_dsi_encoder_enable(struct drm_encoder *encoder)
+ 	if (mdp4_dsi_encoder->enabled)
+ 		return;
+ 
+-	 mdp4_crtc_set_config(encoder->crtc,
++	mdp4_crtc_set_config(encoder->crtc,
+ 			MDP4_DMA_CONFIG_PACK_ALIGN_MSB |
+ 			MDP4_DMA_CONFIG_DEFLKR_EN |
+ 			MDP4_DMA_CONFIG_DITHER_EN |
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index e0b241bd3070..9c7f03f23eca 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2375,10 +2375,10 @@ int hid_add_device(struct hid_device *hdev)
+ 	/*
+ 	 * Check for the mandatory transport channel.
+ 	 */
+-	 if (!hdev->ll_driver->raw_request) {
++	if (!hdev->ll_driver->raw_request) {
+ 		hid_err(hdev, "transport driver missing .raw_request()\n");
+ 		return -EINVAL;
+-	 }
++	}
+ 
+ 	/*
+ 	 * Read the device report descriptor once and use as template
+diff --git a/drivers/mtd/nand/onenand/onenand_base.c b/drivers/mtd/nand/onenand/onenand_base.c
+index 77bd32a683e1..9e81cd982dd3 100644
+--- a/drivers/mtd/nand/onenand/onenand_base.c
++++ b/drivers/mtd/nand/onenand/onenand_base.c
+@@ -1248,44 +1248,44 @@ static int onenand_read_ops_nolock(struct mtd_info *mtd, loff_t from,
+ 
+ 	stats = mtd->ecc_stats;
+ 
+- 	/* Read-while-load method */
++	/* Read-while-load method */
+ 
+- 	/* Do first load to bufferRAM */
+- 	if (read < len) {
+- 		if (!onenand_check_bufferram(mtd, from)) {
++	/* Do first load to bufferRAM */
++	if (read < len) {
++		if (!onenand_check_bufferram(mtd, from)) {
+ 			this->command(mtd, ONENAND_CMD_READ, from, writesize);
+- 			ret = this->wait(mtd, FL_READING);
+- 			onenand_update_bufferram(mtd, from, !ret);
++			ret = this->wait(mtd, FL_READING);
++			onenand_update_bufferram(mtd, from, !ret);
+ 			if (mtd_is_eccerr(ret))
+ 				ret = 0;
+- 		}
+- 	}
++		}
++	}
+ 
+ 	thislen = min_t(int, writesize, len - read);
+ 	column = from & (writesize - 1);
+ 	if (column + thislen > writesize)
+ 		thislen = writesize - column;
+ 
+- 	while (!ret) {
+- 		/* If there is more to load then start next load */
+- 		from += thislen;
+- 		if (read + thislen < len) {
++	while (!ret) {
++		/* If there is more to load then start next load */
++		from += thislen;
++		if (read + thislen < len) {
+ 			this->command(mtd, ONENAND_CMD_READ, from, writesize);
+- 			/*
+- 			 * Chip boundary handling in DDP
+- 			 * Now we issued chip 1 read and pointed chip 1
++			/*
++			 * Chip boundary handling in DDP
++			 * Now we issued chip 1 read and pointed chip 1
+ 			 * bufferram so we have to point chip 0 bufferram.
+- 			 */
+- 			if (ONENAND_IS_DDP(this) &&
+- 			    unlikely(from == (this->chipsize >> 1))) {
+- 				this->write_word(ONENAND_DDP_CHIP0, this->base + ONENAND_REG_START_ADDRESS2);
+- 				boundary = 1;
+- 			} else
+- 				boundary = 0;
+- 			ONENAND_SET_PREV_BUFFERRAM(this);
+- 		}
+- 		/* While load is going, read from last bufferRAM */
+- 		this->read_bufferram(mtd, ONENAND_DATARAM, buf, column, thislen);
++			 */
++			if (ONENAND_IS_DDP(this) &&
++			    unlikely(from == (this->chipsize >> 1))) {
++				this->write_word(ONENAND_DDP_CHIP0, this->base + ONENAND_REG_START_ADDRESS2);
++				boundary = 1;
++			} else
++				boundary = 0;
++			ONENAND_SET_PREV_BUFFERRAM(this);
++		}
++		/* While load is going, read from last bufferRAM */
++		this->read_bufferram(mtd, ONENAND_DATARAM, buf, column, thislen);
+ 
+ 		/* Read oob area if needed */
+ 		if (oobbuf) {
+@@ -1301,24 +1301,24 @@ static int onenand_read_ops_nolock(struct mtd_info *mtd, loff_t from,
+ 			oobcolumn = 0;
+ 		}
+ 
+- 		/* See if we are done */
+- 		read += thislen;
+- 		if (read == len)
+- 			break;
+- 		/* Set up for next read from bufferRAM */
+- 		if (unlikely(boundary))
+- 			this->write_word(ONENAND_DDP_CHIP1, this->base + ONENAND_REG_START_ADDRESS2);
+- 		ONENAND_SET_NEXT_BUFFERRAM(this);
+- 		buf += thislen;
++		/* See if we are done */
++		read += thislen;
++		if (read == len)
++			break;
++		/* Set up for next read from bufferRAM */
++		if (unlikely(boundary))
++			this->write_word(ONENAND_DDP_CHIP1, this->base + ONENAND_REG_START_ADDRESS2);
++		ONENAND_SET_NEXT_BUFFERRAM(this);
++		buf += thislen;
+ 		thislen = min_t(int, writesize, len - read);
+- 		column = 0;
+- 		cond_resched();
+- 		/* Now wait for load */
+- 		ret = this->wait(mtd, FL_READING);
+- 		onenand_update_bufferram(mtd, from, !ret);
++		column = 0;
++		cond_resched();
++		/* Now wait for load */
++		ret = this->wait(mtd, FL_READING);
++		onenand_update_bufferram(mtd, from, !ret);
+ 		if (mtd_is_eccerr(ret))
+ 			ret = 0;
+- 	}
++	}
+ 
+ 	/*
+ 	 * Return success, if no ECC failures, else -EBADMSG
+diff --git a/drivers/net/ethernet/dec/tulip/dmfe.c b/drivers/net/ethernet/dec/tulip/dmfe.c
+index 0efdbd1a4a6f..ba75365155fb 100644
+--- a/drivers/net/ethernet/dec/tulip/dmfe.c
++++ b/drivers/net/ethernet/dec/tulip/dmfe.c
+@@ -530,7 +530,7 @@ static void dmfe_remove_one(struct pci_dev *pdev)
+ 		pci_iounmap(db->pdev, db->ioaddr);
+ 		pci_free_consistent(db->pdev, sizeof(struct tx_desc) *
+ 					DESC_ALL_CNT + 0x20, db->desc_pool_ptr,
+- 					db->desc_pool_dma_ptr);
++					db->desc_pool_dma_ptr);
+ 		pci_free_consistent(db->pdev, TX_BUF_ALLOC * TX_DESC_CNT + 4,
+ 					db->buf_pool_ptr, db->buf_pool_dma_ptr);
+ 		pci_release_regions(pdev);
+@@ -908,7 +908,7 @@ static void dmfe_free_tx_pkt(struct net_device *dev, struct dmfe_board_info *db)
+ 			}
+ 		}
+ 
+-    		txptr = txptr->next_tx_desc;
++		txptr = txptr->next_tx_desc;
+ 	}/* End of while */
+ 
+ 	/* Update TX remove pointer to next */
+@@ -1127,7 +1127,7 @@ static void dmfe_timer(struct timer_list *t)
+ 	void __iomem *ioaddr = db->ioaddr;
+ 	u32 tmp_cr8;
+ 	unsigned char tmp_cr12;
+- 	unsigned long flags;
++	unsigned long flags;
+ 
+ 	int link_ok, link_ok_phy;
+ 
+@@ -1223,7 +1223,7 @@ static void dmfe_timer(struct timer_list *t)
+ 	if (link_ok_phy != link_ok) {
+ 		DMFE_DBUG (0, "PHY and chip report different link status", 0);
+ 		link_ok = link_ok | link_ok_phy;
+- 	}
++	}
+ 
+ 	if ( !link_ok && netif_carrier_ok(dev)) {
+ 		/* Link Failed */
+@@ -1705,14 +1705,14 @@ static void dmfe_set_phyxcer(struct dmfe_board_info *db)
+ 		if (db->chip_id == PCI_DM9009_ID) phy_reg &= 0x61;
+ 	}
+ 
+-  	/* Write new capability to Phyxcer Reg4 */
++	/* Write new capability to Phyxcer Reg4 */
+ 	if ( !(phy_reg & 0x01e0)) {
+ 		phy_reg|=db->PHY_reg4;
+ 		db->media_mode|=DMFE_AUTO;
+ 	}
+ 	dmfe_phy_write(db->ioaddr, db->phy_addr, 4, phy_reg, db->chip_id);
+ 
+- 	/* Restart Auto-Negotiation */
++	/* Restart Auto-Negotiation */
+ 	if ( db->chip_type && (db->chip_id == PCI_DM9102_ID) )
+ 		dmfe_phy_write(db->ioaddr, db->phy_addr, 0, 0x1800, db->chip_id);
+ 	if ( !db->chip_type )
+@@ -1760,7 +1760,7 @@ static void dmfe_process_mode(struct dmfe_board_info *db)
+ 			}
+ 			dmfe_phy_write(db->ioaddr,
+ 				       db->phy_addr, 0, phy_reg, db->chip_id);
+-       			if ( db->chip_type && (db->chip_id == PCI_DM9102_ID) )
++			if ( db->chip_type && (db->chip_id == PCI_DM9102_ID) )
+ 				mdelay(20);
+ 			dmfe_phy_write(db->ioaddr,
+ 				       db->phy_addr, 0, phy_reg, db->chip_id);
+@@ -2214,15 +2214,16 @@ static int __init dmfe_init_module(void)
+ 	if (cr6set)
+ 		dmfe_cr6_user_set = cr6set;
+ 
+- 	switch(mode) {
+-   	case DMFE_10MHF:
++	switch (mode) {
++	case DMFE_10MHF:
+ 	case DMFE_100MHF:
+ 	case DMFE_10MFD:
+ 	case DMFE_100MFD:
+ 	case DMFE_1M_HPNA:
+ 		dmfe_media_mode = mode;
+ 		break;
+-	default:dmfe_media_mode = DMFE_AUTO;
++	default:
++		dmfe_media_mode = DMFE_AUTO;
+ 		break;
+ 	}
+ 
+diff --git a/drivers/net/ethernet/dec/tulip/uli526x.c b/drivers/net/ethernet/dec/tulip/uli526x.c
+index b1f30b194300..43364295c59b 100644
+--- a/drivers/net/ethernet/dec/tulip/uli526x.c
++++ b/drivers/net/ethernet/dec/tulip/uli526x.c
+@@ -435,7 +435,7 @@ static void uli526x_remove_one(struct pci_dev *pdev)
+ 	pci_iounmap(pdev, db->ioaddr);
+ 	pci_free_consistent(db->pdev, sizeof(struct tx_desc) *
+ 				DESC_ALL_CNT + 0x20, db->desc_pool_ptr,
+- 				db->desc_pool_dma_ptr);
++				db->desc_pool_dma_ptr);
+ 	pci_free_consistent(db->pdev, TX_BUF_ALLOC * TX_DESC_CNT + 4,
+ 				db->buf_pool_ptr, db->buf_pool_dma_ptr);
+ 	pci_release_regions(pdev);
+@@ -784,7 +784,7 @@ static void uli526x_free_tx_pkt(struct net_device *dev,
+ 			}
+ 		}
+ 
+-    		txptr = txptr->next_tx_desc;
++		txptr = txptr->next_tx_desc;
+ 	}/* End of while */
+ 
+ 	/* Update TX remove pointer to next */
+@@ -1019,7 +1019,7 @@ static void uli526x_timer(struct timer_list *t)
+ 	struct net_device *dev = pci_get_drvdata(db->pdev);
+ 	struct uli_phy_ops *phy = &db->phy;
+ 	void __iomem *ioaddr = db->ioaddr;
+- 	unsigned long flags;
++	unsigned long flags;
+ 	u8 tmp_cr12 = 0;
+ 	u32 tmp_cr8;
+ 
+@@ -1575,14 +1575,14 @@ static void uli526x_set_phyxcer(struct uli526x_board_info *db)
+ 
+ 	}
+ 
+-  	/* Write new capability to Phyxcer Reg4 */
++	/* Write new capability to Phyxcer Reg4 */
+ 	if ( !(phy_reg & 0x01e0)) {
+ 		phy_reg|=db->PHY_reg4;
+ 		db->media_mode|=ULI526X_AUTO;
+ 	}
+ 	phy->write(db, db->phy_addr, 4, phy_reg);
+ 
+- 	/* Restart Auto-Negotiation */
++	/* Restart Auto-Negotiation */
+ 	phy->write(db, db->phy_addr, 0, 0x1200);
+ 	udelay(50);
+ }
+@@ -1809,8 +1809,8 @@ static int __init uli526x_init_module(void)
+ 	if (cr6set)
+ 		uli526x_cr6_user_set = cr6set;
+ 
+- 	switch (mode) {
+-   	case ULI526X_10MHF:
++	switch (mode) {
++	case ULI526X_10MHF:
+ 	case ULI526X_100MHF:
+ 	case ULI526X_10MFD:
+ 	case ULI526X_100MFD:
+diff --git a/drivers/net/ethernet/smsc/smc911x.c b/drivers/net/ethernet/smsc/smc911x.c
+index 8d88e4083456..7b65e79d6ae9 100644
+--- a/drivers/net/ethernet/smsc/smc911x.c
++++ b/drivers/net/ethernet/smsc/smc911x.c
+@@ -936,7 +936,7 @@ static void smc911x_phy_configure(struct work_struct *work)
+ 	if (lp->ctl_rspeed != 100)
+ 		my_ad_caps &= ~(ADVERTISE_100BASE4|ADVERTISE_100FULL|ADVERTISE_100HALF);
+ 
+-	 if (!lp->ctl_rfduplx)
++	if (!lp->ctl_rfduplx)
+ 		my_ad_caps &= ~(ADVERTISE_100FULL|ADVERTISE_10FULL);
+ 
+ 	/* Update our Auto-Neg Advertisement Register */
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index a7b9cf3269bf..29a0917a81e6 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -874,15 +874,15 @@ ppp_async_input(struct asyncppp *ap, const unsigned char *buf,
+ 				skb = dev_alloc_skb(ap->mru + PPP_HDRLEN + 2);
+ 				if (!skb)
+ 					goto nomem;
+- 				ap->rpkt = skb;
+- 			}
+- 			if (skb->len == 0) {
+- 				/* Try to get the payload 4-byte aligned.
+- 				 * This should match the
+- 				 * PPP_ALLSTATIONS/PPP_UI/compressed tests in
+- 				 * process_input_packet, but we do not have
+- 				 * enough chars here to test buf[1] and buf[2].
+- 				 */
++				ap->rpkt = skb;
++			}
++			if (skb->len == 0) {
++				/* Try to get the payload 4-byte aligned.
++				 * This should match the
++				 * PPP_ALLSTATIONS/PPP_UI/compressed tests in
++				 * process_input_packet, but we do not have
++				 * enough chars here to test buf[1] and buf[2].
++				 */
+ 				if (buf[0] != PPP_ALLSTATIONS)
+ 					skb_reserve(skb, 2 + (buf[0] & 1));
+ 			}
+diff --git a/drivers/net/wireless/intersil/hostap/hostap_ap.c b/drivers/net/wireless/intersil/hostap/hostap_ap.c
+index 0094b1d2b577..3ec46f48cfde 100644
+--- a/drivers/net/wireless/intersil/hostap/hostap_ap.c
++++ b/drivers/net/wireless/intersil/hostap/hostap_ap.c
+@@ -2508,7 +2508,7 @@ static int prism2_hostapd_add_sta(struct ap_data *ap,
+ 		sta->supported_rates[0] = 2;
+ 	if (sta->tx_supp_rates & WLAN_RATE_2M)
+ 		sta->supported_rates[1] = 4;
+- 	if (sta->tx_supp_rates & WLAN_RATE_5M5)
++	if (sta->tx_supp_rates & WLAN_RATE_5M5)
+ 		sta->supported_rates[2] = 11;
+ 	if (sta->tx_supp_rates & WLAN_RATE_11M)
+ 		sta->supported_rates[3] = 22;
+diff --git a/drivers/nfc/pn544/pn544.c b/drivers/nfc/pn544/pn544.c
+index cda996f6954e..2b83156efe3f 100644
+--- a/drivers/nfc/pn544/pn544.c
++++ b/drivers/nfc/pn544/pn544.c
+@@ -693,7 +693,7 @@ static int pn544_hci_check_presence(struct nfc_hci_dev *hdev,
+ 		    target->nfcid1_len != 10)
+ 			return -EOPNOTSUPP;
+ 
+-		 return nfc_hci_send_cmd(hdev, NFC_HCI_RF_READER_A_GATE,
++		return nfc_hci_send_cmd(hdev, NFC_HCI_RF_READER_A_GATE,
+ 				     PN544_RF_READER_CMD_ACTIVATE_NEXT,
+ 				     target->nfcid1, target->nfcid1_len, NULL);
+ 	} else if (target->supported_protocols & (NFC_PROTO_JEWEL_MASK |
+diff --git a/drivers/pci/controller/pcie-altera.c b/drivers/pci/controller/pcie-altera.c
+index b447c3e4abad..24cb1c331058 100644
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -193,7 +193,7 @@ static bool altera_pcie_valid_device(struct altera_pcie *pcie,
+ 	if (bus->number == pcie->root_bus_nr && dev > 0)
+ 		return false;
+ 
+-	 return true;
++	return true;
+ }
+ 
+ static int tlp_read_packet(struct altera_pcie *pcie, u32 *value)
+diff --git a/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c b/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
+index 42bc5150dd92..febe0aef68d4 100644
+--- a/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
++++ b/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
+@@ -80,7 +80,7 @@ static int read_poll_timeout(void __iomem *addr, u32 mask)
+ 		if (readl_relaxed(addr) & mask)
+ 			return 0;
+ 
+-		 usleep_range(DELAY_INTERVAL_US, DELAY_INTERVAL_US + 50);
++		usleep_range(DELAY_INTERVAL_US, DELAY_INTERVAL_US + 50);
+ 	} while (!time_after(jiffies, timeout));
+ 
+ 	return (readl_relaxed(addr) & mask) ? 0 : -ETIMEDOUT;
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
+index a9d40d3b90ef..4190a025381a 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_core.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
+@@ -2314,7 +2314,7 @@ ahc_find_syncrate(struct ahc_softc *ahc, u_int *period,
+ 			 * At some speeds, we only support
+ 			 * ST transfers.
+ 			 */
+-		 	if ((syncrate->sxfr_u2 & ST_SXFR) != 0)
++			if ((syncrate->sxfr_u2 & ST_SXFR) != 0)
+ 				*ppr_options &= ~MSG_EXT_PPR_DT_REQ;
+ 			break;
+ 		}
+diff --git a/drivers/scsi/csiostor/csio_scsi.c b/drivers/scsi/csiostor/csio_scsi.c
+index 469d0bc9f5fe..00cf33573136 100644
+--- a/drivers/scsi/csiostor/csio_scsi.c
++++ b/drivers/scsi/csiostor/csio_scsi.c
+@@ -1383,7 +1383,7 @@ csio_device_reset(struct device *dev,
+ 		return -EINVAL;
+ 
+ 	/* Delete NPIV lnodes */
+-	 csio_lnodes_exit(hw, 1);
++	csio_lnodes_exit(hw, 1);
+ 
+ 	/* Block upper IOs */
+ 	csio_lnodes_block_request(hw);
+diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
+index 8c674eca09f1..baa3542a8eab 100644
+--- a/drivers/scsi/qla4xxx/ql4_os.c
++++ b/drivers/scsi/qla4xxx/ql4_os.c
+@@ -4145,7 +4145,7 @@ static void qla4xxx_mem_free(struct scsi_qla_host *ha)
+ 		dma_free_coherent(&ha->pdev->dev, ha->queues_len, ha->queues,
+ 				  ha->queues_dma);
+ 
+-	 if (ha->fw_dump)
++	if (ha->fw_dump)
+ 		vfree(ha->fw_dump);
+ 
+ 	ha->queues_len = 0;
+diff --git a/drivers/staging/uwb/allocator.c b/drivers/staging/uwb/allocator.c
+index 1f429fba20b7..5c1b062893f9 100644
+--- a/drivers/staging/uwb/allocator.c
++++ b/drivers/staging/uwb/allocator.c
+@@ -350,7 +350,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+ 	else
+ 		goto alloc_not_found;
+ 
+-  alloc_found:
++alloc_found:
+ 	bitmap_zero(result->bm, UWB_NUM_MAS);
+ 	bitmap_zero(result->unsafe_bm, UWB_NUM_MAS);
+ 	/* fill the safe and unsafe bitmaps */
+@@ -368,7 +368,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+ 	kfree(ai);		
+ 	return UWB_RSV_ALLOC_FOUND;
+   
+-  alloc_not_found:
++alloc_not_found:
+ 	kfree(ai);
+ 	return UWB_RSV_ALLOC_NOT_FOUND;
+ }
+diff --git a/drivers/tty/synclink.c b/drivers/tty/synclink.c
+index 84f26e43b229..892394f0bf1e 100644
+--- a/drivers/tty/synclink.c
++++ b/drivers/tty/synclink.c
+@@ -1164,21 +1164,21 @@ static void mgsl_isr_receive_status( struct mgsl_struct *info )
+ 		printk("%s(%d):mgsl_isr_receive_status status=%04X\n",
+ 			__FILE__,__LINE__,status);
+ 			
+- 	if ( (status & RXSTATUS_ABORT_RECEIVED) && 
++	if ( (status & RXSTATUS_ABORT_RECEIVED) && 
+ 		info->loopmode_insert_requested &&
+- 		usc_loopmode_active(info) )
+- 	{
++		usc_loopmode_active(info) )
++	{
+ 		++info->icount.rxabort;
+-	 	info->loopmode_insert_requested = false;
++		info->loopmode_insert_requested = false;
+  
+- 		/* clear CMR:13 to start echoing RxD to TxD */
++		/* clear CMR:13 to start echoing RxD to TxD */
+ 		info->cmr_value &= ~BIT13;
+- 		usc_OutReg(info, CMR, info->cmr_value);
++		usc_OutReg(info, CMR, info->cmr_value);
+  
+ 		/* disable received abort irq (no longer required) */
+-	 	usc_OutReg(info, RICR,
+- 			(usc_InReg(info, RICR) & ~RXSTATUS_ABORT_RECEIVED));
+- 	}
++		usc_OutReg(info, RICR,
++			(usc_InReg(info, RICR) & ~RXSTATUS_ABORT_RECEIVED));
++	}
+ 
+ 	if (status & (RXSTATUS_EXITED_HUNT | RXSTATUS_IDLE_RECEIVED)) {
+ 		if (status & RXSTATUS_EXITED_HUNT)
+@@ -1970,8 +1970,8 @@ static void mgsl_change_params(struct mgsl_struct *info)
+ 	info->read_status_mask = RXSTATUS_OVERRUN;
+ 	if (I_INPCK(info->port.tty))
+ 		info->read_status_mask |= RXSTATUS_PARITY_ERROR | RXSTATUS_FRAMING_ERROR;
+- 	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
+- 		info->read_status_mask |= RXSTATUS_BREAK_RECEIVED;
++	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
++		info->read_status_mask |= RXSTATUS_BREAK_RECEIVED;
+ 	
+ 	if (I_IGNPAR(info->port.tty))
+ 		info->ignore_status_mask |= RXSTATUS_PARITY_ERROR | RXSTATUS_FRAMING_ERROR;
+@@ -3226,7 +3226,7 @@ static void dtr_rts(struct tty_port *port, int on)
+ 		info->serial_signals |= SerialSignal_RTS | SerialSignal_DTR;
+ 	else
+ 		info->serial_signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
+- 	usc_set_serial_signals(info);
++	usc_set_serial_signals(info);
+ 	spin_unlock_irqrestore(&info->irq_spinlock,flags);
+ }
+ 
+@@ -4907,23 +4907,23 @@ static void usc_set_sdlc_mode( struct mgsl_struct *info )
+ 		/*  of rounding up and then subtracting 1 we just don't subtract */
+ 		/*  the one in this case. */
+ 
+- 		/*--------------------------------------------------
+- 		 * ejz: for DPLL mode, application should use the
+- 		 * same clock speed as the partner system, even 
+- 		 * though clocking is derived from the input RxData.
+- 		 * In case the user uses a 0 for the clock speed,
+- 		 * default to 0xffffffff and don't try to divide by
+- 		 * zero
+- 		 *--------------------------------------------------*/
+- 		if ( info->params.clock_speed )
+- 		{
++		/*--------------------------------------------------
++		 * ejz: for DPLL mode, application should use the
++		 * same clock speed as the partner system, even 
++		 * though clocking is derived from the input RxData.
++		 * In case the user uses a 0 for the clock speed,
++		 * default to 0xffffffff and don't try to divide by
++		 * zero
++		 *--------------------------------------------------*/
++		if ( info->params.clock_speed )
++		{
+ 			Tc = (u16)((XtalSpeed/DpllDivisor)/info->params.clock_speed);
+ 			if ( !((((XtalSpeed/DpllDivisor) % info->params.clock_speed) * 2)
+ 			       / info->params.clock_speed) )
+ 				Tc--;
+- 		}
+- 		else
+- 			Tc = -1;
++		}
++		else
++			Tc = -1;
+  				  
+ 
+ 		/* Write 16-bit Time Constant for BRG1 */
+diff --git a/drivers/tty/synclink_gt.c b/drivers/tty/synclink_gt.c
+index e8a9047de451..1a7c5881a830 100644
+--- a/drivers/tty/synclink_gt.c
++++ b/drivers/tty/synclink_gt.c
+@@ -1334,10 +1334,10 @@ static void throttle(struct tty_struct * tty)
+ 	DBGINFO(("%s throttle\n", info->device_name));
+ 	if (I_IXOFF(tty))
+ 		send_xchar(tty, STOP_CHAR(tty));
+- 	if (C_CRTSCTS(tty)) {
++	if (C_CRTSCTS(tty)) {
+ 		spin_lock_irqsave(&info->lock,flags);
+ 		info->signals &= ~SerialSignal_RTS;
+-	 	set_signals(info);
++		set_signals(info);
+ 		spin_unlock_irqrestore(&info->lock,flags);
+ 	}
+ }
+@@ -2560,8 +2560,8 @@ static void change_params(struct slgt_info *info)
+ 	info->read_status_mask = IRQ_RXOVER;
+ 	if (I_INPCK(info->port.tty))
+ 		info->read_status_mask |= MASK_PARITY | MASK_FRAMING;
+- 	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
+- 		info->read_status_mask |= MASK_BREAK;
++	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
++		info->read_status_mask |= MASK_BREAK;
+ 	if (I_IGNPAR(info->port.tty))
+ 		info->ignore_status_mask |= MASK_PARITY | MASK_FRAMING;
+ 	if (I_IGNBRK(info->port.tty)) {
+@@ -3218,7 +3218,7 @@ static void dtr_rts(struct tty_port *port, int on)
+ 		info->signals |= SerialSignal_RTS | SerialSignal_DTR;
+ 	else
+ 		info->signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
+- 	set_signals(info);
++	set_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ }
+ 
+diff --git a/drivers/tty/synclinkmp.c b/drivers/tty/synclinkmp.c
+index fcb91bf7a15b..564f7dc43b65 100644
+--- a/drivers/tty/synclinkmp.c
++++ b/drivers/tty/synclinkmp.c
+@@ -1453,10 +1453,10 @@ static void throttle(struct tty_struct * tty)
+ 	if (I_IXOFF(tty))
+ 		send_xchar(tty, STOP_CHAR(tty));
+ 
+- 	if (C_CRTSCTS(tty)) {
++	if (C_CRTSCTS(tty)) {
+ 		spin_lock_irqsave(&info->lock,flags);
+ 		info->serial_signals &= ~SerialSignal_RTS;
+-	 	set_signals(info);
++		set_signals(info);
+ 		spin_unlock_irqrestore(&info->lock,flags);
+ 	}
+ }
+@@ -2470,7 +2470,7 @@ static void isr_io_pin( SLMP_INFO *info, u16 status )
+ 					if (status & SerialSignal_CTS) {
+ 						if ( debug_level >= DEBUG_LEVEL_ISR )
+ 							printk("CTS tx start...");
+-			 			info->port.tty->hw_stopped = 0;
++						info->port.tty->hw_stopped = 0;
+ 						tx_start(info);
+ 						info->pending_bh |= BH_TRANSMIT;
+ 						return;
+@@ -2479,7 +2479,7 @@ static void isr_io_pin( SLMP_INFO *info, u16 status )
+ 					if (!(status & SerialSignal_CTS)) {
+ 						if ( debug_level >= DEBUG_LEVEL_ISR )
+ 							printk("CTS tx stop...");
+-			 			info->port.tty->hw_stopped = 1;
++						info->port.tty->hw_stopped = 1;
+ 						tx_stop(info);
+ 					}
+ 				}
+@@ -2806,8 +2806,8 @@ static void change_params(SLMP_INFO *info)
+ 	info->read_status_mask2 = OVRN;
+ 	if (I_INPCK(info->port.tty))
+ 		info->read_status_mask2 |= PE | FRME;
+- 	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
+- 		info->read_status_mask1 |= BRKD;
++	if (I_BRKINT(info->port.tty) || I_PARMRK(info->port.tty))
++		info->read_status_mask1 |= BRKD;
+ 	if (I_IGNPAR(info->port.tty))
+ 		info->ignore_status_mask2 |= PE | FRME;
+ 	if (I_IGNBRK(info->port.tty)) {
+@@ -3243,7 +3243,7 @@ static void dtr_rts(struct tty_port *port, int on)
+ 		info->serial_signals |= SerialSignal_RTS | SerialSignal_DTR;
+ 	else
+ 		info->serial_signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
+- 	set_signals(info);
++	set_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ }
+ 
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index c9235a2f42f8..9b9455c72ad2 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -866,7 +866,7 @@ static int set_con2fb_map(int unit, int newidx, int user)
+ 	int oldidx = con2fb_map[unit];
+ 	struct fb_info *info = registered_fb[newidx];
+ 	struct fb_info *oldinfo = NULL;
+- 	int found, err = 0;
++	int found, err = 0;
+ 
+ 	WARN_CONSOLE_UNLOCKED();
+ 
+@@ -888,31 +888,31 @@ static int set_con2fb_map(int unit, int newidx, int user)
+ 
+ 	con2fb_map[unit] = newidx;
+ 	if (!err && !found)
+- 		err = con2fb_acquire_newinfo(vc, info, unit, oldidx);
++		err = con2fb_acquire_newinfo(vc, info, unit, oldidx);
+ 
+ 
+ 	/*
+ 	 * If old fb is not mapped to any of the consoles,
+ 	 * fbcon should release it.
+ 	 */
+- 	if (!err && oldinfo && !search_fb_in_map(oldidx))
+- 		err = con2fb_release_oldinfo(vc, oldinfo, info, unit, oldidx,
+- 					     found);
++	if (!err && oldinfo && !search_fb_in_map(oldidx))
++		err = con2fb_release_oldinfo(vc, oldinfo, info, unit, oldidx,
++					     found);
+ 
+- 	if (!err) {
+- 		int show_logo = (fg_console == 0 && !user &&
+- 				 logo_shown != FBCON_LOGO_DONTSHOW);
++	if (!err) {
++		int show_logo = (fg_console == 0 && !user &&
++				 logo_shown != FBCON_LOGO_DONTSHOW);
+ 
+- 		if (!found)
+- 			fbcon_add_cursor_timer(info);
+- 		con2fb_map_boot[unit] = newidx;
+- 		con2fb_init_display(vc, info, unit, show_logo);
++		if (!found)
++			fbcon_add_cursor_timer(info);
++		con2fb_map_boot[unit] = newidx;
++		con2fb_init_display(vc, info, unit, show_logo);
+ 	}
+ 
+ 	if (!search_fb_in_map(info_idx))
+ 		info_idx = newidx;
+ 
+- 	return err;
++	return err;
+ }
+ 
+ /*
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 6f6fc785b545..74c742e49716 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -662,20 +662,20 @@ int fb_prepare_logo(struct fb_info *info, int rotate)
+ 		fb_logo.depth = 1;
+ 
+ 
+- 	if (fb_logo.depth > 4 && depth > 4) {
+- 		switch (info->fix.visual) {
+- 		case FB_VISUAL_TRUECOLOR:
+- 			fb_logo.needs_truepalette = 1;
+- 			break;
+- 		case FB_VISUAL_DIRECTCOLOR:
+- 			fb_logo.needs_directpalette = 1;
+- 			fb_logo.needs_cmapreset = 1;
+- 			break;
+- 		case FB_VISUAL_PSEUDOCOLOR:
+- 			fb_logo.needs_cmapreset = 1;
+- 			break;
+- 		}
+- 	}
++	if (fb_logo.depth > 4 && depth > 4) {
++		switch (info->fix.visual) {
++		case FB_VISUAL_TRUECOLOR:
++			fb_logo.needs_truepalette = 1;
++			break;
++		case FB_VISUAL_DIRECTCOLOR:
++			fb_logo.needs_directpalette = 1;
++			fb_logo.needs_cmapreset = 1;
++			break;
++		case FB_VISUAL_PSEUDOCOLOR:
++			fb_logo.needs_cmapreset = 1;
++			break;
++		}
++	}
+ 
+ 	height = fb_logo.logo->height;
+ 	if (fb_center_logo)
+@@ -1060,19 +1060,19 @@ fb_blank(struct fb_info *info, int blank)
+ 	struct fb_event event;
+ 	int ret = -EINVAL;
+ 
+- 	if (blank > FB_BLANK_POWERDOWN)
+- 		blank = FB_BLANK_POWERDOWN;
++	if (blank > FB_BLANK_POWERDOWN)
++		blank = FB_BLANK_POWERDOWN;
+ 
+ 	event.info = info;
+ 	event.data = &blank;
+ 
+ 	if (info->fbops->fb_blank)
+- 		ret = info->fbops->fb_blank(blank, info);
++		ret = info->fbops->fb_blank(blank, info);
+ 
+ 	if (!ret)
+ 		fb_notifier_call_chain(FB_EVENT_BLANK, &event);
+ 
+- 	return ret;
++	return ret;
+ }
+ EXPORT_SYMBOL(fb_blank);
+ 
+diff --git a/fs/cifs/smb2file.c b/fs/cifs/smb2file.c
+index 8b0b512c5792..afe1f03aabe3 100644
+--- a/fs/cifs/smb2file.c
++++ b/fs/cifs/smb2file.c
+@@ -67,7 +67,7 @@ smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms,
+ 		goto out;
+ 
+ 
+-	 if (oparms->tcon->use_resilient) {
++	if (oparms->tcon->use_resilient) {
+ 		/* default timeout is 0, servers pick default (120 seconds) */
+ 		nr_ioctl_req.Timeout =
+ 			cpu_to_le32(oparms->tcon->handle_timeout);
+diff --git a/fs/ext2/super.c b/fs/ext2/super.c
+index bcffe25da2f0..0e76db275e23 100644
+--- a/fs/ext2/super.c
++++ b/fs/ext2/super.c
+@@ -1073,9 +1073,9 @@ static int ext2_fill_super(struct super_block *sb, void *data, int silent)
+ 
+ 	if (EXT2_BLOCKS_PER_GROUP(sb) == 0)
+ 		goto cantfind_ext2;
+- 	sbi->s_groups_count = ((le32_to_cpu(es->s_blocks_count) -
+- 				le32_to_cpu(es->s_first_data_block) - 1)
+- 					/ EXT2_BLOCKS_PER_GROUP(sb)) + 1;
++	sbi->s_groups_count = ((le32_to_cpu(es->s_blocks_count) -
++				le32_to_cpu(es->s_first_data_block) - 1)
++					/ EXT2_BLOCKS_PER_GROUP(sb)) + 1;
+ 	db_count = (sbi->s_groups_count + EXT2_DESC_PER_BLOCK(sb) - 1) /
+ 		   EXT2_DESC_PER_BLOCK(sb);
+ 	sbi->s_group_desc = kmalloc_array (db_count,
+diff --git a/fs/read_write.c b/fs/read_write.c
+index 5bbf587f5bc1..c71e863163bd 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -1757,7 +1757,7 @@ static int remap_verify_area(struct file *file, loff_t pos, loff_t len,
+ 	if (unlikely(pos < 0 || len < 0))
+ 		return -EINVAL;
+ 
+-	 if (unlikely((loff_t) (pos + len) < 0))
++	if (unlikely((loff_t) (pos + len) < 0))
+ 		return -EINVAL;
+ 
+ 	if (unlikely(inode->i_flctx && mandatory_lock(inode))) {
+diff --git a/lib/scatterlist.c b/lib/scatterlist.c
+index c2cf2c311b7d..5813072bc589 100644
+--- a/lib/scatterlist.c
++++ b/lib/scatterlist.c
+@@ -311,7 +311,7 @@ int __sg_alloc_table(struct sg_table *table, unsigned int nents,
+ 			if (prv)
+ 				table->nents = ++table->orig_nents;
+ 
+- 			return -ENOMEM;
++			return -ENOMEM;
+ 		}
+ 
+ 		sg_init_table(sg, alloc_size);
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 4785a8a2040e..b30bb0124761 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4476,8 +4476,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 		if (page)
+ 			goto got_pg;
+ 
+-		 if (order >= pageblock_order && (gfp_mask & __GFP_IO) &&
+-		     !(gfp_mask & __GFP_RETRY_MAYFAIL)) {
++		if (order >= pageblock_order && (gfp_mask & __GFP_IO) &&
++		    !(gfp_mask & __GFP_RETRY_MAYFAIL)) {
+ 			/*
+ 			 * If allocating entire pageblock(s) and compaction
+ 			 * failed because all zones are below low watermarks
+diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
+index d1caa8ed9e68..4339bb0525c0 100644
+--- a/sound/usb/usx2y/usX2Yhwdep.c
++++ b/sound/usb/usx2y/usX2Yhwdep.c
+@@ -119,7 +119,7 @@ static int snd_usX2Y_hwdep_dsp_status(struct snd_hwdep *hw,
+ 	info->num_dsps = 2;		// 0: Prepad Data, 1: FPGA Code
+ 	if (us428->chip_status & USX2Y_STAT_CHIP_INIT)
+ 		info->chip_ready = 1;
+- 	info->version = USX2Y_DRIVER_VERSION; 
++	info->version = USX2Y_DRIVER_VERSION; 
+ 	return 0;
+ }
+ 
+-- 
+2.24.0
+

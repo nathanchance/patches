@@ -1,7 +1,7 @@
-From e00a8d860806746f58135c7783503068cbdde286 Mon Sep 17 00:00:00 2001
+From caf44a73596c69256b09d1236304bd178de54dd4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 23 Nov 2019 12:51:44 -0700
-Subject: [PATCH 14/17] drm/i915: Remove tautological compare in
+Subject: [PATCH 14/19] drm/i915: Remove tautological compare in
  eb_relocate_vma
 
 -Wtautological-compare was recently added to -Wall in LLVM, which
