@@ -1,22 +1,11 @@
-From 0e27f3de087e5811bb6042f710c9a1d6ecd2b86b Mon Sep 17 00:00:00 2001
+From 646e8bfbbcf7418b067adc9fb6c87581a552e28a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 20:21:44 -0700
 Subject: [PATCH 23/26] vfs: Adjust indentation in remap_verify_area
 
-Clang warns:
-
-../fs/read_write.c:1760:3: warning: misleading indentation; statement is
-not part of the previous 'if' [-Wmisleading-indentation]
-         if (unlikely((loff_t) (pos + len) < 0))
-         ^
-../fs/read_write.c:1757:2: note: previous statement is here
-        if (unlikely(pos < 0 || len < 0))
-        ^
-1 warning generated.
-
-This warning occurs because there is a space after the tab on this line.
-Remove it so that the indentation is consistent with the Linux kernel
-coding style and clang no longer warns.
+Clang's -Wmisleading-indentation caught an instance in remap_verify_area
+where there was a trailing space after a tab. Remove it to get rid of
+the warning.
 
 Fixes: 04b38d601239 ("vfs: pull btrfs clone API to vfs layer")
 Link: https://github.com/ClangBuiltLinux/linux/issues/828
