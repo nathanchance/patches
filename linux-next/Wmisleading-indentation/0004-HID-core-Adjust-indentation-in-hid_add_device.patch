@@ -1,7 +1,7 @@
-From a45f442e82c512f22ebb667409ddd35832520683 Mon Sep 17 00:00:00 2001
+From 75c6c9e8ad8dbe040316439561ccd883c2c46437 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 13:37:43 -0700
-Subject: [PATCH 04/11] HID: core: Adjust indentation in hid_add_device
+Subject: [PATCH 04/26] HID: core: Adjust indentation in hid_add_device
 
 Clang warns:
 
@@ -26,10 +26,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index e0b241bd3070..9c7f03f23eca 100644
+index 851fe54ea59e..1f47fac8b101 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -2375,10 +2375,10 @@ int hid_add_device(struct hid_device *hdev)
+@@ -2381,10 +2381,10 @@ int hid_add_device(struct hid_device *hdev)
  	/*
  	 * Check for the mandatory transport channel.
  	 */
@@ -43,5 +43,5 @@ index e0b241bd3070..9c7f03f23eca 100644
  	/*
  	 * Read the device report descriptor once and use as template
 -- 
-2.24.0
+2.24.1
 

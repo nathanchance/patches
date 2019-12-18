@@ -1,7 +1,7 @@
-From a09aacddceefac60162d9b5a60058d8ae8197003 Mon Sep 17 00:00:00 2001
+From 710efbe3812132a2109840e8abe36e11365311e2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 14:43:32 -0700
-Subject: [PATCH 05/11] mtd: onenand_base: Adjust indentation in
+Subject: [PATCH 05/26] mtd: onenand_base: Adjust indentation in
  onenand_read_ops_nolock
 
 Clang warns:
@@ -145,5 +145,5 @@ index 77bd32a683e1..9e81cd982dd3 100644
  	/*
  	 * Return success, if no ECC failures, else -EBADMSG
 -- 
-2.24.0
+2.24.1
 

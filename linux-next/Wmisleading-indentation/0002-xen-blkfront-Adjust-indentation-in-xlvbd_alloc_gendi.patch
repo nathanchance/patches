@@ -1,7 +1,7 @@
-From a6f68818b2cdf65847c7149e3a5457dfc522b0bd Mon Sep 17 00:00:00 2001
+From 2c4b5d8292f27b8ebccbbaff518aa68166da9904 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 13:11:18 -0700
-Subject: [PATCH 02/11] xen/blkfront: Adjust indentation in xlvbd_alloc_gendisk
+Subject: [PATCH 02/26] xen/blkfront: Adjust indentation in xlvbd_alloc_gendisk
 
 Clang warns:
 
@@ -43,5 +43,5 @@ index a74d03913822..c02be06c5299 100644
  		minor = BLKIF_MINOR_EXT(info->vdevice);
  		nr_parts = PARTS_PER_EXT_DISK;
 -- 
-2.24.0
+2.24.1
 

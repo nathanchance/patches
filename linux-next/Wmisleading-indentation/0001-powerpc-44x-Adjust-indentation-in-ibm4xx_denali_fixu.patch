@@ -1,7 +1,7 @@
-From 1a227e5d3e3cc9b06c4a46f695e258b4caad0280 Mon Sep 17 00:00:00 2001
+From 6b112a574ce2bdee38b6b9605b9a4b8dc4464fb7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 13:00:22 -0700
-Subject: [PATCH 01/11] powerpc/44x: Adjust indentation in
+Subject: [PATCH 01/26] powerpc/44x: Adjust indentation in
  ibm4xx_denali_fixup_memsize
 
 Clang warns:
@@ -39,7 +39,7 @@ index 1699e9531552..00c4d843a023 100644
  	row = DDR_GET_VAL(val, DDR_APIN, DDR_APIN_SHIFT);
  	if (row > max_row)
 
-base-commit: 6cf8298daad041cd15dc514d8a4f93ca3636c84e
+base-commit: fca4fe890ea0352f7e9e4bf33ffed287946ff59e
 -- 
-2.24.0
+2.24.1
 

@@ -1,0 +1,44 @@
+From 10d3f9b81d76c5fe7eada51b12ef4f4e65dc47ad Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 17 Dec 2019 20:28:55 -0700
+Subject: [PATCH 24/26] ipc/msg.c: Adjust indentation in ksys_msgctl
+
+Clang warns:
+
+../ipc/msg.c:621:4: warning: misleading indentation; statement is not
+part of the previous 'if' [-Wmisleading-indentation]
+                 return msgctl_down(ns, msqid, cmd, &msqid64.msg_perm,
+msqid64.msg_qbytes);
+                 ^
+../ipc/msg.c:619:3: note: previous statement is here
+                if (copy_msqid_from_user(&msqid64, buf, version))
+                ^
+1 warning generated.
+
+This warning occurs because there is a space after the tab on this line.
+Remove it so that the indentation is consistent with the Linux kernel
+coding style and clang no longer warns.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/829
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ ipc/msg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ipc/msg.c b/ipc/msg.c
+index 22ed09ded601..caca67368cb5 100644
+--- a/ipc/msg.c
++++ b/ipc/msg.c
+@@ -618,7 +618,8 @@ static long ksys_msgctl(int msqid, int cmd, struct msqid_ds __user *buf, int ver
+ 	case IPC_SET:
+ 		if (copy_msqid_from_user(&msqid64, buf, version))
+ 			return -EFAULT;
+-		 return msgctl_down(ns, msqid, cmd, &msqid64.msg_perm, msqid64.msg_qbytes);
++		return msgctl_down(ns, msqid, cmd, &msqid64.msg_perm,
++				   msqid64.msg_qbytes);
+ 	case IPC_RMID:
+ 		return msgctl_down(ns, msqid, cmd, NULL, 0);
+ 	default:
+-- 
+2.24.1
+

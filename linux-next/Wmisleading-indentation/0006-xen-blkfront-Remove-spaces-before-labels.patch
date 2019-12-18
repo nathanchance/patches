@@ -1,7 +1,7 @@
-From 9940561c563efff793613f0559638fc445504008 Mon Sep 17 00:00:00 2001
+From 7ace0c435dad1d4167fd2d36fe7722455b34a13c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 14:57:44 -0700
-Subject: [PATCH 08/11] xen/blkfront: Remove spaces before labels
+Subject: [PATCH 06/26] xen/blkfront: Remove spaces before labels
 
 The general C convention is that labels do not have any indentation.
 
@@ -51,5 +51,5 @@ index c02be06c5299..dea434d7e258 100644
  
  	mutex_lock(&blkfront_mutex);
 -- 
-2.24.0
+2.24.1
 

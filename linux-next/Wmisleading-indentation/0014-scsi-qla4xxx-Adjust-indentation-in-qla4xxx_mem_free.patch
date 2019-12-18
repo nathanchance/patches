@@ -1,0 +1,45 @@
+From 4f7c809085d7a2219c4f7036b02c6e0d6e015f3c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 17 Dec 2019 18:51:07 -0700
+Subject: [PATCH 14/26] scsi: qla4xxx: Adjust indentation in qla4xxx_mem_free
+
+Clang warns:
+
+../drivers/scsi/qla4xxx/ql4_os.c:4148:3: warning: misleading
+indentation; statement is not part of the previous 'if'
+[-Wmisleading-indentation]
+         if (ha->fw_dump)
+         ^
+../drivers/scsi/qla4xxx/ql4_os.c:4144:2: note: previous statement is
+here
+        if (ha->queues)
+        ^
+1 warning generated.
+
+This warning occurs because there is a space after the tab on this line.
+Remove it so that the indentation is consistent with the Linux kernel
+coding style and clang no longer warns.
+
+Fixes: 068237c87c64 ("[SCSI] qla4xxx: Capture minidump for ISP82XX on firmware failure")
+Link: https://github.com/ClangBuiltLinux/linux/issues/819
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/scsi/qla4xxx/ql4_os.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
+index 2323432a0edb..5504ab11decc 100644
+--- a/drivers/scsi/qla4xxx/ql4_os.c
++++ b/drivers/scsi/qla4xxx/ql4_os.c
+@@ -4145,7 +4145,7 @@ static void qla4xxx_mem_free(struct scsi_qla_host *ha)
+ 		dma_free_coherent(&ha->pdev->dev, ha->queues_len, ha->queues,
+ 				  ha->queues_dma);
+ 
+-	 if (ha->fw_dump)
++	if (ha->fw_dump)
+ 		vfree(ha->fw_dump);
+ 
+ 	ha->queues_len = 0;
+-- 
+2.24.1
+
