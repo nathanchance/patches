@@ -1,7 +1,7 @@
-From 6db5be8b13da4e62ec86b56486debdfd81d74247 Mon Sep 17 00:00:00 2001
+From 067c408d0f0e3b20253612a558bf7338402e2d75 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 19:27:35 -0700
-Subject: [PATCH 16/26] tty: synclink: Adjust indentation and style in several
+Subject: [PATCH 13/22] tty: synclink: Adjust indentation and style in several
  functions
 
 Clang warns:
@@ -62,7 +62,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 26 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/tty/synclink.c b/drivers/tty/synclink.c
-index 61dc6b4a43d0..586810defb21 100644
+index 08d2976593d5..b94a2e2d225d 100644
 --- a/drivers/tty/synclink.c
 +++ b/drivers/tty/synclink.c
 @@ -1164,21 +1164,20 @@ static void mgsl_isr_receive_status( struct mgsl_struct *info )

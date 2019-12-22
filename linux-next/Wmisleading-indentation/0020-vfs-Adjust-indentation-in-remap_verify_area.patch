@@ -1,7 +1,7 @@
-From 646e8bfbbcf7418b067adc9fb6c87581a552e28a Mon Sep 17 00:00:00 2001
+From f5b9e2395d8afc2809c6e1246b01261fee62eb81 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 20:21:44 -0700
-Subject: [PATCH 23/26] vfs: Adjust indentation in remap_verify_area
+Subject: [PATCH 20/22] vfs: Adjust indentation in remap_verify_area
 
 Clang's -Wmisleading-indentation caught an instance in remap_verify_area
 where there was a trailing space after a tab. Remove it to get rid of

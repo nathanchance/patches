@@ -1,7 +1,7 @@
-From 136b6e9df5a6f0b4ef1549888bb5b6c8b9ca6be6 Mon Sep 17 00:00:00 2001
+From aa2f0cd711e67f64fb5f0ad098aea9569f7d1701 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 19:44:37 -0700
-Subject: [PATCH 18/26] tty: synclinkmp: Adjust indentation in several
+Subject: [PATCH 15/22] tty: synclinkmp: Adjust indentation in several
  functions
 
 Clang warns:
@@ -54,7 +54,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/tty/synclinkmp.c b/drivers/tty/synclinkmp.c
-index 33181fa6eb18..517a0d172239 100644
+index 7446b03fef02..33ff2dbb6650 100644
 --- a/drivers/tty/synclinkmp.c
 +++ b/drivers/tty/synclinkmp.c
 @@ -1453,10 +1453,10 @@ static void throttle(struct tty_struct * tty)

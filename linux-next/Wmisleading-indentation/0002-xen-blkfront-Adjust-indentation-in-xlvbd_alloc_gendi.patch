@@ -1,7 +1,7 @@
-From 2c4b5d8292f27b8ebccbbaff518aa68166da9904 Mon Sep 17 00:00:00 2001
+From 5198abdaf65934d3ba39bca6f98646247fbce2a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 13:11:18 -0700
-Subject: [PATCH 02/26] xen/blkfront: Adjust indentation in xlvbd_alloc_gendisk
+Subject: [PATCH 02/22] xen/blkfront: Adjust indentation in xlvbd_alloc_gendisk
 
 Clang warns:
 
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index a74d03913822..c02be06c5299 100644
+index 23c86350a5ab..57d50c5ba309 100644
 --- a/drivers/block/xen-blkfront.c
 +++ b/drivers/block/xen-blkfront.c
 @@ -1113,8 +1113,8 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,

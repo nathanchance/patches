@@ -1,7 +1,7 @@
-From 7ace0c435dad1d4167fd2d36fe7722455b34a13c Mon Sep 17 00:00:00 2001
+From ce5dbab99bd9c789f5729e1de8a5963eb7eec598 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 9 Dec 2019 14:57:44 -0700
-Subject: [PATCH 06/26] xen/blkfront: Remove spaces before labels
+Subject: [PATCH 06/22] xen/blkfront: Remove spaces before labels
 
 The general C convention is that labels do not have any indentation.
 
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index c02be06c5299..dea434d7e258 100644
+index 57d50c5ba309..3441b281a6c8 100644
 --- a/drivers/block/xen-blkfront.c
 +++ b/drivers/block/xen-blkfront.c
 @@ -1175,9 +1175,9 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,

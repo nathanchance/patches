@@ -1,7 +1,7 @@
-From da591b439a33a45288ff40cd361c6a200d032cbf Mon Sep 17 00:00:00 2001
+From 7cc2b91640d72c656b53d2bcf99fc272f635e082 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 19:38:00 -0700
-Subject: [PATCH 17/26] tty: synclink_gt: Adjust indentation in several
+Subject: [PATCH 14/22] tty: synclink_gt: Adjust indentation in several
  functions
 
 Clang warns:
@@ -40,7 +40,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/tty/synclink_gt.c b/drivers/tty/synclink_gt.c
-index 5d59e2369c8a..57ca38df7a8b 100644
+index 5759b6c5b3e2..52d93c29a1db 100644
 --- a/drivers/tty/synclink_gt.c
 +++ b/drivers/tty/synclink_gt.c
 @@ -1334,10 +1334,10 @@ static void throttle(struct tty_struct * tty)
