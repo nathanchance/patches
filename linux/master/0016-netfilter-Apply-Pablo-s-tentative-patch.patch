@@ -1,7 +1,7 @@
-From 72d4dc18dd6c23392c8c0695879e2654ebdaf7ac Mon Sep 17 00:00:00 2001
+From c6a39c880ca3acccbd9e741f8424b4d08e384092 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Dec 2019 12:53:24 -0700
-Subject: [PATCH 18/19] netfilter: Apply Pablo's tentative patch
+Subject: [PATCH 16/19] netfilter: Apply Pablo's tentative patch
 
 Link: https://lore.kernel.org/lkml/20191207164111.fpnpoipaiadaxyde@salvia/
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -36,7 +36,7 @@ index d93017a7ce5c..92c27ba37e33 100644
  
  /**
 diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index d524a693e00f..8c704598ffc6 100644
+index 2dbbb030fbed..95705edf2460 100644
 --- a/net/core/flow_dissector.c
 +++ b/net/core/flow_dissector.c
 @@ -756,7 +756,7 @@ __skb_flow_dissect_tcp(const struct sk_buff *skb,
@@ -49,10 +49,10 @@ index d524a693e00f..8c704598ffc6 100644
  
  static void
 diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index a77a6e1cfd64..dee31674be06 100644
+index de7a0d1e15c8..343c75e096e1 100644
 --- a/net/netfilter/nf_flow_table_offload.c
 +++ b/net/netfilter/nf_flow_table_offload.c
-@@ -76,8 +76,8 @@ static int nf_flow_rule_match(struct nf_flow_match *match,
+@@ -87,8 +87,8 @@ static int nf_flow_rule_match(struct nf_flow_match *match,
  
  	switch (tuple->l4proto) {
  	case IPPROTO_TCP:
@@ -64,5 +64,5 @@ index a77a6e1cfd64..dee31674be06 100644
  		break;
  	case IPPROTO_UDP:
 -- 
-2.24.0
+2.24.1
 

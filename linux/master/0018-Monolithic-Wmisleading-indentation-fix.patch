@@ -1,12 +1,12 @@
-From 6aeb84c4f139d7e7145bbc5e77edf8c1b5731e34 Mon Sep 17 00:00:00 2001
+From ddb92d5250a1478ad7c3142b1e7691806dacc72c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 10 Dec 2019 22:45:14 -0700
-Subject: [PATCH 19/19] Monolithic -Wmisleading-indentation
+Date: Wed, 18 Dec 2019 06:58:13 -0700
+Subject: [PATCH 18/19] Monolithic -Wmisleading-indentation fix
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/powerpc/boot/4xx.c                       |  2 +-
- drivers/block/xen-blkfront.c                  | 14 ++--
+ drivers/block/xen-blkfront.c                  | 10 +--
  .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  |  2 +-
  drivers/hid/hid-core.c                        |  4 +-
  drivers/mtd/nand/onenand/onenand_base.c       | 82 +++++++++----------
@@ -21,19 +21,18 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  drivers/scsi/aic7xxx/aic7xxx_core.c           |  2 +-
  drivers/scsi/csiostor/csio_scsi.c             |  2 +-
  drivers/scsi/qla4xxx/ql4_os.c                 |  2 +-
- drivers/staging/uwb/allocator.c               |  4 +-
- drivers/tty/synclink.c                        | 50 +++++------
- drivers/tty/synclink_gt.c                     | 10 +--
- drivers/tty/synclinkmp.c                      | 14 ++--
- drivers/video/fbdev/core/fbcon.c              | 26 +++---
+ drivers/staging/uwb/allocator.c               | 11 ++-
+ drivers/tty/synclink.c                        | 55 ++++++-------
+ drivers/tty/synclink_gt.c                     | 18 ++--
+ drivers/tty/synclinkmp.c                      | 24 +++---
+ drivers/video/fbdev/core/fbcon.c              | 27 +++---
  drivers/video/fbdev/core/fbmem.c              | 36 ++++----
- fs/cifs/smb2file.c                            |  2 +-
  fs/ext2/super.c                               |  6 +-
  fs/read_write.c                               |  2 +-
  lib/scatterlist.c                             |  2 +-
- mm/page_alloc.c                               |  4 +-
+ mm/page_alloc.c                               |  2 +-
  sound/usb/usx2y/usX2Yhwdep.c                  |  2 +-
- 28 files changed, 166 insertions(+), 165 deletions(-)
+ 27 files changed, 175 insertions(+), 179 deletions(-)
 
 diff --git a/arch/powerpc/boot/4xx.c b/arch/powerpc/boot/4xx.c
 index 1699e9531552..00c4d843a023 100644
@@ -49,20 +48,9 @@ index 1699e9531552..00c4d843a023 100644
  	row = DDR_GET_VAL(val, DDR_APIN, DDR_APIN_SHIFT);
  	if (row > max_row)
 diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index a74d03913822..dea434d7e258 100644
+index c02be06c5299..dea434d7e258 100644
 --- a/drivers/block/xen-blkfront.c
 +++ b/drivers/block/xen-blkfront.c
-@@ -1113,8 +1113,8 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
- 	if (!VDEV_IS_EXTENDED(info->vdevice)) {
- 		err = xen_translate_vdev(info->vdevice, &minor, &offset);
- 		if (err)
--			return err;		
-- 		nr_parts = PARTS_PER_DISK;
-+			return err;
-+		nr_parts = PARTS_PER_DISK;
- 	} else {
- 		minor = BLKIF_MINOR_EXT(info->vdevice);
- 		nr_parts = PARTS_PER_EXT_DISK;
 @@ -1175,9 +1175,9 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
  
  	return 0;
@@ -509,7 +497,7 @@ index 469d0bc9f5fe..00cf33573136 100644
  	/* Block upper IOs */
  	csio_lnodes_block_request(hw);
 diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index 8c674eca09f1..baa3542a8eab 100644
+index 2323432a0edb..5504ab11decc 100644
 --- a/drivers/scsi/qla4xxx/ql4_os.c
 +++ b/drivers/scsi/qla4xxx/ql4_os.c
 @@ -4145,7 +4145,7 @@ static void qla4xxx_mem_free(struct scsi_qla_host *ha)
@@ -522,10 +510,27 @@ index 8c674eca09f1..baa3542a8eab 100644
  
  	ha->queues_len = 0;
 diff --git a/drivers/staging/uwb/allocator.c b/drivers/staging/uwb/allocator.c
-index 1f429fba20b7..5c1b062893f9 100644
+index 1f429fba20b7..d8f38f9c414c 100644
 --- a/drivers/staging/uwb/allocator.c
 +++ b/drivers/staging/uwb/allocator.c
-@@ -350,7 +350,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+@@ -321,7 +321,6 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+ 	ai->max_mas = rsv->max_mas;
+ 	ai->max_interval = rsv->max_interval;
+ 
+-
+ 	/* fill the not available vector from the available bm */
+ 	for_each_clear_bit(bit_index, available->bm, UWB_NUM_MAS)
+ 		ai->bm[bit_index] = UWB_RSV_MAS_NOT_AVAIL;
+@@ -335,7 +334,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+ 	}
+ 
+ 	get_column_descriptors(ai);
+-        
++
+ 	for (interval = 16; interval >= 2; interval>>=1) {
+ 		if (interval > ai->max_interval)
+ 			continue;
+@@ -350,7 +349,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
  	else
  		goto alloc_not_found;
  
@@ -534,40 +539,47 @@ index 1f429fba20b7..5c1b062893f9 100644
  	bitmap_zero(result->bm, UWB_NUM_MAS);
  	bitmap_zero(result->unsafe_bm, UWB_NUM_MAS);
  	/* fill the safe and unsafe bitmaps */
-@@ -368,7 +368,7 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+@@ -364,11 +363,11 @@ int uwb_rsv_find_best_allocation(struct uwb_rsv *rsv, struct uwb_mas_bm *availab
+ 
+ 	result->safe   = ai->safe_allocated_mases;
+ 	result->unsafe = ai->unsafe_allocated_mases;
+-	
++
  	kfree(ai);		
  	return UWB_RSV_ALLOC_FOUND;
-   
+-  
 -  alloc_not_found:
++
 +alloc_not_found:
  	kfree(ai);
  	return UWB_RSV_ALLOC_NOT_FOUND;
  }
 diff --git a/drivers/tty/synclink.c b/drivers/tty/synclink.c
-index 84f26e43b229..892394f0bf1e 100644
+index 84f26e43b229..a1c52c95d6a2 100644
 --- a/drivers/tty/synclink.c
 +++ b/drivers/tty/synclink.c
-@@ -1164,21 +1164,21 @@ static void mgsl_isr_receive_status( struct mgsl_struct *info )
+@@ -1164,21 +1164,20 @@ static void mgsl_isr_receive_status( struct mgsl_struct *info )
  		printk("%s(%d):mgsl_isr_receive_status status=%04X\n",
  			__FILE__,__LINE__,status);
  			
 - 	if ( (status & RXSTATUS_ABORT_RECEIVED) && 
-+	if ( (status & RXSTATUS_ABORT_RECEIVED) && 
++	if ((status & RXSTATUS_ABORT_RECEIVED) &&
  		info->loopmode_insert_requested &&
 - 		usc_loopmode_active(info) )
 - 	{
-+		usc_loopmode_active(info) )
-+	{
++		usc_loopmode_active(info)) {
  		++info->icount.rxabort;
 -	 	info->loopmode_insert_requested = false;
-+		info->loopmode_insert_requested = false;
-  
+- 
 - 		/* clear CMR:13 to start echoing RxD to TxD */
++		info->loopmode_insert_requested = false;
++
 +		/* clear CMR:13 to start echoing RxD to TxD */
  		info->cmr_value &= ~BIT13;
 - 		usc_OutReg(info, CMR, info->cmr_value);
+- 
 +		usc_OutReg(info, CMR, info->cmr_value);
-  
++
  		/* disable received abort irq (no longer required) */
 -	 	usc_OutReg(info, RICR,
 - 			(usc_InReg(info, RICR) & ~RXSTATUS_ABORT_RECEIVED));
@@ -578,7 +590,7 @@ index 84f26e43b229..892394f0bf1e 100644
  
  	if (status & (RXSTATUS_EXITED_HUNT | RXSTATUS_IDLE_RECEIVED)) {
  		if (status & RXSTATUS_EXITED_HUNT)
-@@ -1970,8 +1970,8 @@ static void mgsl_change_params(struct mgsl_struct *info)
+@@ -1970,8 +1969,8 @@ static void mgsl_change_params(struct mgsl_struct *info)
  	info->read_status_mask = RXSTATUS_OVERRUN;
  	if (I_INPCK(info->port.tty))
  		info->read_status_mask |= RXSTATUS_PARITY_ERROR | RXSTATUS_FRAMING_ERROR;
@@ -589,7 +601,16 @@ index 84f26e43b229..892394f0bf1e 100644
  	
  	if (I_IGNPAR(info->port.tty))
  		info->ignore_status_mask |= RXSTATUS_PARITY_ERROR | RXSTATUS_FRAMING_ERROR;
-@@ -3226,7 +3226,7 @@ static void dtr_rts(struct tty_port *port, int on)
+@@ -3211,7 +3210,7 @@ static int carrier_raised(struct tty_port *port)
+ 	struct mgsl_struct *info = container_of(port, struct mgsl_struct, port);
+ 	
+ 	spin_lock_irqsave(&info->irq_spinlock, flags);
+- 	usc_get_serial_signals(info);
++	usc_get_serial_signals(info);
+ 	spin_unlock_irqrestore(&info->irq_spinlock, flags);
+ 	return (info->serial_signals & SerialSignal_DCD) ? 1 : 0;
+ }
+@@ -3226,7 +3225,7 @@ static void dtr_rts(struct tty_port *port, int on)
  		info->serial_signals |= SerialSignal_RTS | SerialSignal_DTR;
  	else
  		info->serial_signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
@@ -598,7 +619,7 @@ index 84f26e43b229..892394f0bf1e 100644
  	spin_unlock_irqrestore(&info->irq_spinlock,flags);
  }
  
-@@ -4907,23 +4907,23 @@ static void usc_set_sdlc_mode( struct mgsl_struct *info )
+@@ -4907,24 +4906,22 @@ static void usc_set_sdlc_mode( struct mgsl_struct *info )
  		/*  of rounding up and then subtracting 1 we just don't subtract */
  		/*  the one in this case. */
  
@@ -612,16 +633,15 @@ index 84f26e43b229..892394f0bf1e 100644
 - 		 *--------------------------------------------------*/
 - 		if ( info->params.clock_speed )
 - 		{
-+		/*--------------------------------------------------
++		/*
 +		 * ejz: for DPLL mode, application should use the
-+		 * same clock speed as the partner system, even 
++		 * same clock speed as the partner system, even
 +		 * though clocking is derived from the input RxData.
 +		 * In case the user uses a 0 for the clock speed,
 +		 * default to 0xffffffff and don't try to divide by
 +		 * zero
-+		 *--------------------------------------------------*/
-+		if ( info->params.clock_speed )
-+		{
++		 */
++		if (info->params.clock_speed) {
  			Tc = (u16)((XtalSpeed/DpllDivisor)/info->params.clock_speed);
  			if ( !((((XtalSpeed/DpllDivisor) % info->params.clock_speed) * 2)
  			       / info->params.clock_speed) )
@@ -629,14 +649,15 @@ index 84f26e43b229..892394f0bf1e 100644
 - 		}
 - 		else
 - 			Tc = -1;
-+		}
-+		else
+- 				  
++		} else {
 +			Tc = -1;
-  				  
++		}
  
  		/* Write 16-bit Time Constant for BRG1 */
+ 		usc_OutReg( info, TC1R, Tc );
 diff --git a/drivers/tty/synclink_gt.c b/drivers/tty/synclink_gt.c
-index e8a9047de451..1a7c5881a830 100644
+index e8a9047de451..36f1a4d870eb 100644
 --- a/drivers/tty/synclink_gt.c
 +++ b/drivers/tty/synclink_gt.c
 @@ -1334,10 +1334,10 @@ static void throttle(struct tty_struct * tty)
@@ -647,6 +668,19 @@ index e8a9047de451..1a7c5881a830 100644
 +	if (C_CRTSCTS(tty)) {
  		spin_lock_irqsave(&info->lock,flags);
  		info->signals &= ~SerialSignal_RTS;
+-	 	set_signals(info);
++		set_signals(info);
+ 		spin_unlock_irqrestore(&info->lock,flags);
+ 	}
+ }
+@@ -1359,10 +1359,10 @@ static void unthrottle(struct tty_struct * tty)
+ 		else
+ 			send_xchar(tty, START_CHAR(tty));
+ 	}
+- 	if (C_CRTSCTS(tty)) {
++	if (C_CRTSCTS(tty)) {
+ 		spin_lock_irqsave(&info->lock,flags);
+ 		info->signals |= SerialSignal_RTS;
 -	 	set_signals(info);
 +		set_signals(info);
  		spin_unlock_irqrestore(&info->lock,flags);
@@ -663,6 +697,24 @@ index e8a9047de451..1a7c5881a830 100644
  	if (I_IGNPAR(info->port.tty))
  		info->ignore_status_mask |= MASK_PARITY | MASK_FRAMING;
  	if (I_IGNBRK(info->port.tty)) {
+@@ -3192,7 +3192,7 @@ static int tiocmset(struct tty_struct *tty,
+ 		info->signals &= ~SerialSignal_DTR;
+ 
+ 	spin_lock_irqsave(&info->lock,flags);
+- 	set_signals(info);
++	set_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ 	return 0;
+ }
+@@ -3203,7 +3203,7 @@ static int carrier_raised(struct tty_port *port)
+ 	struct slgt_info *info = container_of(port, struct slgt_info, port);
+ 
+ 	spin_lock_irqsave(&info->lock,flags);
+- 	get_signals(info);
++	get_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ 	return (info->signals & SerialSignal_DCD) ? 1 : 0;
+ }
 @@ -3218,7 +3218,7 @@ static void dtr_rts(struct tty_port *port, int on)
  		info->signals |= SerialSignal_RTS | SerialSignal_DTR;
  	else
@@ -673,7 +725,7 @@ index e8a9047de451..1a7c5881a830 100644
  }
  
 diff --git a/drivers/tty/synclinkmp.c b/drivers/tty/synclinkmp.c
-index fcb91bf7a15b..564f7dc43b65 100644
+index fcb91bf7a15b..54b897a646d0 100644
 --- a/drivers/tty/synclinkmp.c
 +++ b/drivers/tty/synclinkmp.c
 @@ -1453,10 +1453,10 @@ static void throttle(struct tty_struct * tty)
@@ -684,6 +736,19 @@ index fcb91bf7a15b..564f7dc43b65 100644
 +	if (C_CRTSCTS(tty)) {
  		spin_lock_irqsave(&info->lock,flags);
  		info->serial_signals &= ~SerialSignal_RTS;
+-	 	set_signals(info);
++		set_signals(info);
+ 		spin_unlock_irqrestore(&info->lock,flags);
+ 	}
+ }
+@@ -1482,10 +1482,10 @@ static void unthrottle(struct tty_struct * tty)
+ 			send_xchar(tty, START_CHAR(tty));
+ 	}
+ 
+- 	if (C_CRTSCTS(tty)) {
++	if (C_CRTSCTS(tty)) {
+ 		spin_lock_irqsave(&info->lock,flags);
+ 		info->serial_signals |= SerialSignal_RTS;
 -	 	set_signals(info);
 +		set_signals(info);
  		spin_unlock_irqrestore(&info->lock,flags);
@@ -718,6 +783,33 @@ index fcb91bf7a15b..564f7dc43b65 100644
  	if (I_IGNPAR(info->port.tty))
  		info->ignore_status_mask2 |= PE | FRME;
  	if (I_IGNBRK(info->port.tty)) {
+@@ -3177,7 +3177,7 @@ static int tiocmget(struct tty_struct *tty)
+  	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&info->lock,flags);
+- 	get_signals(info);
++	get_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ 
+ 	result = ((info->serial_signals & SerialSignal_RTS) ? TIOCM_RTS : 0) |
+@@ -3215,7 +3215,7 @@ static int tiocmset(struct tty_struct *tty,
+ 		info->serial_signals &= ~SerialSignal_DTR;
+ 
+ 	spin_lock_irqsave(&info->lock,flags);
+- 	set_signals(info);
++	set_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ 
+ 	return 0;
+@@ -3227,7 +3227,7 @@ static int carrier_raised(struct tty_port *port)
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&info->lock,flags);
+- 	get_signals(info);
++	get_signals(info);
+ 	spin_unlock_irqrestore(&info->lock,flags);
+ 
+ 	return (info->serial_signals & SerialSignal_DCD) ? 1 : 0;
 @@ -3243,7 +3243,7 @@ static void dtr_rts(struct tty_port *port, int on)
  		info->serial_signals |= SerialSignal_RTS | SerialSignal_DTR;
  	else
@@ -728,7 +820,7 @@ index fcb91bf7a15b..564f7dc43b65 100644
  }
  
 diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index c9235a2f42f8..9b9455c72ad2 100644
+index c9235a2f42f8..9d2c43e345a4 100644
 --- a/drivers/video/fbdev/core/fbcon.c
 +++ b/drivers/video/fbdev/core/fbcon.c
 @@ -866,7 +866,7 @@ static int set_con2fb_map(int unit, int newidx, int user)
@@ -740,13 +832,13 @@ index c9235a2f42f8..9b9455c72ad2 100644
  
  	WARN_CONSOLE_UNLOCKED();
  
-@@ -888,31 +888,31 @@ static int set_con2fb_map(int unit, int newidx, int user)
+@@ -888,31 +888,30 @@ static int set_con2fb_map(int unit, int newidx, int user)
  
  	con2fb_map[unit] = newidx;
  	if (!err && !found)
 - 		err = con2fb_acquire_newinfo(vc, info, unit, oldidx);
+-
 +		err = con2fb_acquire_newinfo(vc, info, unit, oldidx);
- 
  
  	/*
  	 * If old fb is not mapped to any of the consoles,
@@ -847,19 +939,6 @@ index 6f6fc785b545..74c742e49716 100644
  }
  EXPORT_SYMBOL(fb_blank);
  
-diff --git a/fs/cifs/smb2file.c b/fs/cifs/smb2file.c
-index 8b0b512c5792..afe1f03aabe3 100644
---- a/fs/cifs/smb2file.c
-+++ b/fs/cifs/smb2file.c
-@@ -67,7 +67,7 @@ smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms,
- 		goto out;
- 
- 
--	 if (oparms->tcon->use_resilient) {
-+	if (oparms->tcon->use_resilient) {
- 		/* default timeout is 0, servers pick default (120 seconds) */
- 		nr_ioctl_req.Timeout =
- 			cpu_to_le32(oparms->tcon->handle_timeout);
 diff --git a/fs/ext2/super.c b/fs/ext2/super.c
 index bcffe25da2f0..0e76db275e23 100644
 --- a/fs/ext2/super.c
@@ -904,22 +983,20 @@ index c2cf2c311b7d..5813072bc589 100644
  
  		sg_init_table(sg, alloc_size);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 4785a8a2040e..b30bb0124761 100644
+index 4785a8a2040e..762cf49adf95 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4476,8 +4476,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4476,7 +4476,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		if (page)
  			goto got_pg;
  
 -		 if (order >= pageblock_order && (gfp_mask & __GFP_IO) &&
--		     !(gfp_mask & __GFP_RETRY_MAYFAIL)) {
 +		if (order >= pageblock_order && (gfp_mask & __GFP_IO) &&
-+		    !(gfp_mask & __GFP_RETRY_MAYFAIL)) {
+ 		     !(gfp_mask & __GFP_RETRY_MAYFAIL)) {
  			/*
  			 * If allocating entire pageblock(s) and compaction
- 			 * failed because all zones are below low watermarks
 diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
-index d1caa8ed9e68..4339bb0525c0 100644
+index d1caa8ed9e68..9985fc139487 100644
 --- a/sound/usb/usx2y/usX2Yhwdep.c
 +++ b/sound/usb/usx2y/usX2Yhwdep.c
 @@ -119,7 +119,7 @@ static int snd_usX2Y_hwdep_dsp_status(struct snd_hwdep *hw,
@@ -927,10 +1004,10 @@ index d1caa8ed9e68..4339bb0525c0 100644
  	if (us428->chip_status & USX2Y_STAT_CHIP_INIT)
  		info->chip_ready = 1;
 - 	info->version = USX2Y_DRIVER_VERSION; 
-+	info->version = USX2Y_DRIVER_VERSION; 
++	info->version = USX2Y_DRIVER_VERSION;
  	return 0;
  }
  
 -- 
-2.24.0
+2.24.1
 

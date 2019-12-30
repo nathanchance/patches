@@ -1,4 +1,4 @@
-From 813262510d5b400635bfa643bbd7e89c2baa6468 Mon Sep 17 00:00:00 2001
+From 8059bdf0cd2731e53a36d48592e289ce4850f37a Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
 Date: Tue, 22 Oct 2019 08:25:22 -0500
 Subject: [PATCH 13/19] media: i2c: adv748x: Fix unsafe macros
@@ -54,5 +54,5 @@ index 5042f9e94aee..fccb388ce179 100644
  #define tx_read(t, r) adv748x_read(t->state, t->page, r)
  #define tx_write(t, r, v) adv748x_write(t->state, t->page, r, v)
 -- 
-2.24.0
+2.24.1
 

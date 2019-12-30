@@ -1,4 +1,4 @@
-From 6e9e8a85223709a9c66aac2c93500aa3a1525dcb Mon Sep 17 00:00:00 2001
+From 8c6250c4b397a98609b5c24c025d3716552d3839 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 12 Jul 2019 10:58:48 +0200
 Subject: [PATCH 05/19] xen/trace: avoid clang warning on function pointers
@@ -60,5 +60,5 @@ index 9a0e8af21310..f75b77414ac1 100644
  		    ),
  	    TP_fast_assign(
 -- 
-2.24.0
+2.24.1
 

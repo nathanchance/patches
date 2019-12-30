@@ -1,4 +1,4 @@
-From caf44a73596c69256b09d1236304bd178de54dd4 Mon Sep 17 00:00:00 2001
+From a6a4b0d95a045d71204d3e27ff19a00e3316a58d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 23 Nov 2019 12:51:44 -0700
 Subject: [PATCH 14/19] drm/i915: Remove tautological compare in
@@ -27,7 +27,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index f0998f1225af..9ed4379b4bc8 100644
+index bc3a67226163..a2b82364e757 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 @@ -1482,8 +1482,6 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct i915_vma *vma)
@@ -40,5 +40,5 @@ index f0998f1225af..9ed4379b4bc8 100644
  	/*
  	 * We must check that the entire relocation array is safe
 -- 
-2.24.0
+2.24.1
 
