@@ -1,0 +1,26 @@
+From 32f6ea2dad2edb99dbdf2cda5f98d373537e2a7d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 13 Dec 2019 01:37:39 -0700
+Subject: [PATCH 19/20] i915: __maybe_unused
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/i915/gt/uc/intel_uc_fw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.c b/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.c
+index 8ee0a0c7f447..f1bf56bc8e4c 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.c
+@@ -221,7 +221,7 @@ void intel_uc_fw_init_early(struct intel_uc_fw *uc_fw,
+ 
+ static void __force_fw_fetch_failures(struct intel_uc_fw *uc_fw, int e)
+ {
+-	struct drm_i915_private *i915 = __uc_fw_to_gt(uc_fw)->i915;
++	struct drm_i915_private __maybe_unused *i915 = __uc_fw_to_gt(uc_fw)->i915;
+ 	bool user = e == -EINVAL;
+ 
+ 	if (i915_inject_probe_error(i915, e)) {
+-- 
+2.24.1
+

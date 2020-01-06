@@ -1,7 +1,7 @@
-From eeb00baac7025dbb26e9859f9443530fe45bd5aa Mon Sep 17 00:00:00 2001
+From ffc27fcc3cfdcc73eb7920a70aea14d99c50584f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 23 Nov 2019 12:51:44 -0700
-Subject: [PATCH 19/22] drm/i915: Remove tautological compare in
+Subject: [PATCH 16/20] drm/i915: Remove tautological compare in
  eb_relocate_vma
 
 -Wtautological-compare was recently added to -Wall in LLVM, which
@@ -27,10 +27,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index f0998f1225af..9ed4379b4bc8 100644
+index cbd2bcade3c8..ba35f41a7e6d 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -1482,8 +1482,6 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct i915_vma *vma)
+@@ -1430,8 +1430,6 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct i915_vma *vma)
  
  	urelocs = u64_to_user_ptr(entry->relocs_ptr);
  	remain = entry->relocation_count;
@@ -40,5 +40,5 @@ index f0998f1225af..9ed4379b4bc8 100644
  	/*
  	 * We must check that the entire relocation array is safe
 -- 
-2.24.0
+2.24.1
 

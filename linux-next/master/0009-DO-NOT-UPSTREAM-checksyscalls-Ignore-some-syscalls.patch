@@ -1,7 +1,7 @@
-From 36b21ea249250a0cb6c82a11b23ad01f825e8714 Mon Sep 17 00:00:00 2001
+From a4b3572f783c30e690520ecf186de59ec66c5058 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Jul 2019 11:20:15 -0700
-Subject: [PATCH 09/22] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls
+Subject: [PATCH 09/20] DO-NOT-UPSTREAM: checksyscalls: Ignore some syscalls
 
 So that I can compile with -Werror.
 
@@ -26,5 +26,5 @@ index a18b47695f55..3fa09e143cd1 100755
  }
  
 -- 
-2.24.0
+2.24.1
 
