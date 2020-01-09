@@ -1,0 +1,28 @@
+From a16f8b159c1b65f6bce378a6df6c11c364574e85 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 9 Jan 2020 12:33:20 -0700
+Subject: [PATCH 24/25] qcom-cpr: -Wsometimes-uninitialized
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/power/avs/qcom-cpr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
+index 0321729431a5..ccf18c734419 100644
+--- a/drivers/power/avs/qcom-cpr.c
++++ b/drivers/power/avs/qcom-cpr.c
+@@ -461,8 +461,8 @@ static unsigned int cpr_get_cur_perf_state(struct cpr_drv *drv)
+ 
+ static int cpr_scale(struct cpr_drv *drv, enum voltage_change_dir dir)
+ {
+-	u32 val, error_steps, reg_mask;
+-	int last_uV, new_uV, step_uV, ret;
++	u32 val, error_steps, reg_mask = 0;
++	int last_uV, new_uV = 0, step_uV, ret;
+ 	struct corner *corner;
+ 	const struct cpr_desc *desc = drv->desc;
+ 
+-- 
+2.25.0.rc2
+

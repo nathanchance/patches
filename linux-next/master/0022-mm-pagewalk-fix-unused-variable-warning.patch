@@ -1,7 +1,7 @@
 From 8f658343ba8299ae381009a3ae5ffa06f9f8e858 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 7 Jan 2020 21:45:50 +0100
-Subject: [PATCH 22/23] mm: pagewalk: fix unused variable warning
+Subject: [PATCH 22/25] mm: pagewalk: fix unused variable warning
 
 One of the pagewalk patches introduced a harmless warning:
 
