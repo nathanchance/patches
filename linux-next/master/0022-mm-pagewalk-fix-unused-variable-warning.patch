@@ -1,0 +1,42 @@
+From 8f658343ba8299ae381009a3ae5ffa06f9f8e858 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 7 Jan 2020 21:45:50 +0100
+Subject: [PATCH 22/23] mm: pagewalk: fix unused variable warning
+
+One of the pagewalk patches introduced a harmless warning:
+
+mm/hmm.c: In function 'hmm_vma_walk_pud':
+mm/hmm.c:478:9: error: unused variable 'pmdp' [-Werror=unused-variable]
+  pmd_t *pmdp;
+         ^~~~
+mm/hmm.c:477:30: error: unused variable 'next' [-Werror=unused-variable]
+  unsigned long addr = start, next;
+                              ^~~~
+
+Remove both of the now-unused variables.
+
+Fixes: cb4d03d5fb4c ("mm: pagewalk: add p4d_entry() and pgd_entry()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/lkml/20200107204607.1533842-1-arnd@arndb.de/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ mm/hmm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/mm/hmm.c b/mm/hmm.c
+index a71295e99968..72e5a6d9a417 100644
+--- a/mm/hmm.c
++++ b/mm/hmm.c
+@@ -474,8 +474,7 @@ static int hmm_vma_walk_pud(pud_t *pudp, unsigned long start, unsigned long end,
+ {
+ 	struct hmm_vma_walk *hmm_vma_walk = walk->private;
+ 	struct hmm_range *range = hmm_vma_walk->range;
+-	unsigned long addr = start, next;
+-	pmd_t *pmdp;
++	unsigned long addr = start;
+ 	pud_t pud;
+ 	int ret = 0;
+ 	spinlock_t *ptl = pud_trans_huge_lock(pudp, walk->vma);
+-- 
+2.25.0.rc2
+

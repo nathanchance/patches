@@ -1,0 +1,26 @@
+From 9718b11d43e97cc66ec0271d483d157864562599 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 9 Jan 2020 12:02:06 -0700
+Subject: [PATCH 23/23] gpio: gpio-grgpio: Remove unused variable 'flags'
+
+Fixes: 25d071b3f6db ("gpio: gpio-grgpio: fix possible sleep-in-atomic-context bugs in grgpio_remove()")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpio/gpio-grgpio.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index 1922adf96fc9..f954359c9544 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -435,7 +435,6 @@ static int grgpio_probe(struct platform_device *ofdev)
+ static int grgpio_remove(struct platform_device *ofdev)
+ {
+ 	struct grgpio_priv *priv = platform_get_drvdata(ofdev);
+-	unsigned long flags;
+ 	int i;
+ 	int ret = 0;
+ 
+-- 
+2.25.0.rc2
+
