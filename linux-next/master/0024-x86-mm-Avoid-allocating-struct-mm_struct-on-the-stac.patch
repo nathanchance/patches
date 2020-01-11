@@ -1,0 +1,49 @@
+From 4a9945b296a8636829df9efb6e2bc3a58af56360 Mon Sep 17 00:00:00 2001
+From: Steven Price <steven.price@arm.com>
+Date: Wed, 8 Jan 2020 14:57:10 +0000
+Subject: [PATCH 24/26] x86: mm: Avoid allocating struct mm_struct on the stack
+
+struct mm_struct is quite large (~1664 bytes) and so allocating on the
+stack may cause problems as the kernel stack size is small.
+
+Since ptdump_walk_pgd_level_core() was only allocating the structure so
+that it could modify the pgd argument we can instead introduce a pgd
+override in struct mm_walk and pass this down the call stack to where it
+is needed.
+
+Since the correct mm_struct is now being passed down, it is now also
+unnecessary to take the mmap_sem semaphore because ptdump_walk_pgd()
+will now take the semaphore on the real mm.
+
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/lkml/20200108145710.34314-1-steven.price@arm.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm64/mm/dump.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/mm/dump.c b/arch/arm64/mm/dump.c
+index ef4b3ca1e058..860c00ec8bd3 100644
+--- a/arch/arm64/mm/dump.c
++++ b/arch/arm64/mm/dump.c
+@@ -323,7 +323,7 @@ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
+ 		}
+ 	};
+ 
+-	ptdump_walk_pgd(&st.ptdump, info->mm);
++	ptdump_walk_pgd(&st.ptdump, info->mm, NULL);
+ }
+ 
+ static void ptdump_initialize(void)
+@@ -361,7 +361,7 @@ void ptdump_check_wx(void)
+ 		}
+ 	};
+ 
+-	ptdump_walk_pgd(&st.ptdump, &init_mm);
++	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
+ 
+ 	if (st.wx_pages || st.uxn_pages)
+ 		pr_warn("Checked W+X mappings: FAILED, %lu W+X pages found, %lu non-UXN pages found\n",
+-- 
+2.25.0.rc2
+

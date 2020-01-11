@@ -1,0 +1,34 @@
+From b5949b4ffe78f539e32f8513d2478fc217d08a0a Mon Sep 17 00:00:00 2001
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date: Fri, 10 Jan 2020 09:24:41 +0100
+Subject: [PATCH 23/26] nvmem: fix a 'makes pointer from integer without a
+ cast' build warning
+
+nvmem_register() returns a pointer, not a long int. Use ERR_CAST() to
+cast the struct gpio_desc pointer to struct nvmem_device.
+
+Reported-by: kbuild test robot <lkp@intel.com>
+Fixes: 2a127da461a9 ("nvmem: add support for the write-protect pin")
+Signed-off-by: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Link: https://lore.kernel.org/lkml/20200110082441.8300-1-brgl@bgdev.pl/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/nvmem/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index 27733e0e5044..ef326f243f36 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -353,7 +353,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 		nvmem->wp_gpio = gpiod_get_optional(config->dev, "wp",
+ 						    GPIOD_OUT_HIGH);
+ 	if (IS_ERR(nvmem->wp_gpio))
+-		return PTR_ERR(nvmem->wp_gpio);
++		return ERR_CAST(nvmem->wp_gpio);
+ 
+ 
+ 	kref_init(&nvmem->refcnt);
+-- 
+2.25.0.rc2
+

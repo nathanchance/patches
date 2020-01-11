@@ -1,7 +1,7 @@
-From a16f8b159c1b65f6bce378a6df6c11c364574e85 Mon Sep 17 00:00:00 2001
+From 6995184fac5cf9e826a85a60fdca08be5c3a2477 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 9 Jan 2020 12:33:20 -0700
-Subject: [PATCH 24/25] qcom-cpr: -Wsometimes-uninitialized
+Subject: [PATCH 22/26] qcom-cpr: -Wsometimes-uninitialized
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
-index 0321729431a5..ccf18c734419 100644
+index 9192fb747653..902756f2b7e9 100644
 --- a/drivers/power/avs/qcom-cpr.c
 +++ b/drivers/power/avs/qcom-cpr.c
-@@ -461,8 +461,8 @@ static unsigned int cpr_get_cur_perf_state(struct cpr_drv *drv)
+@@ -460,8 +460,8 @@ static unsigned int cpr_get_cur_perf_state(struct cpr_drv *drv)
  
  static int cpr_scale(struct cpr_drv *drv, enum voltage_change_dir dir)
  {
