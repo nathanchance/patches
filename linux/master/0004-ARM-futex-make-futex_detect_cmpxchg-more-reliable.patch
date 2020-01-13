@@ -1,4 +1,4 @@
-From fda8204a733027a5ca7112247965c0e1b6ddf687 Mon Sep 17 00:00:00 2001
+From 39b309e3a51ebb213638fbbc90c5c361b2142282 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:49 +0100
 Subject: [PATCH 04/16] ARM: futex: make futex_detect_cmpxchg more reliable
@@ -57,5 +57,5 @@ index 83c391b597d4..ef9c6116e40e 100644
  	uaccess_restore(__ua_flags);
  
 -- 
-2.24.1
+2.25.0.rc2
 
