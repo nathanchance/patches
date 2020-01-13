@@ -1,7 +1,7 @@
-From c77163220ef7868fd8b45e85be791c1cd199da6c Mon Sep 17 00:00:00 2001
+From a6a91eef4ef49fc00d0401086e006bdc67ffbea1 Mon Sep 17 00:00:00 2001
 From: Tony Lindgren <tony@atomide.com>
 Date: Mon, 6 Jan 2020 12:37:00 -0800
-Subject: [PATCH 19/21] clocksource: timer-ti-dm: Fix regression
+Subject: [PATCH 17/21] clocksource: timer-ti-dm: Fix regression
 
 Clean-up commit 8c82723414d5 ("clocksource/drivers/timer-ti-dm: Switch to
 platform_get_irq") caused a regression where we now try to access
