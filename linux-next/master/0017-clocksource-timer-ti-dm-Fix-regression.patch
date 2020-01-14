@@ -1,4 +1,4 @@
-From a6a91eef4ef49fc00d0401086e006bdc67ffbea1 Mon Sep 17 00:00:00 2001
+From 6156077730dae93b9bea9f54a782c40a355698a1 Mon Sep 17 00:00:00 2001
 From: Tony Lindgren <tony@atomide.com>
 Date: Mon, 6 Jan 2020 12:37:00 -0800
 Subject: [PATCH 17/21] clocksource: timer-ti-dm: Fix regression
@@ -56,5 +56,5 @@ index bd16efb2740b..269a994d6a99 100644
  	timer->io_base = devm_platform_ioremap_resource(pdev, 0);
  	if (IS_ERR(timer->io_base))
 -- 
-2.25.0.rc2
+2.25.0
 

@@ -1,4 +1,4 @@
-From bfb3f6bcf07ffc83291e1df44a513ad5bdde2f7a Mon Sep 17 00:00:00 2001
+From 15a9b0114a6ccd416d027810d30925c3932b6f9d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Dec 2019 10:46:06 -0700
 Subject: [PATCH 21/21] HACK: arm64: Disable assertions for linking due to
@@ -31,5 +31,5 @@ index 497f9675071d..d86f1f32ed42 100644
  ASSERT(__hibernate_exit_text_end - (__hibernate_exit_text_start & ~(SZ_4K - 1))
  	<= SZ_4K, "Hibernate exit text too big or misaligned")
 -- 
-2.25.0.rc2
+2.25.0
 

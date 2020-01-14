@@ -1,4 +1,4 @@
-From 98878eba95148d7535f5dd3a1145bd2b6b583642 Mon Sep 17 00:00:00 2001
+From e85da1ba639de3ce5140239fdb675f3559717020 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 4 Nov 2019 16:57:32 -0700
 Subject: [PATCH 14/21] treewide: Cast arrays used in comparisons to unsigned
@@ -68,5 +68,5 @@ index 3a4259eeb5a0..14c643188cc2 100644
  			      __end_ro_after_init - __start_ro_after_init,
  			      KMEMLEAK_GREY, GFP_ATOMIC);
 -- 
-2.25.0.rc2
+2.25.0
 
