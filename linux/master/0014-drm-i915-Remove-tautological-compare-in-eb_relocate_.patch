@@ -1,7 +1,7 @@
 From 69f110877369639a30e1337a5faf8204e34b5bfd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 23 Nov 2019 12:51:44 -0700
-Subject: [PATCH 14/16] drm/i915: Remove tautological compare in
+Subject: [PATCH 14/15] drm/i915: Remove tautological compare in
  eb_relocate_vma
 
 -Wtautological-compare was recently added to -Wall in LLVM, which
@@ -40,5 +40,5 @@ index bc3a67226163..a2b82364e757 100644
  	/*
  	 * We must check that the entire relocation array is safe
 -- 
-2.25.0.rc2
+2.25.0
 

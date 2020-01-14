@@ -1,7 +1,7 @@
 From 4cde4ef149850f6e68b38ef03f6877fd2dac7a4a Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Fri, 1 Nov 2019 19:21:16 +0000
-Subject: [PATCH 15/16] drm/i915/perf: Reverse a ternary to make sparse happy
+Subject: [PATCH 15/15] drm/i915/perf: Reverse a ternary to make sparse happy
 
 Avoid
 
@@ -58,5 +58,5 @@ index 2ae14bc14931..24d236d6848d 100644
  	intel_uncore_write(uncore, GEN12_OAG_OAGLBCTXCTRL, periodic ?
  			   (GEN12_OAG_OAGLBCTXCTRL_COUNTER_RESUME |
 -- 
-2.25.0.rc2
+2.25.0
 

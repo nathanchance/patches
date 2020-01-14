@@ -1,7 +1,7 @@
 From ffd8d179ec2ba9c59e3d9179c65a23711ac25078 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 28 May 2019 16:11:13 -0700
-Subject: [PATCH 02/16] ARM: xor-neon: Replace __GNUC__ checks with
+Subject: [PATCH 02/15] ARM: xor-neon: Replace __GNUC__ checks with
  CONFIG_CC_IS_GCC
 
 Currently, when compiling this code with clang, the following warning is
@@ -74,5 +74,5 @@ index b99dd8e1c93f..e1e76186ec23 100644
  
  #pragma GCC diagnostic ignored "-Wunused-variable"
 -- 
-2.25.0.rc2
+2.25.0
 
