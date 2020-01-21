@@ -1,0 +1,39 @@
+From 06c9acb7506a2d0212f2bf708d714ee35002aebe Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 20 Jan 2020 11:55:58 -0700
+Subject: [PATCH 21/22] scsi: qla1280: Fix a use of QLA_64BIT_PTR
+
+Clang warns:
+
+../drivers/scsi/qla1280.c:1702:5: warning: 'QLA_64BIT_PTR' is not
+defined, evaluates to 0 [-Wundef]
+if QLA_64BIT_PTR
+    ^
+1 warning generated.
+
+The rest of this driver uses #ifdef QLA_64BIT_PTR, do the same thing at
+this site to remove this warning.
+
+Fixes: ba304e5b4498 ("scsi: qla1280: Fix dma firmware download, if dma address is 64bit")
+Link: https://github.com/ClangBuiltLinux/linux/issues/843
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/scsi/qla1280.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/qla1280.c b/drivers/scsi/qla1280.c
+index 607cbddcdd14..3337cd341d21 100644
+--- a/drivers/scsi/qla1280.c
++++ b/drivers/scsi/qla1280.c
+@@ -1699,7 +1699,7 @@ qla1280_load_firmware_pio(struct scsi_qla_host *ha)
+ 	return err;
+ }
+ 
+-#if QLA_64BIT_PTR
++#ifdef QLA_64BIT_PTR
+ #define LOAD_CMD	MBC_LOAD_RAM_A64_ROM
+ #define DUMP_CMD	MBC_DUMP_RAM_A64_ROM
+ #define CMD_ARGS	(BIT_7 | BIT_6 | BIT_4 | BIT_3 | BIT_2 | BIT_1 | BIT_0)
+-- 
+2.25.0
+
