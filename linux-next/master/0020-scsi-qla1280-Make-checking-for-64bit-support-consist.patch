@@ -1,7 +1,7 @@
-From 198ac959df362104f74b5f2b6c1e0844d2add949 Mon Sep 17 00:00:00 2001
+From 778f53000d8fade443c5cb194b4577d2cdce2f5f Mon Sep 17 00:00:00 2001
 From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 Date: Fri, 17 Jan 2020 12:56:27 +0100
-Subject: [PATCH 21/22] scsi: qla1280: Make checking for 64bit support
+Subject: [PATCH 20/22] scsi: qla1280: Make checking for 64bit support
  consistent
 
 Use #ifdef QLA_64BIT_PTR to check if 64bit support is enabled.  This
