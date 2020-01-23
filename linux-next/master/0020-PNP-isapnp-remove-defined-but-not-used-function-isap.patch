@@ -1,7 +1,7 @@
-From 7406be3271c7bf422833bb8d08677347efb2b347 Mon Sep 17 00:00:00 2001
+From 219b171bd0bbd6d6c530d2907ef5bd0d5f1c15e7 Mon Sep 17 00:00:00 2001
 From: yu kuai <yukuai3@huawei.com>
 Date: Mon, 20 Jan 2020 09:23:31 +0800
-Subject: [PATCH 21/22] PNP: isapnp: remove defined but not used function
+Subject: [PATCH 20/20] PNP: isapnp: remove defined but not used function
  'isapnp_checksum'
 
 Fix gcc '-Wunused-function' warnning:
@@ -23,7 +23,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 22 deletions(-)
 
 diff --git a/drivers/pnp/isapnp/core.c b/drivers/pnp/isapnp/core.c
-index e39d49bceae0..c43d8ad02529 100644
+index 179b737280e1..6c457006e84b 100644
 --- a/drivers/pnp/isapnp/core.c
 +++ b/drivers/pnp/isapnp/core.c
 @@ -746,28 +746,6 @@ static void __init isapnp_parse_resource_map(struct pnp_card *card)
