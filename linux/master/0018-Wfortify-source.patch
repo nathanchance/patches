@@ -1,7 +1,7 @@
-From 6aa7be750e6fa8c468ca8cd9629e6f6d3caa2809 Mon Sep 17 00:00:00 2001
+From e47789ad1bfbb3c7ca99e934545f76f1d02a0ec2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 25 Jan 2020 22:49:02 -0700
-Subject: [PATCH 15/15] -Wfortify-source
+Subject: [PATCH 18/18] -Wfortify-source
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 1ef6f75d92f1..6221347dadf7 100644
+index fada22dc4ab6..cca579e77f77 100644
 --- a/kernel/printk/printk.c
 +++ b/kernel/printk/printk.c
 @@ -2412,6 +2412,7 @@ void console_unlock(void)
