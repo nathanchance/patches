@@ -1,0 +1,384 @@
+From 41b7db7e65b16a31c4de789a8719d182fcc30e78 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 30 Jan 2020 20:20:51 -0700
+Subject: [PATCH 21/21] powerpc: Revert a bunch of vDSO changes that break
+ using ld.lld
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/include/asm/vdso_datapage.h  | 14 ++----
+ arch/powerpc/kernel/asm-offsets.c         |  5 +--
+ arch/powerpc/kernel/vdso.c                |  5 +++
+ arch/powerpc/kernel/vdso32/cacheflush.S   | 32 +++----------
+ arch/powerpc/kernel/vdso32/datapage.S     | 31 +++++++++++--
+ arch/powerpc/kernel/vdso32/getcpu.S       |  6 +--
+ arch/powerpc/kernel/vdso32/gettimeofday.S | 55 ++++++++++++-----------
+ 7 files changed, 73 insertions(+), 75 deletions(-)
+
+diff --git a/arch/powerpc/include/asm/vdso_datapage.h b/arch/powerpc/include/asm/vdso_datapage.h
+index b9ef6cf50ea5..40f13f3626d3 100644
+--- a/arch/powerpc/include/asm/vdso_datapage.h
++++ b/arch/powerpc/include/asm/vdso_datapage.h
+@@ -108,22 +108,16 @@ struct vdso_data {
+ 	__u32 stamp_sec_fraction;	/* fractional seconds of stamp_xtime */
+ 	__u32 hrtimer_res;		/* hrtimer resolution */
+    	__u32 syscall_map_32[SYSCALL_MAP_SIZE]; /* map of syscalls */
++	__u32 dcache_block_size;	/* L1 d-cache block size     */
++	__u32 icache_block_size;	/* L1 i-cache block size     */
++	__u32 dcache_log_block_size;	/* L1 d-cache log block size */
++	__u32 icache_log_block_size;	/* L1 i-cache log block size */
+ };
+ 
+ #endif /* CONFIG_PPC64 */
+ 
+ extern struct vdso_data *vdso_data;
+ 
+-#else /* __ASSEMBLY__ */
+-
+-.macro get_datapage ptr, tmp
+-	bcl	20, 31, .+4
+-	mflr	\ptr
+-	addi	\ptr, \ptr, (__kernel_datapage_offset - (.-4))@l
+-	lwz	\tmp, 0(\ptr)
+-	add	\ptr, \tmp, \ptr
+-.endm
+-
+ #endif /* __ASSEMBLY__ */
+ 
+ #endif /* __KERNEL__ */
+diff --git a/arch/powerpc/kernel/asm-offsets.c b/arch/powerpc/kernel/asm-offsets.c
+index c25e562f1cd9..bef3f7f92823 100644
+--- a/arch/powerpc/kernel/asm-offsets.c
++++ b/arch/powerpc/kernel/asm-offsets.c
+@@ -395,11 +395,11 @@ int main(void)
+ 	OFFSET(STAMP_XTIME_NSEC, vdso_data, stamp_xtime_nsec);
+ 	OFFSET(STAMP_SEC_FRAC, vdso_data, stamp_sec_fraction);
+ 	OFFSET(CLOCK_HRTIMER_RES, vdso_data, hrtimer_res);
+-#ifdef CONFIG_PPC64
+ 	OFFSET(CFG_ICACHE_BLOCKSZ, vdso_data, icache_block_size);
+ 	OFFSET(CFG_DCACHE_BLOCKSZ, vdso_data, dcache_block_size);
+ 	OFFSET(CFG_ICACHE_LOGBLOCKSZ, vdso_data, icache_log_block_size);
+ 	OFFSET(CFG_DCACHE_LOGBLOCKSZ, vdso_data, dcache_log_block_size);
++#ifdef CONFIG_PPC64
+ 	OFFSET(CFG_SYSCALL_MAP64, vdso_data, syscall_map_64);
+ 	OFFSET(TVAL64_TV_SEC, __kernel_old_timeval, tv_sec);
+ 	OFFSET(TVAL64_TV_USEC, __kernel_old_timeval, tv_usec);
+@@ -419,10 +419,7 @@ int main(void)
+ 	DEFINE(CLOCK_MONOTONIC, CLOCK_MONOTONIC);
+ 	DEFINE(CLOCK_REALTIME_COARSE, CLOCK_REALTIME_COARSE);
+ 	DEFINE(CLOCK_MONOTONIC_COARSE, CLOCK_MONOTONIC_COARSE);
+-	DEFINE(CLOCK_MAX, CLOCK_TAI);
+ 	DEFINE(NSEC_PER_SEC, NSEC_PER_SEC);
+-	DEFINE(EINVAL, EINVAL);
+-	DEFINE(KTIME_LOW_RES, KTIME_LOW_RES);
+ 
+ #ifdef CONFIG_BUG
+ 	DEFINE(BUG_ENTRY_SIZE, sizeof(struct bug_entry));
+diff --git a/arch/powerpc/kernel/vdso.c b/arch/powerpc/kernel/vdso.c
+index b9a108411c0d..eae9ddaecbcf 100644
+--- a/arch/powerpc/kernel/vdso.c
++++ b/arch/powerpc/kernel/vdso.c
+@@ -728,6 +728,11 @@ static int __init vdso_init(void)
+ 	 */
+ 	vdso64_pages = (&vdso64_end - &vdso64_start) >> PAGE_SHIFT;
+ 	DBG("vdso64_kbase: %p, 0x%x pages\n", vdso64_kbase, vdso64_pages);
++#else
++	vdso_data->dcache_block_size = L1_CACHE_BYTES;
++	vdso_data->dcache_log_block_size = L1_CACHE_SHIFT;
++	vdso_data->icache_block_size = L1_CACHE_BYTES;
++	vdso_data->icache_log_block_size = L1_CACHE_SHIFT;
+ #endif /* CONFIG_PPC64 */
+ 
+ 
+diff --git a/arch/powerpc/kernel/vdso32/cacheflush.S b/arch/powerpc/kernel/vdso32/cacheflush.S
+index 3440ddf21c8b..7f882e7b9f43 100644
+--- a/arch/powerpc/kernel/vdso32/cacheflush.S
++++ b/arch/powerpc/kernel/vdso32/cacheflush.S
+@@ -8,9 +8,7 @@
+ #include <asm/processor.h>
+ #include <asm/ppc_asm.h>
+ #include <asm/vdso.h>
+-#include <asm/vdso_datapage.h>
+ #include <asm/asm-offsets.h>
+-#include <asm/cache.h>
+ 
+ 	.text
+ 
+@@ -24,62 +22,42 @@
+  */
+ V_FUNCTION_BEGIN(__kernel_sync_dicache)
+   .cfi_startproc
+-#ifdef CONFIG_PPC64
+ 	mflr	r12
+   .cfi_register lr,r12
+-	get_datapage	r10, r0
++	mr	r11,r3
++	bl	__get_datapage@local
+ 	mtlr	r12
+-#endif
++	mr	r10,r3
+ 
+-#ifdef CONFIG_PPC64
+ 	lwz	r7,CFG_DCACHE_BLOCKSZ(r10)
+ 	addi	r5,r7,-1
+-#else
+-	li	r5, L1_CACHE_BYTES - 1
+-#endif
+-	andc	r6,r3,r5		/* round low to line bdy */
++	andc	r6,r11,r5		/* round low to line bdy */
+ 	subf	r8,r6,r4		/* compute length */
+ 	add	r8,r8,r5		/* ensure we get enough */
+-#ifdef CONFIG_PPC64
+ 	lwz	r9,CFG_DCACHE_LOGBLOCKSZ(r10)
+ 	srw.	r8,r8,r9		/* compute line count */
+-#else
+-	srwi.	r8, r8, L1_CACHE_SHIFT
+-	mr	r7, r6
+-#endif
+ 	crclr	cr0*4+so
+ 	beqlr				/* nothing to do? */
+ 	mtctr	r8
+ 1:	dcbst	0,r6
+-#ifdef CONFIG_PPC64
+ 	add	r6,r6,r7
+-#else
+-	addi	r6, r6, L1_CACHE_BYTES
+-#endif
+ 	bdnz	1b
+ 	sync
+ 
+ /* Now invalidate the instruction cache */
+ 
+-#ifdef CONFIG_PPC64
+ 	lwz	r7,CFG_ICACHE_BLOCKSZ(r10)
+ 	addi	r5,r7,-1
+-	andc	r6,r3,r5		/* round low to line bdy */
++	andc	r6,r11,r5		/* round low to line bdy */
+ 	subf	r8,r6,r4		/* compute length */
+ 	add	r8,r8,r5
+ 	lwz	r9,CFG_ICACHE_LOGBLOCKSZ(r10)
+ 	srw.	r8,r8,r9		/* compute line count */
+ 	crclr	cr0*4+so
+ 	beqlr				/* nothing to do? */
+-#endif
+ 	mtctr	r8
+-#ifdef CONFIG_PPC64
+ 2:	icbi	0,r6
+ 	add	r6,r6,r7
+-#else
+-2:	icbi	0, r7
+-	addi	r7, r7, L1_CACHE_BYTES
+-#endif
+ 	bdnz	2b
+ 	isync
+ 	li	r3,0
+diff --git a/arch/powerpc/kernel/vdso32/datapage.S b/arch/powerpc/kernel/vdso32/datapage.S
+index 217bb630f8f9..6c7401bd284e 100644
+--- a/arch/powerpc/kernel/vdso32/datapage.S
++++ b/arch/powerpc/kernel/vdso32/datapage.S
+@@ -10,13 +10,35 @@
+ #include <asm/asm-offsets.h>
+ #include <asm/unistd.h>
+ #include <asm/vdso.h>
+-#include <asm/vdso_datapage.h>
+ 
+ 	.text
+ 	.global	__kernel_datapage_offset;
+ __kernel_datapage_offset:
+ 	.long	0
+ 
++V_FUNCTION_BEGIN(__get_datapage)
++  .cfi_startproc
++	/* We don't want that exposed or overridable as we want other objects
++	 * to be able to bl directly to here
++	 */
++	.protected __get_datapage
++	.hidden __get_datapage
++
++	mflr	r0
++  .cfi_register lr,r0
++
++	bcl	20,31,data_page_branch
++data_page_branch:
++	mflr	r3
++	mtlr	r0
++	addi	r3, r3, __kernel_datapage_offset-data_page_branch
++	lwz	r0,0(r3)
++  .cfi_restore lr
++	add	r3,r0,r3
++	blr
++  .cfi_endproc
++V_FUNCTION_END(__get_datapage)
++
+ /*
+  * void *__kernel_get_syscall_map(unsigned int *syscall_count) ;
+  *
+@@ -30,10 +52,11 @@ V_FUNCTION_BEGIN(__kernel_get_syscall_map)
+   .cfi_startproc
+ 	mflr	r12
+   .cfi_register lr,r12
+-	mr.	r4,r3
+-	get_datapage	r3, r0
++	mr	r4,r3
++	bl	__get_datapage@local
+ 	mtlr	r12
+ 	addi	r3,r3,CFG_SYSCALL_MAP32
++	cmpli	cr0,r4,0
+ 	beqlr
+ 	li	r0,NR_syscalls
+ 	stw	r0,0(r4)
+@@ -52,7 +75,7 @@ V_FUNCTION_BEGIN(__kernel_get_tbfreq)
+   .cfi_startproc
+ 	mflr	r12
+   .cfi_register lr,r12
+-	get_datapage	r3, r0
++	bl	__get_datapage@local
+ 	lwz	r4,(CFG_TB_TICKS_PER_SEC + 4)(r3)
+ 	lwz	r3,CFG_TB_TICKS_PER_SEC(r3)
+ 	mtlr	r12
+diff --git a/arch/powerpc/kernel/vdso32/getcpu.S b/arch/powerpc/kernel/vdso32/getcpu.S
+index ff5e214fec41..90b39af14383 100644
+--- a/arch/powerpc/kernel/vdso32/getcpu.S
++++ b/arch/powerpc/kernel/vdso32/getcpu.S
+@@ -25,10 +25,10 @@ V_FUNCTION_BEGIN(__kernel_getcpu)
+ 	rlwinm  r7,r5,16,31-15,31-0
+ 	beq	cr0,1f
+ 	stw	r6,0(r3)
+-1:	crclr	cr0*4+so
+-	li	r3,0			/* always success */
+-	beqlr	cr1
++1:	beq	cr1,2f
+ 	stw	r7,0(r4)
++2:	crclr	cr0*4+so
++	li	r3,0			/* always success */
+ 	blr
+   .cfi_endproc
+ V_FUNCTION_END(__kernel_getcpu)
+diff --git a/arch/powerpc/kernel/vdso32/gettimeofday.S b/arch/powerpc/kernel/vdso32/gettimeofday.S
+index a3951567118a..e9ce8ee56edb 100644
+--- a/arch/powerpc/kernel/vdso32/gettimeofday.S
++++ b/arch/powerpc/kernel/vdso32/gettimeofday.S
+@@ -9,7 +9,6 @@
+ #include <asm/processor.h>
+ #include <asm/ppc_asm.h>
+ #include <asm/vdso.h>
+-#include <asm/vdso_datapage.h>
+ #include <asm/asm-offsets.h>
+ #include <asm/unistd.h>
+ 
+@@ -32,26 +31,28 @@ V_FUNCTION_BEGIN(__kernel_gettimeofday)
+ 	mflr	r12
+   .cfi_register lr,r12
+ 
+-	mr.	r10,r3			/* r10 saves tv */
++	mr	r10,r3			/* r10 saves tv */
+ 	mr	r11,r4			/* r11 saves tz */
+-	get_datapage	r9, r0
++	bl	__get_datapage@local	/* get data page */
++	mr	r9, r3			/* datapage ptr in r9 */
++	cmplwi	r10,0			/* check if tv is NULL */
+ 	beq	3f
+-	LOAD_REG_IMMEDIATE(r7, 1000000)	/* load up USEC_PER_SEC */
++	lis	r7,1000000@ha		/* load up USEC_PER_SEC */
++	addi	r7,r7,1000000@l		/* so we get microseconds in r4 */
+ 	bl	__do_get_tspec@local	/* get sec/usec from tb & kernel */
+ 	stw	r3,TVAL32_TV_SEC(r10)
+ 	stw	r4,TVAL32_TV_USEC(r10)
+ 
+ 3:	cmplwi	r11,0			/* check if tz is NULL */
+-	mtlr	r12
+-	crclr	cr0*4+so
+-	li	r3,0
+-	beqlr
+-
++	beq	1f
+ 	lwz	r4,CFG_TZ_MINUTEWEST(r9)/* fill tz */
+ 	lwz	r5,CFG_TZ_DSTTIME(r9)
+ 	stw	r4,TZONE_TZ_MINWEST(r11)
+ 	stw	r5,TZONE_TZ_DSTTIME(r11)
+ 
++1:	mtlr	r12
++	crclr	cr0*4+so
++	li	r3,0
+ 	blr
+   .cfi_endproc
+ V_FUNCTION_END(__kernel_gettimeofday)
+@@ -79,8 +80,10 @@ V_FUNCTION_BEGIN(__kernel_clock_gettime)
+ 	mflr	r12			/* r12 saves lr */
+   .cfi_register lr,r12
+ 	mr	r11,r4			/* r11 saves tp */
+-	get_datapage	r9, r0
+-	LOAD_REG_IMMEDIATE(r7, NSEC_PER_SEC)	/* load up NSEC_PER_SEC */
++	bl	__get_datapage@local	/* get data page */
++	mr	r9,r3			/* datapage ptr in r9 */
++	lis	r7,NSEC_PER_SEC@h	/* want nanoseconds */
++	ori	r7,r7,NSEC_PER_SEC@l
+ 	beq	cr5, .Lcoarse_clocks
+ .Lprecise_clocks:
+ 	bl	__do_get_tspec@local	/* get sec/nsec from tb & kernel */
+@@ -196,20 +199,17 @@ V_FUNCTION_END(__kernel_clock_gettime)
+ V_FUNCTION_BEGIN(__kernel_clock_getres)
+   .cfi_startproc
+ 	/* Check for supported clock IDs */
+-	cmplwi	cr0, r3, CLOCK_MAX
+-	cmpwi	cr1, r3, CLOCK_REALTIME_COARSE
+-	cmpwi	cr7, r3, CLOCK_MONOTONIC_COARSE
+-	bgt	cr0, 99f
+-	LOAD_REG_IMMEDIATE(r5, KTIME_LOW_RES)
+-	beq	cr1, 1f
+-	beq	cr7, 1f
++	cmpwi	cr0,r3,CLOCK_REALTIME
++	cmpwi	cr1,r3,CLOCK_MONOTONIC
++	cror	cr0*4+eq,cr0*4+eq,cr1*4+eq
++	bne	cr0,99f
+ 
+ 	mflr	r12
+   .cfi_register lr,r12
+-	get_datapage	r3, r0
++	bl	__get_datapage@local	/* get data page */
+ 	lwz	r5, CLOCK_HRTIMER_RES(r3)
+ 	mtlr	r12
+-1:	li	r3,0
++	li	r3,0
+ 	cmpli	cr0,r4,0
+ 	crclr	cr0*4+so
+ 	beqlr
+@@ -218,11 +218,11 @@ V_FUNCTION_BEGIN(__kernel_clock_getres)
+ 	blr
+ 
+ 	/*
+-	 * invalid clock
++	 * syscall fallback
+ 	 */
+ 99:
+-	li	r3, EINVAL
+-	crset	so
++	li	r0,__NR_clock_getres
++	sc
+ 	blr
+   .cfi_endproc
+ V_FUNCTION_END(__kernel_clock_getres)
+@@ -240,15 +240,16 @@ V_FUNCTION_BEGIN(__kernel_time)
+   .cfi_register lr,r12
+ 
+ 	mr	r11,r3			/* r11 holds t */
+-	get_datapage	r9, r0
++	bl	__get_datapage@local
++	mr	r9, r3			/* datapage ptr in r9 */
+ 
+ 	lwz	r3,STAMP_XTIME_SEC+LOPART(r9)
+ 
+ 	cmplwi	r11,0			/* check if t is NULL */
+-	mtlr	r12
+-	crclr	cr0*4+so
+-	beqlr
++	beq	2f
+ 	stw	r3,0(r11)		/* store result at *t */
++2:	mtlr	r12
++	crclr	cr0*4+so
+ 	blr
+   .cfi_endproc
+ V_FUNCTION_END(__kernel_time)
+-- 
+2.25.0
+
