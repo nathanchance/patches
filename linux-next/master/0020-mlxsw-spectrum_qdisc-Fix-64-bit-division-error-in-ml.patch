@@ -1,0 +1,36 @@
+From 209c0e52690d57f5a8c437fc73fa27dbf1c2aec5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 30 Jan 2020 18:47:23 -0700
+Subject: [PATCH 20/20] mlxsw: spectrum_qdisc: Fix 64-bit division error in
+ mlxsw_sp_qdisc_tbf_rate_kbps
+
+When building arm32 allmodconfig:
+
+ERROR: "__aeabi_uldivmod"
+[drivers/net/ethernet/mellanox/mlxsw/mlxsw_spectrum.ko] undefined!
+
+rate_bytes_ps has type u64, we need to use a 64-bit division helper to
+avoid a build error.
+
+Fixes: a44f58c41bfb ("mlxsw: spectrum_qdisc: Support offloading of TBF Qdisc")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_qdisc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_qdisc.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_qdisc.c
+index 79a2801d59f6..02526c53d4f5 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_qdisc.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_qdisc.c
+@@ -614,7 +614,7 @@ mlxsw_sp_qdisc_tbf_rate_kbps(struct tc_tbf_qopt_offload_replace_params *p)
+ 	/* TBF interface is in bytes/s, whereas Spectrum ASIC is configured in
+ 	 * Kbits/s.
+ 	 */
+-	return p->rate.rate_bytes_ps / 1000 * 8;
++	return div_u64(p->rate.rate_bytes_ps, 1000) * 8;
+ }
+ 
+ static int
+-- 
+2.25.0
+
