@@ -1,7 +1,7 @@
-From c6fb2758d97b58498455e76e62a85c73319d5609 Mon Sep 17 00:00:00 2001
+From 5b32de56cfcda3ccbbaca6686c68fe7e7935c504 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 Jan 2020 18:37:02 -0700
-Subject: [PATCH 16/20] power: avs: qcom-cpr: Avoid clang
+Subject: [PATCH 16/19] power: avs: qcom-cpr: Avoid clang
  -Wsometimes-uninitialized in cpr_scale
 
 Clang warns (trimmed for brevity):
