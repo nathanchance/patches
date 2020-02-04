@@ -1,7 +1,7 @@
-From 062aba8a987d902c486738e774ff0893439cb548 Mon Sep 17 00:00:00 2001
+From fdc79d48be71c2a3d916ff7775f80f8c099f319b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 30 Jan 2020 18:47:23 -0700
-Subject: [PATCH 17/18] mlxsw: spectrum_qdisc: Fix 64-bit division error in
+Subject: [PATCH 17/19] mlxsw: spectrum_qdisc: Fix 64-bit division error in
  mlxsw_sp_qdisc_tbf_rate_kbps
 
 When building arm32 allmodconfig:
