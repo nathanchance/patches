@@ -1,0 +1,41 @@
+From 02de943434edbaac49a8c28c32f733a29f52fe01 Mon Sep 17 00:00:00 2001
+From: Fangrui Song <maskray@google.com>
+Date: Tue, 4 Feb 2020 16:50:54 -0800
+Subject: [PATCH 17/17] powerpc/vdso32: mark __kernel_datapage_offset as
+ STV_PROTECTED
+
+A PC-relative relocation (R_PPC_REL16_LO in this case) referencing a
+preemptible symbol in a -shared link is not allowed.  GNU ld's powerpc
+port is permissive and allows it [1], but lld will report an error after
+https://git.kernel.org/pub/scm/linux/kernel/git/powerpc/linux.git/commit/?id=ec0895f08f99515194e9fcfe1338becf6f759d38
+
+Make the symbol protected so that it is non-preemptible but still
+exported.
+
+[1]: https://sourceware.org/bugzilla/show_bug.cgi?id=25500
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/851
+Signed-off-by: Fangrui Song <maskray@google.com>
+Link: https://lore.kernel.org/lkml/20200205005054.k72fuikf6rwrgfe4@google.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/kernel/vdso32/datapage.S | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/kernel/vdso32/datapage.S b/arch/powerpc/kernel/vdso32/datapage.S
+index 217bb630f8f9..2831a8676365 100644
+--- a/arch/powerpc/kernel/vdso32/datapage.S
++++ b/arch/powerpc/kernel/vdso32/datapage.S
+@@ -13,7 +13,8 @@
+ #include <asm/vdso_datapage.h>
+ 
+ 	.text
+-	.global	__kernel_datapage_offset;
++	.global	__kernel_datapage_offset
++	.protected	__kernel_datapage_offset
+ __kernel_datapage_offset:
+ 	.long	0
+ 
+-- 
+2.25.0
+
