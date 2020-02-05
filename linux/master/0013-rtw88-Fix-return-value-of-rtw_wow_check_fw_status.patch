@@ -1,7 +1,7 @@
-From 151c9d134b051c1132e85da452c6b3b39a5779d6 Mon Sep 17 00:00:00 2001
+From da64c499434451c937ea6506cce64e6fbfa978ab Mon Sep 17 00:00:00 2001
 From: Chin-Yen Lee <timlee@realtek.com>
 Date: Mon, 3 Feb 2020 14:01:57 +0800
-Subject: [PATCH 13/19] rtw88: Fix return value of rtw_wow_check_fw_status
+Subject: [PATCH 13/18] rtw88: Fix return value of rtw_wow_check_fw_status
 
 Clang warns that ret is used uninitialzed.
 And we found that actually the return type should be "int" instead
