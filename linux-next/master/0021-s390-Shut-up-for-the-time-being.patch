@@ -1,0 +1,39 @@
+From 778a712293e807628ed6e1ab482ab79739ce62e1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 8 Feb 2020 07:14:05 -0700
+Subject: [PATCH 21/21] s390: Shut up for the time being
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/s390/configs/defconfig  | 1 -
+ arch/s390/include/asm/page.h | 2 --
+ 2 files changed, 3 deletions(-)
+
+diff --git a/arch/s390/configs/defconfig b/arch/s390/configs/defconfig
+index 25f799849582..9de699a5a428 100644
+--- a/arch/s390/configs/defconfig
++++ b/arch/s390/configs/defconfig
+@@ -734,7 +734,6 @@ CONFIG_PRINTK_TIME=y
+ CONFIG_DEBUG_INFO=y
+ CONFIG_DEBUG_INFO_DWARF4=y
+ CONFIG_GDB_SCRIPTS=y
+-CONFIG_FRAME_WARN=1024
+ CONFIG_DEBUG_SECTION_MISMATCH=y
+ CONFIG_MAGIC_SYSRQ=y
+ CONFIG_DEBUG_MEMORY_INIT=y
+diff --git a/arch/s390/include/asm/page.h b/arch/s390/include/asm/page.h
+index 85e944f04c70..999a29f94b2d 100644
+--- a/arch/s390/include/asm/page.h
++++ b/arch/s390/include/asm/page.h
+@@ -42,8 +42,6 @@ void __storage_key_init_range(unsigned long start, unsigned long end);
+ 
+ static inline void storage_key_init_range(unsigned long start, unsigned long end)
+ {
+-	if (PAGE_DEFAULT_KEY)
+-		__storage_key_init_range(start, end);
+ }
+ 
+ #define clear_page(page)	memset((page), 0, PAGE_SIZE)
+-- 
+2.25.0
+
