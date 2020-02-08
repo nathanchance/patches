@@ -1,7 +1,7 @@
 From f8661bce3cddd0912e9799715d1d98a69b17c762 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
-Subject: [PATCH 05/17] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 05/20] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
