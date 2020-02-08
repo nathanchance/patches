@@ -1,7 +1,7 @@
-From ca753ff43ff9899fc8fe08039984c1b8425f898f Mon Sep 17 00:00:00 2001
+From a8991cb3e2460adde7f02ee12ec930735a5ce509 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 30 Jan 2020 15:10:22 -0700
-Subject: [PATCH 16/18] printk: Convert a use of sprintf to snprintf in
+Subject: [PATCH 15/17] printk: Convert a use of sprintf to snprintf in
  console_unlock
 
 When CONFIG_PRINTK is disabled (e.g. when building allnoconfig), clang
