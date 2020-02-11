@@ -1,0 +1,41 @@
+From 82ea23619278bc0cccf8f03066994c8f27fd3613 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Feb 2020 02:31:11 -0700
+Subject: [PATCH 16/25] dynamic_debug: Wrap section comparison in
+ dynamic_debug_init with COMPARE_SECTIONS
+
+Clang warns:
+
+../lib/dynamic_debug.c:1016:24: warning: array comparison always
+evaluates to false [-Wtautological-compare]
+        if (__start___verbose == __stop___verbose) {
+                              ^
+1 warning generated.
+
+These are not true arrays, they are linker defined symbols, which are
+just addresses so there is not a real issue here. Use the
+COMPARE_SECTIONS macro to silence this warning by casting the linker
+defined symbols to unsigned long, which keeps the logic the same.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/765
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ lib/dynamic_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+index c60409138e13..a8b10e00daf5 100644
+--- a/lib/dynamic_debug.c
++++ b/lib/dynamic_debug.c
+@@ -1013,7 +1013,7 @@ static int __init dynamic_debug_init(void)
+ 	int n = 0, entries = 0, modct = 0;
+ 	int verbose_bytes = 0;
+ 
+-	if (__start___verbose == __stop___verbose) {
++	if (COMPARE_SECTIONS(__start___verbose, ==, __stop___verbose)) {
+ 		pr_warn("_ddebug table is empty in a CONFIG_DYNAMIC_DEBUG build\n");
+ 		return 1;
+ 	}
+-- 
+2.25.0
+

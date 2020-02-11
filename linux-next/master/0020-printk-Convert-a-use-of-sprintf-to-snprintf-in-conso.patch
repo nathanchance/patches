@@ -1,0 +1,49 @@
+From 1445db92a4d3fff9ad88df529d131986f5fecde1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 30 Jan 2020 15:10:22 -0700
+Subject: [PATCH 20/25] printk: Convert a use of sprintf to snprintf in
+ console_unlock
+
+When CONFIG_PRINTK is disabled (e.g. when building allnoconfig), clang
+warns:
+
+../kernel/printk/printk.c:2416:10: warning: 'sprintf' will always
+overflow; destination buffer has size 0, but format string expands to at
+least 33 [-Wfortify-source]
+                        len = sprintf(text,
+                              ^
+1 warning generated.
+
+It is not wrong; text has a zero size when CONFIG_PRINTK is disabled
+because LOG_LINE_MAX and PREFIX_MAX are both zero. Change to snprintf so
+that this case is explicitly handled without any risk of overflow.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/846
+Link: https://github.com/llvm/llvm-project/commit/6d485ff455ea2b37fef9e06e426dae6c1241b231
+Link: https://lore.kernel.org/lkml/20200130051711.GF115889@google.com/
+Suggested-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/printk/printk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index fada22dc4ab6..a44094727a5c 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -2413,9 +2413,9 @@ void console_unlock(void)
+ 		printk_safe_enter_irqsave(flags);
+ 		raw_spin_lock(&logbuf_lock);
+ 		if (console_seq < log_first_seq) {
+-			len = sprintf(text,
+-				      "** %llu printk messages dropped **\n",
+-				      log_first_seq - console_seq);
++			len = snprintf(text, sizeof(text),
++				       "** %llu printk messages dropped **\n",
++				       log_first_seq - console_seq);
+ 
+ 			/* messages are gone, move to first one */
+ 			console_seq = log_first_seq;
+-- 
+2.25.0
+
