@@ -1,0 +1,34 @@
+From 4b00d8c3a352a3ad8f82a4df9f7f1614b6bfb434 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 3 Aug 2019 14:50:47 -0700
+Subject: [PATCH 10/25] DO-NOT-UPSTREAM: MIPS: Hide an uninitialized variable
+ warning
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/606
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/mips/lib/uncached.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/mips/lib/uncached.c b/arch/mips/lib/uncached.c
+index 09d5deea747f..dc020fadda35 100644
+--- a/arch/mips/lib/uncached.c
++++ b/arch/mips/lib/uncached.c
+@@ -42,7 +42,14 @@ unsigned long run_uncached(void *func)
+ 	long lfunc = (long)func, ufunc;
+ 	long usp;
+ 
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wuninitialized"
++#endif
+ 	if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang diagnostic pop
++#endif
+ 		usp = CKSEG1ADDR(sp);
+ #ifdef CONFIG_64BIT
+ 	else if ((long long)sp >= (long long)PHYS_TO_XKPHYS(0, 0) &&
+-- 
+2.25.0
+
