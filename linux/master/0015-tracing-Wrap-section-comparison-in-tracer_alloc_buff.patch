@@ -1,0 +1,41 @@
+From e101bb5538ea6ad2a65e015022c79b275b324eba Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Feb 2020 02:28:36 -0700
+Subject: [PATCH 15/25] tracing: Wrap section comparison in
+ tracer_alloc_buffers with COMPARE_SECTIONS
+
+Clang warns:
+
+../kernel/trace/trace.c:9335:33: warning: array comparison always
+evaluates to true [-Wtautological-compare]
+        if (__stop___trace_bprintk_fmt != __start___trace_bprintk_fmt)
+                                       ^
+1 warning generated.
+
+These are not true arrays, they are linker defined symbols, which are
+just addresses so there is not a real issue here. Use the
+COMPARE_SECTIONS macro to silence this warning by casting the linker
+defined symbols to unsigned long, which keeps the logic the same.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/765
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/trace/trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index c797a15a1fc7..e1f3b16e457b 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9332,7 +9332,7 @@ __init static int tracer_alloc_buffers(void)
+ 		goto out_free_buffer_mask;
+ 
+ 	/* Only allocate trace_printk buffers if a trace_printk exists */
+-	if (__stop___trace_bprintk_fmt != __start___trace_bprintk_fmt)
++	if (COMPARE_SECTIONS(__stop___trace_bprintk_fmt, !=, __start___trace_bprintk_fmt))
+ 		/* Must be called before global_trace.buffer is allocated */
+ 		trace_printk_init_buffers();
+ 
+-- 
+2.25.0
+

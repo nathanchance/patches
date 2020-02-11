@@ -1,0 +1,48 @@
+From ebec97cd638a7409908e711303059028dcfebb24 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Feb 2020 03:25:35 -0700
+Subject: [PATCH 10/25] MIPS: Do not use register as a local variable in
+ run_uncached
+
+Clang warns:
+
+arch/mips/lib/uncached.c:45:6: warning: variable 'sp' is uninitialized
+when used here [-Wuninitialized]
+        if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
+            ^~
+arch/mips/lib/uncached.c:40:18: note: initialize the variable 'sp' to
+silence this warning
+        register long sp __asm__("$sp");
+                        ^
+                         = 0
+1 warning generated.
+
+Clang does not support using register variables locally, they must be
+used globally. See commit fe92da0f355e ("MIPS: Changed
+current_thread_info() to an equivalent supported by both clang and
+GCC") for another instance of this.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/606
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/mips/lib/uncached.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/mips/lib/uncached.c b/arch/mips/lib/uncached.c
+index 09d5deea747f..34c8d73e8837 100644
+--- a/arch/mips/lib/uncached.c
++++ b/arch/mips/lib/uncached.c
+@@ -35,9 +35,9 @@
+  * values, so we can avoid sharing the same stack area between a cached
+  * and the uncached mode.
+  */
++register long sp __asm__("$sp");
+ unsigned long run_uncached(void *func)
+ {
+-	register long sp __asm__("$sp");
+ 	register long ret __asm__("$2");
+ 	long lfunc = (long)func, ufunc;
+ 	long usp;
+-- 
+2.25.0
+

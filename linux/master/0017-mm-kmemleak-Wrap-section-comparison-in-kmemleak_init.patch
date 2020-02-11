@@ -1,0 +1,46 @@
+From b267cb935b4f497a1efe44351677c170c38a4e67 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Feb 2020 02:32:55 -0700
+Subject: [PATCH 17/25] mm: kmemleak: Wrap section comparison in kmemleak_init
+ with COMPARE_SECTIONS
+
+Clang warns:
+
+../mm/kmemleak.c:1950:28: warning: array comparison always evaluates to
+a constant [-Wtautological-compare]
+        if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
+                                  ^
+../mm/kmemleak.c:1950:60: warning: array comparison always evaluates to
+a constant [-Wtautological-compare]
+        if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
+                                                                  ^
+2 warnings generated.
+
+These are not true arrays, they are linker defined symbols, which are
+just addresses so there is not a real issue here. Use the
+COMPARE_SECTIONS macro to silence this warning by casting the linker
+defined symbols to unsigned long, which keeps the logic the same.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/765
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ mm/kmemleak.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index 3a4259eeb5a0..ad887bc81382 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1947,7 +1947,8 @@ void __init kmemleak_init(void)
+ 	create_object((unsigned long)__bss_start, __bss_stop - __bss_start,
+ 		      KMEMLEAK_GREY, GFP_ATOMIC);
+ 	/* only register .data..ro_after_init if not within .data */
+-	if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
++	if (COMPARE_SECTIONS(__start_ro_after_init, <, _sdata) ||
++	    COMPARE_SECTIONS(__end_ro_after_init, >, _edata))
+ 		create_object((unsigned long)__start_ro_after_init,
+ 			      __end_ro_after_init - __start_ro_after_init,
+ 			      KMEMLEAK_GREY, GFP_ATOMIC);
+-- 
+2.25.0
+

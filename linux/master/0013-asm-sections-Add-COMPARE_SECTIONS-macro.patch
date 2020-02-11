@@ -1,0 +1,53 @@
+From a8cd561982b439e9685e29b4850748c88a3a8827 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 11 Feb 2020 02:17:51 -0700
+Subject: [PATCH 13/25] asm/sections: Add COMPARE_SECTIONS macro
+
+When building with clang's -Wtautological-compare, there are a few
+warnings around the comparison of section boundaries, which are linker
+defined symbols and just contain an address. Clang says that these
+comparisons always evaluate to a constant, which is expected and
+reasonable since we just care about its boolean value. The kernel does
+this to figure out how exactly it was laid out during link time so that
+it can make certain run time decisions without hard coding them via
+preprocessor macros.
+
+These comparisons always evaluate the way that the kernel wants (done by
+comparing a Clang built kernel to a GCC built kernel). As a result, this
+warning should be silenced in these particular instances so that
+-Wtautological-compare can be enabled for the kernel globally since it
+brings several useful warnings within its group.
+
+The warnings can be silenced by casting the linked defined symbols to
+unsigned long (normally uintptr_t but the kernel typedef's uintptr_t to
+unsigned long and some kernel developers prefer unsigned long) to make
+them purely numeric comparisons, which will be converted to a boolean
+without any warning from Clang. The casting is done within a macro so
+that it can be documented why this casting happens, rather than
+sprinkling random casts in the kernel.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/765
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/asm-generic/sections.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/include/asm-generic/sections.h b/include/asm-generic/sections.h
+index d1779d442aa5..e1f3095a50c1 100644
+--- a/include/asm-generic/sections.h
++++ b/include/asm-generic/sections.h
+@@ -169,4 +169,11 @@ static inline bool is_kernel_rodata(unsigned long addr)
+ 	       addr < (unsigned long)__end_rodata;
+ }
+ 
++/*
++ * Comparing section boundaries trips clang's -Wtautological-compare
++ * This silences that warning by making the comparisons purely numeric
++ */
++#define COMPARE_SECTIONS(section_one, op, section_two) \
++	((unsigned long)(section_one) op (unsigned long)(section_two))
++
+ #endif /* _ASM_GENERIC_SECTIONS_H_ */
+-- 
+2.25.0
+
