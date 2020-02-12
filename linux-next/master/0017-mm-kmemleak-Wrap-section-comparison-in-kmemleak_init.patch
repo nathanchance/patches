@@ -1,7 +1,7 @@
-From 5b7fae00159a8d562a5ea995b2c13a8286a95d89 Mon Sep 17 00:00:00 2001
+From b1345c1332732a58328cad2cb7a135b35ad22223 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:32:55 -0700
-Subject: [PATCH 17/25] mm: kmemleak: Wrap section comparison in kmemleak_init
+Subject: [PATCH 17/22] mm: kmemleak: Wrap section comparison in kmemleak_init
  with COMPARE_SECTIONS
 
 Clang warns:
