@@ -1,7 +1,7 @@
-From 901b790ab37f7af6794a6dc3bedabcea14aef1a7 Mon Sep 17 00:00:00 2001
+From be553d20bcc2eceb77d3d8de28c68da44fe0345d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:17:51 -0700
-Subject: [PATCH 13/25] asm/sections: Add COMPARE_SECTIONS macro
+Subject: [PATCH 14/26] asm/sections: Add COMPARE_SECTIONS macro
 
 When building with clang's -Wtautological-compare, there are a few
 warnings around the comparison of section boundaries, which are linker
