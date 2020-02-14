@@ -1,7 +1,7 @@
-From 2509b672abd4b20cde9f68587d265969f66290a7 Mon Sep 17 00:00:00 2001
+From b7aa5b1921ac7e6c6e691bdafe0e4e579e654671 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:31:11 -0700
-Subject: [PATCH 16/22] dynamic_debug: Wrap section comparison in
+Subject: [PATCH 16/24] dynamic_debug: Wrap section comparison in
  dynamic_debug_init with COMPARE_SECTIONS
 
 Clang warns:
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-index c60409138e13..a8b10e00daf5 100644
+index aae17d9522e5..c7350aa6e853 100644
 --- a/lib/dynamic_debug.c
 +++ b/lib/dynamic_debug.c
-@@ -1013,7 +1013,7 @@ static int __init dynamic_debug_init(void)
+@@ -1031,7 +1031,7 @@ static int __init dynamic_debug_init(void)
  	int n = 0, entries = 0, modct = 0;
  	int verbose_bytes = 0;
  

@@ -1,7 +1,7 @@
-From 5f356a0b7c308d4507e36fd4126bcd9aab93616d Mon Sep 17 00:00:00 2001
+From 9eb291aae4b5bd181c48b048319b5bcb0b38b285 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:48 +0100
-Subject: [PATCH 03/22] futex: mark futex_detect_cmpxchg() as 'noinline'
+Subject: [PATCH 03/24] futex: mark futex_detect_cmpxchg() as 'noinline'
 
 On 32-bit ARM, I got a link failure in futex_init() when building
 with clang in some random configurations:
