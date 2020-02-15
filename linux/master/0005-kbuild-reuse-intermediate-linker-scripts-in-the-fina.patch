@@ -1,4 +1,4 @@
-From 39180c55baae3b3001a12fd8a6c27610a724a784 Mon Sep 17 00:00:00 2001
+From 7daf920d1de6d4ade22d53c6544ffdbfa930d8a4 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
 Subject: [PATCH 05/26] kbuild: reuse intermediate linker scripts in the final
@@ -67,7 +67,7 @@ index a1730d42e5f3..f2184dfed087 100644
  $(obj)/lib-ksyms.o: $(lib-target) FORCE
  	$(call if_changed,export_list)
 diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 1919c311c149..8a205be3650e 100755
+index dd484e92752e..c959cba3d774 100755
 --- a/scripts/link-vmlinux.sh
 +++ b/scripts/link-vmlinux.sh
 @@ -62,6 +62,7 @@ vmlinux_link()
