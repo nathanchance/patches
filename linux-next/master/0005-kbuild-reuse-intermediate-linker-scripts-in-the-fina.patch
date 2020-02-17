@@ -1,7 +1,7 @@
 From 2d0e03fe39b9487a4df0ee16524dbe79a14aba27 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
-Subject: [PATCH 05/27] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 05/29] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -114,5 +114,5 @@ index dd484e92752e..c959cba3d774 100755
  			-lutil -lrt -lpthread
  		rm -f linux
 -- 
-2.25.0
+2.25.1
 

@@ -1,7 +1,7 @@
 From 9aceeb7e3354a51501037134aaf632a5f50cebba Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:32:55 -0700
-Subject: [PATCH 18/27] mm: kmemleak: Wrap section comparison in kmemleak_init
+Subject: [PATCH 18/29] mm: kmemleak: Wrap section comparison in kmemleak_init
  with COMPARE_SECTIONS
 
 Clang warns:
@@ -42,5 +42,5 @@ index aa6832432d6a..e27655526ba7 100644
  			      __end_ro_after_init - __start_ro_after_init,
  			      KMEMLEAK_GREY, GFP_ATOMIC);
 -- 
-2.25.0
+2.25.1
 

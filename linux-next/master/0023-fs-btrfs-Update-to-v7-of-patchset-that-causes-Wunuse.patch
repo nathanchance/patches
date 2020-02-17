@@ -1,7 +1,7 @@
 From 6d774a91ebe9309022e1c23117daa139d0ba7394 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 12 Feb 2020 10:18:42 -0700
-Subject: [PATCH 23/27] fs/btrfs: Update to v7 of patchset that causes
+Subject: [PATCH 23/29] fs/btrfs: Update to v7 of patchset that causes
  -Wunused-result
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -99,5 +99,5 @@ index 724aab8a39a5..7fa392f38262 100644
  			   u64 logical, u64 len);
  unsigned long btrfs_full_stripe_len(struct btrfs_fs_info *fs_info,
 -- 
-2.25.0
+2.25.1
 

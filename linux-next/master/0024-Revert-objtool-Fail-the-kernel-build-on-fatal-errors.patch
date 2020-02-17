@@ -1,7 +1,7 @@
 From 967cf687e9cf940eb642d60458869eabb0df6f4e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 12 Feb 2020 22:33:49 -0700
-Subject: [PATCH 24/27] Revert "objtool: Fail the kernel build on fatal errors"
+Subject: [PATCH 24/29] Revert "objtool: Fail the kernel build on fatal errors"
 
 Breaks clang. Revert while issue is being sorted out.
 
@@ -36,5 +36,5 @@ index 2d52a40e6cb9..0825f86c5122 100644
  	return 0;
  }
 -- 
-2.25.0
+2.25.1
 

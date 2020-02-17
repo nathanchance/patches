@@ -1,7 +1,7 @@
 From 8fa2150e342f672393c348a2236e89b77f61be6b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:34:43 -0700
-Subject: [PATCH 19/27] kbuild: Enable -Wtautological-compare
+Subject: [PATCH 19/29] kbuild: Enable -Wtautological-compare
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings that are useful
@@ -35,5 +35,5 @@ index da5b7596b65d..28cfce6a4c1d 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.25.0
+2.25.1
 

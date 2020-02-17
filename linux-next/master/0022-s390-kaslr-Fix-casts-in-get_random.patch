@@ -1,7 +1,7 @@
 From a56a308caf7eed586a4f13bbdce14f7a583b794b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 8 Feb 2020 07:04:50 -0700
-Subject: [PATCH 22/27] s390/kaslr: Fix casts in get_random
+Subject: [PATCH 22/29] s390/kaslr: Fix casts in get_random
 
 Clang warns:
 
@@ -40,5 +40,5 @@ index 5d12352545c5..5591243d673e 100644
  			memcpy(prng.parm_block, entropy, sizeof(entropy));
  		}
 -- 
-2.25.0
+2.25.1
 
