@@ -1,7 +1,7 @@
 From 4897d64e1e30690d5e27e6cdbfe7f57ea6f936b2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 Jan 2020 18:51:39 -0700
-Subject: [PATCH 20/29] ath11k: Silence clang -Wsometimes-uninitialized in
+Subject: [PATCH 20/30] ath11k: Silence clang -Wsometimes-uninitialized in
  ath11k_update_per_peer_stats_from_txcompl
 
 Clang warns a few times (trimmed for brevity):

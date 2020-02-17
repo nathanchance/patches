@@ -1,7 +1,7 @@
 From 53463b428981e29a7de198202f4ae8a9fbd2610f Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Tue, 4 Feb 2020 16:50:54 -0800
-Subject: [PATCH 21/29] powerpc/vdso32: mark __kernel_datapage_offset as
+Subject: [PATCH 21/30] powerpc/vdso32: mark __kernel_datapage_offset as
  STV_PROTECTED
 
 A PC-relative relocation (R_PPC_REL16_LO in this case) referencing a
