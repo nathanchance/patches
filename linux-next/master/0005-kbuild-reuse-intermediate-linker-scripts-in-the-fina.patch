@@ -1,4 +1,4 @@
-From a508afc45d357124c452a052f2347a3da47e4b33 Mon Sep 17 00:00:00 2001
+From 2d0e03fe39b9487a4df0ee16524dbe79a14aba27 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
 Subject: [PATCH 05/27] kbuild: reuse intermediate linker scripts in the final
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 216a07c1218e..caa293be7ab4 100644
+index bb53376ffb08..da5b7596b65d 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1033,6 +1033,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))

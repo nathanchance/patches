@@ -1,4 +1,4 @@
-From 433c707763fa9409b259201c6aab7e1801a7b140 Mon Sep 17 00:00:00 2001
+From 9aceeb7e3354a51501037134aaf632a5f50cebba Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:32:55 -0700
 Subject: [PATCH 18/27] mm: kmemleak: Wrap section comparison in kmemleak_init
@@ -28,10 +28,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mm/kmemleak.c b/mm/kmemleak.c
-index 3a4259eeb5a0..ad887bc81382 100644
+index aa6832432d6a..e27655526ba7 100644
 --- a/mm/kmemleak.c
 +++ b/mm/kmemleak.c
-@@ -1947,7 +1947,8 @@ void __init kmemleak_init(void)
+@@ -1952,7 +1952,8 @@ void __init kmemleak_init(void)
  	create_object((unsigned long)__bss_start, __bss_stop - __bss_start,
  		      KMEMLEAK_GREY, GFP_ATOMIC);
  	/* only register .data..ro_after_init if not within .data */
