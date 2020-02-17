@@ -1,7 +1,7 @@
 From 41ceaad156b198407cdb9a66e302a5df09fdf3f5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 17 Feb 2020 14:03:40 -0700
-Subject: [PATCH 28/30] MIPS: vdso: Wrap -mexplicit-relocs in cc-option
+Subject: [PATCH 28/31] MIPS: vdso: Wrap -mexplicit-relocs in cc-option
 
 Clang does not support this option and errors out:
 

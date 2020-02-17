@@ -1,7 +1,7 @@
 From eeade79ef71198cb3f3792bf2cb4105217710868 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 23:38:00 -0700
-Subject: [PATCH 26/30] s390/mm: Explicitly compare PAGE_DEFAULT_KEY against
+Subject: [PATCH 26/31] s390/mm: Explicitly compare PAGE_DEFAULT_KEY against
  zero in storage_key_init_range
 
 Clang warns:
