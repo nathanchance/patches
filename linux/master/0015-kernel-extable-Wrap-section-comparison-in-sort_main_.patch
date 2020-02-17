@@ -1,7 +1,7 @@
-From 6fd86b4f17f7ec4d5adb9c81b21c2cd9610417ea Mon Sep 17 00:00:00 2001
+From 8f99a064a5a140b7e2cf463e3d81bfaeff5e0ade Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:22:53 -0700
-Subject: [PATCH 15/26] kernel/extable: Wrap section comparison in
+Subject: [PATCH 15/25] kernel/extable: Wrap section comparison in
  sort_main_extable with COMPARE_SECTIONS
 
 Clang warns:
