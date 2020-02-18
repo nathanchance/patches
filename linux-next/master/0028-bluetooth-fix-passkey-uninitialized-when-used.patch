@@ -1,0 +1,37 @@
+From 929cf6f333e463e75001fb6c05ff08fbf895283d Mon Sep 17 00:00:00 2001
+From: Howard Chung <howardchung@google.com>
+Date: Tue, 18 Feb 2020 19:05:13 +0800
+Subject: [PATCH 28/28] bluetooth: fix passkey uninitialized when used
+
+This issue cause a warning here
+https://groups.google.com/forum/#!topic/clang-built-linux/kyRKCjRsGoU
+
+Signed-off-by: Howard Chung <howardchung@google.com>
+Link: https://lore.kernel.org/lkml/20200218190509.Bluez.v1.1.I04681c6e295c27088c0b4ed7bb9b187d1bb4ed19@changeid/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ net/bluetooth/smp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 50e0ac692ec4..fa40de69e487 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2179,10 +2179,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 		 */
+ 		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
+ 				 hcon->role)) {
++			/* Set passkey to 0. The value can be any number since
++			 * it'll be ignored anyway.
++			 */
+ 			err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst,
+ 							hcon->type,
+-							hcon->dst_type,
+-							passkey, 1);
++							hcon->dst_type, 0, 1);
+ 			if (err)
+ 				return SMP_UNSPECIFIED;
+ 			set_bit(SMP_FLAG_WAIT_USER, &smp->flags);
+-- 
+2.25.1
+
