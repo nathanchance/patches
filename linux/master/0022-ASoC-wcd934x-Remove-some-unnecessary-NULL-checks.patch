@@ -1,7 +1,7 @@
-From 693270227f703b3fba865eb3f8eef13bb1674a38 Mon Sep 17 00:00:00 2001
+From bd749ead0c2463127f127da83af27368065cc49a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 3 Feb 2020 22:55:10 -0700
-Subject: [PATCH 22/25] ASoC: wcd934x: Remove some unnecessary NULL checks
+Subject: [PATCH 22/26] ASoC: wcd934x: Remove some unnecessary NULL checks
 
 Clang warns:
 
@@ -59,5 +59,5 @@ index 158e878abd6c..e780ecd554d2 100644
  
  	return 0;
 -- 
-2.25.0
+2.25.1
 

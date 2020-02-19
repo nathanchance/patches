@@ -1,7 +1,7 @@
-From 59dcd4197d4c762a281a7bf5914a8e60119528aa Mon Sep 17 00:00:00 2001
+From f49871f2930f26ff8f63ff11f29e0c7b90e42076 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 11 Feb 2020 02:28:36 -0700
-Subject: [PATCH 16/25] tracing: Wrap section comparison in
+Date: Tue, 11 Feb 2020 03:10:40 -0700
+Subject: [PATCH 16/26] tracing: Wrap section comparison in
  tracer_alloc_buffers with COMPARE_SECTIONS
 
 Clang warns:
@@ -37,5 +37,5 @@ index c797a15a1fc7..e1f3b16e457b 100644
  		trace_printk_init_buffers();
  
 -- 
-2.25.0
+2.25.1
 

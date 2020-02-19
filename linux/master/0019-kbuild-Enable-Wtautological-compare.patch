@@ -1,11 +1,13 @@
-From 841033dd12ddd2e5b962f095e857378b36d08be1 Mon Sep 17 00:00:00 2001
+From eec5e83a2630401dd1cd526aec8466214a3c3bd8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 11 Feb 2020 02:34:43 -0700
-Subject: [PATCH 19/25] kbuild: Enable -Wtautological-compare
+Date: Tue, 11 Feb 2020 03:10:43 -0700
+Subject: [PATCH 19/26] kbuild: Enable -Wtautological-compare
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings that are useful
-for the kernel (see the Twitter link below).
+for the kernel (see clang's documentation below). Now that all of the
+major/noisy warnings have been fixed, enable -Wtautological-compare so
+that more issues can be caught at build time.
 
 -Wtautological-constant-out-of-range-compare is kept disabled because
 there are places in the kernel where a constant can change based on the
@@ -14,7 +16,6 @@ they are harmless so this warning is kept disabled.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/488
 Link: http://releases.llvm.org/9.0.0/tools/clang/docs/DiagnosticsReference.html#wtautological-compare
-Link: https://twitter.com/dvyukov/status/1186666563522445312
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  Makefile | 3 +--
@@ -35,5 +36,5 @@ index 08a5b316bd61..e9698bd93f04 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.25.0
+2.25.1
 

@@ -1,0 +1,38 @@
+From 5f963092062f2a0d0610adeb0462e750f74a8806 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 17 Feb 2020 13:42:50 -0700
+Subject: [PATCH 26/26] RDMA/core: Fix use of logical OR in get_new_pps
+
+Clang warns:
+
+../drivers/infiniband/core/security.c:351:41: warning: converting the
+enum constant to a boolean [-Wint-in-bool-context]
+        if (!(qp_attr_mask & (IB_QP_PKEY_INDEX || IB_QP_PORT)) && qp_pps) {
+                                               ^
+1 warning generated.
+
+A bitwise OR should have been used instead.
+
+Fixes: 1dd017882e01 ("RDMA/core: Fix protection fault in get_pkey_idx_qp_list")
+Link: https://github.com/ClangBuiltLinux/linux/issues/889
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/infiniband/core/security.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/infiniband/core/security.c b/drivers/infiniband/core/security.c
+index 2b4d80393bd0..b9a36ea244d4 100644
+--- a/drivers/infiniband/core/security.c
++++ b/drivers/infiniband/core/security.c
+@@ -348,7 +348,7 @@ static struct ib_ports_pkeys *get_new_pps(const struct ib_qp *qp,
+ 	if ((qp_attr_mask & IB_QP_PKEY_INDEX) && (qp_attr_mask & IB_QP_PORT))
+ 		new_pps->main.state = IB_PORT_PKEY_VALID;
+ 
+-	if (!(qp_attr_mask & (IB_QP_PKEY_INDEX || IB_QP_PORT)) && qp_pps) {
++	if (!(qp_attr_mask & (IB_QP_PKEY_INDEX | IB_QP_PORT)) && qp_pps) {
+ 		new_pps->main.port_num = qp_pps->main.port_num;
+ 		new_pps->main.pkey_index = qp_pps->main.pkey_index;
+ 		if (qp_pps->main.state != IB_PORT_PKEY_NOT_VALID)
+-- 
+2.25.1
+
