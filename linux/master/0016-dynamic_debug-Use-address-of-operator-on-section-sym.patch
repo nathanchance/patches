@@ -1,30 +1,31 @@
-From fbe073fbe0d846513be645793e17f8cc17592144 Mon Sep 17 00:00:00 2001
+From 23df84ba342ea478cd6ac28e6b33b5ee1695adec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 11 Feb 2020 03:10:41 -0700
-Subject: [PATCH 17/26] dynamic_debug: Wrap section comparison in
- dynamic_debug_init with COMPARE_SECTIONS
+Date: Wed, 19 Feb 2020 13:41:46 -0700
+Subject: [PATCH 16/25] dynamic_debug: Use address-of operator on section
+ symbols
 
 Clang warns:
 
-../lib/dynamic_debug.c:1016:24: warning: array comparison always
+../lib/dynamic_debug.c:1034:24: warning: array comparison always
 evaluates to false [-Wtautological-compare]
         if (__start___verbose == __stop___verbose) {
                               ^
 1 warning generated.
 
 These are not true arrays, they are linker defined symbols, which are
-just addresses so there is not a real issue here. Use the
-COMPARE_SECTIONS macro to silence this warning by casting the linker
-defined symbols to unsigned long, which keeps the logic the same.
+just addresses. Using the address of operator silences the warning and
+does not change the resulting assembly with either clang/ld.lld or
+gcc/ld (tested with diff + objdump -Dr).
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/765
+Link: https://github.com/ClangBuiltLinux/linux/issues/894
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  lib/dynamic_debug.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-index c60409138e13..a8b10e00daf5 100644
+index c60409138e13..74f9fc319168 100644
 --- a/lib/dynamic_debug.c
 +++ b/lib/dynamic_debug.c
 @@ -1013,7 +1013,7 @@ static int __init dynamic_debug_init(void)
@@ -32,7 +33,7 @@ index c60409138e13..a8b10e00daf5 100644
  	int verbose_bytes = 0;
  
 -	if (__start___verbose == __stop___verbose) {
-+	if (COMPARE_SECTIONS(__start___verbose, ==, __stop___verbose)) {
++	if (&__start___verbose == &__stop___verbose) {
  		pr_warn("_ddebug table is empty in a CONFIG_DYNAMIC_DEBUG build\n");
  		return 1;
  	}
