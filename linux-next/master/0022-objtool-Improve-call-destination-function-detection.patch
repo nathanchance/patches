@@ -1,7 +1,7 @@
-From 30b40040bed3ae8883ecdb36e24b39fca686e2d7 Mon Sep 17 00:00:00 2001
+From 5eea57469e7fd5c17a1a9574f7fd937f99ea01d7 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@redhat.com>
 Date: Mon, 17 Feb 2020 21:41:54 -0600
-Subject: [PATCH 23/26] objtool: Improve call destination function detection
+Subject: [PATCH 22/24] objtool: Improve call destination function detection
 
 A recent clang change, combined with a binutils bug, can trigger a
 situation where a ".Lprintk$local" STT_NOTYPE symbol gets created at the

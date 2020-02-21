@@ -1,10 +1,20 @@
-From 64c89d559ec77dcd5d27823c10b2d36fee0307c0 Mon Sep 17 00:00:00 2001
+From b63f9352b2a09fdb96aa6dae811dec574bbf5d79 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 13:50:21 -0700
-Subject: [PATCH 17/26] mm: kmemleak: Use address-of operator on section
+Subject: [PATCH 16/24] mm: kmemleak: Use address-of operator on section
  symbols
 
 Clang warns:
+
+../mm/kmemleak.c:1955:28: warning: array comparison always evaluates to
+a constant [-Wtautological-compare]
+        if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
+                                  ^
+../mm/kmemleak.c:1955:60: warning: array comparison always evaluates to
+a constant [-Wtautological-compare]
+        if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
+                                                                  ^
+2 warnings generated.
 
 These are not true arrays, they are linker defined symbols, which are
 just addresses. Using the address of operator silences the warning and
