@@ -1,0 +1,33 @@
+From cffee186b27ae4be15f77a387e068651853a0584 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Feb 2020 22:10:54 -0700
+Subject: [PATCH 26/26] Revert "x86/boot/compressed: Remove unnecessary
+ sections from bzImage"
+
+This breaks linking with ld.lld.
+
+This reverts commit e11831d0ada3efc7f9268f35c80257f7e1b1dd0c.
+
+Link: https://lore.kernel.org/lkml/20200222050845.GA19912@ubuntu-m2-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/compressed/vmlinux.lds.S | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
+index 12a20603d92e..508cfa6828c5 100644
+--- a/arch/x86/boot/compressed/vmlinux.lds.S
++++ b/arch/x86/boot/compressed/vmlinux.lds.S
+@@ -73,9 +73,4 @@ SECTIONS
+ #endif
+ 	. = ALIGN(PAGE_SIZE);	/* keep ZO size page aligned */
+ 	_end = .;
+-
+-	/* Discard all remaining sections */
+-	/DISCARD/ : {
+-		*(*)
+-	}
+ }
+-- 
+2.25.1
+

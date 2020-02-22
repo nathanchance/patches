@@ -1,7 +1,7 @@
 From 5b6bfe6a4a563811a9bd56d060cffa1a60820a25 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@redhat.com>
 Date: Mon, 17 Feb 2020 21:41:53 -0600
-Subject: [PATCH 21/25] objtool: Fix clang switch table edge case
+Subject: [PATCH 21/26] objtool: Fix clang switch table edge case
 
 Clang has the ability to create a switch table which is not a jump
 table, but is rather a table of string pointers.  This confuses objtool,
