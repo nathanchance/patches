@@ -1,7 +1,7 @@
-From 594974863584bcb53cdde730dc3112981be5cb40 Mon Sep 17 00:00:00 2001
+From 50d16675e34b0639760b3cab2e815b446cdfcbd0 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Sun, 23 Feb 2020 14:37:14 -0500
-Subject: [PATCH 27/28] arch/x86: Use -fno-asynchronous-unwind-tables to
+Subject: [PATCH 22/23] arch/x86: Use -fno-asynchronous-unwind-tables to
  suppress .eh_frame sections
 
 While discussing a patch to discard .eh_frame from the compressed
