@@ -1,7 +1,7 @@
 From 9860d050f86b4a450d9abcecee79920918ff7cf9 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Sun, 23 Feb 2020 14:37:15 -0500
-Subject: [PATCH 22/22] arch/x86: Drop unneeded linker script discard of
+Subject: [PATCH 22/23] arch/x86: Drop unneeded linker script discard of
  .eh_frame
 
 Now that we don't generate .eh_frame sections for the files in setup.elf
