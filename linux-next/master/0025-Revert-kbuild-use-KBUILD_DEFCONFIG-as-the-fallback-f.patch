@@ -1,7 +1,7 @@
-From d3ddc0300d88e5fa3e0f5be09dad259cdb3cd863 Mon Sep 17 00:00:00 2001
+From 580f1a2b638b7072b6a68fc0c032970269168d69 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 22 Feb 2020 01:04:28 -0700
-Subject: [PATCH 27/27] Revert "kbuild: use KBUILD_DEFCONFIG as the fallback
+Subject: [PATCH 25/28] Revert "kbuild: use KBUILD_DEFCONFIG as the fallback
  for DEFCONFIG_LIST"
 
 Being dropped due to an infinite loop on arm64.

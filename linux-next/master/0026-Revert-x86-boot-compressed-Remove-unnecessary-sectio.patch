@@ -1,14 +1,14 @@
-From cffee186b27ae4be15f77a387e068651853a0584 Mon Sep 17 00:00:00 2001
+From 9d11a44c2ccfa7dde8fb69251c1b49ffe2ab658d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Fri, 21 Feb 2020 22:10:54 -0700
-Subject: [PATCH 26/27] Revert "x86/boot/compressed: Remove unnecessary
+Date: Sun, 23 Feb 2020 20:32:06 -0700
+Subject: [PATCH 26/28] Revert "x86/boot/compressed: Remove unnecessary
  sections from bzImage"
 
-This breaks linking with ld.lld.
+Arvind's new series will fix this in a different way.
 
 This reverts commit e11831d0ada3efc7f9268f35c80257f7e1b1dd0c.
 
-Link: https://lore.kernel.org/lkml/20200222050845.GA19912@ubuntu-m2-xlarge-x86/
+Link: https://github.com/ClangBuiltLinux/linux/issues/899
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/boot/compressed/vmlinux.lds.S | 5 -----

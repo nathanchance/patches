@@ -1,0 +1,62 @@
+From 10ced0a9434225c9bee1ed4ae8afeeebb7ce8e94 Mon Sep 17 00:00:00 2001
+From: Arvind Sankar <nivedita@alum.mit.edu>
+Date: Sun, 23 Feb 2020 14:37:15 -0500
+Subject: [PATCH 28/28] arch/x86: Drop unneeded linker script discard of
+ .eh_frame
+
+Now that we don't generate .eh_frame sections for the files in setup.elf
+and realmode.elf, the linker scripts don't need the /DISCARD/ any more.
+
+Also remove the one in the main kernel linker script, since there are no
+.eh_frame sections already.
+
+Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Link: https://lore.kernel.org/lkml/20200223193715.83729-3-nivedita@alum.mit.edu/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/setup.ld              | 1 -
+ arch/x86/kernel/vmlinux.lds.S       | 3 ---
+ arch/x86/realmode/rm/realmode.lds.S | 1 -
+ 3 files changed, 5 deletions(-)
+
+diff --git a/arch/x86/boot/setup.ld b/arch/x86/boot/setup.ld
+index 3da1c37c6dd5..24c95522f231 100644
+--- a/arch/x86/boot/setup.ld
++++ b/arch/x86/boot/setup.ld
+@@ -52,7 +52,6 @@ SECTIONS
+ 	_end = .;
+ 
+ 	/DISCARD/	: {
+-		*(.eh_frame)
+ 		*(.note*)
+ 	}
+ 
+diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
+index e3296aa028fe..54f7b9f46446 100644
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -412,9 +412,6 @@ SECTIONS
+ 	DWARF_DEBUG
+ 
+ 	DISCARDS
+-	/DISCARD/ : {
+-		*(.eh_frame)
+-	}
+ }
+ 
+ 
+diff --git a/arch/x86/realmode/rm/realmode.lds.S b/arch/x86/realmode/rm/realmode.lds.S
+index 64d135d1ee63..63aa51875ba0 100644
+--- a/arch/x86/realmode/rm/realmode.lds.S
++++ b/arch/x86/realmode/rm/realmode.lds.S
+@@ -71,7 +71,6 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.note*)
+ 		*(.debug*)
+-		*(.eh_frame*)
+ 	}
+ 
+ #include "pasyms.h"
+-- 
+2.25.1
+

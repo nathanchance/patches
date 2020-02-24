@@ -1,0 +1,86 @@
+From 594974863584bcb53cdde730dc3112981be5cb40 Mon Sep 17 00:00:00 2001
+From: Arvind Sankar <nivedita@alum.mit.edu>
+Date: Sun, 23 Feb 2020 14:37:14 -0500
+Subject: [PATCH 27/28] arch/x86: Use -fno-asynchronous-unwind-tables to
+ suppress .eh_frame sections
+
+While discussing a patch to discard .eh_frame from the compressed
+vmlinux using the linker script, Fangrui Song pointed out [1] that these
+sections shouldn't exist in the first place because arch/x86/Makefile
+uses -fno-asynchronous-unwind-tables.
+
+It turns out this is because the Makefiles used to build the compressed
+kernel redefine KBUILD_CFLAGS, dropping this flag.
+
+Add the flag to the Makefile for the compressed kernel, as well as the
+EFI stub Makefile to fix this.
+
+Also add the flag to boot/Makefile and realmode/rm/Makefile so that the
+kernel's boot code (boot/setup.elf) and realmode trampoline
+(realmode/rm/realmode.elf) won't be compiled with .eh_frame sections,
+since their linker scripts also just discard it.
+
+Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Suggested-By: Fangrui Song <maskray@google.com>
+[1] https://lore.kernel.org/lkml/20200222185806.ywnqhfqmy67akfsa@google.com/
+Link: https://lore.kernel.org/lkml/20200223193715.83729-2-nivedita@alum.mit.edu/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/Makefile                | 1 +
+ arch/x86/boot/compressed/Makefile     | 1 +
+ arch/x86/realmode/rm/Makefile         | 1 +
+ drivers/firmware/efi/libstub/Makefile | 3 ++-
+ 4 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/boot/Makefile b/arch/x86/boot/Makefile
+index 11714c4e2631..7f0701b493a3 100644
+--- a/arch/x86/boot/Makefile
++++ b/arch/x86/boot/Makefile
+@@ -70,6 +70,7 @@ clean-files += cpustr.h
+ KBUILD_CFLAGS	:= $(REALMODE_CFLAGS) -D_SETUP
+ KBUILD_AFLAGS	:= $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ KBUILD_CFLAGS	+= $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
++KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
+ GCOV_PROFILE := n
+ UBSAN_SANITIZE := n
+ 
+diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
+index 125b92eae6c9..a663f5c40df9 100644
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -41,6 +41,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
+ KBUILD_CFLAGS += -Wno-pointer-sign
+ KBUILD_CFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
++KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
+ 
+ KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ GCOV_PROFILE := n
+diff --git a/arch/x86/realmode/rm/Makefile b/arch/x86/realmode/rm/Makefile
+index 9a486d7821b8..83f1b6a56449 100644
+--- a/arch/x86/realmode/rm/Makefile
++++ b/arch/x86/realmode/rm/Makefile
+@@ -74,5 +74,6 @@ $(obj)/realmode.relocs: $(obj)/realmode.elf FORCE
+ KBUILD_CFLAGS	:= $(REALMODE_CFLAGS) -D_SETUP -D_WAKEUP \
+ 		   -I$(srctree)/arch/x86/boot
+ KBUILD_AFLAGS	:= $(KBUILD_CFLAGS) -D__ASSEMBLY__
++KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
+ GCOV_PROFILE := n
+ UBSAN_SANITIZE := n
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index 9cf9173f948e..c421ee7d724e 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -12,7 +12,8 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -O2 \
+ 				   -mno-mmx -mno-sse -fshort-wchar \
+ 				   -Wno-pointer-sign \
+ 				   $(call cc-disable-warning, address-of-packed-member) \
+-				   $(call cc-disable-warning, gnu)
++				   $(call cc-disable-warning, gnu) \
++				   -fno-asynchronous-unwind-tables
+ 
+ # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
+ # disable the stackleak plugin
+-- 
+2.25.1
+
