@@ -1,7 +1,7 @@
-From b46b2070510b6da56af6550715f6e52fe90658d6 Mon Sep 17 00:00:00 2001
+From a76039a30d1df9dc210b4e0caf2b8a2b760bf7c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 14:02:21 -0700
-Subject: [PATCH 13/23] tracing: Use address-of operator on section symbols
+Subject: [PATCH 13/24] tracing: Use address-of operator on section symbols
 
 Clang warns:
 
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index c797a15a1fc7..78727dd9a6f5 100644
+index 6b11e4e2150c..02be4ddd4ad5 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -9332,7 +9332,7 @@ __init static int tracer_alloc_buffers(void)
+@@ -9334,7 +9334,7 @@ __init static int tracer_alloc_buffers(void)
  		goto out_free_buffer_mask;
  
  	/* Only allocate trace_printk buffers if a trace_printk exists */
