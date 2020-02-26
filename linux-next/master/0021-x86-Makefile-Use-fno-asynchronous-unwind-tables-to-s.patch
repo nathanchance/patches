@@ -1,7 +1,7 @@
-From d361edf0b16467bc5a192d002ede8e96c4049143 Mon Sep 17 00:00:00 2001
+From 19f44be2c47708bfc5746e674ade426e6336d7b9 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
-Date: Sun, 23 Feb 2020 14:37:14 -0500
-Subject: [PATCH 21/24] arch/x86: Use -fno-asynchronous-unwind-tables to
+Date: Mon, 24 Feb 2020 18:21:28 -0500
+Subject: [PATCH 21/23] x86/*/Makefile: Use -fno-asynchronous-unwind-tables to
  suppress .eh_frame sections
 
 While discussing a patch to discard .eh_frame from the compressed
@@ -18,12 +18,19 @@ EFI stub Makefile to fix this.
 Also add the flag to boot/Makefile and realmode/rm/Makefile so that the
 kernel's boot code (boot/setup.elf) and realmode trampoline
 (realmode/rm/realmode.elf) won't be compiled with .eh_frame sections,
-since their linker scripts also just discard it.
+since their linker scripts also just discard them.
 
+  [1] https://lore.kernel.org/lkml/20200222185806.ywnqhfqmy67akfsa@google.com/
+
+Suggested-by: Fangrui Song <maskray@google.com>
 Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
-Suggested-By: Fangrui Song <maskray@google.com>
-[1] https://lore.kernel.org/lkml/20200222185806.ywnqhfqmy67akfsa@google.com/
-Link: https://lore.kernel.org/lkml/20200223193715.83729-2-nivedita@alum.mit.edu/
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lkml.kernel.org/r/20200224232129.597160-2-nivedita@alum.mit.edu
+Link: https://git.kernel.org/tip/003602ad5516e59940de42e44c8d8033387bb363
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/boot/Makefile                | 1 +

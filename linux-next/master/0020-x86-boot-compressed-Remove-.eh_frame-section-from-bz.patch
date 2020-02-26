@@ -1,0 +1,53 @@
+From 0920f3af80cedff045417dffd778037a57004706 Mon Sep 17 00:00:00 2001
+From: Arvind Sankar <nivedita@alum.mit.edu>
+Date: Thu, 9 Jan 2020 10:02:18 -0500
+Subject: [PATCH 20/23] x86/boot/compressed: Remove .eh_frame section from
+ bzImage
+
+Discarding unnecessary sections with "*(*)" (see thread at Link: below)
+works fine with the bfd linker but fails with lld:
+
+  $ make -j$(nproc) -s CC=clang LD=ld.lld O=out.x86_64 distclean defconfig bzImage
+  ld.lld: error: discarding .shstrtab section is not allowed
+
+lld tries to also discard essential sections like .shstrtab, .symtab and
+.strtab, which results in the link failing since .shstrtab is required
+by the ELF specification: the e_shstrndx field in the ELF header is the
+index of .shstrtab, and each section in the section table is required to
+have an sh_name that points into the .shstrtab.
+
+.symtab and .strtab are also necessary to generate the zoffset.h file
+for the bzImage header.
+
+Since the only sizeable section that can be discarded is .eh_frame,
+restrict the discard to only .eh_frame to be safe.
+
+ [ bp: Flesh out commit message and replace offending commit with this one. ]
+
+Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lkml.kernel.org/r/20200109150218.16544-2-nivedita@alum.mit.edu
+Link: https://git.kernel.org/tip/0eea39a234dc52063d14541fabcb2c64516a2328
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/compressed/vmlinux.lds.S | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
+index 508cfa6828c5..469dcf800a2c 100644
+--- a/arch/x86/boot/compressed/vmlinux.lds.S
++++ b/arch/x86/boot/compressed/vmlinux.lds.S
+@@ -73,4 +73,9 @@ SECTIONS
+ #endif
+ 	. = ALIGN(PAGE_SIZE);	/* keep ZO size page aligned */
+ 	_end = .;
++
++	/* Discard .eh_frame to save some space */
++	/DISCARD/ : {
++		*(.eh_frame)
++	}
+ }
+-- 
+2.25.1
+
