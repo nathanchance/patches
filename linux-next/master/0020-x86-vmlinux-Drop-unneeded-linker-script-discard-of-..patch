@@ -1,0 +1,48 @@
+From b6297be3851dd5c30e5af9aae1fe84f68599e85d Mon Sep 17 00:00:00 2001
+From: Arvind Sankar <nivedita@alum.mit.edu>
+Date: Mon, 24 Feb 2020 18:21:29 -0500
+Subject: [PATCH 20/21] x86/vmlinux: Drop unneeded linker script discard of
+ .eh_frame
+
+Now that .eh_frame sections for the files in setup.elf and realmode.elf
+are not generated anymore, the linker scripts don't need the special
+output section name /DISCARD/ any more.
+
+Remove the one in the main kernel linker script as well, since there are
+no .eh_frame sections already, and fix up a comment referencing .eh_frame.
+
+Update the comment in asm/dwarf2.h referring to .eh_frame so it continues
+to make sense, as well as being more specific.
+
+ [ bp: Touch up commit message. ]
+
+Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lkml.kernel.org/r/20200224232129.597160-3-nivedita@alum.mit.edu
+Link: https://git.kernel.org/tip/6f8f0dc980028e98ae339876a8403edae4d20e39
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/compressed/vmlinux.lds.S | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
+index 469dcf800a2c..508cfa6828c5 100644
+--- a/arch/x86/boot/compressed/vmlinux.lds.S
++++ b/arch/x86/boot/compressed/vmlinux.lds.S
+@@ -73,9 +73,4 @@ SECTIONS
+ #endif
+ 	. = ALIGN(PAGE_SIZE);	/* keep ZO size page aligned */
+ 	_end = .;
+-
+-	/* Discard .eh_frame to save some space */
+-	/DISCARD/ : {
+-		*(.eh_frame)
+-	}
+ }
+-- 
+2.25.1
+
