@@ -1,4 +1,4 @@
-From d4f8ceb5c154e2ab6bb3e5b9a1e21e3688effc7c Mon Sep 17 00:00:00 2001
+From 5e9769c43a1bcb80e08572090bc9cf611f1f538c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 03:10:43 -0700
 Subject: [PATCH 17/22] kbuild: Enable -Wtautological-compare
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0750929f03e7..9592aa166603 100644
+index 32708ba5b6a2..bdeddc4a3aaa 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -742,8 +742,7 @@ ifdef CONFIG_CC_IS_CLANG
