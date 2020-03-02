@@ -1,4 +1,4 @@
-From 668701fa05f4398707eab999aa0d80e9f24e677b Mon Sep 17 00:00:00 2001
+From f3089c104c74c97478142704bed5f0ff70b52e3e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:08:06 -0700
 Subject: [PATCH 06/21] drm/i915: Avoid false -Wsometimes-uninitialized warning
@@ -16,16 +16,16 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index d53af93b919b..46329a9aeb70 100644
+index feccf29381aa..209c4a1cbab1 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1415,8 +1415,9 @@ static unsigned long local_clock_us(unsigned int *cpu)
+@@ -1430,8 +1430,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
-+	unsigned long local_clock = local_clock_us(&this_cpu);
++	unsigned long local_clock = local_clock_ns(&this_cpu);
  
--	if (time_after(local_clock_us(&this_cpu), timeout))
+-	if (time_after(local_clock_ns(&this_cpu), timeout))
 +	if (time_after(local_clock, timeout))
  		return true;
  
