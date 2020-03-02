@@ -1,0 +1,46 @@
+From 3f008937ffc3b44d2b4b6f949b29c8876a888a8d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 2 Mar 2020 15:36:23 -0700
+Subject: [PATCH 22/23] drm/amd/display: Remove pointless NULL checks in
+ dmub_psr_copy_settings
+
+Clang warns:
+
+drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dmub_psr.c:147:31: warning:
+address of 'pipe_ctx->plane_res' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (!pipe_ctx || !&pipe_ctx->plane_res || !&pipe_ctx->stream_res)
+                         ~ ~~~~~~~~~~^~~~~~~~~
+drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dmub_psr.c:147:56: warning:
+address of 'pipe_ctx->stream_res' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (!pipe_ctx || !&pipe_ctx->plane_res || !&pipe_ctx->stream_res)
+                                                  ~ ~~~~~~~~~~^~~~~~~~~~
+2 warnings generated.
+
+As long as pipe_ctx is not NULL, the address of members in this struct
+cannot be NULL, which means these checks will always evaluate to false.
+
+Fixes: 4c1a1335dfe0 ("drm/amd/display: Driverside changes to support PSR in DMCUB")
+Link: https://github.com/ClangBuiltLinux/linux/issues/915
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
+index 2c932c29f1f9..a9e1c01e9d9b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
+@@ -144,7 +144,7 @@ static bool dmub_psr_copy_settings(struct dmub_psr *dmub,
+ 		}
+ 	}
+ 
+-	if (!pipe_ctx || !&pipe_ctx->plane_res || !&pipe_ctx->stream_res)
++	if (!pipe_ctx)
+ 		return false;
+ 
+ 	// First, set the psr version
+-- 
+2.25.1
+
