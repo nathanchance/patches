@@ -1,0 +1,84 @@
+From f24944b1339031715b7e73c775bd4f305e7d367d Mon Sep 17 00:00:00 2001
+From: Jens Axboe <axboe@kernel.dk>
+Date: Mon, 2 Mar 2020 19:59:31 -0700
+Subject: [PATCH 26/26] io_uring: fix 32-bit pointer cast warnings
+
+Stephen reports:
+
+After merging the block tree, today's linux-next build (arm
+multi_v7_defconfig) produced these warnings:
+
+fs/io_uring.c: In function 'io_put_kbuf':
+fs/io_uring.c:1651:27: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 1651 |  struct io_buffer *kbuf = (struct io_buffer *) req->rw.addr;
+      |                           ^
+fs/io_uring.c: In function 'io_rw_buffer_select':
+fs/io_uring.c:2209:27: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 2209 |  struct io_buffer *kbuf = (struct io_buffer *) req->rw.addr;
+      |                           ^
+fs/io_uring.c:2216:17: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 2216 |  req->rw.addr = (u64) kbuf;
+      |                 ^
+fs/io_uring.c: In function 'io_cleanup_req':
+fs/io_uring.c:4897:10: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 4897 |    kfree((void *)req->rw.addr);
+      |          ^
+
+Fix these by casting to/from unsigned long first.
+
+Fixes: 7efcbb97deab ("io_uring: support buffer selection for OP_READ and OP_RECV")
+Fixes: 8cab19f460b6 ("io_uring: add IOSQE_BUFFER_SELECT support for IORING_OP_READV")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://git.kernel.org/axboe/linux-block/c/6489632c286167b3211ecf0cd6c2ab084de97780
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/io_uring.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/fs/io_uring.c b/fs/io_uring.c
+index b7c178f9a1a8..f55522822a39 100644
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -1648,9 +1648,10 @@ static inline bool io_req_multi_free(struct req_batch *rb, struct io_kiocb *req)
+ 
+ static int io_put_kbuf(struct io_kiocb *req)
+ {
+-	struct io_buffer *kbuf = (struct io_buffer *) req->rw.addr;
++	struct io_buffer *kbuf;
+ 	int cflags;
+ 
++	kbuf = (struct io_buffer *) (unsigned long) req->rw.addr;
+ 	cflags = kbuf->bid << IORING_CQE_BUFFER_SHIFT;
+ 	cflags |= IORING_CQE_F_BUFFER;
+ 	req->rw.addr = 0;
+@@ -2206,14 +2207,15 @@ static struct io_buffer *io_buffer_select(struct io_kiocb *req, int gid,
+ static void __user *io_rw_buffer_select(struct io_kiocb *req, size_t *len,
+ 					bool needs_lock)
+ {
+-	struct io_buffer *kbuf = (struct io_buffer *) req->rw.addr;
++	struct io_buffer *kbuf;
+ 	int gid;
+ 
++	kbuf = (struct io_buffer *) (unsigned long) req->rw.addr;
+ 	gid = (int) (unsigned long) req->rw.kiocb.private;
+ 	kbuf = io_buffer_select(req, gid, kbuf, needs_lock);
+ 	if (IS_ERR(kbuf))
+ 		return kbuf;
+-	req->rw.addr = (u64) kbuf;
++	req->rw.addr = (u64) (unsigned long) kbuf;
+ 	if (*len > kbuf->len)
+ 		*len = kbuf->len;
+ 	req->flags |= REQ_F_BUFFER_SELECTED;
+@@ -4894,7 +4896,7 @@ static void io_cleanup_req(struct io_kiocb *req)
+ 	case IORING_OP_WRITE_FIXED:
+ 	case IORING_OP_WRITE:
+ 		if (req->flags & REQ_F_BUFFER_SELECTED)
+-			kfree((void *)req->rw.addr);
++			kfree((void *)(unsigned long)req->rw.addr);
+ 		if (io->rw.iov != io->rw.fast_iov)
+ 			kfree(io->rw.iov);
+ 		break;
+-- 
+2.25.1
+
