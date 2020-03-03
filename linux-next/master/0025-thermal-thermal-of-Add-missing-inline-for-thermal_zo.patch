@@ -1,0 +1,33 @@
+From 2e4190dfb6c8ba5bd9b9e6a857a013ad271fb1df Mon Sep 17 00:00:00 2001
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+Date: Tue, 3 Mar 2020 00:57:41 +0100
+Subject: [PATCH 25/25] thermal: thermal-of: Add missing inline for
+ thermal_zone_of_get_sensor_id()
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://git.kernel.org/thermal/c/558971a4c794b6edbdeca404bb0f0ed8d475d174
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/thermal.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+index 53e6f677761f..f7fe6f438fac 100644
+--- a/include/linux/thermal.h
++++ b/include/linux/thermal.h
+@@ -379,9 +379,9 @@ void devm_thermal_zone_of_sensor_unregister(struct device *dev,
+ 					    struct thermal_zone_device *tz);
+ #else
+ 
+-static int thermal_zone_of_get_sensor_id(struct device_node *tz_np,
+-					 struct device_node *sensor_np,
+-					 u32 *id)
++static inline int thermal_zone_of_get_sensor_id(struct device_node *tz_np,
++						struct device_node *sensor_np,
++						u32 *id)
+ {
+ 	return -ENOENT;
+ }
+-- 
+2.25.1
+
