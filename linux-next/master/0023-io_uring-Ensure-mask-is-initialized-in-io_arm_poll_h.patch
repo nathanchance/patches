@@ -1,7 +1,7 @@
 From 6781a9357b2be89ccd9b879f6269bdda05457a4d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 2 Mar 2020 16:00:08 -0700
-Subject: [PATCH 23/23] io_uring: Ensure mask is initialized in
+Subject: [PATCH 23/27] io_uring: Ensure mask is initialized in
  io_arm_poll_handler
 
 Clang warns:
