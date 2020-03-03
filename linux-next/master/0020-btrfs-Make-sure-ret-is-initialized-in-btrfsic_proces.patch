@@ -1,7 +1,7 @@
-From 3860b6124ecfb7bc13849b9e05f7e4931e27b306 Mon Sep 17 00:00:00 2001
+From 71dd1d3040785af91dda99eaa435caa75220fdab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 23 Feb 2020 21:44:39 -0700
-Subject: [PATCH 20/27] btrfs: Make sure ret is initialized in
+Subject: [PATCH 20/24] btrfs: Make sure ret is initialized in
  btrfsic_process_superblock_dev_mirror
 
 Clang warns:
