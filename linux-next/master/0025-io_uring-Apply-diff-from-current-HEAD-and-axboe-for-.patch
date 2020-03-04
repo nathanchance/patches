@@ -1,27 +1,18 @@
-From 09b2b6c30c3baf94c902c4cb5818483ac4d0e7b8 Mon Sep 17 00:00:00 2001
+From 3d8b895fa31cde38627d431d040944c1fd157b51 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 3 Mar 2020 22:24:36 -0700
+Date: Wed, 4 Mar 2020 12:26:34 -0700
 Subject: [PATCH 25/25] io_uring: Apply diff from current HEAD and
  axboe/for-next
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- fs/io_uring.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/io_uring.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/io_uring.c b/fs/io_uring.c
-index d7c42bd04c78..c3437e2e1dd4 100644
+index d7c42bd04c78..ec486c24e523 100644
 --- a/fs/io_uring.c
 +++ b/fs/io_uring.c
-@@ -2710,7 +2710,7 @@ static int io_splice_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 
- static bool io_splice_punt(struct file *file)
- {
--	if (get_pipe_info(file, true))
-+	if (get_pipe_info(file))
- 		return false;
- 	if (!io_file_supports_async(file))
- 		return true;
 @@ -3404,6 +3404,9 @@ static int io_close(struct io_kiocb *req, bool force_nonblock)
  
  	/* if the file has a flush method, be safe and punt to async */
