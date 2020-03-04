@@ -1,7 +1,7 @@
-From a68bc750d481a2090c26fa94f11fdd966a1ba5d7 Mon Sep 17 00:00:00 2001
+From 5963c789603e6f30ed61084bf05d9e88f2188b6a Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
-Subject: [PATCH 05/26] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 05/25] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -28,10 +28,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index c7b9462c7949..89fc2967d1da 100644
+index bbdb44916a0f..07fbce6e2c33 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1034,6 +1034,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
+@@ -1037,6 +1037,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
  net-y		:= $(patsubst %/, %/built-in.a, $(net-y))
  libs-y1		:= $(patsubst %/, %/lib.a, $(libs-y))
  libs-y2		:= $(patsubst %/, %/built-in.a, $(filter-out %.a, $(libs-y)))
@@ -39,7 +39,7 @@ index c7b9462c7949..89fc2967d1da 100644
  virt-y		:= $(patsubst %/, %/built-in.a, $(virt-y))
  
  # Externally visible symbols (used by link-vmlinux.sh)
-@@ -1041,11 +1042,12 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
+@@ -1044,11 +1045,12 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
  			      $(drivers-y) $(net-y) $(virt-y)
  export KBUILD_VMLINUX_LIBS := $(libs-y1)
  export KBUILD_LDS          := arch/$(SRCARCH)/kernel/vmlinux.lds

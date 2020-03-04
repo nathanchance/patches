@@ -1,0 +1,46 @@
+From 09b2b6c30c3baf94c902c4cb5818483ac4d0e7b8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 3 Mar 2020 22:24:36 -0700
+Subject: [PATCH 25/25] io_uring: Apply diff from current HEAD and
+ axboe/for-next
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/io_uring.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/fs/io_uring.c b/fs/io_uring.c
+index d7c42bd04c78..c3437e2e1dd4 100644
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -2710,7 +2710,7 @@ static int io_splice_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 
+ static bool io_splice_punt(struct file *file)
+ {
+-	if (get_pipe_info(file, true))
++	if (get_pipe_info(file))
+ 		return false;
+ 	if (!io_file_supports_async(file))
+ 		return true;
+@@ -3404,6 +3404,9 @@ static int io_close(struct io_kiocb *req, bool force_nonblock)
+ 
+ 	/* if the file has a flush method, be safe and punt to async */
+ 	if (req->close.put_file->f_op->flush && force_nonblock) {
++		/* submission ref will be dropped, take it for async */
++		refcount_inc(&req->refs);
++
+ 		req->work.func = io_close_finish;
+ 		/*
+ 		 * Do manual async queue here to avoid grabbing files - we don't
+@@ -3411,8 +3414,6 @@ static int io_close(struct io_kiocb *req, bool force_nonblock)
+ 		 * the file again and cause a double CQE entry for this request
+ 		 */
+ 		io_queue_async_work(req);
+-		/* submission ref will be dropped, take it for async */
+-		refcount_inc_not_zero(&req->refs);
+ 		return 0;
+ 	}
+ 
+-- 
+2.25.1
+
