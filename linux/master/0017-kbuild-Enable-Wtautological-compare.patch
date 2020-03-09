@@ -1,7 +1,7 @@
-From 69538e1743f5dd954601b8370ff30de4ed316ce7 Mon Sep 17 00:00:00 2001
+From e5632993766847912921423d40734be96b4a2f72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 03:10:43 -0700
-Subject: [PATCH 17/23] kbuild: Enable -Wtautological-compare
+Subject: [PATCH 17/22] kbuild: Enable -Wtautological-compare
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings that are useful
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 32708ba5b6a2..bdeddc4a3aaa 100644
+index 1fe45734fb49..2d9302858e19 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -742,8 +742,7 @@ ifdef CONFIG_CC_IS_CLANG

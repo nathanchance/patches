@@ -1,7 +1,7 @@
-From 38ee8c95fc8b54118a2abb5b48fcd061f22af60a Mon Sep 17 00:00:00 2001
+From 45a7ea00e66982f33f32212dcdafdf6d0ebc2766 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Mar 2020 00:21:05 -0700
-Subject: [PATCH 23/23] kbuild: Disable -Wpointer-to-enum-cast
+Subject: [PATCH 22/22] kbuild: Disable -Wpointer-to-enum-cast
 
 Clang's -Wpointer-to-int-cast deviates from GCC in that it warns when
 casting to enums. The kernel does this in certain places, such as device
@@ -25,7 +25,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index bdeddc4a3aaa..2bbedf0c43d7 100644
+index 2d9302858e19..17cd4d7a4522 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -747,6 +747,10 @@ KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
