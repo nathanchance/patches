@@ -1,0 +1,30 @@
+From b7cf5306b10c843d483928d3af431018eb492cca Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 10 Mar 2020 16:31:14 -0700
+Subject: [PATCH 08/31] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
+ no-op
+
+I build with -Werror and I do not care when syscalls are not defined on
+random architectures.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/checksyscalls.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
+index a18b47695f55..b3a6de55d18a 100755
+--- a/scripts/checksyscalls.sh
++++ b/scripts/checksyscalls.sh
+@@ -255,7 +255,7 @@ EOF
+ syscall_list() {
+     grep '^[0-9]' "$1" | sort -n |
+ 	while read nr abi name entry ; do
+-		echo "#if !defined(__NR_${name}) && !defined(__IGNORE_${name})"
++		echo "#if 0"
+ 		echo "#warning syscall ${name} not implemented"
+ 		echo "#endif"
+ 	done
+-- 
+2.26.0.rc1
+
