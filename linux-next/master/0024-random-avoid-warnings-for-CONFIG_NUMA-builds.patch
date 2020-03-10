@@ -1,0 +1,47 @@
+From d0c4ede704d2e35e0dfc8837b5ed1a728dedfaf2 Mon Sep 17 00:00:00 2001
+From: Mark Rutland <mark.rutland@arm.com>
+Date: Tue, 10 Mar 2020 12:09:12 +0000
+Subject: [PATCH 24/24] random: avoid warnings for !CONFIG_NUMA builds
+
+As crng_initialize_secondary() is only called by do_numa_crng_init(),
+and the latter is under ifdeffery for CONFIG_NUMA, when CONFIG_NUMA is
+not selected the compiler will warn that the former is unused:
+
+| drivers/char/random.c:820:13: warning: 'crng_initialize_secondary' defined but not used [-Wunused-function]
+|   820 | static void crng_initialize_secondary(struct crng_state *crng)
+|       |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Stephen reports that this happens for x86_64 noallconfig builds.
+
+We could move crng_initialize_secondary() and crng_init_try_arch() under
+the CONFIG_NUMA ifdeffery, but this has the unfortunate property of
+separating them from crng_initialize_primary() and
+crng_init_try_arch_early() respectively. Instead, let's mark
+crng_initialize_secondary() as __maybe_unused.
+
+Fixes: 5cbe0f13b51a ("random: split primary/secondary crng init paths")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/lkml/20200310121747.GA49602@lakrids.cambridge.arm.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/char/random.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/char/random.c b/drivers/char/random.c
+index f43f65c2195d..0d10e31fd342 100644
+--- a/drivers/char/random.c
++++ b/drivers/char/random.c
+@@ -817,7 +817,7 @@ static bool __init crng_init_try_arch_early(struct crng_state *crng)
+ 	return arch_init;
+ }
+ 
+-static void crng_initialize_secondary(struct crng_state *crng)
++static void __maybe_unused crng_initialize_secondary(struct crng_state *crng)
+ {
+ 	memcpy(&crng->state[0], "expand 32-byte k", 16);
+ 	_get_random_bytes(&crng->state[4], sizeof(__u32) * 12);
+-- 
+2.25.1
+
