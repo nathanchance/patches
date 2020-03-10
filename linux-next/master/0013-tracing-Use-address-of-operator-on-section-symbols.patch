@@ -1,7 +1,7 @@
 From 5bf9d5aede8635488365e05ae6589abf97716d17 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 14:02:21 -0700
-Subject: [PATCH 13/24] tracing: Use address-of operator on section symbols
+Subject: [PATCH 13/31] tracing: Use address-of operator on section symbols
 
 Clang warns:
 
@@ -37,5 +37,5 @@ index 6b11e4e2150c..02be4ddd4ad5 100644
  		trace_printk_init_buffers();
  
 -- 
-2.25.1
+2.26.0.rc1
 

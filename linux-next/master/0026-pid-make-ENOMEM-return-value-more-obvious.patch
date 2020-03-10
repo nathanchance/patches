@@ -1,0 +1,47 @@
+From 5c5bd35e44dd0ae0515d2980d373d9367652cb61 Mon Sep 17 00:00:00 2001
+From: Christian Brauner <christian.brauner@ubuntu.com>
+Date: Sun, 8 Mar 2020 14:29:17 +0100
+Subject: [PATCH 26/31] pid: make ENOMEM return value more obvious
+
+The alloc_pid() codepath used to be simpler. With the introducation of the
+ability to choose specific pids in 49cb2fc42ce4 ("fork: extend clone3() to
+support setting a PID") it got more complex. It hasn't been super obvious
+that ENOMEM is returned when the pid namespace init process/child subreaper
+of the pid namespace has died. As can be seen from multiple attempts to
+improve this see e.g. [1] and most recently [2].
+We regressed returning ENOMEM in [3] and [2] restored it. Let's add a
+comment on top explaining that this is historic and documented behavior and
+cannot easily be changed.
+
+[1]: 35f71bc0a09a ("fork: report pid reservation failure properly")
+[2]: b26ebfe12f34 ("pid: Fix error return value in some cases")
+[3]: 49cb2fc42ce4 ("fork: extend clone3() to support setting a PID")
+Signed-off-by: Christian Brauner <christian.brauner@ubuntu.com>
+Link: https://git.kernel.org/brauner/c/10dab84caf400f2f5f8b010ebb0c7c4272ec5093
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/pid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/kernel/pid.c b/kernel/pid.c
+index cf22d84ab1a8..d4e0622e8b85 100644
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -244,6 +244,14 @@ struct pid *alloc_pid(struct pid_namespace *ns, pid_t *set_tid,
+ 		tmp = tmp->parent;
+ 	}
+ 
++	/*
++	 * ENOMEM is not the most obvious choice especially for the case
++	 * where the child subreaper has already exited and the pid
++	 * namespace denies the creation of any new processes. But ENOMEM
++	 * is what we have exposed to userspace for a long time and it is
++	 * documented behavior for pid namespaces. So we can't easily
++	 * change it even if there were an error code better suited.
++	 */
+ 	retval = -ENOMEM;
+ 
+ 	get_pid_ns(ns);
+-- 
+2.26.0.rc1
+

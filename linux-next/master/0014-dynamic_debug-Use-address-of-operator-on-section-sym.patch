@@ -1,7 +1,7 @@
 From a80f14bdd44bc9ea1be1f7d6cbd3caa9ded1f8ee Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 13:41:46 -0700
-Subject: [PATCH 14/24] dynamic_debug: Use address-of operator on section
+Subject: [PATCH 14/31] dynamic_debug: Use address-of operator on section
  symbols
 
 Clang warns:
@@ -38,5 +38,5 @@ index aae17d9522e5..8f199f403ab5 100644
  		return 1;
  	}
 -- 
-2.25.1
+2.26.0.rc1
 

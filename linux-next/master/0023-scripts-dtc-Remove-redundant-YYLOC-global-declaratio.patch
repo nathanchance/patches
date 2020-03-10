@@ -1,7 +1,7 @@
 From c992993131e2ef55fcc37c93f9d05ab5fc0d44d2 Mon Sep 17 00:00:00 2001
 From: Dirk Mueller <dmueller@suse.com>
 Date: Tue, 14 Jan 2020 18:53:41 +0100
-Subject: [PATCH 23/24] scripts/dtc: Remove redundant YYLOC global declaration
+Subject: [PATCH 23/31] scripts/dtc: Remove redundant YYLOC global declaration
 
 gcc 10 will default to -fno-common, which causes this error at link
 time:
@@ -47,5 +47,5 @@ index 5c6c3fd557d7..b3b7270300de 100644
  
  /* CAUTION: this will stop working if we ever use yyless() or yyunput() */
 -- 
-2.25.1
+2.26.0.rc1
 

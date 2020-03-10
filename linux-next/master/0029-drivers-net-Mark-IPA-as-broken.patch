@@ -1,0 +1,26 @@
+From 4369af9df82ef346929eea3992cb99eea0e276ff Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 10 Mar 2020 14:31:51 -0700
+Subject: [PATCH 29/31] drivers/net: Mark IPA as broken
+
+Link: https://lore.kernel.org/lkml/20200310212938.GA17565@ubuntu-m2-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ipa/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ipa/Kconfig b/drivers/net/ipa/Kconfig
+index b8cb7cadbf75..207b42aa4c76 100644
+--- a/drivers/net/ipa/Kconfig
++++ b/drivers/net/ipa/Kconfig
+@@ -1,6 +1,6 @@
+ config QCOM_IPA
+ 	tristate "Qualcomm IPA support"
+-	depends on ARCH_QCOM && 64BIT && NET
++	depends on ARCH_QCOM && 64BIT && NET && BROKEN
+ 	select QCOM_QMI_HELPERS
+ 	select QCOM_MDT_LOADER
+ 	default QCOM_Q6V5_COMMON
+-- 
+2.26.0.rc1
+

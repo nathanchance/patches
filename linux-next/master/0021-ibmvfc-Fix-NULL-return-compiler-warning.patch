@@ -1,7 +1,7 @@
 From e3489836a9c67235acb2687052d8d11cd2e4dd4b Mon Sep 17 00:00:00 2001
 From: Brian King <brking@linux.vnet.ibm.com>
 Date: Mon, 2 Mar 2020 08:39:21 -0600
-Subject: [PATCH 21/24] ibmvfc: Fix NULL return compiler warning
+Subject: [PATCH 21/31] ibmvfc: Fix NULL return compiler warning
 
 Fix up a compiler warning introduced via 54b04c99d02e
 
@@ -27,5 +27,5 @@ index 84dd8c5145c8..7da9e060b270 100644
  	vhost->discovery_threads++;
  	evt = __ibmvfc_tgt_get_implicit_logout_evt(tgt,
 -- 
-2.25.1
+2.26.0.rc1
 

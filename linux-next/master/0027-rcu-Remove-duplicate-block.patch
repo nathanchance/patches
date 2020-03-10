@@ -1,0 +1,32 @@
+From c079a172fc72d1d4fb8d26a2895d133de485c124 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 10 Mar 2020 13:50:41 -0700
+Subject: [PATCH 27/31] rcu: Remove duplicate block
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/926
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/rcu/tasks.h | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index cd071b5d4274..4b0bd5071cb3 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -16,13 +16,6 @@
+ struct rcu_tasks;
+ typedef void (*rcu_tasks_gp_func_t)(struct rcu_tasks *rtp);
+ 
+-////////////////////////////////////////////////////////////////////////
+-//
+-// Generic data structures.
+-
+-struct rcu_tasks;
+-typedef void (*rcu_tasks_gp_func_t)(struct rcu_tasks *rtp);
+-
+ /**
+  * Definition for a Tasks-RCU-like mechanism.
+  * @cbs_head: Head of callback list.
+-- 
+2.26.0.rc1
+
