@@ -1,7 +1,7 @@
 From fa2634b1976922222f5e77971de978c1c01973eb Mon Sep 17 00:00:00 2001
 From: "H. Nikolaus Schaller" <hns@goldelico.com>
 Date: Fri, 6 Mar 2020 20:17:58 +0100
-Subject: [PATCH 24/25] nvmem: jz4780-efuse: fix build warnings on ARCH=x86_64
+Subject: [PATCH 24/26] nvmem: jz4780-efuse: fix build warnings on ARCH=x86_64
  or riscv
 
 kbuild-robot did find a type error in the min(a, b)
