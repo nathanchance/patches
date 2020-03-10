@@ -1,7 +1,7 @@
-From 25df9b20e22d29243b36cc39f209fed9e2678da6 Mon Sep 17 00:00:00 2001
+From 1fe9c449de88040c9d46888eea511e75cbf3ab3b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 2 Mar 2020 16:16:52 -0700
-Subject: [PATCH 21/26] random: Shuffle some functions into CONFIG_NUMA block
+Subject: [PATCH 21/24] random: Shuffle some functions into CONFIG_NUMA block
 
 Fixes: 5cbe0f13b51a ("random: split primary/secondary crng init paths")
 Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
