@@ -1,4 +1,4 @@
-From e5632993766847912921423d40734be96b4a2f72 Mon Sep 17 00:00:00 2001
+From 2965a912fec048e29c0f595f7a16e3d02e81d0b2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 03:10:43 -0700
 Subject: [PATCH 17/23] kbuild: Enable -Wtautological-compare
@@ -36,5 +36,5 @@ index 1fe45734fb49..2d9302858e19 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.25.1
+2.26.0.rc1
 

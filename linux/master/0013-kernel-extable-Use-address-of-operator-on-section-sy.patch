@@ -1,4 +1,4 @@
-From e2ff9e30384a38ea73103fea48ccf1726302db4a Mon Sep 17 00:00:00 2001
+From 41a992ed70369aa22e21942aba9595482a8fa42d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 13:17:43 -0700
 Subject: [PATCH 13/23] kernel/extable: Use address-of operator on section
@@ -39,5 +39,5 @@ index a0024f27d3a1..88f3251b05e3 100644
  		sort_extable(__start___ex_table, __stop___ex_table);
  	}
 -- 
-2.25.1
+2.26.0.rc1
 

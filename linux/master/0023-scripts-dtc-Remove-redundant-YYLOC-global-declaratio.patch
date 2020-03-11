@@ -1,4 +1,4 @@
-From 057cd84c7a6b93c453572171018f5d1fc7b9a17f Mon Sep 17 00:00:00 2001
+From 7eec78f78be31aa28f7bc3783fa73c08e751b999 Mon Sep 17 00:00:00 2001
 From: Dirk Mueller <dmueller@suse.com>
 Date: Tue, 14 Jan 2020 18:53:41 +0100
 Subject: [PATCH 23/23] scripts/dtc: Remove redundant YYLOC global declaration
@@ -47,5 +47,5 @@ index 5c6c3fd557d7..b3b7270300de 100644
  
  /* CAUTION: this will stop working if we ever use yyless() or yyunput() */
 -- 
-2.25.1
+2.26.0.rc1
 
