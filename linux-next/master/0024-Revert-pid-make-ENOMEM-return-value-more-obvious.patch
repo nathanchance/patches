@@ -1,7 +1,7 @@
-From e348d403c77a73c95be4ca9b68053c7a2a8950ce Mon Sep 17 00:00:00 2001
+From b23690539296e02d759e71a5eb825fb7b7887e4d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 10 Mar 2020 12:40:22 -0700
-Subject: [PATCH 25/32] Revert "pid: make ENOMEM return value more obvious"
+Subject: [PATCH 24/30] Revert "pid: make ENOMEM return value more obvious"
 
 Take the updated version of this patch to avoid a clang warning.
 
@@ -9,22 +9,13 @@ This reverts commit 8deb24dcb89cb390110d2ccac830a84d1ab5cee4.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- kernel/pid.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ kernel/pid.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/kernel/pid.c b/kernel/pid.c
-index ff6cd6786d10..cf22d84ab1a8 100644
+index d4e0622e8b85..cf22d84ab1a8 100644
 --- a/kernel/pid.c
 +++ b/kernel/pid.c
-@@ -162,7 +162,7 @@ struct pid *alloc_pid(struct pid_namespace *ns, pid_t *set_tid,
- 	int i, nr;
- 	struct pid_namespace *tmp;
- 	struct upid *upid;
--	int retval;
-+	int retval = -ENOMEM;
- 
- 	/*
- 	 * set_tid_size contains the size of the set_tid array. Starting at
 @@ -244,14 +244,6 @@ struct pid *alloc_pid(struct pid_namespace *ns, pid_t *set_tid,
  		tmp = tmp->parent;
  	}
