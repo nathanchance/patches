@@ -1,7 +1,7 @@
-From 9d8ade0a440f17ff0ef0302b8f90ce61ea9887d6 Mon Sep 17 00:00:00 2001
+From cbe78d3f36823bec92c4bdc635593b0014b6baf9 Mon Sep 17 00:00:00 2001
 From: Alex Elder <elder@linaro.org>
 Date: Tue, 10 Mar 2020 21:42:40 -0500
-Subject: [PATCH 27/30] bitfield.h: add FIELD_MAX() and field_max()
+Subject: [PATCH 27/29] bitfield.h: add FIELD_MAX() and field_max()
 
 Define FIELD_MAX(), which supplies the maximum value that can be
 represented by a field value.  Define field_max() as well, to go
