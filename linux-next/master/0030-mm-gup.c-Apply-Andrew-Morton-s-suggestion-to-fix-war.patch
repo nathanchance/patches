@@ -1,0 +1,80 @@
+From 8c25745c6508f2e33e4f617d3050eb335828441a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 12 Mar 2020 18:20:55 -0700
+Subject: [PATCH 30/30] mm/gup.c: Apply Andrew Morton's suggestion to fix
+ warning
+
+Link: https://lore.kernel.org/lkml/20200312173148.6647751b1ad538687563f652@linux-foundation.org/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ mm/gup.c | 46 ++++++++++++++++++++++++----------------------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
+
+diff --git a/mm/gup.c b/mm/gup.c
+index e8aaa40c35ea..0361a1dca77e 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -116,28 +116,6 @@ static __maybe_unused struct page *try_grab_compound_head(struct page *page,
+ 	return NULL;
+ }
+ 
+-static void put_compound_head(struct page *page, int refs, unsigned int flags)
+-{
+-	if (flags & FOLL_PIN) {
+-		mod_node_page_state(page_pgdat(page), NR_FOLL_PIN_RELEASED,
+-				    refs);
+-
+-		if (hpage_pincount_available(page))
+-			hpage_pincount_sub(page, refs);
+-		else
+-			refs *= GUP_PIN_COUNTING_BIAS;
+-	}
+-
+-	VM_BUG_ON_PAGE(page_ref_count(page) < refs, page);
+-	/*
+-	 * Calling put_page() for each ref is unnecessarily slow. Only the last
+-	 * ref needs a put_page().
+-	 */
+-	if (refs > 1)
+-		page_ref_sub(page, refs - 1);
+-	put_page(page);
+-}
+-
+ /**
+  * try_grab_page() - elevate a page's refcount by a flag-dependent amount
+  *
+@@ -2083,7 +2061,31 @@ EXPORT_SYMBOL(get_user_pages_unlocked);
+  * This code is based heavily on the PowerPC implementation by Nick Piggin.
+  */
+ #ifdef CONFIG_HAVE_FAST_GUP
++
++static void put_compound_head(struct page *page, int refs, unsigned int flags)
++{
++	if (flags & FOLL_PIN) {
++		mod_node_page_state(page_pgdat(page), NR_FOLL_PIN_RELEASED,
++				    refs);
++
++		if (hpage_pincount_available(page))
++			hpage_pincount_sub(page, refs);
++		else
++			refs *= GUP_PIN_COUNTING_BIAS;
++	}
++
++	VM_BUG_ON_PAGE(page_ref_count(page) < refs, page);
++	/*
++	 * Calling put_page() for each ref is unnecessarily slow. Only the last
++	 * ref needs a put_page().
++	 */
++	if (refs > 1)
++		page_ref_sub(page, refs - 1);
++	put_page(page);
++}
++
+ #ifdef CONFIG_GUP_GET_PTE_LOW_HIGH
++
+ /*
+  * WARNING: only to be used in the get_user_pages_fast() implementation.
+  *
+-- 
+2.26.0.rc1
+
