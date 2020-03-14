@@ -1,7 +1,7 @@
-From 9a886da321b7a9ad6947d4530f10b1ed60895674 Mon Sep 17 00:00:00 2001
+From f39fb08f78b3c352c5c0e47fe7531d266b51077c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 22:43:06 -0700
-Subject: [PATCH 12/32] drm/i915: Cast remain to unsigned long in
+Subject: [PATCH 12/27] drm/i915: Cast remain to unsigned long in
  eb_relocate_vma
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -39,7 +39,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 0893ce781a84..f2f8f0806cc1 100644
+index d3f4f28e9468..0d94d4f376a8 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 @@ -1415,7 +1415,7 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct eb_vma *ev)
