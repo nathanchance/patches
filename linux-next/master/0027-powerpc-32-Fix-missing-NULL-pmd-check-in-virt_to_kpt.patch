@@ -1,7 +1,7 @@
 From 63cf2d4d2169c9aab8f1d9776d8c8d2fef64b144 Mon Sep 17 00:00:00 2001
 From: Christophe Leroy <christophe.leroy@c-s.fr>
 Date: Sat, 7 Mar 2020 10:09:15 +0000
-Subject: [PATCH 27/28] powerpc/32: Fix missing NULL pmd check in
+Subject: [PATCH 27/29] powerpc/32: Fix missing NULL pmd check in
  virt_to_kpte()
 
 Commit 2efc7c085f05 ("powerpc/32: drop get_pteptr()"),

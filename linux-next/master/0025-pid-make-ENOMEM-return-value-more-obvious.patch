@@ -1,7 +1,7 @@
 From 03fa6242195f378e99925b44949d1fad647db99b Mon Sep 17 00:00:00 2001
 From: Christian Brauner <christian.brauner@ubuntu.com>
 Date: Sun, 8 Mar 2020 14:29:17 +0100
-Subject: [PATCH 25/28] pid: make ENOMEM return value more obvious
+Subject: [PATCH 25/29] pid: make ENOMEM return value more obvious
 
 The alloc_pid() codepath used to be simpler. With the introducation of the
 ability to choose specific pids in 49cb2fc42ce4 ("fork: extend clone3() to

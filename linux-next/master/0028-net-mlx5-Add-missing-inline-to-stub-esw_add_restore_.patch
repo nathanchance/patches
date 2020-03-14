@@ -1,7 +1,7 @@
 From fee26c057f2f59f6df3102616b663ab686fc9940 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 13 Mar 2020 20:37:51 -0700
-Subject: [PATCH 28/28] net/mlx5: Add missing inline to stub
+Subject: [PATCH 28/29] net/mlx5: Add missing inline to stub
  esw_add_restore_rule
 
 When CONFIG_MLX5_ESWITCH is unset, clang warns:
