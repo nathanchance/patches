@@ -1,7 +1,7 @@
 From a04a048e2ace7182ef3e6d3c65ff1eff7cc2a887 Mon Sep 17 00:00:00 2001
 From: afzal mohammed <afzal.mohd.ma@gmail.com>
 Date: Sat, 14 Mar 2020 13:43:12 +0530
-Subject: [PATCH 23/26] MIPS: pass non-NULL dev_id on shared request_irq()
+Subject: [PATCH 23/27] MIPS: pass non-NULL dev_id on shared request_irq()
 
 Recently all usages of setup_irq() was replaced by request_irq().
 request_irq() does a few sanity checks that were not done in

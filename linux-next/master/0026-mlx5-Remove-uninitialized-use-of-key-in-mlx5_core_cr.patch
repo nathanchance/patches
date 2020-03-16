@@ -1,7 +1,7 @@
 From 6af05f5b69c9b9106752d850eed6a78fd4942c24 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 16 Mar 2020 13:27:38 -0700
-Subject: [PATCH 26/26] mlx5: Remove uninitialized use of key in
+Subject: [PATCH 26/27] mlx5: Remove uninitialized use of key in
  mlx5_core_create_mkey
 
 Clang warns:
