@@ -1,7 +1,7 @@
-From 3a097ff8ec1438510ec2fe96cdac83b8041eb899 Mon Sep 17 00:00:00 2001
+From 24e064422be681e318915dab5e1bb5b42a5c54cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 13 Mar 2020 20:37:51 -0700
-Subject: [PATCH 26/27] net/mlx5: Add missing inline to stub
+Subject: [PATCH 25/26] net/mlx5: Add missing inline to stub
  esw_add_restore_rule
 
 When CONFIG_MLX5_ESWITCH is unset, clang warns:
@@ -22,10 +22,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 2e0417dd8ce3..470a16e63242 100644
+index 91b2aedcf52b..2318c1cfc434 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -666,7 +666,7 @@ static inline const u32 *mlx5_esw_query_functions(struct mlx5_core_dev *dev)
+@@ -677,7 +677,7 @@ static inline const u32 *mlx5_esw_query_functions(struct mlx5_core_dev *dev)
  
  static inline void mlx5_eswitch_update_num_of_vfs(struct mlx5_eswitch *esw, const int num_vfs) {}
  
