@@ -1,7 +1,7 @@
 From ec271a7297e8d92c7eabd90e793d7c64dcc11de3 Mon Sep 17 00:00:00 2001
 From: Mark Rutland <mark.rutland@arm.com>
 Date: Tue, 10 Mar 2020 12:09:12 +0000
-Subject: [PATCH 22/27] random: avoid warnings for !CONFIG_NUMA builds
+Subject: [PATCH 22/28] random: avoid warnings for !CONFIG_NUMA builds
 
 As crng_initialize_secondary() is only called by do_numa_crng_init(),
 and the latter is under ifdeffery for CONFIG_NUMA, when CONFIG_NUMA is

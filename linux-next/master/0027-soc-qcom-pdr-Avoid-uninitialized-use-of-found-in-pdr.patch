@@ -1,7 +1,7 @@
 From 5950ef4335e13855b65f54d9673e2a10deb3f4a2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 16 Mar 2020 13:43:32 -0700
-Subject: [PATCH 27/27] soc: qcom: pdr: Avoid uninitialized use of found in
+Subject: [PATCH 27/28] soc: qcom: pdr: Avoid uninitialized use of found in
  pdr_indication_cb
 
 Clang warns:
