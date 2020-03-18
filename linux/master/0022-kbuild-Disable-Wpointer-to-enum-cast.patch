@@ -1,4 +1,4 @@
-From a8e765fe4505c70b302159d87cdbe8afc608fcd3 Mon Sep 17 00:00:00 2001
+From 02bd1f40b60e78a88ee51acff52ec206b5269579 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Mar 2020 00:21:05 -0700
 Subject: [PATCH 22/23] kbuild: Disable -Wpointer-to-enum-cast
@@ -25,7 +25,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 2d9302858e19..17cd4d7a4522 100644
+index 92f5efd4ccbe..9c33cc277b02 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -747,6 +747,10 @@ KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare

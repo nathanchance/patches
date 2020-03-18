@@ -1,4 +1,4 @@
-From 7f1c63d40655bc252ef93c24c51362a7a0c2ac3a Mon Sep 17 00:00:00 2001
+From 46474a818f1596163aea214f060cfebfb2ae7ae2 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:48 +0100
 Subject: [PATCH 03/23] futex: mark futex_detect_cmpxchg() as 'noinline'
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/futex.c b/kernel/futex.c
-index 0cf84c8664f2..68966aabe7b1 100644
+index 82dfacb3250e..083617d759e3 100644
 --- a/kernel/futex.c
 +++ b/kernel/futex.c
-@@ -4132,7 +4132,7 @@ SYSCALL_DEFINE6(futex_time32, u32 __user *, uaddr, int, op, u32, val,
+@@ -4149,7 +4149,7 @@ SYSCALL_DEFINE6(futex_time32, u32 __user *, uaddr, int, op, u32, val,
  }
  #endif /* CONFIG_COMPAT_32BIT_TIME */
  
