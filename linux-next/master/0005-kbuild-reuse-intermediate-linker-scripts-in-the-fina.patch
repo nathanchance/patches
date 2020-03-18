@@ -1,7 +1,7 @@
-From 6c8a91be3e08ae14c98f6025b340ea059da01d35 Mon Sep 17 00:00:00 2001
+From 634b2da05699b717985322b156406e40cf56e245 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 26 Jul 2019 08:41:09 +0300
-Subject: [PATCH 05/28] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 05/27] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 7004c99d07d4..8f8258169a13 100644
+index 402f276da062..570371895686 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1037,6 +1037,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
