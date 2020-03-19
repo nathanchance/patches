@@ -1,7 +1,7 @@
-From 21c3b33817915905f1ca268169bcf4aaba459646 Mon Sep 17 00:00:00 2001
+From 7737ca805e57a5622d9aeb616cac4413ae60f52c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 16 Mar 2020 22:33:40 -0700
-Subject: [PATCH 23/24] pci: Export some symbols
+Subject: [PATCH 18/19] pci: Export some symbols
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index dfbb806c25bf..8e9f31144b69 100644
+index 4233c4321373..1cdcbd102ce8 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
 @@ -18,6 +18,7 @@ void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
@@ -28,7 +28,7 @@ index dfbb806c25bf..8e9f31144b69 100644
  
  static void __dw_pcie_ep_reset_bar(struct dw_pcie *pci, enum pci_barno bar,
  				   int flags)
-@@ -536,6 +538,7 @@ int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
+@@ -535,6 +537,7 @@ int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
  
  	return 0;
  }
@@ -36,7 +36,7 @@ index dfbb806c25bf..8e9f31144b69 100644
  
  int dw_pcie_ep_init(struct dw_pcie_ep *ep)
  {
-@@ -630,3 +633,4 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+@@ -629,3 +632,4 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
  
  	return dw_pcie_ep_init_complete(ep);
  }
