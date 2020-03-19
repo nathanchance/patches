@@ -1,7 +1,7 @@
-From 635564ce683283dce957db80e017b8ac7e3c2a77 Mon Sep 17 00:00:00 2001
+From 34a6b25a613d5ecd93cc0fff0bedc082fd7c7498 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:34:43 -0700
-Subject: [PATCH 15/27] kbuild: Enable -Wtautological-compare
+Subject: [PATCH 15/24] kbuild: Enable -Wtautological-compare
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings that are useful

@@ -1,7 +1,7 @@
-From 813dea406df70b6431e381dcc6753cd8064eaec7 Mon Sep 17 00:00:00 2001
+From 46e0b581a2eb4997c9c1f7e273daf49df7200bbd Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Thu, 9 Jan 2020 10:02:18 -0500
-Subject: [PATCH 17/27] x86/boot/compressed: Remove .eh_frame section from
+Subject: [PATCH 17/24] x86/boot/compressed: Remove .eh_frame section from
  bzImage
 
 Discarding unnecessary sections with "*(*)" (see thread at Link: below)

@@ -1,7 +1,7 @@
-From 127118f1961e4c6d55dcd62684ad04ba31bf036b Mon Sep 17 00:00:00 2001
+From 8d0d607df32e0741eab0a9b38d5878bcd1cb872b Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Mon, 24 Feb 2020 18:21:29 -0500
-Subject: [PATCH 18/27] x86/vmlinux: Drop unneeded linker script discard of
+Subject: [PATCH 18/24] x86/vmlinux: Drop unneeded linker script discard of
  .eh_frame
 
 Now that .eh_frame sections for the files in setup.elf and realmode.elf

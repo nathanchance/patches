@@ -1,7 +1,7 @@
-From 41a4ea519484669268ad2bb5210439002fac6c20 Mon Sep 17 00:00:00 2001
+From 40c6894fe1a61714a32c44d8c61cba25d95329d3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 17 Mar 2020 17:22:52 -0700
-Subject: [PATCH 27/27] drm/amdgpu: Initialize shadow to false in
+Subject: [PATCH 24/24] drm/amdgpu: Remove unnecessary variable shadow in
  gfx_v9_0_rlcg_wreg
 
 clang warns:
@@ -26,29 +26,43 @@ variable 'shadow' to silence this warning
                     = 0
 1 warning generated.
 
-It is not wrong so initialize shadow to false to ensure shadow is always
-used initialized.
+shadow is only assigned in one condition and used as the condition for
+another if statement; combine the two if statements and remove shadow
+to make the code cleaner and resolve this warning.
 
 Fixes: 2e0cc4d48b91 ("drm/amdgpu: revise RLCG access path")
 Link: https://github.com/ClangBuiltLinux/linux/issues/936
+Suggested-by: Joe Perches <joe@perches.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 7bc2486167e7..affbff76758c 100644
+index 7bc2486167e7..496b9edca3c3 100644
 --- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -735,7 +735,7 @@ void gfx_v9_0_rlcg_wreg(struct amdgpu_device *adev, u32 offset, u32 v)
+@@ -735,7 +735,6 @@ void gfx_v9_0_rlcg_wreg(struct amdgpu_device *adev, u32 offset, u32 v)
  	static void *spare_int;
  	static uint32_t grbm_cntl;
  	static uint32_t grbm_idx;
 -	bool shadow;
-+	bool shadow = false;
  
  	scratch_reg0 = adev->rmmio + (adev->reg_offset[GC_HWIP][0][mmSCRATCH_REG0_BASE_IDX] + mmSCRATCH_REG0)*4;
  	scratch_reg1 = adev->rmmio + (adev->reg_offset[GC_HWIP][0][mmSCRATCH_REG1_BASE_IDX] + mmSCRATCH_REG1)*4;
+@@ -751,10 +750,7 @@ void gfx_v9_0_rlcg_wreg(struct amdgpu_device *adev, u32 offset, u32 v)
+ 		return;
+ 	}
+ 
+-	if (offset == grbm_cntl || offset == grbm_idx)
+-		shadow = true;
+-
+-	if (shadow) {
++	if (offset == grbm_cntl || offset == grbm_idx) {
+ 		if (offset  == grbm_cntl)
+ 			writel(v, scratch_reg2);
+ 		else if (offset == grbm_idx)
 -- 
 2.26.0.rc1
 
