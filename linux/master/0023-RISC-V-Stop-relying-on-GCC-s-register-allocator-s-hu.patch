@@ -1,0 +1,115 @@
+From cd6199575ace95eef6d8efa2a673c106eb3c2a02 Mon Sep 17 00:00:00 2001
+From: Palmer Dabbelt <palmerdabbelt@google.com>
+Date: Thu, 27 Feb 2020 11:07:28 -0800
+Subject: [PATCH 23/26] RISC-V: Stop relying on GCC's register allocator's
+ hueristics
+
+GCC allows users to hint to the register allocation that a variable should be
+placed in a register by using a syntax along the lines of
+
+    function(...) {
+        register long in_REG __asm__("REG");
+    }
+
+We've abused this a bit throughout the RISC-V port to access fixed registers
+directly as C variables.  In practice it's never going to blow up because GCC
+isn't going to allocate these registers, but it's not a well defined syntax so
+we really shouldn't be relying upon this.  Luckily there is a very similar but
+well defined syntax that allows us to still access these registers directly as
+C variables, which is to simply declare the register variables globally.  For
+fixed variables this doesn't change the ABI.
+
+LLVM disallows this ambiguous syntax, so this isn't just strictly a formatting
+change.
+
+Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
+Link: https://git.kernel.org/riscv/c/52e7c52d2ded5908e6a4f8a7248e5fa6e0d6809a
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/riscv/include/asm/current.h | 5 +++--
+ arch/riscv/kernel/process.c      | 5 +++--
+ arch/riscv/kernel/stacktrace.c   | 7 ++++---
+ 3 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/arch/riscv/include/asm/current.h b/arch/riscv/include/asm/current.h
+index dd973efe5d7c..1de233d8e8de 100644
+--- a/arch/riscv/include/asm/current.h
++++ b/arch/riscv/include/asm/current.h
+@@ -17,6 +17,8 @@
+ 
+ struct task_struct;
+ 
++register struct task_struct *riscv_current_is_tp __asm__("tp");
++
+ /*
+  * This only works because "struct thread_info" is at offset 0 from "struct
+  * task_struct".  This constraint seems to be necessary on other architectures
+@@ -26,8 +28,7 @@ struct task_struct;
+  */
+ static __always_inline struct task_struct *get_current(void)
+ {
+-	register struct task_struct *tp __asm__("tp");
+-	return tp;
++	return riscv_current_is_tp;
+ }
+ 
+ #define current get_current()
+diff --git a/arch/riscv/kernel/process.c b/arch/riscv/kernel/process.c
+index 817cf7b0974c..610c11e91606 100644
+--- a/arch/riscv/kernel/process.c
++++ b/arch/riscv/kernel/process.c
+@@ -22,6 +22,8 @@
+ #include <asm/switch_to.h>
+ #include <asm/thread_info.h>
+ 
++unsigned long gp_in_global __asm__("gp");
++
+ extern asmlinkage void ret_from_fork(void);
+ extern asmlinkage void ret_from_kernel_thread(void);
+ 
+@@ -107,9 +109,8 @@ int copy_thread_tls(unsigned long clone_flags, unsigned long usp,
+ 	/* p->thread holds context to be restored by __switch_to() */
+ 	if (unlikely(p->flags & PF_KTHREAD)) {
+ 		/* Kernel thread */
+-		const register unsigned long gp __asm__ ("gp");
+ 		memset(childregs, 0, sizeof(struct pt_regs));
+-		childregs->gp = gp;
++		childregs->gp = gp_in_global;
+ 		/* Supervisor/Machine, irqs on: */
+ 		childregs->status = SR_PP | SR_PIE;
+ 
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 0940681d2f68..02087fe539c6 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -19,6 +19,8 @@ struct stackframe {
+ 	unsigned long ra;
+ };
+ 
++register unsigned long sp_in_global __asm__("sp");
++
+ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			     bool (*fn)(unsigned long, void *), void *arg)
+ {
+@@ -29,7 +31,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 		sp = user_stack_pointer(regs);
+ 		pc = instruction_pointer(regs);
+ 	} else if (task == NULL || task == current) {
+-		const register unsigned long current_sp __asm__ ("sp");
++		const register unsigned long current_sp = sp_in_global;
+ 		fp = (unsigned long)__builtin_frame_address(0);
+ 		sp = current_sp;
+ 		pc = (unsigned long)walk_stackframe;
+@@ -73,8 +75,7 @@ static void notrace walk_stackframe(struct task_struct *task,
+ 		sp = user_stack_pointer(regs);
+ 		pc = instruction_pointer(regs);
+ 	} else if (task == NULL || task == current) {
+-		const register unsigned long current_sp __asm__ ("sp");
+-		sp = current_sp;
++		sp = sp_in_global;
+ 		pc = (unsigned long)walk_stackframe;
+ 	} else {
+ 		/* task blocked in __switch_to */
+-- 
+2.26.0.rc1
+

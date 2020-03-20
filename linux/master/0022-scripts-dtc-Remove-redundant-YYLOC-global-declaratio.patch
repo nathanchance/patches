@@ -1,7 +1,7 @@
-From a52ffd3e02e40903774e0b094d8805fbb0363a5f Mon Sep 17 00:00:00 2001
+From 13fb76999ddf74fabef5aa0c9466740ae7d8efe0 Mon Sep 17 00:00:00 2001
 From: Dirk Mueller <dmueller@suse.com>
 Date: Tue, 14 Jan 2020 18:53:41 +0100
-Subject: [PATCH 23/23] scripts/dtc: Remove redundant YYLOC global declaration
+Subject: [PATCH 22/26] scripts/dtc: Remove redundant YYLOC global declaration
 
 gcc 10 will default to -fno-common, which causes this error at link
 time:
