@@ -1,7 +1,7 @@
 From 196a3db0188e7b8784479138cd55b58c42062cac Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 19:14:08 -0700
-Subject: [PATCH 20/20] mlxsw: spectrum_cnt: Fix 64-bit division in
+Subject: [PATCH 20/21] mlxsw: spectrum_cnt: Fix 64-bit division in
  mlxsw_sp_counter_resources_register
 
 When building arm32 allyesconfig:

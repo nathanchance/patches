@@ -1,7 +1,7 @@
 From c2c9d33c0c683ae2587f5610bf1059a74cd62d2a Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 12 Mar 2020 07:37:25 +0900
-Subject: [PATCH 05/20] kbuild: link lib-y objects to vmlinux forcibly when
+Subject: [PATCH 05/21] kbuild: link lib-y objects to vmlinux forcibly when
  CONFIG_MODULES=y
 
 Kbuild supports not only obj-y but also lib-y to list objects linked to
