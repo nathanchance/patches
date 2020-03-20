@@ -1,8 +1,21 @@
-From ce95ee1214f673339fce1d7bf62934cded4d3c50 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 16 Mar 2020 22:33:40 -0700
-Subject: [PATCH 18/21] pci: Export some symbols
+From fbff6430703668fe3019c2b56188111ab31c7a11 Mon Sep 17 00:00:00 2001
+From: Qiujun Huang <hqjagain@gmail.com>
+Date: Fri, 20 Mar 2020 14:24:50 +0800
+Subject: [PATCH 17/19] PCI: dwc: fix compile err for pcie-tagra194
 
+make allmodconfig
+ERROR: modpost: "dw_pcie_ep_init" [drivers/pci/controller/dwc/pcie-tegra194.ko] undefined!
+ERROR: modpost: "dw_pcie_ep_init_notify" [drivers/pci/controller/dwc/pcie-tegra194.ko] undefined!
+ERROR: modpost: "dw_pcie_ep_init_complete" [drivers/pci/controller/dwc/pcie-tegra194.ko] undefined!
+ERROR: modpost: "dw_pcie_ep_linkup" [drivers/pci/controller/dwc/pcie-tegra194.ko] undefined!
+make[2]: *** [__modpost] Error 1
+make[1]: *** [modules] Error 2
+make: *** [sub-make] Error 2
+
+need to export the symbols.
+
+Signed-off-by: Qiujun Huang <hqjagain@gmail.com>
+Link: https://lore.kernel.org/lkml/1584685490-8170-1-git-send-email-hqjagain@gmail.com/
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/pci/controller/dwc/pcie-designware-ep.c | 4 ++++
