@@ -1,0 +1,26 @@
+From 29b17713714a8a6f518abf73c3656bc3bf6c0c7d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 23 Mar 2020 02:38:06 -0700
+Subject: [PATCH 19/19] rtc: fsl-ftm-alarm: Remove unused variable
+
+Link: https://lore.kernel.org/lkml/20200323162406.7b1059c1@canb.auug.org.au/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/rtc/rtc-fsl-ftm-alarm.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/rtc/rtc-fsl-ftm-alarm.c b/drivers/rtc/rtc-fsl-ftm-alarm.c
+index c572044ff06e..0f4142b35f38 100644
+--- a/drivers/rtc/rtc-fsl-ftm-alarm.c
++++ b/drivers/rtc/rtc-fsl-ftm-alarm.c
+@@ -243,7 +243,6 @@ static const struct rtc_class_ops ftm_rtc_ops = {
+ 
+ static int ftm_rtc_probe(struct platform_device *pdev)
+ {
+-	struct device_node *np = pdev->dev.of_node;
+ 	int irq;
+ 	int ret;
+ 	struct ftm_rtc *rtc;
+-- 
+2.25.2
+

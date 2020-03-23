@@ -1,0 +1,27 @@
+From 0162cc4c813d554ecfe935c9ce936682d4f02829 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 13 Feb 2020 23:44:46 -0700
+Subject: [PATCH 15/19] s390: Remove CONFIG_FRAME_WARN from defconfig
+
+Use the 64-bit default for now.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/s390/configs/defconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/s390/configs/defconfig b/arch/s390/configs/defconfig
+index 7cd0648c1f4e..2345cca3e28b 100644
+--- a/arch/s390/configs/defconfig
++++ b/arch/s390/configs/defconfig
+@@ -734,7 +734,6 @@ CONFIG_PRINTK_TIME=y
+ CONFIG_DEBUG_INFO=y
+ CONFIG_DEBUG_INFO_DWARF4=y
+ CONFIG_GDB_SCRIPTS=y
+-CONFIG_FRAME_WARN=1024
+ CONFIG_DEBUG_SECTION_MISMATCH=y
+ CONFIG_MAGIC_SYSRQ=y
+ CONFIG_DEBUG_MEMORY_INIT=y
+-- 
+2.25.2
+

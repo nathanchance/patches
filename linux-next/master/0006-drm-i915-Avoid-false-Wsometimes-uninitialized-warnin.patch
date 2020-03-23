@@ -1,0 +1,35 @@
+From 6d0fb189eced7d916d1b335c4304864b08bdd6b6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 23 May 2019 13:08:06 -0700
+Subject: [PATCH 06/19] drm/i915: Avoid false -Wsometimes-uninitialized warning
+ in busywait_stop
+
+drivers/gpu/drm/i915/i915_request.c:1032:6: warning: variable 'this_cpu'
+is used uninitialized whenever '&&' condition is false
+[-Wsometimes-uninitialized]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/415
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/i915/i915_request.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
+index c0df71d7d0ff..46e35cb6fb75 100644
+--- a/drivers/gpu/drm/i915/i915_request.c
++++ b/drivers/gpu/drm/i915/i915_request.c
+@@ -1477,8 +1477,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+ static bool busywait_stop(unsigned long timeout, unsigned int cpu)
+ {
+ 	unsigned int this_cpu;
++	unsigned long local_clock = local_clock_ns(&this_cpu);
+ 
+-	if (time_after(local_clock_ns(&this_cpu), timeout))
++	if (time_after(local_clock, timeout))
+ 		return true;
+ 
+ 	return this_cpu != cpu;
+-- 
+2.25.2
+
