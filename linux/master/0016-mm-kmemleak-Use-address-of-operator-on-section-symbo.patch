@@ -1,4 +1,4 @@
-From 34e94a9d22d95bfe1fd2d2b3ddd28a5a52d2c30b Mon Sep 17 00:00:00 2001
+From 2d4234fedd5f91a231097088a37976602fdbd3ad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 19 Feb 2020 13:50:21 -0700
 Subject: [PATCH 16/26] mm: kmemleak: Use address-of operator on section
@@ -42,5 +42,5 @@ index 3a4259eeb5a0..e362dc3d2028 100644
  			      __end_ro_after_init - __start_ro_after_init,
  			      KMEMLEAK_GREY, GFP_ATOMIC);
 -- 
-2.26.0.rc1
+2.26.0
 

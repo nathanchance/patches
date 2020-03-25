@@ -1,4 +1,4 @@
-From 8ac0a04131f4210c33c2ed58a63be6cf9c79ad74 Mon Sep 17 00:00:00 2001
+From 4781d5fed042347d5e82257fb259510194ce4680 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Thu, 27 Feb 2020 11:07:28 -0800
 Subject: [PATCH 23/26] RISC-V: Stop relying on GCC's register allocator's
@@ -111,5 +111,5 @@ index 0940681d2f68..02087fe539c6 100644
  	} else {
  		/* task blocked in __switch_to */
 -- 
-2.26.0.rc1
+2.26.0
 

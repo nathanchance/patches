@@ -1,4 +1,4 @@
-From 3ec7c443f9fdb88d56ed2c21c4878f66bb47accd Mon Sep 17 00:00:00 2001
+From e86c764d79d17fefdbf3a229334ff83ad2eef50c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 03:10:43 -0700
 Subject: [PATCH 17/26] kbuild: Enable -Wtautological-compare
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index fcec84681e4e..17b7e981451e 100644
+index c308717d1aa0..0326bc7e7ae1 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -742,8 +742,7 @@ ifdef CONFIG_CC_IS_CLANG
@@ -36,5 +36,5 @@ index fcec84681e4e..17b7e981451e 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.26.0.rc1
+2.26.0
 
