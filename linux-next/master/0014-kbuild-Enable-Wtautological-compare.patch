@@ -1,7 +1,7 @@
-From 2eb76d78090e460a547ed785bb329d2d93e2591b Mon Sep 17 00:00:00 2001
+From 4b434511f6d7271e8b474fe3d3099753e0bab918 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 11 Feb 2020 02:34:43 -0700
-Subject: [PATCH 14/19] kbuild: Enable -Wtautological-compare
+Subject: [PATCH 14/17] kbuild: Enable -Wtautological-compare
 
 Currently, we disable -Wtautological-compare, which in turn disables a
 bunch of more specific tautological comparison warnings that are useful
@@ -21,10 +21,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f98203619652..af5f5fd6c063 100644
+index c4618f00a1cb..12f53b69635a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -745,8 +745,7 @@ ifdef CONFIG_CC_IS_CLANG
+@@ -746,8 +746,7 @@ ifdef CONFIG_CC_IS_CLANG
  KBUILD_CPPFLAGS += -Qunused-arguments
  KBUILD_CFLAGS += -Wno-format-invalid-specifier
  KBUILD_CFLAGS += -Wno-gnu
@@ -35,5 +35,5 @@ index f98203619652..af5f5fd6c063 100644
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
 -- 
-2.25.2
+2.26.0
 
