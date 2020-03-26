@@ -1,0 +1,69 @@
+From 6c8a8693ea618ba759d1621b84f89f3d9901ec1b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 26 Mar 2020 11:57:27 -0700
+Subject: [PATCH 17/17] s390/ism: Remove PM support
+
+Clang warns:
+
+drivers/s390/net/ism_drv.c:570:12: warning: unused function
+'ism_suspend' [-Wunused-function]
+static int ism_suspend(struct device *dev)
+           ^
+drivers/s390/net/ism_drv.c:578:12: warning: unused function 'ism_resume'
+[-Wunused-function]
+static int ism_resume(struct device *dev)
+           ^
+2 warnings generated.
+
+When CONFIG_PM is unset, SIMPLE_DEV_PM_OPS does not use the suspend or
+resume functions. Power management was recently ripped out of s390 so
+CONFIG_PM will never be set and these functions will always be unused.
+
+Remove them so that there is no more warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/950
+Fixes: 394216275c7d ("s390: remove broken hibernate / power management support")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/s390/net/ism_drv.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
+
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index 4fc2056bd227..c75112ee7b97 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -567,31 +567,11 @@ static void ism_remove(struct pci_dev *pdev)
+ 	kfree(ism);
+ }
+ 
+-static int ism_suspend(struct device *dev)
+-{
+-	struct ism_dev *ism = dev_get_drvdata(dev);
+-
+-	ism_dev_exit(ism);
+-	return 0;
+-}
+-
+-static int ism_resume(struct device *dev)
+-{
+-	struct ism_dev *ism = dev_get_drvdata(dev);
+-
+-	return ism_dev_init(ism);
+-}
+-
+-static SIMPLE_DEV_PM_OPS(ism_pm_ops, ism_suspend, ism_resume);
+-
+ static struct pci_driver ism_driver = {
+ 	.name	  = DRV_NAME,
+ 	.id_table = ism_device_table,
+ 	.probe	  = ism_probe,
+ 	.remove	  = ism_remove,
+-	.driver	  = {
+-		.pm = &ism_pm_ops,
+-	},
+ };
+ 
+ static int __init ism_init(void)
+-- 
+2.26.0
+

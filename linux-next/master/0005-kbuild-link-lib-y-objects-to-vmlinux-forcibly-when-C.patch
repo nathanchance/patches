@@ -1,7 +1,7 @@
-From ab9b0c10979ef9d21c16b361c9db62d623d538f7 Mon Sep 17 00:00:00 2001
+From 98a8e3eb72c47b6caf481d2b370006fe48715a0f Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 12 Mar 2020 07:37:25 +0900
-Subject: [PATCH 05/18] kbuild: link lib-y objects to vmlinux forcibly when
+Subject: [PATCH 05/17] kbuild: link lib-y objects to vmlinux forcibly when
  CONFIG_MODULES=y
 
 Kbuild supports not only obj-y but also lib-y to list objects linked to
@@ -88,7 +88,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 6 insertions(+), 18 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 053a87515765..c4618f00a1cb 100644
+index db442a9ee6b2..361530263a61 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1036,8 +1036,13 @@ init-y		:= $(patsubst %/, %/built-in.a, $(init-y))
