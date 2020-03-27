@@ -1,0 +1,49 @@
+From 83d884ca9d7662595f8e272ffadd4a61baf16c04 Mon Sep 17 00:00:00 2001
+From: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+Date: Thu, 26 Mar 2020 19:27:42 +0100
+Subject: [PATCH 20/20] soc: mediatek: mtk-mmsys: Export ddp_dis/connect
+ symbols
+
+When building on arm64 with allmodconfig or CONFIG_DRM_MEDIATEK=m we see
+the following error.
+
+  ERROR: modpost: "mtk_mmsys_ddp_disconnect"
+  [drivers/gpu/drm/mediatek/mediatek-drm.ko] undefined!
+  ERROR: modpost: "mtk_mmsys_ddp_connect"
+  [drivers/gpu/drm/mediatek/mediatek-drm.ko] undefined!
+
+Export mtk_mmsys_ddp_connect and mtk_mmsys_ddp_disconnect symbols to be
+able to be used for other modules.
+
+Fixes: 396c3fccaf03 ("soc / drm: mediatek: Move routing control to mmsys device")
+Reported-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+Link: https://lore.kernel.org/lkml/20200326182742.487026-1-enric.balletbo@collabora.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/soc/mediatek/mtk-mmsys.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/soc/mediatek/mtk-mmsys.c b/drivers/soc/mediatek/mtk-mmsys.c
+index 32a92ec447c5..05e322c9c301 100644
+--- a/drivers/soc/mediatek/mtk-mmsys.c
++++ b/drivers/soc/mediatek/mtk-mmsys.c
+@@ -259,6 +259,7 @@ void mtk_mmsys_ddp_connect(struct device *dev,
+ 		writel_relaxed(reg, config_regs + addr);
+ 	}
+ }
++EXPORT_SYMBOL_GPL(mtk_mmsys_ddp_connect);
+ 
+ void mtk_mmsys_ddp_disconnect(struct device *dev,
+ 			      enum mtk_ddp_comp_id cur,
+@@ -279,6 +280,7 @@ void mtk_mmsys_ddp_disconnect(struct device *dev,
+ 		writel_relaxed(reg, config_regs + addr);
+ 	}
+ }
++EXPORT_SYMBOL_GPL(mtk_mmsys_ddp_disconnect);
+ 
+ static int mtk_mmsys_probe(struct platform_device *pdev)
+ {
+-- 
+2.26.0
+
