@@ -1,7 +1,7 @@
-From 390d1d6e1bbb382a61bf4fa36f2c9d35f20e4342 Mon Sep 17 00:00:00 2001
+From aa0c92b964271839267705c285e87aa638ca3027 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Thu, 27 Feb 2020 11:07:28 -0800
-Subject: [PATCH 23/25] RISC-V: Stop relying on GCC's register allocator's
+Subject: [PATCH 24/26] RISC-V: Stop relying on GCC's register allocator's
  hueristics
 
 GCC allows users to hint to the register allocation that a variable should be
