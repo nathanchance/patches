@@ -1,7 +1,7 @@
 From fda40a87fa87c04b81b015a2e76fd82b80fa2dac Mon Sep 17 00:00:00 2001
 From: Ursula Braun <ubraun@linux.ibm.com>
 Date: Fri, 20 Mar 2020 09:19:14 +0100
-Subject: [PATCH 17/18] s390/ism: remove pm support
+Subject: [PATCH 17/19] s390/ism: remove pm support
 
 As s390 no longer supports ARCH_HIBERNATION_POSSIBLE, drop the unused
 pm ops from the ism driver.
