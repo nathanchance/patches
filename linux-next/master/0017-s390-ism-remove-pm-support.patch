@@ -1,28 +1,14 @@
-From 6c8a8693ea618ba759d1621b84f89f3d9901ec1b Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 26 Mar 2020 11:57:27 -0700
-Subject: [PATCH 17/17] s390/ism: Remove PM support
+From fda40a87fa87c04b81b015a2e76fd82b80fa2dac Mon Sep 17 00:00:00 2001
+From: Ursula Braun <ubraun@linux.ibm.com>
+Date: Fri, 20 Mar 2020 09:19:14 +0100
+Subject: [PATCH 17/18] s390/ism: remove pm support
 
-Clang warns:
+As s390 no longer supports ARCH_HIBERNATION_POSSIBLE, drop the unused
+pm ops from the ism driver.
 
-drivers/s390/net/ism_drv.c:570:12: warning: unused function
-'ism_suspend' [-Wunused-function]
-static int ism_suspend(struct device *dev)
-           ^
-drivers/s390/net/ism_drv.c:578:12: warning: unused function 'ism_resume'
-[-Wunused-function]
-static int ism_resume(struct device *dev)
-           ^
-2 warnings generated.
-
-When CONFIG_PM is unset, SIMPLE_DEV_PM_OPS does not use the suspend or
-resume functions. Power management was recently ripped out of s390 so
-CONFIG_PM will never be set and these functions will always be unused.
-
-Remove them so that there is no more warning.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/950
-Fixes: 394216275c7d ("s390: remove broken hibernate / power management support")
+Signed-off-by: Ursula Braun <ubraun@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://git.kernel.org/s390/c/194f75706b86847d1b4237958f7d6bd7ea7baf42
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/s390/net/ism_drv.c | 20 --------------------

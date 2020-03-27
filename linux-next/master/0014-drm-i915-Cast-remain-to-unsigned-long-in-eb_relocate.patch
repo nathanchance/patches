@@ -1,7 +1,7 @@
-From d0f7ad0be675e42804d31ab1bc65ffc12b863c5d Mon Sep 17 00:00:00 2001
+From 9cf9867ac77154ff4274c6e56d7ac341a86c59fb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 13 Feb 2020 22:43:06 -0700
-Subject: [PATCH 12/17] drm/i915: Cast remain to unsigned long in
+Date: Thu, 13 Feb 2020 22:47:07 -0700
+Subject: [PATCH 14/18] drm/i915: Cast remain to unsigned long in
  eb_relocate_vma
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -31,15 +31,20 @@ Cast remain to unsigned long, which keeps the generated code the same
 the warning is silenced so we can catch more potential issues in the
 future.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/778
+Closes: https://github.com/ClangBuiltLinux/linux/issues/778
 Suggested-by: Michel Dänzer <michel@daenzer.net>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200214054706.33870-1-natechancellor@gmail.com
+Link: https://cgit.freedesktop.org/drm/drm-intel/patch/?id=7bf03e7504e433da274963c447648876902b86df
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index d3f4f28e9468..0d94d4f376a8 100644
+index 36d069504836..69b4928fa8d4 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 @@ -1415,7 +1415,7 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct eb_vma *ev)
