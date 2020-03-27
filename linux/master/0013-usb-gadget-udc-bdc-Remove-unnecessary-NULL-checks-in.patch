@@ -1,7 +1,7 @@
-From 755b1b9d98ced54c33497f1b5fc130900b8ee9a4 Mon Sep 17 00:00:00 2001
+From 2205feb7882ee6fc49f6b86b3f06a320ec8bbf27 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:17:04 -0700
-Subject: [PATCH 13/26] usb: gadget: udc: bdc: Remove unnecessary NULL checks
+Subject: [PATCH 13/25] usb: gadget: udc: bdc: Remove unnecessary NULL checks
  in bdc_req_complete
 
 When building with Clang + -Wtautological-pointer-compare:

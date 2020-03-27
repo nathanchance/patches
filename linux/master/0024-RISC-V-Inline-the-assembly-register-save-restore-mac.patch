@@ -1,7 +1,7 @@
-From 13a7a4e72c483842bf8847307c018130279220b0 Mon Sep 17 00:00:00 2001
+From d0d2b3e29d0b8378cdc554b06311ebb0ed7d257d Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Thu, 27 Feb 2020 11:15:03 -0800
-Subject: [PATCH 25/26] RISC-V: Inline the assembly register save/restore
+Subject: [PATCH 24/25] RISC-V: Inline the assembly register save/restore
  macros
 
 These are only used once, and when reading the code I've always found them to
