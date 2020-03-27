@@ -1,28 +1,29 @@
-From 2d4234fedd5f91a231097088a37976602fdbd3ad Mon Sep 17 00:00:00 2001
+From b5e559e88225467b00be181ef4d8cf0d0b99bc38 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 19 Feb 2020 13:50:21 -0700
-Subject: [PATCH 16/26] mm: kmemleak: Use address-of operator on section
+Date: Fri, 27 Mar 2020 10:52:07 -0700
+Subject: [PATCH 17/25] mm/kmemleak.c: use address-of operator on section
  symbols
 
 Clang warns:
 
-../mm/kmemleak.c:1955:28: warning: array comparison always evaluates to
-a constant [-Wtautological-compare]
+../mm/kmemleak.c:1955:28: warning: array comparison always evaluates to a constant [-Wtautological-compare]
         if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
                                   ^
-../mm/kmemleak.c:1955:60: warning: array comparison always evaluates to
-a constant [-Wtautological-compare]
+../mm/kmemleak.c:1955:60: warning: array comparison always evaluates to a constant [-Wtautological-compare]
         if (__start_ro_after_init < _sdata || __end_ro_after_init > _edata)
-                                                                  ^
-2 warnings generated.
 
-These are not true arrays, they are linker defined symbols, which are
-just addresses. Using the address of operator silences the warning and
-does not change the resulting assembly with either clang/ld.lld or
-gcc/ld (tested with diff + objdump -Dr).
+These are not true arrays, they are linker defined symbols, which are just
+addresses.  Using the address of operator silences the warning and does
+not change the resulting assembly with either clang/ld.lld or gcc/ld
+(tested with diff + objdump -Dr).
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/895
+Link: http://lkml.kernel.org/r/20200220051551.44000-1-natechancellor@gmail.com
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://ozlabs.org/~akpm/mmotm/broken-out/mm-kmemleak-use-address-of-operator-on-section-symbols.patch
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  mm/kmemleak.c | 2 +-

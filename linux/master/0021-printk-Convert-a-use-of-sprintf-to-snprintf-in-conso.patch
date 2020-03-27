@@ -1,7 +1,7 @@
-From a1406f39d1ffe4564ff07843ad215f15377f22bb Mon Sep 17 00:00:00 2001
+From 4eae8c7f11262b5bef672644ffe668c5373766e6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 30 Jan 2020 15:10:22 -0700
-Subject: [PATCH 19/26] printk: Convert a use of sprintf to snprintf in
+Date: Thu, 30 Jan 2020 15:16:44 -0700
+Subject: [PATCH 21/25] printk: Convert a use of sprintf to snprintf in
  console_unlock
 
 When CONFIG_PRINTK is disabled (e.g. when building allnoconfig), clang
@@ -10,8 +10,8 @@ warns:
 ../kernel/printk/printk.c:2416:10: warning: 'sprintf' will always
 overflow; destination buffer has size 0, but format string expands to at
 least 33 [-Wfortify-source]
-                        len = sprintf(text,
-                              ^
+			len = sprintf(text,
+			      ^
 1 warning generated.
 
 It is not wrong; text has a zero size when CONFIG_PRINTK is disabled
@@ -20,8 +20,14 @@ that this case is explicitly handled without any risk of overflow.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/846
 Link: https://github.com/llvm/llvm-project/commit/6d485ff455ea2b37fef9e06e426dae6c1241b231
-Link: https://lore.kernel.org/lkml/20200130051711.GF115889@google.com/
-Suggested-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+Link: http://lkml.kernel.org/r/20200130221644.2273-1-natechancellor@gmail.com
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: clang-built-linux@googlegroups.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://git.kernel.org/pmladek/printk/c/5661dd95a2958634485bb1a53f90a6ab621d4b0c
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  kernel/printk/printk.c | 6 +++---

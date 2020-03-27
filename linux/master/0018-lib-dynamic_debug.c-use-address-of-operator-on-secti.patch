@@ -1,7 +1,7 @@
-From abf9a562d9632286bddbe9ee8968ee5887ea7110 Mon Sep 17 00:00:00 2001
+From da0615978b3512068d3800675bdf5d0ea96a539d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 19 Feb 2020 13:41:46 -0700
-Subject: [PATCH 15/26] dynamic_debug: Use address-of operator on section
+Date: Fri, 27 Mar 2020 10:52:25 -0700
+Subject: [PATCH 18/25] lib/dynamic_debug.c: use address-of operator on section
  symbols
 
 Clang warns:
@@ -12,13 +12,18 @@ evaluates to false [-Wtautological-compare]
                               ^
 1 warning generated.
 
-These are not true arrays, they are linker defined symbols, which are
-just addresses. Using the address of operator silences the warning and
-does not change the resulting assembly with either clang/ld.lld or
-gcc/ld (tested with diff + objdump -Dr).
+These are not true arrays, they are linker defined symbols, which are just
+addresses.  Using the address of operator silences the warning and does
+not change the resulting assembly with either clang/ld.lld or gcc/ld
+(tested with diff + objdump -Dr).
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/894
+Link: http://lkml.kernel.org/r/20200220051320.10739-1-natechancellor@gmail.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Jason Baron <jbaron@akamai.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://ozlabs.org/~akpm/mmotm/broken-out/dynamic_debug-use-address-of-operator-on-section-symbols.patch
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  lib/dynamic_debug.c | 2 +-

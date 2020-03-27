@@ -1,0 +1,58 @@
+From ca3cfee3b11bfe7e6bf523ef7dc96a6b57567c7b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 26 Mar 2020 12:41:55 -0700
+Subject: [PATCH 14/25] kbuild: Enable -Wtautological-compare
+
+Currently, we disable -Wtautological-compare, which in turn disables a
+bunch of more specific tautological comparison warnings that are useful
+for the kernel such as -Wtautological-bitwise-compare. See clang's
+documentation below for the other warnings that are suppressed by
+-Wtautological-compare. Now that all of the major/noisy warnings have
+been fixed, enable -Wtautological-compare so that more issues can be
+caught at build time by various continuous integration setups.
+
+-Wtautological-constant-out-of-range-compare is kept disabled under a
+normal build but visible at W=1 because there are places in the kernel
+where a constant or variable size can change based on the kernel
+configuration. These are not fixed in a clean/concise way and the ones
+I have audited so far appear to be harmless. It is not a subgroup but
+rather just one warning so we do not lose out on much coverage by
+default.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/488
+Link: http://releases.llvm.org/10.0.0/tools/clang/docs/DiagnosticsReference.html#wtautological-compare
+Link: https://bugs.llvm.org/show_bug.cgi?id=42666
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile                   | 2 --
+ scripts/Makefile.extrawarn | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c308717d1aa0..c49b6e25efca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -742,8 +742,6 @@ ifdef CONFIG_CC_IS_CLANG
+ KBUILD_CPPFLAGS += -Qunused-arguments
+ KBUILD_CFLAGS += -Wno-format-invalid-specifier
+ KBUILD_CFLAGS += -Wno-gnu
+-# Quiet clang warning: comparison of unsigned expression < 0 is always false
+-KBUILD_CFLAGS += -Wno-tautological-compare
+ # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
+ # source of a reference will be _MergedGlobals and not on of the whitelisted names.
+ # See modpost pattern 2
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index ca08f2fe7c34..4aea7cf71d11 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -49,6 +49,7 @@ KBUILD_CFLAGS += -Wno-format
+ KBUILD_CFLAGS += -Wno-sign-compare
+ KBUILD_CFLAGS += -Wno-format-zero-length
+ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
++KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
+ endif
+ 
+ endif
+-- 
+2.26.0
+

@@ -1,7 +1,7 @@
-From 2352debe65f1834dc3abe5566bbda6f2002cd026 Mon Sep 17 00:00:00 2001
+From 114f847d26d6a24c5800dcbeb0c5272f639f5174 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 19 Feb 2020 13:17:43 -0700
-Subject: [PATCH 13/26] kernel/extable: Use address-of operator on section
+Date: Fri, 27 Mar 2020 10:51:47 -0700
+Subject: [PATCH 16/25] kernel/extable.c: use address-of operator on section
  symbols
 
 Clang warns:
@@ -12,13 +12,18 @@ a constant [-Wtautological-compare]
                                                           ^
 1 warning generated.
 
-These are not true arrays, they are linker defined symbols, which are
-just addresses. Using the address of operator silences the warning and
-does not change the resulting assembly with either clang/ld.lld or
-gcc/ld.
+These are not true arrays, they are linker defined symbols, which are just
+addresses.  Using the address of operator silences the warning and does
+not change the resulting assembly with either clang/ld.lld or gcc/ld
+(tested with diff + objdump -Dr).
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/892
+Link: http://lkml.kernel.org/r/20200219202036.45702-1-natechancellor@gmail.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://ozlabs.org/~akpm/mmotm/broken-out/kernel-extable-use-address-of-operator-on-section-symbols.patch
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  kernel/extable.c | 3 ++-

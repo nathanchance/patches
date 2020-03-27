@@ -1,7 +1,7 @@
-From f5913dcccda4d9cde3f9b03be335f614fec1e57d Mon Sep 17 00:00:00 2001
+From fb31d6b073c0ed7144171554de6aec10b27394e1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 29 Jan 2020 18:51:39 -0700
-Subject: [PATCH 18/26] ath11k: Silence clang -Wsometimes-uninitialized in
+Date: Wed, 29 Jan 2020 18:59:05 -0700
+Subject: [PATCH 20/25] ath11k: Silence clang -Wsometimes-uninitialized in
  ath11k_update_per_peer_stats_from_txcompl
 
 Clang warns a few times (trimmed for brevity):
@@ -22,6 +22,10 @@ down the line.
 Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
 Link: https://github.com/ClangBuiltLinux/linux/issues/832
 Reported-by: ci_notify@linaro.org
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://git.kernel.org/netdev/net-next/c/df57acc415b16299ddef108551c80929a41d5754
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/net/wireless/ath/ath11k/debugfs_sta.c | 2 +-

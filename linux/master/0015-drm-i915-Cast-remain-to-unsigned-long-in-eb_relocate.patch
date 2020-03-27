@@ -1,7 +1,7 @@
-From 4c1f9d74d9970d78cac8d0b6a93308ff41455b85 Mon Sep 17 00:00:00 2001
+From 9a8eac3a2504c8f6f27ff91ef33094bf297c03e5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 13 Feb 2020 22:43:06 -0700
-Subject: [PATCH 12/26] drm/i915: Cast remain to unsigned long in
+Date: Thu, 13 Feb 2020 22:47:07 -0700
+Subject: [PATCH 15/25] drm/i915: Cast remain to unsigned long in
  eb_relocate_vma
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -31,8 +31,13 @@ Cast remain to unsigned long, which keeps the generated code the same
 the warning is silenced so we can catch more potential issues in the
 future.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/778
+Closes: https://github.com/ClangBuiltLinux/linux/issues/778
 Suggested-by: Michel Dänzer <michel@daenzer.net>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200214054706.33870-1-natechancellor@gmail.com
+Link: https://cgit.freedesktop.org/drm/drm-intel/patch/?id=7bf03e7504e433da274963c447648876902b86df
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-

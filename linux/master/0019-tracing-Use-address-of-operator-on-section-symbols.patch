@@ -1,7 +1,7 @@
-From 38b1770817ec41805b3f4514cfc6ea43ab488444 Mon Sep 17 00:00:00 2001
+From 0b1e0d43baca1c9b0c39092d3ca772274aa6da46 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 19 Feb 2020 14:02:21 -0700
-Subject: [PATCH 14/26] tracing: Use address-of operator on section symbols
+Date: Wed, 19 Feb 2020 22:10:12 -0700
+Subject: [PATCH 19/25] tracing: Use address-of operator on section symbols
 
 Clang warns:
 
@@ -16,8 +16,13 @@ just addresses. Using the address of operator silences the warning and
 does not change the runtime result of the check (tested with some print
 statements compiled in with clang + ld.lld and gcc + ld.bfd in QEMU).
 
+Link: http://lkml.kernel.org/r/20200220051011.26113-1-natechancellor@gmail.com
+
 Link: https://github.com/ClangBuiltLinux/linux/issues/893
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Link: https://git.kernel.org/rostedt/linux-trace/c/bf2cbe044da275021b2de5917240411a19e5c50d
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  kernel/trace/trace.c | 2 +-
