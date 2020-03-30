@@ -1,0 +1,43 @@
+From 425287665b088960bf395d199070888c39ed7fe8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 30 Mar 2020 14:58:52 -0700
+Subject: [PATCH 18/18] drm/amd/display: Fix 64-bit division error on 32-bit
+ platforms in mod_freesync_build_vrr_params
+
+When building arm32 allyesconfig,
+
+ld.lld: error: undefined symbol: __aeabi_uldivmod
+>>> referenced by freesync.c
+>>>               gpu/drm/amd/display/modules/freesync/freesync.o:(mod_freesync_build_vrr_params) in archive drivers/built-in.a
+>>> did you mean: __aeabi_uidivmod
+>>> defined in: arch/arm/lib/lib.a(lib1funcs.o)
+
+Use div_u64 in the two locations that do 64-bit divisior, which both
+have a u64 dividend and u32 divisor.
+
+Fixes: 349a370781de ("drm/amd/display: LFC not working on 2.0x range monitors")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/display/modules/freesync/freesync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+index 8911f01671aa..c33454a9e0b4 100644
+--- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
++++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+@@ -761,10 +761,10 @@ void mod_freesync_build_vrr_params(struct mod_freesync *mod_freesync,
+ 
+ 	// If a monitor reports exactly max refresh of 2x of min, enforce it on nominal
+ 	rounded_nominal_in_uhz =
+-			((nominal_field_rate_in_uhz + 50000) / 100000) * 100000;
++			div_u64(nominal_field_rate_in_uhz + 50000, 100000) * 100000;
+ 	if (in_config->max_refresh_in_uhz == (2 * in_config->min_refresh_in_uhz) &&
+ 		in_config->max_refresh_in_uhz == rounded_nominal_in_uhz)
+-		min_refresh_in_uhz = nominal_field_rate_in_uhz / 2;
++		min_refresh_in_uhz = div_u64(nominal_field_rate_in_uhz, 2);
+ 
+ 	if (!vrr_settings_require_update(core_freesync,
+ 			in_config, (unsigned int)min_refresh_in_uhz, (unsigned int)max_refresh_in_uhz,
+-- 
+2.26.0
+
