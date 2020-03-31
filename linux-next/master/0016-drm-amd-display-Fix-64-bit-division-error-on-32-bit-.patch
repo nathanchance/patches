@@ -1,7 +1,7 @@
-From 425287665b088960bf395d199070888c39ed7fe8 Mon Sep 17 00:00:00 2001
+From 805202e1c6c733cb724295c6b8a9d55beea50842 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 30 Mar 2020 14:58:52 -0700
-Subject: [PATCH 18/18] drm/amd/display: Fix 64-bit division error on 32-bit
+Subject: [PATCH 16/16] drm/amd/display: Fix 64-bit division error on 32-bit
  platforms in mod_freesync_build_vrr_params
 
 When building arm32 allyesconfig,
