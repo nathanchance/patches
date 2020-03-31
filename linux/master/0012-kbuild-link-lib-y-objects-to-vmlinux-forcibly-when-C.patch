@@ -1,4 +1,4 @@
-From 47bade7a7ac0bff196dc000775b31dff8ce59922 Mon Sep 17 00:00:00 2001
+From 7dfeb106383dd522e35682059c7e2bb5aeae4600 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 12 Mar 2020 07:37:25 +0900
 Subject: [PATCH 12/25] kbuild: link lib-y objects to vmlinux forcibly when
@@ -88,7 +88,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  2 files changed, 6 insertions(+), 18 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e56bf7ef182d..c308717d1aa0 100644
+index 4d0711f54047..c53e1f5f93e0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1031,8 +1031,13 @@ init-y		:= $(patsubst %/, %/built-in.a, $(init-y))

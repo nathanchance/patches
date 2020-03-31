@@ -1,4 +1,4 @@
-From 92db4b7291f217abb9605aae94a6123602acee6b Mon Sep 17 00:00:00 2001
+From b4549fc15e64d516a1be90e34831fc2f44b292f9 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:49 +0100
 Subject: [PATCH 04/25] ARM: futex: make futex_detect_cmpxchg more reliable
@@ -34,7 +34,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm/include/asm/futex.h b/arch/arm/include/asm/futex.h
-index 83c391b597d4..ef9c6116e40e 100644
+index e133da303a98..89048675b125 100644
 --- a/arch/arm/include/asm/futex.h
 +++ b/arch/arm/include/asm/futex.h
 @@ -111,13 +111,13 @@ futex_atomic_cmpxchg_inatomic(u32 *uval, u32 __user *uaddr,
