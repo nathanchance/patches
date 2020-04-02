@@ -1,7 +1,7 @@
-From febe1cd5920eb77b4e496991f731fc42747eba53 Mon Sep 17 00:00:00 2001
+From 38bfbc05a5f5edb5546f5d4e4403d1d235b6bb74 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 22:47:07 -0700
-Subject: [PATCH 15/27] drm/i915: Cast remain to unsigned long in
+Subject: [PATCH 15/26] drm/i915: Cast remain to unsigned long in
  eb_relocate_vma
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -44,10 +44,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 7643a30ba4cd..89e235cfd260 100644
+index 36d069504836..69b4928fa8d4 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -1431,7 +1431,7 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct i915_vma *vma)
+@@ -1415,7 +1415,7 @@ static int eb_relocate_vma(struct i915_execbuffer *eb, struct eb_vma *ev)
  
  	urelocs = u64_to_user_ptr(entry->relocs_ptr);
  	remain = entry->relocation_count;

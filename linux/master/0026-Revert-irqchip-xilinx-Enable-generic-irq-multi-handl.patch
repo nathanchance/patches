@@ -1,7 +1,7 @@
-From 3cb8ebb1d0558276baf895a930c802436c333545 Mon Sep 17 00:00:00 2001
+From c645d05bb007a9d96fadd0c31eab50574d5527c8 Mon Sep 17 00:00:00 2001
 From: Marc Zyngier <maz@kernel.org>
 Date: Mon, 30 Mar 2020 10:43:59 +0100
-Subject: [PATCH 27/27] Revert "irqchip/xilinx: Enable generic irq multi
+Subject: [PATCH 26/26] Revert "irqchip/xilinx: Enable generic irq multi
  handler"
 
 This reverts commit a0789993bf8266e62fea6b4613945ba081c71e7d, which
@@ -32,10 +32,10 @@ index 242f58ec086b..6a331bd57ea8 100644
  # Endianness selection
  choice
 diff --git a/arch/microblaze/include/asm/irq.h b/arch/microblaze/include/asm/irq.h
-index 5166f0893e2b..eac2fb4b3fb9 100644
+index cb6ab55d1d01..0a28e80bbab0 100644
 --- a/arch/microblaze/include/asm/irq.h
 +++ b/arch/microblaze/include/asm/irq.h
-@@ -14,4 +14,7 @@
+@@ -11,4 +11,7 @@
  struct pt_regs;
  extern void do_IRQ(struct pt_regs *regs);
  

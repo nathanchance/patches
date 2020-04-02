@@ -1,7 +1,7 @@
-From c9a27182d19b5dee7943995d3f9f431e33cf02c2 Mon Sep 17 00:00:00 2001
+From e4fc2801d0567eef461b50e5dce0551d50ea8f37 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
-Subject: [PATCH 06/27] Revert "drm/i915: Disable -Wuninitialized"
+Subject: [PATCH 06/26] Revert "drm/i915: Disable -Wuninitialized"
 
 This will be turned on for the whole kernel, as we want to catch these
 cases.
@@ -15,7 +15,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index a1f2411aa21b..15193e3efe5c 100644
+index 9f887a86e555..339d76f4965c 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)

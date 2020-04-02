@@ -1,7 +1,7 @@
-From 66eb692ed291eae9bd9c9b78160d01b6adbd3c07 Mon Sep 17 00:00:00 2001
+From d3c8d0c5919d5d542ef8ac33dc8d1fd963c7a824 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 27 Mar 2020 10:51:47 -0700
-Subject: [PATCH 16/27] kernel/extable.c: use address-of operator on section
+Subject: [PATCH 16/26] kernel/extable.c: use address-of operator on section
  symbols
 
 Clang warns:
@@ -30,7 +30,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/extable.c b/kernel/extable.c
-index a0024f27d3a1..88f3251b05e3 100644
+index 7681f87e89dd..b0ea5eb0c3b4 100644
 --- a/kernel/extable.c
 +++ b/kernel/extable.c
 @@ -34,7 +34,8 @@ u32 __initdata __visible main_extable_sort_needed = 1;
