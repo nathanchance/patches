@@ -1,7 +1,7 @@
-From ffc7e0c6186eb734ffdfcb83a0fd9b2b34a8fc0d Mon Sep 17 00:00:00 2001
+From ad73d5daf610558e2b4efa07f4c25216eb360f64 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 12 Jul 2019 11:23:32 -0700
-Subject: [PATCH 10/27] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
+Subject: [PATCH 10/26] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
 
 There are a few of these warnings remaining but I don't want to see them
 at the moment.

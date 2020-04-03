@@ -1,0 +1,47 @@
+From 8cd909b620842c1ad9b8078bcbcbc3fcb7648f21 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 2 Apr 2020 18:24:53 -0700
+Subject: [PATCH 26/26] remoteproc/omap: Fix set_load call in
+ omap_rproc_request_timer
+
+When building arm allyesconfig:
+
+drivers/remoteproc/omap_remoteproc.c:174:44: error: too many arguments
+to function call, expected 2, have 3
+        timer->timer_ops->set_load(timer->odt, 0, 0);
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~                ^
+1 error generated.
+
+This is due to commit 02e6d546e3bd ("clocksource/drivers/timer-ti-dm:
+Enable autoreload in set_pwm") in the clockevents tree interacting with
+commit e28edc571925 ("remoteproc/omap: Request a timer(s) for remoteproc
+usage") from the rpmsg tree.
+
+This should have been fixed during the merge of the remoteproc tree
+since it happened after the clockevents tree merge; however, it does not
+look like my email was noticed by either maintainer and I did not pay
+attention when the pull was sent since I was on CC.
+
+Fixes: c6570114316f ("Merge tag 'rproc-v5.7' of git://git.kernel.org/pub/scm/linux/kernel/git/andersson/remoteproc")
+Link: https://lore.kernel.org/lkml/20200327185055.GA22438@ubuntu-m2-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/remoteproc/omap_remoteproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/omap_remoteproc.c b/drivers/remoteproc/omap_remoteproc.c
+index cdb546f7232e..6955fab0a78b 100644
+--- a/drivers/remoteproc/omap_remoteproc.c
++++ b/drivers/remoteproc/omap_remoteproc.c
+@@ -171,7 +171,7 @@ static int omap_rproc_request_timer(struct device *dev, struct device_node *np,
+ 	}
+ 
+ 	/* clean counter, remoteproc code will set the value */
+-	timer->timer_ops->set_load(timer->odt, 0, 0);
++	timer->timer_ops->set_load(timer->odt, 0);
+ 
+ 	return 0;
+ }
+-- 
+2.26.0
+
