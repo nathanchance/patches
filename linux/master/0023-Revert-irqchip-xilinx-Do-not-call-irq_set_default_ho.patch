@@ -1,7 +1,7 @@
-From ac4da62ca28a513fbc8813e1e54d06c50a6849a5 Mon Sep 17 00:00:00 2001
+From 8dbe8111482e5cb533488a11e49db5d95e63639d Mon Sep 17 00:00:00 2001
 From: Marc Zyngier <maz@kernel.org>
 Date: Mon, 30 Mar 2020 10:41:58 +0100
-Subject: [PATCH 23/26] Revert "irqchip/xilinx: Do not call
+Subject: [PATCH 23/24] Revert "irqchip/xilinx: Do not call
  irq_set_default_host()"
 
 This reverts commit 9c2d4f525c002591f4e0c14a37663663aaba1656, which

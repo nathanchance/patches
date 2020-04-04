@@ -1,7 +1,7 @@
-From 15d1c3d11b20ab7594be3430e53239606c1fd9fa Mon Sep 17 00:00:00 2001
+From e67b31e89e046964af59a935e08a08b00e74a690 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 27 Mar 2020 10:52:25 -0700
-Subject: [PATCH 17/26] lib/dynamic_debug.c: use address-of operator on section
+Subject: [PATCH 17/24] lib/dynamic_debug.c: use address-of operator on section
  symbols
 
 Clang warns:
@@ -30,10 +30,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-index c60409138e13..74f9fc319168 100644
+index aae17d9522e5..8f199f403ab5 100644
 --- a/lib/dynamic_debug.c
 +++ b/lib/dynamic_debug.c
-@@ -1013,7 +1013,7 @@ static int __init dynamic_debug_init(void)
+@@ -1031,7 +1031,7 @@ static int __init dynamic_debug_init(void)
  	int n = 0, entries = 0, modct = 0;
  	int verbose_bytes = 0;
  
