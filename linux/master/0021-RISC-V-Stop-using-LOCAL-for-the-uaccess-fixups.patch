@@ -1,7 +1,7 @@
-From c401913222182386f7c1e14c10192cefa5becb12 Mon Sep 17 00:00:00 2001
+From 5ead89a2814d893861ad1065f0e28989e46b3936 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Thu, 27 Feb 2020 11:16:28 -0800
-Subject: [PATCH 22/24] RISC-V: Stop using LOCAL for the uaccess fixups
+Subject: [PATCH 21/21] RISC-V: Stop using LOCAL for the uaccess fixups
 
 LLVM's integrated assembler doesn't support the LOCAL directive, which we're
 using when generating our uaccess fixup tables.  Luckily the table fragment is
