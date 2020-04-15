@@ -1,4 +1,4 @@
-From 7cc296deb3b2f6928ae5bc461b19aabe40e58496 Mon Sep 17 00:00:00 2001
+From 26a3964b74b66007273aa4c0a55e0df5ca4a98a2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 22 Oct 2019 17:17:04 -0700
 Subject: [PATCH 12/12] usb: gadget: udc: bdc: Remove unnecessary NULL checks
@@ -42,5 +42,5 @@ index a4d9b5e1e50e..d49c6dc1082d 100644
  
  	dev_dbg(bdc->dev, "%s ep:%s status:%d\n", __func__, ep->name, status);
 -- 
-2.26.0
+2.26.1
 
