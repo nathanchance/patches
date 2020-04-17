@@ -1,0 +1,80 @@
+From d5b744b9520910a71749b52da922e1858daf3ede Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 16 Apr 2020 11:21:12 -0700
+Subject: [PATCH 12/12] mmc: sdhci-of-arasan: Remove uninitialized ret
+ variables
+
+Clang warns:
+
+drivers/mmc/host/sdhci-of-arasan.c:784:9: warning: variable 'ret' is
+uninitialized when used here [-Wuninitialized]
+        return ret;
+               ^~~
+drivers/mmc/host/sdhci-of-arasan.c:738:9: note: initialize the variable
+'ret' to silence this warning
+        int ret;
+               ^
+                = 0
+drivers/mmc/host/sdhci-of-arasan.c:860:9: warning: variable 'ret' is
+uninitialized when used here [-Wuninitialized]
+        return ret;
+               ^~~
+drivers/mmc/host/sdhci-of-arasan.c:810:9: note: initialize the variable
+'ret' to silence this warning
+        int ret;
+               ^
+                = 0
+2 warnings generated.
+
+This looks like a copy paste error. Neither function has handling that
+needs ret so just remove it and return 0 directly.
+
+Fixes: f73e66a36772 ("sdhci: arasan: Add support for Versal Tap Delays")
+Link: https://github.com/ClangBuiltLinux/linux/issues/996
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/mmc/host/sdhci-of-arasan.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
+index 16e26c217a77..18bf0e76b1eb 100644
+--- a/drivers/mmc/host/sdhci-of-arasan.c
++++ b/drivers/mmc/host/sdhci-of-arasan.c
+@@ -735,7 +735,6 @@ static int sdhci_versal_sdcardclk_set_phase(struct clk_hw *hw, int degrees)
+ 		container_of(clk_data, struct sdhci_arasan_data, clk_data);
+ 	struct sdhci_host *host = sdhci_arasan->host;
+ 	u8 tap_delay, tap_max = 0;
+-	int ret;
+ 
+ 	/*
+ 	 * This is applicable for SDHCI_SPEC_300 and above
+@@ -781,7 +780,7 @@ static int sdhci_versal_sdcardclk_set_phase(struct clk_hw *hw, int degrees)
+ 		sdhci_writel(host, regval, SDHCI_ARASAN_OTAPDLY_REGISTER);
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct clk_ops versal_sdcardclk_ops = {
+@@ -807,7 +806,6 @@ static int sdhci_versal_sampleclk_set_phase(struct clk_hw *hw, int degrees)
+ 		container_of(clk_data, struct sdhci_arasan_data, clk_data);
+ 	struct sdhci_host *host = sdhci_arasan->host;
+ 	u8 tap_delay, tap_max = 0;
+-	int ret;
+ 
+ 	/*
+ 	 * This is applicable for SDHCI_SPEC_300 and above
+@@ -857,7 +855,7 @@ static int sdhci_versal_sampleclk_set_phase(struct clk_hw *hw, int degrees)
+ 		sdhci_writel(host, regval, SDHCI_ARASAN_ITAPDLY_REGISTER);
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct clk_ops versal_sampleclk_ops = {
+-- 
+2.26.1
+
