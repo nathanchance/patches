@@ -1,0 +1,41 @@
+From 2a537e725bd1530777bc6a8394cf57bef4590a6a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 12 Jul 2019 11:23:32 -0700
+Subject: [PATCH 09/14] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
+
+There are a few of these warnings remaining but I don't want to see them
+at the moment.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/s390/configs/defconfig | 1 -
+ lib/Kconfig.debug           | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/s390/configs/defconfig b/arch/s390/configs/defconfig
+index 7cd0648c1f4e..2345cca3e28b 100644
+--- a/arch/s390/configs/defconfig
++++ b/arch/s390/configs/defconfig
+@@ -734,7 +734,6 @@ CONFIG_PRINTK_TIME=y
+ CONFIG_DEBUG_INFO=y
+ CONFIG_DEBUG_INFO_DWARF4=y
+ CONFIG_GDB_SCRIPTS=y
+-CONFIG_FRAME_WARN=1024
+ CONFIG_DEBUG_SECTION_MISMATCH=y
+ CONFIG_MAGIC_SYSRQ=y
+ CONFIG_DEBUG_MEMORY_INIT=y
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 21d9c5f6e7ec..581495c3f112 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -271,6 +271,7 @@ config ENABLE_MUST_CHECK
+ config FRAME_WARN
+ 	int "Warn for stack frames larger than"
+ 	range 0 8192
++	default 0 if CC_IS_CLANG
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+ 	default 1280 if (!64BIT && PARISC)
+ 	default 1024 if (!64BIT && !PARISC)
+-- 
+2.26.1
+
