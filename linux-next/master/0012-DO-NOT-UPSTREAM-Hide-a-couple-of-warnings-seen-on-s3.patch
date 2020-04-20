@@ -1,0 +1,42 @@
+From 1899603cba7d863b1f2fbcd74dfad802bf63cd1e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 17 Apr 2020 13:43:14 -0700
+Subject: [PATCH 12/12] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
+ allyesconfig
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/997
+Link: https://lore.kernel.org/netdev/20200417004120.GA18080@ubuntu-s3-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/input/joystick/analog.c            | 1 -
+ drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
+index 2b625ebef914..3935f8c95eef 100644
+--- a/drivers/input/joystick/analog.c
++++ b/drivers/input/joystick/analog.c
+@@ -157,7 +157,6 @@ static unsigned long analog_faketime = 0;
+ #define GET_TIME(x)     do { x = analog_faketime++; } while(0)
+ #define DELTA(x,y)	((y)-(x))
+ #define TIME_NAME	"Unreliable"
+-#warning Precise timer not defined for this architecture.
+ #endif
+ 
+ static inline u64 get_time(void)
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+index 543a310ec102..f3c146f62072 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+@@ -622,7 +622,7 @@
+ 
+ /* RX buffer constants */
+ #define MVPP2_SKB_SHINFO_SIZE \
+-	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
++	SKB_DATA_ALIGN(((int)(sizeof(struct skb_shared_info))))
+ 
+ #define MVPP2_RX_PKT_SIZE(mtu) \
+ 	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
+-- 
+2.26.1
+
