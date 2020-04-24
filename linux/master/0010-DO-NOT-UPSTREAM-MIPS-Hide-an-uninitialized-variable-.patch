@@ -1,4 +1,4 @@
-From 37a21d2f1fb0f70b6f1aa209272ce9aaa79887b5 Mon Sep 17 00:00:00 2001
+From fab78c36fc6d6bfa92facca386f5a4a59c0c2d13 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 3 Aug 2019 14:50:47 -0700
 Subject: [PATCH 10/14] DO-NOT-UPSTREAM: MIPS: Hide an uninitialized variable
@@ -30,5 +30,5 @@ index 09d5deea747f..dc020fadda35 100644
  #ifdef CONFIG_64BIT
  	else if ((long long)sp >= (long long)PHYS_TO_XKPHYS(0, 0) &&
 -- 
-2.26.1
+2.26.2
 
