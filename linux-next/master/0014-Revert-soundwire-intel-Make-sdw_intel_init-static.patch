@@ -1,0 +1,33 @@
+From cc94fd0f2ff50f493e1b38931283f780b0b5cdb6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 24 Apr 2020 12:58:49 -0700
+Subject: [PATCH 14/14] Revert "soundwire: intel: Make sdw_intel_init static"
+
+This reverts commit 2978a43e7690edfc816f2002aacc1bb382f50f11.
+
+You don't fix a sparse warning and cause a gcc/clang warning in the
+process...
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1006
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/soundwire/intel_init.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/soundwire/intel_init.c b/drivers/soundwire/intel_init.c
+index ad7053463889..4b769409f6f8 100644
+--- a/drivers/soundwire/intel_init.c
++++ b/drivers/soundwire/intel_init.c
+@@ -190,8 +190,7 @@ static acpi_status sdw_intel_acpi_cb(acpi_handle handle, u32 level,
+  * This scans the namespace and creates SoundWire link controller devices
+  * based on the info queried.
+  */
+-static void *sdw_intel_init(acpi_handle *parent_handle,
+-			    struct sdw_intel_res *res)
++void *sdw_intel_init(acpi_handle *parent_handle, struct sdw_intel_res *res)
+ {
+ 	acpi_status status;
+ 
+-- 
+2.26.2
+
