@@ -1,7 +1,7 @@
-From 77bb32ddf4cfc8a674416061e3d040862d199572 Mon Sep 17 00:00:00 2001
+From 6ea2764a395d78bd48b30cc8f30f2a33b3fcbe6b Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 24 Apr 2020 14:04:19 +0100
-Subject: [PATCH 13/15] iio: adc: ad7476: remove redundant null check on an
+Subject: [PATCH 13/16] iio: adc: ad7476: remove redundant null check on an
  array
 
 The null check on st->chip_info->convst_channel is redundant because
@@ -10,7 +10,9 @@ and this can never be null. Fix this by removing the null check.
 
 Addresses-Coverity: ("Array compared against 0")
 Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Link: https://lore.kernel.org/lkml/20200424130419.22940-1-colin.king@canonical.com/
+Reviewed-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://git.kernel.org/jic23/iio/c/4d22ab7446c69f7ebbc8c8a486ebd9aba68823c0
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/iio/adc/ad7476.c | 2 +-
