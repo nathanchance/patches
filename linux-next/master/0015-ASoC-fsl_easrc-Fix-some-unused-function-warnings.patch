@@ -1,7 +1,7 @@
-From fdf0c73a57d7e545f5c8ea17d970329a95fad3ae Mon Sep 17 00:00:00 2001
+From d171b96caf47c26577f69ffba2bfa64dd140bcae Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 26 Apr 2020 05:14:34 -0700
-Subject: [PATCH 16/17] ASoC: fsl_easrc: Fix some unused function warnings
+Subject: [PATCH 15/15] ASoC: fsl_easrc: Fix some unused function warnings
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 125 insertions(+), 125 deletions(-)
 
 diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 97658e1f4989..3490e21e96d6 100644
+index 20326bffab64..d7c5a6f4bddd 100644
 --- a/sound/soc/fsl/fsl_easrc.c
 +++ b/sound/soc/fsl/fsl_easrc.c
 @@ -300,89 +300,6 @@ static inline uint32_t bits_taps_to_val(unsigned int t)
@@ -102,7 +102,7 @@ index 97658e1f4989..3490e21e96d6 100644
  /**
   *  Scale filter coefficients (64 bits float)
   *  For input float32 normalized range (1.0,-1.0) -> output int[16,24,32]:
-@@ -1799,48 +1716,6 @@ static void fsl_easrc_dump_firmware(struct fsl_asrc *easrc)
+@@ -1804,48 +1721,6 @@ static void fsl_easrc_dump_firmware(struct fsl_asrc *easrc)
  }
  #endif
  
@@ -151,7 +151,7 @@ index 97658e1f4989..3490e21e96d6 100644
  static irqreturn_t fsl_easrc_isr(int irq, void *dev_id)
  {
  	struct fsl_asrc *easrc = (struct fsl_asrc *)dev_id;
-@@ -1993,6 +1868,131 @@ static int fsl_easrc_remove(struct platform_device *pdev)
+@@ -1998,6 +1873,131 @@ static int fsl_easrc_remove(struct platform_device *pdev)
  }
  
  #ifdef CONFIG_PM
