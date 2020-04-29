@@ -1,7 +1,7 @@
 From dbb384586da849c19c106ed9fbbdc3eae8bb2a51 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:28:08 +0200
-Subject: [PATCH 15/17] ASoC: fsl_easrc: mark PM functions __maybe_unused
+Subject: [PATCH 15/18] ASoC: fsl_easrc: mark PM functions __maybe_unused
 
 ifdefs are hard, and in this driver the suspend/resume functions are
 the only callers of some other helpers that trigger a harmless warning
