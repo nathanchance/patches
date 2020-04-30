@@ -1,7 +1,7 @@
-From be60918daac3e1daa8decba45b2cd3aae773d878 Mon Sep 17 00:00:00 2001
+From 79695c7b66d4e5163e6be135118297d56e0b56f5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 28 Apr 2020 19:55:25 -0700
-Subject: [PATCH 18/18] drm/i915/gt: Avoid uninitialized use of rpcurupei in
+Subject: [PATCH 16/16] drm/i915/gt: Avoid uninitialized use of rpcurupei in
  frequency_show
 
 When building with clang + -Wuninitialized:
