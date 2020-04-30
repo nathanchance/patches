@@ -1,4 +1,4 @@
-From 35790f8df3eccf5d3eb86c651b5a6558952a840c Mon Sep 17 00:00:00 2001
+From 30cf5b4770669cac40d22430a1e66a77062f9597 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 21:18:32 -0700
 Subject: [PATCH 07/13] arch/riscv: vdso: Only add -no-pie with GCC
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 33b16f4212f7..7c729ad114d0 100644
+index a4ee3a0e7d20..f47517c5d6c0 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
 @@ -54,8 +54,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
