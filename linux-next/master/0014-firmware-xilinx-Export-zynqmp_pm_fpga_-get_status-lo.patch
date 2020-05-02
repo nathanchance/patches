@@ -1,0 +1,44 @@
+From a525d3d1e8f8fb20f3b9725cbd9b54cfc078d07a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 1 May 2020 19:57:15 -0700
+Subject: [PATCH 14/16] firmware: xilinx: Export
+ zynqmp_pm_fpga_{get_status,load}
+
+When building arm64 allmodconfig:
+
+ERROR: modpost: "zynqmp_pm_fpga_load" [drivers/fpga/zynqmp-fpga.ko] undefined!
+ERROR: modpost: "zynqmp_pm_fpga_get_status" [drivers/fpga/zynqmp-fpga.ko] undefined!
+
+These functions were added to drivers/fpga/zynqmp-fpga.c but not
+exported so the module build breaks. Export them so that they can be
+used in modules properly.
+
+Fixes: 4db8180ffe7c ("firmware: xilinx: Remove eemi ops for fpga related APIs")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/firmware/xilinx/zynqmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/firmware/xilinx/zynqmp.c b/drivers/firmware/xilinx/zynqmp.c
+index bfaf29a58eac..8095fa84d5d7 100644
+--- a/drivers/firmware/xilinx/zynqmp.c
++++ b/drivers/firmware/xilinx/zynqmp.c
+@@ -755,6 +755,7 @@ int zynqmp_pm_fpga_load(const u64 address, const u32 size, const u32 flags)
+ 	return zynqmp_pm_invoke_fn(PM_FPGA_LOAD, lower_32_bits(address),
+ 				   upper_32_bits(address), size, flags, NULL);
+ }
++EXPORT_SYMBOL_GPL(zynqmp_pm_fpga_load);
+ 
+ /**
+  * zynqmp_pm_fpga_get_status - Read value from PCAP status register
+@@ -778,6 +779,7 @@ int zynqmp_pm_fpga_get_status(u32 *value)
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL_GPL(zynqmp_pm_fpga_get_status);
+ 
+ /**
+  * zynqmp_pm_init_finalize() - PM call to inform firmware that the caller
+-- 
+2.26.2
+
