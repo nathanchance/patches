@@ -1,7 +1,7 @@
-From 3fadaafc31d4673efbeaeb0b4ff16ba5e5a2ba10 Mon Sep 17 00:00:00 2001
+From d609dc1a154b16079308e2e7c61e87e887628891 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 1 May 2020 20:07:57 -0700
-Subject: [PATCH 15/16] drm/amdgpu: Avoid integer overflow in
+Subject: [PATCH 15/15] drm/amdgpu: Avoid integer overflow in
  amdgpu_device_suspend_display_audio
 
 When building with Clang:
