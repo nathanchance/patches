@@ -1,0 +1,78 @@
+From 032723bddb65f47716fb67c4885dd732ec012160 Mon Sep 17 00:00:00 2001
+From: Damien Le Moal <damien.lemoal@wdc.com>
+Date: Thu, 7 May 2020 11:35:26 +0900
+Subject: [PATCH 13/13] scsi_debug: Fix compilation error on 32bits arch
+
+Allowing a non-power-of-2 zone size forces the use of direct division
+operations of 64bits sector values to obtain a zone number or number of
+zones. Doing so without using do_div() leads to compilation errors on
+32bits architecture.
+
+Devices with a zone size that is not a power of 2 do not exist today so
+allowing their emulation is of limited interest, as the sd driver will
+not support them anyway. So to fix this compilation error, instead of
+using do_div() for sector values divisions, simply disallow zone size
+values that are not a power of 2 value, allowing to use bitshift for
+divisions in all cases.
+
+Fixes: 98e0a689868c ("scsi: scsi_debug: Add zone_size_mb module parameter")
+Fixes: f0d1cf9378bd ("scsi: scsi_debug: Add ZBC zone commands")
+Signed-off-by: Damien Le Moal <damien.lemoal@wdc.com>
+Link: https://lore.kernel.org/linux-scsi/20200507023526.221574-1-damien.lemoal@wdc.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/scsi/scsi_debug.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index d3ea16f3c12e..105e563d87b4 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -2657,13 +2657,7 @@ static inline bool sdebug_dev_is_zoned(struct sdebug_dev_info *devip)
+ static struct sdeb_zone_state *zbc_zone(struct sdebug_dev_info *devip,
+ 					unsigned long long lba)
+ {
+-	unsigned int zno;
+-
+-	if (devip->zsize_shift)
+-		zno = lba >> devip->zsize_shift;
+-	else
+-		zno = lba / devip->zsize;
+-	return &devip->zstate[zno];
++	return &devip->zstate[lba >> devip->zsize_shift];
+ }
+ 
+ static inline bool zbc_zone_is_conv(struct sdeb_zone_state *zsp)
+@@ -4306,7 +4300,7 @@ static int resp_report_zones(struct scsi_cmnd *scp,
+ 		return check_condition_result;
+ 	}
+ 
+-	max_zones = devip->nr_zones - zs_lba / devip->zsize;
++	max_zones = devip->nr_zones - (zs_lba >> devip->zsize_shift);
+ 	rep_max_zones = min((alloc_len - 64) >> ilog2(RZONES_DESC_HD),
+ 			    max_zones);
+ 
+@@ -4826,6 +4820,10 @@ static int sdebug_device_create_zones(struct sdebug_dev_info *devip)
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		if (!is_power_of_2(sdeb_zbc_zone_size_mb)) {
++			pr_err("Zone size is not a power of 2\n");
++			return -EINVAL;
++		}
+ 		devip->zsize = (sdeb_zbc_zone_size_mb * SZ_1M)
+ 			>> ilog2(sdebug_sector_size);
+ 		if (devip->zsize >= capacity) {
+@@ -4834,8 +4832,7 @@ static int sdebug_device_create_zones(struct sdebug_dev_info *devip)
+ 		}
+ 	}
+ 
+-	if (is_power_of_2(devip->zsize))
+-		devip->zsize_shift = ilog2(devip->zsize);
++	devip->zsize_shift = ilog2(devip->zsize);
+ 	devip->nr_zones = (capacity + devip->zsize - 1) >> devip->zsize_shift;
+ 
+ 	if (sdeb_zbc_nr_conv >= devip->nr_zones) {
+-- 
+2.26.2
+
