@@ -1,22 +1,23 @@
-From 961c7a611f74309914bf9faea9a2b16f95ea4c22 Mon Sep 17 00:00:00 2001
+From 861b74f25c8270aff0eba8500cf64b0e6b42eaf8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Fri, 8 May 2020 12:24:25 -0700
-Subject: [PATCH 14/15] xfs: Remove unused variable in xfs_buf_bio_end_io
+Date: Fri, 8 May 2020 13:20:48 -0700
+Subject: [PATCH 14/15] xfs: Mark mp as maybe unused in xfs_buf_bio_end_io
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- fs/xfs/xfs_buf.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/xfs/xfs_buf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/xfs/xfs_buf.c b/fs/xfs/xfs_buf.c
-index d7279edac98b..14e560a6b295 100644
+index d7279edac98b..d3edbf928dcd 100644
 --- a/fs/xfs/xfs_buf.c
 +++ b/fs/xfs/xfs_buf.c
-@@ -1289,7 +1289,6 @@ xfs_buf_bio_end_io(
+@@ -1289,7 +1289,7 @@ xfs_buf_bio_end_io(
  	struct bio		*bio)
  {
  	struct xfs_buf		*bp = (struct xfs_buf *)bio->bi_private;
 -	struct xfs_mount	*mp = bp->b_mount;
++	struct xfs_mount	*mp __maybe_unused = bp->b_mount;
  
  	if (!bio->bi_status &&
  	    (bp->b_flags & XBF_WRITE) && (bp->b_flags & XBF_ASYNC) &&
