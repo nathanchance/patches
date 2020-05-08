@@ -1,4 +1,4 @@
-From ba40ec7e9201f19e2bb9fc0cc8b3c294d268dc73 Mon Sep 17 00:00:00 2001
+From c75a650c0237b58b85e099c7d21b2aad3384a29b Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:48 +0100
 Subject: [PATCH 03/13] futex: mark futex_detect_cmpxchg() as 'noinline'
