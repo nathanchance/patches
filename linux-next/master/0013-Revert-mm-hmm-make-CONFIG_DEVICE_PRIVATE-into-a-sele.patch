@@ -1,7 +1,7 @@
-From 5e9089a9469223e2a1a26a3d325474de605d3e63 Mon Sep 17 00:00:00 2001
+From c7d2cb62412fcac8a0a1f1cf26e481427591098e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 11 May 2020 16:18:26 -0700
-Subject: [PATCH 13/13] Revert "mm/hmm: make CONFIG_DEVICE_PRIVATE into a
+Date: Tue, 12 May 2020 03:51:40 -0700
+Subject: [PATCH 13/14] Revert "mm/hmm: make CONFIG_DEVICE_PRIVATE into a
  select"
 
 This reverts commit d2c63df2242ee20deda58506eb573356f4f6f2ac.
@@ -13,8 +13,9 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/powerpc/Kconfig            | 2 +-
  drivers/gpu/drm/nouveau/Kconfig | 2 +-
+ lib/Kconfig.debug               | 2 +-
  mm/Kconfig                      | 7 ++++++-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
 index ab40b88eb323..bed534711128 100644
@@ -45,6 +46,19 @@ index af5793f3e7c2..d6e4ae1ef705 100644
  	select HMM_MIRROR
  	select MMU_NOTIFIER
  	default n
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 2015a77b4d91..f7d80d6241b8 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2273,7 +2273,7 @@ config TEST_MEMINIT
+ config TEST_HMM
+ 	tristate "Test HMM (Heterogeneous Memory Management)"
+ 	depends on TRANSPARENT_HUGEPAGE
+-	select DEVICE_PRIVATE
++	depends on DEVICE_PRIVATE
+ 	select HMM_MIRROR
+ 	select MMU_NOTIFIER
+ 	help
 diff --git a/mm/Kconfig b/mm/Kconfig
 index 761a54d1c32c..db626b8d4fdb 100644
 --- a/mm/Kconfig
