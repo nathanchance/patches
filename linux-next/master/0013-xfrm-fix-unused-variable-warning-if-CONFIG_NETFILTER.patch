@@ -1,7 +1,7 @@
 From 4329207ab67ec9ad2804161ac000dccabd26a9e2 Mon Sep 17 00:00:00 2001
 From: Florian Westphal <fw@strlen.de>
 Date: Mon, 11 May 2020 10:33:42 +0200
-Subject: [PATCH 13/13] xfrm: fix unused variable warning if CONFIG_NETFILTER=n
+Subject: [PATCH 13/14] xfrm: fix unused variable warning if CONFIG_NETFILTER=n
 
 After recent change 'x' is only used when CONFIG_NETFILTER is set:
 

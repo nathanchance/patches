@@ -1,7 +1,7 @@
 From 0db7e26bb068fba09e6e75cec0c3e3fa604126e7 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 24 Apr 2020 14:04:19 +0100
-Subject: [PATCH 12/13] iio: adc: ad7476: remove redundant null check on an
+Subject: [PATCH 12/14] iio: adc: ad7476: remove redundant null check on an
  array
 
 The null check on st->chip_info->convst_channel is redundant because
