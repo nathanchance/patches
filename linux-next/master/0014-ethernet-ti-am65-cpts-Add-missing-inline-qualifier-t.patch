@@ -1,0 +1,63 @@
+From 6b00aee5e8f6b061187deb1cf0ce1e1e64b9d074 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 15 May 2020 15:27:02 -0700
+Subject: [PATCH 14/14] ethernet: ti: am65-cpts: Add missing inline qualifier
+ to stub functions
+
+When building with Clang:
+
+In file included from drivers/net/ethernet/ti/am65-cpsw-ethtool.c:15:
+drivers/net/ethernet/ti/am65-cpts.h:58:12: warning: unused function
+'am65_cpts_ns_gettime' [-Wunused-function]
+static s64 am65_cpts_ns_gettime(struct am65_cpts *cpts)
+           ^
+drivers/net/ethernet/ti/am65-cpts.h:63:12: warning: unused function
+'am65_cpts_estf_enable' [-Wunused-function]
+static int am65_cpts_estf_enable(struct am65_cpts *cpts,
+           ^
+drivers/net/ethernet/ti/am65-cpts.h:69:13: warning: unused function
+'am65_cpts_estf_disable' [-Wunused-function]
+static void am65_cpts_estf_disable(struct am65_cpts *cpts, int idx)
+            ^
+3 warnings generated.
+
+These functions need to be marked as inline, which adds __maybe_unused,
+to avoid these warnings, which is the pattern for stub functions.
+
+Fixes: ec008fa2a9e5 ("ethernet: ti: am65-cpts: add routines to support taprio offload")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1026
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/ti/am65-cpts.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/ethernet/ti/am65-cpts.h b/drivers/net/ethernet/ti/am65-cpts.h
+index 98c1960b20b9..cf9fbc28fd03 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.h
++++ b/drivers/net/ethernet/ti/am65-cpts.h
+@@ -55,18 +55,18 @@ static inline void am65_cpts_rx_enable(struct am65_cpts *cpts, bool en)
+ {
+ }
+ 
+-static s64 am65_cpts_ns_gettime(struct am65_cpts *cpts)
++static inline s64 am65_cpts_ns_gettime(struct am65_cpts *cpts)
+ {
+ 	return 0;
+ }
+ 
+-static int am65_cpts_estf_enable(struct am65_cpts *cpts,
+-				 int idx, struct am65_cpts_estf_cfg *cfg)
++static inline int am65_cpts_estf_enable(struct am65_cpts *cpts, int idx,
++					struct am65_cpts_estf_cfg *cfg)
+ {
+ 	return 0;
+ }
+ 
+-static void am65_cpts_estf_disable(struct am65_cpts *cpts, int idx)
++static inline void am65_cpts_estf_disable(struct am65_cpts *cpts, int idx)
+ {
+ }
+ #endif
+-- 
+2.26.2
+
