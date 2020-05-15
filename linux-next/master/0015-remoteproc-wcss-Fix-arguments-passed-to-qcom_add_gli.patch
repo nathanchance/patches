@@ -1,0 +1,37 @@
+From cd8e4dfcbc0a47ade5ecb83e94f6417e87117651 Mon Sep 17 00:00:00 2001
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+Date: Thu, 14 May 2020 11:58:56 -0700
+Subject: [PATCH 15/15] remoteproc: wcss: Fix arguments passed to
+ qcom_add_glink_subdev()
+
+Recently qcom_add_glink_subdev() was extended to also take the glink_ssr
+identifier as an argument and I missed this while applying '8a226e2c71bb
+("remoteproc: wcss: add support for rpmsg communication")'.
+
+Fixes: 8a226e2c71bb ("remoteproc: wcss: add support for rpmsg communication")
+Reported-by: kbuild test robot <lkp@intel.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20200514185856.1598945-1-bjorn.andersson@linaro.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://git.kernel.org/andersson/remoteproc/c/25f9f5a2107fdc6510463be4e55012d17d83ab2b
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index 48d16d81f94d..88c76b9417fa 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -560,7 +560,7 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto free_rproc;
+ 
+-	qcom_add_glink_subdev(rproc, &wcss->glink_subdev);
++	qcom_add_glink_subdev(rproc, &wcss->glink_subdev, "q6wcss");
+ 	qcom_add_ssr_subdev(rproc, &wcss->ssr_subdev, "q6wcss");
+ 
+ 	ret = rproc_add(rproc);
+-- 
+2.26.2
+

@@ -1,7 +1,7 @@
 From bdcc95a9aafc4add419613de88a8743559ee45b6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 13 May 2020 01:41:38 -0700
-Subject: [PATCH 13/13] dm zoned: Avoid 64-bit division error in
+Subject: [PATCH 13/15] dm zoned: Avoid 64-bit division error in
  dmz_fixup_devices
 
 When building arm32 allyesconfig:

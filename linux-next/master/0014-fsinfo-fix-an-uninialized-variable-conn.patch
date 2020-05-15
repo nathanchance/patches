@@ -1,0 +1,34 @@
+From cb6ddfc81d4b821a8f943a3d9a68adc619de4d7e Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Thu, 14 May 2020 19:19:26 +0100
+Subject: [PATCH 14/15] fsinfo: fix an uninialized variable 'conn'
+
+Variable conn is not initialized and can potentially contain
+garbage causing a false -EPERM return on the !conn check.
+Fix this by initializing it to false.
+
+Addresses-Coverity: ("Uninitialized scalar variable")
+Fixes: f2494de388bd ("fsinfo: Add an attribute that lists all the visible mounts in a namespace")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Link: https://lore.kernel.org/lkml/20200514181926.16571-1-colin.king@canonical.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 3fd24575756b..ae489cbac467 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4433,7 +4433,7 @@ int fsinfo_generic_mount_all(struct path *path, struct fsinfo_context *ctx)
+ 	struct mnt_namespace *ns;
+ 	struct mount *m, *p;
+ 	struct path chroot;
+-	bool conn;
++	bool conn = false;
+ 
+ 	m = real_mount(path->mnt);
+ 	ns = m->mnt_ns;
+-- 
+2.26.2
+
