@@ -1,4 +1,4 @@
-From de42554d733b6a52ed7255a1a6ea1ca8a74bb7e2 Mon Sep 17 00:00:00 2001
+From eee72403d2067d4e04e1d25f557081fb34d7c4e4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:08:06 -0700
 Subject: [PATCH 05/13] drm/i915: Avoid false -Wsometimes-uninitialized warning
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index c0df71d7d0ff..46e35cb6fb75 100644
+index e2b78db685ea..2ec8b274aec4 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1477,8 +1477,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+@@ -1483,8 +1483,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
