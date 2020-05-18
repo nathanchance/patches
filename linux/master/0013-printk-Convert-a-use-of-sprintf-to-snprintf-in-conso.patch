@@ -1,4 +1,4 @@
-From 6588f453bffe0e4e057e0fa1ed961a50db77b98e Mon Sep 17 00:00:00 2001
+From 6ae7659bc8f941cc7e94fa38d7a1ff664178d532 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 30 Jan 2020 15:16:44 -0700
 Subject: [PATCH 13/13] printk: Convert a use of sprintf to snprintf in
@@ -51,5 +51,5 @@ index 9a9b6156270b..dc8fb3b2f3c8 100644
  			/* messages are gone, move to first one */
  			console_seq = log_first_seq;
 -- 
-2.26.2
+2.27.0.rc0
 

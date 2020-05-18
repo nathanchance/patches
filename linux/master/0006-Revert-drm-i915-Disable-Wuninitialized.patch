@@ -1,4 +1,4 @@
-From 375f5c1266d0180fb5236d4895d0c9945427548c Mon Sep 17 00:00:00 2001
+From a6976244b6ebc5b3ac651c05e4757a0d3a770751 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
 Subject: [PATCH 06/13] Revert "drm/i915: Disable -Wuninitialized"
@@ -27,5 +27,5 @@ index 6cd1f6253814..928538e5a439 100644
  
  # Fine grained warnings disable
 -- 
-2.26.2
+2.27.0.rc0
 
