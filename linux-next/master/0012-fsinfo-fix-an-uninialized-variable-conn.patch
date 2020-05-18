@@ -1,7 +1,7 @@
-From e8b44926cc917c56ae2cb2039f0b9e16d87eed2a Mon Sep 17 00:00:00 2001
+From 959f34bb29a937e06a618c30ef18e6b5af10f5cf Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Thu, 14 May 2020 19:19:26 +0100
-Subject: [PATCH 13/15] fsinfo: fix an uninialized variable 'conn'
+Subject: [PATCH 12/12] fsinfo: fix an uninialized variable 'conn'
 
 Variable conn is not initialized and can potentially contain
 garbage causing a false -EPERM return on the !conn check.
@@ -17,10 +17,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index a175ceca4fdf..7b25307ef046 100644
+index e6e6f48c8526..bd480392aadd 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -4492,7 +4492,7 @@ int fsinfo_generic_mount_all(struct path *path, struct fsinfo_context *ctx)
+@@ -4496,7 +4496,7 @@ int fsinfo_generic_mount_all(struct path *path, struct fsinfo_context *ctx)
  	struct mnt_namespace *ns;
  	struct mount *m, *p;
  	struct path chroot;
@@ -30,5 +30,5 @@ index a175ceca4fdf..7b25307ef046 100644
  	m = real_mount(path->mnt);
  	ns = m->mnt_ns;
 -- 
-2.26.2
+2.27.0.rc0
 
