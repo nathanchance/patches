@@ -1,7 +1,7 @@
 From 4072ece821c64b97a899a0e212efa8648409a778 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Thu, 14 May 2020 19:19:26 +0100
-Subject: [PATCH 12/12] fsinfo: fix an uninialized variable 'conn'
+Subject: [PATCH 12/13] fsinfo: fix an uninialized variable 'conn'
 
 Variable conn is not initialized and can potentially contain
 garbage causing a false -EPERM return on the !conn check.
