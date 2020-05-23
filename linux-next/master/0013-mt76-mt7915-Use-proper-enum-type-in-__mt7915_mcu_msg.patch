@@ -1,0 +1,56 @@
+From 242ed337230f38ea8fe29be74e10a37d75ea7b9d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 22 May 2020 21:13:30 -0700
+Subject: [PATCH 13/14] mt76: mt7915: Use proper enum type in
+ __mt7915_mcu_msg_send
+
+Clang warns:
+
+drivers/net/wireless/mediatek/mt76/mt7915/mcu.c:232:9: warning: implicit
+conversion from enumeration type 'enum mt76_txq_id' to different
+enumeration type 'enum mt7915_txq_id' [-Wenum-conversion]
+                txq = MT_TXQ_FWDL;
+                    ~ ^~~~~~~~~~~
+drivers/net/wireless/mediatek/mt76/mt7915/mcu.c:239:9: warning: implicit
+conversion from enumeration type 'enum mt76_txq_id' to different
+enumeration type 'enum mt7915_txq_id' [-Wenum-conversion]
+                txq = MT_TXQ_MCU_WA;
+                    ~ ^~~~~~~~~~~~~
+drivers/net/wireless/mediatek/mt76/mt7915/mcu.c:243:9: warning: implicit
+conversion from enumeration type 'enum mt76_txq_id' to different
+enumeration type 'enum mt7915_txq_id' [-Wenum-conversion]
+                txq = MT_TXQ_MCU;
+                    ~ ^~~~~~~~~~
+drivers/net/wireless/mediatek/mt76/mt7915/mcu.c:287:36: warning:
+implicit conversion from enumeration type 'enum mt7915_txq_id' to
+different enumeration type 'enum mt76_txq_id' [-Wenum-conversion]
+        return mt76_tx_queue_skb_raw(dev, txq, skb, 0);
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+
+txq should be a "enum mt76_txq_id" as values of that type are the only
+ones assigned to it and that is the type that mt76_tx_queue_skb_raw
+expects.
+
+Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1035
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index f00ad2b66761..916f664e964e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -220,7 +220,7 @@ static int __mt7915_mcu_msg_send(struct mt7915_dev *dev, struct sk_buff *skb,
+ {
+ 	struct mt7915_mcu_txd *mcu_txd;
+ 	u8 seq, pkt_fmt, qidx;
+-	enum mt7915_txq_id txq;
++	enum mt76_txq_id txq;
+ 	__le32 *txd;
+ 	u32 val;
+ 
+-- 
+2.27.0.rc0
+

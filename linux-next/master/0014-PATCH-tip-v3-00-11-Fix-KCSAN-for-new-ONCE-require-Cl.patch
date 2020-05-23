@@ -1,0 +1,285 @@
+From edeed890e48b9b1a57d165dc24d2019606272633 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 22 May 2020 21:24:11 -0700
+Subject: [PATCH 14/14] [PATCH -tip v3 00/11] Fix KCSAN for new ONCE (require
+ Clang 11)
+
+$ b4 am -S 20200521142047.169334-1-elver@google.com
+$ git ap v3_20200521_elver_fix_kcsan_for_new_once_require_clang_11.mbx
+$ git ac -m "[PATCH -tip v3 00/11] Fix KCSAN for new ONCE (require Clang 11)"
+
+Link: https://lore.kernel.org/lkml/20200521142047.169334-1-elver@google.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Documentation/dev-tools/kcsan.rst |  9 +-----
+ include/linux/compiler.h          | 54 ++++---------------------------
+ include/linux/compiler_types.h    | 32 ++++++++++++++++++
+ kernel/kcsan/core.c               | 43 ++++++++++++++++++++++++
+ lib/Kconfig.kcsan                 |  9 +++++-
+ scripts/Makefile.kcsan            | 15 ++++++++-
+ 6 files changed, 105 insertions(+), 57 deletions(-)
+
+diff --git a/Documentation/dev-tools/kcsan.rst b/Documentation/dev-tools/kcsan.rst
+index f4b5766f12cc..ce4bbd918648 100644
+--- a/Documentation/dev-tools/kcsan.rst
++++ b/Documentation/dev-tools/kcsan.rst
+@@ -8,8 +8,7 @@ approach to detect races. KCSAN's primary purpose is to detect `data races`_.
+ Usage
+ -----
+ 
+-KCSAN is supported in both GCC and Clang. With GCC it requires version 7.3.0 or
+-later. With Clang it requires version 7.0.0 or later.
++KCSAN requires Clang version 11 or later.
+ 
+ To enable KCSAN configure the kernel with::
+ 
+@@ -121,12 +120,6 @@ the below options are available:
+     static __no_kcsan_or_inline void foo(void) {
+         ...
+ 
+-  Note: Older compiler versions (GCC < 9) also do not always honor the
+-  ``__no_kcsan`` attribute on regular ``inline`` functions. If false positives
+-  with these compilers cannot be tolerated, for small functions where
+-  ``__always_inline`` would be appropriate, ``__no_kcsan_or_inline`` should be
+-  preferred instead.
+-
+ * To disable data race detection for a particular compilation unit, add to the
+   ``Makefile``::
+ 
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index eb0592dbb7f9..9bbfc4563e78 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -264,12 +264,12 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
+  */
+ #define data_race(expr)							\
+ ({									\
+-	__kcsan_disable_current();					\
+-	({								\
+-		__unqual_scalar_typeof(({ expr; })) __v = ({ expr; });	\
+-		__kcsan_enable_current();				\
+-		__v;							\
++	__unqual_scalar_typeof(({ expr; })) __v = ({			\
++		__kcsan_disable_current();				\
++		expr;							\
+ 	});								\
++	__kcsan_enable_current();					\
++	__v;								\
+ })
+ 
+ /*
+@@ -281,9 +281,7 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
+ 
+ #define __READ_ONCE_SCALAR(x)						\
+ ({									\
+-	typeof(x) *__xp = &(x);						\
+-	__unqual_scalar_typeof(x) __x = data_race(__READ_ONCE(*__xp));	\
+-	kcsan_check_atomic_read(__xp, sizeof(*__xp));			\
++	__unqual_scalar_typeof(x) __x = __READ_ONCE(x);			\
+ 	smp_read_barrier_depends();					\
+ 	(typeof(x))__x;							\
+ })
+@@ -299,50 +297,12 @@ do {									\
+ 	*(volatile typeof(x) *)&(x) = (val);				\
+ } while (0)
+ 
+-#define __WRITE_ONCE_SCALAR(x, val)					\
+-do {									\
+-	typeof(x) *__xp = &(x);						\
+-	kcsan_check_atomic_write(__xp, sizeof(*__xp));			\
+-	data_race(({ __WRITE_ONCE(*__xp, val); 0; }));			\
+-} while (0)
+-
+ #define WRITE_ONCE(x, val)						\
+ do {									\
+ 	compiletime_assert_rwonce_type(x);				\
+-	__WRITE_ONCE_SCALAR(x, val);					\
++	__WRITE_ONCE(x, val);						\
+ } while (0)
+ 
+-#ifdef CONFIG_KASAN
+-/*
+- * We can't declare function 'inline' because __no_sanitize_address conflicts
+- * with inlining. Attempt to inline it may cause a build failure.
+- *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=67368
+- * '__maybe_unused' allows us to avoid defined-but-not-used warnings.
+- */
+-# define __no_kasan_or_inline __no_sanitize_address notrace __maybe_unused
+-# define __no_sanitize_or_inline __no_kasan_or_inline
+-#else
+-# define __no_kasan_or_inline __always_inline
+-#endif
+-
+-#define __no_kcsan __no_sanitize_thread
+-#ifdef __SANITIZE_THREAD__
+-/*
+- * Rely on __SANITIZE_THREAD__ instead of CONFIG_KCSAN, to avoid not inlining in
+- * compilation units where instrumentation is disabled. The attribute 'noinline'
+- * is required for older compilers, where implicit inlining of very small
+- * functions renders __no_sanitize_thread ineffective.
+- */
+-# define __no_kcsan_or_inline __no_kcsan noinline notrace __maybe_unused
+-# define __no_sanitize_or_inline __no_kcsan_or_inline
+-#else
+-# define __no_kcsan_or_inline __always_inline
+-#endif
+-
+-#ifndef __no_sanitize_or_inline
+-#define __no_sanitize_or_inline __always_inline
+-#endif
+-
+ static __no_sanitize_or_inline
+ unsigned long __read_once_word_nocheck(const void *addr)
+ {
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index ea15ea99efb4..e517c6461547 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -171,6 +171,38 @@ struct ftrace_likely_data {
+  */
+ #define noinline_for_stack noinline
+ 
++/*
++ * Sanitizer helper attributes: Because using __always_inline and
++ * __no_sanitize_* conflict, provide helper attributes that will either expand
++ * to __no_sanitize_* in compilation units where instrumentation is enabled
++ * (__SANITIZE_*__), or __always_inline in compilation units without
++ * instrumentation (__SANITIZE_*__ undefined).
++ */
++#ifdef __SANITIZE_ADDRESS__
++/*
++ * We can't declare function 'inline' because __no_sanitize_address conflicts
++ * with inlining. Attempt to inline it may cause a build failure.
++ *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=67368
++ * '__maybe_unused' allows us to avoid defined-but-not-used warnings.
++ */
++# define __no_kasan_or_inline __no_sanitize_address notrace __maybe_unused
++# define __no_sanitize_or_inline __no_kasan_or_inline
++#else
++# define __no_kasan_or_inline __always_inline
++#endif
++
++#define __no_kcsan __no_sanitize_thread
++#ifdef __SANITIZE_THREAD__
++# define __no_kcsan_or_inline __no_kcsan notrace __maybe_unused
++# define __no_sanitize_or_inline __no_kcsan_or_inline
++#else
++# define __no_kcsan_or_inline __always_inline
++#endif
++
++#ifndef __no_sanitize_or_inline
++#define __no_sanitize_or_inline __always_inline
++#endif
++
+ #endif /* __KERNEL__ */
+ 
+ #endif /* __ASSEMBLY__ */
+diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
+index a73a66cf79df..15f67949d11e 100644
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -789,6 +789,49 @@ void __tsan_write_range(void *ptr, size_t size)
+ }
+ EXPORT_SYMBOL(__tsan_write_range);
+ 
++/*
++ * Use of explicit volatile is generally disallowed [1], however, volatile is
++ * still used in various concurrent context, whether in low-level
++ * synchronization primitives or for legacy reasons.
++ * [1] https://lwn.net/Articles/233479/
++ *
++ * We only consider volatile accesses atomic if they are aligned and would pass
++ * the size-check of compiletime_assert_rwonce_type().
++ */
++#define DEFINE_TSAN_VOLATILE_READ_WRITE(size)                                  \
++	void __tsan_volatile_read##size(void *ptr)                             \
++	{                                                                      \
++		const bool is_atomic = size <= sizeof(long long) &&            \
++				       IS_ALIGNED((unsigned long)ptr, size);   \
++		if (IS_ENABLED(CONFIG_KCSAN_IGNORE_ATOMICS) && is_atomic)      \
++			return;                                                \
++		check_access(ptr, size, is_atomic ? KCSAN_ACCESS_ATOMIC : 0);  \
++	}                                                                      \
++	EXPORT_SYMBOL(__tsan_volatile_read##size);                             \
++	void __tsan_unaligned_volatile_read##size(void *ptr)                   \
++		__alias(__tsan_volatile_read##size);                           \
++	EXPORT_SYMBOL(__tsan_unaligned_volatile_read##size);                   \
++	void __tsan_volatile_write##size(void *ptr)                            \
++	{                                                                      \
++		const bool is_atomic = size <= sizeof(long long) &&            \
++				       IS_ALIGNED((unsigned long)ptr, size);   \
++		if (IS_ENABLED(CONFIG_KCSAN_IGNORE_ATOMICS) && is_atomic)      \
++			return;                                                \
++		check_access(ptr, size,                                        \
++			     KCSAN_ACCESS_WRITE |                              \
++				     (is_atomic ? KCSAN_ACCESS_ATOMIC : 0));   \
++	}                                                                      \
++	EXPORT_SYMBOL(__tsan_volatile_write##size);                            \
++	void __tsan_unaligned_volatile_write##size(void *ptr)                  \
++		__alias(__tsan_volatile_write##size);                          \
++	EXPORT_SYMBOL(__tsan_unaligned_volatile_write##size)
++
++DEFINE_TSAN_VOLATILE_READ_WRITE(1);
++DEFINE_TSAN_VOLATILE_READ_WRITE(2);
++DEFINE_TSAN_VOLATILE_READ_WRITE(4);
++DEFINE_TSAN_VOLATILE_READ_WRITE(8);
++DEFINE_TSAN_VOLATILE_READ_WRITE(16);
++
+ /*
+  * The below are not required by KCSAN, but can still be emitted by the
+  * compiler.
+diff --git a/lib/Kconfig.kcsan b/lib/Kconfig.kcsan
+index a7276035ca0d..3f3b5bca7a8f 100644
+--- a/lib/Kconfig.kcsan
++++ b/lib/Kconfig.kcsan
+@@ -3,6 +3,12 @@
+ config HAVE_ARCH_KCSAN
+ 	bool
+ 
++config HAVE_KCSAN_COMPILER
++	def_bool CC_IS_CLANG && $(cc-option,-fsanitize=thread -mllvm -tsan-distinguish-volatile=1)
++	help
++	  For the list of compilers that support KCSAN, please see
++	  <file:Documentation/dev-tools/kcsan.rst>.
++
+ config KCSAN_KCOV_BROKEN
+ 	def_bool KCOV && CC_HAS_SANCOV_TRACE_PC
+ 	depends on CC_IS_CLANG
+@@ -15,7 +21,8 @@ config KCSAN_KCOV_BROKEN
+ 
+ menuconfig KCSAN
+ 	bool "KCSAN: dynamic data race detector"
+-	depends on HAVE_ARCH_KCSAN && DEBUG_KERNEL && !KASAN
++	depends on HAVE_ARCH_KCSAN && HAVE_KCSAN_COMPILER
++	depends on DEBUG_KERNEL && !KASAN
+ 	depends on !KCSAN_KCOV_BROKEN
+ 	select STACKTRACE
+ 	help
+diff --git a/scripts/Makefile.kcsan b/scripts/Makefile.kcsan
+index caf1111a28ae..bd4da1af5953 100644
+--- a/scripts/Makefile.kcsan
++++ b/scripts/Makefile.kcsan
+@@ -1,6 +1,19 @@
+ # SPDX-License-Identifier: GPL-2.0
+ ifdef CONFIG_KCSAN
+ 
+-CFLAGS_KCSAN := -fsanitize=thread
++# GCC and Clang accept backend options differently. Do not wrap in cc-option,
++# because Clang accepts "--param" even if it is unused.
++ifdef CONFIG_CC_IS_CLANG
++cc-param = -mllvm -$(1)
++else
++cc-param = --param -$(1)
++endif
++
++# Keep most options here optional, to allow enabling more compilers if absence
++# of some options does not break KCSAN nor causes false positive reports.
++CFLAGS_KCSAN := -fsanitize=thread \
++	$(call cc-option,$(call cc-param,tsan-instrument-func-entry-exit=0) -fno-optimize-sibling-calls) \
++	$(call cc-option,$(call cc-param,tsan-instrument-read-before-write=1)) \
++	$(call cc-param,tsan-distinguish-volatile=1)
+ 
+ endif # CONFIG_KCSAN
+-- 
+2.27.0.rc0
+
