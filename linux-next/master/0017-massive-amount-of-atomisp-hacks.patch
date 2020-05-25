@@ -1,0 +1,226 @@
+From b926fad2b7ef8a23ab3b81c5a3c15ee9b45e6d31 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 24 May 2020 20:04:32 -0700
+Subject: [PATCH 17/17] massive amount of atomisp hacks
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ .../media/atomisp/pci/atomisp_subdev.c        |  6 +-
+ .../staging/media/atomisp/pci/atomisp_v4l2.c  | 94 -------------------
+ .../kernels/xnr/xnr_3.0/ia_css_xnr3.host.c    |  2 +-
+ .../atomisp/pci/runtime/binary/src/binary.c   |  2 +-
+ drivers/staging/media/atomisp/pci/sh_css.c    | 19 +---
+ drivers/staging/media/atomisp/pci/sh_css_sp.c |  2 +-
+ 6 files changed, 9 insertions(+), 116 deletions(-)
+
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_subdev.c b/drivers/staging/media/atomisp/pci/atomisp_subdev.c
+index 46590129cbe3..27f443fefa69 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_subdev.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_subdev.c
+@@ -44,9 +44,9 @@ const struct atomisp_in_fmt_conv atomisp_in_fmt_conv[] = {
+ 	{ MEDIA_BUS_FMT_SRGGB12_1X12, 12, 12, ATOMISP_INPUT_FORMAT_RAW_12, CSS_BAYER_ORDER_RGGB, CSS_FORMAT_RAW_12 },
+ 	{ MEDIA_BUS_FMT_UYVY8_1X16, 8, 8, ATOMISP_INPUT_FORMAT_YUV422_8, 0, ATOMISP_INPUT_FORMAT_YUV422_8 },
+ 	{ MEDIA_BUS_FMT_YUYV8_1X16, 8, 8, ATOMISP_INPUT_FORMAT_YUV422_8, 0, ATOMISP_INPUT_FORMAT_YUV422_8 },
+-	{ MEDIA_BUS_FMT_JPEG_1X8, 8, 8, CSS_FRAME_FORMAT_BINARY_8, 0, ATOMISP_INPUT_FORMAT_BINARY_8 },
+-	{ V4L2_MBUS_FMT_CUSTOM_NV12, 12, 12, CSS_FRAME_FORMAT_NV12, 0, CSS_FRAME_FORMAT_NV12 },
+-	{ V4L2_MBUS_FMT_CUSTOM_NV21, 12, 12, CSS_FRAME_FORMAT_NV21, 0, CSS_FRAME_FORMAT_NV21 },
++	{ MEDIA_BUS_FMT_JPEG_1X8, 8, 8, ATOMISP_INPUT_FORMAT_BINARY_8, 0, ATOMISP_INPUT_FORMAT_BINARY_8 },
++	{ V4L2_MBUS_FMT_CUSTOM_NV12, 12, 12, ATOMISP_INPUT_FORMAT_YUV420_8, 0, ATOMISP_INPUT_FORMAT_YUV420_8 },
++	{ V4L2_MBUS_FMT_CUSTOM_NV21, 12, 12, ATOMISP_INPUT_FORMAT_YUV422_10, 0, ATOMISP_INPUT_FORMAT_YUV422_10 },
+ 	{ V4L2_MBUS_FMT_CUSTOM_YUV420, 12, 12, ATOMISP_INPUT_FORMAT_YUV420_8_LEGACY, 0, ATOMISP_INPUT_FORMAT_YUV420_8_LEGACY },
+ #if 0
+ 	{ V4L2_MBUS_FMT_CUSTOM_M10MO_RAW, 8, 8, CSS_FRAME_FORMAT_BINARY_8, 0, ATOMISP_INPUT_FORMAT_BINARY_8 },
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
+index 694268d133c0..73e68c0ca26c 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
+@@ -732,109 +732,16 @@ static int atomisp_mrfld_pre_power_down(struct atomisp_device *isp)
+ 	return 0;
+ }
+ 
+-/*
+-* WA for DDR DVFS enable/disable
+-* By default, ISP will force DDR DVFS 1600MHz before disable DVFS
+-*/
+-static void punit_ddr_dvfs_enable(bool enable)
+-{
+-	int door_bell = 1 << 8;
+-	int max_wait = 30;
+-	int reg;
+-
+-	iosf_mbi_read(BT_MBI_UNIT_PMC, MBI_REG_READ, MRFLD_ISPSSDVFS, &reg);
+-	if (enable) {
+-		reg &= ~(MRFLD_BIT0 | MRFLD_BIT1);
+-	} else {
+-		reg |= (MRFLD_BIT1 | door_bell);
+-		reg &= ~(MRFLD_BIT0);
+-	}
+-	iosf_mbi_write(BT_MBI_UNIT_PMC, MBI_REG_WRITE, MRFLD_ISPSSDVFS, reg);
+-
+-	/* Check Req_ACK to see freq status, wait until door_bell is cleared */
+-	while ((reg & door_bell) && max_wait--) {
+-		iosf_mbi_read(BT_MBI_UNIT_PMC, MBI_REG_READ, MRFLD_ISPSSDVFS, &reg);
+-		usleep_range(100, 500);
+-	}
+-
+-	if (max_wait == -1)
+-		pr_info("DDR DVFS, door bell is not cleared within 3ms\n");
+-}
+-
+-static int atomisp_mrfld_power(struct atomisp_device *isp, bool enable)
+-{
+-	unsigned long timeout;
+-	u32 val = enable ? MRFLD_ISPSSPM0_IUNIT_POWER_ON :
+-			   MRFLD_ISPSSPM0_IUNIT_POWER_OFF;
+-
+-	dev_dbg(isp->dev, "IUNIT power-%s.\n", enable ? "on" : "off");
+-
+-	/*WA:Enable DVFS*/
+-	if (IS_CHT && enable)
+-		punit_ddr_dvfs_enable(true);
+-
+-	/*
+-	 * FIXME:WA for ECS28A, with this sleep, CTS
+-	 * android.hardware.camera2.cts.CameraDeviceTest#testCameraDeviceAbort
+-	 * PASS, no impact on other platforms
+-	*/
+-	if (IS_BYT && enable)
+-		msleep(10);
+-
+-	/* Write to ISPSSPM0 bit[1:0] to power on/off the IUNIT */
+-	iosf_mbi_modify(BT_MBI_UNIT_PMC, MBI_REG_READ, MRFLD_ISPSSPM0,
+-			val, MRFLD_ISPSSPM0_ISPSSC_MASK);
+-
+-	/*WA:Enable DVFS*/
+-	if (IS_CHT && !enable)
+-		punit_ddr_dvfs_enable(true);
+-
+-	/*
+-	 * There should be no IUNIT access while power-down is
+-	 * in progress. HW sighting: 4567865.
+-	 * Wait up to 50 ms for the IUNIT to shut down.
+-	 * And we do the same for power on.
+-	 */
+-	timeout = jiffies + msecs_to_jiffies(50);
+-	do {
+-		u32 tmp;
+-
+-		/* Wait until ISPSSPM0 bit[25:24] shows the right value */
+-		iosf_mbi_read(BT_MBI_UNIT_PMC, MBI_REG_READ, MRFLD_ISPSSPM0, &tmp);
+-		tmp = (tmp & MRFLD_ISPSSPM0_ISPSSC_MASK) >> MRFLD_ISPSSPM0_ISPSSS_OFFSET;
+-		if (tmp == val) {
+-			trace_ipu_cstate(enable);
+-			return 0;
+-		}
+-
+-		if (time_after(jiffies, timeout))
+-			break;
+-
+-		/* FIXME: experienced value for delay */
+-		usleep_range(100, 150);
+-	} while (1);
+-
+-	if (enable)
+-		msleep(10);
+-
+-	dev_err(isp->dev, "IUNIT power-%s timeout.\n", enable ? "on" : "off");
+-	return -EBUSY;
+-}
+-
+ /* Workaround for pmu_nc_set_power_state not ready in MRFLD */
+ int atomisp_mrfld_power_down(struct atomisp_device *isp)
+ {
+ 	return 0;
+-// FIXME: at least with ISP2401, the code below causes the driver to break
+-//	return atomisp_mrfld_power(isp, false);
+ }
+ 
+ /* Workaround for pmu_nc_set_power_state not ready in MRFLD */
+ int atomisp_mrfld_power_up(struct atomisp_device *isp)
+ {
+ 	return 0;
+-// FIXME: at least with ISP2401, the code below causes the driver to break
+-//	return atomisp_mrfld_power(isp, true);
+ }
+ 
+ int atomisp_runtime_suspend(struct device *dev)
+@@ -1094,7 +1001,6 @@ static int atomisp_subdev_probe(struct atomisp_device *isp)
+ 		if (camera_count)
+ 			break;
+ 		msleep(SUBDEV_WAIT_TIMEOUT);
+-		count++;
+ 	}
+ 	/* Wait more time to give more time for subdev init code to finish */
+ 	msleep(5 * SUBDEV_WAIT_TIMEOUT);
+diff --git a/drivers/staging/media/atomisp/pci/isp/kernels/xnr/xnr_3.0/ia_css_xnr3.host.c b/drivers/staging/media/atomisp/pci/isp/kernels/xnr/xnr_3.0/ia_css_xnr3.host.c
+index a9db6366d20b..a031871559c4 100644
+--- a/drivers/staging/media/atomisp/pci/isp/kernels/xnr/xnr_3.0/ia_css_xnr3.host.c
++++ b/drivers/staging/media/atomisp/pci/isp/kernels/xnr/xnr_3.0/ia_css_xnr3.host.c
+@@ -126,7 +126,7 @@ compute_blending(int strength)
+ 	 * exactly as s0.11 fixed point, but -1.0 can.
+ 	 */
+ 	isp_strength = -(((strength * isp_scale) + offset) / host_scale);
+-	return MAX(MIN(isp_strength, 0), -XNR_BLENDING_SCALE_FACTOR);
++	return MAX(MIN(isp_strength, 0), (s32)-XNR_BLENDING_SCALE_FACTOR);
+ }
+ 
+ void
+diff --git a/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c b/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
+index 2a23b7c6aeeb..10d698295daf 100644
+--- a/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
++++ b/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
+@@ -1704,7 +1704,7 @@ ia_css_binary_find(struct ia_css_binary_descr *descr,
+ 			ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE,
+ 					    "ia_css_binary_find() [%d] continue: !%d\n",
+ 					    __LINE__,
+-					    binary_supports_input_format(xcandidate, req_in_info->format));
++					    binary_supports_input_format(xcandidate, descr->stream_format));
+ 			continue;
+ 		}
+ #endif
+diff --git a/drivers/staging/media/atomisp/pci/sh_css.c b/drivers/staging/media/atomisp/pci/sh_css.c
+index d77432254a2c..b8626cdb2436 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css.c
++++ b/drivers/staging/media/atomisp/pci/sh_css.c
+@@ -8533,22 +8533,9 @@ ia_css_pipe_load_extension(struct ia_css_pipe *pipe,
+ 	}
+ 
+ 	if (firmware->info.isp.type == IA_CSS_ACC_OUTPUT)
+-	{
+-		if (&pipe->output_stage)
+-			append_firmware(&pipe->output_stage, firmware);
+-		else {
+-			IA_CSS_LEAVE_ERR_PRIVATE(IA_CSS_ERR_INTERNAL_ERROR);
+-			return IA_CSS_ERR_INTERNAL_ERROR;
+-		}
+-	} else if (firmware->info.isp.type == IA_CSS_ACC_VIEWFINDER)
+-	{
+-		if (&pipe->vf_stage)
+-			append_firmware(&pipe->vf_stage, firmware);
+-		else {
+-			IA_CSS_LEAVE_ERR_PRIVATE(IA_CSS_ERR_INTERNAL_ERROR);
+-			return IA_CSS_ERR_INTERNAL_ERROR;
+-		}
+-	}
++		append_firmware(&pipe->output_stage, firmware);
++	else if (firmware->info.isp.type == IA_CSS_ACC_VIEWFINDER)
++		append_firmware(&pipe->vf_stage, firmware);
+ 	err = acc_load_extension(firmware);
+ 
+ 	IA_CSS_LEAVE_ERR_PRIVATE(err);
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_sp.c b/drivers/staging/media/atomisp/pci/sh_css_sp.c
+index e574396ad0f4..28d8e13a18a9 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_sp.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_sp.c
+@@ -1036,7 +1036,7 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
+ 			if (!pipe)
+ 				return IA_CSS_ERR_INTERNAL_ERROR;
+ 			ia_css_get_crop_offsets(pipe, &args->in_frame->info);
+-		} else if (&binary->in_frame_info) {
++		} else {
+ 			pipe = find_pipe_by_num(sh_css_sp_group.pipe[thread_id].pipe_num);
+ 			if (!pipe)
+ 				return IA_CSS_ERR_INTERNAL_ERROR;
+-- 
+2.27.0.rc0
+

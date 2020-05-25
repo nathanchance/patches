@@ -1,0 +1,67 @@
+From 4449226ce12e1e5ccea9db7df2e4df4e6cea5683 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 24 May 2020 19:41:22 -0700
+Subject: [PATCH 16/17] it's all so broken
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c   | 2 +-
+ drivers/staging/media/atomisp/pci/atomisp_cmd.c | 5 -----
+ include/asm-generic/cacheflush.h                | 5 +++++
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 85c2a4190840..5ea725d8da6c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -250,7 +250,7 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 
+ 	for (i = 0; i < kms->num_paths; i++)
+ 		icc_set_bw(kms->path[i],
+-			Bps_to_icc(avg_bw), (perf.max_per_pipe_ib));
++			div_u64(avg_bw, 1000), (perf.max_per_pipe_ib));
+ 
+ 	return ret;
+ }
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_cmd.c b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+index 5be690f876c1..105c5aeb83ac 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+@@ -4264,7 +4264,6 @@ int atomisp_set_parameters(struct video_device *vdev,
+ int atomisp_param(struct atomisp_sub_device *asd, int flag,
+ 		  struct atomisp_parm *config)
+ {
+-	struct atomisp_device *isp = asd->isp;
+ 	struct ia_css_pipe_config *vp_cfg =
+ 		    &asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].
+ 		    pipe_configs[IA_CSS_PIPE_ID_VIDEO];
+@@ -4275,10 +4274,6 @@ int atomisp_param(struct atomisp_sub_device *asd, int flag,
+ 		    atomisp_css_get_dvs_grid_info(
+ 			&asd->params.curr_grid_info);
+ 
+-		if (!&config->info) {
+-			dev_err(isp->dev, "ERROR: NULL pointer in grid_info\n");
+-			return -EINVAL;
+-		}
+ 		atomisp_curr_user_grid_info(asd, &config->info);
+ 
+ 		/* We always return the resolution and stride even if there is
+diff --git a/include/asm-generic/cacheflush.h b/include/asm-generic/cacheflush.h
+index 907fa5d16494..093b743da596 100644
+--- a/include/asm-generic/cacheflush.h
++++ b/include/asm-generic/cacheflush.h
+@@ -2,6 +2,11 @@
+ #ifndef _ASM_GENERIC_CACHEFLUSH_H
+ #define _ASM_GENERIC_CACHEFLUSH_H
+ 
++struct address_space;
++struct mm_struct;
++struct page;
++struct vm_area_struct;
++
+ /*
+  * The cache doesn't need to be flushed when TLB entries change when
+  * the cache is mapped to physical memory, not virtual memory
+-- 
+2.27.0.rc0
+

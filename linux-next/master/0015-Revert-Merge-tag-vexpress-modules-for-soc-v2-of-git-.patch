@@ -1,0 +1,1334 @@
+From 04320ebab9400c3c018043aff3c1a2606dfc0ba1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 24 May 2020 15:22:19 -0700
+Subject: [PATCH 15/17] Revert "Merge tag 'vexpress-modules-for-soc-v2' of
+ git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux into arm/soc"
+
+This reverts commit a875e0e5a2a307b4c35127f225d0b0b4be2bc75e, reversing
+changes made to 5df04698bd39c71243220be353aa9def4e1bacd1.
+
+Breaks allmodconfig.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm/mach-integrator/Kconfig         |   1 +
+ arch/arm/mach-realview/Kconfig           |   1 +
+ arch/arm/mach-versatile/Kconfig          |   1 +
+ arch/arm/mach-vexpress/Kconfig           |   4 +
+ arch/arm/mach-vexpress/core.h            |   1 -
+ arch/arm/mach-vexpress/dcscb.c           |   1 -
+ arch/arm/mach-vexpress/v2m.c             |  23 --
+ arch/arm64/Kconfig.platforms             |   3 +
+ drivers/amba/bus.c                       |  14 +-
+ drivers/bus/Kconfig                      |   2 +-
+ drivers/bus/vexpress-config.c            | 354 +++++------------------
+ drivers/clk/Makefile                     |   2 +-
+ drivers/clk/versatile/Kconfig            |  26 +-
+ drivers/clk/versatile/clk-vexpress-osc.c |  20 +-
+ drivers/mfd/Kconfig                      |   5 +-
+ drivers/mfd/vexpress-sysreg.c            |  99 ++++++-
+ drivers/misc/Kconfig                     |   9 +
+ drivers/misc/Makefile                    |   1 +
+ drivers/misc/vexpress-syscfg.c           | 280 ++++++++++++++++++
+ include/linux/vexpress.h                 |  30 ++
+ 20 files changed, 522 insertions(+), 355 deletions(-)
+ create mode 100644 drivers/misc/vexpress-syscfg.c
+
+diff --git a/arch/arm/mach-integrator/Kconfig b/arch/arm/mach-integrator/Kconfig
+index 7a9808b01763..106670c37c94 100644
+--- a/arch/arm/mach-integrator/Kconfig
++++ b/arch/arm/mach-integrator/Kconfig
+@@ -3,6 +3,7 @@ menuconfig ARCH_INTEGRATOR
+ 	bool "ARM Ltd. Integrator family"
+ 	depends on ARCH_MULTI_V4T || ARCH_MULTI_V5 || ARCH_MULTI_V6
+ 	select ARM_AMBA
++	select COMMON_CLK_VERSATILE
+ 	select CMA
+ 	select DMA_CMA
+ 	select HAVE_TCM
+diff --git a/arch/arm/mach-realview/Kconfig b/arch/arm/mach-realview/Kconfig
+index 5c6031b144c8..0bed0d3ab364 100644
+--- a/arch/arm/mach-realview/Kconfig
++++ b/arch/arm/mach-realview/Kconfig
+@@ -6,6 +6,7 @@ menuconfig ARCH_REALVIEW
+ 	select ARM_GIC
+ 	select ARM_TIMER_SP804
+ 	select CLK_SP810
++	select COMMON_CLK_VERSATILE
+ 	select GPIO_PL061 if GPIOLIB
+ 	select HAVE_ARM_SCU if SMP
+ 	select HAVE_ARM_TWD if SMP
+diff --git a/arch/arm/mach-versatile/Kconfig b/arch/arm/mach-versatile/Kconfig
+index d88e7725bf99..f5c275434d6c 100644
+--- a/arch/arm/mach-versatile/Kconfig
++++ b/arch/arm/mach-versatile/Kconfig
+@@ -6,6 +6,7 @@ config ARCH_VERSATILE
+ 	select ARM_TIMER_SP804
+ 	select ARM_VIC
+ 	select CLKSRC_VERSATILE
++	select COMMON_CLK_VERSATILE
+ 	select CPU_ARM926T
+ 	select ICST
+ 	select MFD_SYSCON
+diff --git a/arch/arm/mach-vexpress/Kconfig b/arch/arm/mach-vexpress/Kconfig
+index 8391a5b3cd78..726a68085c3b 100644
+--- a/arch/arm/mach-vexpress/Kconfig
++++ b/arch/arm/mach-vexpress/Kconfig
+@@ -7,6 +7,7 @@ menuconfig ARCH_VEXPRESS
+ 	select ARM_GIC
+ 	select ARM_GLOBAL_TIMER
+ 	select ARM_TIMER_SP804
++	select COMMON_CLK_VERSATILE
+ 	select GPIOLIB
+ 	select HAVE_ARM_SCU if SMP
+ 	select HAVE_ARM_TWD if SMP
+@@ -19,6 +20,9 @@ menuconfig ARCH_VEXPRESS
+ 	select POWER_SUPPLY
+ 	select REGULATOR if MMC_ARMMMCI
+ 	select REGULATOR_FIXED_VOLTAGE if REGULATOR
++	select VEXPRESS_CONFIG
++	select VEXPRESS_SYSCFG
++	select MFD_VEXPRESS_SYSREG
+ 	help
+ 	  This option enables support for systems using Cortex processor based
+ 	  ARM core and logic (FPGA) tiles on the Versatile Express motherboard,
+diff --git a/arch/arm/mach-vexpress/core.h b/arch/arm/mach-vexpress/core.h
+index bda78675c55d..f4a7519084f1 100644
+--- a/arch/arm/mach-vexpress/core.h
++++ b/arch/arm/mach-vexpress/core.h
+@@ -1,4 +1,3 @@
+ bool vexpress_smp_init_ops(void);
+-void vexpress_flags_set(u32 data);
+ 
+ extern const struct smp_operations vexpress_smp_dt_ops;
+diff --git a/arch/arm/mach-vexpress/dcscb.c b/arch/arm/mach-vexpress/dcscb.c
+index a0554d7d04f7..46a903c88c6a 100644
+--- a/arch/arm/mach-vexpress/dcscb.c
++++ b/arch/arm/mach-vexpress/dcscb.c
+@@ -20,7 +20,6 @@
+ #include <asm/cputype.h>
+ #include <asm/cp15.h>
+ 
+-#include "core.h"
+ 
+ #define RST_HOLD0	0x0
+ #define RST_HOLD1	0x4
+diff --git a/arch/arm/mach-vexpress/v2m.c b/arch/arm/mach-vexpress/v2m.c
+index ffe7c7a85ae9..95886b3bb9dd 100644
+--- a/arch/arm/mach-vexpress/v2m.c
++++ b/arch/arm/mach-vexpress/v2m.c
+@@ -1,31 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+-#include <linux/of.h>
+-#include <linux/of_address.h>
+ #include <asm/mach/arch.h>
+ 
+ #include "core.h"
+ 
+-#define SYS_FLAGSSET		0x030
+-#define SYS_FLAGSCLR		0x034
+-
+-void vexpress_flags_set(u32 data)
+-{
+-	static void __iomem *base;
+-
+-	if (!base) {
+-		struct device_node *node = of_find_compatible_node(NULL, NULL,
+-				"arm,vexpress-sysreg");
+-
+-		base = of_iomap(node, 0);
+-	}
+-
+-	if (WARN_ON(!base))
+-		return;
+-
+-	writel(~0, base + SYS_FLAGSCLR);
+-	writel(data, base + SYS_FLAGSSET);
+-}
+-
+ static const char * const v2m_dt_match[] __initconst = {
+ 	"arm,vexpress",
+ 	NULL,
+diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.platforms
+index 17a9ca7b7b57..0c7fcdec6d7f 100644
+--- a/arch/arm64/Kconfig.platforms
++++ b/arch/arm64/Kconfig.platforms
+@@ -273,9 +273,12 @@ config ARCH_UNIPHIER
+ 
+ config ARCH_VEXPRESS
+ 	bool "ARMv8 software model (Versatile Express)"
++	select COMMON_CLK_VERSATILE
+ 	select GPIOLIB
+ 	select PM
+ 	select PM_GENERIC_DOMAINS
++	select POWER_RESET_VEXPRESS
++	select VEXPRESS_CONFIG
+ 	help
+ 	  This enables support for the ARMv8 software model (Versatile
+ 	  Express).
+diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
+index ecc304149067..8558b629880b 100644
+--- a/drivers/amba/bus.c
++++ b/drivers/amba/bus.c
+@@ -505,7 +505,7 @@ static DECLARE_DELAYED_WORK(deferred_retry_work, amba_deferred_retry_func);
+ 
+ #define DEFERRED_DEVICE_TIMEOUT (msecs_to_jiffies(5 * 1000))
+ 
+-static int amba_deferred_retry(void)
++static void amba_deferred_retry_func(struct work_struct *dummy)
+ {
+ 	struct deferred_device *ddev, *tmp;
+ 
+@@ -521,19 +521,11 @@ static int amba_deferred_retry(void)
+ 		kfree(ddev);
+ 	}
+ 
+-	mutex_unlock(&deferred_devices_lock);
+-
+-	return 0;
+-}
+-late_initcall(amba_deferred_retry);
+-
+-static void amba_deferred_retry_func(struct work_struct *dummy)
+-{
+-	amba_deferred_retry();
+-
+ 	if (!list_empty(&deferred_devices))
+ 		schedule_delayed_work(&deferred_retry_work,
+ 				      DEFERRED_DEVICE_TIMEOUT);
++
++	mutex_unlock(&deferred_devices_lock);
+ }
+ 
+ /**
+diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+index 2d73d4b6c9a6..d4c8898868fc 100644
+--- a/drivers/bus/Kconfig
++++ b/drivers/bus/Kconfig
+@@ -192,7 +192,7 @@ config UNIPHIER_SYSTEM_BUS
+ 	  needed to use on-board devices connected to UniPhier SoCs.
+ 
+ config VEXPRESS_CONFIG
+-	tristate "Versatile Express configuration bus"
++	bool "Versatile Express configuration bus"
+ 	default y if ARCH_VEXPRESS
+ 	depends on ARM || ARM64
+ 	depends on OF
+diff --git a/drivers/bus/vexpress-config.c b/drivers/bus/vexpress-config.c
+index a58ac0c8e282..ff70575b2db6 100644
+--- a/drivers/bus/vexpress-config.c
++++ b/drivers/bus/vexpress-config.c
+@@ -6,61 +6,10 @@
+ 
+ #include <linux/err.h>
+ #include <linux/init.h>
+-#include <linux/io.h>
+-#include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/platform_device.h>
+ #include <linux/of_device.h>
+-#include <linux/sched/signal.h>
+-#include <linux/slab.h>
+ #include <linux/vexpress.h>
+ 
+-#define SYS_MISC		0x0
+-#define SYS_MISC_MASTERSITE	(1 << 14)
+-
+-#define SYS_PROCID0		0x24
+-#define SYS_PROCID1		0x28
+-#define SYS_HBI_MASK		0xfff
+-#define SYS_PROCIDx_HBI_SHIFT	0
+-
+-#define SYS_CFGDATA		0x40
+-
+-#define SYS_CFGCTRL		0x44
+-#define SYS_CFGCTRL_START	(1 << 31)
+-#define SYS_CFGCTRL_WRITE	(1 << 30)
+-#define SYS_CFGCTRL_DCC(n)	(((n) & 0xf) << 26)
+-#define SYS_CFGCTRL_FUNC(n)	(((n) & 0x3f) << 20)
+-#define SYS_CFGCTRL_SITE(n)	(((n) & 0x3) << 16)
+-#define SYS_CFGCTRL_POSITION(n)	(((n) & 0xf) << 12)
+-#define SYS_CFGCTRL_DEVICE(n)	(((n) & 0xfff) << 0)
+-
+-#define SYS_CFGSTAT		0x48
+-#define SYS_CFGSTAT_ERR		(1 << 1)
+-#define SYS_CFGSTAT_COMPLETE	(1 << 0)
+-
+-#define VEXPRESS_SITE_MB		0
+-#define VEXPRESS_SITE_DB1		1
+-#define VEXPRESS_SITE_DB2		2
+-#define VEXPRESS_SITE_MASTER		0xf
+-
+-struct vexpress_syscfg {
+-	struct device *dev;
+-	void __iomem *base;
+-	struct list_head funcs;
+-};
+-
+-struct vexpress_syscfg_func {
+-	struct list_head list;
+-	struct vexpress_syscfg *syscfg;
+-	struct regmap *regmap;
+-	int num_templates;
+-	u32 template[]; /* Keep it last! */
+-};
+-
+-struct vexpress_config_bridge_ops {
+-	struct regmap * (*regmap_init)(struct device *dev, void *context);
+-	void (*regmap_exit)(struct regmap *regmap, void *context);
+-};
+ 
+ struct vexpress_config_bridge {
+ 	struct vexpress_config_bridge_ops *ops;
+@@ -69,20 +18,26 @@ struct vexpress_config_bridge {
+ 
+ 
+ static DEFINE_MUTEX(vexpress_config_mutex);
++static struct class *vexpress_config_class;
+ static u32 vexpress_config_site_master = VEXPRESS_SITE_MASTER;
+ 
+ 
+-static void vexpress_config_set_master(u32 site)
++void vexpress_config_set_master(u32 site)
+ {
+ 	vexpress_config_site_master = site;
+ }
+ 
+-static void vexpress_config_lock(void *arg)
++u32 vexpress_config_get_master(void)
++{
++	return vexpress_config_site_master;
++}
++
++void vexpress_config_lock(void *arg)
+ {
+ 	mutex_lock(&vexpress_config_mutex);
+ }
+ 
+-static void vexpress_config_unlock(void *arg)
++void vexpress_config_unlock(void *arg)
+ {
+ 	mutex_unlock(&vexpress_config_mutex);
+ }
+@@ -104,7 +59,7 @@ static void vexpress_config_find_prop(struct device_node *node,
+ 	}
+ }
+ 
+-static int vexpress_config_get_topo(struct device_node *node, u32 *site,
++int vexpress_config_get_topo(struct device_node *node, u32 *site,
+ 		u32 *position, u32 *dcc)
+ {
+ 	vexpress_config_find_prop(node, "arm,vexpress,site", site);
+@@ -133,6 +88,9 @@ struct regmap *devm_regmap_init_vexpress_config(struct device *dev)
+ 	struct regmap *regmap;
+ 	struct regmap **res;
+ 
++	if (WARN_ON(dev->parent->class != vexpress_config_class))
++		return ERR_PTR(-ENODEV);
++
+ 	bridge = dev_get_drvdata(dev->parent);
+ 	if (WARN_ON(!bridge))
+ 		return ERR_PTR(-EINVAL);
+@@ -155,265 +113,91 @@ struct regmap *devm_regmap_init_vexpress_config(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(devm_regmap_init_vexpress_config);
+ 
+-static int vexpress_syscfg_exec(struct vexpress_syscfg_func *func,
+-		int index, bool write, u32 *data)
++struct device *vexpress_config_bridge_register(struct device *parent,
++		struct vexpress_config_bridge_ops *ops, void *context)
+ {
+-	struct vexpress_syscfg *syscfg = func->syscfg;
+-	u32 command, status;
+-	int tries;
+-	long timeout;
+-
+-	if (WARN_ON(index >= func->num_templates))
+-		return -EINVAL;
+-
+-	command = readl(syscfg->base + SYS_CFGCTRL);
+-	if (WARN_ON(command & SYS_CFGCTRL_START))
+-		return -EBUSY;
+-
+-	command = func->template[index];
+-	command |= SYS_CFGCTRL_START;
+-	command |= write ? SYS_CFGCTRL_WRITE : 0;
+-
+-	/* Use a canary for reads */
+-	if (!write)
+-		*data = 0xdeadbeef;
+-
+-	dev_dbg(syscfg->dev, "func %p, command %x, data %x\n",
+-			func, command, *data);
+-	writel(*data, syscfg->base + SYS_CFGDATA);
+-	writel(0, syscfg->base + SYS_CFGSTAT);
+-	writel(command, syscfg->base + SYS_CFGCTRL);
+-	mb();
+-
+-	/* The operation can take ages... Go to sleep, 100us initially */
+-	tries = 100;
+-	timeout = 100;
+-	do {
+-		if (!irqs_disabled()) {
+-			set_current_state(TASK_INTERRUPTIBLE);
+-			schedule_timeout(usecs_to_jiffies(timeout));
+-			if (signal_pending(current))
+-				return -EINTR;
+-		} else {
+-			udelay(timeout);
+-		}
+-
+-		status = readl(syscfg->base + SYS_CFGSTAT);
+-		if (status & SYS_CFGSTAT_ERR)
+-			return -EFAULT;
+-
+-		if (timeout > 20)
+-			timeout -= 20;
+-	} while (--tries && !(status & SYS_CFGSTAT_COMPLETE));
+-	if (WARN_ON_ONCE(!tries))
+-		return -ETIMEDOUT;
++	struct device *dev;
++	struct vexpress_config_bridge *bridge;
+ 
+-	if (!write) {
+-		*data = readl(syscfg->base + SYS_CFGDATA);
+-		dev_dbg(syscfg->dev, "func %p, read data %x\n", func, *data);
++	if (!vexpress_config_class) {
++		vexpress_config_class = class_create(THIS_MODULE,
++				"vexpress-config");
++		if (IS_ERR(vexpress_config_class))
++			return (void *)vexpress_config_class;
+ 	}
+ 
+-	return 0;
+-}
+-
+-static int vexpress_syscfg_read(void *context, unsigned int index,
+-		unsigned int *val)
+-{
+-	struct vexpress_syscfg_func *func = context;
+-
+-	return vexpress_syscfg_exec(func, index, false, val);
+-}
+-
+-static int vexpress_syscfg_write(void *context, unsigned int index,
+-		unsigned int val)
+-{
+-	struct vexpress_syscfg_func *func = context;
+-
+-	return vexpress_syscfg_exec(func, index, true, &val);
+-}
+-
+-static struct regmap_config vexpress_syscfg_regmap_config = {
+-	.lock = vexpress_config_lock,
+-	.unlock = vexpress_config_unlock,
+-	.reg_bits = 32,
+-	.val_bits = 32,
+-	.reg_read = vexpress_syscfg_read,
+-	.reg_write = vexpress_syscfg_write,
+-	.reg_format_endian = REGMAP_ENDIAN_LITTLE,
+-	.val_format_endian = REGMAP_ENDIAN_LITTLE,
+-};
+-
++	dev = device_create(vexpress_config_class, parent, 0,
++			NULL, "%s.bridge", dev_name(parent));
+ 
+-static struct regmap *vexpress_syscfg_regmap_init(struct device *dev,
+-		void *context)
+-{
+-	int err;
+-	struct vexpress_syscfg *syscfg = context;
+-	struct vexpress_syscfg_func *func;
+-	struct property *prop;
+-	const __be32 *val = NULL;
+-	__be32 energy_quirk[4];
+-	int num;
+-	u32 site, position, dcc;
+-	int i;
+-
+-	err = vexpress_config_get_topo(dev->of_node, &site,
+-				&position, &dcc);
+-	if (err)
+-		return ERR_PTR(err);
+-
+-	prop = of_find_property(dev->of_node,
+-			"arm,vexpress-sysreg,func", NULL);
+-	if (!prop)
+-		return ERR_PTR(-EINVAL);
++	if (IS_ERR(dev))
++		return dev;
+ 
+-	num = prop->length / sizeof(u32) / 2;
+-	val = prop->value;
+-
+-	/*
+-	 * "arm,vexpress-energy" function used to be described
+-	 * by its first device only, now it requires both
+-	 */
+-	if (num == 1 && of_device_is_compatible(dev->of_node,
+-			"arm,vexpress-energy")) {
+-		num = 2;
+-		energy_quirk[0] = *val;
+-		energy_quirk[2] = *val++;
+-		energy_quirk[1] = *val;
+-		energy_quirk[3] = cpu_to_be32(be32_to_cpup(val) + 1);
+-		val = energy_quirk;
+-	}
+-
+-	func = kzalloc(struct_size(func, template, num), GFP_KERNEL);
+-	if (!func)
++	bridge = devm_kmalloc(dev, sizeof(*bridge), GFP_KERNEL);
++	if (!bridge) {
++		put_device(dev);
++		device_unregister(dev);
+ 		return ERR_PTR(-ENOMEM);
+-
+-	func->syscfg = syscfg;
+-	func->num_templates = num;
+-
+-	for (i = 0; i < num; i++) {
+-		u32 function, device;
+-
+-		function = be32_to_cpup(val++);
+-		device = be32_to_cpup(val++);
+-
+-		dev_dbg(dev, "func %p: %u/%u/%u/%u/%u\n",
+-				func, site, position, dcc,
+-				function, device);
+-
+-		func->template[i] = SYS_CFGCTRL_DCC(dcc);
+-		func->template[i] |= SYS_CFGCTRL_SITE(site);
+-		func->template[i] |= SYS_CFGCTRL_POSITION(position);
+-		func->template[i] |= SYS_CFGCTRL_FUNC(function);
+-		func->template[i] |= SYS_CFGCTRL_DEVICE(device);
+ 	}
++	bridge->ops = ops;
++	bridge->context = context;
+ 
+-	vexpress_syscfg_regmap_config.max_register = num - 1;
+-
+-	func->regmap = regmap_init(dev, NULL, func,
+-			&vexpress_syscfg_regmap_config);
++	dev_set_drvdata(dev, bridge);
+ 
+-	if (IS_ERR(func->regmap)) {
+-		void *err = func->regmap;
++	dev_dbg(parent, "Registered bridge '%s', parent node %p\n",
++			dev_name(dev), parent->of_node);
+ 
+-		kfree(func);
+-		return err;
+-	}
+-
+-	list_add(&func->list, &syscfg->funcs);
+-
+-	return func->regmap;
++	return dev;
+ }
+ 
+-static void vexpress_syscfg_regmap_exit(struct regmap *regmap, void *context)
++
++static int vexpress_config_node_match(struct device *dev, const void *data)
+ {
+-	struct vexpress_syscfg *syscfg = context;
+-	struct vexpress_syscfg_func *func, *tmp;
++	const struct device_node *node = data;
+ 
+-	regmap_exit(regmap);
++	dev_dbg(dev, "Parent node %p, looking for %p\n",
++			dev->parent->of_node, node);
+ 
+-	list_for_each_entry_safe(func, tmp, &syscfg->funcs, list) {
+-		if (func->regmap == regmap) {
+-			list_del(&syscfg->funcs);
+-			kfree(func);
+-			break;
+-		}
+-	}
++	return dev->parent->of_node == node;
+ }
+ 
+-static struct vexpress_config_bridge_ops vexpress_syscfg_bridge_ops = {
+-	.regmap_init = vexpress_syscfg_regmap_init,
+-	.regmap_exit = vexpress_syscfg_regmap_exit,
+-};
+-
+-
+-static int vexpress_syscfg_probe(struct platform_device *pdev)
++static int vexpress_config_populate(struct device_node *node)
+ {
+-	struct vexpress_syscfg *syscfg;
+-	struct resource *res;
+-	struct vexpress_config_bridge *bridge;
+-	struct device_node *node;
+-	int master;
+-	u32 dt_hbi;
+-
+-	syscfg = devm_kzalloc(&pdev->dev, sizeof(*syscfg), GFP_KERNEL);
+-	if (!syscfg)
+-		return -ENOMEM;
+-	syscfg->dev = &pdev->dev;
+-	INIT_LIST_HEAD(&syscfg->funcs);
+-
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	syscfg->base = devm_ioremap_resource(&pdev->dev, res);
+-	if (IS_ERR(syscfg->base))
+-		return PTR_ERR(syscfg->base);
++	struct device_node *bridge;
++	struct device *parent;
++	int ret;
+ 
+-	bridge = devm_kmalloc(&pdev->dev, sizeof(*bridge), GFP_KERNEL);
++	bridge = of_parse_phandle(node, "arm,vexpress,config-bridge", 0);
+ 	if (!bridge)
+-		return -ENOMEM;
++		return -EINVAL;
+ 
+-	bridge->ops = &vexpress_syscfg_bridge_ops;
+-	bridge->context = syscfg;
++	parent = class_find_device(vexpress_config_class, NULL, bridge,
++			vexpress_config_node_match);
++	of_node_put(bridge);
++	if (WARN_ON(!parent))
++		return -ENODEV;
+ 
+-	dev_set_drvdata(&pdev->dev, bridge);
++	ret = of_platform_populate(node, NULL, NULL, parent);
+ 
+-	master = readl(syscfg->base + SYS_MISC) & SYS_MISC_MASTERSITE ?
+-			VEXPRESS_SITE_DB2 : VEXPRESS_SITE_DB1;
+-	vexpress_config_set_master(master);
++	put_device(parent);
+ 
+-	/* Confirm board type against DT property, if available */
+-	if (of_property_read_u32(of_root, "arm,hbi", &dt_hbi) == 0) {
+-		u32 id = readl(syscfg->base + (master == VEXPRESS_SITE_DB1 ?
+-				 SYS_PROCID0 : SYS_PROCID1));
+-		u32 hbi = (id >> SYS_PROCIDx_HBI_SHIFT) & SYS_HBI_MASK;
++	return ret;
++}
+ 
+-		if (WARN_ON(dt_hbi != hbi))
+-			dev_warn(&pdev->dev, "DT HBI (%x) is not matching hardware (%x)!\n",
+-					dt_hbi, hbi);
+-	}
++static int __init vexpress_config_init(void)
++{
++	int err = 0;
++	struct device_node *node;
+ 
++	/* Need the config devices early, before the "normal" devices... */
+ 	for_each_compatible_node(node, NULL, "arm,vexpress,config-bus") {
+-		struct device_node *bridge_np;
+-
+-		bridge_np = of_parse_phandle(node, "arm,vexpress,config-bridge", 0);
+-		if (bridge_np != pdev->dev.parent->of_node)
+-			continue;
+-
+-		of_platform_populate(node, NULL, NULL, &pdev->dev);
++		err = vexpress_config_populate(node);
++		if (err) {
++			of_node_put(node);
++			break;
++		}
+ 	}
+ 
+-	return 0;
++	return err;
+ }
++postcore_initcall(vexpress_config_init);
+ 
+-static const struct platform_device_id vexpress_syscfg_id_table[] = {
+-	{ "vexpress-syscfg", },
+-	{},
+-};
+-MODULE_DEVICE_TABLE(platform, vexpress_syscfg_id_table);
+-
+-static struct platform_driver vexpress_syscfg_driver = {
+-	.driver.name = "vexpress-syscfg",
+-	.id_table = vexpress_syscfg_id_table,
+-	.probe = vexpress_syscfg_probe,
+-};
+-module_platform_driver(vexpress_syscfg_driver);
+-MODULE_LICENSE("GPL v2");
+diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+index fb30c16e1596..f4169cc2fd31 100644
+--- a/drivers/clk/Makefile
++++ b/drivers/clk/Makefile
+@@ -114,7 +114,7 @@ obj-$(CONFIG_ARCH_TEGRA)		+= tegra/
+ obj-y					+= ti/
+ obj-$(CONFIG_CLK_UNIPHIER)		+= uniphier/
+ obj-$(CONFIG_ARCH_U8500)		+= ux500/
+-obj-y					+= versatile/
++obj-$(CONFIG_COMMON_CLK_VERSATILE)	+= versatile/
+ ifeq ($(CONFIG_COMMON_CLK), y)
+ obj-$(CONFIG_X86)			+= x86/
+ endif
+diff --git a/drivers/clk/versatile/Kconfig b/drivers/clk/versatile/Kconfig
+index a0ed412e8396..c2618f1477a2 100644
+--- a/drivers/clk/versatile/Kconfig
++++ b/drivers/clk/versatile/Kconfig
+@@ -1,35 +1,33 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-
+-menuconfig COMMON_CLK_VERSATILE
+-	bool "Clock driver for ARM Reference designs" if COMPILE_TEST
+-	default y if ARCH_INTEGRATOR || ARCH_REALVIEW || \
+-		ARCH_VERSATILE || ARCH_VEXPRESS
+-
+-if COMMON_CLK_VERSATILE
+-
+ config ICST
+-	bool "Clock driver for ARM Reference designs ICST"
++	bool
++
++config COMMON_CLK_VERSATILE
++	bool "Clock driver for ARM Reference designs"
++	depends on ARCH_INTEGRATOR || ARCH_REALVIEW || \
++		ARCH_VERSATILE || ARCH_VEXPRESS || ARM64 || \
++		COMPILE_TEST
+ 	select REGMAP_MMIO
+ 	---help---
+ 	  Supports clocking on ARM Reference designs:
+ 	  - Integrator/AP and Integrator/CP
+ 	  - RealView PB1176, EB, PB11MP and PBX
++	  - Versatile Express
+ 
+ config CLK_SP810
+ 	bool "Clock driver for ARM SP810 System Controller"
+-	default y if (ARCH_VEXPRESS && ARM)
++	depends on COMMON_CLK_VERSATILE
++	default y if ARCH_VEXPRESS
+ 	---help---
+ 	  Supports clock muxing (REFCLK/TIMCLK to TIMERCLKEN0-3) capabilities
+ 	  of the ARM SP810 System Controller cell.
+ 
+ config CLK_VEXPRESS_OSC
+-	tristate "Clock driver for Versatile Express OSC clock generators"
++	bool "Clock driver for Versatile Express OSC clock generators"
++	depends on COMMON_CLK_VERSATILE
+ 	depends on VEXPRESS_CONFIG
+-	select REGMAP_MMIO
+ 	default y if ARCH_VEXPRESS
+ 	---help---
+ 	  Simple regmap-based driver driving clock generators on Versatile
+ 	  Express platforms hidden behind its configuration infrastructure,
+ 	  commonly known as OSCs.
+-
+-endif
+diff --git a/drivers/clk/versatile/clk-vexpress-osc.c b/drivers/clk/versatile/clk-vexpress-osc.c
+index b2b32fa2d7c3..7ade146a3ea9 100644
+--- a/drivers/clk/versatile/clk-vexpress-osc.c
++++ b/drivers/clk/versatile/clk-vexpress-osc.c
+@@ -7,7 +7,6 @@
+ #include <linux/clkdev.h>
+ #include <linux/clk-provider.h>
+ #include <linux/err.h>
+-#include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+@@ -66,8 +65,8 @@ static int vexpress_osc_probe(struct platform_device *pdev)
+ {
+ 	struct clk_init_data init;
+ 	struct vexpress_osc *osc;
++	struct clk *clk;
+ 	u32 range[2];
+-	int ret;
+ 
+ 	osc = devm_kzalloc(&pdev->dev, sizeof(*osc), GFP_KERNEL);
+ 	if (!osc)
+@@ -93,11 +92,11 @@ static int vexpress_osc_probe(struct platform_device *pdev)
+ 
+ 	osc->hw.init = &init;
+ 
+-	ret = devm_clk_hw_register(&pdev->dev, &osc->hw);
+-	if (ret < 0)
+-		return ret;
++	clk = clk_register(NULL, &osc->hw);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
+ 
+-	devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_simple_get, &osc->hw);
++	of_clk_add_provider(pdev->dev.of_node, of_clk_src_simple_get, clk);
+ 	clk_hw_set_rate_range(&osc->hw, osc->rate_min, osc->rate_max);
+ 
+ 	dev_dbg(&pdev->dev, "Registered clock '%s'\n", init.name);
+@@ -109,7 +108,6 @@ static const struct of_device_id vexpress_osc_of_match[] = {
+ 	{ .compatible = "arm,vexpress-osc", },
+ 	{}
+ };
+-MODULE_DEVICE_TABLE(of, vexpress_osc_of_match);
+ 
+ static struct platform_driver vexpress_osc_driver = {
+ 	.driver	= {
+@@ -118,5 +116,9 @@ static struct platform_driver vexpress_osc_driver = {
+ 	},
+ 	.probe = vexpress_osc_probe,
+ };
+-module_platform_driver(vexpress_osc_driver);
+-MODULE_LICENSE("GPL v2");
++
++static int __init vexpress_osc_init(void)
++{
++	return platform_driver_register(&vexpress_osc_driver);
++}
++core_initcall(vexpress_osc_init);
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 02b617cca92e..687e9c848053 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -2057,9 +2057,10 @@ config MCP_UCB1200_TS
+ endmenu
+ 
+ config MFD_VEXPRESS_SYSREG
+-	tristate "Versatile Express System Registers"
+-	depends on VEXPRESS_CONFIG && GPIOLIB
++	bool "Versatile Express System Registers"
++	depends on VEXPRESS_CONFIG && GPIOLIB && !ARCH_USES_GETTIMEOFFSET
+ 	default y
++	select CLKSRC_MMIO
+ 	select GPIO_GENERIC_PLATFORM
+ 	select MFD_CORE
+ 	select MFD_SYSCON
+diff --git a/drivers/mfd/vexpress-sysreg.c b/drivers/mfd/vexpress-sysreg.c
+index aaf24af287dd..c68ff56dbdb1 100644
+--- a/drivers/mfd/vexpress-sysreg.c
++++ b/drivers/mfd/vexpress-sysreg.c
+@@ -8,12 +8,13 @@
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/mfd/core.h>
+-#include <linux/module.h>
++#include <linux/of_address.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_data/syscon.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/stat.h>
++#include <linux/vexpress.h>
+ 
+ #define SYS_ID			0x000
+ #define SYS_SW			0x004
+@@ -36,8 +37,35 @@
+ #define SYS_CFGCTRL		0x0a4
+ #define SYS_CFGSTAT		0x0a8
+ 
++#define SYS_HBI_MASK		0xfff
++#define SYS_PROCIDx_HBI_SHIFT	0
++
++#define SYS_MISC_MASTERSITE	(1 << 14)
++
++void vexpress_flags_set(u32 data)
++{
++	static void __iomem *base;
++
++	if (!base) {
++		struct device_node *node = of_find_compatible_node(NULL, NULL,
++				"arm,vexpress-sysreg");
++
++		base = of_iomap(node, 0);
++	}
++
++	if (WARN_ON(!base))
++		return;
++
++	writel(~0, base + SYS_FLAGSCLR);
++	writel(data, base + SYS_FLAGSSET);
++}
++
+ /* The sysreg block is just a random collection of various functions... */
+ 
++static struct syscon_platform_data vexpress_sysreg_sys_id_pdata = {
++	.label = "sys_id",
++};
++
+ static struct bgpio_pdata vexpress_sysreg_sys_led_pdata = {
+ 	.label = "sys_led",
+ 	.base = -1,
+@@ -56,8 +84,24 @@ static struct bgpio_pdata vexpress_sysreg_sys_flash_pdata = {
+ 	.ngpio = 1,
+ };
+ 
++static struct syscon_platform_data vexpress_sysreg_sys_misc_pdata = {
++	.label = "sys_misc",
++};
++
++static struct syscon_platform_data vexpress_sysreg_sys_procid_pdata = {
++	.label = "sys_procid",
++};
++
+ static struct mfd_cell vexpress_sysreg_cells[] = {
+ 	{
++		.name = "syscon",
++		.num_resources = 1,
++		.resources = (struct resource []) {
++			DEFINE_RES_MEM(SYS_ID, 0x4),
++		},
++		.platform_data = &vexpress_sysreg_sys_id_pdata,
++		.pdata_size = sizeof(vexpress_sysreg_sys_id_pdata),
++	}, {
+ 		.name = "basic-mmio-gpio",
+ 		.of_compatible = "arm,vexpress-sysreg,sys_led",
+ 		.num_resources = 1,
+@@ -84,11 +128,27 @@ static struct mfd_cell vexpress_sysreg_cells[] = {
+ 		},
+ 		.platform_data = &vexpress_sysreg_sys_flash_pdata,
+ 		.pdata_size = sizeof(vexpress_sysreg_sys_flash_pdata),
++	}, {
++		.name = "syscon",
++		.num_resources = 1,
++		.resources = (struct resource []) {
++			DEFINE_RES_MEM(SYS_MISC, 0x4),
++		},
++		.platform_data = &vexpress_sysreg_sys_misc_pdata,
++		.pdata_size = sizeof(vexpress_sysreg_sys_misc_pdata),
++	}, {
++		.name = "syscon",
++		.num_resources = 1,
++		.resources = (struct resource []) {
++			DEFINE_RES_MEM(SYS_PROCID0, 0x8),
++		},
++		.platform_data = &vexpress_sysreg_sys_procid_pdata,
++		.pdata_size = sizeof(vexpress_sysreg_sys_procid_pdata),
+ 	}, {
+ 		.name = "vexpress-syscfg",
+ 		.num_resources = 1,
+ 		.resources = (struct resource []) {
+-			DEFINE_RES_MEM(SYS_MISC, 0x4c),
++			DEFINE_RES_MEM(SYS_CFGDATA, 0xc),
+ 		},
+ 	}
+ };
+@@ -98,6 +158,8 @@ static int vexpress_sysreg_probe(struct platform_device *pdev)
+ 	struct resource *mem;
+ 	void __iomem *base;
+ 	struct gpio_chip *mmc_gpio_chip;
++	int master;
++	u32 dt_hbi;
+ 
+ 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!mem)
+@@ -107,6 +169,21 @@ static int vexpress_sysreg_probe(struct platform_device *pdev)
+ 	if (!base)
+ 		return -ENOMEM;
+ 
++	master = readl(base + SYS_MISC) & SYS_MISC_MASTERSITE ?
++			VEXPRESS_SITE_DB2 : VEXPRESS_SITE_DB1;
++	vexpress_config_set_master(master);
++
++	/* Confirm board type against DT property, if available */
++	if (of_property_read_u32(of_root, "arm,hbi", &dt_hbi) == 0) {
++		u32 id = readl(base + (master == VEXPRESS_SITE_DB1 ?
++				 SYS_PROCID0 : SYS_PROCID1));
++		u32 hbi = (id >> SYS_PROCIDx_HBI_SHIFT) & SYS_HBI_MASK;
++
++		if (WARN_ON(dt_hbi != hbi))
++			dev_warn(&pdev->dev, "DT HBI (%x) is not matching hardware (%x)!\n",
++					dt_hbi, hbi);
++	}
++
+ 	/*
+ 	 * Duplicated SYS_MCI pseudo-GPIO controller for compatibility with
+ 	 * older trees using sysreg node for MMC control lines.
+@@ -118,9 +195,9 @@ static int vexpress_sysreg_probe(struct platform_device *pdev)
+ 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
+ 			NULL, NULL, NULL, NULL, 0);
+ 	mmc_gpio_chip->ngpio = 2;
+-	devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
++	gpiochip_add_data(mmc_gpio_chip, NULL);
+ 
+-	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
++	return mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
+ 			vexpress_sysreg_cells,
+ 			ARRAY_SIZE(vexpress_sysreg_cells), mem, 0, NULL);
+ }
+@@ -129,7 +206,6 @@ static const struct of_device_id vexpress_sysreg_match[] = {
+ 	{ .compatible = "arm,vexpress-sysreg", },
+ 	{},
+ };
+-MODULE_DEVICE_TABLE(of, vexpress_sysreg_match);
+ 
+ static struct platform_driver vexpress_sysreg_driver = {
+ 	.driver = {
+@@ -139,5 +215,14 @@ static struct platform_driver vexpress_sysreg_driver = {
+ 	.probe = vexpress_sysreg_probe,
+ };
+ 
+-module_platform_driver(vexpress_sysreg_driver);
+-MODULE_LICENSE("GPL v2");
++static int __init vexpress_sysreg_init(void)
++{
++	struct device_node *node;
++
++	/* Need the sysreg early, before any other device... */
++	for_each_matching_node(node, vexpress_sysreg_match)
++		of_platform_device_create(node, NULL, NULL);
++
++	return platform_driver_register(&vexpress_sysreg_driver);
++}
++core_initcall(vexpress_sysreg_init);
+diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+index edd5dd5ebfdc..99e151475d8f 100644
+--- a/drivers/misc/Kconfig
++++ b/drivers/misc/Kconfig
+@@ -423,6 +423,15 @@ config SRAM
+ config SRAM_EXEC
+ 	bool
+ 
++config VEXPRESS_SYSCFG
++	bool "Versatile Express System Configuration driver"
++	depends on VEXPRESS_CONFIG
++	default y
++	help
++	  ARM Ltd. Versatile Express uses specialised platform configuration
++	  bus. System Configuration interface is one of the possible means
++	  of generating transactions on this bus.
++
+ config PCI_ENDPOINT_TEST
+ 	depends on PCI
+ 	select CRC32
+diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+index c7bd01ac6291..9abf2923d831 100644
+--- a/drivers/misc/Makefile
++++ b/drivers/misc/Makefile
+@@ -49,6 +49,7 @@ obj-$(CONFIG_SRAM_EXEC)		+= sram-exec.o
+ obj-y				+= mic/
+ obj-$(CONFIG_GENWQE)		+= genwqe/
+ obj-$(CONFIG_ECHO)		+= echo/
++obj-$(CONFIG_VEXPRESS_SYSCFG)	+= vexpress-syscfg.o
+ obj-$(CONFIG_CXL_BASE)		+= cxl/
+ obj-$(CONFIG_PCI_ENDPOINT_TEST)	+= pci_endpoint_test.o
+ obj-$(CONFIG_OCXL)		+= ocxl/
+diff --git a/drivers/misc/vexpress-syscfg.c b/drivers/misc/vexpress-syscfg.c
+new file mode 100644
+index 000000000000..a431787c0898
+--- /dev/null
++++ b/drivers/misc/vexpress-syscfg.c
+@@ -0,0 +1,280 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ *
++ * Copyright (C) 2014 ARM Limited
++ */
++
++#include <linux/delay.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/sched/signal.h>
++#include <linux/slab.h>
++#include <linux/syscore_ops.h>
++#include <linux/vexpress.h>
++
++
++#define SYS_CFGDATA		0x0
++
++#define SYS_CFGCTRL		0x4
++#define SYS_CFGCTRL_START	(1 << 31)
++#define SYS_CFGCTRL_WRITE	(1 << 30)
++#define SYS_CFGCTRL_DCC(n)	(((n) & 0xf) << 26)
++#define SYS_CFGCTRL_FUNC(n)	(((n) & 0x3f) << 20)
++#define SYS_CFGCTRL_SITE(n)	(((n) & 0x3) << 16)
++#define SYS_CFGCTRL_POSITION(n)	(((n) & 0xf) << 12)
++#define SYS_CFGCTRL_DEVICE(n)	(((n) & 0xfff) << 0)
++
++#define SYS_CFGSTAT		0x8
++#define SYS_CFGSTAT_ERR		(1 << 1)
++#define SYS_CFGSTAT_COMPLETE	(1 << 0)
++
++
++struct vexpress_syscfg {
++	struct device *dev;
++	void __iomem *base;
++	struct list_head funcs;
++};
++
++struct vexpress_syscfg_func {
++	struct list_head list;
++	struct vexpress_syscfg *syscfg;
++	struct regmap *regmap;
++	int num_templates;
++	u32 template[]; /* Keep it last! */
++};
++
++
++static int vexpress_syscfg_exec(struct vexpress_syscfg_func *func,
++		int index, bool write, u32 *data)
++{
++	struct vexpress_syscfg *syscfg = func->syscfg;
++	u32 command, status;
++	int tries;
++	long timeout;
++
++	if (WARN_ON(index >= func->num_templates))
++		return -EINVAL;
++
++	command = readl(syscfg->base + SYS_CFGCTRL);
++	if (WARN_ON(command & SYS_CFGCTRL_START))
++		return -EBUSY;
++
++	command = func->template[index];
++	command |= SYS_CFGCTRL_START;
++	command |= write ? SYS_CFGCTRL_WRITE : 0;
++
++	/* Use a canary for reads */
++	if (!write)
++		*data = 0xdeadbeef;
++
++	dev_dbg(syscfg->dev, "func %p, command %x, data %x\n",
++			func, command, *data);
++	writel(*data, syscfg->base + SYS_CFGDATA);
++	writel(0, syscfg->base + SYS_CFGSTAT);
++	writel(command, syscfg->base + SYS_CFGCTRL);
++	mb();
++
++	/* The operation can take ages... Go to sleep, 100us initially */
++	tries = 100;
++	timeout = 100;
++	do {
++		if (!irqs_disabled()) {
++			set_current_state(TASK_INTERRUPTIBLE);
++			schedule_timeout(usecs_to_jiffies(timeout));
++			if (signal_pending(current))
++				return -EINTR;
++		} else {
++			udelay(timeout);
++		}
++
++		status = readl(syscfg->base + SYS_CFGSTAT);
++		if (status & SYS_CFGSTAT_ERR)
++			return -EFAULT;
++
++		if (timeout > 20)
++			timeout -= 20;
++	} while (--tries && !(status & SYS_CFGSTAT_COMPLETE));
++	if (WARN_ON_ONCE(!tries))
++		return -ETIMEDOUT;
++
++	if (!write) {
++		*data = readl(syscfg->base + SYS_CFGDATA);
++		dev_dbg(syscfg->dev, "func %p, read data %x\n", func, *data);
++	}
++
++	return 0;
++}
++
++static int vexpress_syscfg_read(void *context, unsigned int index,
++		unsigned int *val)
++{
++	struct vexpress_syscfg_func *func = context;
++
++	return vexpress_syscfg_exec(func, index, false, val);
++}
++
++static int vexpress_syscfg_write(void *context, unsigned int index,
++		unsigned int val)
++{
++	struct vexpress_syscfg_func *func = context;
++
++	return vexpress_syscfg_exec(func, index, true, &val);
++}
++
++static struct regmap_config vexpress_syscfg_regmap_config = {
++	.lock = vexpress_config_lock,
++	.unlock = vexpress_config_unlock,
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_read = vexpress_syscfg_read,
++	.reg_write = vexpress_syscfg_write,
++	.reg_format_endian = REGMAP_ENDIAN_LITTLE,
++	.val_format_endian = REGMAP_ENDIAN_LITTLE,
++};
++
++
++static struct regmap *vexpress_syscfg_regmap_init(struct device *dev,
++		void *context)
++{
++	int err;
++	struct vexpress_syscfg *syscfg = context;
++	struct vexpress_syscfg_func *func;
++	struct property *prop;
++	const __be32 *val = NULL;
++	__be32 energy_quirk[4];
++	int num;
++	u32 site, position, dcc;
++	int i;
++
++	err = vexpress_config_get_topo(dev->of_node, &site,
++				&position, &dcc);
++	if (err)
++		return ERR_PTR(err);
++
++	prop = of_find_property(dev->of_node,
++			"arm,vexpress-sysreg,func", NULL);
++	if (!prop)
++		return ERR_PTR(-EINVAL);
++
++	num = prop->length / sizeof(u32) / 2;
++	val = prop->value;
++
++	/*
++	 * "arm,vexpress-energy" function used to be described
++	 * by its first device only, now it requires both
++	 */
++	if (num == 1 && of_device_is_compatible(dev->of_node,
++			"arm,vexpress-energy")) {
++		num = 2;
++		energy_quirk[0] = *val;
++		energy_quirk[2] = *val++;
++		energy_quirk[1] = *val;
++		energy_quirk[3] = cpu_to_be32(be32_to_cpup(val) + 1);
++		val = energy_quirk;
++	}
++
++	func = kzalloc(struct_size(func, template, num), GFP_KERNEL);
++	if (!func)
++		return ERR_PTR(-ENOMEM);
++
++	func->syscfg = syscfg;
++	func->num_templates = num;
++
++	for (i = 0; i < num; i++) {
++		u32 function, device;
++
++		function = be32_to_cpup(val++);
++		device = be32_to_cpup(val++);
++
++		dev_dbg(dev, "func %p: %u/%u/%u/%u/%u\n",
++				func, site, position, dcc,
++				function, device);
++
++		func->template[i] = SYS_CFGCTRL_DCC(dcc);
++		func->template[i] |= SYS_CFGCTRL_SITE(site);
++		func->template[i] |= SYS_CFGCTRL_POSITION(position);
++		func->template[i] |= SYS_CFGCTRL_FUNC(function);
++		func->template[i] |= SYS_CFGCTRL_DEVICE(device);
++	}
++
++	vexpress_syscfg_regmap_config.max_register = num - 1;
++
++	func->regmap = regmap_init(dev, NULL, func,
++			&vexpress_syscfg_regmap_config);
++
++	if (IS_ERR(func->regmap)) {
++		void *err = func->regmap;
++
++		kfree(func);
++		return err;
++	}
++
++	list_add(&func->list, &syscfg->funcs);
++
++	return func->regmap;
++}
++
++static void vexpress_syscfg_regmap_exit(struct regmap *regmap, void *context)
++{
++	struct vexpress_syscfg *syscfg = context;
++	struct vexpress_syscfg_func *func, *tmp;
++
++	regmap_exit(regmap);
++
++	list_for_each_entry_safe(func, tmp, &syscfg->funcs, list) {
++		if (func->regmap == regmap) {
++			list_del(&syscfg->funcs);
++			kfree(func);
++			break;
++		}
++	}
++}
++
++static struct vexpress_config_bridge_ops vexpress_syscfg_bridge_ops = {
++	.regmap_init = vexpress_syscfg_regmap_init,
++	.regmap_exit = vexpress_syscfg_regmap_exit,
++};
++
++
++static int vexpress_syscfg_probe(struct platform_device *pdev)
++{
++	struct vexpress_syscfg *syscfg;
++	struct resource *res;
++	struct device *bridge;
++
++	syscfg = devm_kzalloc(&pdev->dev, sizeof(*syscfg), GFP_KERNEL);
++	if (!syscfg)
++		return -ENOMEM;
++	syscfg->dev = &pdev->dev;
++	INIT_LIST_HEAD(&syscfg->funcs);
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	syscfg->base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(syscfg->base))
++		return PTR_ERR(syscfg->base);
++
++	/* Must use dev.parent (MFD), as that's where DT phandle points at... */
++	bridge = vexpress_config_bridge_register(pdev->dev.parent,
++			&vexpress_syscfg_bridge_ops, syscfg);
++
++	return PTR_ERR_OR_ZERO(bridge);
++}
++
++static const struct platform_device_id vexpress_syscfg_id_table[] = {
++	{ "vexpress-syscfg", },
++	{},
++};
++
++static struct platform_driver vexpress_syscfg_driver = {
++	.driver.name = "vexpress-syscfg",
++	.id_table = vexpress_syscfg_id_table,
++	.probe = vexpress_syscfg_probe,
++};
++
++static int __init vexpress_syscfg_init(void)
++{
++	return platform_driver_register(&vexpress_syscfg_driver);
++}
++core_initcall(vexpress_syscfg_init);
+diff --git a/include/linux/vexpress.h b/include/linux/vexpress.h
+index 2f9dd072f11f..0e130b5077a5 100644
+--- a/include/linux/vexpress.h
++++ b/include/linux/vexpress.h
+@@ -10,8 +10,38 @@
+ #include <linux/device.h>
+ #include <linux/regmap.h>
+ 
++#define VEXPRESS_SITE_MB		0
++#define VEXPRESS_SITE_DB1		1
++#define VEXPRESS_SITE_DB2		2
++#define VEXPRESS_SITE_MASTER		0xf
++
++/* Config infrastructure */
++
++void vexpress_config_set_master(u32 site);
++u32 vexpress_config_get_master(void);
++
++void vexpress_config_lock(void *arg);
++void vexpress_config_unlock(void *arg);
++
++int vexpress_config_get_topo(struct device_node *node, u32 *site,
++		u32 *position, u32 *dcc);
++
++/* Config bridge API */
++
++struct vexpress_config_bridge_ops {
++	struct regmap * (*regmap_init)(struct device *dev, void *context);
++	void (*regmap_exit)(struct regmap *regmap, void *context);
++};
++
++struct device *vexpress_config_bridge_register(struct device *parent,
++		struct vexpress_config_bridge_ops *ops, void *context);
++
+ /* Config regmap API */
+ 
+ struct regmap *devm_regmap_init_vexpress_config(struct device *dev);
+ 
++/* Platform control */
++
++void vexpress_flags_set(u32 data);
++
+ #endif
+-- 
+2.27.0.rc0
+

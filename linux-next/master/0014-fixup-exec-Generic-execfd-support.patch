@@ -1,0 +1,26 @@
+From 340c4775a1c62aae7cfaf2b1bd84d61ba6def01d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 24 May 2020 14:32:23 -0700
+Subject: [PATCH 14/17] fixup! exec: Generic execfd support
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/binfmt_elf_fdpic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
+index bba3ad555b94..aaf332d32326 100644
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -588,7 +588,7 @@ static int create_elf_fdpic_tables(struct linux_binprm *bprm,
+ 	nitems = 1 + DLINFO_ITEMS + (k_platform ? 1 : 0) +
+ 		(k_base_platform ? 1 : 0) + AT_VECTOR_SIZE_ARCH;
+ 
+-	if (bprm->interp_flags & BINPRM_FLAGS_EXECFD)
++	if (bprm->have_execfd)
+ 		nitems++;
+ 
+ 	csp = sp;
+-- 
+2.27.0.rc0
+
