@@ -1,4 +1,4 @@
-From d5c2447ae83c0459ed146d867f47b39b63f8e02d Mon Sep 17 00:00:00 2001
+From 20090b8b4877e1d3a6cbc79609b453e91b18ff05 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 22 May 2020 21:13:30 -0700
 Subject: [PATCH 13/17] mt76: mt7915: Use proper enum type in
@@ -39,7 +39,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index f00ad2b66761..916f664e964e 100644
+index 99eeea42478f..001b3078c48e 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
 @@ -220,7 +220,7 @@ static int __mt7915_mcu_msg_send(struct mt7915_dev *dev, struct sk_buff *skb,
