@@ -1,0 +1,98 @@
+From 3721c0a6b5ae94450a2817a45ae233ebf83c1c2c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 25 May 2020 22:31:45 -0700
+Subject: [PATCH 16/16] next-20200525 fixes
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/e1000e/netdev.c    | 24 +++++++++----------
+ drivers/net/ethernet/mediatek/mtk_star_emac.c |  2 +-
+ .../net/ethernet/mellanox/mlx5/core/en_tc.c   |  2 +-
+ net/ipv4/nexthop.c                            |  2 +-
+ 4 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 9cc8ec5421d5..e88193934db5 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -134,18 +134,6 @@ static const struct e1000e_me_supported me_supported[] = {
+ 	{0}
+ };
+ 
+-static bool e1000e_check_me(u16 device_id)
+-{
+-	struct e1000e_me_supported *id;
+-
+-	for (id = (struct e1000e_me_supported *)me_supported;
+-	     id->device_id; id++)
+-		if (device_id == id->device_id)
+-			return true;
+-
+-	return false;
+-}
+-
+ /**
+  * __ew32_prepare - prepare to write to MAC CSR register on certain parts
+  * @hw: pointer to the HW structure
+@@ -6938,6 +6926,18 @@ static int __e1000_resume(struct pci_dev *pdev)
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
++static bool e1000e_check_me(u16 device_id)
++{
++	struct e1000e_me_supported *id;
++
++	for (id = (struct e1000e_me_supported *)me_supported;
++	     id->device_id; id++)
++		if (device_id == id->device_id)
++			return true;
++
++	return false;
++}
++
+ static int e1000e_pm_suspend(struct device *dev)
+ {
+ 	struct net_device *netdev = pci_get_drvdata(to_pci_dev(dev));
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index b74349cede28..b59e74c2bdbe 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1317,8 +1317,8 @@ static int mtk_star_receive_packet(struct mtk_star_priv *priv)
+ 	desc_data.skb->dev = ndev;
+ 	netif_receive_skb(desc_data.skb);
+ 
+-push_new_skb:
+ 	desc_data.dma_addr = new_dma_addr;
++push_new_skb:
+ 	desc_data.len = skb_tailroom(new_skb);
+ 	desc_data.skb = new_skb;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 571da14809fe..ae53bf599421 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -3637,7 +3637,7 @@ static int mlx5e_attach_decap(struct mlx5e_priv *priv,
+ 	struct mlx5e_decap_entry *d;
+ 	struct mlx5e_decap_key key;
+ 	uintptr_t hash_key;
+-	int err;
++	int err = 0;
+ 
+ 	parse_attr = attr->parse_attr;
+ 	if (sizeof(parse_attr->eth) > MLX5_CAP_ESW(priv->mdev, max_encap_header_size)) {
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 143011f9b580..ec1282858cb7 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -37,7 +37,7 @@ static const struct nla_policy rtm_nh_policy[NHA_MAX + 1] = {
+ };
+ 
+ static int call_nexthop_notifiers(struct net *net,
+-				  enum fib_event_type event_type,
++				  enum nexthop_event_type event_type,
+ 				  struct nexthop *nh)
+ {
+ 	int err;
+-- 
+2.27.0.rc0
+
