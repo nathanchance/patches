@@ -1,0 +1,44 @@
+From 185e8f3a0806a93378a3695a07de083b4431fe25 Mon Sep 17 00:00:00 2001
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date: Wed, 27 May 2020 11:24:04 +0200
+Subject: [PATCH 29/34] net: ethernet: mtk-star-emac: fix error path in RX
+ handling
+
+The dma_addr field in desc_data must not be overwritten until after the
+new skb is mapped. Currently we do replace it with uninitialized value
+in error path. This change fixes it by moving the assignment before the
+label to which we jump after mapping or allocation errors.
+
+Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Link: https://lore.kernel.org/netdev/20200527092404.3567-1-brgl@bgdev.pl/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index b74349cede28..72bb624a6a68 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1308,6 +1308,8 @@ static int mtk_star_receive_packet(struct mtk_star_priv *priv)
+ 		goto push_new_skb;
+ 	}
+ 
++	desc_data.dma_addr = new_dma_addr;
++
+ 	/* We can't fail anymore at this point: it's safe to unmap the skb. */
+ 	mtk_star_dma_unmap_rx(priv, &desc_data);
+ 
+@@ -1318,7 +1320,6 @@ static int mtk_star_receive_packet(struct mtk_star_priv *priv)
+ 	netif_receive_skb(desc_data.skb);
+ 
+ push_new_skb:
+-	desc_data.dma_addr = new_dma_addr;
+ 	desc_data.len = skb_tailroom(new_skb);
+ 	desc_data.skb = new_skb;
+ 
+-- 
+2.27.0.rc0
+

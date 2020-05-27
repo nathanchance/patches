@@ -1,7 +1,7 @@
-From 8a0caeb4d87b920e0693910922792e489576d706 Mon Sep 17 00:00:00 2001
+From 1d7eeed0236285d0e4d2140107f2652e70727fcd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 01:06:30 -0700
-Subject: [PATCH 32/33] netfilter: conntrack: Pass value of ctinfo to
+Subject: [PATCH 32/34] netfilter: conntrack: Pass value of ctinfo to
  __nf_conntrack_update
 
 Clang warns:

@@ -1,0 +1,61 @@
+From afc7702851a599e46c1accbc742e7cd0c959fa65 Mon Sep 17 00:00:00 2001
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 8 May 2020 16:09:04 +0930
+Subject: [PATCH 34/34] dtc: Remove warning for I2C_OWN_SLAVE_ADDRESS
+
+dtc does a sanity check on reg properties that they are within the 10
+bit address range for i2c slave addresses. In the case of multi-master
+buses the binding may describe an address that the bus will listen on as
+a device. Do not warn when this flag is set.
+
+This fixes the following build warnings reported by Stephen:
+
+arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts:126.11-130.4:
+  Warning (i2c_bus_reg): /ahb/apb/bus@1e78a000/i2c-bus@80/ipmb1@10:
+    I2C bus unit address format error, expected "40000010"
+arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts:128.3-30:
+  Warning (i2c_bus_reg): /ahb/apb/bus@1e78a000/i2c-bus@80/ipmb1@10:reg:
+    I2C address must be less than 10-bits, got "0x40000010"
+
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/linux-devicetree/20200508063904.60162-1-joel@jms.id.au/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ scripts/dtc/checks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/scripts/dtc/checks.c b/scripts/dtc/checks.c
+index 4b3c486f1399..7f32ea03de6a 100644
+--- a/scripts/dtc/checks.c
++++ b/scripts/dtc/checks.c
+@@ -1022,6 +1022,8 @@ static void check_i2c_bus_bridge(struct check *c, struct dt_info *dti, struct no
+ }
+ WARNING(i2c_bus_bridge, check_i2c_bus_bridge, NULL, &addr_size_cells);
+ 
++#define I2C_OWN_SLAVE_ADDRESS	(1 << 30)
++
+ static void check_i2c_bus_reg(struct check *c, struct dt_info *dti, struct node *node)
+ {
+ 	struct property *prop;
+@@ -1044,6 +1046,8 @@ static void check_i2c_bus_reg(struct check *c, struct dt_info *dti, struct node
+ 	}
+ 
+ 	reg = fdt32_to_cpu(*cells);
++	/* Ignore I2C_OWN_SLAVE_ADDRESS */
++	reg &= ~I2C_OWN_SLAVE_ADDRESS;
+ 	snprintf(unit_addr, sizeof(unit_addr), "%x", reg);
+ 	if (!streq(unitname, unit_addr))
+ 		FAIL(c, dti, node, "I2C bus unit address format error, expected \"%s\"",
+@@ -1051,6 +1055,8 @@ static void check_i2c_bus_reg(struct check *c, struct dt_info *dti, struct node
+ 
+ 	for (len = prop->val.len; len > 0; len -= 4) {
+ 		reg = fdt32_to_cpu(*(cells++));
++		/* Ignore I2C_OWN_SLAVE_ADDRESS */
++		reg &= ~I2C_OWN_SLAVE_ADDRESS;
+ 		if (reg > 0x3ff)
+ 			FAIL_PROP(c, dti, node, prop, "I2C address must be less than 10-bits, got \"0x%x\"",
+ 				  reg);
+-- 
+2.27.0.rc0
+
