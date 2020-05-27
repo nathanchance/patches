@@ -1,0 +1,79 @@
+From 1f65d56bfe98a07a11d2392fd6ab4bb663718197 Mon Sep 17 00:00:00 2001
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Date: Tue, 26 May 2020 10:50:49 +0200
+Subject: [PATCH 20/34] media: atomisp: get rid of a warning message
+
+There's a warning message about an unused code. The code that
+were using it were commented out, due to a problem causing the
+firmware load to fail on the machines we're using for testing.
+
+Change the place where we're commenting the code out, in order
+to avoid the warning.
+
+Fixes: 95d1f398c4dc ("media: atomisp: keep the ISP powered on when setting it")
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://git.linuxtv.org/mchehab/experimental.git/commit/?id=70def6b0e3043f28fb11bfe3e0f9f6ec990f9a3b
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ .../staging/media/atomisp/pci/atomisp_v4l2.c   | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
+index 694268d133c0..729f873b06d9 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
+@@ -736,6 +736,10 @@ static int atomisp_mrfld_pre_power_down(struct atomisp_device *isp)
+ * WA for DDR DVFS enable/disable
+ * By default, ISP will force DDR DVFS 1600MHz before disable DVFS
+ */
++
++#if 0
++// Used only by atomisp_mrfld_power
++
+ static void punit_ddr_dvfs_enable(bool enable)
+ {
+ 	int door_bell = 1 << 8;
+@@ -760,9 +764,12 @@ static void punit_ddr_dvfs_enable(bool enable)
+ 	if (max_wait == -1)
+ 		pr_info("DDR DVFS, door bell is not cleared within 3ms\n");
+ }
++#endif
+ 
+ static int atomisp_mrfld_power(struct atomisp_device *isp, bool enable)
+ {
++// FIXME: at least with ISP2401, the code below causes the driver to break
++#if 0
+ 	unsigned long timeout;
+ 	u32 val = enable ? MRFLD_ISPSSPM0_IUNIT_POWER_ON :
+ 			   MRFLD_ISPSSPM0_IUNIT_POWER_OFF;
+@@ -819,22 +826,21 @@ static int atomisp_mrfld_power(struct atomisp_device *isp, bool enable)
+ 
+ 	dev_err(isp->dev, "IUNIT power-%s timeout.\n", enable ? "on" : "off");
+ 	return -EBUSY;
++#else
++	return 0;
++#endif
+ }
+ 
+ /* Workaround for pmu_nc_set_power_state not ready in MRFLD */
+ int atomisp_mrfld_power_down(struct atomisp_device *isp)
+ {
+-	return 0;
+-// FIXME: at least with ISP2401, the code below causes the driver to break
+-//	return atomisp_mrfld_power(isp, false);
++	return atomisp_mrfld_power(isp, false);
+ }
+ 
+ /* Workaround for pmu_nc_set_power_state not ready in MRFLD */
+ int atomisp_mrfld_power_up(struct atomisp_device *isp)
+ {
+-	return 0;
+-// FIXME: at least with ISP2401, the code below causes the driver to break
+-//	return atomisp_mrfld_power(isp, true);
++	return atomisp_mrfld_power(isp, true);
+ }
+ 
+ int atomisp_runtime_suspend(struct device *dev)
+-- 
+2.27.0.rc0
+

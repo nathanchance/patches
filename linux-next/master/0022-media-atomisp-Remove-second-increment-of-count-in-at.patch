@@ -1,7 +1,7 @@
-From 0d5e17e92cb7992b3f158a1ca021ff72040eb8ce Mon Sep 17 00:00:00 2001
+From 4226c66f3f59a64ff9536a75362293b308066287 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 26 May 2020 22:04:56 -0700
-Subject: [PATCH 21/34] media: atomisp: Remove second increment of count in
+Subject: [PATCH 22/34] media: atomisp: Remove second increment of count in
  atomisp_subdev_probe
 
 Clang warns:
@@ -22,10 +22,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
-index 694268d133c0..c42999a55303 100644
+index 729f873b06d9..b46c5d8f5f20 100644
 --- a/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
 +++ b/drivers/staging/media/atomisp/pci/atomisp_v4l2.c
-@@ -1094,7 +1094,6 @@ static int atomisp_subdev_probe(struct atomisp_device *isp)
+@@ -1100,7 +1100,6 @@ static int atomisp_subdev_probe(struct atomisp_device *isp)
  		if (camera_count)
  			break;
  		msleep(SUBDEV_WAIT_TIMEOUT);
