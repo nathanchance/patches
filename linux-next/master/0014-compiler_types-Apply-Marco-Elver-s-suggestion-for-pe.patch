@@ -1,0 +1,55 @@
+From d0c3ae4cf037db5cf47eb5e2558fbef08e79666f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 26 May 2020 21:07:41 -0700
+Subject: [PATCH 14/14] compiler_types: Apply Marco Elver's suggestion for
+ performance improvement
+
+Link: https://lore.kernel.org/lkml/20200526173312.GA30240@google.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/compiler_types.h | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index 4e4982d6f3b0..68da40f2877d 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -253,7 +253,9 @@ struct ftrace_likely_data {
+ /*
+  * __unqual_scalar_typeof(x) - Declare an unqualified scalar type, leaving
+  *			       non-scalar types unchanged.
+- *
++ */
++#if defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 40900
++/*
+  * We build this out of a couple of helper macros in a vain attempt to
+  * help you keep your lunch down while reading it.
+  */
+@@ -275,6 +277,24 @@ struct ftrace_likely_data {
+ 			__pick_integer_type(x, int,				\
+ 				__pick_integer_type(x, long,			\
+ 					__pick_integer_type(x, long long, x))))))
++#else
++/*
++ * If supported, prefer C11 _Generic for better compile-times. As above, 'char'
++ * is not type-compatible with 'signed char', and we define a separate case.
++ */
++#define __scalar_type_to_expr_cases(type)				\
++		type: (type)0, unsigned type: (unsigned type)0
++
++#define __unqual_scalar_typeof(x) typeof(				\
++		_Generic((x),						\
++			 __scalar_type_to_expr_cases(char),		\
++			 signed char: (signed char)0,			\
++			 __scalar_type_to_expr_cases(short),		\
++			 __scalar_type_to_expr_cases(int),		\
++			 __scalar_type_to_expr_cases(long),		\
++			 __scalar_type_to_expr_cases(long long),	\
++			 default: (x)))
++#endif
+ 
+ /* Is this type a native word size -- useful for atomic operations */
+ #define __native_word(t) \
+-- 
+2.27.0.rc0
+
