@@ -1,0 +1,54 @@
+From 9762a398766ba5b9d5d2f568a843a491d6cbae18 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 27 May 2020 00:48:21 -0700
+Subject: [PATCH 30/30] net/mlx5e: Don't use err uninitialized in
+ mlx5e_attach_decap
+
+Clang warns:
+
+drivers/net/ethernet/mellanox/mlx5/core/en_tc.c:3712:6: warning:
+variable 'err' is used uninitialized whenever 'if' condition is false
+[-Wsometimes-uninitialized]
+        if (IS_ERR(d->pkt_reformat)) {
+            ^~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/mellanox/mlx5/core/en_tc.c:3718:6: note:
+uninitialized use occurs here
+        if (err)
+            ^~~
+drivers/net/ethernet/mellanox/mlx5/core/en_tc.c:3712:2: note: remove the
+'if' if its condition is always true
+        if (IS_ERR(d->pkt_reformat)) {
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/mellanox/mlx5/core/en_tc.c:3670:9: note: initialize
+the variable 'err' to silence this warning
+        int err;
+               ^
+                = 0
+1 warning generated.
+
+It is not wrong, err is only ever initialized in if statements but this
+one is not in one. Initialize err to 0 to fix this.
+
+Fixes: 14e6b038afa0 ("net/mlx5e: Add support for hw decapsulation of MPLS over UDP")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1037
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 571da14809fe..ae53bf599421 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -3637,7 +3637,7 @@ static int mlx5e_attach_decap(struct mlx5e_priv *priv,
+ 	struct mlx5e_decap_entry *d;
+ 	struct mlx5e_decap_key key;
+ 	uintptr_t hash_key;
+-	int err;
++	int err = 0;
+ 
+ 	parse_attr = attr->parse_attr;
+ 	if (sizeof(parse_attr->eth) > MLX5_CAP_ESW(priv->mdev, max_encap_header_size)) {
+-- 
+2.27.0.rc0
+
