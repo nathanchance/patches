@@ -1,0 +1,58 @@
+From f571ee3a17f68f4475e4862e6a9276a342973dac Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 27 May 2020 00:19:38 -0700
+Subject: [PATCH 28/28] e1000e: Shuffle location of e1000e_check_me
+
+Until the legitimate fix comes in.
+
+Link: https://lore.kernel.org/lkml/61CC2BC414934749BD9F5BF3D5D94044986D9CE3@ORSMSX112.amr.corp.intel.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/e1000e/netdev.c | 24 +++++++++++-----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 9cc8ec5421d5..e88193934db5 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -134,18 +134,6 @@ static const struct e1000e_me_supported me_supported[] = {
+ 	{0}
+ };
+ 
+-static bool e1000e_check_me(u16 device_id)
+-{
+-	struct e1000e_me_supported *id;
+-
+-	for (id = (struct e1000e_me_supported *)me_supported;
+-	     id->device_id; id++)
+-		if (device_id == id->device_id)
+-			return true;
+-
+-	return false;
+-}
+-
+ /**
+  * __ew32_prepare - prepare to write to MAC CSR register on certain parts
+  * @hw: pointer to the HW structure
+@@ -6938,6 +6926,18 @@ static int __e1000_resume(struct pci_dev *pdev)
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
++static bool e1000e_check_me(u16 device_id)
++{
++	struct e1000e_me_supported *id;
++
++	for (id = (struct e1000e_me_supported *)me_supported;
++	     id->device_id; id++)
++		if (device_id == id->device_id)
++			return true;
++
++	return false;
++}
++
+ static int e1000e_pm_suspend(struct device *dev)
+ {
+ 	struct net_device *netdev = pci_get_drvdata(to_pci_dev(dev));
+-- 
+2.27.0.rc0
+
