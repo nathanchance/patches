@@ -1,7 +1,7 @@
 From 50fc5381882a00e4b44d378f7bd3610034770d7a Mon Sep 17 00:00:00 2001
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Date: Tue, 26 May 2020 10:50:49 +0200
-Subject: [PATCH 19/32] media: atomisp: get rid of a warning message
+Subject: [PATCH 19/33] media: atomisp: get rid of a warning message
 
 There's a warning message about an unused code. The code that
 were using it were commented out, due to a problem causing the
