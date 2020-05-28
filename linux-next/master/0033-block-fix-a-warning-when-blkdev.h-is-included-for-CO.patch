@@ -1,7 +1,7 @@
 From 38c4997a28b8da0db3943d24fca044163071cbf3 Mon Sep 17 00:00:00 2001
 From: Christoph Hellwig <hch@lst.de>
 Date: Thu, 28 May 2020 15:41:23 +0200
-Subject: [PATCH 33/33] block: fix a warning when blkdev.h is included for
+Subject: [PATCH 33/35] block: fix a warning when blkdev.h is included for
  !CONFIG_BLOCK builds
 
 disk_start_io_acct and disk_end_io_acct need at least a struct gendisk
