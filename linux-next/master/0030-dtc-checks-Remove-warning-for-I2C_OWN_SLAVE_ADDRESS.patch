@@ -1,14 +1,17 @@
-From 04909175a7acb0ce3273a50395e4e2e85de80fd6 Mon Sep 17 00:00:00 2001
+From 4038e25c12e343b8230247b6902411711396d108 Mon Sep 17 00:00:00 2001
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 8 May 2020 16:09:04 +0930
-Subject: [PATCH 34/34] dtc: Remove warning for I2C_OWN_SLAVE_ADDRESS
+Date: Thu, 28 May 2020 18:26:49 +0930
+Subject: [PATCH 30/31] dtc: checks: Remove warning for I2C_OWN_SLAVE_ADDRESS
 
 dtc does a sanity check on reg properties that they are within the 10
 bit address range for i2c slave addresses. In the case of multi-master
-buses the binding may describe an address that the bus will listen on as
-a device. Do not warn when this flag is set.
+buses or devices that act as a slave, the binding may describe an
+address that the bus will listen on as a device. Do not warn when this
+flag is set.
 
-This fixes the following build warnings reported by Stephen:
+See Documentation/devicetree/bindings/i2c/i2c.txt.
+
+This fixes the following build warnings reported by Stephen and by Arnd:
 
 arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts:126.11-130.4:
   Warning (i2c_bus_reg): /ahb/apb/bus@1e78a000/i2c-bus@80/ipmb1@10:
@@ -18,8 +21,9 @@ arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts:128.3-30:
     I2C address must be less than 10-bits, got "0x40000010"
 
 Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/linux-devicetree/20200508063904.60162-1-joel@jms.id.au/
+Link: https://lore.kernel.org/lkml/20200528085650.1417942-2-joel@jms.id.au/
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  scripts/dtc/checks.c | 6 ++++++
