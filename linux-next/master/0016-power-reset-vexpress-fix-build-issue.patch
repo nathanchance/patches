@@ -1,7 +1,7 @@
 From 827de8397da49265987079ba033b5da29a9e50f6 Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Sat, 23 May 2020 00:01:03 +0200
-Subject: [PATCH 16/31] power: reset: vexpress: fix build issue
+Subject: [PATCH 16/32] power: reset: vexpress: fix build issue
 
 An allmodconfig kernel makes CONFIG_VEXPRESS_CONFIG a module and
 CONFIG_POWER_RESET_VEXPRESS builtin. That makes us see this build

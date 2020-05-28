@@ -1,7 +1,7 @@
 From 09c42579c2b2e9fda82a0e3c8e6d3c6049201f88 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 00:48:21 -0700
-Subject: [PATCH 28/31] net/mlx5e: Don't use err uninitialized in
+Subject: [PATCH 28/32] net/mlx5e: Don't use err uninitialized in
  mlx5e_attach_decap
 
 Clang warns:
