@@ -1,7 +1,7 @@
 From c269237413e97f53410daaef040fbbdce845d93a Mon Sep 17 00:00:00 2001
 From: Christian Gromm <christian.gromm@microchip.com>
 Date: Thu, 28 May 2020 14:41:43 +0200
-Subject: [PATCH 31/31] staging: most: usb: init return value in default path
+Subject: [PATCH 31/32] staging: most: usb: init return value in default path
  of switch/case expression
 
 This patch avoids returning an uninitialized value in the default

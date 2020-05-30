@@ -1,0 +1,52 @@
+From e5c75fa8ce6e2391393aaec2e77adac6442f8c09 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 29 May 2020 22:51:31 -0700
+Subject: [PATCH 32/32] mlx5: Restore err assignment in mlx5_mdev_init
+
+Clang warns:
+
+drivers/net/ethernet/mellanox/mlx5/core/main.c:1278:6: warning: variable
+'err' is used uninitialized whenever 'if' condition is true
+[-Wsometimes-uninitialized]
+        if (!priv->dbg_root) {
+            ^~~~~~~~~~~~~~~
+drivers/net/ethernet/mellanox/mlx5/core/main.c:1303:9: note:
+uninitialized use occurs here
+        return err;
+               ^~~
+drivers/net/ethernet/mellanox/mlx5/core/main.c:1278:2: note: remove the
+'if' if its condition is always false
+        if (!priv->dbg_root) {
+        ^~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/mellanox/mlx5/core/main.c:1259:9: note: initialize
+the variable 'err' to silence this warning
+        int err;
+               ^
+                = 0
+1 warning generated.
+
+This path previously returned -ENOMEM, restore that error code so that
+it is not uninitialized.
+
+Fixes: 810cbb25549b ("net/mlx5: Add missing mutex destroy")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1042
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 09fe2d777550..976a2613330f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1277,6 +1277,7 @@ static int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ 					    mlx5_debugfs_root);
+ 	if (!priv->dbg_root) {
+ 		dev_err(dev->device, "mlx5_core: error, Cannot create debugfs dir, aborting\n");
++		err = -ENOMEM;
+ 		goto err_dbg_root;
+ 	}
+ 
+-- 
+2.27.0.rc0
+
