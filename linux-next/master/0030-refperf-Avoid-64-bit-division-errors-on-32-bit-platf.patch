@@ -1,7 +1,7 @@
-From f56c9d53bd88d619f4b65a24b002728946f891d6 Mon Sep 17 00:00:00 2001
+From eae3e2bf831fb15c4ed13494249b38335d5fb3d0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 28 May 2020 13:53:49 -0700
-Subject: [PATCH 35/35] refperf: Avoid 64-bit division errors on 32-bit
+Subject: [PATCH 30/30] refperf: Avoid 64-bit division errors on 32-bit
  platforms
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/rcu/refperf.c b/kernel/rcu/refperf.c
-index 47df72c492b3..f029eaefc930 100644
+index ab57da04342f..059a7aefabc2 100644
 --- a/kernel/rcu/refperf.c
 +++ b/kernel/rcu/refperf.c
-@@ -386,7 +386,8 @@ static int main_func(void *arg)
+@@ -406,7 +406,8 @@ static int main_func(void *arg)
  		if (torture_must_stop())
  			goto end;
  
@@ -23,8 +23,8 @@ index 47df72c492b3..f029eaefc930 100644
  	}
  
  	// Print the average of all experiments
-@@ -397,9 +398,12 @@ static int main_func(void *arg)
- 	strcat(buf, "Threads\tTime(ns)\n");
+@@ -417,9 +418,12 @@ static int main_func(void *arg)
+ 	strcat(buf, "Runs\tTime(ns)\n");
  
  	for (exp = 0; exp < nruns; exp++) {
 +		u64 result;
