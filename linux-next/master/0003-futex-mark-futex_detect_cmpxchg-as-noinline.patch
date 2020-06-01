@@ -1,4 +1,4 @@
-From 7fc5a50985e9d351cedf03173c59e1fb05d640ab Mon Sep 17 00:00:00 2001
+From 10de23cc7cbe818e9b302136df3ffb45c513aaa2 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Mar 2019 10:14:48 +0100
 Subject: [PATCH 03/32] futex: mark futex_detect_cmpxchg() as 'noinline'
@@ -36,5 +36,5 @@ index e646661f6282..6fbbed45f51b 100644
  #ifndef CONFIG_HAVE_FUTEX_CMPXCHG
  	u32 curval;
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

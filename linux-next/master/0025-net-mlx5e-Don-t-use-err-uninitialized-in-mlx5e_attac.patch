@@ -1,4 +1,4 @@
-From cec22048adc1c62a9099f5270973635ec45e5d34 Mon Sep 17 00:00:00 2001
+From 9a3a4dec6f6b30a0d4ce396241767fc742ddb86f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 00:48:21 -0700
 Subject: [PATCH 25/32] net/mlx5e: Don't use err uninitialized in
@@ -50,5 +50,5 @@ index 0f119c08b835..ac19a61c5cbc 100644
  	parse_attr = attr->parse_attr;
  	if (sizeof(parse_attr->eth) > MLX5_CAP_ESW(priv->mdev, max_encap_header_size)) {
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

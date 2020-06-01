@@ -1,4 +1,4 @@
-From bbadd883f552e68784e6d603f036b58526935e26 Mon Sep 17 00:00:00 2001
+From 83dde8fec9bb076429ec47b10a4b9ff512e46434 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 00:19:38 -0700
 Subject: [PATCH 24/32] e1000e: Shuffle location of e1000e_check_me
@@ -54,5 +54,5 @@ index 9cc8ec5421d5..e88193934db5 100644
  {
  	struct net_device *netdev = pci_get_drvdata(to_pci_dev(dev));
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

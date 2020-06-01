@@ -1,4 +1,4 @@
-From 870d40b07afd181751a2d3a2afb7f2d53b193edc Mon Sep 17 00:00:00 2001
+From eaa4cba55bee6c2067a3c20cb6bae4c0318f6ce8 Mon Sep 17 00:00:00 2001
 From: Joel Stanley <joel@jms.id.au>
 Date: Thu, 28 May 2020 18:26:49 +0930
 Subject: [PATCH 27/32] dtc: checks: Remove warning for I2C_OWN_SLAVE_ADDRESS
@@ -61,5 +61,5 @@ index 4b3c486f1399..7f32ea03de6a 100644
  			FAIL_PROP(c, dti, node, prop, "I2C address must be less than 10-bits, got \"0x%x\"",
  				  reg);
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

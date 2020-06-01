@@ -1,4 +1,4 @@
-From dca21fa2f9705cf4e09ede98d5c673648a371ab3 Mon Sep 17 00:00:00 2001
+From b8ed4871fcb3b63d58bf86e54e139716b29a3be2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 26 May 2020 22:04:56 -0700
 Subject: [PATCH 18/32] media: atomisp: Remove second increment of count in
@@ -34,5 +34,5 @@ index 729f873b06d9..b46c5d8f5f20 100644
  	/* Wait more time to give more time for subdev init code to finish */
  	msleep(5 * SUBDEV_WAIT_TIMEOUT);
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

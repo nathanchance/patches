@@ -1,4 +1,4 @@
-From d43e8b4978c7793b20e054c41f0a40715d41e1f4 Mon Sep 17 00:00:00 2001
+From 5e5d0e01bc4d8e29549a735284f43f782818649a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:08:06 -0700
 Subject: [PATCH 04/32] drm/i915: Avoid false -Wsometimes-uninitialized warning
@@ -31,5 +31,5 @@ index c282719ad3ac..f07613ba5953 100644
  
  	return this_cpu != cpu;
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

@@ -1,4 +1,4 @@
-From 81bc4fe3b38f0efd009b8b25325c6bce1ffd3c9a Mon Sep 17 00:00:00 2001
+From ca05546af00abf9fe52f7ad570007804b361f46c Mon Sep 17 00:00:00 2001
 From: Joel Stanley <joel@jms.id.au>
 Date: Thu, 28 May 2020 18:26:50 +0930
 Subject: [PATCH 28/32] dtc: checks: Improve i2c reg property checking
@@ -48,5 +48,5 @@ index 7f32ea03de6a..122887b8d53d 100644
  }
  WARNING(i2c_bus_reg, check_i2c_bus_reg, NULL, &reg_format, &i2c_bus_bridge);
 -- 
-2.27.0.rc0
+2.27.0.rc2
 
