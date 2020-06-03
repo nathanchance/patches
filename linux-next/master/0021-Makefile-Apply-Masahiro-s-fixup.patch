@@ -1,0 +1,27 @@
+From 9cdac106e2928eaf54bf7838a5af9961ea95af0b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jun 2020 15:14:54 -0700
+Subject: [PATCH 21/21] Makefile: Apply Masahiro's fixup
+
+Link: https://lore.kernel.org/lkml/CAK7LNAT_rgoDQPgDB2cTvwmXrQv2mFH1ysuhvWxp2HnVMd0W7Q@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 7e2c659a8bb8..34c0ee1f230e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1081,7 +1081,7 @@ build-dirs	:= $(vmlinux-dirs)
+ clean-dirs	:= $(vmlinux-alldirs)
+ 
+ # Externally visible symbols (used by link-vmlinux.sh)
+-KBUILD_VMLINUX_OBJS := $(head-y) $(addsuffix built-in.a, $(core-y))
++KBUILD_VMLINUX_OBJS := $(head-y) $(patsubst %/,%/built-in.a, $(core-y))
+ KBUILD_VMLINUX_OBJS += $(addsuffix built-in.a, $(filter %/, $(libs-y)))
+ ifdef CONFIG_MODULES
+ KBUILD_VMLINUX_OBJS += $(patsubst %/, %/lib.a, $(filter %/, $(libs-y)))
+-- 
+2.27.0
+
