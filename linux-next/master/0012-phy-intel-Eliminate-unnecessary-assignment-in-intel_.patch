@@ -1,7 +1,7 @@
 From e31b81dcc68685236e25ea3ce1a41159b6696f39 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 22 May 2020 20:48:02 -0700
-Subject: [PATCH 12/18] phy: intel: Eliminate unnecessary assignment in
+Subject: [PATCH 12/20] phy: intel: Eliminate unnecessary assignment in
  intel_cbphy_set_mode
 
 Clang warns:
@@ -40,5 +40,5 @@ index c2a35be4cdfb..4bc1276ecf23 100644
  	int ret;
  
 -- 
-2.27.0.rc2
+2.27.0
 

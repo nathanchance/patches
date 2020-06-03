@@ -1,0 +1,26 @@
+From 8ca9872eaa21947316ee3120e75ee393586f063a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 3 Jun 2020 13:49:39 -0700
+Subject: [PATCH 20/20] fixup! net/mlx5: Don't fail driver on failure to create
+ debugfs
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 110e8d277d15..b0b1b0309f1e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1289,7 +1289,6 @@ static int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ 	mlx5_health_cleanup(dev);
+ err_health_init:
+ 	debugfs_remove(dev->priv.dbg_root);
+-err_dbg_root:
+ 	mutex_destroy(&priv->pgdir_mutex);
+ 	mutex_destroy(&priv->alloc_mutex);
+ 	mutex_destroy(&priv->bfregs.wc_head.lock);
+-- 
+2.27.0
+

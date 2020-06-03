@@ -1,7 +1,7 @@
 From 6f5e1534d07f79fda8765e9f0f346e70fbb17aa7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 23:44:46 -0700
-Subject: [PATCH 06/18] s390: Remove CONFIG_FRAME_WARN from defconfig
+Subject: [PATCH 06/20] s390: Remove CONFIG_FRAME_WARN from defconfig
 
 Use the 64-bit default for now.
 
@@ -23,5 +23,5 @@ index 7cd0648c1f4e..2345cca3e28b 100644
  CONFIG_MAGIC_SYSRQ=y
  CONFIG_DEBUG_MEMORY_INIT=y
 -- 
-2.27.0.rc2
+2.27.0
 
