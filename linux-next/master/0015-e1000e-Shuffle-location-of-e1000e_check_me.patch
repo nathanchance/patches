@@ -1,7 +1,7 @@
-From 83dde8fec9bb076429ec47b10a4b9ff512e46434 Mon Sep 17 00:00:00 2001
+From 861c2385d9cdce38677e93002252b94feeeb1ba0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 00:19:38 -0700
-Subject: [PATCH 24/32] e1000e: Shuffle location of e1000e_check_me
+Subject: [PATCH 15/19] e1000e: Shuffle location of e1000e_check_me
 
 Until the legitimate fix comes in.
 
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 9cc8ec5421d5..e88193934db5 100644
+index a279f4fa9962..87d4f787d9a2 100644
 --- a/drivers/net/ethernet/intel/e1000e/netdev.c
 +++ b/drivers/net/ethernet/intel/e1000e/netdev.c
 @@ -134,18 +134,6 @@ static const struct e1000e_me_supported me_supported[] = {
@@ -34,7 +34,7 @@ index 9cc8ec5421d5..e88193934db5 100644
  /**
   * __ew32_prepare - prepare to write to MAC CSR register on certain parts
   * @hw: pointer to the HW structure
-@@ -6938,6 +6926,18 @@ static int __e1000_resume(struct pci_dev *pdev)
+@@ -6936,6 +6924,18 @@ static int __e1000_resume(struct pci_dev *pdev)
  }
  
  #ifdef CONFIG_PM_SLEEP

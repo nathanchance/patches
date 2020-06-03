@@ -1,7 +1,7 @@
-From fc43ab9ab5d2c71dadea0b4f4a15bf5474a04d3b Mon Sep 17 00:00:00 2001
+From a6521fc97c6d4919958fab5f582f2d6c88fce520 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 27 May 2020 00:14:21 -0700
-Subject: [PATCH 15/32] media: omap3isp: Remove cacheflush.h
+Subject: [PATCH 14/19] media: omap3isp: Remove cacheflush.h
 
 After mm.h was removed from the asm-generic version of cacheflush.h,
 s390 allyesconfig shows several warnings of the following nature:
