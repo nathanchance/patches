@@ -1,4 +1,4 @@
-From a79d21f58a0b96a7d7486d07dc1d959293dce6a2 Mon Sep 17 00:00:00 2001
+From 55dcd1496de6347fe803a1a235aca3511fcd3ba8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
 Subject: [PATCH 06/11] Revert "drm/i915: Disable -Wuninitialized"
@@ -27,5 +27,5 @@ index b0da6ea6e3f1..d232c9e5984b 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 -- 
-2.27.0.rc2
+2.27.0
 
