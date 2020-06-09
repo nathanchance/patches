@@ -1,7 +1,7 @@
-From 7ca18da5db462d60b81c81a91f2ab6c256f93d51 Mon Sep 17 00:00:00 2001
+From 1c859046737328fb0adfddf9addaf12177d222b1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 23 May 2019 13:08:06 -0700
-Subject: [PATCH 05/11] drm/i915: Avoid false -Wsometimes-uninitialized warning
+Subject: [PATCH 6/8] drm/i915: Avoid false -Wsometimes-uninitialized warning
  in busywait_stop
 
 drivers/gpu/drm/i915/i915_request.c:1032:6: warning: variable 'this_cpu'
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 526c1e9acbd5..5d529c3d6050 100644
+index def62100e666..8166fbd69785 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1530,8 +1530,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+@@ -1625,8 +1625,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
