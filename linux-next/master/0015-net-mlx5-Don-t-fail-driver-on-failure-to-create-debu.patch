@@ -1,7 +1,7 @@
-From 6499b1d577027beeb21f993332797f82b56ccb67 Mon Sep 17 00:00:00 2001
+From f0612317b8acb5cbceb083af0ad6610082d4d809 Mon Sep 17 00:00:00 2001
 From: Leon Romanovsky <leonro@mellanox.com>
 Date: Tue, 2 Jun 2020 15:28:37 +0300
-Subject: [PATCH 18/22] net/mlx5: Don't fail driver on failure to create
+Subject: [PATCH 15/15] net/mlx5: Don't fail driver on failure to create
  debugfs
 
 Clang warns:
@@ -35,14 +35,16 @@ Fixes: 11f3b84d7068 ("net/mlx5: Split mdev init and pci init")
 Link: https://github.com/ClangBuiltLinux/linux/issues/1042
 Reported-by: Nathan Chancellor <natechancellor@gmail.com>
 Signed-off-by: Leon Romanovsky <leonro@mellanox.com>
-Link: https://lore.kernel.org/netdev/20200602122837.161519-1-leon@kernel.org/
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
+Link: https://git.kernel.org/saeed/c/7c0a2c89cdcae43def15e8e39f75b8ac2f2b0abc
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index df46b1fce3a7..110e8d277d15 100644
+index df46b1fce3a7..b0b1b0309f1e 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
 @@ -1275,11 +1275,6 @@ static int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
@@ -57,6 +59,14 @@ index df46b1fce3a7..110e8d277d15 100644
  	err = mlx5_health_init(dev);
  	if (err)
  		goto err_health_init;
+@@ -1294,7 +1289,6 @@ static int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ 	mlx5_health_cleanup(dev);
+ err_health_init:
+ 	debugfs_remove(dev->priv.dbg_root);
+-err_dbg_root:
+ 	mutex_destroy(&priv->pgdir_mutex);
+ 	mutex_destroy(&priv->alloc_mutex);
+ 	mutex_destroy(&priv->bfregs.wc_head.lock);
 -- 
 2.27.0
 
