@@ -1,0 +1,74 @@
+From 1724fc12b1190252fdcf6540b49a3f775e39cc68 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 27 May 2020 09:11:50 +0200
+Subject: [PATCH 18/19] media: atomisp: Remove binary_supports_input_format
+
+Clang warns:
+
+drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c:1707:64:
+warning: implicit conversion from enumeration type 'const enum
+ia_css_frame_format' to different enumeration type 'enum
+atomisp_input_format' [-Wenum-conversion]
+        binary_supports_input_format(xcandidate, req_in_info->format));
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~^~~~~~
+
+As it turns out, binary_supports_input_format only asserts that
+xcandidate is not NULL and just returns true so this call is never
+actually made.
+
+There are other functions that are called that assert info is not NULL
+so this function actually serves no purpose. Remove it. It can be
+brought back if needed later.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1036
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://git.linuxtv.org/mchehab/experimental.git/commit/?id=6412bdd0cb78f64eac765946cd271dbb91dbc1f8
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ .../atomisp/pci/runtime/binary/src/binary.c   | 21 -------------------
+ 1 file changed, 21 deletions(-)
+
+diff --git a/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c b/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
+index 2a23b7c6aeeb..0be2331c66cd 100644
+--- a/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
++++ b/drivers/staging/media/atomisp/pci/runtime/binary/src/binary.c
+@@ -857,18 +857,6 @@ binary_supports_output_format(const struct ia_css_binary_xinfo *info,
+ 	return false;
+ }
+ 
+-#ifdef ISP2401
+-static bool
+-binary_supports_input_format(const struct ia_css_binary_xinfo *info,
+-			     enum atomisp_input_format format)
+-{
+-	assert(info);
+-	(void)format;
+-
+-	return true;
+-}
+-#endif
+-
+ static bool
+ binary_supports_vf_format(const struct ia_css_binary_xinfo *info,
+ 			  enum ia_css_frame_format format)
+@@ -1699,15 +1687,6 @@ ia_css_binary_find(struct ia_css_binary_descr *descr,
+ 					    binary_supports_output_format(xcandidate, req_bin_out_info->format));
+ 			continue;
+ 		}
+-#ifdef ISP2401
+-		if (!binary_supports_input_format(xcandidate, descr->stream_format)) {
+-			ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE,
+-					    "ia_css_binary_find() [%d] continue: !%d\n",
+-					    __LINE__,
+-					    binary_supports_input_format(xcandidate, req_in_info->format));
+-			continue;
+-		}
+-#endif
+ 		if (xcandidate->num_output_pins > 1 &&
+ 		    /* in case we have a second output pin, */
+ 		    req_vf_info                   && /* and we need vf output. */
+-- 
+2.27.0
+

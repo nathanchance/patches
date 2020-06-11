@@ -1,0 +1,44 @@
+From 90a443c9aa0361ce6f4bb5cc28daf7c9f7b15e7e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 22 May 2020 20:48:02 -0700
+Subject: [PATCH 12/19] phy: intel: Eliminate unnecessary assignment in
+ intel_cbphy_set_mode
+
+Clang warns:
+
+drivers/phy/intel/phy-intel-combo.c:202:34: warning: implicit conversion
+from enumeration type 'enum intel_phy_mode' to different enumeration
+type 'enum intel_combo_mode' [-Wenum-conversion]
+        enum intel_combo_mode cb_mode = PHY_PCIE_MODE;
+                              ~~~~~~~   ^~~~~~~~~~~~~
+1 warning generated.
+
+The correct enum to use would be PCIE0_PCIE1_MODE. However, eliminating
+this assignment is a little better because the switch statement always
+assigns a new value to cb_mode, which also takes care of the warning.
+
+Fixes: ac0a95a3ea78 ("phy: intel: Add driver support for ComboPhy")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1034
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/phy/intel/phy-intel-combo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/phy/intel/phy-intel-combo.c b/drivers/phy/intel/phy-intel-combo.c
+index c2a35be4cdfb..4bc1276ecf23 100644
+--- a/drivers/phy/intel/phy-intel-combo.c
++++ b/drivers/phy/intel/phy-intel-combo.c
+@@ -199,9 +199,9 @@ static int intel_cbphy_pcie_dis_pad_refclk(struct intel_cbphy_iphy *iphy)
+ 
+ static int intel_cbphy_set_mode(struct intel_combo_phy *cbphy)
+ {
+-	enum intel_combo_mode cb_mode = PHY_PCIE_MODE;
+ 	enum aggregated_mode aggr = cbphy->aggr_mode;
+ 	struct device *dev = cbphy->dev;
++	enum intel_combo_mode cb_mode;
+ 	enum intel_phy_mode mode;
+ 	int ret;
+ 
+-- 
+2.27.0
+
