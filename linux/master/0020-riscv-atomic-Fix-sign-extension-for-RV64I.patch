@@ -1,4 +1,4 @@
-From 55971d985d909c080135683f84aef9762fe28178 Mon Sep 17 00:00:00 2001
+From 630971fb2ced8910e789522eb5170ab97a058078 Mon Sep 17 00:00:00 2001
 From: Nathan Huckleberry <nhuck@google.com>
 Date: Thu, 11 Jun 2020 18:32:35 +0000
 Subject: [PATCH 20/20] riscv/atomic: Fix sign extension for RV64I
@@ -13,6 +13,8 @@ RV64I. With this fix, clang built RISC-V kernels now boot.
 Link: https://github.com/ClangBuiltLinux/linux/issues/867
 Cc: clang-built-linux@googlegroups.com
 Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Link: https://lore.kernel.org/lkml/20200611183235.37508-1-nhuck@google.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/riscv/include/asm/cmpxchg.h | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
