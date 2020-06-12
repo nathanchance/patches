@@ -1,7 +1,7 @@
 From 82a4c5e8dbb8763777eb92f8a793b8a31a66e1a6 Mon Sep 17 00:00:00 2001
 From: Leon Romanovsky <leonro@mellanox.com>
 Date: Tue, 2 Jun 2020 15:28:37 +0300
-Subject: [PATCH 15/15] net/mlx5: Don't fail driver on failure to create
+Subject: [PATCH 15/16] net/mlx5: Don't fail driver on failure to create
  debugfs
 
 Clang warns:
