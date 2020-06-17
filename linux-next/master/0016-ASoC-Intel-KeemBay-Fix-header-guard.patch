@@ -1,0 +1,45 @@
+From 878964f1a295590d285e68f5e183f32a910c74cd Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 16 Jun 2020 17:57:55 -0700
+Subject: [PATCH 16/16] ASoC: Intel: KeemBay: Fix header guard
+
+Clang warns:
+
+ In file included from sound/soc/intel/keembay/kmb_platform.c:14:
+ sound/soc/intel/keembay/kmb_platform.h:9:9: warning: 'KMB_PLATFORM_H_'
+ is used as a header guard here, followed by #define of a different
+ macro [-Wheader-guard]
+ #ifndef KMB_PLATFORM_H_
+         ^~~~~~~~~~~~~~~
+ sound/soc/intel/keembay/kmb_platform.h:10:9: note: 'KMB_PLATFORMP_H_'
+ is defined here; did you mean 'KMB_PLATFORM_H_'?
+ #define KMB_PLATFORMP_H_
+         ^~~~~~~~~~~~~~~~
+         KMB_PLATFORM_H_
+ 1 warning generated.
+
+Fix the typo so that the header guard works as intended.
+
+Fixes: c5477e966728 ("ASoC: Intel: Add KeemBay platform driver")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1053
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/soc/intel/keembay/kmb_platform.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/intel/keembay/kmb_platform.h b/sound/soc/intel/keembay/kmb_platform.h
+index 29600652d8f4..6bf221aa8fff 100644
+--- a/sound/soc/intel/keembay/kmb_platform.h
++++ b/sound/soc/intel/keembay/kmb_platform.h
+@@ -7,7 +7,7 @@
+  */
+ 
+ #ifndef KMB_PLATFORM_H_
+-#define KMB_PLATFORMP_H_
++#define KMB_PLATFORM_H_
+ 
+ #include <linux/bits.h>
+ #include <linux/bitfield.h>
+-- 
+2.27.0
+
