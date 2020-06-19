@@ -1,7 +1,7 @@
-From 53a46289219a9599fab90c2ebfb60603e455c88d Mon Sep 17 00:00:00 2001
+From 978deaf1b180cfb0c4a24a883932d347ec830f29 Mon Sep 17 00:00:00 2001
 From: Nathan Huckleberry <nhuck@google.com>
 Date: Thu, 11 Jun 2020 18:32:35 +0000
-Subject: [PATCH 11/13] riscv/atomic: Fix sign extension for RV64I
+Subject: [PATCH 11/14] riscv/atomic: Fix sign extension for RV64I
 
 The argument passed to cmpxchg is not guaranteed to be sign
 extended, but lr.w sign extends on RV64I. This makes cmpxchg

@@ -1,0 +1,40 @@
+From 965d5f828f1a4adab5142f4196d842fbd7e9dbdb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 27 May 2020 00:14:21 -0700
+Subject: [PATCH 14/14] media: omap3isp: Remove cacheflush.h
+
+After mm.h was removed from the asm-generic version of cacheflush.h,
+s390 allyesconfig shows several warnings of the following nature:
+
+In file included from ./arch/s390/include/generated/asm/cacheflush.h:1,
+                 from drivers/media/platform/omap3isp/isp.c:42:
+./include/asm-generic/cacheflush.h:16:42: warning: 'struct mm_struct'
+declared inside parameter list will not be visible outside of this
+definition or declaration
+
+As Geert points out, this driver does not need this header. Remove it so
+there are no warnings.
+
+Fixes: 19c0054597a0 ("asm-generic: don't include <linux/mm.h> in cacheflush.h")
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/media/platform/omap3isp/isp.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/media/platform/omap3isp/isp.c b/drivers/media/platform/omap3isp/isp.c
+index a4ee6b86663e..b91e472ee764 100644
+--- a/drivers/media/platform/omap3isp/isp.c
++++ b/drivers/media/platform/omap3isp/isp.c
+@@ -39,8 +39,6 @@
+  *	Troy Laramy <t-laramy@ti.com>
+  */
+ 
+-#include <asm/cacheflush.h>
+-
+ #include <linux/clk.h>
+ #include <linux/clkdev.h>
+ #include <linux/delay.h>
+-- 
+2.27.0
+
