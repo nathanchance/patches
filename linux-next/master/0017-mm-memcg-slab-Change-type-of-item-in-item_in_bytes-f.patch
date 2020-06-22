@@ -1,0 +1,53 @@
+From 5c283ef33015e866ae7ac190b73afc51e2091373 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sun, 21 Jun 2020 12:27:18 -0700
+Subject: [PATCH 17/17] mm: memcg/slab: Change type of item in item_in_bytes
+ functions
+
+Clang warns over and over:
+
+include/linux/memcontrol.h:45:30: warning: implicit conversion from
+enumeration type 'enum memcg_stat_item' to different enumeration type
+'enum node_stat_item' [-Wenum-conversion]
+        return vmstat_item_in_bytes(item);
+               ~~~~~~~~~~~~~~~~~~~~ ^~~~
+1 warning generated.
+
+If one is going to disregard the type safety offered by enums, just
+don't bother expecting for them in the first place.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/memcontrol.h | 2 +-
+ include/linux/mmzone.h     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 2499f78cf32d..bddeb4ce7a4f 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -38,7 +38,7 @@ enum memcg_stat_item {
+ 	MEMCG_NR_STAT,
+ };
+ 
+-static __always_inline bool memcg_stat_item_in_bytes(enum memcg_stat_item item)
++static __always_inline bool memcg_stat_item_in_bytes(int item)
+ {
+ 	if (item == MEMCG_PERCPU_B)
+ 		return true;
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 084ee1c17160..52d7961a24f0 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -211,7 +211,7 @@ enum node_stat_item {
+  * measured in pages). This defines the API part, the internal representation
+  * might be different.
+  */
+-static __always_inline bool vmstat_item_in_bytes(enum node_stat_item item)
++static __always_inline bool vmstat_item_in_bytes(int item)
+ {
+ 	/*
+ 	 * Global and per-node slab counters track slab pages.
+-- 
+2.27.0
+
