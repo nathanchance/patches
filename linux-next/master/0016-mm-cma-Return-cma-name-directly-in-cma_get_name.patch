@@ -1,0 +1,39 @@
+From 5b814cab93ab4880df097bc39786fdb4ecfe976d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 22 Jun 2020 18:55:10 -0700
+Subject: [PATCH 16/22] mm: cma: Return cma->name directly in cma_get_name
+
+clang warns:
+
+mm/cma.c:55:14: warning: address of array 'cma->name' will always
+evaluate to 'true' [-Wpointer-bool-conversion]
+        return cma->name ? cma->name : "(undefined)";
+               ~~~~~^~~~ ~
+1 warning generated.
+
+After commit e7f0557d7de9 ("mm: cma: fix the name of CMA areas"),
+cma->name will be an array with some value worth printing so we do not
+need to check for NULL.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1063
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ mm/cma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/cma.c b/mm/cma.c
+index 31a61d410c59..6cf08817bac6 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -52,7 +52,7 @@ unsigned long cma_get_size(const struct cma *cma)
+ 
+ const char *cma_get_name(const struct cma *cma)
+ {
+-	return cma->name ? cma->name : "(undefined)";
++	return cma->name;
+ }
+ 
+ static unsigned long cma_bitmap_aligned_mask(const struct cma *cma,
+-- 
+2.27.0
+

@@ -1,0 +1,132 @@
+From 6e6ca6f8140494c9806a24b12dd38f344e5fc74e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 22 Jun 2020 19:31:37 -0700
+Subject: [PATCH 21/22] Revert "mm: use unsigned types for fragmentation score"
+
+This reverts commit 87268b23aa72b2b2476235a4f31c5cfdc5b41fe1.
+
+Prerequisite patch for reverting proactive compaction patch.
+
+Link: https://lore.kernel.org/lkml/20200623022636.GA1051134@ubuntu-n2-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ include/linux/compaction.h |  4 ++--
+ kernel/sysctl.c            |  2 +-
+ mm/compaction.c            | 18 +++++++++---------
+ mm/vmstat.c                |  2 +-
+ 4 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/include/linux/compaction.h b/include/linux/compaction.h
+index 25a521d299c1..7a242d46454e 100644
+--- a/include/linux/compaction.h
++++ b/include/linux/compaction.h
+@@ -85,13 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
+ 
+ #ifdef CONFIG_COMPACTION
+ extern int sysctl_compact_memory;
+-extern unsigned int sysctl_compaction_proactiveness;
++extern int sysctl_compaction_proactiveness;
+ extern int sysctl_compaction_handler(struct ctl_table *table, int write,
+ 			void *buffer, size_t *length, loff_t *ppos);
+ extern int sysctl_extfrag_threshold;
+ extern int sysctl_compact_unevictable_allowed;
+ 
+-extern unsigned int extfrag_for_order(struct zone *zone, unsigned int order);
++extern int extfrag_for_order(struct zone *zone, unsigned int order);
+ extern int fragmentation_index(struct zone *zone, unsigned int order);
+ extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
+ 		unsigned int order, unsigned int alloc_flags,
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 8dca8896c99f..cac5a14a5184 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2847,7 +2847,7 @@ static struct ctl_table vm_table[] = {
+ 	{
+ 		.procname	= "compaction_proactiveness",
+ 		.data		= &sysctl_compaction_proactiveness,
+-		.maxlen		= sizeof(sysctl_compaction_proactiveness),
++		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= SYSCTL_ZERO,
+diff --git a/mm/compaction.c b/mm/compaction.c
+index 2ca208eb6396..544a98811c82 100644
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
+ /*
+  * Fragmentation score check interval for proactive compaction purposes.
+  */
+-static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
++static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
+ 
+ /*
+  * Page order with-respect-to which proactive compaction
+@@ -1890,7 +1890,7 @@ static bool kswapd_is_running(pg_data_t *pgdat)
+  * ZONE_DMA32. For smaller zones, the score value remains close to zero,
+  * and thus never exceeds the high threshold for proactive compaction.
+  */
+-static unsigned int fragmentation_score_zone(struct zone *zone)
++static int fragmentation_score_zone(struct zone *zone)
+ {
+ 	unsigned long score;
+ 
+@@ -1906,9 +1906,9 @@ static unsigned int fragmentation_score_zone(struct zone *zone)
+  * the node's score falls below the low threshold, or one of the back-off
+  * conditions is met.
+  */
+-static unsigned int fragmentation_score_node(pg_data_t *pgdat)
++static int fragmentation_score_node(pg_data_t *pgdat)
+ {
+-	unsigned int score = 0;
++	unsigned long score = 0;
+ 	int zoneid;
+ 
+ 	for (zoneid = 0; zoneid < MAX_NR_ZONES; zoneid++) {
+@@ -1921,17 +1921,17 @@ static unsigned int fragmentation_score_node(pg_data_t *pgdat)
+ 	return score;
+ }
+ 
+-static unsigned int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
++static int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
+ {
+-	unsigned int wmark_low;
++	int wmark_low;
+ 
+ 	/*
+ 	 * Cap the low watermak to avoid excessive compaction
+ 	 * activity in case a user sets the proactivess tunable
+ 	 * close to 100 (maximum).
+ 	 */
+-	wmark_low = max(100U - sysctl_compaction_proactiveness, 5U);
+-	return low ? wmark_low : min(wmark_low + 10, 100U);
++	wmark_low = max(100 - sysctl_compaction_proactiveness, 5);
++	return low ? wmark_low : min(wmark_low + 10, 100);
+ }
+ 
+ static bool should_proactive_compact_node(pg_data_t *pgdat)
+@@ -2615,7 +2615,7 @@ int sysctl_compact_memory;
+  * aggressively the kernel should compact memory in the
+  * background. It takes values in the range [0, 100].
+  */
+-unsigned int __read_mostly sysctl_compaction_proactiveness = 20;
++int __read_mostly sysctl_compaction_proactiveness = 20;
+ 
+ /*
+  * This is the entry point for compacting all nodes via
+diff --git a/mm/vmstat.c b/mm/vmstat.c
+index 2c5a96694490..321a23c71a0b 100644
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -1101,7 +1101,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
+  * It is defined as the percentage of pages found in blocks of size
+  * less than 1 << order. It returns values in range [0, 100].
+  */
+-unsigned int extfrag_for_order(struct zone *zone, unsigned int order)
++int extfrag_for_order(struct zone *zone, unsigned int order)
+ {
+ 	struct contig_page_info info;
+ 
+-- 
+2.27.0
+
