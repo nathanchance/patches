@@ -1,7 +1,7 @@
 From 1099522a09402bc3005da4c1b54329fe8a9c119e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Valdis=20Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>
 Date: Sat, 20 Jun 2020 13:03:22 -0400
-Subject: [PATCH 20/22] opp: core: Add missing export for
+Subject: [PATCH 20/21] opp: core: Add missing export for
  dev_pm_opp_adjust_voltage
 
 Export dev_pm_opp_adjust_voltage() as it may be used by modules later
