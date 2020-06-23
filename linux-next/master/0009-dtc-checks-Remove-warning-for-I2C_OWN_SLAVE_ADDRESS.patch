@@ -1,7 +1,7 @@
-From 5eb2e21c6c7e238978ddd1f2bb446077715b9aa0 Mon Sep 17 00:00:00 2001
+From 19c297f659e9de506075c2287fae5238824ac56e Mon Sep 17 00:00:00 2001
 From: Joel Stanley <joel@jms.id.au>
 Date: Thu, 28 May 2020 18:26:49 +0930
-Subject: [PATCH 09/21] dtc: checks: Remove warning for I2C_OWN_SLAVE_ADDRESS
+Subject: [PATCH 09/20] dtc: checks: Remove warning for I2C_OWN_SLAVE_ADDRESS
 
 dtc does a sanity check on reg properties that they are within the 10
 bit address range for i2c slave addresses. In the case of multi-master

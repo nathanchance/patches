@@ -1,7 +1,7 @@
-From 69975f4bf561f7953d4114009012f38401e7a971 Mon Sep 17 00:00:00 2001
+From 01bc0bf41573f67e2447ea611e36b0687acc8795 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 16:36:48 -0700
-Subject: [PATCH 15/21] asm-generic: Make cacheflush.h self-contained
+Subject: [PATCH 15/20] asm-generic: Make cacheflush.h self-contained
 
 Currently, cacheflush.h has to be included after mm.h to avoid several
 -Wvisibility warnings:
