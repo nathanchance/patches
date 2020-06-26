@@ -1,7 +1,7 @@
-From ccde15326f4c85d0a1bd79195ea18148e6530204 Mon Sep 17 00:00:00 2001
+From 47d9ec0ae4bd1492e864eff1be258158699a7f06 Mon Sep 17 00:00:00 2001
 From: Joel Stanley <joel@jms.id.au>
 Date: Thu, 28 May 2020 18:26:50 +0930
-Subject: [PATCH 10/17] dtc: checks: Improve i2c reg property checking
+Subject: [PATCH 10/15] dtc: checks: Improve i2c reg property checking
 
 The i2c bindings in the kernel tree describe support for 10 bit
 addressing, which must be indicated with the I2C_TEN_BIT_ADDRESS flag.

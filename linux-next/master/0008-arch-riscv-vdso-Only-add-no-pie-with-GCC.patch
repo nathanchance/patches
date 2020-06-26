@@ -1,7 +1,7 @@
-From 0e7c2edbd8a3cc9a5345762dcf12612624e6623e Mon Sep 17 00:00:00 2001
+From 5a253bab102b21d3251f09221c50d5c14991e73b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 21:18:32 -0700
-Subject: [PATCH 08/17] arch/riscv: vdso: Only add -no-pie with GCC
+Subject: [PATCH 08/15] arch/riscv: vdso: Only add -no-pie with GCC
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/803
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 38ba55b0eb9d..02ed0adbcebd 100644
+index 29cf052f6541..b19fea0c49b0 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
 @@ -60,8 +60,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
