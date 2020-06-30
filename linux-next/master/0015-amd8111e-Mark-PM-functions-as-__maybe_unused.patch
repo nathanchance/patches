@@ -1,0 +1,52 @@
+From 448c5953b48fc3c4c35ab6f23193c8137375aec5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 30 Jun 2020 13:54:20 -0700
+Subject: [PATCH 15/16] amd8111e: Mark PM functions as __maybe_unused
+
+In certain configurations without power management support, the
+following warnings happen:
+
+../drivers/net/ethernet/amd/amd8111e.c:1623:12: warning:
+'amd8111e_resume' defined but not used [-Wunused-function]
+ 1623 | static int amd8111e_resume(struct device *dev_d)
+      |            ^~~~~~~~~~~~~~~
+../drivers/net/ethernet/amd/amd8111e.c:1584:12: warning:
+'amd8111e_suspend' defined but not used [-Wunused-function]
+ 1584 | static int amd8111e_suspend(struct device *dev_d)
+      |            ^~~~~~~~~~~~~~~~
+
+Mark these functions as __maybe_unused to make it clear to the compiler
+that this is going to happen based on the configuration, which is the
+standard for these types of functions.
+
+Fixes: 2caf751fe080 ("amd8111e: Convert to generic power management")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/amd/amd8111e.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/amd/amd8111e.c b/drivers/net/ethernet/amd/amd8111e.c
+index c6591b33abcc..5d389a984394 100644
+--- a/drivers/net/ethernet/amd/amd8111e.c
++++ b/drivers/net/ethernet/amd/amd8111e.c
+@@ -1581,7 +1581,7 @@ static void amd8111e_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ 		netif_wake_queue(dev);
+ }
+ 
+-static int amd8111e_suspend(struct device *dev_d)
++static int __maybe_unused amd8111e_suspend(struct device *dev_d)
+ {
+ 	struct net_device *dev = dev_get_drvdata(dev_d);
+ 	struct amd8111e_priv *lp = netdev_priv(dev);
+@@ -1620,7 +1620,7 @@ static int amd8111e_suspend(struct device *dev_d)
+ 	return 0;
+ }
+ 
+-static int amd8111e_resume(struct device *dev_d)
++static int __maybe_unused amd8111e_resume(struct device *dev_d)
+ {
+ 	struct net_device *dev = dev_get_drvdata(dev_d);
+ 	struct amd8111e_priv *lp = netdev_priv(dev);
+-- 
+2.27.0
+

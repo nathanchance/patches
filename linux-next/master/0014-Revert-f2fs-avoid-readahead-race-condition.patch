@@ -1,0 +1,90 @@
+From 9e9649afb1b896cdffc032f29981b3b69cd66abc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 30 Jun 2020 13:45:36 -0700
+Subject: [PATCH 14/16] Revert "f2fs: avoid readahead race condition"
+
+This reverts commit f4fc6cfb57b6368ab7ffbf5d967358b6ae53da67.
+
+Link: https://lore.kernel.org/lkml/20200630204348.GA2504307@ubuntu-s3-xlarge-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/f2fs/data.c  | 18 ------------------
+ fs/f2fs/f2fs.h  |  1 -
+ fs/f2fs/super.c |  2 --
+ 3 files changed, 21 deletions(-)
+
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 5cff2fdec65b..5f6babe95207 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2296,7 +2296,6 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 	unsigned nr_pages = rac ? readahead_count(rac) : 1;
+ 	unsigned max_nr_pages = nr_pages;
+ 	int ret = 0;
+-	bool drop_ra = false;
+ 
+ 	map.m_pblk = 0;
+ 	map.m_lblk = 0;
+@@ -2307,24 +2306,10 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 	map.m_seg_type = NO_CHECK_TYPE;
+ 	map.m_may_create = false;
+ 
+-	/*
+-	 * Two readahead threads for same address range can cause race condition
+-	 * which fragments sequential read IOs. So let's avoid each other.
+-	 */
+-	if (rac && readahead_count(rac)) {
+-		if (READ_ONCE(F2FS_I(inode)->ra_offset) == readahead_index(rac))
+-			drop_ra = true;
+-		else
+-			WRITE_ONCE(F2FS_I(inode)->ra_offset,
+-						readahead_index(rac));
+-	}
+-
+ 	for (; nr_pages; nr_pages--) {
+ 		if (rac) {
+ 			page = readahead_page(rac);
+ 			prefetchw(&page->flags);
+-			if (drop_ra)
+-				goto next_page;
+ 		}
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+@@ -2387,9 +2372,6 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 	}
+ 	if (bio)
+ 		__submit_bio(F2FS_I_SB(inode), bio, DATA);
+-
+-	if (rac && readahead_count(rac) && !drop_ra)
+-		WRITE_ONCE(F2FS_I(inode)->ra_offset, -1);
+ 	return ret;
+ }
+ 
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index e6e47618a357..6a655edeb522 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -809,7 +809,6 @@ struct f2fs_inode_info {
+ 	struct list_head inmem_pages;	/* inmemory pages managed by f2fs */
+ 	struct task_struct *inmem_task;	/* store inmemory task */
+ 	struct mutex inmem_lock;	/* lock for inmemory pages */
+-	pgoff_t ra_offset;		/* ongoing readahead offset */
+ 	struct extent_tree *extent_tree;	/* cached extent_tree entry */
+ 
+ 	/* avoid racing between foreground op and gc */
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 80cb7cd358f8..732652205737 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1015,8 +1015,6 @@ static struct inode *f2fs_alloc_inode(struct super_block *sb)
+ 	/* Will be used by directory only */
+ 	fi->i_dir_level = F2FS_SB(sb)->dir_level;
+ 
+-	fi->ra_offset = -1;
+-
+ 	return &fi->vfs_inode;
+ }
+ 
+-- 
+2.27.0
+

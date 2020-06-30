@@ -1,0 +1,131 @@
+From 8a5073f816bc1fb6a8cbe95277b0e4ff5fbe9e66 Mon Sep 17 00:00:00 2001
+From: Lee Jones <lee.jones@linaro.org>
+Date: Mon, 29 Jun 2020 13:30:03 +0100
+Subject: [PATCH 13/16] crypto: ux500: hash: Add namespacing to hash_init()
+
+A recent change to the Regulator consumer API (which this driver
+utilises) add prototypes for the some suspend functions.  These
+functions require including header file include/linux/suspend.h.
+
+The following tree of includes affecting this driver will be
+present:
+
+   In file included from include/linux/elevator.h:6,
+                    from include/linux/blkdev.h:288,
+                    from include/linux/blk-cgroup.h:23,
+                    from include/linux/writeback.h:14,
+                    from include/linux/memcontrol.h:22,
+                    from include/linux/swap.h:9,
+                    from include/linux/suspend.h:5,
+                    from include/linux/regulator/consumer.h:35,
+                    from drivers/crypto/ux500/hash/hash_core.c:28:
+
+include/linux/elevator.h pulls in include/linux/hashtable.h which
+contains its own version of hash_init().  This confuses the build
+system and results in the following error (amongst others):
+
+ drivers/crypto/ux500/hash/hash_core.c:1362:19: error: passing argument 1 of '__hash_init' from incompatible pointer type [-Werror=incompatible-pointer-types]
+ 1362 |  return hash_init(req);
+
+Fix this by namespacing the local hash_init() such that the
+source of confusion is removed.
+
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: linux-crypto@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Link: https://lore.kernel.org/lkml/20200629123003.1014387-1-lee.jones@linaro.org/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/crypto/ux500/hash/hash_core.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/crypto/ux500/hash/hash_core.c b/drivers/crypto/ux500/hash/hash_core.c
+index c24f2db8d5e8..a5ee8c2fb4e0 100644
+--- a/drivers/crypto/ux500/hash/hash_core.c
++++ b/drivers/crypto/ux500/hash/hash_core.c
+@@ -545,7 +545,7 @@ static bool hash_dma_valid_data(struct scatterlist *sg, int datasize)
+  *
+  * Initialize structures.
+  */
+-static int hash_init(struct ahash_request *req)
++static int ux500_hash_init(struct ahash_request *req)
+ {
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+ 	struct hash_ctx *ctx = crypto_ahash_ctx(tfm);
+@@ -1359,7 +1359,7 @@ static int ahash_sha1_init(struct ahash_request *req)
+ 	ctx->config.oper_mode = HASH_OPER_MODE_HASH;
+ 	ctx->digestsize = SHA1_DIGEST_SIZE;
+ 
+-	return hash_init(req);
++	return ux500_hash_init(req);
+ }
+ 
+ static int ahash_sha256_init(struct ahash_request *req)
+@@ -1372,7 +1372,7 @@ static int ahash_sha256_init(struct ahash_request *req)
+ 	ctx->config.oper_mode = HASH_OPER_MODE_HASH;
+ 	ctx->digestsize = SHA256_DIGEST_SIZE;
+ 
+-	return hash_init(req);
++	return ux500_hash_init(req);
+ }
+ 
+ static int ahash_sha1_digest(struct ahash_request *req)
+@@ -1425,7 +1425,7 @@ static int hmac_sha1_init(struct ahash_request *req)
+ 	ctx->config.oper_mode	= HASH_OPER_MODE_HMAC;
+ 	ctx->digestsize		= SHA1_DIGEST_SIZE;
+ 
+-	return hash_init(req);
++	return ux500_hash_init(req);
+ }
+ 
+ static int hmac_sha256_init(struct ahash_request *req)
+@@ -1438,7 +1438,7 @@ static int hmac_sha256_init(struct ahash_request *req)
+ 	ctx->config.oper_mode	= HASH_OPER_MODE_HMAC;
+ 	ctx->digestsize		= SHA256_DIGEST_SIZE;
+ 
+-	return hash_init(req);
++	return ux500_hash_init(req);
+ }
+ 
+ static int hmac_sha1_digest(struct ahash_request *req)
+@@ -1515,7 +1515,7 @@ static struct hash_algo_template hash_algs[] = {
+ 		.conf.algorithm = HASH_ALGO_SHA1,
+ 		.conf.oper_mode = HASH_OPER_MODE_HASH,
+ 		.hash = {
+-			.init = hash_init,
++			.init = ux500_hash_init,
+ 			.update = ahash_update,
+ 			.final = ahash_final,
+ 			.digest = ahash_sha1_digest,
+@@ -1538,7 +1538,7 @@ static struct hash_algo_template hash_algs[] = {
+ 		.conf.algorithm	= HASH_ALGO_SHA256,
+ 		.conf.oper_mode	= HASH_OPER_MODE_HASH,
+ 		.hash = {
+-			.init = hash_init,
++			.init = ux500_hash_init,
+ 			.update	= ahash_update,
+ 			.final = ahash_final,
+ 			.digest = ahash_sha256_digest,
+@@ -1561,7 +1561,7 @@ static struct hash_algo_template hash_algs[] = {
+ 		.conf.algorithm = HASH_ALGO_SHA1,
+ 		.conf.oper_mode = HASH_OPER_MODE_HMAC,
+ 			.hash = {
+-			.init = hash_init,
++			.init = ux500_hash_init,
+ 			.update = ahash_update,
+ 			.final = ahash_final,
+ 			.digest = hmac_sha1_digest,
+@@ -1585,7 +1585,7 @@ static struct hash_algo_template hash_algs[] = {
+ 		.conf.algorithm = HASH_ALGO_SHA256,
+ 		.conf.oper_mode = HASH_OPER_MODE_HMAC,
+ 		.hash = {
+-			.init = hash_init,
++			.init = ux500_hash_init,
+ 			.update = ahash_update,
+ 			.final = ahash_final,
+ 			.digest = hmac_sha256_digest,
+-- 
+2.27.0
+
