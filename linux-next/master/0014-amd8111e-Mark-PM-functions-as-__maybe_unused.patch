@@ -1,7 +1,7 @@
-From b95f7c4bf0edafd812b48b2e49837129ea0fe751 Mon Sep 17 00:00:00 2001
+From ecdde5b948779aaec75ac7b894e5c9aa009a0937 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 30 Jun 2020 13:54:20 -0700
-Subject: [PATCH 15/16] amd8111e: Mark PM functions as __maybe_unused
+Subject: [PATCH 14/15] amd8111e: Mark PM functions as __maybe_unused
 
 In certain configurations without power management support, the
 following warnings happen:
