@@ -1,7 +1,7 @@
 From d48d32be9a8d93d161b3b3fb16958b9f08929c1b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 30 Jun 2020 13:54:20 -0700
-Subject: [PATCH 15/15] pcnet32: Mark PM functions as __maybe_unused
+Subject: [PATCH 15/16] pcnet32: Mark PM functions as __maybe_unused
 
 In certain configurations without power management support, the
 following warnings happen:
