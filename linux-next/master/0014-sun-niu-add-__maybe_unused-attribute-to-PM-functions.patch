@@ -1,0 +1,47 @@
+From cd824f44285224c0fbe728370f78030fe0aa0f6f Mon Sep 17 00:00:00 2001
+From: Vaibhav Gupta <vaibhavgupta40@gmail.com>
+Date: Tue, 7 Jul 2020 13:11:22 +0530
+Subject: [PATCH 14/14] sun/niu: add __maybe_unused attribute to PM functions
+
+The upgraded .suspend() and .resume() throw
+"defined but not used [-Wunused-function]" warning for certain
+configurations.
+
+Mark them with "__maybe_unused" attribute.
+
+Compile-tested only.
+
+Fixes: b0db0cc2f695 ("sun/niu: use generic power management")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Vaibhav Gupta <vaibhavgupta40@gmail.com>
+Link: https://lore.kernel.org/netdev/20200707074121.230686-1-vaibhavgupta40@gmail.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/sun/niu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
+index cd179e845365..9b5effb72657 100644
+--- a/drivers/net/ethernet/sun/niu.c
++++ b/drivers/net/ethernet/sun/niu.c
+@@ -9873,7 +9873,7 @@ static void niu_pci_remove_one(struct pci_dev *pdev)
+ 	}
+ }
+ 
+-static int niu_suspend(struct device *dev_d)
++static int __maybe_unused niu_suspend(struct device *dev_d)
+ {
+ 	struct net_device *dev = dev_get_drvdata(dev_d);
+ 	struct niu *np = netdev_priv(dev);
+@@ -9900,7 +9900,7 @@ static int niu_suspend(struct device *dev_d)
+ 	return 0;
+ }
+ 
+-static int niu_resume(struct device *dev_d)
++static int __maybe_unused niu_resume(struct device *dev_d)
+ {
+ 	struct net_device *dev = dev_get_drvdata(dev_d);
+ 	struct niu *np = netdev_priv(dev);
+-- 
+2.27.0
+

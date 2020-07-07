@@ -1,0 +1,38 @@
+From 6e8a605ca8fa241b31dd82a3af479e5a0f71505a Mon Sep 17 00:00:00 2001
+From: Dave Jiang <dave.jiang@intel.com>
+Date: Mon, 6 Jul 2020 08:18:31 -0700
+Subject: [PATCH 13/14] dmaengine: fix incorrect return value for
+ dma_request_chan()
+
+dma_request_chan() is expected to return ERR_PTR rather than NULL. This
+triggered a crash in pl011_dma_probe() when dma_device_list is empty
+and returning NULL. Fix return of NULL ptr to ERR_PTR(-ENODEV).
+
+Fixes: deb9541f5052 ("dmaengine: check device and channel list for empty")
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/159404871194.45151.3076873396834992441.stgit@djiang5-desk3.ch.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://git.kernel.org/vkoul/dmaengine/c/730bf7a24fd521931d69e2d201f58e78b9ec61b2
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/dma/dmaengine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 0d6529eff66f..48e159e83cf5 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -852,7 +852,7 @@ struct dma_chan *dma_request_chan(struct device *dev, const char *name)
+ 	mutex_lock(&dma_list_mutex);
+ 	if (list_empty(&dma_device_list)) {
+ 		mutex_unlock(&dma_list_mutex);
+-		return NULL;
++		return ERR_PTR(-ENODEV);
+ 	}
+ 
+ 	list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
+-- 
+2.27.0
+
