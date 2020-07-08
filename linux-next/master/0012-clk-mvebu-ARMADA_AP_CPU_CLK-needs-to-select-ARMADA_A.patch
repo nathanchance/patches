@@ -1,7 +1,7 @@
-From 589ed5f5a1f9f4a3d9657601c214ee4942e285ee Mon Sep 17 00:00:00 2001
+From 68d2e2d61dce4c7af041a01978f73d5c412a1ab6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 1 Jul 2020 13:04:15 -0700
-Subject: [PATCH 12/12] clk: mvebu: ARMADA_AP_CPU_CLK needs to select
+Subject: [PATCH 12/13] clk: mvebu: ARMADA_AP_CPU_CLK needs to select
  ARMADA_AP_CP_HELPER
 
 When building arm32 allmodconfig:
