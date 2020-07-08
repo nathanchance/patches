@@ -1,7 +1,7 @@
-From bb80aeef9fff656fefd6ed8bc15f8feb20f68013 Mon Sep 17 00:00:00 2001
+From d00c1546ecb475a8b4c0f759a89f8ae1dfe68726 Mon Sep 17 00:00:00 2001
 From: Lee Jones <lee.jones@linaro.org>
 Date: Mon, 29 Jun 2020 13:30:03 +0100
-Subject: [PATCH 11/14] crypto: ux500: hash: Add namespacing to hash_init()
+Subject: [PATCH 11/12] crypto: ux500: hash: Add namespacing to hash_init()
 
 A recent change to the Regulator consumer API (which this driver
 utilises) add prototypes for the some suspend functions.  These
