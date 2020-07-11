@@ -1,7 +1,7 @@
-From 9666629f0be0e2141c0d9c71f27d382f6d51890d Mon Sep 17 00:00:00 2001
+From 95001767da07f3460ca95651e50a05c30202de4b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 17 Apr 2020 13:43:14 -0700
-Subject: [PATCH 04/11] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
+Subject: [PATCH 04/10] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
  allyesconfig
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/997
@@ -38,5 +38,5 @@ index 543a310ec102..f3c146f62072 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 -- 
-2.27.0
+2.28.0.rc0
 

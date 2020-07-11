@@ -1,7 +1,7 @@
-From dab2c03b7c8a938e2a5691244ab1ba87b7ff84a9 Mon Sep 17 00:00:00 2001
+From 03bda3aff52b4047b6236e987f62c1d4182899f9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 17:59:44 -0700
-Subject: [PATCH 10/11] mailbox: imx: Mark PM functions as __maybe_unused
+Subject: [PATCH 10/10] mailbox: imx: Mark PM functions as __maybe_unused
 
 When CONFIG_PM and CONFIG_PM_SLEEP are unset, the following warnings
 occur:
@@ -73,5 +73,5 @@ index 7205b825c8b5..2543c7b6948b 100644
  	struct imx_mu_priv *priv = dev_get_drvdata(dev);
  	int ret;
 -- 
-2.27.0
+2.28.0.rc0
 
