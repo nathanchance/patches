@@ -1,7 +1,7 @@
-From 8a4883c852338bed5e29c50977bb736e0dcb1b85 Mon Sep 17 00:00:00 2001
+From 9cbd648d6aff4155e69f30e9018631b0445bdd62 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap@infradead.org>
 Date: Mon, 6 Jul 2020 09:44:46 -0700
-Subject: [PATCH 13/13] cpufreq: add stub for get_cpu_idle_time() to fix
+Subject: [PATCH 12/13] cpufreq: add stub for get_cpu_idle_time() to fix
  scsi/lpfc driver build
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -44,5 +44,5 @@ index e62b022cb07e..11fb45a93fdb 100644
  #endif
  
 -- 
-2.27.0
+2.28.0.rc0
 

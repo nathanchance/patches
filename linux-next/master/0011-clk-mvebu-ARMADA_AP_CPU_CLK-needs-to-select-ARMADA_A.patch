@@ -1,7 +1,7 @@
-From 68d2e2d61dce4c7af041a01978f73d5c412a1ab6 Mon Sep 17 00:00:00 2001
+From e32a1bf2e0cda4b4604d164870cd8b530b10780b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 1 Jul 2020 13:04:15 -0700
-Subject: [PATCH 12/13] clk: mvebu: ARMADA_AP_CPU_CLK needs to select
+Subject: [PATCH 11/13] clk: mvebu: ARMADA_AP_CPU_CLK needs to select
  ARMADA_AP_CP_HELPER
 
 When building arm32 allmodconfig:
@@ -37,5 +37,5 @@ index ded07b0bd0d5..557d6213783c 100644
  config ARMADA_CP110_SYSCON
  	bool
 -- 
-2.27.0
+2.28.0.rc0
 
