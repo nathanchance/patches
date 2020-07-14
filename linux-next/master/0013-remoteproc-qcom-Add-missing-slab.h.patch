@@ -1,0 +1,40 @@
+From 3d8befeebe64e1b41622172d847e33366b0e2037 Mon Sep 17 00:00:00 2001
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+Date: Mon, 13 Jul 2020 10:00:03 +0800
+Subject: [PATCH 13/13] remoteproc: qcom: Add missing slab.h
+
+drivers/remoteproc/qcom_common.c: In function 'qcom_ssr_get_subsys':
+drivers/remoteproc/qcom_common.c:210:9: error: implicit declaration of function 'kzalloc'; did you mean 'vzalloc'?
+[-Werror=implicit-function-declaration]
+  info = kzalloc(sizeof(*info), GFP_KERNEL);
+         ^~~~~~~
+         vzalloc
+
+kzalloc() is declared in linux/slab.h, add include to fix build issue.
+
+Tested-by: Alex Elder <elder@linaro.org>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Link: https://lore.kernel.org/r/20200713020003.134039-1-wangkefeng.wang@huawei.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://git.kernel.org/andersson/remoteproc/c/0cf17702d872128fc2bec79a9578b5cb00d54a11
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/remoteproc/qcom_common.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 2f45f0c79914..085fd73fa23a 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -15,6 +15,7 @@
+ #include <linux/remoteproc/qcom_rproc.h>
+ #include <linux/rpmsg/qcom_glink.h>
+ #include <linux/rpmsg/qcom_smd.h>
++#include <linux/slab.h>
+ #include <linux/soc/qcom/mdt_loader.h>
+ 
+ #include "remoteproc_internal.h"
+-- 
+2.28.0.rc0
+
