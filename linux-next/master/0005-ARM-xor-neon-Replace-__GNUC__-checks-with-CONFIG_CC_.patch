@@ -1,7 +1,7 @@
-From b6421a2bc27a284f12423a93b28bd7070b31fcc0 Mon Sep 17 00:00:00 2001
+From 6b7b3e160a25851b3f2658cd85f4bd594812b1ae Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 28 May 2019 16:11:13 -0700
-Subject: [PATCH 05/13] ARM: xor-neon: Replace __GNUC__ checks with
+Subject: [PATCH 05/12] ARM: xor-neon: Replace __GNUC__ checks with
  CONFIG_CC_IS_GCC
 
 Currently, when compiling this code with clang, the following warning is
