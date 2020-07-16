@@ -1,7 +1,7 @@
 From 769804567090c8c8fb30f178be8e13d68a8ee932 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 15 Jul 2020 21:47:21 -0700
-Subject: [PATCH 13/15] igc: Do not use link uninitialized in
+Subject: [PATCH 13/16] igc: Do not use link uninitialized in
  igc_check_for_copper_link
 
 Clang warns:

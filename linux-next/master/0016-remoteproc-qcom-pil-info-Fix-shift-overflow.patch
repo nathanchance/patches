@@ -1,0 +1,35 @@
+From cf04893ab4c440a63fed876628e75b57f5e2cc8c Mon Sep 17 00:00:00 2001
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+Date: Wed, 15 Jul 2020 22:48:17 -0700
+Subject: [PATCH 16/16] remoteproc: qcom: pil-info: Fix shift overflow
+
+On platforms with 32-bit phys_addr_t the shift to get the upper word of
+the base address of the memory region is invalid. Cast the base to 64
+bit to resolv this.
+
+Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
+Reported-by: Lee Jones <lee.jones@linaro.org>
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/lkml/20200716054817.157608-1-bjorn.andersson@linaro.org/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/remoteproc/qcom_pil_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
+index 0536e3904669..5521c4437ffa 100644
+--- a/drivers/remoteproc/qcom_pil_info.c
++++ b/drivers/remoteproc/qcom_pil_info.c
+@@ -108,7 +108,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
+ found_existing:
+ 	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
+ 	writel(base, entry + PIL_RELOC_NAME_LEN);
+-	writel(base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
++	writel((u64)base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
+ 	writel(size, entry + PIL_RELOC_NAME_LEN + sizeof(__le64));
+ 	mutex_unlock(&pil_reloc_lock);
+ 
+-- 
+2.28.0.rc0
+
