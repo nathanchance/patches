@@ -1,0 +1,27 @@
+From 219d4325d3c3950b8cb4387311e54a77715e9f5b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 15 Jul 2020 22:11:22 -0700
+Subject: [PATCH 14/15] nsfs: Remove unused variables
+
+Link: https://lore.kernel.org/lkml/20200710075906.dilvvpj3q5dij7fu@wittgenstein/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/nsfs.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/fs/nsfs.c b/fs/nsfs.c
+index 5a7de1ee6df0..543672426fd3 100644
+--- a/fs/nsfs.c
++++ b/fs/nsfs.c
+@@ -191,8 +191,6 @@ static long ns_ioctl(struct file *filp, unsigned int ioctl,
+ {
+ 	struct user_namespace *user_ns;
+ 	struct pid_namespace *pid_ns;
+-	struct task_struct *child_reaper;
+-	struct pid *pid_struct;
+ 	pid_t pid;
+ 	struct ns_common *ns = get_proc_ns(file_inode(filp));
+ 	uid_t __user *argp;
+-- 
+2.28.0.rc0
+
