@@ -1,0 +1,35 @@
+From 194762e7532997510392dec323847d35a3082a0d Mon Sep 17 00:00:00 2001
+From: Sasha Neftin <sasha.neftin@intel.com>
+Date: Thu, 9 Jul 2020 10:34:16 +0300
+Subject: [PATCH 13/16] igc: Fix static checker warning
+
+drivers/net/ethernet/intel/igc/igc_mac.c:424 igc_check_for_copper_link()
+error: uninitialized symbol 'link'.
+This patch come to fix this warning and initialize the 'link' symbol.
+
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Fixes: 707abf069548 ("igc: Add initial LTR support")
+Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
+Link: https://patchwork.ozlabs.org/project/intel-wired-lan/patch/20200709073416.14126-1-sasha.neftin@intel.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/intel/igc/igc_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/intel/igc/igc_mac.c b/drivers/net/ethernet/intel/igc/igc_mac.c
+index b47e7b0a6398..336776196d85 100644
+--- a/drivers/net/ethernet/intel/igc/igc_mac.c
++++ b/drivers/net/ethernet/intel/igc/igc_mac.c
+@@ -363,8 +363,8 @@ void igc_rar_set(struct igc_hw *hw, u8 *addr, u32 index)
+ s32 igc_check_for_copper_link(struct igc_hw *hw)
+ {
+ 	struct igc_mac_info *mac = &hw->mac;
++	bool link = false;
+ 	s32 ret_val;
+-	bool link;
+ 
+ 	/* We only want to go out to the PHY registers to see if Auto-Neg
+ 	 * has completed and/or if our link status has changed.  The
+-- 
+2.28.0.rc0
+
