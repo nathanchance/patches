@@ -1,7 +1,7 @@
-From 86c735edd1b6ef602b2f52cd7ad7d72b1a3a7a8b Mon Sep 17 00:00:00 2001
+From fc25b8584ea91f902d83b183e5c64da56caf19c9 Mon Sep 17 00:00:00 2001
 From: Bjorn Andersson <bjorn.andersson@linaro.org>
 Date: Wed, 15 Jul 2020 22:48:17 -0700
-Subject: [PATCH 16/16] remoteproc: qcom: pil-info: Fix shift overflow
+Subject: [PATCH 15/15] remoteproc: qcom: pil-info: Fix shift overflow
 
 On platforms with 32-bit phys_addr_t the shift to get the upper word of
 the base address of the memory region is invalid. Cast the base to 64

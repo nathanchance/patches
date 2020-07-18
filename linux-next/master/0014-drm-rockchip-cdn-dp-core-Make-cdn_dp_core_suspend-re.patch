@@ -1,7 +1,7 @@
-From 830ea0916a3bfd0005d53b71aee376aa527a5096 Mon Sep 17 00:00:00 2001
+From 9372c395feb7508aa8af8726ab8c98404ad5e592 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:31:24 +0200
-Subject: [PATCH 15/16] drm/rockchip: cdn-dp-core: Make
+Subject: [PATCH 14/15] drm/rockchip: cdn-dp-core: Make
  cdn_dp_core_suspend/resume __maybe_unused
 
 With the new static annotation, the compiler warns when the functions
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-index c634b95b50f7..1cde98c6b0e6 100644
+index a4a45daf93f2..413b0e90f10f 100644
 --- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
 +++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-@@ -1106,7 +1106,7 @@ static const struct component_ops cdn_dp_component_ops = {
+@@ -1107,7 +1107,7 @@ static const struct component_ops cdn_dp_component_ops = {
  	.unbind = cdn_dp_unbind,
  };
  
@@ -35,7 +35,7 @@ index c634b95b50f7..1cde98c6b0e6 100644
  {
  	struct cdn_dp_device *dp = dev_get_drvdata(dev);
  	int ret = 0;
-@@ -1120,7 +1120,7 @@ static int cdn_dp_suspend(struct device *dev)
+@@ -1121,7 +1121,7 @@ static int cdn_dp_suspend(struct device *dev)
  	return ret;
  }
  
