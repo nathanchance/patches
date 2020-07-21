@@ -25,5 +25,5 @@ index e4c7c2c8a02f..f9a07857ef86 100644
                     $(CROSS_COMPILE)objcopy \
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
 -- 
-2.28.0.rc0
+2.28.0.rc1
 
