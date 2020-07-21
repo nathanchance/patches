@@ -1,4 +1,4 @@
-From addd0f2c731ac789abc58ba850a6fd88797acb1d Mon Sep 17 00:00:00 2001
+From 871c4c8b9b73d67ead4ee509a7846fcc1977bcbe Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 15 Jul 2020 21:24:00 -0700
 Subject: [PATCH 12/15] drm/i915/display: Ensure that ret is always initialized
@@ -34,10 +34,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_combo_phy.c b/drivers/gpu/drm/i915/display/intel_combo_phy.c
-index eccaa79cb4a9..a4b8aa6d0a9e 100644
+index d88f91038428..7c9235b7c98c 100644
 --- a/drivers/gpu/drm/i915/display/intel_combo_phy.c
 +++ b/drivers/gpu/drm/i915/display/intel_combo_phy.c
-@@ -258,7 +258,7 @@ static bool phy_is_master(struct drm_i915_private *dev_priv, enum phy phy)
+@@ -278,7 +278,7 @@ static bool verify_wa14011224835(struct drm_i915_private *i915)
  static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
  				       enum phy phy)
  {
@@ -46,7 +46,7 @@ index eccaa79cb4a9..a4b8aa6d0a9e 100644
  	u32 expected_val = 0;
  
  	if (!icl_combo_phy_enabled(dev_priv, phy))
-@@ -276,7 +276,7 @@ static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
+@@ -296,7 +296,7 @@ static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
  				     DCC_MODE_SELECT_CONTINUOSLY);
  	}
  
