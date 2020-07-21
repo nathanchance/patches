@@ -1,4 +1,4 @@
-From 4096783739f453a0334119a4ae94daa4cad0a2b5 Mon Sep 17 00:00:00 2001
+From 26b8827feb4e335805ddaa8b309c3604886631bd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 17:59:44 -0700
 Subject: [PATCH 09/15] mailbox: imx: Mark PM functions as __maybe_unused
@@ -73,5 +73,5 @@ index 7205b825c8b5..2543c7b6948b 100644
  	struct imx_mu_priv *priv = dev_get_drvdata(dev);
  	int ret;
 -- 
-2.28.0.rc0
+2.28.0.rc1
 

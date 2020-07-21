@@ -1,4 +1,4 @@
-From 1c2f96ec50c9a9c18a8a12e6e3b80b1153fe7a9e Mon Sep 17 00:00:00 2001
+From f848a940f1c47d783cb94afddb0156f208b5b137 Mon Sep 17 00:00:00 2001
 From: Sasha Neftin <sasha.neftin@intel.com>
 Date: Thu, 9 Jul 2020 10:34:16 +0300
 Subject: [PATCH 13/15] igc: Fix static checker warning
@@ -31,5 +31,5 @@ index b47e7b0a6398..336776196d85 100644
  	/* We only want to go out to the PHY registers to see if Auto-Neg
  	 * has completed and/or if our link status has changed.  The
 -- 
-2.28.0.rc0
+2.28.0.rc1
 

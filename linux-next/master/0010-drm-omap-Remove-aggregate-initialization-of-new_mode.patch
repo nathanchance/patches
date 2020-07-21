@@ -1,4 +1,4 @@
-From 9f0ebb6c157c5169bda4c84bbee41581ec797359 Mon Sep 17 00:00:00 2001
+From f63b839323087ad7c6f774ba4b04d096dae44a0d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 18:21:34 -0700
 Subject: [PATCH 10/15] drm/omap: Remove aggregate initialization of new_mode
@@ -45,5 +45,5 @@ index 528764566b17..ce4da1511920 100644
  
  	status = omap_connector_mode_fixup(omap_connector->output, mode,
 -- 
-2.28.0.rc0
+2.28.0.rc1
 

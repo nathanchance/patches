@@ -1,6 +1,6 @@
-From 46dedeb05fd5ccc14e82418f71fe72b3d5ab7642 Mon Sep 17 00:00:00 2001
+From 92c4d74077933bf820f862333b86094256fccd88 Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
-Date: Mon, 20 Jul 2020 21:19:38 -0700
+Date: Tue, 21 Jul 2020 10:31:23 -0700
 Subject: [PATCH 15/15] Makefile: Fix GCC_TOOLCHAIN_DIR prefix for Clang cross
  compilation
 
@@ -30,8 +30,10 @@ Signed-off-by: Fangrui Song <maskray@google.com>
 Tested-by: Nathan Chancellor <natechancellor@gmail.com>
 Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Cc: stable@vger.kernel.org
 Link: https://github.com/ClangBuiltLinux/linux/issues/1099
-Link: https://lore.kernel.org/lkml/20200721041940.4029552-1-maskray@google.com/
+Link: https://lore.kernel.org/lkml/20200721173125.1273884-1-maskray@google.com/
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  Makefile | 2 +-
@@ -51,5 +53,5 @@ index 28ebf7cd2b4d..8955f40b9115 100644
  endif
  ifneq ($(GCC_TOOLCHAIN),)
 -- 
-2.28.0.rc0
+2.28.0.rc1
 
