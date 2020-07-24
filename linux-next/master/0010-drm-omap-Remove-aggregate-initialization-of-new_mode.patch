@@ -1,7 +1,7 @@
-From 2cfa8bcf43dbb60d054d6bf158b5cc30ce88e9dc Mon Sep 17 00:00:00 2001
+From 17b6f95c884b27161a1fc5d728cb1b7adf4076de Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 18:21:34 -0700
-Subject: [PATCH 10/15] drm/omap: Remove aggregate initialization of new_mode
+Subject: [PATCH 10/14] drm/omap: Remove aggregate initialization of new_mode
  in omap_connector_mode_valid
 
 After commit 42acb06b01b1 ("drm: pahole struct drm_display_mode"), clang
