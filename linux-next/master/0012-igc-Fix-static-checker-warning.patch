@@ -1,7 +1,7 @@
-From cf46acc73106d2a12246c05bed1165c653f54516 Mon Sep 17 00:00:00 2001
+From aade174b01fbe3959da7b2713541d6e5718b6485 Mon Sep 17 00:00:00 2001
 From: Sasha Neftin <sasha.neftin@intel.com>
 Date: Thu, 9 Jul 2020 10:34:16 +0300
-Subject: [PATCH 13/14] igc: Fix static checker warning
+Subject: [PATCH 12/13] igc: Fix static checker warning
 
 drivers/net/ethernet/intel/igc/igc_mac.c:424 igc_check_for_copper_link()
 error: uninitialized symbol 'link'.
