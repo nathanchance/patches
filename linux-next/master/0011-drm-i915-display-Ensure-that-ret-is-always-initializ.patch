@@ -1,7 +1,7 @@
-From 5fa1d8d56eeff3e91823f67d3eb6ec519f9b698d Mon Sep 17 00:00:00 2001
+From fde1f9cc778df095ded1dded0c9c0e4c7285ab0e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 15 Jul 2020 21:24:00 -0700
-Subject: [PATCH 11/13] drm/i915/display: Ensure that ret is always initialized
+Subject: [PATCH 11/12] drm/i915/display: Ensure that ret is always initialized
  in icl_combo_phy_verify_state
 
 Clang warns:
@@ -34,10 +34,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_combo_phy.c b/drivers/gpu/drm/i915/display/intel_combo_phy.c
-index d88f91038428..7c9235b7c98c 100644
+index eccaa79cb4a9..a4b8aa6d0a9e 100644
 --- a/drivers/gpu/drm/i915/display/intel_combo_phy.c
 +++ b/drivers/gpu/drm/i915/display/intel_combo_phy.c
-@@ -278,7 +278,7 @@ static bool verify_wa14011224835(struct drm_i915_private *i915)
+@@ -258,7 +258,7 @@ static bool phy_is_master(struct drm_i915_private *dev_priv, enum phy phy)
  static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
  				       enum phy phy)
  {
@@ -46,7 +46,7 @@ index d88f91038428..7c9235b7c98c 100644
  	u32 expected_val = 0;
  
  	if (!icl_combo_phy_enabled(dev_priv, phy))
-@@ -296,7 +296,7 @@ static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
+@@ -276,7 +276,7 @@ static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
  				     DCC_MODE_SELECT_CONTINUOSLY);
  	}
  
@@ -56,5 +56,5 @@ index d88f91038428..7c9235b7c98c 100644
  	if (phy_is_master(dev_priv, phy)) {
  		ret &= check_phy_reg(dev_priv, phy, ICL_PORT_COMP_DW8(phy),
 -- 
-2.28.0.rc1
+2.28.0
 
