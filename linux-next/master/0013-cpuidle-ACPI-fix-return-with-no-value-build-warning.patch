@@ -1,0 +1,40 @@
+From 9be297a74c15a0d65bbe59513eaea32d4eac6475 Mon Sep 17 00:00:00 2001
+From: Neal Liu <neal.liu@mediatek.com>
+Date: Fri, 31 Jul 2020 11:39:04 +0800
+Subject: [PATCH 13/13] cpuidle: ACPI: fix 'return' with no value build warning
+
+Add return value to fix return-type build warning introduced by
+commit efe9711214e6 ("cpuidle: change enter_s2idle() prototype").
+
+Fixes: efe9711214e6 ("cpuidle: change enter_s2idle() prototype")
+Signed-off-by: Neal Liu <neal.liu@mediatek.com>
+[ rjw: Subject & changelog edits, make acpi_idle_enter_s2idle()
+  return 0 in all cases ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://git.kernel.org/rafael/linux-pm/c/0a398945d6f3e54f9f88ba2a17908674c659bfa4
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/acpi/processor_idle.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index ec1577c8bed5..71a30b0d0f05 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -663,11 +663,11 @@ static int acpi_idle_enter_s2idle(struct cpuidle_device *dev,
+ 		struct acpi_processor *pr = __this_cpu_read(processors);
+ 
+ 		if (unlikely(!pr))
+-			return;
++			return 0;
+ 
+ 		if (pr->flags.bm_check) {
+ 			acpi_idle_enter_bm(pr, cx, false);
+-			return;
++			return 0;
+ 		} else {
+ 			ACPI_FLUSH_CPU_CACHE();
+ 		}
+-- 
+2.28.0
+
