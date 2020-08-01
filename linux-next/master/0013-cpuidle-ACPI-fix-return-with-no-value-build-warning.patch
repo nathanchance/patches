@@ -1,7 +1,7 @@
 From 9be297a74c15a0d65bbe59513eaea32d4eac6475 Mon Sep 17 00:00:00 2001
 From: Neal Liu <neal.liu@mediatek.com>
 Date: Fri, 31 Jul 2020 11:39:04 +0800
-Subject: [PATCH 13/13] cpuidle: ACPI: fix 'return' with no value build warning
+Subject: [PATCH 13/18] cpuidle: ACPI: fix 'return' with no value build warning
 
 Add return value to fix return-type build warning introduced by
 commit efe9711214e6 ("cpuidle: change enter_s2idle() prototype").

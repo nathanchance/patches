@@ -1,0 +1,65 @@
+From 2294114c9075b81ec563c605cd6d44d7074cd2af Mon Sep 17 00:00:00 2001
+From: Thomas Pedersen <thomas@adapt-ip.com>
+Date: Thu, 30 Jul 2020 22:56:36 -0700
+Subject: [PATCH 15/18] ath10k: fix unhandled switch value warning
+
+Cited commit introduced the following warnings:
+
+drivers/net/wireless/ath/ath10k/mac.c: In function 'chan_to_phymode':
+drivers/net/wireless/ath/ath10k/mac.c:558:3: warning: enumeration value 'NL80211_CHAN_WIDTH_1' not handled in switch [-Wswitch]
+  558 |   switch (chandef->width) {
+      |   ^~~~~~
+drivers/net/wireless/ath/ath10k/mac.c:558:3: warning: enumeration value 'NL80211_CHAN_WIDTH_2' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:558:3: warning: enumeration value 'NL80211_CHAN_WIDTH_4' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:558:3: warning: enumeration value 'NL80211_CHAN_WIDTH_8' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:558:3: warning: enumeration value 'NL80211_CHAN_WIDTH_16' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:581:3: warning: enumeration value 'NL80211_CHAN_WIDTH_1' not handled in switch [-Wswitch]
+  581 |   switch (chandef->width) {
+      |   ^~~~~~
+drivers/net/wireless/ath/ath10k/mac.c:581:3: warning: enumeration value 'NL80211_CHAN_WIDTH_2' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:581:3: warning: enumeration value 'NL80211_CHAN_WIDTH_4' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:581:3: warning: enumeration value 'NL80211_CHAN_WIDTH_8' not handled in switch [-Wswitch]
+drivers/net/wireless/ath/ath10k/mac.c:581:3: warning: enumeration value 'NL80211_CHAN_WIDTH_16' not handled in switch [-Wswitch]
+
+Fix them by making the existing invalid channel width
+cases the default, as the introduced channel widths
+currently don't make sense in 2 or 5GHz either.
+
+Fixes: e5cb3d34a66d ("nl80211: S1G band and channel definitions")
+Signed-off-by: Thomas Pedersen <thomas@adapt-ip.com>
+Link: https://lore.kernel.org/r/20200731055636.795173-1-thomas@adapt-ip.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/wireless/ath/ath10k/mac.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 919d15584d4a..3c0c33a9f30c 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -568,11 +568,7 @@ chan_to_phymode(const struct cfg80211_chan_def *chandef)
+ 		case NL80211_CHAN_WIDTH_40:
+ 			phymode = MODE_11NG_HT40;
+ 			break;
+-		case NL80211_CHAN_WIDTH_5:
+-		case NL80211_CHAN_WIDTH_10:
+-		case NL80211_CHAN_WIDTH_80:
+-		case NL80211_CHAN_WIDTH_80P80:
+-		case NL80211_CHAN_WIDTH_160:
++		default:
+ 			phymode = MODE_UNKNOWN;
+ 			break;
+ 		}
+@@ -597,8 +593,7 @@ chan_to_phymode(const struct cfg80211_chan_def *chandef)
+ 		case NL80211_CHAN_WIDTH_80P80:
+ 			phymode = MODE_11AC_VHT80_80;
+ 			break;
+-		case NL80211_CHAN_WIDTH_5:
+-		case NL80211_CHAN_WIDTH_10:
++		default:
+ 			phymode = MODE_UNKNOWN;
+ 			break;
+ 		}
+-- 
+2.28.0
+

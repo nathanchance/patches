@@ -1,0 +1,110 @@
+From 34ce1a69f27cbec0045441b07c6813b251bf675e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=E5=91=A8=E7=90=B0=E6=9D=B0=20=28Zhou=20Yanjie=29?=
+ <zhouyanjie@wanyeetech.com>
+Date: Wed, 29 Jul 2020 01:02:51 +0800
+Subject: [PATCH 14/18] USB: PHY: JZ4770: Fix static checker warning.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The commit 2a6c0b82e651 ("USB: PHY: JZ4770: Add support for new
+Ingenic SoCs.") introduced the initialization function for different
+chips, but left the relevant code involved in the resetting process
+in the original function, resulting in uninitialized variable calls.
+This problem can be solved by putting this part of the code into the
+initialization function for each chip. Although the four processors
+currently supported have the same reset code, let us can solve this
+problem by adding the initialization of the reg variable to the
+original function, but when other processors with different reset
+methods (such as X2000) are introduced in the future, it will cause
+inevitable condition judgments to complicate the function, which
+violates the original intention of introducing initialization
+functions for each processor.
+
+Fixes: 2a6c0b82e651 ("USB: PHY: JZ4770: Add support for new
+Ingenic SoCs.").
+
+Reported-by: Colin Ian King <colin.king@canonical.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: 周琰杰 (Zhou Yanjie) <zhouyanjie@wanyeetech.com>
+Link: https://lore.kernel.org/r/20200728170251.112484-2-zhouyanjie@wanyeetech.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/usb/phy/phy-jz4770.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/usb/phy/phy-jz4770.c b/drivers/usb/phy/phy-jz4770.c
+index d4ee3cb721ea..23d38cbc150e 100644
+--- a/drivers/usb/phy/phy-jz4770.c
++++ b/drivers/usb/phy/phy-jz4770.c
+@@ -158,7 +158,6 @@ static int ingenic_usb_phy_init(struct usb_phy *phy)
+ {
+ 	struct jz4770_phy *priv = phy_to_jz4770_phy(phy);
+ 	int err;
+-	u32 reg;
+ 
+ 	err = regulator_enable(priv->vcc_supply);
+ 	if (err) {
+@@ -174,11 +173,6 @@ static int ingenic_usb_phy_init(struct usb_phy *phy)
+ 
+ 	priv->soc_info->usb_phy_init(phy);
+ 
+-	/* Wait for PHY to reset */
+-	usleep_range(30, 300);
+-	writel(reg & ~USBPCR_POR, priv->base + REG_USBPCR_OFFSET);
+-	usleep_range(300, 1000);
+-
+ 	return 0;
+ }
+ 
+@@ -205,6 +199,11 @@ static void jz4770_usb_phy_init(struct usb_phy *phy)
+ 		USBPCR_TXFSLSTUNE_DFT | USBPCR_TXRISETUNE_DFT | USBPCR_TXVREFTUNE_DFT |
+ 		USBPCR_POR;
+ 	writel(reg, priv->base + REG_USBPCR_OFFSET);
++
++	/* Wait for PHY to reset */
++	usleep_range(30, 300);
++	writel(reg & ~USBPCR_POR, priv->base + REG_USBPCR_OFFSET);
++	usleep_range(300, 1000);
+ }
+ 
+ static void jz4780_usb_phy_init(struct usb_phy *phy)
+@@ -218,6 +217,11 @@ static void jz4780_usb_phy_init(struct usb_phy *phy)
+ 
+ 	reg = USBPCR_TXPREEMPHTUNE | USBPCR_COMMONONN | USBPCR_POR;
+ 	writel(reg, priv->base + REG_USBPCR_OFFSET);
++
++	/* Wait for PHY to reset */
++	usleep_range(30, 300);
++	writel(reg & ~USBPCR_POR, priv->base + REG_USBPCR_OFFSET);
++	usleep_range(300, 1000);
+ }
+ 
+ static void x1000_usb_phy_init(struct usb_phy *phy)
+@@ -232,6 +236,11 @@ static void x1000_usb_phy_init(struct usb_phy *phy)
+ 		USBPCR_TXHSXVTUNE_DCR_15MV | USBPCR_TXVREFTUNE_INC_25PPT |
+ 		USBPCR_COMMONONN | USBPCR_POR;
+ 	writel(reg, priv->base + REG_USBPCR_OFFSET);
++
++	/* Wait for PHY to reset */
++	usleep_range(30, 300);
++	writel(reg & ~USBPCR_POR, priv->base + REG_USBPCR_OFFSET);
++	usleep_range(300, 1000);
+ }
+ 
+ static void x1830_usb_phy_init(struct usb_phy *phy)
+@@ -249,6 +258,11 @@ static void x1830_usb_phy_init(struct usb_phy *phy)
+ 	reg = USBPCR_IDPULLUP_OTG | USBPCR_VBUSVLDEXT |	USBPCR_TXPREEMPHTUNE |
+ 		USBPCR_COMMONONN | USBPCR_POR;
+ 	writel(reg, priv->base + REG_USBPCR_OFFSET);
++
++	/* Wait for PHY to reset */
++	usleep_range(30, 300);
++	writel(reg & ~USBPCR_POR, priv->base + REG_USBPCR_OFFSET);
++	usleep_range(300, 1000);
+ }
+ 
+ static const struct ingenic_soc_info jz4770_soc_info = {
+-- 
+2.28.0
+

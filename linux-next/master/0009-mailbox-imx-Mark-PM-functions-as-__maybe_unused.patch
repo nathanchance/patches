@@ -1,7 +1,7 @@
 From 3b0bec1f7c2550aa3bdd9d50b6974fbc60ba2811 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 22 Jun 2020 17:59:44 -0700
-Subject: [PATCH 09/13] mailbox: imx: Mark PM functions as __maybe_unused
+Subject: [PATCH 09/18] mailbox: imx: Mark PM functions as __maybe_unused
 
 When CONFIG_PM and CONFIG_PM_SLEEP are unset, the following warnings
 occur:
