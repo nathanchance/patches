@@ -1,4 +1,4 @@
-From ece1df4b1a57ed06e535fb02f2de0322aa5825e5 Mon Sep 17 00:00:00 2001
+From 6b5528ba84984d452673de7e69792a45cddbcc21 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Fri, 14 Aug 2020 19:09:44 -0700
 Subject: [PATCH 9/9] lib/string.c: implement stpcpy
@@ -35,11 +35,12 @@ Link: https://man7.org/linux/man-pages/man3/stpcpy.3.html
 Link: https://pubs.opengroup.org/onlinepubs/9699919799/functions/stpcpy.html
 Link: https://reviews.llvm.org/D85963
 Link: https://lore.kernel.org/r/20200815020946.1538085-1-ndesaulniers@google.com
+[nc: Add EXPORT_SYMBOL to avoid modpost failures]
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  include/linux/string.h |  3 +++
- lib/string.c           | 23 +++++++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ lib/string.c           | 24 ++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
 diff --git a/include/linux/string.h b/include/linux/string.h
 index 9b7a0632e87a..4861c5beea86 100644
@@ -56,10 +57,10 @@ index 9b7a0632e87a..4861c5beea86 100644
  /* Wraps calls to strscpy()/memset(), no arch specific code required */
  ssize_t strscpy_pad(char *dest, const char *src, size_t count);
 diff --git a/lib/string.c b/lib/string.c
-index 6012c385fb31..68ddbffbbd58 100644
+index 6012c385fb31..6e6b0512f164 100644
 --- a/lib/string.c
 +++ b/lib/string.c
-@@ -272,6 +272,29 @@ ssize_t strscpy_pad(char *dest, const char *src, size_t count)
+@@ -272,6 +272,30 @@ ssize_t strscpy_pad(char *dest, const char *src, size_t count)
  }
  EXPORT_SYMBOL(strscpy_pad);
  
@@ -84,6 +85,7 @@ index 6012c385fb31..68ddbffbbd58 100644
 +		/* nothing */;
 +	return --dest;
 +}
++EXPORT_SYMBOL(stpcpy);
 +#endif
 +
  #ifndef __HAVE_ARCH_STRCAT
