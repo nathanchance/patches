@@ -1,0 +1,84 @@
+From 686c77c55af64b8c2d363ce4b75f6fa70b29caa2 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 17 Aug 2020 15:02:10 -0700
+Subject: [PATCH 10/12] Revert "lib/string.c: implement a basic bcmp"
+
+This reverts commit 5f074f3e192f10c9fade898b9b3b8812e3d83342.
+
+Use `-fno-builtin-bcmp` instead.
+
+The issue with using `-fno-builtin-*` flags was that they were not
+retained during an LTO link with LLVM.  This was fixed in clang-11 by
+https://reviews.llvm.org/D71193
+(0508c994f0b14144041f2cfd3ba9f9a80f03de08), which is also the minimum
+supported version of clang for LTO.
+
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20200817220212.338670-3-ndesaulniers@google.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile               |  1 +
+ include/linux/string.h |  3 ---
+ lib/string.c           | 20 --------------------
+ 3 files changed, 1 insertion(+), 23 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 211a1b6f6478..722ff5864275 100644
+--- a/Makefile
++++ b/Makefile
+@@ -964,6 +964,7 @@ endif
+ # to provide implementations of these routines, then prevent the compiler from
+ # emitting calls to what will be undefined symbols.
+ KBUILD_CFLAGS	+= -fno-builtin-stpcpy
++KBUILD_CFLAGS	+= -fno-builtin-bcmp
+ 
+ # include additional Makefiles when needed
+ include-y			:= scripts/Makefile.extrawarn
+diff --git a/include/linux/string.h b/include/linux/string.h
+index 9b7a0632e87a..cd9b822e9cd7 100644
+--- a/include/linux/string.h
++++ b/include/linux/string.h
+@@ -155,9 +155,6 @@ extern void * memscan(void *,int,__kernel_size_t);
+ #ifndef __HAVE_ARCH_MEMCMP
+ extern int memcmp(const void *,const void *,__kernel_size_t);
+ #endif
+-#ifndef __HAVE_ARCH_BCMP
+-extern int bcmp(const void *,const void *,__kernel_size_t);
+-#endif
+ #ifndef __HAVE_ARCH_MEMCHR
+ extern void * memchr(const void *,int,__kernel_size_t);
+ #endif
+diff --git a/lib/string.c b/lib/string.c
+index 6012c385fb31..69328b8353e1 100644
+--- a/lib/string.c
++++ b/lib/string.c
+@@ -922,26 +922,6 @@ __visible int memcmp(const void *cs, const void *ct, size_t count)
+ EXPORT_SYMBOL(memcmp);
+ #endif
+ 
+-#ifndef __HAVE_ARCH_BCMP
+-/**
+- * bcmp - returns 0 if and only if the buffers have identical contents.
+- * @a: pointer to first buffer.
+- * @b: pointer to second buffer.
+- * @len: size of buffers.
+- *
+- * The sign or magnitude of a non-zero return value has no particular
+- * meaning, and architectures may implement their own more efficient bcmp(). So
+- * while this particular implementation is a simple (tail) call to memcmp, do
+- * not rely on anything but whether the return value is zero or non-zero.
+- */
+-#undef bcmp
+-int bcmp(const void *a, const void *b, size_t len)
+-{
+-	return memcmp(a, b, len);
+-}
+-EXPORT_SYMBOL(bcmp);
+-#endif
+-
+ #ifndef __HAVE_ARCH_MEMSCAN
+ /**
+  * memscan - Find a character in an area of memory.
+-- 
+2.28.0
+

@@ -1,0 +1,59 @@
+From e86dd5a41996e5a12b2efaa0f7b3b3a5a52fa18b Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 17 Aug 2020 15:02:11 -0700
+Subject: [PATCH 11/12] x86/boot: use -fno-builtin-bcmp
+
+We're reverting
+commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
+in favor of -fno-builtin-bcmp. Remove the additional definition here,
+too.
+
+arch/x86/purgatory/Makefile uses -ffreestanding, so there's no risk of
+this libcall optimization occurring for arch/x86/boot/purgatory.ro.
+
+arch/x86/boot/Makefile resets KBUILD_CFLAGS, so make sure to reset this
+flag that was set for the top level Makefile.
+
+Fixes: 4ce97317f41d ("x86/purgatory: Do not use __builtin_memcpy and __builtin_memset")
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20200817220212.338670-4-ndesaulniers@google.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/x86/boot/Makefile | 1 +
+ arch/x86/boot/string.c | 8 --------
+ 2 files changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/arch/x86/boot/Makefile b/arch/x86/boot/Makefile
+index fe605205b4ce..ef7f15bfceab 100644
+--- a/arch/x86/boot/Makefile
++++ b/arch/x86/boot/Makefile
+@@ -70,6 +70,7 @@ KBUILD_CFLAGS	:= $(REALMODE_CFLAGS) -D_SETUP
+ KBUILD_AFLAGS	:= $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ KBUILD_CFLAGS	+= $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
+ KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
++KBUILD_CFLAGS	+= -fno-builtin-bcmp
+ GCOV_PROFILE := n
+ UBSAN_SANITIZE := n
+ 
+diff --git a/arch/x86/boot/string.c b/arch/x86/boot/string.c
+index 8a3fff9128bb..23d91aa7691e 100644
+--- a/arch/x86/boot/string.c
++++ b/arch/x86/boot/string.c
+@@ -37,14 +37,6 @@ int memcmp(const void *s1, const void *s2, size_t len)
+ 	return diff;
+ }
+ 
+-/*
+- * Clang may lower `memcmp == 0` to `bcmp == 0`.
+- */
+-int bcmp(const void *s1, const void *s2, size_t len)
+-{
+-	return memcmp(s1, s2, len);
+-}
+-
+ int strcmp(const char *str1, const char *str2)
+ {
+ 	const unsigned char *s1 = (const unsigned char *)str1;
+-- 
+2.28.0
+
