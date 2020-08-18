@@ -1,0 +1,60 @@
+From 57b5b043200ed13b08491e6c9958b467df6bd0c4 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 17 Aug 2020 15:02:09 -0700
+Subject: [PATCH 15/18] Makefile: add -fno-builtin-stpcpy
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+LLVM implemented a recent "libcall optimization" that lowers calls to
+`sprintf(dest, "%s", str)` where the return value is used to
+`stpcpy(dest, str) - dest`. This generally avoids the machinery involved
+in parsing format strings. This optimization was introduced into
+clang-12. Because the kernel does not provide an implementation of
+stpcpy, we observe linkage failures for almost all targets when building
+with ToT clang.
+
+The interface is unsafe as it does not perform any bounds checking.
+Disable this "libcall optimization" via `-fno-builtin-stpcpy`.
+
+Unlike
+commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
+which cited failures with `-fno-builtin-*` flags being retained in LLVM
+LTO, that bug seems to have been fixed by
+https://reviews.llvm.org/D71193, so the above sha can now be reverted in
+favor of `-fno-builtin-bcmp`.
+
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Suggested-by: Dávid Bolvanský <david.bolvansky@gmail.com>
+Suggested-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Cc: stable@vger.kernel.org # 4.4
+Link: https://bugs.llvm.org/show_bug.cgi?id=47162
+Link: https://github.com/ClangBuiltLinux/linux/issues/1126
+Link: https://reviews.llvm.org/D85963
+Link: https://lore.kernel.org/r/20200817220212.338670-2-ndesaulniers@google.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 9cac6fde3479..211a1b6f6478 100644
+--- a/Makefile
++++ b/Makefile
+@@ -959,6 +959,12 @@ ifdef CONFIG_RETPOLINE
+ KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
+ endif
+ 
++# The compiler may "libcall optimize" certain function calls into the below
++# functions, for architectures that don't use -ffreestanding. If we don't plan
++# to provide implementations of these routines, then prevent the compiler from
++# emitting calls to what will be undefined symbols.
++KBUILD_CFLAGS	+= -fno-builtin-stpcpy
++
+ # include additional Makefiles when needed
+ include-y			:= scripts/Makefile.extrawarn
+ include-$(CONFIG_KASAN)		+= scripts/Makefile.kasan
+-- 
+2.28.0
+
