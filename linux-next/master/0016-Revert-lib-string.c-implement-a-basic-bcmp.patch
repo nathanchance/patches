@@ -1,4 +1,4 @@
-From 67acd163317e7c3bbc827c1dcf0f7c8836036f86 Mon Sep 17 00:00:00 2001
+From f079a9a8d51686bb8bcc1cb4f9e14a96f26a66ad Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 17 Aug 2020 15:02:10 -0700
 Subject: [PATCH 16/19] Revert "lib/string.c: implement a basic bcmp"
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  3 files changed, 1 insertion(+), 23 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 211a1b6f6478..722ff5864275 100644
+index e144bfade95e..c1015b540f70 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -964,6 +964,7 @@ endif
+@@ -963,6 +963,7 @@ endif
  # to provide implementations of these routines, then prevent the compiler from
  # emitting calls to what will be undefined symbols.
  KBUILD_CFLAGS	+= -fno-builtin-stpcpy

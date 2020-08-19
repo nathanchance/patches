@@ -1,4 +1,4 @@
-From 57b5b043200ed13b08491e6c9958b467df6bd0c4 Mon Sep 17 00:00:00 2001
+From 6d625197d1f3b1eed0f6cdddb5965704ca669236 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 17 Aug 2020 15:02:09 -0700
 Subject: [PATCH 15/19] Makefile: add -fno-builtin-stpcpy
@@ -39,10 +39,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 9cac6fde3479..211a1b6f6478 100644
+index c4470a4e131f..e144bfade95e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -959,6 +959,12 @@ ifdef CONFIG_RETPOLINE
+@@ -958,6 +958,12 @@ ifdef CONFIG_RETPOLINE
  KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
  endif
  
