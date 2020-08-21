@@ -1,7 +1,7 @@
-From b633626e355e7c98f2547e9ac70908b122ba110d Mon Sep 17 00:00:00 2001
+From b8f829b67969121647af336d06c1d8c1f8c1c31b Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 17 Aug 2020 15:02:11 -0700
-Subject: [PATCH 11/13] x86/boot: use -fno-builtin-bcmp
+Date: Wed, 19 Aug 2020 12:16:53 -0700
+Subject: [PATCH 12/14] x86/boot: use -fno-builtin-bcmp
 
 We're reverting
 commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
@@ -16,7 +16,8 @@ flag that was set for the top level Makefile.
 
 Fixes: 4ce97317f41d ("x86/purgatory: Do not use __builtin_memcpy and __builtin_memset")
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20200817220212.338670-4-ndesaulniers@google.com
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20200819191654.1130563-5-ndesaulniers@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/boot/Makefile | 1 +
