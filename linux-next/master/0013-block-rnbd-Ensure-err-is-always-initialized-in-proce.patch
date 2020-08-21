@@ -1,7 +1,7 @@
 From 56bc758056eb63ff3a0a3f193e889501649802cd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 17 Aug 2020 23:46:19 -0700
-Subject: [PATCH 13/18] block/rnbd: Ensure err is always initialized in
+Subject: [PATCH 13/24] block/rnbd: Ensure err is always initialized in
  process_rdma
 
 Clang warns:
