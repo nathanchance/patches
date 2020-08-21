@@ -1,7 +1,7 @@
-From 940af69b5893ecbd6f8edeb89948fd8732c35982 Mon Sep 17 00:00:00 2001
+From fbca3631ec5518644cc022e10dc59f2d8a67d4c5 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 17 Aug 2020 15:02:09 -0700
-Subject: [PATCH 13/17] Makefile: add -fno-builtin-stpcpy
+Date: Wed, 19 Aug 2020 12:16:50 -0700
+Subject: [PATCH 14/18] Makefile: add -fno-builtin-stpcpy
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -17,44 +17,35 @@ with ToT clang.
 The interface is unsafe as it does not perform any bounds checking.
 Disable this "libcall optimization" via `-fno-builtin-stpcpy`.
 
-Unlike
-commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
-which cited failures with `-fno-builtin-*` flags being retained in LLVM
-LTO, that bug seems to have been fixed by
-https://reviews.llvm.org/D71193, so the above sha can now be reverted in
-favor of `-fno-builtin-bcmp`.
-
 Reported-by: Sami Tolvanen <samitolvanen@google.com>
 Suggested-by: Dávid Bolvanský <david.bolvansky@gmail.com>
 Suggested-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
 Cc: stable@vger.kernel.org # 4.4
 Link: https://bugs.llvm.org/show_bug.cgi?id=47162
 Link: https://github.com/ClangBuiltLinux/linux/issues/1126
 Link: https://reviews.llvm.org/D85963
-Link: https://lore.kernel.org/r/20200817220212.338670-2-ndesaulniers@google.com
+Link: https://lore.kernel.org/r/20200819191654.1130563-2-ndesaulniers@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index c4470a4e131f..e144bfade95e 100644
+index c4470a4e131f..6a08cdfa58ae 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -958,6 +958,12 @@ ifdef CONFIG_RETPOLINE
- KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
+@@ -577,6 +577,7 @@ ifneq ($(LLVM_IAS),1)
+ CLANG_FLAGS	+= -no-integrated-as
  endif
- 
-+# The compiler may "libcall optimize" certain function calls into the below
-+# functions, for architectures that don't use -ffreestanding. If we don't plan
-+# to provide implementations of these routines, then prevent the compiler from
-+# emitting calls to what will be undefined symbols.
-+KBUILD_CFLAGS	+= -fno-builtin-stpcpy
-+
- # include additional Makefiles when needed
- include-y			:= scripts/Makefile.extrawarn
- include-$(CONFIG_KASAN)		+= scripts/Makefile.kasan
+ CLANG_FLAGS	+= -Werror=unknown-warning-option
++CLANG_FLAGS	+= -fno-builtin-stpcpy
+ KBUILD_CFLAGS	+= $(CLANG_FLAGS)
+ KBUILD_AFLAGS	+= $(CLANG_FLAGS)
+ export CLANG_FLAGS
 -- 
 2.28.0
 

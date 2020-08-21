@@ -1,39 +1,25 @@
-From 958c71a8a6b91b76696b65d139a980ebf070ff39 Mon Sep 17 00:00:00 2001
+From 23f0833029798ac6808a7e1cd46b719938daddb3 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 17 Aug 2020 15:02:10 -0700
-Subject: [PATCH 14/17] Revert "lib/string.c: implement a basic bcmp"
+Date: Wed, 19 Aug 2020 12:16:52 -0700
+Subject: [PATCH 16/18] Revert "lib/string.c: implement a basic bcmp"
 
 This reverts commit 5f074f3e192f10c9fade898b9b3b8812e3d83342.
 
-Use `-fno-builtin-bcmp` instead.
+An earlier commit in the series prevents the compiler from emitting
+calls to bcmp as part of "libcall optimization," and there are no
+explicit callers, so we can now safely remove this interface.
 
-The issue with using `-fno-builtin-*` flags was that they were not
-retained during an LTO link with LLVM.  This was fixed in clang-11 by
-https://reviews.llvm.org/D71193
-(0508c994f0b14144041f2cfd3ba9f9a80f03de08), which is also the minimum
-supported version of clang for LTO.
-
+Suggested-by: Nathan Chancellor <natechancellor@gmail.com>
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20200817220212.338670-3-ndesaulniers@google.com
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lore.kernel.org/r/20200819191654.1130563-4-ndesaulniers@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- Makefile               |  1 +
  include/linux/string.h |  3 ---
  lib/string.c           | 20 --------------------
- 3 files changed, 1 insertion(+), 23 deletions(-)
+ 2 files changed, 23 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e144bfade95e..c1015b540f70 100644
---- a/Makefile
-+++ b/Makefile
-@@ -963,6 +963,7 @@ endif
- # to provide implementations of these routines, then prevent the compiler from
- # emitting calls to what will be undefined symbols.
- KBUILD_CFLAGS	+= -fno-builtin-stpcpy
-+KBUILD_CFLAGS	+= -fno-builtin-bcmp
- 
- # include additional Makefiles when needed
- include-y			:= scripts/Makefile.extrawarn
 diff --git a/include/linux/string.h b/include/linux/string.h
 index b1f3894a0a3e..f3bdb74bc230 100644
 --- a/include/linux/string.h

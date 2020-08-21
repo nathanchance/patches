@@ -1,7 +1,7 @@
-From 7a3ce290684307728b19100da10927fb7f8c27f4 Mon Sep 17 00:00:00 2001
+From ab44415f6f3cf37467eb2d4bf8ef0a8c27daf484 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 17 Aug 2020 15:02:12 -0700
-Subject: [PATCH 16/17] x86: don't build CONFIG_X86_32 as -ffreestanding
+Date: Wed, 19 Aug 2020 12:16:54 -0700
+Subject: [PATCH 18/18] x86: don't build CONFIG_X86_32 as -ffreestanding
 
 -ffreestanding typically inhibits "libcall optimizations" where calls to
 certain library functions can be replaced by the compiler in certain
@@ -9,12 +9,13 @@ cases to calls to other library functions that may be more efficient.
 This can be problematic for embedded targets that don't provide full
 libc implementations.
 
--ffreestanding inhibits all such optimizations, which is the safe
-choice, but generally we want the optimizations that are performed. The
-Linux kernel does implement a fair amount of libc routines. Instead of
--ffreestanding (which makes more sense in smaller images like kexec's
-purgatory image), prefer -fno-builtin-* flags to disable the compiler
-from emitting calls to functions which may not be defined.
+-ffreestanding inhibits all optimizations, which
+is the safe choice, but generally we want the optimizations that are
+performed. The Linux kernel does implement a fair amount of libc
+routines. Instead of -ffreestanding (which makes more sense in smaller
+images like kexec's purgatory image), prefer -fno-builtin-* flags to
+disable the compiler from emitting calls to functions which may not be
+defined.
 
 If you see a linkage failure due to a missing symbol that's typically
 defined in a libc, and not explicitly called from the source code, then
@@ -29,7 +30,8 @@ old TODO from the codebase.
 Fixes: 6edfba1b33c7 ("x86_64: Don't define string functions to builtin")
 Suggested-by: Arvind Sankar <nivedita@alum.mit.edu>
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20200817220212.338670-5-ndesaulniers@google.com
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20200819191654.1130563-6-ndesaulniers@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/Makefile | 3 ---

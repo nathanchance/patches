@@ -1,7 +1,7 @@
-From bfbc6ed3408dd66266279937663beeec92e7e50e Mon Sep 17 00:00:00 2001
+From 56a4190aebc94640a82f76ad13f7676492a54f65 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
-Subject: [PATCH 07/17] Revert "drm/i915: Disable -Wuninitialized"
+Subject: [PATCH 07/18] Revert "drm/i915: Disable -Wuninitialized"
 
 This will be turned on for the whole kernel, as we want to catch these
 cases.
