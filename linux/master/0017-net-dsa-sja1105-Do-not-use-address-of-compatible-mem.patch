@@ -1,0 +1,46 @@
+From 551a937a749fe10bad7dac2353cd81fcfa395d3e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Aug 2020 15:25:16 -0700
+Subject: [PATCH 17/23] net: dsa: sja1105: Do not use address of compatible
+ member in sja1105_check_device_id
+
+Clang warns:
+
+drivers/net/dsa/sja1105/sja1105_main.c:3418:38: warning: address of
+array 'match->compatible' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        for (match = sja1105_dt_ids; match->compatible; match++) {
+        ~~~                          ~~~~~~~^~~~~~~~~~
+1 warning generated.
+
+We should check the value of the first character in compatible to see if
+it is empty or not. This matches how the rest of the tree iterates over
+IDs.
+
+Fixes: 0b0e299720bb ("net: dsa: sja1105: use detected device id instead of DT one on mismatch")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Vladimir Oltean <olteanv@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1139
+Link: https://lore.kernel.org/r/20200821222515.414167-1-natechancellor@gmail.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/dsa/sja1105/sja1105_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index c3f6f124e5f0..5a28dfb36ec3 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -3415,7 +3415,7 @@ static int sja1105_check_device_id(struct sja1105_private *priv)
+ 
+ 	sja1105_unpack(prod_id, &part_no, 19, 4, SJA1105_SIZE_DEVICE_ID);
+ 
+-	for (match = sja1105_dt_ids; match->compatible; match++) {
++	for (match = sja1105_dt_ids; match->compatible[0]; match++) {
+ 		const struct sja1105_info *info = match->data;
+ 
+ 		/* Is what's been probed in our match table at all? */
+-- 
+2.28.0
+

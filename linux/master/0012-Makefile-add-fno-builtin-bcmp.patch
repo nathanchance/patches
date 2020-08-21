@@ -1,7 +1,7 @@
-From 78a402e35775a4c9ce60a1616cb9e286b4357300 Mon Sep 17 00:00:00 2001
+From 75c03860c69b8c7cfe72eb941435daac72ab8351 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:51 -0700
-Subject: [PATCH 10/14] Makefile: add -fno-builtin-bcmp
+Subject: [PATCH 12/23] Makefile: add -fno-builtin-bcmp
 
 The issue with using `-fno-builtin-*` flags was that they were not
 retained during an LTO link with LLVM.  This was fixed in clang-11 by

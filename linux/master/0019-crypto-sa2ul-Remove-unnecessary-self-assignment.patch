@@ -1,0 +1,33 @@
+From 760455bd010ac2b73b4d9e734c961e290c7e9ffe Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 21 Aug 2020 16:08:27 -0700
+Subject: [PATCH 19/23] crypto: sa2ul - Remove unnecessary self assignment
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1138
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/crypto/sa2ul.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index 5bc099052bd2..ff8bbdb4d235 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1148,12 +1148,10 @@ static int sa_run(struct sa_req *req)
+ 			ret = sg_split(req->dst, mapped_dst_nents, 0, 1,
+ 				       &split_size, &dst, &dst_nents,
+ 				       gfp_flags);
+-			if (ret) {
+-				dst_nents = dst_nents;
++			if (ret)
+ 				dst = req->dst;
+-			} else {
++			else
+ 				rxd->split_dst_sg = dst;
+-			}
+ 		}
+ 	}
+ 
+-- 
+2.28.0
+
