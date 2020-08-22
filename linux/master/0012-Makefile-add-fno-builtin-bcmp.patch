@@ -1,4 +1,4 @@
-From 75c03860c69b8c7cfe72eb941435daac72ab8351 Mon Sep 17 00:00:00 2001
+From 45410a567e57d92a18f24c1b032d6b5ec80f76e5 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:51 -0700
 Subject: [PATCH 12/23] Makefile: add -fno-builtin-bcmp
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index e523dc8d30e0..def590b743a9 100644
+index 6a08cdfa58ae..cf07bc925ea4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -579,6 +579,7 @@ CLANG_FLAGS	+= -no-integrated-as
+@@ -578,6 +578,7 @@ CLANG_FLAGS	+= -no-integrated-as
  endif
  CLANG_FLAGS	+= -Werror=unknown-warning-option
  CLANG_FLAGS	+= -fno-builtin-stpcpy

@@ -1,4 +1,4 @@
-From 2dbd5f741d490d4ea85d91a511cf1e7598ce1003 Mon Sep 17 00:00:00 2001
+From 2dbd43ff8a488966f9d90616908bb81d090e9205 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:50 -0700
 Subject: [PATCH 11/23] Makefile: add -fno-builtin-stpcpy
@@ -35,10 +35,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index 9cac6fde3479..e523dc8d30e0 100644
+index c4470a4e131f..6a08cdfa58ae 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -578,6 +578,7 @@ ifneq ($(LLVM_IAS),1)
+@@ -577,6 +577,7 @@ ifneq ($(LLVM_IAS),1)
  CLANG_FLAGS	+= -no-integrated-as
  endif
  CLANG_FLAGS	+= -Werror=unknown-warning-option

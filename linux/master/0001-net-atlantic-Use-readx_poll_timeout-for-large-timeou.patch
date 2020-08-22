@@ -1,4 +1,4 @@
-From fb51907f6a2238c6e5472ebbba30ffc94b8f192b Mon Sep 17 00:00:00 2001
+From b9d09c1463d76aecd87e329c7f160718f8519bae Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 18 Aug 2020 18:14:39 +0200
 Subject: [PATCH 01/23] net: atlantic: Use readx_poll_timeout() for large
@@ -44,7 +44,7 @@ index 16a944707ba9..8941ac4df9e3 100644
  		return err;
  
 
-base-commit: d723b99ec9e502a414a96a51ec229333f807b47e
+base-commit: c3d8f220d01220a5b253e422be407d068dc65511
 -- 
 2.28.0
 
