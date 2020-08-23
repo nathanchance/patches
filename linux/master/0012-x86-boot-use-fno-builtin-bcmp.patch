@@ -1,7 +1,7 @@
-From cf7927a9702937e47844659ee89ef5000c731eea Mon Sep 17 00:00:00 2001
+From baa884df61efa6ed0c1c4b590168da3b317743ee Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:53 -0700
-Subject: [PATCH 14/23] x86/boot: use -fno-builtin-bcmp
+Subject: [PATCH 12/22] x86/boot: use -fno-builtin-bcmp
 
 We're reverting
 commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
