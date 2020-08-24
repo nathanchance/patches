@@ -1,7 +1,7 @@
 From 0e2cdf8a5cd9fce9e71a80d2c76a4d9ad504d1e5 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:54 -0700
-Subject: [PATCH 18/24] x86: don't build CONFIG_X86_32 as -ffreestanding
+Subject: [PATCH 18/27] x86: don't build CONFIG_X86_32 as -ffreestanding
 
 -ffreestanding typically inhibits "libcall optimizations" where calls to
 certain library functions can be replaced by the compiler in certain
