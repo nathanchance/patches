@@ -1,7 +1,7 @@
-From fbca3631ec5518644cc022e10dc59f2d8a67d4c5 Mon Sep 17 00:00:00 2001
+From 9450183540afa7556d13bdad3fb8d5c016e90e42 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 19 Aug 2020 12:16:50 -0700
-Subject: [PATCH 14/25] Makefile: add -fno-builtin-stpcpy
+Subject: [PATCH 14/24] Makefile: add -fno-builtin-stpcpy
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -35,7 +35,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index c4470a4e131f..6a08cdfa58ae 100644
+index f21168154160..fdcae35e7e18 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -577,6 +577,7 @@ ifneq ($(LLVM_IAS),1)
