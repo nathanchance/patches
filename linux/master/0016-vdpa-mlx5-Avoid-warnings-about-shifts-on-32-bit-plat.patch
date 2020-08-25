@@ -1,7 +1,7 @@
-From e6be8e29b62e760a1b69f70f724994d1bcd7001f Mon Sep 17 00:00:00 2001
+From 35005c9696aeef23935aa76926f232bacf159449 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Aug 2020 15:50:19 -0700
-Subject: [PATCH 20/21] vdpa/mlx5: Avoid warnings about shifts on 32-bit
+Subject: [PATCH 16/17] vdpa/mlx5: Avoid warnings about shifts on 32-bit
  platforms
 
 Clang warns several times when building for 32-bit ARM along the lines

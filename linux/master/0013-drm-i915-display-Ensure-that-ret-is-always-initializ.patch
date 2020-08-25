@@ -1,7 +1,7 @@
-From c3d83abad7ca4b4c0780887068fbf0f7729bac38 Mon Sep 17 00:00:00 2001
+From 5549be9ac298b5167db8d0bab57f6f29b1b018c8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 15 Jul 2020 21:27:42 -0700
-Subject: [PATCH 17/21] drm/i915/display: Ensure that ret is always initialized
+Subject: [PATCH 13/17] drm/i915/display: Ensure that ret is always initialized
  in icl_combo_phy_verify_state
 
 Clang warns:
