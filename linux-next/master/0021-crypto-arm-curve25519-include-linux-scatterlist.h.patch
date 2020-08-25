@@ -1,7 +1,7 @@
-From 0a1e1b05c14fb42febcbcf770ae3b50c3277fdc5 Mon Sep 17 00:00:00 2001
+From 23e44067e9fb574c3a6c0d786ed1dd7f6ec4ac49 Mon Sep 17 00:00:00 2001
 From: Fabio Estevam <festevam@gmail.com>
 Date: Mon, 24 Aug 2020 11:09:53 -0300
-Subject: [PATCH 27/27] crypto: arm/curve25519 - include <linux/scatterlist.h>
+Subject: [PATCH 21/21] crypto: arm/curve25519 - include <linux/scatterlist.h>
 
 Building ARM allmodconfig leads to the following warnings:
 
