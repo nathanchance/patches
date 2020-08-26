@@ -1,0 +1,28 @@
+From e391af8469acc12d97357ddb23e89739f09ccf87 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 25 Aug 2020 07:47:48 -0700
+Subject: [PATCH 16/16] btrfs: Remove unused fs_info variable in
+ btrfs_rm_dev_replace_free_srcdev
+
+Link: https://lore.kernel.org/lkml/20200825104507.4c79c433@canb.auug.org.au/
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ fs/btrfs/volumes.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index ec62fc0ec113..b775ed5d3737 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -2214,7 +2214,6 @@ void btrfs_rm_dev_replace_remove_srcdev(struct btrfs_device *srcdev)
+ 
+ void btrfs_rm_dev_replace_free_srcdev(struct btrfs_device *srcdev)
+ {
+-	struct btrfs_fs_info *fs_info = srcdev->fs_info;
+ 	struct btrfs_fs_devices *fs_devices = srcdev->fs_devices;
+ 
+ 	mutex_lock(&uuid_mutex);
+-- 
+2.28.0
+
