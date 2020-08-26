@@ -1,9 +1,16 @@
-From a6a978c56176f816b7ef1660f49a9bf296e56d20 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Fri, 21 Aug 2020 16:08:27 -0700
-Subject: [PATCH 14/21] crypto: sa2ul - Remove unnecessary self assignment
+From 5934deffc3a60ec6bcbe6aeb73a9670ce53e9122 Mon Sep 17 00:00:00 2001
+From: Tero Kristo <t-kristo@ti.com>
+Date: Tue, 25 Aug 2020 16:31:06 +0300
+Subject: [PATCH 14/21] crypto: sa2ul: fix compiler warning produced by clang
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1138
+Clang detects a warning for an assignment that doesn't really do
+anything. Fix this by removing the offending piece of code.
+
+Fixes: 7694b6ca649f ("crypto: sa2ul - Add crypto driver")
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Tero Kristo <t-kristo@ti.com>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lore.kernel.org/r/20200825133106.21542-3-t-kristo@ti.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/crypto/sa2ul.c | 6 ++----
