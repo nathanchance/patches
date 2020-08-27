@@ -1,7 +1,7 @@
-From 245f5ff281e8fd58a7698dba96695a1278544dc2 Mon Sep 17 00:00:00 2001
+From 45e5ae8fa8620291def246701d2a32f0e19aaca4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Aug 2020 16:26:39 -0700
-Subject: [PATCH 14/17] Revert "ASOC: SOF: Intel: hda-codec: move unused label
+Subject: [PATCH 13/15] Revert "ASOC: SOF: Intel: hda-codec: move unused label
  to correct position"
 
 This reverts commit 11ec0edc6408a739dffca34ebbbe921817c3b10e.
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
-index 55811b99e47a..7a2a612f1245 100644
+index f6ba3b593e1f..165daaba71c0 100644
 --- a/sound/soc/sof/intel/hda-codec.c
 +++ b/sound/soc/sof/intel/hda-codec.c
 @@ -178,11 +178,6 @@ static int hda_codec_probe(struct snd_sof_dev *sdev, int address,

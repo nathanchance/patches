@@ -1,7 +1,7 @@
-From 2937bf38ad21670b0c35b682236f3878f767b092 Mon Sep 17 00:00:00 2001
+From 1c161d75618fa131a45d1a290ae97354a973f8f7 Mon Sep 17 00:00:00 2001
 From: Tero Kristo <t-kristo@ti.com>
 Date: Tue, 25 Aug 2020 16:31:06 +0300
-Subject: [PATCH 12/17] crypto: sa2ul: fix compiler warning produced by clang
+Subject: [PATCH 12/15] crypto: sa2ul: fix compiler warning produced by clang
 
 Clang detects a warning for an assignment that doesn't really do
 anything. Fix this by removing the offending piece of code.
