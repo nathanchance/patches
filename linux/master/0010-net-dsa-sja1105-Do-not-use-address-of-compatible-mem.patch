@@ -1,7 +1,7 @@
-From 5fef24dc68b228a277cc180bf4b5512142546fd2 Mon Sep 17 00:00:00 2001
+From f433d71bc1c096996c99c7b7a6ed3adc53a00cd7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 21 Aug 2020 15:25:16 -0700
-Subject: [PATCH 10/17] net: dsa: sja1105: Do not use address of compatible
+Subject: [PATCH 10/16] net: dsa: sja1105: Do not use address of compatible
  member in sja1105_check_device_id
 
 Clang warns:

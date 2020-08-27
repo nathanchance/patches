@@ -1,7 +1,7 @@
-From 92bb445263cac7c4f20365427d8d22d15cbf8d8b Mon Sep 17 00:00:00 2001
+From 13fcd246fd04757b7e265f60bbf403273636eba7 Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Tue, 4 Aug 2020 09:41:37 +0800
-Subject: [PATCH 15/17] media: staging: tegra-vde: Mark
+Subject: [PATCH 15/16] media: staging: tegra-vde: Mark
  tegra_vde_runtime_suspend/resume as __maybe_unused
 
 If CONFIG_PM is not set, gcc warns:
