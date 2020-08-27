@@ -1,7 +1,7 @@
-From 972f6fa3990aeac610b16db7aa8c32b5d4f85b75 Mon Sep 17 00:00:00 2001
+From 58717a4931bb506546686948713b3ccfb6da649a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 27 Aug 2020 14:06:26 -0700
-Subject: [PATCH] RISC-V: Workaround -next breakage
+Subject: [PATCH 14/14] RISC-V: Workaround -next breakage
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1143
 Link: https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org/message/NKXLXVU4F5T46SV4DV2DWRWDHI2YYZS3/
@@ -36,8 +36,6 @@ index 5ab185130cae..41ef96d0d97a 100644
  #include <asm/setup.h>
  #include <asm/sections.h>
  #include <asm/sbi.h>
-
-base-commit: f37be72473a007d5d66c52f6cdf43fc8c0961f95
 -- 
 2.28.0
 
