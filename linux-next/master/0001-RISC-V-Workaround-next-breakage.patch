@@ -1,7 +1,7 @@
-From b5e87f087040672243c7ac7b77523dad54410475 Mon Sep 17 00:00:00 2001
+From 972f6fa3990aeac610b16db7aa8c32b5d4f85b75 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 26 Aug 2020 18:54:18 -0700
-Subject: [PATCH 14/14] RISC-V: Workaround -next breakage
+Date: Thu, 27 Aug 2020 14:06:26 -0700
+Subject: [PATCH] RISC-V: Workaround -next breakage
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1143
 Link: https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org/message/NKXLXVU4F5T46SV4DV2DWRWDHI2YYZS3/
@@ -25,17 +25,19 @@ index 6ef2394be857..0a71e1996dfb 100644
  	select UCS2_STRING
  	select EFI_PARAMS_FROM_FDT
 diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index 5ab185130cae..97130ac72e28 100644
+index 5ab185130cae..41ef96d0d97a 100644
 --- a/arch/riscv/kernel/setup.c
 +++ b/arch/riscv/kernel/setup.c
 @@ -19,6 +19,7 @@
  #include <linux/smp.h>
  
  #include <asm/cpu_ops.h>
-+#include <asm/io.h>
++#include <asm/early_ioremap.h>
  #include <asm/setup.h>
  #include <asm/sections.h>
  #include <asm/sbi.h>
+
+base-commit: f37be72473a007d5d66c52f6cdf43fc8c0961f95
 -- 
 2.28.0
 
