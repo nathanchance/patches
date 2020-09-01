@@ -1,7 +1,7 @@
-From cdea8e54e59fdd7edd8a28f003d77bb7d9a52579 Mon Sep 17 00:00:00 2001
+From 146c8a5666471c75af33a8a6d136305d908f9919 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Tue, 25 Aug 2020 06:58:36 -0700
-Subject: [PATCH 09/16] lib/string.c: implement stpcpy
+Subject: [PATCH 09/15] lib/string.c: implement stpcpy
 
 LLVM implemented a recent "libcall optimization" that lowers calls to
 `sprintf(dest, "%s", str)` where the return value is used to
