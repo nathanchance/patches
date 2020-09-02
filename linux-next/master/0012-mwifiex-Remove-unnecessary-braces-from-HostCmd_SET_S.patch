@@ -1,7 +1,7 @@
-From 9e72bdbcb922d7ba61b73e0630a1164630d88084 Mon Sep 17 00:00:00 2001
+From 6f867bfe9a6cfd00d963e0e67e8a4c57190b9d0d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
-Subject: [PATCH 14/14] mwifiex: Remove unnecessary braces from
+Subject: [PATCH 12/12] mwifiex: Remove unnecessary braces from
  HostCmd_SET_SEQ_NO_BSS_INFO
 
 A new warning in clang points out when macro expansion might result in a

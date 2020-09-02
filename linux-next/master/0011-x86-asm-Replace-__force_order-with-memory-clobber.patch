@@ -1,7 +1,7 @@
-From 8d2d4503a1e304ac82154879f4de3a8e2f5f4d75 Mon Sep 17 00:00:00 2001
+From e9f9426958a3be4e9ea8f5576d92e01288e20740 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Sun, 23 Aug 2020 17:25:50 -0400
-Subject: [PATCH 13/14] x86/asm: Replace __force_order with memory clobber
+Subject: [PATCH 11/12] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
 prevent the compiler from reordering the inline asm.
