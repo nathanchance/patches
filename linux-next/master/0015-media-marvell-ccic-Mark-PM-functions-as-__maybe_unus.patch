@@ -1,0 +1,55 @@
+From 5db2612086e5a12d28d63fbc0eeb8f77f67cb9a6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 2 Sep 2020 16:25:02 -0700
+Subject: [PATCH 15/15] media: marvell-ccic: Mark PM functions as
+ __maybe_unused
+
+Fixes: 55cd34524aa3 ("media: marvell-ccic: add support for runtime PM")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/media/platform/marvell-ccic/mmp-driver.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/media/platform/marvell-ccic/mmp-driver.c b/drivers/media/platform/marvell-ccic/mmp-driver.c
+index c4b28a00a3a2..032fdddbbecc 100644
+--- a/drivers/media/platform/marvell-ccic/mmp-driver.c
++++ b/drivers/media/platform/marvell-ccic/mmp-driver.c
+@@ -307,7 +307,7 @@ static int mmpcam_platform_remove(struct platform_device *pdev)
+  * Suspend/resume support.
+  */
+ 
+-static int mmpcam_runtime_resume(struct device *dev)
++static int __maybe_unused mmpcam_runtime_resume(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 	struct mcam_camera *mcam = &cam->mcam;
+@@ -321,7 +321,7 @@ static int mmpcam_runtime_resume(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int mmpcam_runtime_suspend(struct device *dev)
++static int __maybe_unused mmpcam_runtime_suspend(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 	struct mcam_camera *mcam = &cam->mcam;
+@@ -335,7 +335,7 @@ static int mmpcam_runtime_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int mmpcam_suspend(struct device *dev)
++static int __maybe_unused mmpcam_suspend(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 
+@@ -344,7 +344,7 @@ static int mmpcam_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int mmpcam_resume(struct device *dev)
++static int __maybe_unused mmpcam_resume(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 
+-- 
+2.28.0
+

@@ -1,0 +1,70 @@
+From a64161590be7c9853d4c43eeb436fe2939049676 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 2 Sep 2020 11:06:30 -0700
+Subject: [PATCH 13/15] Revert "arm64: dts: mt8183: add scp node"
+
+This reverts commit 0d5e41709f7629f95874c1e42a60f5fd21f1ad29.
+
+Broken:
+
+arch/arm64/boot/dts/mediatek/mt8183.dtsi:342.21-352.5: ERROR
+(phandle_references): /soc/scp@10500000: Reference to non-existent node
+or label "scp_mem_reserved"
+
+ERROR: Input tree has errors, aborting (use -f to force output)
+
+Link: https://lore.kernel.org/lkml/CA+G9fYt9AujG6gyfeV5AaAv0EgggUfGT1jow8DJjVfetVWV3EA@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm64/boot/dts/mediatek/mt8183-evb.dts | 11 -----------
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi    | 12 ------------
+ 2 files changed, 23 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+index cba2d8933e79..ae405bd8f06b 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+@@ -25,17 +25,6 @@ memory@40000000 {
+ 	chosen {
+ 		stdout-path = "serial0:921600n8";
+ 	};
+-
+-	reserved-memory {
+-		#address-cells = <2>;
+-		#size-cells = <2>;
+-		ranges;
+-		scp_mem_reserved: scp_mem_region {
+-			compatible = "shared-dma-pool";
+-			reg = <0 0x50000000 0 0x2900000>;
+-			no-map;
+-		};
+-	};
+ };
+ 
+ &auxadc {
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index f9b60e3d085c..102105871db2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -339,18 +339,6 @@ pwrap: pwrap@1000d000 {
+ 			clock-names = "spi", "wrap";
+ 		};
+ 
+-		scp: scp@10500000 {
+-			compatible = "mediatek,mt8183-scp";
+-			reg = <0 0x10500000 0 0x80000>,
+-			      <0 0x105c0000 0 0x19080>;
+-			reg-names = "sram", "cfg";
+-			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&infracfg CLK_INFRA_SCPSYS>;
+-			clock-names = "main";
+-			memory-region = <&scp_mem_reserved>;
+-			status = "disabled";
+-		};
+-
+ 		systimer: timer@10017000 {
+ 			compatible = "mediatek,mt8183-timer",
+ 				     "mediatek,mt6765-timer";
+-- 
+2.28.0
+

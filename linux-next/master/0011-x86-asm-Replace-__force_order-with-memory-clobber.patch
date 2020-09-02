@@ -1,14 +1,17 @@
-From e9f9426958a3be4e9ea8f5576d92e01288e20740 Mon Sep 17 00:00:00 2001
+From f40d72e2453330bf19bff012f183cb897880f225 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
-Date: Sun, 23 Aug 2020 17:25:50 -0400
-Subject: [PATCH 11/12] x86/asm: Replace __force_order with memory clobber
+Date: Wed, 2 Sep 2020 19:21:52 -0400
+Subject: [PATCH 11/15] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
-prevent the compiler from reordering the inline asm.
+prevent the compiler from reordering CRn reads/writes with respect to
+each other.
 
-The fact that the asm is volatile should be enough to prevent this
-already, however older versions of GCC had a bug that could sometimes
-result in reordering. This was fixed in 8.1, 7.3 and 6.5.
+The fact that the asm is volatile should be enough to prevent this:
+volatile asm statements should be executed in program order. However GCC
+4.9.x and 5.x have a bug that might result in reordering. This was fixed
+in 8.1, 7.3 and 6.5. Versions prior to these, including 5.x and 4.9.x,
+may reorder volatile asm statements with respect to each other.
 
 There are some issues with __force_order as implemented:
 - It is used only as an input operand for the write functions, and hence
@@ -32,14 +35,17 @@ Fix this by:
   cached/reordered across CRn reads, which should be safe.
 
 Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82602
-Link: https://lore.kernel.org/r/20200823212550.3377591-1-nivedita@alum.mit.edu
+Link: https://lore.kernel.org/lkml/20200527135329.1172644-1-arnd@arndb.de/
+Link: https://lore.kernel.org/r/20200902232152.3709896-1-nivedita@alum.mit.edu
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/boot/compressed/pgtable_64.c |  9 ---------
- arch/x86/include/asm/special_insns.h  | 27 ++++++++++++++-------------
+ arch/x86/include/asm/special_insns.h  | 28 ++++++++++++++-------------
  arch/x86/kernel/cpu/common.c          |  4 ++--
- 3 files changed, 16 insertions(+), 24 deletions(-)
+ 3 files changed, 17 insertions(+), 24 deletions(-)
 
 diff --git a/arch/x86/boot/compressed/pgtable_64.c b/arch/x86/boot/compressed/pgtable_64.c
 index c8862696a47b..7d0394f4ebf9 100644
@@ -62,10 +68,10 @@ index c8862696a47b..7d0394f4ebf9 100644
  #define BIOS_START_MAX		0x9f000U	/* 640K, absolute maximum */
  
 diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 5999b0b3dd4a..17d46b1cbb0f 100644
+index 5999b0b3dd4a..2f898d12ef45 100644
 --- a/arch/x86/include/asm/special_insns.h
 +++ b/arch/x86/include/asm/special_insns.h
-@@ -11,45 +11,46 @@
+@@ -11,45 +11,47 @@
  #include <linux/jump_label.h>
  
  /*
@@ -74,11 +80,12 @@ index 5999b0b3dd4a..17d46b1cbb0f 100644
 - * A memory clobber would solve the problem, but would prevent reordering of
 - * all loads stores around it, which can hurt performance. Solution is to
 - * use a variable and mimic reads and writes to it to enforce serialization
-+ * The compiler should not reorder volatile asm, however older versions of GCC
-+ * had a bug (which was fixed in 8.1, 7.3 and 6.5) where they could sometimes
-+ * reorder volatile asm. The write functions are not a problem since they have
-+ * memory clobbers preventing reordering. To prevent reads from being reordered
-+ * with respect to writes, use a dummy memory operand.
++ * The compiler should not reorder volatile asm statements with respect to each
++ * other: they should execute in program order. However GCC 4.9.x and 5.x have
++ * a bug (which was fixed in 8.1, 7.3 and 6.5) where they might reorder
++ * volatile asm. The write functions are not affected since they have memory
++ * clobbers preventing reordering. To prevent reads from being reordered with
++ * respect to writes, use a dummy memory operand.
   */
 -extern unsigned long __force_order;
 +
@@ -123,7 +130,7 @@ index 5999b0b3dd4a..17d46b1cbb0f 100644
  }
  
  static inline unsigned long native_read_cr4(void)
-@@ -64,10 +65,10 @@ static inline unsigned long native_read_cr4(void)
+@@ -64,10 +66,10 @@ static inline unsigned long native_read_cr4(void)
  	asm volatile("1: mov %%cr4, %0\n"
  		     "2:\n"
  		     _ASM_EXTABLE(1b, 2b)
