@@ -1,7 +1,7 @@
 From e28c2056d47d343cf7a09fdaa0c0dbb454315979 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 11:06:30 -0700
-Subject: [PATCH 1/4] Revert "arm64: dts: mt8183: add scp node"
+Subject: [PATCH 1/5] Revert "arm64: dts: mt8183: add scp node"
 
 This reverts commit 0d5e41709f7629f95874c1e42a60f5fd21f1ad29.
 
@@ -72,7 +72,7 @@ index f9b60e3d085c..102105871db2 100644
 From 19fb4fd1e3fa424f38740f6a9409ec659ddf05ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 14:54:41 -0700
-Subject: [PATCH 2/4] Revert "dma-mapping: introduce DMA range map, supplanting
+Subject: [PATCH 2/5] Revert "dma-mapping: introduce DMA range map, supplanting
  dma_pfn_offset"
 
 This reverts commit eef520b232c60e74eb8b33a5a7863ad8f2b4a5c7.
@@ -965,7 +965,7 @@ index a58df8a5cc05..0d129421e75f 100644
 From 41ab9fe57b40938907b3cce2e0b4017c04bb499a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:08:46 -0700
-Subject: [PATCH 3/4] pci: Remove unused error variables
+Subject: [PATCH 3/5] pci: Remove unused error variables
 
 This is already fixed for the upcoming -next refresh so no sending
 upstream.
@@ -1003,7 +1003,7 @@ index e136f08ad92a..40be221e69cf 100644
 From 43b987b76daac011542ce2d1ee728bc0e4115234 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
-Subject: [PATCH 4/4] mwifiex: Remove unnecessary braces from
+Subject: [PATCH 4/5] mwifiex: Remove unnecessary braces from
  HostCmd_SET_SEQ_NO_BSS_INFO
 
 A new warning in clang points out when macro expansion might result in a
@@ -1071,6 +1071,35 @@ index d9f8bdbc817b..470d669c7f14 100644
  
  #define HostCmd_GET_SEQ_NO(seq)       \
  	((seq) & HostCmd_SEQ_NUM_MASK)
+-- 
+2.28.0
+
+
+From 18552fb11aa3d6456ede43871ea9658809d7544d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Wed, 2 Sep 2020 15:51:52 -0700
+Subject: [PATCH 5/5] arm64: defconfig: Disable DEBUG_INFO
+
+The integrated assembler is really noisy when building debug info in
+DWARF2 and I do not plan on debugging this kernel in gdb.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm64/configs/defconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index a0697f9c192d..a0aaf744154a 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1049,7 +1049,6 @@ CONFIG_CRYPTO_DEV_HISI_ZIP=m
+ CONFIG_CRYPTO_DEV_HISI_HPRE=m
+ CONFIG_CMA_SIZE_MBYTES=32
+ CONFIG_PRINTK_TIME=y
+-CONFIG_DEBUG_INFO=y
+ CONFIG_MAGIC_SYSRQ=y
+ CONFIG_DEBUG_FS=y
+ CONFIG_DEBUG_KERNEL=y
 -- 
 2.28.0
 
