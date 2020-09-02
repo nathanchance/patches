@@ -1,6 +1,6 @@
-From eb38e739b9eca3dc9e3fad12fbbd503d91bb06aa Mon Sep 17 00:00:00 2001
+From c91e15632f241a82400149f9b16eeb67f2931c38 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
-Date: Sun, 23 Aug 2020 17:25:50 -0400
+Date: Wed, 2 Sep 2020 11:33:46 -0400
 Subject: [PATCH 15/16] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
@@ -8,7 +8,8 @@ prevent the compiler from reordering the inline asm.
 
 The fact that the asm is volatile should be enough to prevent this
 already, however older versions of GCC had a bug that could sometimes
-result in reordering. This was fixed in 8.1, 7.3 and 6.5.
+result in reordering. This was fixed in 8.1, 7.3 and 6.5. Versions prior
+to these, including 5.x and 4.9.x, may reorder volatile asm.
 
 There are some issues with __force_order as implemented:
 - It is used only as an input operand for the write functions, and hence
@@ -32,8 +33,11 @@ Fix this by:
   cached/reordered across CRn reads, which should be safe.
 
 Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82602
-Link: https://lore.kernel.org/r/20200823212550.3377591-1-nivedita@alum.mit.edu
+Link: https://lore.kernel.org/lkml/20200527135329.1172644-1-arnd@arndb.de/
+Link: https://lore.kernel.org/r/20200902153346.3296117-1-nivedita@alum.mit.edu
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/boot/compressed/pgtable_64.c |  9 ---------
