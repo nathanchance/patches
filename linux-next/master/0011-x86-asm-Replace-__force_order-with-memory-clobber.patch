@@ -1,7 +1,7 @@
-From f40d72e2453330bf19bff012f183cb897880f225 Mon Sep 17 00:00:00 2001
+From 82b7ef5180aa29d1ba7722e67bb3abcb5ded984a Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Wed, 2 Sep 2020 19:21:52 -0400
-Subject: [PATCH 11/15] x86/asm: Replace __force_order with memory clobber
+Subject: [PATCH 11/14] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
 prevent the compiler from reordering CRn reads/writes with respect to
@@ -68,7 +68,7 @@ index c8862696a47b..7d0394f4ebf9 100644
  #define BIOS_START_MAX		0x9f000U	/* 640K, absolute maximum */
  
 diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 5999b0b3dd4a..2f898d12ef45 100644
+index 59a3e13204c3..d6e3bb9363d2 100644
 --- a/arch/x86/include/asm/special_insns.h
 +++ b/arch/x86/include/asm/special_insns.h
 @@ -11,45 +11,47 @@
@@ -144,7 +144,7 @@ index 5999b0b3dd4a..2f898d12ef45 100644
  	return val;
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 8aa20bc2f1ca..08114bd22409 100644
+index c5d6f17d9b9d..178499f90366 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
 @@ -359,7 +359,7 @@ void native_write_cr0(unsigned long val)
