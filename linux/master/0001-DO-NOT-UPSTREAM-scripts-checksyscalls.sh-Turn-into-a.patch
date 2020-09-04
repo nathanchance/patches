@@ -1,7 +1,7 @@
-From 3a47f6dfb8e855a1358510f2753b417f94d3be7c Mon Sep 17 00:00:00 2001
+From a6ac18fc58e64ac49ec0faddc065561041bbe552 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 10 Mar 2020 16:31:14 -0700
-Subject: [PATCH 01/16] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
+Subject: [PATCH 01/15] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
  no-op
 
 I build with -Werror and I do not care when syscalls are not defined on
@@ -26,7 +26,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: fc3abb53250a90ba2150eebd182137c136f4d25a
+base-commit: 59126901f200f5fc907153468b03c64e0081b6e6
 -- 
 2.28.0
 
