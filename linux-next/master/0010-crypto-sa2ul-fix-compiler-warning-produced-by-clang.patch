@@ -1,7 +1,7 @@
-From b5906da0ccc2b0119b985473974587c7307fdfc5 Mon Sep 17 00:00:00 2001
+From cf9e738a294f0b0a000ca888fcdcabb3de7df0bf Mon Sep 17 00:00:00 2001
 From: Tero Kristo <t-kristo@ti.com>
 Date: Tue, 25 Aug 2020 16:31:06 +0300
-Subject: [PATCH 10/14] crypto: sa2ul: fix compiler warning produced by clang
+Subject: [PATCH 10/13] crypto: sa2ul: fix compiler warning produced by clang
 
 Clang detects a warning for an assignment that doesn't really do
 anything. Fix this by removing the offending piece of code.
@@ -17,7 +17,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index acabb8ddacb6..c2c600a2dad3 100644
+index b685a76ae88c..934e9a00638c 100644
 --- a/drivers/crypto/sa2ul.c
 +++ b/drivers/crypto/sa2ul.c
 @@ -1148,12 +1148,10 @@ static int sa_run(struct sa_req *req)

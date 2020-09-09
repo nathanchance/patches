@@ -1,7 +1,7 @@
-From 44418a4e8f5682bda49e56220e14b445d0f1d178 Mon Sep 17 00:00:00 2001
+From 0da5536f72819f6b6fd9d383711732fdcf9224c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 17 Apr 2020 13:43:14 -0700
-Subject: [PATCH 04/14] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
+Subject: [PATCH 04/13] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
  allyesconfig
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/997
@@ -25,7 +25,7 @@ index 2b625ebef914..3935f8c95eef 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 32753cc771bf..46cf530ced3c 100644
+index ecb5f4616a36..18456bdf7991 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -635,7 +635,7 @@

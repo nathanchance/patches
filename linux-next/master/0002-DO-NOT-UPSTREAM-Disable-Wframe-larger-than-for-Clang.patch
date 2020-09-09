@@ -1,7 +1,7 @@
-From bf261f925add29164957a4f34ea3e7a32ba74807 Mon Sep 17 00:00:00 2001
+From e17d64405b7fd2953a950667c93cf804d48b34d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Jun 2020 09:42:37 -0700
-Subject: [PATCH 02/14] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
+Subject: [PATCH 02/13] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
 
 I am not interesting in debugging all of these.
 
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index a84a41d8fadd..bb328aba1e78 100644
+index fde620501707..b9b61aec4636 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -295,8 +295,9 @@ config ENABLE_MUST_CHECK
