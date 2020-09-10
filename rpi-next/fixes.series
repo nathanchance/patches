@@ -1,90 +1,24 @@
-From e8bf2b468311c883ba8a64ee6d20169017d2c255 Mon Sep 17 00:00:00 2001
+From 30d2b6588af01ed3dab2acb3c96155b1e712b107 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Wed, 2 Sep 2020 11:06:30 -0700
-Subject: [PATCH 1/4] Revert "arm64: dts: mt8183: add scp node"
+Date: Thu, 10 Sep 2020 10:00:41 -0700
+Subject: [PATCH 1/4] drm/vc4: Update type of reg parameter in
+ vc4_hdmi_{read,write}
 
-This reverts commit 0d5e41709f7629f95874c1e42a60f5fd21f1ad29.
+Clang warns 100+ times in the vc4 driver along the lines of:
 
-Broken:
+drivers/gpu/drm/vc4/vc4_hdmi_phy.c:518:13: warning: implicit conversion
+from enumeration type 'enum vc4_hdmi_field' to different enumeration
+type 'enum vc4_hdmi_regs' [-Wenum-conversion]
+        HDMI_WRITE(HDMI_TX_PHY_POWERDOWN_CTL,
+        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
 
-arch/arm64/boot/dts/mediatek/mt8183.dtsi:342.21-352.5: ERROR
-(phandle_references): /soc/scp@10500000: Reference to non-existent node
-or label "scp_mem_reserved"
-
-ERROR: Input tree has errors, aborting (use -f to force output)
-
-Link: https://lore.kernel.org/lkml/CA+G9fYt9AujG6gyfeV5AaAv0EgggUfGT1jow8DJjVfetVWV3EA@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
----
- arch/arm64/boot/dts/mediatek/mt8183-evb.dts | 11 -----------
- arch/arm64/boot/dts/mediatek/mt8183.dtsi    | 12 ------------
- 2 files changed, 23 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-index cba2d8933e79..ae405bd8f06b 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-@@ -25,17 +25,6 @@ memory@40000000 {
- 	chosen {
- 		stdout-path = "serial0:921600n8";
- 	};
--
--	reserved-memory {
--		#address-cells = <2>;
--		#size-cells = <2>;
--		ranges;
--		scp_mem_reserved: scp_mem_region {
--			compatible = "shared-dma-pool";
--			reg = <0 0x50000000 0 0x2900000>;
--			no-map;
--		};
--	};
- };
- 
- &auxadc {
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index f9b60e3d085c..102105871db2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -339,18 +339,6 @@ pwrap: pwrap@1000d000 {
- 			clock-names = "spi", "wrap";
- 		};
- 
--		scp: scp@10500000 {
--			compatible = "mediatek,mt8183-scp";
--			reg = <0 0x10500000 0 0x80000>,
--			      <0 0x105c0000 0 0x19080>;
--			reg-names = "sram", "cfg";
--			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
--			clocks = <&infracfg CLK_INFRA_SCPSYS>;
--			clock-names = "main";
--			memory-region = <&scp_mem_reserved>;
--			status = "disabled";
--		};
--
- 		systimer: timer@10017000 {
- 			compatible = "mediatek,mt8183-timer",
- 				     "mediatek,mt6765-timer";
--- 
-2.28.0
-
-
-From 3432833502fd6034aef7096bdf8148511fa1c3a6 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Sun, 17 May 2020 01:04:44 -0700
-Subject: [PATCH 2/4] drm/vc4: hdmi: Use proper enum in vc4_hdmi_{read,write}
-
-Clang warns a lot along the lines of:
-
-drivers/gpu/drm/vc4/vc4_hdmi.c:102:13: warning: implicit conversion from
-enumeration type 'enum vc4_hdmi_field' to different enumeration type
-'enum vc4_hdmi_regs' [-Wenum-conversion]
-
-HDMI_WRITE and HDMI_READ are only ever used with types of vc4_hdmi_field
-so use that type. The names of the variables are a little wonky now but
-I wanted to go with the simplest fix.
+The HDMI_READ and HDMI_WRITE macros pass in enumerators of type
+vc4_hdmi_field but vc4_hdmi_write and vc4_hdmi_read expect a enumerator
+of type vc4_hdmi_regs, causing a warning for every instance of this.
+Update the parameter type so there is no more mismatch.
 
 Fixes: 311e305fdb4e ("drm/vc4: hdmi: Implement a register layout abstraction")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1149
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/vc4/vc4_hdmi_regs.h | 4 ++--
@@ -116,12 +50,34 @@ index a5f1354e3e06..f5d36b31fa65 100644
 2.28.0
 
 
-From aed723e11ca895b26456126cd541abaf1993e798 Mon Sep 17 00:00:00 2001
+From ab1f8252e4d9727d4fa73b6d180d975c168a25a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 8 Sep 2020 23:07:37 -0700
-Subject: [PATCH 3/4] drm/vc4: Fix missing parentheses around conditional in
+Date: Thu, 10 Sep 2020 10:13:00 -0700
+Subject: [PATCH 2/4] drm/vc4: Fix bitwise OR versus ternary operator in
  vc4_plane_mode_set
 
+Clang warns:
+
+drivers/gpu/drm/vc4/vc4_plane.c:901:27: warning: operator '?:' has lower
+precedence than '|'; '|' will be evaluated first
+[-Wbitwise-conditional-parentheses]
+                                fb->format->has_alpha ?
+                                ~~~~~~~~~~~~~~~~~~~~~ ^
+drivers/gpu/drm/vc4/vc4_plane.c:901:27: note: place parentheses around
+the '|' expression to silence this warning
+                                fb->format->has_alpha ?
+                                ~~~~~~~~~~~~~~~~~~~~~ ^
+drivers/gpu/drm/vc4/vc4_plane.c:901:27: note: place parentheses around
+the '?:' expression to evaluate it first
+                                fb->format->has_alpha ?
+                                ~~~~~~~~~~~~~~~~~~~~~~^
+1 warning generated.
+
+Add the parentheses as that was clearly intended, otherwise
+SCALER5_CTL2_ALPHA_PREMULT won't be added to the list.
+
+Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1150
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/vc4/vc4_plane.c | 4 ++--
@@ -146,7 +102,72 @@ index 24d7e6db6fdd..89543fa8ca4d 100644
 2.28.0
 
 
-From 2400406077025517531a3a03250c1eaccf83944d Mon Sep 17 00:00:00 2001
+From 1951228e70e5eba66060d21075e83cbd81f19b43 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 10 Sep 2020 10:44:18 -0700
+Subject: [PATCH 3/4] net: mvpp2: Initialize link in
+ mvpp2_isr_handle_{xlg,gmac_internal}
+
+Clang warns (trimmed for brevity):
+
+drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3073:7: warning:
+variable 'link' is used uninitialized whenever 'if' condition is false
+[-Wsometimes-uninitialized]
+                if (val & MVPP22_XLG_STATUS_LINK_UP)
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3075:31: note:
+uninitialized use occurs here
+                mvpp2_isr_handle_link(port, link);
+                                            ^~~~
+...
+drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3090:8: warning:
+variable 'link' is used uninitialized whenever 'if' condition is false
+[-Wsometimes-uninitialized]
+                        if (val & MVPP2_GMAC_STATUS0_LINK_UP)
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3092:32: note:
+uninitialized use occurs here
+                        mvpp2_isr_handle_link(port, link);
+                                                    ^~~~
+
+Initialize link to false like it was before the refactoring that
+happened around link status so that a valid valid is always passed into
+mvpp2_isr_handle_link.
+
+Fixes: 36cfd3a6e52b ("net: mvpp2: restructure "link status" interrupt handling")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1151
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 7d86940747d1..0d5ee96f89b4 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -3064,7 +3064,7 @@ static void mvpp2_isr_handle_link(struct mvpp2_port *port, bool link)
+ 
+ static void mvpp2_isr_handle_xlg(struct mvpp2_port *port)
+ {
+-	bool link;
++	bool link = false;
+ 	u32 val;
+ 
+ 	val = readl(port->base + MVPP22_XLG_INT_STAT);
+@@ -3078,7 +3078,7 @@ static void mvpp2_isr_handle_xlg(struct mvpp2_port *port)
+ 
+ static void mvpp2_isr_handle_gmac_internal(struct mvpp2_port *port)
+ {
+-	bool link;
++	bool link = false;
+ 	u32 val;
+ 
+ 	if (phy_interface_mode_is_rgmii(port->phy_interface) ||
+-- 
+2.28.0
+
+
+From a5f63e2cd23b0eee1134b1ac3c7b05c53cae06c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:51:52 -0700
 Subject: [PATCH 4/4] arm64: defconfig: Disable DEBUG_INFO
