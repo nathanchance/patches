@@ -1,0 +1,41 @@
+From 67acb0e4c98e42658541c03646fed61c52d23df1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 10 Sep 2020 13:50:50 -0700
+Subject: [PATCH 19/20] next-20200910: Unused variables
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/radeon/radeon_ttm.c     | 2 +-
+ drivers/pci/controller/dwc/pci-dra7xx.c | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/radeon/radeon_ttm.c b/drivers/gpu/drm/radeon/radeon_ttm.c
+index 31c63d339629..449e77eb75f9 100644
+--- a/drivers/gpu/drm/radeon/radeon_ttm.c
++++ b/drivers/gpu/drm/radeon/radeon_ttm.c
+@@ -689,9 +689,9 @@ static int radeon_ttm_tt_bind(struct ttm_bo_device *bdev,
+ 			      struct ttm_tt *ttm,
+ 			      struct ttm_resource *bo_mem)
+ {
++#if IS_ENABLED(CONFIG_AGP)
+ 	struct radeon_device *rdev = radeon_get_rdev(bdev);
+ 
+-#if IS_ENABLED(CONFIG_AGP)
+ 	if (rdev->flags & RADEON_IS_AGP)
+ 		return ttm_agp_bind(ttm, bo_mem);
+ #endif
+diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+index 69cd43f74260..8f0b6d644e4b 100644
+--- a/drivers/pci/controller/dwc/pci-dra7xx.c
++++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+@@ -139,7 +139,6 @@ static int dra7xx_pcie_establish_link(struct dw_pcie *pci)
+ 	struct dra7xx_pcie *dra7xx = to_dra7xx_pcie(pci);
+ 	struct device *dev = pci->dev;
+ 	u32 reg;
+-	u32 exp_cap_off = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 
+ 	if (dw_pcie_link_up(pci)) {
+ 		dev_err(dev, "link is already up\n");
+-- 
+2.28.0
+

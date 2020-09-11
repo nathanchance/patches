@@ -1,0 +1,41 @@
+From 434a992cb867f445663f9e4b3ddb666bcfb3d04b Mon Sep 17 00:00:00 2001
+From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Date: Thu, 10 Sep 2020 12:52:50 +0300
+Subject: [PATCH 18/20] drm/imx/dcss: fix compilation issue on 32bit
+
+When compiling for 32bit platforms, the compilation fails with:
+
+ERROR: modpost: "__aeabi_ldivmod"
+[drivers/gpu/drm/imx/dcss/imx-dcss.ko] undefined!
+ERROR: modpost: "__aeabi_uldivmod"
+[drivers/gpu/drm/imx/dcss/imx-dcss.ko] undefined!
+
+This patch adds a dependency on ARM64 since no 32bit SoCs have DCSS, so far.
+
+Signed-off-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Reported-by: Daniel Vetter <daniel@ffwll.ch>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200910095250.7663-1-laurentiu.palcu@oss.nxp.com
+Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=6a8a58acfe82a49e91a3c3e1c1c07865024b4ff4
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/imx/dcss/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/imx/dcss/Kconfig b/drivers/gpu/drm/imx/dcss/Kconfig
+index 69860de8861f..2b17a964ff05 100644
+--- a/drivers/gpu/drm/imx/dcss/Kconfig
++++ b/drivers/gpu/drm/imx/dcss/Kconfig
+@@ -3,7 +3,7 @@ config DRM_IMX_DCSS
+ 	select IMX_IRQSTEER
+ 	select DRM_KMS_CMA_HELPER
+ 	select VIDEOMODE_HELPERS
+-	depends on DRM && ARCH_MXC
++	depends on DRM && ARCH_MXC && ARM64
+ 	help
+ 	  Choose this if you have a NXP i.MX8MQ based system and want to use the
+ 	  Display Controller Subsystem. This option enables DCSS support.
+-- 
+2.28.0
+
