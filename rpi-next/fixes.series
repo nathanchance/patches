@@ -1,7 +1,7 @@
-From 30d2b6588af01ed3dab2acb3c96155b1e712b107 Mon Sep 17 00:00:00 2001
+From 93f700b03aa22b770bf76594be427cd8b1e4872f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 10 Sep 2020 10:00:41 -0700
-Subject: [PATCH 1/4] drm/vc4: Update type of reg parameter in
+Date: Thu, 10 Sep 2020 10:04:02 -0700
+Subject: [PATCH 1/3] drm/vc4: Update type of reg parameter in
  vc4_hdmi_{read,write}
 
 Clang warns 100+ times in the vc4 driver along the lines of:
@@ -18,14 +18,18 @@ of type vc4_hdmi_regs, causing a warning for every instance of this.
 Update the parameter type so there is no more mismatch.
 
 Fixes: 311e305fdb4e ("drm/vc4: hdmi: Implement a register layout abstraction")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Link: https://github.com/ClangBuiltLinux/linux/issues/1149
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200910170401.3857250-1-natechancellor@gmail.com
+Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=910e1ca6f36f48b7911e72dc8b6667d652031d97
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/vc4/vc4_hdmi_regs.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
-index a5f1354e3e06..f5d36b31fa65 100644
+index 47364bd3960d..7c6b4818f245 100644
 --- a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
 +++ b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
 @@ -392,7 +392,7 @@ void __iomem *__vc4_hdmi_get_field_base(struct vc4_hdmi *hdmi,
@@ -50,10 +54,10 @@ index a5f1354e3e06..f5d36b31fa65 100644
 2.28.0
 
 
-From ab1f8252e4d9727d4fa73b6d180d975c168a25a0 Mon Sep 17 00:00:00 2001
+From 9541a43943f59a015b97ddfff987d9d1e181e79a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 10 Sep 2020 10:13:00 -0700
-Subject: [PATCH 2/4] drm/vc4: Fix bitwise OR versus ternary operator in
+Date: Thu, 10 Sep 2020 10:18:32 -0700
+Subject: [PATCH 2/3] drm/vc4: Fix bitwise OR versus ternary operator in
  vc4_plane_mode_set
 
 Clang warns:
@@ -77,7 +81,11 @@ Add the parentheses as that was clearly intended, otherwise
 SCALER5_CTL2_ALPHA_PREMULT won't be added to the list.
 
 Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Link: https://github.com/ClangBuiltLinux/linux/issues/1150
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200910171831.4112580-1-natechancellor@gmail.com
+Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=4494346392204ab4387d08eb5e089be8e7e1b74e
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/vc4/vc4_plane.c | 4 ++--
@@ -102,75 +110,10 @@ index 24d7e6db6fdd..89543fa8ca4d 100644
 2.28.0
 
 
-From 1951228e70e5eba66060d21075e83cbd81f19b43 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 10 Sep 2020 10:44:18 -0700
-Subject: [PATCH 3/4] net: mvpp2: Initialize link in
- mvpp2_isr_handle_{xlg,gmac_internal}
-
-Clang warns (trimmed for brevity):
-
-drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3073:7: warning:
-variable 'link' is used uninitialized whenever 'if' condition is false
-[-Wsometimes-uninitialized]
-                if (val & MVPP22_XLG_STATUS_LINK_UP)
-                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3075:31: note:
-uninitialized use occurs here
-                mvpp2_isr_handle_link(port, link);
-                                            ^~~~
-...
-drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3090:8: warning:
-variable 'link' is used uninitialized whenever 'if' condition is false
-[-Wsometimes-uninitialized]
-                        if (val & MVPP2_GMAC_STATUS0_LINK_UP)
-                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c:3092:32: note:
-uninitialized use occurs here
-                        mvpp2_isr_handle_link(port, link);
-                                                    ^~~~
-
-Initialize link to false like it was before the refactoring that
-happened around link status so that a valid valid is always passed into
-mvpp2_isr_handle_link.
-
-Fixes: 36cfd3a6e52b ("net: mvpp2: restructure "link status" interrupt handling")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1151
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
----
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 7d86940747d1..0d5ee96f89b4 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3064,7 +3064,7 @@ static void mvpp2_isr_handle_link(struct mvpp2_port *port, bool link)
- 
- static void mvpp2_isr_handle_xlg(struct mvpp2_port *port)
- {
--	bool link;
-+	bool link = false;
- 	u32 val;
- 
- 	val = readl(port->base + MVPP22_XLG_INT_STAT);
-@@ -3078,7 +3078,7 @@ static void mvpp2_isr_handle_xlg(struct mvpp2_port *port)
- 
- static void mvpp2_isr_handle_gmac_internal(struct mvpp2_port *port)
- {
--	bool link;
-+	bool link = false;
- 	u32 val;
- 
- 	if (phy_interface_mode_is_rgmii(port->phy_interface) ||
--- 
-2.28.0
-
-
-From a5f63e2cd23b0eee1134b1ac3c7b05c53cae06c2 Mon Sep 17 00:00:00 2001
+From 6c8b52c7f606d1d9e12b5e9ba00f9c33554a150d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:51:52 -0700
-Subject: [PATCH 4/4] arm64: defconfig: Disable DEBUG_INFO
+Subject: [PATCH 3/3] arm64: defconfig: Disable DEBUG_INFO
 
 The integrated assembler is really noisy when building debug info in
 DWARF2 and I do not plan on debugging this kernel in gdb.
@@ -181,10 +124,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 4e2b54e1cc1a..d143adcf1270 100644
+index 63003ec116ee..e7203565babf 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
-@@ -1058,7 +1058,6 @@ CONFIG_CRYPTO_DEV_HISI_ZIP=m
+@@ -1062,7 +1062,6 @@ CONFIG_CRYPTO_DEV_HISI_ZIP=m
  CONFIG_CRYPTO_DEV_HISI_HPRE=m
  CONFIG_CMA_SIZE_MBYTES=32
  CONFIG_PRINTK_TIME=y
