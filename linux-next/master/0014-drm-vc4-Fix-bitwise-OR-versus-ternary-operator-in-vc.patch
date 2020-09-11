@@ -1,7 +1,7 @@
 From 804ccb9b7df191edeac3fa9f4c6a27a5ee6a86f7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 10 Sep 2020 10:13:00 -0700
-Subject: [PATCH 14/20] drm/vc4: Fix bitwise OR versus ternary operator in
+Subject: [PATCH 14/21] drm/vc4: Fix bitwise OR versus ternary operator in
  vc4_plane_mode_set
 
 Clang warns:

@@ -1,7 +1,7 @@
 From ef93d9348f70f7835bb96202c618a7408bdd8786 Mon Sep 17 00:00:00 2001
 From: Alex Dewar <alex.dewar90@gmail.com>
 Date: Thu, 10 Sep 2020 14:49:10 +0100
-Subject: [PATCH 15/20] net: mvpp2: ptp: Fix unused variables
+Subject: [PATCH 15/21] net: mvpp2: ptp: Fix unused variables
 
 In the functions mvpp2_isr_handle_xlg() and
 mvpp2_isr_handle_gmac_internal(), the bool variable link is assigned a

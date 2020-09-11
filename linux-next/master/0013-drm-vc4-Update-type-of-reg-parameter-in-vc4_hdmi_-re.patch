@@ -1,7 +1,7 @@
 From 173d08c9f2f039baca1a586c22d742e70a4d0ad2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 10 Sep 2020 10:00:41 -0700
-Subject: [PATCH 13/20] drm/vc4: Update type of reg parameter in
+Subject: [PATCH 13/21] drm/vc4: Update type of reg parameter in
  vc4_hdmi_{read,write}
 
 Clang warns 100+ times in the vc4 driver along the lines of:

@@ -1,7 +1,7 @@
 From 46ca6e41ed186e582f2d41daa713bee5df2da5a2 Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Thu, 10 Sep 2020 03:09:49 -0700
-Subject: [PATCH 16/20] hwmon: (pmbus) Move boolean error condition check to
+Subject: [PATCH 16/21] hwmon: (pmbus) Move boolean error condition check to
  generating code
 
 0-day rightfully complains about a sometimes uninitialized variable

@@ -1,7 +1,7 @@
 From e41a67e836d8ac53cfcc75950815d45a8f940ccd Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Wed, 9 Sep 2020 21:42:34 +0800
-Subject: [PATCH 17/20] PCI: dwc: unexport dw_pcie_link_set_max_speed
+Subject: [PATCH 17/21] PCI: dwc: unexport dw_pcie_link_set_max_speed
 
 This function has been made static, which causes warning:
 

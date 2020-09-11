@@ -1,7 +1,7 @@
 From ce489354cfec5248b71cc607ddef675d783b6e47 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 10 Sep 2020 14:12:16 -0700
-Subject: [PATCH 20/20] arm/build: Discard ARM.exidx and ARM.extab when
+Subject: [PATCH 20/21] arm/build: Discard ARM.exidx and ARM.extab when
  !CONFIG_ARM_UNWIND
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1152
