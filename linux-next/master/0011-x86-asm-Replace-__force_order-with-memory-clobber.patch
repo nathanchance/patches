@@ -1,7 +1,7 @@
-From 332020694ecd7ac42a4489096cb8990f8500bb24 Mon Sep 17 00:00:00 2001
+From 91f005d5a81413d5bd4e3534de8812a0ce8fc21a Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Wed, 2 Sep 2020 19:21:52 -0400
-Subject: [PATCH 11/21] x86/asm: Replace __force_order with memory clobber
+Subject: [PATCH 11/18] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
 prevent the compiler from reordering CRn reads/writes with respect to
@@ -144,7 +144,7 @@ index 5999b0b3dd4a..2f898d12ef45 100644
  	return val;
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 8aa20bc2f1ca..08114bd22409 100644
+index 8d4715e84268..51b0ca3b2fbd 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
 @@ -359,7 +359,7 @@ void native_write_cr0(unsigned long val)

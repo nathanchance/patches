@@ -1,7 +1,7 @@
-From 173d08c9f2f039baca1a586c22d742e70a4d0ad2 Mon Sep 17 00:00:00 2001
+From 48951e3345f1af1b0f8337391e0aa91016955b30 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 10 Sep 2020 10:00:41 -0700
-Subject: [PATCH 13/21] drm/vc4: Update type of reg parameter in
+Subject: [PATCH 13/18] drm/vc4: Update type of reg parameter in
  vc4_hdmi_{read,write}
 
 Clang warns 100+ times in the vc4 driver along the lines of:
@@ -25,7 +25,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
-index a5f1354e3e06..f5d36b31fa65 100644
+index 47364bd3960d..7c6b4818f245 100644
 --- a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
 +++ b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
 @@ -392,7 +392,7 @@ void __iomem *__vc4_hdmi_get_field_base(struct vc4_hdmi *hdmi,
