@@ -1,116 +1,157 @@
-From 93f700b03aa22b770bf76594be427cd8b1e4872f Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 10 Sep 2020 10:04:02 -0700
-Subject: [PATCH 1/3] drm/vc4: Update type of reg parameter in
- vc4_hdmi_{read,write}
+From 32b9935432cc7007774d07d89e0646e84dc4275b Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 14 Sep 2020 09:16:43 -0700
+Subject: [PATCH 1/3] lib/string.c: implement stpcpy
 
-Clang warns 100+ times in the vc4 driver along the lines of:
+LLVM implemented a recent "libcall optimization" that lowers calls to
+`sprintf(dest, "%s", str)` where the return value is used to
+`stpcpy(dest, str) - dest`. This generally avoids the machinery involved
+in parsing format strings.  `stpcpy` is just like `strcpy` except it
+returns the pointer to the new tail of `dest`.  This optimization was
+introduced into clang-12.
 
-drivers/gpu/drm/vc4/vc4_hdmi_phy.c:518:13: warning: implicit conversion
-from enumeration type 'enum vc4_hdmi_field' to different enumeration
-type 'enum vc4_hdmi_regs' [-Wenum-conversion]
-        HDMI_WRITE(HDMI_TX_PHY_POWERDOWN_CTL,
-        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+Implement this so that we don't observe linkage failures due to missing
+symbol definitions for `stpcpy`.
 
-The HDMI_READ and HDMI_WRITE macros pass in enumerators of type
-vc4_hdmi_field but vc4_hdmi_write and vc4_hdmi_read expect a enumerator
-of type vc4_hdmi_regs, causing a warning for every instance of this.
-Update the parameter type so there is no more mismatch.
+Similar to last year's fire drill with:
+commit 5f074f3e192f ("lib/string.c: implement a basic bcmp")
 
-Fixes: 311e305fdb4e ("drm/vc4: hdmi: Implement a register layout abstraction")
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1149
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200910170401.3857250-1-natechancellor@gmail.com
-Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=910e1ca6f36f48b7911e72dc8b6667d652031d97
+The kernel is somewhere between a "freestanding" environment (no full libc)
+and "hosted" environment (many symbols from libc exist with the same
+type, function signature, and semantics).
+
+As H. Peter Anvin notes, there's not really a great way to inform the
+compiler that you're targeting a freestanding environment but would like
+to opt-in to some libcall optimizations (see pr/47280 below), rather than
+opt-out.
+
+Arvind notes, -fno-builtin-* behaves slightly differently between GCC
+and Clang, and Clang is missing many __builtin_* definitions, which I
+consider a bug in Clang and am working on fixing.
+
+Masahiro summarizes the subtle distinction between compilers justly:
+  To prevent transformation from foo() into bar(), there are two ways in
+  Clang to do that; -fno-builtin-foo, and -fno-builtin-bar.  There is
+  only one in GCC; -fno-buitin-foo.
+
+(Any difference in that behavior in Clang is likely a bug from a missing
+__builtin_* definition.)
+
+Masahiro also notes:
+  We want to disable optimization from foo() to bar(),
+  but we may still benefit from the optimization from
+  foo() into something else. If GCC implements the same transform, we
+  would run into a problem because it is not -fno-builtin-bar, but
+  -fno-builtin-foo that disables that optimization.
+
+  In this regard, -fno-builtin-foo would be more future-proof than
+  -fno-built-bar, but -fno-builtin-foo is still potentially overkill. We
+  may want to prevent calls from foo() being optimized into calls to
+  bar(), but we still may want other optimization on calls to foo().
+
+It seems that compilers today don't quite provide the fine grain control
+over which libcall optimizations pseudo-freestanding environments would
+prefer.
+
+Finally, Kees notes that this interface is unsafe, so we should not
+encourage its use.  As such, I've removed the declaration from any
+header, but it still needs to be exported to avoid linkage errors in
+modules.
+
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Suggested-by: Andy Lavr <andy.lavr@gmail.com>
+Suggested-by: Arvind Sankar <nivedita@alum.mit.edu>
+Suggested-by: Joe Perches <joe@perches.com>
+Suggested-by: Kees Cook <keescook@chromium.org>
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Suggested-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://bugs.llvm.org/show_bug.cgi?id=47162
+Link: https://bugs.llvm.org/show_bug.cgi?id=47280
+Link: https://github.com/ClangBuiltLinux/linux/issues/1126
+Link: https://man7.org/linux/man-pages/man3/stpcpy.3.html
+Link: https://pubs.opengroup.org/onlinepubs/9699919799/functions/stpcpy.html
+Link: https://reviews.llvm.org/D85963
+Link: https://lore.kernel.org/r/20200914161643.938408-1-ndesaulniers@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/string.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
-index 47364bd3960d..7c6b4818f245 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi_regs.h
-@@ -392,7 +392,7 @@ void __iomem *__vc4_hdmi_get_field_base(struct vc4_hdmi *hdmi,
+diff --git a/lib/string.c b/lib/string.c
+index 6012c385fb31..4288e0158d47 100644
+--- a/lib/string.c
++++ b/lib/string.c
+@@ -272,6 +272,30 @@ ssize_t strscpy_pad(char *dest, const char *src, size_t count)
  }
+ EXPORT_SYMBOL(strscpy_pad);
  
- static inline u32 vc4_hdmi_read(struct vc4_hdmi *hdmi,
--				enum vc4_hdmi_regs reg)
-+				enum vc4_hdmi_field reg)
- {
- 	const struct vc4_hdmi_register *field;
- 	const struct vc4_hdmi_variant *variant = hdmi->variant;
-@@ -417,7 +417,7 @@ static inline u32 vc4_hdmi_read(struct vc4_hdmi *hdmi,
- #define HDMI_READ(reg)		vc4_hdmi_read(vc4_hdmi, reg)
- 
- static inline void vc4_hdmi_write(struct vc4_hdmi *hdmi,
--				  enum vc4_hdmi_regs reg,
-+				  enum vc4_hdmi_field reg,
- 				  u32 value)
- {
- 	const struct vc4_hdmi_register *field;
++/**
++ * stpcpy - copy a string from src to dest returning a pointer to the new end
++ *          of dest, including src's %NUL-terminator. May overrun dest.
++ * @dest: pointer to end of string being copied into. Must be large enough
++ *        to receive copy.
++ * @src: pointer to the beginning of string being copied from. Must not overlap
++ *       dest.
++ *
++ * stpcpy differs from strcpy in a key way: the return value is a pointer
++ * to the new %NUL-terminating character in @dest. (For strcpy, the return
++ * value is a pointer to the start of @dest). This interface is considered
++ * unsafe as it doesn't perform bounds checking of the inputs. As such it's
++ * not recommended for usage. Instead, its definition is provided in case
++ * the compiler lowers other libcalls to stpcpy.
++ */
++char *stpcpy(char *__restrict__ dest, const char *__restrict__ src);
++char *stpcpy(char *__restrict__ dest, const char *__restrict__ src)
++{
++	while ((*dest++ = *src++) != '\0')
++		/* nothing */;
++	return --dest;
++}
++EXPORT_SYMBOL(stpcpy);
++
+ #ifndef __HAVE_ARCH_STRCAT
+ /**
+  * strcat - Append one %NUL-terminated string to another
 -- 
 2.28.0
 
 
-From 9541a43943f59a015b97ddfff987d9d1e181e79a Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 10 Sep 2020 10:18:32 -0700
-Subject: [PATCH 2/3] drm/vc4: Fix bitwise OR versus ternary operator in
- vc4_plane_mode_set
+From aadb6d2b838e8fec60ea4f3e3d152f5ac6244623 Mon Sep 17 00:00:00 2001
+From: Qi Liu <liuqi115@huawei.com>
+Date: Mon, 14 Sep 2020 17:22:16 +0800
+Subject: [PATCH 2/3] mm/madvise.c: Remove the unused variable in function
+ madvise_inject_error
 
-Clang warns:
+Variable zone is unused in function madvise_inject_error, let's remove it.
 
-drivers/gpu/drm/vc4/vc4_plane.c:901:27: warning: operator '?:' has lower
-precedence than '|'; '|' will be evaluated first
-[-Wbitwise-conditional-parentheses]
-                                fb->format->has_alpha ?
-                                ~~~~~~~~~~~~~~~~~~~~~ ^
-drivers/gpu/drm/vc4/vc4_plane.c:901:27: note: place parentheses around
-the '|' expression to silence this warning
-                                fb->format->has_alpha ?
-                                ~~~~~~~~~~~~~~~~~~~~~ ^
-drivers/gpu/drm/vc4/vc4_plane.c:901:27: note: place parentheses around
-the '?:' expression to evaluate it first
-                                fb->format->has_alpha ?
-                                ~~~~~~~~~~~~~~~~~~~~~~^
-1 warning generated.
-
-Add the parentheses as that was clearly intended, otherwise
-SCALER5_CTL2_ALPHA_PREMULT won't be added to the list.
-
-Fixes: c54619b0bfb3 ("drm/vc4: Add support for the BCM2711 HVS5")
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1150
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200910171831.4112580-1-natechancellor@gmail.com
-Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=4494346392204ab4387d08eb5e089be8e7e1b74e
+Signed-off-by: Qi Liu <liuqi115@huawei.com>
+Link: https://lore.kernel.org/r/1600075336-43414-1-git-send-email-liuqi115@huawei.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- drivers/gpu/drm/vc4/vc4_plane.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/madvise.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_plane.c b/drivers/gpu/drm/vc4/vc4_plane.c
-index 24d7e6db6fdd..89543fa8ca4d 100644
---- a/drivers/gpu/drm/vc4/vc4_plane.c
-+++ b/drivers/gpu/drm/vc4/vc4_plane.c
-@@ -898,8 +898,8 @@ static int vc4_plane_mode_set(struct drm_plane *plane,
- 		vc4_dlist_write(vc4_state,
- 				VC4_SET_FIELD(state->alpha >> 4,
- 					      SCALER5_CTL2_ALPHA) |
--				fb->format->has_alpha ?
--					SCALER5_CTL2_ALPHA_PREMULT : 0 |
-+				(fb->format->has_alpha ?
-+					SCALER5_CTL2_ALPHA_PREMULT : 0) |
- 				(mix_plane_alpha ?
- 					SCALER5_CTL2_ALPHA_MIX : 0) |
- 				VC4_SET_FIELD(fb->format->has_alpha ?
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 460e19d60ba3..94b9d17331b9 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -879,7 +879,6 @@ static long madvise_remove(struct vm_area_struct *vma,
+ static int madvise_inject_error(int behavior,
+ 		unsigned long start, unsigned long end)
+ {
+-	struct zone *zone;
+ 	unsigned long size;
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
 -- 
 2.28.0
 
 
-From 6c8b52c7f606d1d9e12b5e9ba00f9c33554a150d Mon Sep 17 00:00:00 2001
+From 296ccbde1c928a04e993e2761b47180ef3dd7953 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:51:52 -0700
 Subject: [PATCH 3/3] arm64: defconfig: Disable DEBUG_INFO
