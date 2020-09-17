@@ -1,0 +1,28 @@
+From 0245359aec0ba45798be818a64827eb6944fe49b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 10 Sep 2020 13:50:50 -0700
+Subject: [PATCH 12/14] next-20200910: Unused variables
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/radeon/radeon_ttm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/radeon/radeon_ttm.c b/drivers/gpu/drm/radeon/radeon_ttm.c
+index ab693e33427f..c299360e68c6 100644
+--- a/drivers/gpu/drm/radeon/radeon_ttm.c
++++ b/drivers/gpu/drm/radeon/radeon_ttm.c
+@@ -693,9 +693,9 @@ static int radeon_ttm_tt_bind(struct ttm_bo_device *bdev,
+ 			      struct ttm_tt *ttm,
+ 			      struct ttm_resource *bo_mem)
+ {
++#if IS_ENABLED(CONFIG_AGP)
+ 	struct radeon_device *rdev = radeon_get_rdev(bdev);
+ 
+-#if IS_ENABLED(CONFIG_AGP)
+ 	if (rdev->flags & RADEON_IS_AGP)
+ 		return ttm_agp_bind(ttm, bo_mem);
+ #endif
+-- 
+2.28.0
+
