@@ -1,4 +1,4 @@
-From bae85d73e181e37ff67753b3a571eedb8f57f6cf Mon Sep 17 00:00:00 2001
+From 56208f0c610e685e16d2e5e7a527d4f9c966e0d9 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 16 Sep 2020 13:02:55 -0700
 Subject: [PATCH 1/3] nfs: remove incorrect fallthrough label
@@ -49,38 +49,44 @@ index d20326ee0475..eb2401079b04 100644
 2.28.0
 
 
-From b7a93461e35c019342fdf107501dbd922dedf711 Mon Sep 17 00:00:00 2001
-From: Qi Liu <liuqi115@huawei.com>
-Date: Mon, 14 Sep 2020 17:22:16 +0800
-Subject: [PATCH 2/3] mm/madvise.c: Remove the unused variable in function
- madvise_inject_error
+From ee6b7439217bae4b9a1af8953376a62201c9a1d6 Mon Sep 17 00:00:00 2001
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
+Date: Fri, 18 Sep 2020 12:20:02 +0100
+Subject: [PATCH 2/3] regmap: debugfs: Add back in erroneously removed
+ initialisation of ret
 
-Variable zone is unused in function madvise_inject_error, let's remove it.
-
-Signed-off-by: Qi Liu <liuqi115@huawei.com>
-Link: https://lore.kernel.org/r/1600075336-43414-1-git-send-email-liuqi115@huawei.com
+Fixes: 94cc89eb8fa5 ("regmap: debugfs: Fix handling of name string for debugfs init delays")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20200918112002.15216-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://git.kernel.org/broonie/regmap/c/d36cb0205f034e943aa29e35b59c6a441f0056b5
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- mm/madvise.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/base/regmap/regmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 9cdd36a756fa..ae266dfede8a 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -878,7 +878,6 @@ static long madvise_remove(struct vm_area_struct *vma,
- static int madvise_inject_error(int behavior,
- 		unsigned long start, unsigned long end)
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index d0f7cc574ff3..b24f14ea96d8 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -706,9 +706,9 @@ struct regmap *__regmap_init(struct device *dev,
+ 			     const char *lock_name)
  {
--	struct zone *zone;
- 	unsigned long size;
+ 	struct regmap *map;
++	int ret = -EINVAL;
+ 	enum regmap_endian reg_endian, val_endian;
+ 	int i, j;
+-	int ret;
  
- 	if (!capable(CAP_SYS_ADMIN))
+ 	if (!config)
+ 		goto err;
 -- 
 2.28.0
 
 
-From 32133ef77ad113e0038eda8aad30dfb42290ba39 Mon Sep 17 00:00:00 2001
+From 8f72e790ff751a2a09ed9482677bac1bf583e1ff Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:51:52 -0700
 Subject: [PATCH 3/3] arm64: defconfig: Disable DEBUG_INFO
