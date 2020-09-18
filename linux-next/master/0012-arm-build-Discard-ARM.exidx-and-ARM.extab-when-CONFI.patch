@@ -1,7 +1,7 @@
-From 96de201285a3b8cb658d459444118ed86b2b72aa Mon Sep 17 00:00:00 2001
+From a78bdd790115005cf928489233ffc94d89d85c0d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 10 Sep 2020 14:12:16 -0700
-Subject: [PATCH 13/15] arm/build: Discard ARM.exidx and ARM.extab when
+Subject: [PATCH 12/14] arm/build: Discard ARM.exidx and ARM.extab when
  !CONFIG_ARM_UNWIND
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1152
