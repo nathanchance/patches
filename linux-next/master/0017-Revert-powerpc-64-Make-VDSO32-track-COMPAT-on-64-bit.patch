@@ -1,0 +1,39 @@
+From 134f0d0534c50bdb01d3ca72717a25af26ba3080 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 21 Sep 2020 21:49:47 -0700
+Subject: [PATCH 17/20] Revert "powerpc/64: Make VDSO32 track COMPAT on 64-bit"
+
+This reverts commit 231b232df8f67e7d37af01259c21f2a131c3911e.
+
+This introduces a build failure.
+
+Link: https://groups.google.com/g/clang-built-linux/c/ayNmi3HoNdY/m/XJAGj_G2AgAJ
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/powerpc/platforms/Kconfig.cputype | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
+index e74ec220b5d6..1dc9d3c81872 100644
+--- a/arch/powerpc/platforms/Kconfig.cputype
++++ b/arch/powerpc/platforms/Kconfig.cputype
+@@ -490,12 +490,13 @@ endmenu
+ 
+ config VDSO32
+ 	def_bool y
+-	depends on PPC32 || COMPAT
++	depends on PPC32 || CPU_BIG_ENDIAN
+ 	help
+ 	  This symbol controls whether we build the 32-bit VDSO. We obviously
+ 	  want to do that if we're building a 32-bit kernel. If we're building
+-	  a 64-bit kernel then we only want a 32-bit VDSO if we're also enabling
+-	  COMPAT.
++	  a 64-bit kernel then we only want a 32-bit VDSO if we're building for
++	  big endian. That is because the only little endian configuration we
++	  support is ppc64le which is 64-bit only.
+ 
+ choice
+ 	prompt "Endianness selection"
+-- 
+2.28.0
+

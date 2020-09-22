@@ -1,0 +1,52 @@
+From 922dfc9cb4cf537bfe50eaca0d4bb1a631d699c1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Mon, 21 Sep 2020 22:47:02 -0700
+Subject: [PATCH 19/20] drm/amd/display: Simplify condition in try_disable_dsc
+
+Clang warns:
+
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_mst_types.c:637:8:
+warning: logical not is only applied to the left hand side of this
+comparison [-Wlogical-not-parentheses]
+                                && !params[i].clock_force_enable == DSC_CLK_FORCE_DEFAULT) {
+                                   ^                             ~~
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_mst_types.c:637:8:
+note: add parentheses after the '!' to evaluate the comparison first
+                                && !params[i].clock_force_enable == DSC_CLK_FORCE_DEFAULT) {
+                                   ^
+                                    (
+)
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_mst_types.c:637:8:
+note: add parentheses around left hand side expression to silence this
+warning
+                                && !params[i].clock_force_enable == DSC_CLK_FORCE_DEFAULT) {
+                                   ^
+                                   (                            )
+1 warning generated.
+
+The expression "!a == 0" can be more simply written as "a", which makes
+it easier to reason about the logic and prevents the warning.
+
+Fixes: 0749ddeb7d6c ("drm/amd/display: Add DSC force disable to dsc_clock_en debugfs entry")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1158
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 9d7333a36fac..0852a24ee392 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -634,7 +634,7 @@ static void try_disable_dsc(struct drm_atomic_state *state,
+ 	for (i = 0; i < count; i++) {
+ 		if (vars[i].dsc_enabled
+ 				&& vars[i].bpp_x16 == params[i].bw_range.max_target_bpp_x16
+-				&& !params[i].clock_force_enable == DSC_CLK_FORCE_DEFAULT) {
++				&& params[i].clock_force_enable) {
+ 			kbps_increase[i] = params[i].bw_range.stream_kbps - params[i].bw_range.max_kbps;
+ 			tried[i] = false;
+ 			remaining_to_try += 1;
+-- 
+2.28.0
+
