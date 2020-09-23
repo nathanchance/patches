@@ -1,7 +1,7 @@
-From baebf3e47e4322fdf8e71c639f7272e80bdc7914 Mon Sep 17 00:00:00 2001
+From b8af16656a561b9abfe8975867200cb8bfe1c162 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 17 Sep 2020 12:45:09 +1000
-Subject: [PATCH 15/20] powerpc/process: Fix uninitialised variable error
+Subject: [PATCH 15/19] powerpc/process: Fix uninitialised variable error
 
 Clang, and GCC with -Wmaybe-uninitialized, can't see that val is
 unused in get_fpexec_mode():

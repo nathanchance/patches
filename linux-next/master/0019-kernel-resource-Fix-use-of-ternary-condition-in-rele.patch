@@ -1,7 +1,7 @@
-From 9a1f32f7969184688f65df4e845a471864942df8 Mon Sep 17 00:00:00 2001
+From 0a7790145b6fd82ccda81abd44890571981e57a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 23:00:29 -0700
-Subject: [PATCH 20/20] kernel/resource: Fix use of ternary condition in
+Subject: [PATCH 19/19] kernel/resource: Fix use of ternary condition in
  release_mem_region_adjustable
 
 Clang warns:
