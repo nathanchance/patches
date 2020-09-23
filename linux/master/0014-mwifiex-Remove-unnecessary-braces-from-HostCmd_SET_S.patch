@@ -1,4 +1,4 @@
-From 742d72489a356497f40520b986c8cefe4dc0ec9c Mon Sep 17 00:00:00 2001
+From 7fe33791ff0ad121639430f51c174a83501997c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
 Subject: [PATCH 14/14] mwifiex: Remove unnecessary braces from
@@ -50,7 +50,7 @@ index d068b9075c32..3a11342a6bde 100644
  	mwifiex_dbg(adapter, CMD,
  		    "cmd: DNLD_CMD: %#x, act %#x, len %d, seqno %#x\n",
 diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 8047e307892e..1f02c5058aed 100644
+index d9f8bdbc817b..470d669c7f14 100644
 --- a/drivers/net/wireless/marvell/mwifiex/fw.h
 +++ b/drivers/net/wireless/marvell/mwifiex/fw.h
 @@ -513,10 +513,10 @@ enum mwifiex_channel_flags {
