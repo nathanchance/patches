@@ -1,7 +1,7 @@
-From ed11d0448f995af867060741382638f40fae731d Mon Sep 17 00:00:00 2001
+From 48f7679c6a96f0d64aef57651170749cf0bb4f6e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 22:47:02 -0700
-Subject: [PATCH 18/19] drm/amd/display: Simplify condition in try_disable_dsc
+Subject: [PATCH 18/18] drm/amd/display: Simplify condition in try_disable_dsc
 
 Clang warns:
 
@@ -35,10 +35,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 9d7333a36fac..0852a24ee392 100644
+index db741e47d194..1493fe3df717 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -634,7 +634,7 @@ static void try_disable_dsc(struct drm_atomic_state *state,
+@@ -647,7 +647,7 @@ static void try_disable_dsc(struct drm_atomic_state *state,
  	for (i = 0; i < count; i++) {
  		if (vars[i].dsc_enabled
  				&& vars[i].bpp_x16 == params[i].bw_range.max_target_bpp_x16
