@@ -1,58 +1,7 @@
-From 3474521bdf0d1ba46a7e37f3c6dd065e67f43976 Mon Sep 17 00:00:00 2001
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Wed, 16 Sep 2020 13:02:55 -0700
-Subject: [PATCH 1/2] nfs: remove incorrect fallthrough label
-
-There is no case after the default from which to fallthrough to. Clang
-will error in this case (unhelpfully without context, see link below)
-and GCC will with -Wswitch-unreachable.
-
-The previous commit should have just replaced the comment with a break
-statement.
-
-If we consider implicit fallthrough to be a design mistake of C, then
-all case statements should be terminated with one of the following
-statements:
-* break
-* continue
-* return
-* __attribute__(__fallthrough__)
-* goto (plz no)
-* (call of function with __attribute__(__noreturn__))
-
-Fixes: 2a1390c95a69 ("nfs: Convert to use the preferred fallthrough macro")
-Suggested-by: Joe Perches <joe@perches.com>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://bugs.llvm.org/show_bug.cgi?id=47539
-Link: https://lore.kernel.org/r/20200916200255.1382086-1-ndesaulniers@google.com
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
----
- fs/nfs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index d20326ee0475..eb2401079b04 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -889,7 +889,7 @@ static struct nfs_server *nfs_try_mount_request(struct fs_context *fc)
- 		default:
- 			if (rpcauth_get_gssinfo(flavor, &info) != 0)
- 				continue;
--			fallthrough;
-+			break;
- 		}
- 		dfprintk(MOUNT, "NFS: attempting to use auth flavor %u\n", flavor);
- 		ctx->selected_flavor = flavor;
--- 
-2.28.0
-
-
-From 3ab4c1121f7147009e5a2325be2adc441f267719 Mon Sep 17 00:00:00 2001
+From 94ed3cb38dca3a55904279f2cbb7eb35453d2a57 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 15:51:52 -0700
-Subject: [PATCH 2/2] arm64: defconfig: Disable DEBUG_INFO
+Subject: [PATCH] arm64: defconfig: Disable DEBUG_INFO
 
 The integrated assembler is really noisy when building debug info in
 DWARF2 and I do not plan on debugging this kernel in gdb.
@@ -63,10 +12,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 63003ec116ee..e7203565babf 100644
+index 55f9c35568bf..1be08096cc98 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
-@@ -1062,7 +1062,6 @@ CONFIG_CRYPTO_DEV_HISI_ZIP=m
+@@ -1082,7 +1082,6 @@ CONFIG_CRYPTO_DEV_HISI_ZIP=m
  CONFIG_CRYPTO_DEV_HISI_HPRE=m
  CONFIG_CMA_SIZE_MBYTES=32
  CONFIG_PRINTK_TIME=y
