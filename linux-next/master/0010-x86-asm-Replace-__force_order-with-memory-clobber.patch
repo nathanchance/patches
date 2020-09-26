@@ -1,7 +1,7 @@
-From 0062f91c557beedbc898bacc7117b00f0baff13e Mon Sep 17 00:00:00 2001
+From 2644df39e1aa9feef6d309fa0b24ca86a10ddaf1 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Wed, 2 Sep 2020 19:21:52 -0400
-Subject: [PATCH 10/19] x86/asm: Replace __force_order with memory clobber
+Subject: [PATCH 10/18] x86/asm: Replace __force_order with memory clobber
 
 The CRn accessor functions use __force_order as a dummy operand to
 prevent the compiler from reordering CRn reads/writes with respect to
@@ -144,10 +144,10 @@ index 5999b0b3dd4a..2f898d12ef45 100644
  	return val;
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 8d4715e84268..51b0ca3b2fbd 100644
+index 6220fae87263..35ad8480c464 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -359,7 +359,7 @@ void native_write_cr0(unsigned long val)
+@@ -360,7 +360,7 @@ void native_write_cr0(unsigned long val)
  	unsigned long bits_missing = 0;
  
  set_register:
@@ -156,7 +156,7 @@ index 8d4715e84268..51b0ca3b2fbd 100644
  
  	if (static_branch_likely(&cr_pinning)) {
  		if (unlikely((val & X86_CR0_WP) != X86_CR0_WP)) {
-@@ -378,7 +378,7 @@ void native_write_cr4(unsigned long val)
+@@ -379,7 +379,7 @@ void native_write_cr4(unsigned long val)
  	unsigned long bits_changed = 0;
  
  set_register:
