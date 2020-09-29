@@ -1,4 +1,4 @@
-From ddb17377bdc1636de23a046a2ff3addd4d8bf4c2 Mon Sep 17 00:00:00 2001
+From 9e571dfb5d4b1337eefe9a5fbf34a5c5ed54fefe Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 6 Aug 2020 15:14:09 -0700
 Subject: [PATCH 1/4] objtool: Add a pass for generating __mcount_loc
@@ -13,6 +13,7 @@ Signed-off-by: Peter Zijlstra <peterz@infradead.org>
 [Sami: rebased to mainline, dropped config changes, fixed to actually use
        --mcount, and wrote a commit message.]
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 [nc: Forward port to -next]
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
@@ -59,7 +60,7 @@ index 85c979caa367..94565a72b701 100644
  extern int cmd_check(int argc, const char **argv);
  extern int cmd_orc(int argc, const char **argv);
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index d29c774dd8bf..558b856fcc35 100644
+index e9e7babc37e9..2c8a0262ff14 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
 @@ -523,6 +523,65 @@ static int create_static_call_sections(struct objtool_file *file)
@@ -128,7 +129,7 @@ index d29c774dd8bf..558b856fcc35 100644
  /*
   * Warnings shouldn't be reported for ignored functions.
   */
-@@ -938,6 +997,22 @@ static int add_call_destinations(struct objtool_file *file)
+@@ -947,6 +1006,22 @@ static int add_call_destinations(struct objtool_file *file)
  			insn->type = INSN_NOP;
  		}
  
@@ -151,7 +152,7 @@ index d29c774dd8bf..558b856fcc35 100644
  		/*
  		 * Whatever stack impact regular CALLs have, should be undone
  		 * by the RETURN of the called function.
-@@ -2904,6 +2979,13 @@ int check(struct objtool_file *file)
+@@ -2918,6 +2993,13 @@ int check(struct objtool_file *file)
  		goto out;
  	warnings += ret;
  
@@ -205,7 +206,7 @@ index 4125d4578b23..cf004dd60c2b 100644
 2.28.0
 
 
-From f33be5d7d12c2adf92673e488ac1e60c8c362a46 Mon Sep 17 00:00:00 2001
+From bbbcba0fd6e05646c4e71ca1dacbea859c64eaee Mon Sep 17 00:00:00 2001
 From: Sami Tolvanen <samitolvanen@google.com>
 Date: Fri, 17 Jul 2020 12:04:27 -0700
 Subject: [PATCH 2/4] objtool: Don't autodetect vmlinux.o
@@ -216,6 +217,7 @@ explicitly.
 
 Suggested-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 [nc: Forward port to -next and drop scripts/link-vmlinux.sh hunk because
      this series is designed to be applied on top of a merge]
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -254,7 +256,7 @@ index e92e76f69176..7bb4fa8b6609 100644
 2.28.0
 
 
-From 2d8c89524ee66cf2bb9bffa1f5c64cc825a65c4e Mon Sep 17 00:00:00 2001
+From 5dc7c4b6b11241a3db599fac5d9000787a548c5a Mon Sep 17 00:00:00 2001
 From: Sami Tolvanen <samitolvanen@google.com>
 Date: Tue, 14 Apr 2020 16:20:30 -0700
 Subject: [PATCH 3/4] objtool: Ignore CFI jump tables
@@ -263,15 +265,15 @@ Skip checking for the compiler-generated jump table symbols when Clang's
 Control-Flow Integrity (CFI) is enabled.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-[nc: Dropped scripts/Makefile.lib hunk because this series is for
+[nc: Drop scripts/Makefile.lib hunk because this series is for
      applying on top of a merge]
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- tools/objtool/check.c | 53 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ tools/objtool/check.c | 57 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 558b856fcc35..39615dc41ffa 100644
+index 2c8a0262ff14..c43d7afc4ab6 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
 @@ -810,6 +810,55 @@ static int add_ignore_alternatives(struct objtool_file *file)
@@ -330,9 +332,27 @@ index 558b856fcc35..39615dc41ffa 100644
  /*
   * Find the destination instructions for all jumps.
   */
-@@ -970,6 +1019,9 @@ static int add_call_destinations(struct objtool_file *file)
- 			insn->call_dest = find_func_by_offset(reloc->sym->sec,
- 							      dest_off);
+@@ -863,7 +912,6 @@ static int add_jump_destinations(struct objtool_file *file)
+ 
+ 		insn->jump_dest = find_insn(file, dest_sec, dest_off);
+ 		if (!insn->jump_dest) {
+-
+ 			/*
+ 			 * This is a special case where an alt instruction
+ 			 * jumps past the end of the section.  These are
+@@ -872,6 +920,9 @@ static int add_jump_destinations(struct objtool_file *file)
+ 			if (!strcmp(insn->sec->name, ".altinstr_replacement"))
+ 				continue;
+ 
++			if (is_cfi_section(insn->sec))
++				continue;
++
+ 			WARN_FUNC("can't find jump dest instruction at %s+0x%lx",
+ 				  insn->sec, insn->offset, dest_sec->name,
+ 				  dest_off);
+@@ -979,6 +1030,9 @@ static int add_call_destinations(struct objtool_file *file)
+ 			insn->call_dest = find_call_destination(reloc->sym->sec,
+ 								dest_off);
  			if (!insn->call_dest) {
 +				if (is_cfi_section(reloc->sym->sec))
 +					continue;
@@ -340,7 +360,7 @@ index 558b856fcc35..39615dc41ffa 100644
  				WARN_FUNC("can't find call dest symbol at %s+0x%lx",
  					  insn->sec, insn->offset,
  					  reloc->sym->sec->name,
-@@ -1704,6 +1756,7 @@ static int decode_sections(struct objtool_file *file)
+@@ -1713,6 +1767,7 @@ static int decode_sections(struct objtool_file *file)
  
  	add_ignores(file);
  	add_uaccess_safe(file);
@@ -352,7 +372,7 @@ index 558b856fcc35..39615dc41ffa 100644
 2.28.0
 
 
-From b0b2728d115b8fb4460b244c036fdd00c05a8e49 Mon Sep 17 00:00:00 2001
+From 4c82d32c023fe255d7ad1aa9888cff4343e1d873 Mon Sep 17 00:00:00 2001
 From: Sami Tolvanen <samitolvanen@google.com>
 Date: Fri, 14 Aug 2020 14:38:01 -0700
 Subject: [PATCH 4/4] objtool: Find a destination for jumps beyond the section
@@ -370,7 +390,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 39615dc41ffa..06af19113952 100644
+index c43d7afc4ab6..cc3c40c5bc64 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
 @@ -911,6 +911,10 @@ static int add_jump_destinations(struct objtool_file *file)
@@ -382,8 +402,8 @@ index 39615dc41ffa..06af19113952 100644
 +			insn->jump_dest = find_last_insn(file, dest_sec);
 +
  		if (!insn->jump_dest) {
- 
  			/*
+ 			 * This is a special case where an alt instruction
 -- 
 2.28.0
 
