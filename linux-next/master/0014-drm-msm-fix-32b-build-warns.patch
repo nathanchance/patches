@@ -1,10 +1,14 @@
-From 30fce879b5db58564ef8c2681ce480a46ea8b5e1 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 21 Sep 2020 22:04:41 -0700
-Subject: [PATCH 14/18] drm/msm: Fix some overflow issues
+From 087d201c79e6366bf13134e1434a2341acb18bfe Mon Sep 17 00:00:00 2001
+From: Rob Clark <robdclark@chromium.org>
+Date: Mon, 28 Sep 2020 17:19:12 -0700
+Subject: [PATCH 14/18] drm/msm: fix 32b build warns
 
-These happen with GCC so letting others deal with them for now.
+Neither of these code-paths apply to older 32b devices, but it is rude
+to introduce warnings.
 
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+Link: https://lore.kernel.org/r/20200929001925.2916984-1-robdclark@gmail.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/msm/adreno/adreno_gpu.c   | 2 +-
@@ -25,7 +29,7 @@ index fd8f491f2e48..458b5b26d3c2 100644
  	if (IS_ERR(aspace) && !IS_ERR(mmu))
  		mmu->funcs->destroy(mmu);
 diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-index 029cc8bf5a04..91c5e57d5c0a 100644
+index 029cc8bf5a04..de0dfb815125 100644
 --- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
 @@ -879,7 +879,7 @@ struct msm_dsi_pll *msm_dsi_pll_7nm_init(struct platform_device *pdev, int id)
@@ -33,7 +37,7 @@ index 029cc8bf5a04..91c5e57d5c0a 100644
  	if (pll->type == MSM_DSI_PHY_7NM_V4_1) {
  		pll->min_rate = 600000000UL;
 -		pll->max_rate = 5000000000UL;
-+		pll->max_rate = (unsigned long)5000000000UL;
++		pll->max_rate = (unsigned long)5000000000ULL;
  		/* workaround for max rate overflowing on 32-bit builds: */
  		pll->max_rate = max(pll->max_rate, 0xffffffffUL);
  	}
