@@ -1,7 +1,7 @@
-From 3438a1b90bbcfecafceb14f8517c4851cf374e9f Mon Sep 17 00:00:00 2001
+From bca28cb9636e70ee87e673593b1ef2a729488e16 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 28 Sep 2020 12:45:55 -0700
-Subject: [PATCH] ACPI / NUMA: Add stub function for pxm_to_node
+Subject: [PATCH] ACPI / NUMA: Add stub function for pxm_to_node()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -22,12 +22,17 @@ function ‘pxm_to_node’; did you mean ‘xa_to_node’?
 cc1: some warnings being treated as errors
 ...
 
-Add a stub function like acpi_map_pxm_to_node had so that the build
+Add a stub function like acpi_map_pxm_to_node() had so that the build
 continues to work.
 
 Fixes: 01feba590cd6 ("ACPI: Do not create new NUMA domains from ACPI static tables that are not SRAT")
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Link: https://lore.kernel.org/r/20200928194554.3423466-1-natechancellor@gmail.com
+Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://git.kernel.org/rafael/linux-pm/c/4849bc777049b568a35d5d63ae326e93f0fff9de
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  include/acpi/acpi_numa.h | 4 ++++
  1 file changed, 4 insertions(+)
