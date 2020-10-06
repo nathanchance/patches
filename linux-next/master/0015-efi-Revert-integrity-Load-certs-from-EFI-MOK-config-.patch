@@ -1,7 +1,7 @@
-From ecf1f356c5321bdc1b328e148d119f505c0fa548 Mon Sep 17 00:00:00 2001
+From 33de176a87e2f1ee8135fea036e166bb7452feed Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 25 Sep 2020 22:26:18 -0700
-Subject: [PATCH 17/18] efi: Revert "integrity: Load certs from EFI MOK config
+Subject: [PATCH 15/15] efi: Revert "integrity: Load certs from EFI MOK config
  table" series
 
 Causes build issues on arm all{mod,yes}config.
@@ -21,10 +21,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  delete mode 100644 drivers/firmware/efi/mokvar-table.c
 
 diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 210e878c4c0d..ad8f909b5dc8 100644
+index 84f581c91db4..a1cef6976633 100644
 --- a/arch/x86/kernel/setup.c
 +++ b/arch/x86/kernel/setup.c
-@@ -1057,7 +1057,6 @@ void __init setup_arch(char **cmdline_p)
+@@ -1059,7 +1059,6 @@ void __init setup_arch(char **cmdline_p)
  	efi_fake_memmap();
  	efi_find_mirror();
  	efi_esrt_init();
@@ -47,7 +47,7 @@ index 8a26e705cb06..d37ebe6e70d7 100644
  
  u64 efi_setup;		/* efi setup_data physical address */
 diff --git a/drivers/firmware/efi/Makefile b/drivers/firmware/efi/Makefile
-index e8da782280b6..61fd1e8b26fb 100644
+index d6ca2da19339..4d628081bb2f 100644
 --- a/drivers/firmware/efi/Makefile
 +++ b/drivers/firmware/efi/Makefile
 @@ -28,7 +28,6 @@ obj-$(CONFIG_EFI_DEV_PATH_PARSER)	+= dev-path-parser.o
@@ -638,5 +638,5 @@ index ee4b4c666854..253fb9a7fc98 100644
  }
  late_initcall(load_uefi_certs);
 -- 
-2.28.0
+2.29.0.rc0
 

@@ -1,7 +1,7 @@
-From e7a348db127728a4885a5d716f6ce73035f34096 Mon Sep 17 00:00:00 2001
+From 8d9c8c0355c46b9eb083c8dbd07babc18458616e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 29 May 2019 14:18:36 -0700
-Subject: [PATCH 07/18] Revert "drm/i915: Disable -Wuninitialized"
+Subject: [PATCH 07/15] Revert "drm/i915: Disable -Wuninitialized"
 
 This will be turned on for the whole kernel, as we want to catch these
 cases.
@@ -27,5 +27,5 @@ index e5574e506a5c..c140c3da6b81 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 -- 
-2.28.0
+2.29.0.rc0
 

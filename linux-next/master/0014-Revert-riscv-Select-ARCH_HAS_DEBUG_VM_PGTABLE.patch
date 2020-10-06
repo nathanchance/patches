@@ -1,7 +1,7 @@
-From 3a465cf9bef136eafec16c930f11692bb9294a8f Mon Sep 17 00:00:00 2001
+From 3bf7a5832bb246f744f337f92e2c0bd8dd695138 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 25 Sep 2020 22:24:15 -0700
-Subject: [PATCH 16/18] Revert "riscv: Select ARCH_HAS_DEBUG_VM_PGTABLE"
+Subject: [PATCH 14/15] Revert "riscv: Select ARCH_HAS_DEBUG_VM_PGTABLE"
 
 This reverts commit 925ac7b6636b6d6a195e93b2179741d3589f4be1.
 
@@ -26,7 +26,7 @@ index 1c49723e7534..93d10f948d43 100644
      |          sh: | TODO |
      |       sparc: | TODO |
 diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index 82eb6cf2c8a3..bf5a41e73877 100644
+index 44377fd7860e..cb7b17be844f 100644
 --- a/arch/riscv/Kconfig
 +++ b/arch/riscv/Kconfig
 @@ -15,7 +15,6 @@ config RISCV
@@ -38,5 +38,5 @@ index 82eb6cf2c8a3..bf5a41e73877 100644
  	select ARCH_HAS_DEBUG_WX
  	select ARCH_HAS_GCOV_PROFILE_ALL
 -- 
-2.28.0
+2.29.0.rc0
 

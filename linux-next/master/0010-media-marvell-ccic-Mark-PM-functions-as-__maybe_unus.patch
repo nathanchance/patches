@@ -1,7 +1,7 @@
-From 6ea9afdbdbfa7094fa9ddcca3312df673eeaa45d Mon Sep 17 00:00:00 2001
+From 42d94ae593cc16379cb9fbef770d03c1d8248993 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 16:25:02 -0700
-Subject: [PATCH 11/18] media: marvell-ccic: Mark PM functions as
+Subject: [PATCH 10/15] media: marvell-ccic: Mark PM functions as
  __maybe_unused
 
 Fixes: 55cd34524aa3 ("media: marvell-ccic: add support for runtime PM")
@@ -33,5 +33,5 @@ index cd902b180669..032fdddbbecc 100644
  	struct mmp_camera *cam = dev_get_drvdata(dev);
  	struct mcam_camera *mcam = &cam->mcam;
 -- 
-2.28.0
+2.29.0.rc0
 

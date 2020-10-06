@@ -1,7 +1,7 @@
-From 85b4fec58d7f46b50370f24d43d22517d0f10c2c Mon Sep 17 00:00:00 2001
+From a5a24a259dd50d70ca7d52b1e91394708cba89ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 22:47:02 -0700
-Subject: [PATCH 14/18] drm/amd/display: Simplify condition in try_disable_dsc
+Subject: [PATCH 13/15] drm/amd/display: Simplify condition in try_disable_dsc
 
 Clang warns:
 
@@ -48,5 +48,5 @@ index db741e47d194..1493fe3df717 100644
  			tried[i] = false;
  			remaining_to_try += 1;
 -- 
-2.28.0
+2.29.0.rc0
 
