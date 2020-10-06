@@ -1,4 +1,4 @@
-From 412b37bc6107a1f51b6301bb7f8603bfc24c5458 Mon Sep 17 00:00:00 2001
+From 6fdc49456486baa13a3506f51c191489c94fadd2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 17 Apr 2020 13:43:14 -0700
 Subject: [PATCH 04/13] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
@@ -38,5 +38,5 @@ index 32753cc771bf..46cf530ced3c 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 -- 
-2.28.0
+2.29.0.rc0
 

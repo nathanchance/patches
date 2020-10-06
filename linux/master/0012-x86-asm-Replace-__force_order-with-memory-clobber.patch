@@ -1,4 +1,4 @@
-From c8c6393100ebeca8a19df8230685e23c8e7cb78c Mon Sep 17 00:00:00 2001
+From 19069479edb1ee636bf42e5fdb111c7431fcf0f3 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Wed, 2 Sep 2020 19:21:52 -0400
 Subject: [PATCH 12/13] x86/asm: Replace __force_order with memory clobber
@@ -166,5 +166,5 @@ index c5d6f17d9b9d..178499f90366 100644
  	if (static_branch_likely(&cr_pinning)) {
  		if (unlikely((val & cr4_pinned_mask) != cr4_pinned_bits)) {
 -- 
-2.28.0
+2.29.0.rc0
 

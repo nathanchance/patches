@@ -1,4 +1,4 @@
-From 831bc0d768922b2a951537c8034303daf033ce62 Mon Sep 17 00:00:00 2001
+From 50e1e8fd494f1c2d12fed419f1b2bf7c810db5b4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
 Subject: [PATCH 13/13] mwifiex: Remove unnecessary braces from
@@ -69,5 +69,5 @@ index d9f8bdbc817b..470d669c7f14 100644
  #define HostCmd_GET_SEQ_NO(seq)       \
  	((seq) & HostCmd_SEQ_NUM_MASK)
 -- 
-2.28.0
+2.29.0.rc0
 
