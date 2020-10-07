@@ -1,0 +1,41 @@
+From 800ffa37a25df6e90a42e2dad32f5d430d070692 Mon Sep 17 00:00:00 2001
+From: Alex Dewar <alex.dewar90@gmail.com>
+Date: Sun, 4 Oct 2020 11:25:36 +0100
+Subject: [PATCH 19/20] ASoC: omap-mcbsp: Fix use of uninitialised pointer
+
+Commit 9c34d023dc35 ("ASoC: omap-mcbsp: Re-arrange files for core McBSP
+and Sidetone function split"), in rearranging various files, also replaced
+calls to platform_get_resource_by_name() + devm_ioremap_resource() with a
+single call to devm_platform_ioremap_resource_byname(). However, the
+struct resource is needed as we access its members so at present a null
+pointer is dereferenced. Fix by doing things the old way.
+
+Fixes: 9c34d023dc35 ("ASoC: omap-mcbsp: Re-arrange files for core McBSP and Sidetone function split")
+Signed-off-by: Alex Dewar <alex.dewar90@gmail.com>
+Link: https://lore.kernel.org/r/20201004102535.325547-1-alex.dewar90@gmail.com
+Addresses-Coverity-ID: 1497530 ("Memory - illegal accesses")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/soc/ti/omap-mcbsp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/sound/soc/ti/omap-mcbsp.c b/sound/soc/ti/omap-mcbsp.c
+index 186cea91076f..6025b30bbe77 100644
+--- a/sound/soc/ti/omap-mcbsp.c
++++ b/sound/soc/ti/omap-mcbsp.c
+@@ -620,7 +620,11 @@ static int omap_mcbsp_init(struct platform_device *pdev)
+ 	spin_lock_init(&mcbsp->lock);
+ 	mcbsp->free = true;
+ 
+-	mcbsp->io_base = devm_platform_ioremap_resource_byname(pdev, "mpu");
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpu");
++	if (!res)
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++
++	mcbsp->io_base = devm_ioremap_resource(&pdev->dev, res);
+ 	if (IS_ERR(mcbsp->io_base))
+ 		return PTR_ERR(mcbsp->io_base);
+ 
+-- 
+2.29.0.rc0
+
