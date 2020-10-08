@@ -1,0 +1,62 @@
+From 346c0b314a3cb957bdded9ece801de87dc49769f Mon Sep 17 00:00:00 2001
+From: ching Huang <ching2048@areca.com.tw>
+Date: Wed, 7 Oct 2020 15:26:52 +0800
+Subject: [PATCH 19/21] scsi: arcmsr: Use upper_32_bits() instead of
+ dma_addr_hi32()
+
+Use upper_32_bits() instead of dma_addr_hi32().
+
+Signed-off-by: ching Huang <ching2048@areca.com.tw>
+Link: https://lore.kernel.org/r/7dc957d8e16d04cb9605bef10e474acc52235190.camel@areca.com.tw
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/scsi/arcmsr/arcmsr_hba.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/scsi/arcmsr/arcmsr_hba.c b/drivers/scsi/arcmsr/arcmsr_hba.c
+index d4d52d87f89f..45577e41c4ba 100644
+--- a/drivers/scsi/arcmsr/arcmsr_hba.c
++++ b/drivers/scsi/arcmsr/arcmsr_hba.c
+@@ -653,9 +653,9 @@ static void arcmsr_hbaF_assign_regAddr(struct AdapterControlBlock *acb)
+ 		3) >> 2) << 2;
+ 	pmuF = acb->pmuF;
+ 	/* host buffer low address, bit0:1 all buffer active */
+-	writel((uint32_t)(host_buffer_dma | 1), &pmuF->inbound_msgaddr0);
++	writel(lower_32_bits(host_buffer_dma | 1), &pmuF->inbound_msgaddr0);
+ 	/* host buffer high address */
+-	writel(dma_addr_hi32(host_buffer_dma), &pmuF->inbound_msgaddr1);
++	writel(upper_32_bits(host_buffer_dma), &pmuF->inbound_msgaddr1);
+ 	/* set host buffer physical address */
+ 	writel(ARCMSR_HBFMU_DOORBELL_SYNC1, &pmuF->iobound_doorbell);
+ }
+@@ -4057,11 +4057,8 @@ static int arcmsr_iop_confirm(struct AdapterControlBlock *acb)
+ 		writel(cdb_phyaddr, &reg->msgcode_rwbuffer[2]);
+ 		writel(cdb_phyaddr_hi32, &reg->msgcode_rwbuffer[3]);
+ 		writel(acb->ccbsize, &reg->msgcode_rwbuffer[4]);
+-		dma_coherent_handle = acb->dma_coherent_handle2;
+-		cdb_phyaddr = (uint32_t)(dma_coherent_handle & 0xffffffff);
+-		cdb_phyaddr_hi32 = (uint32_t)((dma_coherent_handle >> 16) >> 16);
+-		writel(cdb_phyaddr, &reg->msgcode_rwbuffer[5]);
+-		writel(cdb_phyaddr_hi32, &reg->msgcode_rwbuffer[6]);
++		writel(lower_32_bits(acb->dma_coherent_handle2), &reg->msgcode_rwbuffer[5]);
++		writel(upper_32_bits(acb->dma_coherent_handle2), &reg->msgcode_rwbuffer[6]);
+ 		writel(acb->ioqueue_size, &reg->msgcode_rwbuffer[7]);
+ 		writel(ARCMSR_INBOUND_MESG0_SET_CONFIG, &reg->inbound_msgaddr0);
+ 		acb->out_doorbell ^= ARCMSR_HBEMU_DRV2IOP_MESSAGE_CMD_DONE;
+@@ -4081,11 +4078,8 @@ static int arcmsr_iop_confirm(struct AdapterControlBlock *acb)
+ 		acb->msgcode_rwbuffer[2] = cdb_phyaddr;
+ 		acb->msgcode_rwbuffer[3] = cdb_phyaddr_hi32;
+ 		acb->msgcode_rwbuffer[4] = acb->ccbsize;
+-		dma_coherent_handle = acb->dma_coherent_handle2;
+-		cdb_phyaddr = (uint32_t)dma_coherent_handle;
+-		cdb_phyaddr_hi32 = dma_addr_hi32(dma_coherent_handle);
+-		acb->msgcode_rwbuffer[5] = cdb_phyaddr;
+-		acb->msgcode_rwbuffer[6] = cdb_phyaddr_hi32;
++		acb->msgcode_rwbuffer[5] = lower_32_bits(acb->dma_coherent_handle2);
++		acb->msgcode_rwbuffer[6] = upper_32_bits(acb->dma_coherent_handle2);
+ 		acb->msgcode_rwbuffer[7] = acb->completeQ_size;
+ 		writel(ARCMSR_INBOUND_MESG0_SET_CONFIG, &reg->inbound_msgaddr0);
+ 		acb->out_doorbell ^= ARCMSR_HBEMU_DRV2IOP_MESSAGE_CMD_DONE;
+-- 
+2.29.0.rc0
+

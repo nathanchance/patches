@@ -1,7 +1,7 @@
-From cfc74f56d42c5ae582146293a786917ba872a8b8 Mon Sep 17 00:00:00 2001
+From 9093bda403f22126e9dd951861d48052069a86f4 Mon Sep 17 00:00:00 2001
 From: Dan Murphy <dmurphy@ti.com>
 Date: Tue, 6 Oct 2020 12:30:07 -0500
-Subject: [PATCH 20/20] power: supply: bq25980: Fix uninitialized wd_reg_val
+Subject: [PATCH 21/21] power: supply: bq25980: Fix uninitialized wd_reg_val
 
 Fix the uninitialized wd_reg_val if the for..loop was not successful in
 finding an appropriate match.
