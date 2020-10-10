@@ -1,0 +1,27 @@
+From e45745e3a9dbbd23b005cbc3676e3f654b5761cb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Fri, 9 Oct 2020 23:44:08 -0700
+Subject: [PATCH 15/15] efi: mokvar-table: Apply Ard's suggested build fix
+
+Link: https://lore.kernel.org/linux-efi/CAMj1kXFoCsO3YqvTZx4nU4mQOhoux1iS1vsa73AZhtc5Y8j59Q@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/firmware/efi/mokvar-table.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/firmware/efi/mokvar-table.c b/drivers/firmware/efi/mokvar-table.c
+index 72a9e1736fef..6f42ffb503ea 100644
+--- a/drivers/firmware/efi/mokvar-table.c
++++ b/drivers/firmware/efi/mokvar-table.c
+@@ -31,6 +31,8 @@
+  */
+ #define pr_fmt(fmt) "mokvar: " fmt
+ 
++#include <asm/early_ioremap.h>
++
+ #include <linux/capability.h>
+ #include <linux/efi.h>
+ #include <linux/init.h>
+-- 
+2.29.0.rc0
+
