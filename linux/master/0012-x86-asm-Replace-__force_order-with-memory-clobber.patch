@@ -1,4 +1,4 @@
-From ede65aec9440abd88a80d206a547897bf4376cf5 Mon Sep 17 00:00:00 2001
+From c44ed14bff2d1b0d61a7f44186893b53808813a4 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Wed, 2 Sep 2020 19:21:52 -0400
 Subject: [PATCH 12/13] x86/asm: Replace __force_order with memory clobber
@@ -68,7 +68,7 @@ index c8862696a47b..7d0394f4ebf9 100644
  #define BIOS_START_MAX		0x9f000U	/* 640K, absolute maximum */
  
 diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index 59a3e13204c3..d6e3bb9363d2 100644
+index 94624fb06fac..cc177b4431ae 100644
 --- a/arch/x86/include/asm/special_insns.h
 +++ b/arch/x86/include/asm/special_insns.h
 @@ -11,45 +11,47 @@
@@ -144,10 +144,10 @@ index 59a3e13204c3..d6e3bb9363d2 100644
  	return val;
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index c5d6f17d9b9d..178499f90366 100644
+index 7824fc62c7cd..c51158914ea2 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -359,7 +359,7 @@ void native_write_cr0(unsigned long val)
+@@ -360,7 +360,7 @@ void native_write_cr0(unsigned long val)
  	unsigned long bits_missing = 0;
  
  set_register:
@@ -156,7 +156,7 @@ index c5d6f17d9b9d..178499f90366 100644
  
  	if (static_branch_likely(&cr_pinning)) {
  		if (unlikely((val & X86_CR0_WP) != X86_CR0_WP)) {
-@@ -378,7 +378,7 @@ void native_write_cr4(unsigned long val)
+@@ -379,7 +379,7 @@ void native_write_cr4(unsigned long val)
  	unsigned long bits_changed = 0;
  
  set_register:
