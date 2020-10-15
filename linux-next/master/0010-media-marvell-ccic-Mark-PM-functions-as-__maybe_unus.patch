@@ -1,4 +1,4 @@
-From 2e9e604b4c37b5c046fc45f1fa79e45fe83a61e5 Mon Sep 17 00:00:00 2001
+From ec7cb70f869b61f8352caa651822a336b14657aa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Wed, 2 Sep 2020 16:25:02 -0700
 Subject: [PATCH 10/14] media: marvell-ccic: Mark PM functions as
@@ -33,5 +33,5 @@ index cd902b180669..032fdddbbecc 100644
  	struct mmp_camera *cam = dev_get_drvdata(dev);
  	struct mcam_camera *mcam = &cam->mcam;
 -- 
-2.29.0.rc0
+2.29.0.rc1
 

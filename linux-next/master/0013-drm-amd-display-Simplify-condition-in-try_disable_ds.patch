@@ -1,4 +1,4 @@
-From 8af1408dd89eec2ba2ee01329c6da9d4573163ae Mon Sep 17 00:00:00 2001
+From 369a99f6d0fab9d02811544306cc283aeb16eb7f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 22:47:02 -0700
 Subject: [PATCH 13/14] drm/amd/display: Simplify condition in try_disable_dsc
@@ -48,5 +48,5 @@ index db741e47d194..1493fe3df717 100644
  			tried[i] = false;
  			remaining_to_try += 1;
 -- 
-2.29.0.rc0
+2.29.0.rc1
 

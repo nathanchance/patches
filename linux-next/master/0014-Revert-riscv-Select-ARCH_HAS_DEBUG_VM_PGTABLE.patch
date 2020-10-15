@@ -1,4 +1,4 @@
-From 18dc8f6f061c2a922ab663fa2e463f1344a1955c Mon Sep 17 00:00:00 2001
+From 071d24aadc9b8f0a06db8365b155ef61b29cc875 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 25 Sep 2020 22:24:15 -0700
 Subject: [PATCH 14/14] Revert "riscv: Select ARCH_HAS_DEBUG_VM_PGTABLE"
@@ -38,5 +38,5 @@ index 44377fd7860e..cb7b17be844f 100644
  	select ARCH_HAS_DEBUG_WX
  	select ARCH_HAS_GCOV_PROFILE_ALL
 -- 
-2.29.0.rc0
+2.29.0.rc1
 
