@@ -1,7 +1,7 @@
-From 11ae7404c1cec9400903d508e994ba3766e837e1 Mon Sep 17 00:00:00 2001
+From 1c6a744a36ad094c0a6e1b679d889ede8aa715c1 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Thu, 15 Oct 2020 13:22:26 +0100
-Subject: [PATCH 15/19] vfio/fsl-mc: fix the return of the uninitialized
+Subject: [PATCH 15/18] vfio/fsl-mc: fix the return of the uninitialized
  variable ret
 
 Currently the success path in function vfio_fsl_mc_reflck_attach is
