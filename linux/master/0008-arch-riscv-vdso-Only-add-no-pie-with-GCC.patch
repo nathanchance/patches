@@ -1,7 +1,7 @@
-From 8bbd29cc94a7b5432474bac2b89d6908ebad39ca Mon Sep 17 00:00:00 2001
+From c9c97bfa6c8d89929993e484405f1bd7db22d945 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 21:18:32 -0700
-Subject: [PATCH 08/10] arch/riscv: vdso: Only add -no-pie with GCC
+Subject: [PATCH 08/11] arch/riscv: vdso: Only add -no-pie with GCC
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/803
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -25,5 +25,5 @@ index 478e7338ddc1..c4163bd564c5 100644
                     $(CROSS_COMPILE)objcopy \
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
 -- 
-2.29.0.rc0
+2.29.0.rc1
 

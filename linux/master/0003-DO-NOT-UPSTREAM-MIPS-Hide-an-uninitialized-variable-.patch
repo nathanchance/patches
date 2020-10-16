@@ -1,7 +1,7 @@
-From dc4c045a23873bd650992a02be8aaaf1ff52c823 Mon Sep 17 00:00:00 2001
+From dad063419276ed0d9f7193b2d5db5ecc8f123d1b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 3 Aug 2019 14:50:47 -0700
-Subject: [PATCH 03/10] DO-NOT-UPSTREAM: MIPS: Hide an uninitialized variable
+Subject: [PATCH 03/11] DO-NOT-UPSTREAM: MIPS: Hide an uninitialized variable
  warning
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/606
@@ -30,5 +30,5 @@ index 09d5deea747f..dc020fadda35 100644
  #ifdef CONFIG_64BIT
  	else if ((long long)sp >= (long long)PHYS_TO_XKPHYS(0, 0) &&
 -- 
-2.29.0.rc0
+2.29.0.rc1
 

@@ -1,7 +1,7 @@
-From 0666545f4c826bfd0f8e6079f1622939c1a8f424 Mon Sep 17 00:00:00 2001
+From fb4ddf8f4744d0c8690f09a66b925115234a3d16 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
-Subject: [PATCH 10/10] mwifiex: Remove unnecessary braces from
+Subject: [PATCH 10/11] mwifiex: Remove unnecessary braces from
  HostCmd_SET_SEQ_NO_BSS_INFO
 
 A new warning in clang points out when macro expansion might result in a
@@ -69,5 +69,5 @@ index d9f8bdbc817b..470d669c7f14 100644
  #define HostCmd_GET_SEQ_NO(seq)       \
  	((seq) & HostCmd_SEQ_NUM_MASK)
 -- 
-2.29.0.rc0
+2.29.0.rc1
 
