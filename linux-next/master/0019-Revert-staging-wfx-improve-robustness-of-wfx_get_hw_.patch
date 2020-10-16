@@ -1,0 +1,34 @@
+From c20bb0bd4f5027bc4be378a80181022e3e7eef1a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 15 Oct 2020 18:51:52 -0700
+Subject: [PATCH 19/19] Revert "staging: wfx: improve robustness of
+ wfx_get_hw_rate()"
+
+This reverts commit 868fd970e187d39c586565c875837e530c6f7e1b.
+
+This causes a clang warning.
+
+Link: https://lore.kernel.org/driverdev-devel/20201016015034.GA2122229@ubuntu-m3-large-x86/
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/staging/wfx/data_tx.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/staging/wfx/data_tx.c b/drivers/staging/wfx/data_tx.c
+index 41f6a604a697..8db0be08daf8 100644
+--- a/drivers/staging/wfx/data_tx.c
++++ b/drivers/staging/wfx/data_tx.c
+@@ -31,10 +31,6 @@ static int wfx_get_hw_rate(struct wfx_dev *wdev,
+ 		}
+ 		return rate->idx + 14;
+ 	}
+-	if (rate->idx >= band->n_bitrates) {
+-		WARN(1, "wrong rate->idx value: %d", rate->idx);
+-		return -1;
+-	}
+ 	// WFx only support 2GHz, else band information should be retrieved
+ 	// from ieee80211_tx_info
+ 	band = wdev->hw->wiphy->bands[NL80211_BAND_2GHZ];
+-- 
+2.29.0.rc1
+
