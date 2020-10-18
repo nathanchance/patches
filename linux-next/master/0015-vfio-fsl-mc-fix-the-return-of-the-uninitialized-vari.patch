@@ -1,7 +1,7 @@
 From c982c90af9c88a7aa159e036722ef18dcf3149da Mon Sep 17 00:00:00 2001
 From: Diana Craciun <diana.craciun@oss.nxp.com>
 Date: Fri, 16 Oct 2020 12:32:32 +0300
-Subject: [PATCH 15/18] vfio/fsl-mc: fix the return of the uninitialized
+Subject: [PATCH 15/20] vfio/fsl-mc: fix the return of the uninitialized
  variable ret
 
 The vfio_fsl_mc_reflck_attach function may return, on success path,
