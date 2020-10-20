@@ -1,7 +1,7 @@
-From eaba7de3c1a7ce827cfe48a978950aa3f9f5f72b Mon Sep 17 00:00:00 2001
+From e48a32ac475a1fbfbfab45c14e79a738f6716fb1 Mon Sep 17 00:00:00 2001
 From: Masami Hiramatsu <mhiramat@kernel.org>
 Date: Fri, 16 Oct 2020 13:20:02 +0900
-Subject: [PATCH 19/20] tracing: Remove __init from
+Subject: [PATCH 19/19] tracing: Remove __init from
  __trace_early_add_new_event()
 
 The commit 720dee53ad8d ("tracing/boot: Initialize per-instance event
@@ -37,5 +37,5 @@ index 29ca60f058ef..47a71f96e5bc 100644
  			    struct trace_array *tr)
  {
 -- 
-2.29.0.rc1
+2.29.0
 
