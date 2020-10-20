@@ -1,7 +1,7 @@
-From 7381bf4b2d804df5a6df1e62c6874a0f5ab33370 Mon Sep 17 00:00:00 2001
+From f4fcae79d9deb45de00caa823d75abe3af088d47 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 28 Sep 2020 15:48:54 -0700
-Subject: [PATCH 10/11] arm/build: Always handle .ARM.exidx and .ARM.extab
+Subject: [PATCH 10/10] arm/build: Always handle .ARM.exidx and .ARM.extab
  sections
 
 After turning on warnings for orphan section placement, enabling
@@ -61,5 +61,5 @@ index 5f4922e858d0..a2c0d96b0580 100644
  	}
  
 -- 
-2.29.0.rc1
+2.29.0
 
