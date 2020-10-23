@@ -1,0 +1,53 @@
+From de3a6f4ae844185699d75ef0bad2021281c107e9 Mon Sep 17 00:00:00 2001
+From: YueHaibing <yuehaibing@huawei.com>
+Date: Fri, 11 Sep 2020 19:27:07 +0800
+Subject: [PATCH 13/15] media: marvell-ccic: Fix -Wunused-function warnings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+If CONFIG_PM is n, gcc warns:
+
+drivers/media/platform/marvell-ccic/mmp-driver.c:324:12: warning: ‘mmpcam_runtime_suspend’ defined but not used [-Wunused-function]
+ static int mmpcam_runtime_suspend(struct device *dev)
+            ^~~~~~~~~~~~~~~~~~~~~~
+drivers/media/platform/marvell-ccic/mmp-driver.c:310:12: warning: ‘mmpcam_runtime_resume’ defined but not used [-Wunused-function]
+ static int mmpcam_runtime_resume(struct device *dev)
+            ^~~~~~~~~~~~~~~~~~~~~
+
+Mark them as __maybe_unused to fix this.
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20200911112707.32232-1-yuehaibing@huawei.com
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/media/platform/marvell-ccic/mmp-driver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/platform/marvell-ccic/mmp-driver.c b/drivers/media/platform/marvell-ccic/mmp-driver.c
+index cd902b180669..032fdddbbecc 100644
+--- a/drivers/media/platform/marvell-ccic/mmp-driver.c
++++ b/drivers/media/platform/marvell-ccic/mmp-driver.c
+@@ -307,7 +307,7 @@ static int mmpcam_platform_remove(struct platform_device *pdev)
+  * Suspend/resume support.
+  */
+ 
+-static int mmpcam_runtime_resume(struct device *dev)
++static int __maybe_unused mmpcam_runtime_resume(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 	struct mcam_camera *mcam = &cam->mcam;
+@@ -321,7 +321,7 @@ static int mmpcam_runtime_resume(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int mmpcam_runtime_suspend(struct device *dev)
++static int __maybe_unused mmpcam_runtime_suspend(struct device *dev)
+ {
+ 	struct mmp_camera *cam = dev_get_drvdata(dev);
+ 	struct mcam_camera *mcam = &cam->mcam;
+-- 
+2.29.0
+
