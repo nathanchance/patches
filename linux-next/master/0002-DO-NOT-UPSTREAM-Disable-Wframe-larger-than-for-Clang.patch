@@ -1,4 +1,4 @@
-From 0234ea3bf7b0033af6192db53d669b0942e5851b Mon Sep 17 00:00:00 2001
+From ffa373362326c7892e15534ce2df637419927846 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Jun 2020 09:42:37 -0700
 Subject: [PATCH 02/12] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
@@ -26,5 +26,5 @@ index 537cf3c2937d..8b68fca1e435 100644
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
 -- 
-2.29.0
+2.29.1
 
