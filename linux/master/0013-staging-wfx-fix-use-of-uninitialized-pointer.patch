@@ -1,4 +1,4 @@
-From 022ce5c6a0dc90e3b2c1b378054bc285b7441d4e Mon Sep 17 00:00:00 2001
+From ae7ff78f768c462bb0d2129ff83111f9b87a8a9a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>
 Date: Mon, 19 Oct 2020 18:06:03 +0200
 Subject: [PATCH 13/13] staging: wfx: fix use of uninitialized pointer
@@ -45,5 +45,5 @@ index 41f6a604a697..36b36ef39d05 100644
  }
  
 -- 
-2.29.0
+2.29.2
 
