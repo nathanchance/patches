@@ -1,7 +1,7 @@
 From 652cf46c4b48b8ec59fe829eed42541493318eec Mon Sep 17 00:00:00 2001
 From: Tom Rix <trix@redhat.com>
 Date: Sun, 11 Oct 2020 08:54:38 -0700
-Subject: [PATCH 12/12] rtw88: fix fw_fifo_addr check
+Subject: [PATCH 12/15] rtw88: fix fw_fifo_addr check
 
 The clang build reports this warning
 
@@ -37,5 +37,5 @@ index 042015bc8055..b2fd87834f23 100644
  		return -ENOTSUPP;
  	}
 -- 
-2.29.1
+2.29.2
 

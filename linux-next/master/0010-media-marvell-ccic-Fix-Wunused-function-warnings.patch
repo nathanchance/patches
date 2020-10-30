@@ -1,7 +1,7 @@
 From 73847fbe9ed1e3ce45faa969dd5a175345bc31d7 Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Fri, 11 Sep 2020 19:27:07 +0800
-Subject: [PATCH 10/12] media: marvell-ccic: Fix -Wunused-function warnings
+Subject: [PATCH 10/15] media: marvell-ccic: Fix -Wunused-function warnings
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -49,5 +49,5 @@ index cd902b180669..032fdddbbecc 100644
  	struct mmp_camera *cam = dev_get_drvdata(dev);
  	struct mcam_camera *mcam = &cam->mcam;
 -- 
-2.29.1
+2.29.2
 

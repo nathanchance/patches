@@ -1,7 +1,7 @@
 From 8ec6c1a7b2cf3b72420421f5680eb747d44331a1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 21:49:47 -0700
-Subject: [PATCH 11/12] Revert "powerpc/64: Make VDSO32 track COMPAT on 64-bit"
+Subject: [PATCH 11/15] Revert "powerpc/64: Make VDSO32 track COMPAT on 64-bit"
 
 This reverts commit 231b232df8f67e7d37af01259c21f2a131c3911e.
 
@@ -35,5 +35,5 @@ index c194c4ae8bc7..493c66b2d531 100644
  choice
  	prompt "Endianness selection"
 -- 
-2.29.1
+2.29.2
 
