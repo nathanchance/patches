@@ -1,9 +1,9 @@
-From c24fa6be2ce8d02e89554a04ab56d4e9c2b76b9d Mon Sep 17 00:00:00 2001
+From bf54075548fef5a6605cac55f7fd1d8ab67e02bc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 29 Oct 2020 17:35:24 -0700
-Subject: [PATCH 15/15] Revert KASan for ARM
+Subject: [PATCH 14/15] Revert KASan for ARM
 
-This reverts:
+This reverts the following commits:
 
 fc2933c13374 ("ARM: 9020/1: mm: use correct section size macro to describe the FDT virtual address")
 421015713b30 ("ARM: 9017/2: Enable KASan for ARM")
