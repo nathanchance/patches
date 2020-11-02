@@ -1,92 +1,92 @@
-From aeeb4d144ca1ed5cbb51fc642375f890008449fe Mon Sep 17 00:00:00 2001
+From 259ae10403972c56899f4ba7dfa387c782029fe8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 29 Oct 2020 15:32:53 -0700
-Subject: [PATCH 13/16] Revert "drm/amdgpu: fold CONFIG_DRM_AMD_DC_DCN3* into
+Date: Sun, 1 Nov 2020 23:35:24 -0700
+Subject: [PATCH 14/17] Revert "drm/amdgpu: fold CONFIG_DRM_AMD_DC_DCN3* into
  CONFIG_DRM_AMD_DC_DCN (v2)"
 
-This reverts commit 5d7dd14d6bdc2d44f07cec98be65b6edbff2e51c.
+This reverts commit fe1a72fb54c5948a5612d70b73296f741e98b5d7.
 
 Link: https://lore.kernel.org/r/20201029221410.GA1982624@ubuntu-m3-large-x86
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    |  2 +
- drivers/gpu/drm/amd/display/Kconfig           | 27 ++++++++-
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 60 ++++++++++++++++---
+ drivers/gpu/drm/amd/display/Kconfig           | 27 +++++++++++-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 44 +++++++++++++++++--
  .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c |  2 +
- drivers/gpu/drm/amd/display/dc/Makefile       | 10 ++++
- .../drm/amd/display/dc/bios/bios_parser2.c    | 18 ++++++
- .../display/dc/bios/command_table_helper2.c   | 12 ++++
+ drivers/gpu/drm/amd/display/dc/Makefile       | 10 +++++
+ .../drm/amd/display/dc/bios/bios_parser2.c    | 18 ++++++++
+ .../display/dc/bios/command_table_helper2.c   | 12 +++++
  .../gpu/drm/amd/display/dc/calcs/dcn_calcs.c  |  2 +
  .../gpu/drm/amd/display/dc/clk_mgr/Makefile   |  4 ++
- .../gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c  | 14 ++++-
- drivers/gpu/drm/amd/display/dc/core/dc.c      | 12 ++--
+ .../gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c  | 14 +++++-
+ drivers/gpu/drm/amd/display/dc/core/dc.c      | 12 ++---
  drivers/gpu/drm/amd/display/dc/core/dc_link.c |  4 +-
- .../gpu/drm/amd/display/dc/core/dc_resource.c | 34 +++++++++--
- .../gpu/drm/amd/display/dc/core/dc_stream.c   | 12 ++--
- drivers/gpu/drm/amd/display/dc/dc.h           | 22 +++----
- drivers/gpu/drm/amd/display/dc/dc_hw_types.h  | 18 ++++++
- drivers/gpu/drm/amd/display/dc/dc_stream.h    |  6 ++
- drivers/gpu/drm/amd/display/dc/dc_types.h     | 10 +++-
- drivers/gpu/drm/amd/display/dc/dce/dce_abm.h  |  6 ++
- .../drm/amd/display/dc/dce/dce_clock_source.c |  8 +--
- .../drm/amd/display/dc/dce/dce_clock_source.h | 12 ++--
- .../gpu/drm/amd/display/dc/dce/dce_hwseq.h    | 31 ++++++++++
+ .../gpu/drm/amd/display/dc/core/dc_resource.c | 34 +++++++++++---
+ .../gpu/drm/amd/display/dc/core/dc_stream.c   | 12 ++---
+ drivers/gpu/drm/amd/display/dc/dc.h           | 22 +++++-----
+ drivers/gpu/drm/amd/display/dc/dc_hw_types.h  | 18 ++++++++
+ drivers/gpu/drm/amd/display/dc/dc_stream.h    |  6 +++
+ drivers/gpu/drm/amd/display/dc/dc_types.h     | 10 ++++-
+ drivers/gpu/drm/amd/display/dc/dce/dce_abm.h  |  6 +++
+ .../drm/amd/display/dc/dce/dce_clock_source.c |  8 ++--
+ .../drm/amd/display/dc/dce/dce_clock_source.h | 12 +++--
+ .../gpu/drm/amd/display/dc/dce/dce_hwseq.h    | 31 +++++++++++++
  .../gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c |  2 +
- .../amd/display/dc/dcn10/dcn10_link_encoder.h |  9 +++
- .../gpu/drm/amd/display/dc/dcn10/dcn10_optc.c |  5 +-
- .../gpu/drm/amd/display/dc/dcn10/dcn10_optc.h | 31 ++++++++++
- .../display/dc/dcn10/dcn10_stream_encoder.h   |  8 +++
- .../gpu/drm/amd/display/dc/dcn20/dcn20_dccg.h |  8 +++
+ .../amd/display/dc/dcn10/dcn10_link_encoder.h |  9 ++++
+ .../gpu/drm/amd/display/dc/dcn10/dcn10_optc.c |  5 ++-
+ .../gpu/drm/amd/display/dc/dcn10/dcn10_optc.h | 31 +++++++++++++
+ .../display/dc/dcn10/dcn10_stream_encoder.h   |  8 ++++
+ .../gpu/drm/amd/display/dc/dcn20/dcn20_dccg.h |  8 ++++
  .../drm/amd/display/dc/dcn20/dcn20_hubbub.c   |  4 ++
- .../gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c |  6 ++
- .../gpu/drm/amd/display/dc/dcn20/dcn20_hubp.h | 18 ++++++
- .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    | 13 +++-
+ .../gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c |  6 +++
+ .../gpu/drm/amd/display/dc/dcn20/dcn20_hubp.h | 18 ++++++++
+ .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    | 13 +++++-
  .../amd/display/dc/dcn20/dcn20_link_encoder.h |  2 +
- .../drm/amd/display/dc/dcn20/dcn20_resource.c | 23 ++++++-
+ .../drm/amd/display/dc/dcn20/dcn20_resource.c | 23 +++++++++-
  .../gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c  |  7 +++
  .../gpu/drm/amd/display/dc/dcn30/dcn30_hubp.h |  2 +
  drivers/gpu/drm/amd/display/dc/dm_helpers.h   |  2 +
- drivers/gpu/drm/amd/display/dc/dm_pp_smu.h    |  6 +-
- drivers/gpu/drm/amd/display/dc/dml/Makefile   |  5 ++
+ drivers/gpu/drm/amd/display/dc/dm_pp_smu.h    |  6 ++-
+ drivers/gpu/drm/amd/display/dc/dml/Makefile   |  5 +++
  .../dc/dml/dcn30/display_mode_vba_30.c        |  4 +-
  .../dc/dml/dcn30/display_rq_dlg_calc_30.c     |  2 +-
- .../drm/amd/display/dc/dml/display_mode_lib.c | 10 +++-
+ .../drm/amd/display/dc/dml/display_mode_lib.c | 10 ++++-
  .../drm/amd/display/dc/dml/display_mode_lib.h |  4 ++
  .../amd/display/dc/dml/display_mode_structs.h |  2 +
  .../drm/amd/display/dc/dml/display_mode_vba.c |  2 +
  .../drm/amd/display/dc/dml/display_mode_vba.h |  2 +
- drivers/gpu/drm/amd/display/dc/gpio/Makefile  |  5 +-
+ drivers/gpu/drm/amd/display/dc/gpio/Makefile  |  5 ++-
  .../display/dc/gpio/dcn30/hw_factory_dcn30.c  |  2 +-
  .../display/dc/gpio/dcn30/hw_factory_dcn30.h  |  2 +-
  .../dc/gpio/dcn30/hw_translate_dcn30.c        |  2 +-
  .../dc/gpio/dcn30/hw_translate_dcn30.h        |  2 +-
- .../gpu/drm/amd/display/dc/gpio/hw_factory.c  |  9 +++
- .../drm/amd/display/dc/gpio/hw_translate.c    |  9 +++
- .../gpu/drm/amd/display/dc/inc/core_types.h   |  8 +--
- .../gpu/drm/amd/display/dc/inc/hw/clk_mgr.h   | 26 +++++++-
+ .../gpu/drm/amd/display/dc/gpio/hw_factory.c  |  9 ++++
+ .../drm/amd/display/dc/gpio/hw_translate.c    |  9 ++++
+ .../gpu/drm/amd/display/dc/inc/core_types.h   |  8 ++--
+ .../gpu/drm/amd/display/dc/inc/hw/clk_mgr.h   | 26 ++++++++++-
  .../amd/display/dc/inc/hw/clk_mgr_internal.h  |  7 ++-
- .../gpu/drm/amd/display/dc/inc/hw/dchubbub.h  |  6 ++
+ .../gpu/drm/amd/display/dc/inc/hw/dchubbub.h  |  6 +++
  drivers/gpu/drm/amd/display/dc/inc/hw/dpp.h   |  2 +
- drivers/gpu/drm/amd/display/dc/inc/hw/dwb.h   |  6 +-
+ drivers/gpu/drm/amd/display/dc/inc/hw/dwb.h   |  6 +--
  drivers/gpu/drm/amd/display/dc/inc/hw/hubp.h  |  4 ++
  .../gpu/drm/amd/display/dc/inc/hw/hw_shared.h |  2 +
  .../gpu/drm/amd/display/dc/inc/hw/mcif_wb.h   |  4 ++
- drivers/gpu/drm/amd/display/dc/inc/hw/mpc.h   | 19 +++++-
+ drivers/gpu/drm/amd/display/dc/inc/hw/mpc.h   | 19 +++++++-
  .../amd/display/dc/inc/hw/stream_encoder.h    |  2 +
- .../amd/display/dc/inc/hw/timing_generator.h  |  6 ++
+ .../amd/display/dc/inc/hw/timing_generator.h  |  6 +++
  .../gpu/drm/amd/display/dc/inc/hw_sequencer.h |  4 ++
  drivers/gpu/drm/amd/display/dc/inc/resource.h |  2 +
  drivers/gpu/drm/amd/display/dc/irq/Makefile   |  4 ++
  .../display/dc/irq/dcn30/irq_service_dcn30.c  |  2 +-
  .../display/dc/irq/dcn30/irq_service_dcn30.h  |  2 +-
- drivers/gpu/drm/amd/display/dmub/dmub_srv.h   |  6 ++
+ drivers/gpu/drm/amd/display/dmub/dmub_srv.h   |  6 +++
  drivers/gpu/drm/amd/display/dmub/src/Makefile |  4 ++
- .../gpu/drm/amd/display/dmub/src/dmub_srv.c   | 18 ++++++
- .../gpu/drm/amd/display/include/dal_asic_id.h |  6 ++
- .../gpu/drm/amd/display/include/dal_types.h   |  6 ++
+ .../gpu/drm/amd/display/dmub/src/dmub_srv.c   | 18 ++++++++
+ .../gpu/drm/amd/display/include/dal_asic_id.h |  6 +++
+ .../gpu/drm/amd/display/include/dal_types.h   |  6 +++
  .../display/include/grph_object_ctrl_defs.h   |  4 ++
- .../amd/display/modules/power/power_helpers.c |  8 +--
- 77 files changed, 609 insertions(+), 83 deletions(-)
+ .../amd/display/modules/power/power_helpers.c |  8 ++--
+ 77 files changed, 597 insertions(+), 79 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
 index 300fcade4a2b..0daac7628c7c 100644
@@ -140,7 +140,7 @@ index 797b5d4b43e5..b8b666969ba6 100644
  config DRM_AMD_DC_HDCP
  	bool "Enable HDCP support in DC"
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index f52adfba890d..4c81f5ce8986 100644
+index 04d7f86235cf..32f0694eb85d 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 @@ -95,16 +95,22 @@
@@ -166,7 +166,7 @@ index f52adfba890d..4c81f5ce8986 100644
  
  #define FIRMWARE_RAVEN_DMCU		"amdgpu/raven_dmcu.bin"
  MODULE_FIRMWARE(FIRMWARE_RAVEN_DMCU);
-@@ -1203,10 +1209,16 @@ static int load_dmcu_fw(struct amdgpu_device *adev)
+@@ -1206,10 +1212,16 @@ static int load_dmcu_fw(struct amdgpu_device *adev)
  	case CHIP_NAVI10:
  	case CHIP_NAVI14:
  	case CHIP_RENOIR:
@@ -183,7 +183,7 @@ index f52adfba890d..4c81f5ce8986 100644
  		return 0;
  	case CHIP_NAVI12:
  		fw_name_dmcu = FIRMWARE_NAVI12_DMCU;
-@@ -1305,6 +1317,7 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
+@@ -1308,6 +1320,7 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
  		if (ASICREV_IS_GREEN_SARDINE(adev->external_rev_id))
  			fw_name_dmub = FIRMWARE_GREEN_SARDINE_DMUB;
  		break;
@@ -191,7 +191,7 @@ index f52adfba890d..4c81f5ce8986 100644
  	case CHIP_SIENNA_CICHLID:
  		dmub_asic = DMUB_ASIC_DCN30;
  		fw_name_dmub = FIRMWARE_SIENNA_CICHLID_DMUB;
-@@ -1313,14 +1326,19 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
+@@ -1316,14 +1329,19 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
  		dmub_asic = DMUB_ASIC_DCN30;
  		fw_name_dmub = FIRMWARE_NAVY_FLOUNDER_DMUB;
  		break;
@@ -211,7 +211,7 @@ index f52adfba890d..4c81f5ce8986 100644
  
  	default:
  		/* ASIC doesn't support DMUB. */
-@@ -3439,10 +3457,16 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
+@@ -3443,10 +3461,16 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
  	case CHIP_NAVI10:
  	case CHIP_NAVI14:
  	case CHIP_RENOIR:
@@ -228,7 +228,7 @@ index f52adfba890d..4c81f5ce8986 100644
  		if (dcn10_register_irq_handlers(dm->adev)) {
  			DRM_ERROR("DM: Failed to initialize IRQ\n");
  			goto fail;
-@@ -3601,27 +3625,41 @@ static int dm_early_init(void *handle)
+@@ -3605,27 +3629,41 @@ static int dm_early_init(void *handle)
  		break;
  #if defined(CONFIG_DRM_AMD_DC_DCN)
  	case CHIP_RAVEN:
@@ -273,41 +273,6 @@ index f52adfba890d..4c81f5ce8986 100644
  	default:
  		DRM_ERROR("Unsupported ASIC type: 0x%X\n", adev->asic_type);
  		return -EINVAL;
-@@ -3928,10 +3966,16 @@ fill_plane_buffer_attributes(struct amdgpu_device *adev,
- 	    adev->asic_type == CHIP_NAVI10 ||
- 	    adev->asic_type == CHIP_NAVI14 ||
- 	    adev->asic_type == CHIP_NAVI12 ||
--	    adev->asic_type == CHIP_SIENNA_CICHLID ||
--	    adev->asic_type == CHIP_NAVY_FLOUNDER ||
--	    adev->asic_type == CHIP_DIMGREY_CAVEFISH ||
--	    adev->asic_type == CHIP_VANGOGH ||
-+#if defined(CONFIG_DRM_AMD_DC_DCN3_0)
-+		adev->asic_type == CHIP_SIENNA_CICHLID ||
-+		adev->asic_type == CHIP_NAVY_FLOUNDER ||
-+#endif
-+#if defined(CONFIG_DRM_AMD_DC_DCN3_02)
-+		adev->asic_type == CHIP_DIMGREY_CAVEFISH ||
-+#endif
-+#if defined(CONFIG_DRM_AMD_DC_DCN3_01)
-+		adev->asic_type == CHIP_VANGOGH ||
-+#endif
- 	    adev->asic_type == CHIP_RENOIR ||
- 	    adev->asic_type == CHIP_RAVEN) {
- 		/* Fill GFX9 params */
-@@ -3951,11 +3995,13 @@ fill_plane_buffer_attributes(struct amdgpu_device *adev,
- 			AMDGPU_TILING_GET(tiling_flags, SWIZZLE_MODE);
- 		tiling_info->gfx9.shaderEnable = 1;
- 
-+#ifdef CONFIG_DRM_AMD_DC_DCN3_0
- 		if (adev->asic_type == CHIP_SIENNA_CICHLID ||
- 		    adev->asic_type == CHIP_NAVY_FLOUNDER ||
- 		    adev->asic_type == CHIP_DIMGREY_CAVEFISH ||
- 		    adev->asic_type == CHIP_VANGOGH)
- 			tiling_info->gfx9.num_pkrs = adev->gfx.config.gb_addr_config_fields.num_pkrs;
-+#endif
- 		ret = fill_plane_dcc_attributes(adev, afb, format, rotation,
- 						plane_size, tiling_info,
- 						tiling_flags, dcc, address,
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
 index b7d7ec3ba00d..d839eb14e3f0 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
@@ -2052,7 +2017,7 @@ index 879a930358a5..dbc7e2abe379 100644
  endif
  
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
-index b27df0b409a0..9e0ae18e71fa 100644
+index 319dec59bcd1..0f668699809d 100644
 --- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
 +++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
 @@ -23,7 +23,7 @@

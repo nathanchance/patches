@@ -1,7 +1,7 @@
-From 2d19014f32e5a2d8db52f81bb73aeda189e16172 Mon Sep 17 00:00:00 2001
+From 9f70e881d3415f620ac054a484dc61663e387e27 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 29 Oct 2020 18:17:28 -0700
-Subject: [PATCH 15/16] ARM: Link with -z norelro
+Subject: [PATCH 15/17] ARM: Link with -z norelro
 
 Same as commit 3b92fa7485eb ("arm64: link with -z norelro regardless of
 CONFIG_RELOCATABLE").
@@ -14,7 +14,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 4d76eab2b22d..3c0a64cefe52 100644
+index 64999d94ed1b..a8edc0a7d21b 100644
 --- a/arch/arm/Makefile
 +++ b/arch/arm/Makefile
 @@ -10,7 +10,7 @@
