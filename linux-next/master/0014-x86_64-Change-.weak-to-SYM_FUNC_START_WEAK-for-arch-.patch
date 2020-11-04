@@ -1,28 +1,33 @@
-From fbdaf4c44d14356471fecf28063f7479628da9e1 Mon Sep 17 00:00:00 2001
+From 5661930f4fc17b8e9e6181a99489e1c5fbf48845 Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
-Date: Thu, 29 Oct 2020 11:05:25 -0700
-Subject: [PATCH 17/17] x86_64: Change .weak to SYM_FUNC_START_WEAK for
+Date: Mon, 2 Nov 2020 17:23:58 -0800
+Subject: [PATCH 14/15] x86_64: Change .weak to SYM_FUNC_START_WEAK for
  arch/x86/lib/mem*_64.S
 
 Commit 393f203f5fd5 ("x86_64: kasan: add interceptors for
 memset/memmove/memcpy functions") added .weak directives to
-arch/x86/lib/mem*_64.S instead of changing the existing SYM_FUNC_START_*
-macros. This can lead to the assembly snippet `.weak memcpy ... .globl
+arch/x86/lib/mem*_64.S instead of changing the existing ENTRY macros to
+WEAK. This can lead to the assembly snippet `.weak memcpy ... .globl
 memcpy` which will produce a STB_WEAK memcpy with GNU as but STB_GLOBAL
 memcpy with LLVM's integrated assembler before LLVM 12. LLVM 12 (since
 https://reviews.llvm.org/D90108) will error on such an overridden symbol
 binding.
 
+Commit ef1e03152cb0 ("x86/asm: Make some functions local") changed ENTRY in
+arch/x86/lib/memcpy_64.S to SYM_FUNC_START_LOCAL, which was ineffective due to
+the preceding .weak directive.
+
 Use the appropriate SYM_FUNC_START_WEAK instead.
 
 Fixes: 393f203f5fd5 ("x86_64: kasan: add interceptors for memset/memmove/memcpy functions")
+Fixes: ef1e03152cb0 ("x86/asm: Make some functions local")
 Reported-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Fangrui Song <maskray@google.com>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
 Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20201029180525.1797645-1-maskray@google.com
+Link: https://lore.kernel.org/r/20201103012358.168682-1-maskray@google.com
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  arch/x86/lib/memcpy_64.S  | 4 +---

@@ -1,7 +1,7 @@
-From 9f70e881d3415f620ac054a484dc61663e387e27 Mon Sep 17 00:00:00 2001
+From 24384b869141da974ddbdbc6e52e3d217c666750 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 29 Oct 2020 18:17:28 -0700
-Subject: [PATCH 15/17] ARM: Link with -z norelro
+Subject: [PATCH 12/15] ARM: Link with -z norelro
 
 Same as commit 3b92fa7485eb ("arm64: link with -z norelro regardless of
 CONFIG_RELOCATABLE").
