@@ -1,7 +1,7 @@
-From 8d06488f4f0a30f4e08d4faa34a808155ffdbce0 Mon Sep 17 00:00:00 2001
+From a49ecb488cbb59b593250ab9a1f2eca62321854e Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Thu, 29 Oct 2020 11:05:25 -0700
-Subject: [PATCH 13/14] x86_64: Change .weak to SYM_FUNC_START_WEAK for
+Subject: [PATCH 13/13] x86_64: Change .weak to SYM_FUNC_START_WEAK for
  arch/x86/lib/mem*_64.S
 
 Commit 393f203f5fd5 ("x86_64: kasan: add interceptors for
