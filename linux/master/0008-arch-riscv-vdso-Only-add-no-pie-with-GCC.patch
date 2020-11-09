@@ -1,7 +1,7 @@
-From 46700f17437dfc860d820495545a8ed789abb8e5 Mon Sep 17 00:00:00 2001
+From 388a327c2813a93ddcf9e4baba9e2ce94a1b9a72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 21:18:32 -0700
-Subject: [PATCH 08/13] arch/riscv: vdso: Only add -no-pie with GCC
+Subject: [PATCH 08/12] arch/riscv: vdso: Only add -no-pie with GCC
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/803
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 7d6a94d45ec9..61125cecca11 100644
+index cb8f9e4cfcbf..29ad4db252a0 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -66,8 +66,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
+@@ -61,8 +61,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
  # The DSO images are built using a special linker script
  # Add -lgcc so rv32 gets static muldi3 and lshrdi3 definitions.
  # Make sure only to export the intended __vdso_xxx symbol offsets.
