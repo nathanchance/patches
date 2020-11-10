@@ -1,7 +1,7 @@
-From d8569ab7f32341af969cab8ca493b9dcd4316aa4 Mon Sep 17 00:00:00 2001
+From f19e66547e665835ead26b6f8b00341488ab8ec5 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap@infradead.org>
-Date: Fri, 6 Nov 2020 10:05:44 -0800
-Subject: [PATCH 13/15] clk: pm_clock: provide stubs for
+Date: Sun, 8 Nov 2020 19:21:15 -0800
+Subject: [PATCH 12/13] clk: pm_clock: provide stubs for
  pm_clk_runtime_suspend/_resume
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -32,23 +32,23 @@ Cc: Stephen Boyd <sboyd@kernel.org>
 Cc: linux-clk@vger.kernel.org
 Cc: Taniya Das <tdas@codeaurora.org>
 Cc: linux-next@vger.kernel.org
-Link: https://lore.kernel.org/r/20201106180544.5681-1-rdunlap@infradead.org
+Cc: Nathan Chancellor <natechancellor@gmail.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20201109032115.10610-1-rdunlap@infradead.org
 Build-tested-by: Nathan Chancellor <natechancellor@gmail.com>
-[nc: Move into CONFIG_PM block]
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- include/linux/pm_clock.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/linux/pm_clock.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/include/linux/pm_clock.h b/include/linux/pm_clock.h
-index 8ddc7860e131..947542281002 100644
+index 8ddc7860e131..a0c72fce4689 100644
 --- a/include/linux/pm_clock.h
 +++ b/include/linux/pm_clock.h
-@@ -27,6 +27,15 @@ extern int pm_clk_runtime_resume(struct device *dev);
+@@ -27,6 +27,14 @@ extern int pm_clk_runtime_resume(struct device *dev);
  	.runtime_resume = pm_clk_runtime_resume,
  #else
  #define USE_PM_CLK_RUNTIME_OPS
-+
 +static inline int pm_clk_runtime_suspend(struct device *dev)
 +{
 +	return 0;
