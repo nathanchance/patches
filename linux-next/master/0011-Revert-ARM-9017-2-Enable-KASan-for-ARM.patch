@@ -1,7 +1,7 @@
-From 48a2862fb11c1ed1efa955bbfe7c9801afe60254 Mon Sep 17 00:00:00 2001
+From d11e7b4f54bb16237f7d228f6fff0fff95ce245b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 5 Nov 2020 02:04:05 -0700
-Subject: [PATCH 11/13] Revert "ARM: 9017/2: Enable KASan for ARM"
+Subject: [PATCH 11/12] Revert "ARM: 9017/2: Enable KASan for ARM"
 
 This reverts commit 421015713b306e47af95d4d61cdfbd96d462e4cb.
 
@@ -42,7 +42,7 @@ index b2288dc14b72..c3fe9b266e7b 100644
      |         c6x: | TODO |
      |        csky: | TODO |
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 5c5b12a8ff4b..3713d2167c47 100644
+index 3b1caaefbff0..f6c88edf4948 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
 @@ -67,7 +67,6 @@ config ARM
