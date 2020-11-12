@@ -1,7 +1,7 @@
-From 432f9bf0b2ebbaf94ec31bd105f0c8f30be3000e Mon Sep 17 00:00:00 2001
+From ebbd54eccefd474b8598b76437585d210465222a Mon Sep 17 00:00:00 2001
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 Date: Fri, 6 Nov 2020 15:37:44 +0000
-Subject: [PATCH 12/12] driver core: export device_is_bound() to fix build
+Subject: [PATCH 11/12] driver core: export device_is_bound() to fix build
  failure
 
 When CONFIG_MXC_CLK_SCU is configured as 'm' the build fails as it
