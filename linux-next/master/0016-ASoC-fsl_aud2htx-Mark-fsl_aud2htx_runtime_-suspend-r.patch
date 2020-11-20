@@ -1,0 +1,36 @@
+From e9af3e46651d403b2af3e46bc992b4b7cf349a67 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 19 Nov 2020 15:30:11 -0700
+Subject: [PATCH 16/17] ASoC: fsl_aud2htx: Mark 
+ fsl_aud2htx_runtime_{suspend,resume} as __maybe_unused
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ sound/soc/fsl/fsl_aud2htx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/fsl/fsl_aud2htx.c b/sound/soc/fsl/fsl_aud2htx.c
+index 4091ccc7c3e9..d70d5e75a30c 100644
+--- a/sound/soc/fsl/fsl_aud2htx.c
++++ b/sound/soc/fsl/fsl_aud2htx.c
+@@ -258,7 +258,7 @@ static int fsl_aud2htx_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int fsl_aud2htx_runtime_suspend(struct device *dev)
++static int __maybe_unused fsl_aud2htx_runtime_suspend(struct device *dev)
+ {
+ 	struct fsl_aud2htx *aud2htx = dev_get_drvdata(dev);
+ 
+@@ -268,7 +268,7 @@ static int fsl_aud2htx_runtime_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int fsl_aud2htx_runtime_resume(struct device *dev)
++static int __maybe_unused fsl_aud2htx_runtime_resume(struct device *dev)
+ {
+ 	struct fsl_aud2htx *aud2htx = dev_get_drvdata(dev);
+ 	int ret;
+-- 
+2.29.2
+

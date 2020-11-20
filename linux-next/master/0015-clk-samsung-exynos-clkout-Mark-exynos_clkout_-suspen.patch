@@ -1,0 +1,36 @@
+From e7197fc8190d18e41d8842f1ef3d0560f099fe44 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 19 Nov 2020 15:28:14 -0700
+Subject: [PATCH 15/17] clk: samsung: exynos-clkout: Mark
+ exynos_clkout_{suspend,resume} as __maybe_unused
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/clk/samsung/clk-exynos-clkout.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
+index 9ec2f40cc400..e6d6cbf8c4e6 100644
+--- a/drivers/clk/samsung/clk-exynos-clkout.c
++++ b/drivers/clk/samsung/clk-exynos-clkout.c
+@@ -207,7 +207,7 @@ static int exynos_clkout_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int exynos_clkout_suspend(struct device *dev)
++static int __maybe_unused exynos_clkout_suspend(struct device *dev)
+ {
+ 	struct exynos_clkout *clkout = dev_get_drvdata(dev);
+ 
+@@ -216,7 +216,7 @@ static int exynos_clkout_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int exynos_clkout_resume(struct device *dev)
++static int __maybe_unused exynos_clkout_resume(struct device *dev)
+ {
+ 	struct exynos_clkout *clkout = dev_get_drvdata(dev);
+ 
+-- 
+2.29.2
+

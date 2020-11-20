@@ -1,0 +1,49 @@
+From b3fe99a306dbfdd25ca96df7b345b0979abc5ba6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 19 Nov 2020 12:51:06 -0700
+Subject: [PATCH 14/17] memory: tegra30-emc: Remove unnecessary of_node_put in
+ tegra_emc_probe
+
+Clang warns:
+
+drivers/memory/tegra/tegra30-emc.c:1275:15: warning: variable 'np' is
+uninitialized when used here [-Wuninitialized]
+                of_node_put(np);
+                            ^~
+drivers/memory/tegra/tegra30-emc.c:1269:24: note: initialize the
+variable 'np' to silence this warning
+        struct device_node *np;
+                              ^
+                               = NULL
+1 warning generated.
+
+There does not need to be an of_node_put call in this error handling
+block after the shuffling of the np assignment. Remove it so there is
+no use of uninitialized memory.
+
+Fixes: 5e00fd90183a ("memory: tegra30-emc: Continue probing if timings are missing in device-tree")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1203
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/memory/tegra/tegra30-emc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/memory/tegra/tegra30-emc.c b/drivers/memory/tegra/tegra30-emc.c
+index 3488786da03b..93f9002d32ad 100644
+--- a/drivers/memory/tegra/tegra30-emc.c
++++ b/drivers/memory/tegra/tegra30-emc.c
+@@ -1271,10 +1271,8 @@ static int tegra_emc_probe(struct platform_device *pdev)
+ 	int err;
+ 
+ 	emc = devm_kzalloc(&pdev->dev, sizeof(*emc), GFP_KERNEL);
+-	if (!emc) {
+-		of_node_put(np);
++	if (!emc)
+ 		return -ENOMEM;
+-	}
+ 
+ 	emc->mc = devm_tegra_memory_controller_get(&pdev->dev);
+ 	if (IS_ERR(emc->mc))
+-- 
+2.29.2
+
