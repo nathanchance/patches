@@ -1,7 +1,7 @@
-From 79c2dab210c5e5721f684505d8bfe3c23be28dae Mon Sep 17 00:00:00 2001
+From 916f7e215220a4757aaccc73bc5d2c94ae6314d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 10 Mar 2020 16:31:14 -0700
-Subject: [PATCH 01/17] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
+Subject: [PATCH 01/16] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
  no-op
 
 I build with -Werror and I do not care when syscalls are not defined on
@@ -13,10 +13,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index b7609958ee36..5f42da1b0a1a 100755
+index a18b47695f55..b3a6de55d18a 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -259,7 +259,7 @@ EOF
+@@ -255,7 +255,7 @@ EOF
  syscall_list() {
      grep '^[0-9]' "$1" | sort -n |
  	while read nr abi name entry ; do
@@ -26,7 +26,7 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 
-base-commit: 62918e6fd7b5751c1285c7f8c6cbd27eb6600c02
+base-commit: d9137320ac06f526fe3f9a3fdf07a3b14201068a
 -- 
 2.29.2
 
