@@ -1,4 +1,4 @@
-From 98423ad3b81b005d04095b644f10d9dbb8a3fa2b Mon Sep 17 00:00:00 2001
+From 1af938b96c02bead37fbe6dd0d957f02fe422558 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 17 Apr 2020 13:43:14 -0700
 Subject: [PATCH 04/16] DO-NOT-UPSTREAM: Hide a couple of warnings seen on s390
@@ -25,10 +25,10 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 834775843067..323e1c061f1d 100644
+index 6bd7e405e830..6cfc9d2532d2 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -748,7 +748,7 @@
+@@ -750,7 +750,7 @@
  
  /* RX buffer constants */
  #define MVPP2_SKB_SHINFO_SIZE \
