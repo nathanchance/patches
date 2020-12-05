@@ -1,4 +1,4 @@
-From 62917875e7b945a3a2bd06a32672786becb2489c Mon Sep 17 00:00:00 2001
+From 5f2f7bc4d93e931d8088cdb54ac8225123c414d5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 10 Mar 2020 16:31:14 -0700
 Subject: [PATCH 01/15] DO-NOT-UPSTREAM: scripts/checksyscalls.sh: Turn into a
@@ -13,10 +13,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index a18b47695f55..b3a6de55d18a 100755
+index b7609958ee36..5f42da1b0a1a 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -255,7 +255,7 @@ EOF
+@@ -259,7 +259,7 @@ EOF
  syscall_list() {
      grep '^[0-9]' "$1" | sort -n |
  	while read nr abi name entry ; do
@@ -26,7 +26,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: bfd521e1af519bb7096efc845f6a64a7de28c472
+base-commit: 2996bd3f6ca9ea529b40c369a94b247657abdb4d
 -- 
 2.29.2
 
