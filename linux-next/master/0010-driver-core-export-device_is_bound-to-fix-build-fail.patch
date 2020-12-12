@@ -1,4 +1,4 @@
-From 9aaa3ccd2261eb1aa29c22d2c179b42ee87bc859 Mon Sep 17 00:00:00 2001
+From 6e7d1945a21e62d4f29ddf0f6f14833df814b305 Mon Sep 17 00:00:00 2001
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 Date: Fri, 6 Nov 2020 15:37:44 +0000
 Subject: [PATCH 10/12] driver core: export device_is_bound() to fix build
@@ -19,7 +19,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 148e81969e04..a796a57e5efb 100644
+index 2f32f38a11ed..4aa08d784685 100644
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
 @@ -353,6 +353,7 @@ bool device_is_bound(struct device *dev)
