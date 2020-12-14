@@ -1,0 +1,49 @@
+From efffb5d0a2a4e6632a04f17b8936067d1643c4fe Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 13 Dec 2020 02:55:33 +0300
+Subject: [PATCH 13/13] driver core: platform: don't oops in
+ platform_shutdown() on unbound devices
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+On shutdown the driver core calls the bus' shutdown callback also for
+unbound devices. A driver's shutdown callback however is only called for
+devices bound to this driver. Commit 9c30921fe799 ("driver core:
+platform: use bus_type functions") changed the platform bus from driver
+callbacks to bus callbacks, so the shutdown function must be prepared to
+be called without a driver. Add the corresponding check in the shutdown
+function.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 9c30921fe799 ("driver core: platform: use bus_type functions")
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20201212235533.247537-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/base/platform.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+index 0358dc3ea3ad..e9477e0bbca5 100644
+--- a/drivers/base/platform.c
++++ b/drivers/base/platform.c
+@@ -1351,9 +1351,13 @@ static int platform_remove(struct device *_dev)
+ 
+ static void platform_shutdown(struct device *_dev)
+ {
+-	struct platform_driver *drv = to_platform_driver(_dev->driver);
+ 	struct platform_device *dev = to_platform_device(_dev);
++	struct platform_driver *drv;
++
++	if (!_dev->driver)
++		return;
+ 
++	drv = to_platform_driver(_dev->driver);
+ 	if (drv->shutdown)
+ 		drv->shutdown(dev);
+ }
+-- 
+2.29.2
+
