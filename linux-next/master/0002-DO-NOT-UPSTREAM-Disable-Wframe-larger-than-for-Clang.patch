@@ -1,4 +1,4 @@
-From 11067803176f15965910643004017bcf7b5b0b15 Mon Sep 17 00:00:00 2001
+From 000ec5697f5f51f6daae12d095419eec40e079a9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 9 Jun 2020 09:42:37 -0700
 Subject: [PATCH 02/13] DO-NOT-UPSTREAM: Disable -Wframe-larger-than= for Clang
@@ -25,7 +25,7 @@ index a02a33dcd70b..0db2299ac48c 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 0c7380e36370..b1684262b3ad 100644
+index 78361f0abe3a..5661a9822f14 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -296,8 +296,9 @@ config GDB_SCRIPTS
