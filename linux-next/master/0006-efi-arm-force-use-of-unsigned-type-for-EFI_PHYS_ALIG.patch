@@ -1,7 +1,7 @@
-From da512256c674c2ec447ea7970786347c748430ff Mon Sep 17 00:00:00 2001
+From 79726930b502000d96e735c959ae068bae2e504a Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sun, 13 Dec 2020 16:13:06 +0100
-Subject: [PATCH 5/5] efi: arm: force use of unsigned type for EFI_PHYS_ALIGN
+Subject: [PATCH 6/6] efi: arm: force use of unsigned type for EFI_PHYS_ALIGN
 
 Ensure that EFI_PHYS_ALIGN is an unsigned type, to prevent spurious
 warnings from the type checks in the definition of the max() macro.

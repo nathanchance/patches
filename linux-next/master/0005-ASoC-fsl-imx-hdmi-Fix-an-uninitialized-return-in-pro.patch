@@ -1,7 +1,7 @@
-From c427365d9cc1e71c85d22c40624c3650af2a0a7d Mon Sep 17 00:00:00 2001
+From f61813cc72cd809d8b27c93bdc8439af9466a138 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Fri, 11 Dec 2020 13:13:21 +0300
-Subject: [PATCH 4/5] ASoC: fsl: imx-hdmi: Fix an uninitialized return in probe
+Subject: [PATCH 5/6] ASoC: fsl: imx-hdmi: Fix an uninitialized return in probe
 
 The "ret" variable should be set to a negative error code but
 currently it returns uninitialized stack data.
