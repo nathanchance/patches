@@ -1,0 +1,64 @@
+From 5b91b5105ee3c6d2abb02adec1ef16db9763aa0c Mon Sep 17 00:00:00 2001
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Fri, 11 Dec 2020 11:24:37 +0100
+Subject: [PATCH 2/3] mips: lib: uncached: fix non-standard usage of variable
+ 'sp'
+
+When building mips tinyconfig with clang the following warning show up:
+
+arch/mips/lib/uncached.c:45:6: warning: variable 'sp' is uninitialized when used here [-Wuninitialized]
+        if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
+            ^~
+arch/mips/lib/uncached.c:40:18: note: initialize the variable 'sp' to silence this warning
+        register long sp __asm__("$sp");
+                        ^
+                         = 0
+1 warning generated.
+
+Rework to make an explicit inline move, instead of the non-standard use
+of specifying registers for local variables. This is what's written
+from the gcc-10 manual [1] about specifying registers for local
+variables:
+
+"6.47.5.2 Specifying Registers for Local Variables
+.................................................
+[...]
+
+"The only supported use for this feature is to specify registers for
+input and output operands when calling Extended 'asm' (*note Extended
+Asm::).  [...]".
+
+[1] https://docs.w3cub.com/gcc~10/local-register-variables
+
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/606
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20201211102437.3929348-1-anders.roxell@linaro.org
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/mips/lib/uncached.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/mips/lib/uncached.c b/arch/mips/lib/uncached.c
+index 09d5deea747f..f80a67c092b6 100644
+--- a/arch/mips/lib/uncached.c
++++ b/arch/mips/lib/uncached.c
+@@ -37,10 +37,12 @@
+  */
+ unsigned long run_uncached(void *func)
+ {
+-	register long sp __asm__("$sp");
+ 	register long ret __asm__("$2");
+ 	long lfunc = (long)func, ufunc;
+ 	long usp;
++	long sp;
++
++	__asm__("move %0, $sp" : "=r" (sp));
+ 
+ 	if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
+ 		usp = CKSEG1ADDR(sp);
+-- 
+2.30.0.rc0
+
