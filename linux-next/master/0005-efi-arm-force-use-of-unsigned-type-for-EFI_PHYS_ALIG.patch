@@ -1,7 +1,7 @@
-From e4f92b168bc263331c385923697ef26d86aaeebd Mon Sep 17 00:00:00 2001
+From da512256c674c2ec447ea7970786347c748430ff Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sun, 13 Dec 2020 16:13:06 +0100
-Subject: [PATCH 13/13] efi: arm: force use of unsigned type for EFI_PHYS_ALIGN
+Subject: [PATCH 5/5] efi: arm: force use of unsigned type for EFI_PHYS_ALIGN
 
 Ensure that EFI_PHYS_ALIGN is an unsigned type, to prevent spurious
 warnings from the type checks in the definition of the max() macro.
@@ -27,5 +27,5 @@ index abae071a02e1..9de7ab2ce05d 100644
  /* on ARM, the initrd should be loaded in a lowmem region */
  static inline unsigned long efi_get_max_initrd_addr(unsigned long image_addr)
 -- 
-2.29.2
+2.30.0.rc0
 
