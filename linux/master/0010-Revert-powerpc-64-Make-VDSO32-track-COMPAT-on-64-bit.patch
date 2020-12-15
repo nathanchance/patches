@@ -1,4 +1,4 @@
-From bdf34cf8912db96b011b6da233d369bdddf206f1 Mon Sep 17 00:00:00 2001
+From fac164ba8ff79c48f79e6e71850cf64fccda2490 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Sep 2020 21:49:47 -0700
 Subject: [PATCH 10/10] Revert "powerpc/64: Make VDSO32 track COMPAT on 64-bit"
@@ -35,5 +35,5 @@ index c194c4ae8bc7..493c66b2d531 100644
  choice
  	prompt "Endianness selection"
 -- 
-2.29.2
+2.30.0.rc0
 

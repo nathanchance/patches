@@ -1,4 +1,4 @@
-From 34f76f8d384d2f5a7543743841ce63fbf27601f5 Mon Sep 17 00:00:00 2001
+From 462f5400130896abaa7434bbe24bd5ef4230777f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 19 Mar 2020 21:18:32 -0700
 Subject: [PATCH 08/10] arch/riscv: vdso: Only add -no-pie with GCC
@@ -25,5 +25,5 @@ index 0cfd6da784f8..55d85cec076d 100644
                     $(CROSS_COMPILE)objcopy \
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
 -- 
-2.29.2
+2.30.0.rc0
 
