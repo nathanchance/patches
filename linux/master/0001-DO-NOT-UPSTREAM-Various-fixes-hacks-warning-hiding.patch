@@ -1,0 +1,132 @@
+From 783afdabfa5588bef0e27a7cf090ae1219a4f56a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 15 Dec 2020 13:50:37 -0700
+Subject: [PATCH 1/4] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+
+* arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
+unused (https://github.com/ClangBuiltLinux/linux/issues/803).
+
+* drivers/gpu/drm/i915: Avoid false positive -Wuninitialized warning and
+allows use to continue to find bugs (https://github.com/ClangBuiltLinux/linux/issues/415).
+
+* drivers/input/joystick/analog.c: Avoid this warning on s390.
+
+* drivers/net/ethernet/marvell/mvpp2/mvpp2.h: Avoid
+-Wconstant-conversion warning (https://github.com/ClangBuiltLinux/linux/issues/997).
+
+* lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
+fixed is a long term project.
+
+* scripts/checksyscalls.sh: I do not care for this warning.
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/riscv/kernel/vdso/Makefile            | 3 ++-
+ drivers/gpu/drm/i915/Makefile              | 1 -
+ drivers/gpu/drm/i915/i915_request.c        | 3 ++-
+ drivers/input/joystick/analog.c            | 1 -
+ drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
+ lib/Kconfig.debug                          | 3 ++-
+ scripts/checksyscalls.sh                   | 2 +-
+ 7 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
+index 0cfd6da784f8..55d85cec076d 100644
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -61,8 +61,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
+ # The DSO images are built using a special linker script
+ # Add -lgcc so rv32 gets static muldi3 and lshrdi3 definitions.
+ # Make sure only to export the intended __vdso_xxx symbol offsets.
++no-pie-$(CONFIG_CC_IS_GCC) := $(call cc-option, -no-pie)
+ quiet_cmd_vdsold = VDSOLD  $@
+-      cmd_vdsold = $(CC) $(KBUILD_CFLAGS) $(call cc-option, -no-pie) -nostdlib -nostartfiles $(SYSCFLAGS_$(@F)) \
++      cmd_vdsold = $(CC) $(KBUILD_CFLAGS) $(no-pie-y) -nostdlib -nostartfiles $(SYSCFLAGS_$(@F)) \
+                            -Wl,-T,$(filter-out FORCE,$^) -o $@.tmp && \
+                    $(CROSS_COMPILE)objcopy \
+                            $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
+diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
+index e5574e506a5c..c140c3da6b81 100644
+--- a/drivers/gpu/drm/i915/Makefile
++++ b/drivers/gpu/drm/i915/Makefile
+@@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
+ subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
+ subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
+-subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, frame-address)
+ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
+ 
+diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
+index 5385b081a376..09256d2e4621 100644
+--- a/drivers/gpu/drm/i915/i915_request.c
++++ b/drivers/gpu/drm/i915/i915_request.c
+@@ -1652,8 +1652,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+ static bool busywait_stop(unsigned long timeout, unsigned int cpu)
+ {
+ 	unsigned int this_cpu;
++	unsigned long local_clock = local_clock_ns(&this_cpu);
+ 
+-	if (time_after(local_clock_ns(&this_cpu), timeout))
++	if (time_after(local_clock, timeout))
+ 		return true;
+ 
+ 	return this_cpu != cpu;
+diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
+index 2b625ebef914..3935f8c95eef 100644
+--- a/drivers/input/joystick/analog.c
++++ b/drivers/input/joystick/analog.c
+@@ -157,7 +157,6 @@ static unsigned long analog_faketime = 0;
+ #define GET_TIME(x)     do { x = analog_faketime++; } while(0)
+ #define DELTA(x,y)	((y)-(x))
+ #define TIME_NAME	"Unreliable"
+-#warning Precise timer not defined for this architecture.
+ #endif
+ 
+ static inline u64 get_time(void)
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+index 834775843067..323e1c061f1d 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+@@ -748,7 +748,7 @@
+ 
+ /* RX buffer constants */
+ #define MVPP2_SKB_SHINFO_SIZE \
+-	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
++	SKB_DATA_ALIGN(((int)(sizeof(struct skb_shared_info))))
+ 
+ #define MVPP2_RX_PKT_SIZE(mtu) \
+ 	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index e952f892f047..083e3ec30a31 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -295,8 +295,9 @@ config ENABLE_MUST_CHECK
+ 	  attribute warn_unused_result" messages.
+ 
+ config FRAME_WARN
+-	int "Warn for stack frames larger than"
++	int "Warn for stack frames larger than" if !CC_IS_CLANG
+ 	range 0 8192
++	default 0 if CC_IS_CLANG
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+ 	default 1280 if (!64BIT && PARISC)
+ 	default 1024 if (!64BIT && !PARISC)
+diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
+index a18b47695f55..b3a6de55d18a 100755
+--- a/scripts/checksyscalls.sh
++++ b/scripts/checksyscalls.sh
+@@ -255,7 +255,7 @@ EOF
+ syscall_list() {
+     grep '^[0-9]' "$1" | sort -n |
+ 	while read nr abi name entry ; do
+-		echo "#if !defined(__NR_${name}) && !defined(__IGNORE_${name})"
++		echo "#if 0"
+ 		echo "#warning syscall ${name} not implemented"
+ 		echo "#endif"
+ 	done
+
+base-commit: 148842c98a24e508aecb929718818fbf4c2a6ff3
+-- 
+2.30.0.rc0
+
