@@ -1,4 +1,4 @@
-From 783afdabfa5588bef0e27a7cf090ae1219a4f56a Mon Sep 17 00:00:00 2001
+From 9a8c0ddb2c287a07722153c360acce2b8dd0170b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
 Subject: [PATCH 1/4] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -73,7 +73,7 @@ index 5385b081a376..09256d2e4621 100644
  
  	return this_cpu != cpu;
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
-index 2b625ebef914..3935f8c95eef 100644
+index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
 +++ b/drivers/input/joystick/analog.c
 @@ -157,7 +157,6 @@ static unsigned long analog_faketime = 0;
@@ -85,10 +85,10 @@ index 2b625ebef914..3935f8c95eef 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 834775843067..323e1c061f1d 100644
+index 6bd7e405e830..6cfc9d2532d2 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -748,7 +748,7 @@
+@@ -750,7 +750,7 @@
  
  /* RX buffer constants */
  #define MVPP2_SKB_SHINFO_SIZE \
@@ -98,10 +98,10 @@ index 834775843067..323e1c061f1d 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index e952f892f047..083e3ec30a31 100644
+index 7d7097c5dc58..d33a76150e13 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -295,8 +295,9 @@ config ENABLE_MUST_CHECK
+@@ -304,8 +304,9 @@ config ENABLE_MUST_CHECK
  	  attribute warn_unused_result" messages.
  
  config FRAME_WARN
@@ -126,7 +126,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 148842c98a24e508aecb929718818fbf4c2a6ff3
+base-commit: accefff5b547a9a1d959c7e76ad539bf2480e78b
 -- 
 2.30.0.rc0
 
