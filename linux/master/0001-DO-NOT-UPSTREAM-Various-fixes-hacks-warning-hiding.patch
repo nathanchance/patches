@@ -1,7 +1,7 @@
-From 9a8c0ddb2c287a07722153c360acce2b8dd0170b Mon Sep 17 00:00:00 2001
+From de671950fb0435e4350aa4f2d51fd163aaf31278 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 1/4] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/6] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -21,14 +21,15 @@ fixed is a long term project.
 
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- arch/riscv/kernel/vdso/Makefile            | 3 ++-
- drivers/gpu/drm/i915/Makefile              | 1 -
- drivers/gpu/drm/i915/i915_request.c        | 3 ++-
- drivers/input/joystick/analog.c            | 1 -
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
- lib/Kconfig.debug                          | 3 ++-
- scripts/checksyscalls.sh                   | 2 +-
- 7 files changed, 8 insertions(+), 7 deletions(-)
+ arch/riscv/kernel/vdso/Makefile             | 3 ++-
+ drivers/gpu/drm/amd/display/dc/dml/Makefile | 2 +-
+ drivers/gpu/drm/i915/Makefile               | 1 -
+ drivers/gpu/drm/i915/i915_request.c         | 3 ++-
+ drivers/input/joystick/analog.c             | 1 -
+ drivers/net/ethernet/marvell/mvpp2/mvpp2.h  | 2 +-
+ lib/Kconfig.debug                           | 3 ++-
+ scripts/checksyscalls.sh                    | 2 +-
+ 8 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
 index 0cfd6da784f8..55d85cec076d 100644
@@ -45,6 +46,19 @@ index 0cfd6da784f8..55d85cec076d 100644
                             -Wl,-T,$(filter-out FORCE,$^) -o $@.tmp && \
                     $(CROSS_COMPILE)objcopy \
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+index a02a33dcd70b..0db2299ac48c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -64,7 +64,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_rq_dlg_calc_20v2.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_mode_vba_21.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_rq_dlg_calc_21.o := $(dml_ccflags)
+-CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags) -Wframe-larger-than=2048
++CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
+ CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
 index e5574e506a5c..c140c3da6b81 100644
 --- a/drivers/gpu/drm/i915/Makefile
