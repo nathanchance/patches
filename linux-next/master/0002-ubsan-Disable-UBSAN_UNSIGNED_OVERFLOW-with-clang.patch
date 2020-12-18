@@ -1,0 +1,26 @@
+From 7ebff300dcfcb0522c5327a7f6ad0dfb868d5baf Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 17 Dec 2020 21:48:29 -0700
+Subject: [PATCH 2/4] ubsan: Disable UBSAN_UNSIGNED_OVERFLOW with clang
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1212
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ lib/Kconfig.ubsan | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
+index 8b635fd75fe4..a404f97a0270 100644
+--- a/lib/Kconfig.ubsan
++++ b/lib/Kconfig.ubsan
+@@ -123,6 +123,7 @@ config UBSAN_SIGNED_OVERFLOW
+ config UBSAN_UNSIGNED_OVERFLOW
+ 	bool "Perform checking for unsigned arithmetic overflow"
+ 	depends on $(cc-option,-fsanitize=unsigned-integer-overflow)
++	depends on !CC_IS_CLANG
+ 	help
+ 	  This option enables -fsanitize=unsigned-integer-overflow which checks
+ 	  for overflow of any arithmetic operations with unsigned integers. This
+-- 
+2.30.0.rc0
+
