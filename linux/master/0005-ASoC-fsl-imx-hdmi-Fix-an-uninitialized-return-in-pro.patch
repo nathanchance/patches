@@ -1,4 +1,4 @@
-From 2fc7f35b26ccf5a07f46a01ca5bda1719c8a74cd Mon Sep 17 00:00:00 2001
+From ea720fc04d02c8a8e31bba0fecff95d0b0e0fcc7 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Fri, 11 Dec 2020 13:13:21 +0300
 Subject: [PATCH 5/6] ASoC: fsl: imx-hdmi: Fix an uninitialized return in probe
@@ -27,5 +27,5 @@ index 2c2a76a71940..ede4a9ad1054 100644
  	}
  
 -- 
-2.30.0.rc0
+2.30.0.rc1
 

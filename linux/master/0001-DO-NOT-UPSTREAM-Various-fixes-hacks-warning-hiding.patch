@@ -1,4 +1,4 @@
-From e909d0ea6363c5ab0b8bc13a2d54a347044268f0 Mon Sep 17 00:00:00 2001
+From 586a9f4b9f8fe35de5b4441572c28923ca8d8cf6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
 Subject: [PATCH 1/6] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -112,7 +112,7 @@ index 6bd7e405e830..6cfc9d2532d2 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 7d7097c5dc58..d33a76150e13 100644
+index e6e58b26e888..fd1ffdfab8c6 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -304,8 +304,9 @@ config ENABLE_MUST_CHECK
@@ -140,7 +140,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: a409ed156a90093a03fe6a93721ddf4c591eac87
+base-commit: 3644e2d2dda78e21edd8f5415b6d7ab03f5f54f3
 -- 
-2.30.0.rc0
+2.30.0.rc1
 
