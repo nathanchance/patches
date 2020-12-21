@@ -1,7 +1,7 @@
-From 71d162419f5933ad147e9f369495efaabb9d0a24 Mon Sep 17 00:00:00 2001
+From 189781d8e2f07a573d5aa63d7562c177a632b7d2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 17 Dec 2020 21:48:29 -0700
-Subject: [PATCH 2/4] ubsan: Disable UBSAN_UNSIGNED_OVERFLOW with clang
+Subject: [PATCH 2/5] ubsan: Disable UBSAN_UNSIGNED_OVERFLOW with clang
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1212
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -22,5 +22,5 @@ index 8b635fd75fe4..a404f97a0270 100644
  	  This option enables -fsanitize=unsigned-integer-overflow which checks
  	  for overflow of any arithmetic operations with unsigned integers. This
 -- 
-2.30.0.rc0
+2.30.0.rc1
 
