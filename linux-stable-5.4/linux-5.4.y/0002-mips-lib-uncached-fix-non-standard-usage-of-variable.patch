@@ -1,4 +1,4 @@
-From 5d2309e03f1403913f427b09f3539c85dd4ee9c7 Mon Sep 17 00:00:00 2001
+From 112089bd74de5da3178af2789943d2e75ee7a76e Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Fri, 11 Dec 2020 11:24:37 +0100
 Subject: [PATCH 2/3] mips: lib: uncached: fix non-standard usage of variable
@@ -60,5 +60,5 @@ index 09d5deea747f..f80a67c092b6 100644
  	if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
  		usp = CKSEG1ADDR(sp);
 -- 
-2.30.0.rc0
+2.30.0.rc1
 
