@@ -1,7 +1,7 @@
-From 22b516ddecf4894096bccbdc04155cc10c96909d Mon Sep 17 00:00:00 2001
+From 1aed5af761c49a9f5d684ab445bc6ab7fb4d875a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Dec 2020 19:55:48 -0700
-Subject: [PATCH 6/6] i3c/master/mipi-i3c-hci: Fix position of __maybe_unused
+Subject: [PATCH 06/11] i3c/master/mipi-i3c-hci: Fix position of __maybe_unused
  in i3c_hci_of_match
 
 Clang warns:
@@ -45,5 +45,5 @@ index 500abd27fb22..1b73647cc3b1 100644
  	{},
  };
 -- 
-2.30.0.rc1
+2.30.0
 

@@ -1,0 +1,39 @@
+From bf88de1f8194c63c9f6e8bf425f31bd763c73ad2 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 29 Dec 2020 13:40:55 -0700
+Subject: [PATCH 09/11] pinctrl: nomadik: Remove unused variable in
+ nmk_gpio_dbg_show_one
+
+Clang warns:
+
+drivers/pinctrl/nomadik/pinctrl-nomadik.c:952:8: warning: unused
+variable 'wake' [-Wunused-variable]
+                bool wake;
+                     ^
+1 warning generated.
+
+There were two wake declarations added to nmk_gpio_dbg_show_one when
+converting it to use irq_has_action but only one is used within its
+scope. Remove the unused one so there is no more warning.
+
+Fixes: f3925032d7fd ("pinctrl: nomadik: Use irq_has_action()")
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/pinctrl/nomadik/pinctrl-nomadik.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/pinctrl/nomadik/pinctrl-nomadik.c b/drivers/pinctrl/nomadik/pinctrl-nomadik.c
+index d4ea10803fd9..abfe11c7b49f 100644
+--- a/drivers/pinctrl/nomadik/pinctrl-nomadik.c
++++ b/drivers/pinctrl/nomadik/pinctrl-nomadik.c
+@@ -949,7 +949,6 @@ static void nmk_gpio_dbg_show_one(struct seq_file *s,
+ 	} else {
+ 		int irq = chip->to_irq(chip, offset);
+ 		const int pullidx = pull ? 1 : 0;
+-		bool wake;
+ 		int val;
+ 		static const char * const pulls[] = {
+ 			"none        ",
+-- 
+2.30.0
+
