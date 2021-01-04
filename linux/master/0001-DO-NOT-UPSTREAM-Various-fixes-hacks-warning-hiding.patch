@@ -1,7 +1,7 @@
-From 25138044dd76e14bddd01e9e6dec6b90846ed277 Mon Sep 17 00:00:00 2001
+From 196a0be8fb6c1225ec5e2126ad44d6816e6aa783 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -112,11 +112,11 @@ index 6bd7e405e830..6cfc9d2532d2 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index e6e58b26e888..fd1ffdfab8c6 100644
+index 7937265ef879..fc8421b7c262 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -304,8 +304,9 @@ config ENABLE_MUST_CHECK
- 	  attribute warn_unused_result" messages.
+@@ -296,8 +296,9 @@ config GDB_SCRIPTS
+ endif # DEBUG_INFO
  
  config FRAME_WARN
 -	int "Warn for stack frames larger than"
@@ -140,7 +140,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: e71ba9452f0b5b2e8dc8aa5445198cd9214a6a62
+base-commit: 36bbbd0e234d817938bdc52121a0f5473b3e58f5
 -- 
 2.30.0
 
