@@ -1,7 +1,7 @@
-From 112089bd74de5da3178af2789943d2e75ee7a76e Mon Sep 17 00:00:00 2001
+From 7797de59f6ae5eea2ab30734abf77816d564ccde Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Fri, 11 Dec 2020 11:24:37 +0100
-Subject: [PATCH 2/3] mips: lib: uncached: fix non-standard usage of variable
+Subject: [PATCH 2/4] mips: lib: uncached: fix non-standard usage of variable
  'sp'
 
 When building mips tinyconfig with clang the following warning show up:
@@ -60,5 +60,5 @@ index 09d5deea747f..f80a67c092b6 100644
  	if (sp >= (long)CKSEG0 && sp < (long)CKSEG2)
  		usp = CKSEG1ADDR(sp);
 -- 
-2.30.0.rc1
+2.30.0
 
