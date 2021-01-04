@@ -1,7 +1,7 @@
-From d8999b849711f39e1ac93137115ccddc1122bdc9 Mon Sep 17 00:00:00 2001
+From c50cd584f381cd157c5447d364aea3e5d1275628 Mon Sep 17 00:00:00 2001
 From: Marc Zyngier <maz@kernel.org>
 Date: Wed, 23 Dec 2020 12:08:54 +0000
-Subject: [PATCH 11/11] KVM: arm64: Fix hyp_cpu_pm_{init,exit} __init
+Subject: [PATCH 10/13] KVM: arm64: Fix hyp_cpu_pm_{init,exit} __init
  annotation
 
 The __init annotations on hyp_cpu_pm_{init,exit} are obviously incorrect,
