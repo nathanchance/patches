@@ -1,6 +1,6 @@
-From 6281a80d4814c6aa76cf1b60002e43d7ce2a1977 Mon Sep 17 00:00:00 2001
+From ae91e0c4754e04de21e6f41d3ab1fd28c89c85ff Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 4 Jan 2021 13:48:41 -0700
+Date: Mon, 4 Jan 2021 13:58:11 -0700
 Subject: [PATCH 4/4] powerpc: Handle .text.{hot,unlikely}.* in linker script
 
 Commit eff8728fe698 ("vmlinux.lds.h: Add PGO and AutoFDO input
@@ -24,6 +24,9 @@ ERROR: see comments in arch/powerpc/tools/head_check.sh
 
 Explicitly handle these sections like in the main linker script so
 there is no more build failure.
+
+[1]: https://reviews.llvm.org/D79600
+[2]: https://reviews.llvm.org/D92493
 
 Cc: stable@vger.kernel.org
 Fixes: 83a092cf95f2 ("powerpc: Link warning for orphan sections")
