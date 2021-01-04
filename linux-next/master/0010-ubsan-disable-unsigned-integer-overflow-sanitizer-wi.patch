@@ -1,7 +1,7 @@
 From b2e6c2da3238ff924bdeba6270a01592e95277b4 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:47:35 +0100
-Subject: [PATCH 10/10] ubsan: disable unsigned-integer-overflow sanitizer with
+Subject: [PATCH 10/11] ubsan: disable unsigned-integer-overflow sanitizer with
  clang
 
 Building ubsan kernels even for compile-testing introduced these
