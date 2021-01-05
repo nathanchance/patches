@@ -1,7 +1,7 @@
-From d3250f196a1aaa70df48ae14deba653c94b18f5c Mon Sep 17 00:00:00 2001
+From 82eb6cc022aeaecd65993863684f98d6f26e7379 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -60,7 +60,7 @@ index a02a33dcd70b..0db2299ac48c 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index e5574e506a5c..c140c3da6b81 100644
+index c1fa5a9310f9..b60317fb16e5 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
@@ -140,7 +140,7 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 
-base-commit: 766eff5a4f6c1f2a8d5030727258d622f2f750fa
+base-commit: 83dadd4cfb0c472ad1b19d05343766018a14a458
 -- 
 2.30.0
 
