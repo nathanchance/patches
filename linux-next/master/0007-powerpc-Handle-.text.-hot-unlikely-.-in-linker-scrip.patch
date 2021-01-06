@@ -1,7 +1,7 @@
-From 2f9f4ae10bc2d127e00f2d969f8705e28162f462 Mon Sep 17 00:00:00 2001
+From 400e952ad80e5c261b1138f5b0c1f7c266b4ea67 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 4 Jan 2021 13:58:11 -0700
-Subject: [PATCH 8/8] powerpc: Handle .text.{hot,unlikely}.* in linker script
+Subject: [PATCH 7/7] powerpc: Handle .text.{hot,unlikely}.* in linker script
 
 Commit eff8728fe698 ("vmlinux.lds.h: Add PGO and AutoFDO input
 sections") added ".text.unlikely.*" and ".text.hot.*" due to an LLVM
