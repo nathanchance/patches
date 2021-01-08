@@ -1,7 +1,7 @@
-From 1ef996d9d17b5b168849fe91cdce637ee617250a Mon Sep 17 00:00:00 2001
+From f12af89e17e82e3b1c3c144b83133a04354da85a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -47,10 +47,10 @@ index 0cfd6da784f8..55d85cec076d 100644
                     $(CROSS_COMPILE)objcopy \
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index a02a33dcd70b..0db2299ac48c 100644
+index 6bb7f2905821..a12361f2cf1e 100644
 --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
 +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -64,7 +64,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
+@@ -60,7 +60,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_rq_dlg_calc_20v2.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_mode_vba_21.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_rq_dlg_calc_21.o := $(dml_ccflags)
@@ -140,7 +140,7 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 
-base-commit: 2d3811a4fb231af9acb96fd0355ecb889d66ea41
+base-commit: 1c925d2030afd354a02c23500386e620e662622b
 -- 
 2.30.0
 
