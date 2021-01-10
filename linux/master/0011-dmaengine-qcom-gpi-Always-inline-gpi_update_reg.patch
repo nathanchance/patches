@@ -1,7 +1,7 @@
-From 9acafce0833e5d6479a1ae7ee3764f7bd3758dc5 Mon Sep 17 00:00:00 2001
+From f12b4ae0a90c8c60e54b7f9f94f07971dbf3c994 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 8 Jan 2021 15:13:31 -0700
-Subject: [PATCH 13/17] dmaengine: qcom: gpi: Always inline gpi_update_reg
+Subject: [PATCH 11/14] dmaengine: qcom: gpi: Always inline gpi_update_reg
 
 When building with CONFIG_UBSAN_UNSIGNED_OVERFLOW (clang specific), some
 call to gpi_update_reg does not get inlined, resulting in the following
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index d2334f535de2..8d39d3e24686 100644
+index 1a0bf6b0567a..e48eb397f433 100644
 --- a/drivers/dma/qcom/gpi.c
 +++ b/drivers/dma/qcom/gpi.c
 @@ -584,7 +584,7 @@ static inline void gpi_write_reg_field(struct gpii *gpii, void __iomem *addr,
