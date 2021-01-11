@@ -1,7 +1,7 @@
-From ba2eefe0f6a275a3e9951acc5b4f563964ab0856 Mon Sep 17 00:00:00 2001
+From 2e7e6c9ad5442e3ad8634d53b487c2f01a522555 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 29 Dec 2020 14:15:22 -0700
-Subject: [PATCH 04/12] mt76: Fix queue ID variable types after mcu queue split
+Subject: [PATCH 04/10] mt76: Fix queue ID variable types after mcu queue split
 
 Clang warns in both mt7615 and mt7915:
 
