@@ -1,7 +1,7 @@
-From 0daa7eb2fd5135e37a8dab735f2b04ad7d8f466a Mon Sep 17 00:00:00 2001
+From 24c512fda80535a23fddfd04143801594c54ea4e Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Wed, 6 Jan 2021 16:17:39 -0800
-Subject: [PATCH 5/5] x86: Treat R_386_PLT32 as R_386_PC32
+Subject: [PATCH 4/4] x86: Treat R_386_PLT32 as R_386_PC32
 
 This is similar to commit b21ebf2fb4cde1618915a97cc773e287ff49173e "x86:
 Treat R_X86_64_PLT32 as R_X86_64_PC32", but for i386.  As far as Linux
