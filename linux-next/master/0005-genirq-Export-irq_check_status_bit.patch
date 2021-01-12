@@ -1,7 +1,7 @@
-From e5030a12807e9a6df695ad5dbf0d530e70283d42 Mon Sep 17 00:00:00 2001
+From 19601986f80fc7cd52dba6ca410bdd0f4176d5ec Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:45:40 +0100
-Subject: [PATCH 05/11] genirq: Export irq_check_status_bit
+Subject: [PATCH 05/10] genirq: Export irq_check_status_bit
 
 Changing some inline functions to use the new irq_check_status_bit
 function out of line breaks calling them from loadable modules:
