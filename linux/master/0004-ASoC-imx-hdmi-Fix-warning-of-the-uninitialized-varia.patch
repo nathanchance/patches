@@ -1,7 +1,7 @@
 From 1c03730f6eb7dc8ae0af92440912cd117e3adf1e Mon Sep 17 00:00:00 2001
 From: shengjiu wang <shengjiu.wang@nxp.com>
 Date: Wed, 16 Dec 2020 18:44:24 +0800
-Subject: [PATCH 04/14] ASoC: imx-hdmi: Fix warning of the uninitialized
+Subject: [PATCH 04/15] ASoC: imx-hdmi: Fix warning of the uninitialized
  variable ret
 
 When condition ((hdmi_out && hdmi_in) || (!hdmi_out && !hdmi_in))
