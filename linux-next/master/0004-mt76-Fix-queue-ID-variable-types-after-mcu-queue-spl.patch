@@ -1,6 +1,6 @@
-From 6a2b9a93a320f49c01cbd8d65408f16284ed0b5e Mon Sep 17 00:00:00 2001
+From 7ee8bf44028216fbaebec71fceee6e42f539ab63 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 29 Dec 2020 14:15:22 -0700
+Date: Tue, 29 Dec 2020 14:15:48 -0700
 Subject: [PATCH 04/10] mt76: Fix queue ID variable types after mcu queue split
 
 Clang warns in both mt7615 and mt7915:
@@ -40,6 +40,10 @@ more neutral like mt7615_mcu_send_message.
 
 Fixes: e637763b606b ("mt76: move mcu queues to mt76_dev q_mcu array")
 Link: https://github.com/ClangBuiltLinux/linux/issues/1229
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://github.com/nbd168/wireless/commit/69cd419756fc673e8e90dd5e19a4fdd3277e7d2a
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/net/wireless/mediatek/mt76/mt7615/mcu.c |  2 +-
