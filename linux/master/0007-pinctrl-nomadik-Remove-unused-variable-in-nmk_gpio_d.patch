@@ -1,6 +1,6 @@
-From d4b2a6e9984ccdce3c10251d350df08943c334c9 Mon Sep 17 00:00:00 2001
+From 13042a370ba5dba7736e31730313a4eaddb4e51a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 29 Dec 2020 13:40:55 -0700
+Date: Tue, 29 Dec 2020 13:47:10 -0700
 Subject: [PATCH 07/14] pinctrl: nomadik: Remove unused variable in
  nmk_gpio_dbg_show_one
 
@@ -17,6 +17,15 @@ converting it to use irq_has_action but only one is used within its
 scope. Remove the unused one so there is no more warning.
 
 Fixes: f3925032d7fd ("pinctrl: nomadik: Use irq_has_action()")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Andrew Halaney <ajhalaney@gmail.com>
+Reviewed-by: Andrew Halaney <ajhalaney@gmail.com>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Reported-by: Ye Bin <yebin10@huawei.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Link: https://lore.kernel.org/r/20201229204710.1129033-1-natechancellor@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://git.kernel.org/linusw/linux-pinctrl/c/2f9d9a852f426cdc56ebd5c05c2333ea2012cc97
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/pinctrl/nomadik/pinctrl-nomadik.c | 1 -

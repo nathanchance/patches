@@ -1,6 +1,6 @@
-From dd49ddbaf2ffefc01f39f96b22d001aec8eac3f0 Mon Sep 17 00:00:00 2001
+From 8f6ebec3ee2d8e4c22a654c1ce189042c251ae29 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Mon, 21 Dec 2020 19:55:48 -0700
+Date: Mon, 21 Dec 2020 19:59:31 -0700
 Subject: [PATCH 05/14] i3c/master/mipi-i3c-hci: Fix position of __maybe_unused
  in i3c_hci_of_match
 
@@ -26,6 +26,11 @@ there are no warnings about this variable, period.
 
 Fixes: 95393f3e07ab ("i3c/master/mipi-i3c-hci: quiet maybe-unused variable warning")
 Link: https://github.com/ClangBuiltLinux/linux/issues/1221
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Acked-by: Nicolas Pitre <npitre@baylibre.com>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20201222025931.3043480-1-natechancellor@gmail.com
+Link: https://git.kernel.org/i3c/c/291b5c9870fc546376d69cf792b7885cd0c9c1b3
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  drivers/i3c/master/mipi-i3c-hci/core.c | 2 +-
