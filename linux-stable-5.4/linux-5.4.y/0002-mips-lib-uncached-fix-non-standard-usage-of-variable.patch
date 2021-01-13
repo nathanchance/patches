@@ -1,7 +1,7 @@
 From dbf8905d61b6822d63709e3c709e8b673e522686 Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Fri, 11 Dec 2020 11:24:37 +0100
-Subject: [PATCH 2/4] mips: lib: uncached: fix non-standard usage of variable
+Subject: [PATCH 2/5] mips: lib: uncached: fix non-standard usage of variable
  'sp'
 
 When building mips tinyconfig with clang the following warning show up:
