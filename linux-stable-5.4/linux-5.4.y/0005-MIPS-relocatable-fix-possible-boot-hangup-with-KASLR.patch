@@ -1,7 +1,7 @@
 From c73287e8422294f9b184a7af987c05f604b3acf9 Mon Sep 17 00:00:00 2001
 From: Alexander Lobakin <alobakin@pm.me>
 Date: Sun, 10 Jan 2021 14:21:05 +0000
-Subject: [PATCH 5/6] MIPS: relocatable: fix possible boot hangup with KASLR
+Subject: [PATCH 5/7] MIPS: relocatable: fix possible boot hangup with KASLR
  enabled
 
 LLVM-built Linux triggered a boot hangup with KASLR enabled.
