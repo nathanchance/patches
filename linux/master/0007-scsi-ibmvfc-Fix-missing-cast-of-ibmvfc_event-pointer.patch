@@ -1,7 +1,7 @@
 From 1cad4ae81bc67ed506b0be43c1ef2289df891e78 Mon Sep 17 00:00:00 2001
 From: Tyrel Datwyler <tyreld@linux.ibm.com>
 Date: Wed, 6 Jan 2021 14:37:21 -0600
-Subject: [PATCH 07/14] scsi: ibmvfc: Fix missing cast of ibmvfc_event pointer
+Subject: [PATCH 07/15] scsi: ibmvfc: Fix missing cast of ibmvfc_event pointer
  to u64 handle
 
 Commit 2aa0102c6688 ("scsi: ibmvfc: Use correlation token to tag commands")
