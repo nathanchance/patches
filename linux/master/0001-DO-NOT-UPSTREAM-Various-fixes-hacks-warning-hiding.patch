@@ -1,4 +1,4 @@
-From 6cd69a35d21e6b74aa6ccda2041a613e11a454a8 Mon Sep 17 00:00:00 2001
+From 218e7ab9086e791ab9c3eb0ff2cc92c06b5af229 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
 Subject: [PATCH 01/15] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -60,7 +60,7 @@ index 6bb7f2905821..a12361f2cf1e 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index e5574e506a5c..c140c3da6b81 100644
+index 6d9e81ea67f4..60b60204004f 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
@@ -140,7 +140,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 65f0d2414b7079556fbbcc070b3d1c9f9587606d
+base-commit: f4e087c666f54559cb4e530af1fbfc9967e14a15
 -- 
 2.30.0
 
