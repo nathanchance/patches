@@ -1,0 +1,357 @@
+From cc6498246a520445e74323c074f134c701deb0e2 Mon Sep 17 00:00:00 2001
+From: Kees Cook <keescook@chromium.org>
+Date: Fri, 21 Aug 2020 12:42:45 -0700
+Subject: [PATCH 12/21] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
+
+The .comment section doesn't belong in STABS_DEBUG. Split it out into a
+new macro named ELF_DETAILS. This will gain other non-debug sections
+that need to be accounted for when linking with --orphan-handling=warn.
+
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-arch@vger.kernel.org
+Link: https://lore.kernel.org/r/20200821194310.3089815-5-keescook@chromium.org
+Link: https://git.kernel.org/linus/c604abc3f6e3030f3a3022b184ed7d3780c34d30
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/alpha/kernel/vmlinux.lds.S           | 1 +
+ arch/arc/kernel/vmlinux.lds.S             | 1 +
+ arch/arm/kernel/vmlinux-xip.lds.S         | 1 +
+ arch/arm/kernel/vmlinux.lds.S             | 1 +
+ arch/arm64/kernel/vmlinux.lds.S           | 1 +
+ arch/csky/kernel/vmlinux.lds.S            | 1 +
+ arch/hexagon/kernel/vmlinux.lds.S         | 1 +
+ arch/ia64/kernel/vmlinux.lds.S            | 1 +
+ arch/mips/kernel/vmlinux.lds.S            | 1 +
+ arch/nds32/kernel/vmlinux.lds.S           | 1 +
+ arch/nios2/kernel/vmlinux.lds.S           | 1 +
+ arch/openrisc/kernel/vmlinux.lds.S        | 1 +
+ arch/parisc/boot/compressed/vmlinux.lds.S | 1 +
+ arch/parisc/kernel/vmlinux.lds.S          | 1 +
+ arch/powerpc/kernel/vmlinux.lds.S         | 2 +-
+ arch/riscv/kernel/vmlinux.lds.S           | 1 +
+ arch/s390/kernel/vmlinux.lds.S            | 1 +
+ arch/sh/kernel/vmlinux.lds.S              | 1 +
+ arch/sparc/kernel/vmlinux.lds.S           | 1 +
+ arch/um/kernel/dyn.lds.S                  | 2 +-
+ arch/um/kernel/uml.lds.S                  | 2 +-
+ arch/x86/boot/compressed/vmlinux.lds.S    | 2 ++
+ arch/x86/kernel/vmlinux.lds.S             | 1 +
+ include/asm-generic/vmlinux.lds.h         | 8 ++++++--
+ 24 files changed, 30 insertions(+), 5 deletions(-)
+
+diff --git a/arch/alpha/kernel/vmlinux.lds.S b/arch/alpha/kernel/vmlinux.lds.S
+index c4b5ceceab52..287901c4b167 100644
+--- a/arch/alpha/kernel/vmlinux.lds.S
++++ b/arch/alpha/kernel/vmlinux.lds.S
+@@ -74,6 +74,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/arc/kernel/vmlinux.lds.S b/arch/arc/kernel/vmlinux.lds.S
+index 6c693a9d29b6..1c8886b45393 100644
+--- a/arch/arc/kernel/vmlinux.lds.S
++++ b/arch/arc/kernel/vmlinux.lds.S
+@@ -124,6 +124,7 @@ SECTIONS
+ 	_end = . ;
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ 	DISCARDS
+ 
+ 	.arcextmap 0 : {
+diff --git a/arch/arm/kernel/vmlinux-xip.lds.S b/arch/arm/kernel/vmlinux-xip.lds.S
+index 8c74037ade22..77e7150412e7 100644
+--- a/arch/arm/kernel/vmlinux-xip.lds.S
++++ b/arch/arm/kernel/vmlinux-xip.lds.S
+@@ -154,6 +154,7 @@ SECTIONS
+ 	_end = .;
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ }
+ 
+ /*
+diff --git a/arch/arm/kernel/vmlinux.lds.S b/arch/arm/kernel/vmlinux.lds.S
+index 23150c0f0f4d..1066cabeb37b 100644
+--- a/arch/arm/kernel/vmlinux.lds.S
++++ b/arch/arm/kernel/vmlinux.lds.S
+@@ -153,6 +153,7 @@ SECTIONS
+ 	_end = .;
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ }
+ 
+ #ifdef CONFIG_STRICT_KERNEL_RWX
+diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+index 0bab37b1acbe..935f33b57fb2 100644
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -259,6 +259,7 @@ SECTIONS
+ 	_end = .;
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ 
+ 	HEAD_SYMBOLS
+ }
+diff --git a/arch/csky/kernel/vmlinux.lds.S b/arch/csky/kernel/vmlinux.lds.S
+index ae7961b973f2..c0aa2fcb0058 100644
+--- a/arch/csky/kernel/vmlinux.lds.S
++++ b/arch/csky/kernel/vmlinux.lds.S
+@@ -61,6 +61,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/hexagon/kernel/vmlinux.lds.S b/arch/hexagon/kernel/vmlinux.lds.S
+index 78f2418e97c8..9457212074a7 100644
+--- a/arch/hexagon/kernel/vmlinux.lds.S
++++ b/arch/hexagon/kernel/vmlinux.lds.S
+@@ -68,5 +68,6 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ }
+diff --git a/arch/ia64/kernel/vmlinux.lds.S b/arch/ia64/kernel/vmlinux.lds.S
+index d9d4e21107cd..5aa7ca632bdf 100644
+--- a/arch/ia64/kernel/vmlinux.lds.S
++++ b/arch/ia64/kernel/vmlinux.lds.S
+@@ -218,6 +218,7 @@ SECTIONS {
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	/* Default discards */
+ 	DISCARDS
+diff --git a/arch/mips/kernel/vmlinux.lds.S b/arch/mips/kernel/vmlinux.lds.S
+index eb9d7af93836..b8e3f940b1cb 100644
+--- a/arch/mips/kernel/vmlinux.lds.S
++++ b/arch/mips/kernel/vmlinux.lds.S
+@@ -205,6 +205,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	/* These must appear regardless of  .  */
+ 	.gptab.sdata : {
+diff --git a/arch/nds32/kernel/vmlinux.lds.S b/arch/nds32/kernel/vmlinux.lds.S
+index 9e90f30a181d..5ce8feacc110 100644
+--- a/arch/nds32/kernel/vmlinux.lds.S
++++ b/arch/nds32/kernel/vmlinux.lds.S
+@@ -64,6 +64,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/nios2/kernel/vmlinux.lds.S b/arch/nios2/kernel/vmlinux.lds.S
+index 6ad64f14617d..e1705a032b56 100644
+--- a/arch/nios2/kernel/vmlinux.lds.S
++++ b/arch/nios2/kernel/vmlinux.lds.S
+@@ -59,6 +59,7 @@ SECTIONS
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
+ 	NOTES
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/openrisc/kernel/vmlinux.lds.S b/arch/openrisc/kernel/vmlinux.lds.S
+index 2e2c72c157f3..9b2d6be4dfb3 100644
+--- a/arch/openrisc/kernel/vmlinux.lds.S
++++ b/arch/openrisc/kernel/vmlinux.lds.S
+@@ -116,6 +116,7 @@ SECTIONS
+ 	/* Throw in the debugging sections */
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+         /* Sections to be discarded -- must be last */
+ 	DISCARDS
+diff --git a/arch/parisc/boot/compressed/vmlinux.lds.S b/arch/parisc/boot/compressed/vmlinux.lds.S
+index 2ac3a643f2eb..ab7b43990857 100644
+--- a/arch/parisc/boot/compressed/vmlinux.lds.S
++++ b/arch/parisc/boot/compressed/vmlinux.lds.S
+@@ -84,6 +84,7 @@ SECTIONS
+ 	}
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ 	.note 0 : { *(.note) }
+ 
+ 	/* Sections to be discarded */
+diff --git a/arch/parisc/kernel/vmlinux.lds.S b/arch/parisc/kernel/vmlinux.lds.S
+index 99cd24f2ea01..a4d4aac52bfa 100644
+--- a/arch/parisc/kernel/vmlinux.lds.S
++++ b/arch/parisc/kernel/vmlinux.lds.S
+@@ -167,6 +167,7 @@ SECTIONS
+ 	_end = . ;
+ 
+ 	STABS_DEBUG
++	ELF_DETAILS
+ 	.note 0 : { *(.note) }
+ 
+ 	/* Sections to be discarded */
+diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
+index a9a78fd5a97b..d7aa8a8b79fb 100644
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -397,8 +397,8 @@ SECTIONS
+ 	PROVIDE32 (end = .);
+ 
+ 	STABS_DEBUG
+-
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ 	/DISCARD/ : {
+diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
+index 23cd1a9e52a1..015fd90dc7ff 100644
+--- a/arch/riscv/kernel/vmlinux.lds.S
++++ b/arch/riscv/kernel/vmlinux.lds.S
+@@ -79,6 +79,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index 7e0eb4020917..77d4e59cfeba 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -183,6 +183,7 @@ SECTIONS
+ 	/* Debugging sections.	*/
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	/* Sections to be discarded */
+ 	DISCARDS
+diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.S
+index 77a59d8c6b4d..1d8506bdebdf 100644
+--- a/arch/sh/kernel/vmlinux.lds.S
++++ b/arch/sh/kernel/vmlinux.lds.S
+@@ -85,6 +85,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/sparc/kernel/vmlinux.lds.S b/arch/sparc/kernel/vmlinux.lds.S
+index 59b6df13ddea..ee6da9a9e926 100644
+--- a/arch/sparc/kernel/vmlinux.lds.S
++++ b/arch/sparc/kernel/vmlinux.lds.S
+@@ -188,6 +188,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ }
+diff --git a/arch/um/kernel/dyn.lds.S b/arch/um/kernel/dyn.lds.S
+index f5001481010c..dacbfabf66d8 100644
+--- a/arch/um/kernel/dyn.lds.S
++++ b/arch/um/kernel/dyn.lds.S
+@@ -164,8 +164,8 @@ SECTIONS
+   PROVIDE (end = .);
+ 
+   STABS_DEBUG
+-
+   DWARF_DEBUG
++  ELF_DETAILS
+ 
+   DISCARDS
+ }
+diff --git a/arch/um/kernel/uml.lds.S b/arch/um/kernel/uml.lds.S
+index 9f21443be2c9..925adf3a6d9b 100644
+--- a/arch/um/kernel/uml.lds.S
++++ b/arch/um/kernel/uml.lds.S
+@@ -108,8 +108,8 @@ SECTIONS
+   PROVIDE (end = .);
+ 
+   STABS_DEBUG
+-
+   DWARF_DEBUG
++  ELF_DETAILS
+ 
+   DISCARDS
+ }
+diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
+index 508cfa6828c5..b26911e378bf 100644
+--- a/arch/x86/boot/compressed/vmlinux.lds.S
++++ b/arch/x86/boot/compressed/vmlinux.lds.S
+@@ -73,4 +73,6 @@ SECTIONS
+ #endif
+ 	. = ALIGN(PAGE_SIZE);	/* keep ZO size page aligned */
+ 	_end = .;
++
++	ELF_DETAILS
+ }
+diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
+index 1afe211d7a7c..fbccf793aa78 100644
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -415,6 +415,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	ELF_DETAILS
+ 
+ 	DISCARDS
+ 	/DISCARD/ : {
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index e5e242587595..63da65695a22 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -35,6 +35,7 @@
+  *
+  *	STABS_DEBUG
+  *	DWARF_DEBUG
++ *	ELF_DETAILS
+  *
+  *	DISCARDS		// must be the last
+  * }
+@@ -746,14 +747,17 @@
+ 		.debug_macro	0 : { *(.debug_macro) }			\
+ 		.debug_addr	0 : { *(.debug_addr) }
+ 
+-		/* Stabs debugging sections.  */
++/* Stabs debugging sections. */
+ #define STABS_DEBUG							\
+ 		.stab 0 : { *(.stab) }					\
+ 		.stabstr 0 : { *(.stabstr) }				\
+ 		.stab.excl 0 : { *(.stab.excl) }			\
+ 		.stab.exclstr 0 : { *(.stab.exclstr) }			\
+ 		.stab.index 0 : { *(.stab.index) }			\
+-		.stab.indexstr 0 : { *(.stab.indexstr) }		\
++		.stab.indexstr 0 : { *(.stab.indexstr) }
++
++/* Required sections not related to debugging. */
++#define ELF_DETAILS							\
+ 		.comment 0 : { *(.comment) }
+ 
+ #ifdef CONFIG_GENERIC_BUG
+-- 
+2.30.0
+

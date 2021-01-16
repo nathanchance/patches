@@ -1,7 +1,7 @@
-From 1bd1171dc62bff170a0bbe6a38075fcf8443dfb9 Mon Sep 17 00:00:00 2001
+From fed7b489d2ca51ae8098e4eb668e167af2056631 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Fri, 21 Aug 2020 12:42:47 -0700
-Subject: [PATCH 6/7] vmlinux.lds.h: Add PGO and AutoFDO input sections
+Subject: [PATCH 16/21] vmlinux.lds.h: Add PGO and AutoFDO input sections
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,10 +71,10 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index e5e242587595..130f16cc0b86 100644
+index 6473ea1c2a7a..579d6edede50 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
-@@ -520,7 +520,10 @@
+@@ -521,7 +521,10 @@
   */
  #define TEXT_TEXT							\
  		ALIGN_FUNCTION();					\
