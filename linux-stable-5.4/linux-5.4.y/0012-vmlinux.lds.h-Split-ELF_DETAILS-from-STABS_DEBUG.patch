@@ -1,7 +1,7 @@
-From cc6498246a520445e74323c074f134c701deb0e2 Mon Sep 17 00:00:00 2001
+From 28a679b0a160b16493315ed64a04c1662cdd986d Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
-Subject: [PATCH 12/21] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
+Subject: [PATCH 12/20] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
 
 The .comment section doesn't belong in STABS_DEBUG. Split it out into a
 new macro named ELF_DETAILS. This will gain other non-debug sections
@@ -321,7 +321,7 @@ index 1afe211d7a7c..fbccf793aa78 100644
  	DISCARDS
  	/DISCARD/ : {
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index e5e242587595..63da65695a22 100644
+index 130f16cc0b86..14b3a81eb3b0 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
 @@ -35,6 +35,7 @@
@@ -332,7 +332,7 @@ index e5e242587595..63da65695a22 100644
   *
   *	DISCARDS		// must be the last
   * }
-@@ -746,14 +747,17 @@
+@@ -749,14 +750,17 @@
  		.debug_macro	0 : { *(.debug_macro) }			\
  		.debug_addr	0 : { *(.debug_addr) }
  

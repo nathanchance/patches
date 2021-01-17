@@ -1,7 +1,7 @@
-From 22e67a80e96a033ca376535c747f3fcde8a162b7 Mon Sep 17 00:00:00 2001
+From b7606cf029021bfa573a7639f1a05b8478e5bfcb Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Fri, 27 Nov 2020 09:39:43 +0100
-Subject: [PATCH 14/21] mips: fix Section mismatch in reference
+Subject: [PATCH 14/20] mips: fix Section mismatch in reference
 
 When building mips tinyconfig with clang the following error show up:
 
