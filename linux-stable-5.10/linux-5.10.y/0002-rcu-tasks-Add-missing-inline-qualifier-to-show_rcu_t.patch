@@ -1,0 +1,27 @@
+From 8dcaee75fcca60309135382db252444f0cc15df9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 19 Jan 2021 16:55:37 -0700
+Subject: [PATCH 2/9] rcu-tasks: Add missing inline qualifier to
+ show_rcu_tasks_rude_gp_kthread
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ kernel/rcu/tasks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 73bbe792fe1e..b228a25d0555 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -705,7 +705,7 @@ static void show_rcu_tasks_rude_gp_kthread(void)
+ #endif /* #ifndef CONFIG_TINY_RCU */
+ 
+ #else /* #ifdef CONFIG_TASKS_RUDE_RCU */
+-static void show_rcu_tasks_rude_gp_kthread(void) {}
++static inline void show_rcu_tasks_rude_gp_kthread(void) {}
+ #endif /* #else #ifdef CONFIG_TASKS_RUDE_RCU */
+ 
+ ////////////////////////////////////////////////////////////////////////
+-- 
+2.30.0
+
