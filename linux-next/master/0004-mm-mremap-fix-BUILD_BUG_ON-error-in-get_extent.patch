@@ -1,7 +1,7 @@
-From 0a084d37970e7e270b9039ea630f512ff72324de Mon Sep 17 00:00:00 2001
+From 106d356efc67ba76058eba1931ee710f1367d60c Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:40:40 +0100
-Subject: [PATCH 4/9] mm/mremap: fix BUILD_BUG_ON() error in get_extent
+Subject: [PATCH 04/12] mm/mremap: fix BUILD_BUG_ON() error in get_extent
 
 clang cannt evaluate this function argument at compile time
 when the function is not inlined, which leads to a link
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/mm/mremap.c b/mm/mremap.c
-index a488eb3d1447..47192691fe32 100644
+index 6367534f3a6f..03d2eb290172 100644
 --- a/mm/mremap.c
 +++ b/mm/mremap.c
 @@ -335,8 +335,9 @@ enum pgt_entry {

@@ -1,0 +1,40 @@
+From 39c64c6079eeeab6027845d8a0a850170299517f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 19 Jan 2021 16:33:14 -0700
+Subject: [PATCH 12/12] amdgpu fixes
+
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 73e03a503b79..27c813fe752b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5377,7 +5377,9 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
+ 	struct amdgpu_crtc *acrtc = to_amdgpu_crtc(crtc);
+ 	struct amdgpu_device *adev = drm_to_adev(crtc->dev);
+ 	struct dm_crtc_state *acrtc_state = to_dm_crtc_state(crtc->state);
++#if defined(CONFIG_DRM_AMD_DC_DCN)
+ 	struct amdgpu_display_manager *dm = &adev->dm;
++#endif
+ 	int rc = 0;
+ 
+ 	if (enable) {
+@@ -5408,12 +5410,10 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
+ 	else
+ 		dm->active_vblank_irq_count--;
+ 
+-#if defined(CONFIG_DRM_AMD_DC_DCN)
+ 	dc_allow_idle_optimizations(
+ 		adev->dm.dc, dm->active_vblank_irq_count == 0 ? true : false);
+ 
+ 	DRM_DEBUG_DRIVER("Allow idle optimizations (MALL): %d\n", dm->active_vblank_irq_count == 0);
+-#endif
+ 
+ 	mutex_unlock(&dm->dc_lock);
+ 
+-- 
+2.30.0
+

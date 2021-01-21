@@ -1,7 +1,8 @@
-From f7aa84577423f3d99e8815a0a340f73cb9b1064e Mon Sep 17 00:00:00 2001
+From 41eb340ed3e06f33b44dd9f4ee92d827de738de0 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Jan 2021 23:34:15 +0100
-Subject: [PATCH 5/9] x86: efi: avoid BUILD_BUG_ON() for non-constant p4d_index
+Subject: [PATCH 05/12] x86: efi: avoid BUILD_BUG_ON() for non-constant
+ p4d_index
 
 When 5-level page tables are enabled, clang triggers a BUILD_BUG_ON():
 
