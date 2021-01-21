@@ -1,0 +1,51 @@
+From 0abd5e09a440b8f290de03794f94f2cdfa9ca5eb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Thu, 21 Jan 2021 14:48:05 -0700
+Subject: [PATCH 12/13] mm/zswap: Add return value in zswap_frontswap_load
+
+Clang warns:
+
+mm/zswap.c:1271:6: warning: variable 'ret' is used uninitialized
+whenever 'if' condition is true [-Wsometimes-uninitialized]
+        if (!entry->length) {
+            ^~~~~~~~~~~~~~
+mm/zswap.c:1322:9: note: uninitialized use occurs here
+        return ret;
+               ^~~
+mm/zswap.c:1271:2: note: remove the 'if' if its condition is always
+false
+        if (!entry->length) {
+        ^~~~~~~~~~~~~~~~~~~~~
+mm/zswap.c:1259:9: note: initialize the variable 'ret' to silence this
+warning
+        int ret;
+               ^
+                = 0
+1 warning generated.
+
+Prior to "mm/zswap: add the flag can_sleep_mapped", this path always
+returned 0. Restore that so we are not returning uninitialized memory.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1263
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ mm/zswap.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/mm/zswap.c b/mm/zswap.c
+index 6e0bb61d2a2c..a85334b719b9 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -1272,6 +1272,7 @@ static int zswap_frontswap_load(unsigned type, pgoff_t offset,
+ 		dst = kmap_atomic(page);
+ 		zswap_fill_page(dst, entry->value);
+ 		kunmap_atomic(dst);
++		ret = 0;
+ 		goto freeentry;
+ 	}
+ 
+-- 
+2.30.0
+

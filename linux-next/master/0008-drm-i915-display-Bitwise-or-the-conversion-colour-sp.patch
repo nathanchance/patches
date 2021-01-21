@@ -1,7 +1,7 @@
 From a4fdf08f27635a8cf9bad3e62865d85a3a476a03 Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Wed, 23 Dec 2020 10:39:17 +0000
-Subject: [PATCH 08/11] drm/i915/display: Bitwise or the conversion colour
+Subject: [PATCH 08/13] drm/i915/display: Bitwise or the conversion colour
  specifier together
 
 drivers/gpu/drm/i915/display/intel_dp.c:6922 intel_dp_update_420() warn: should this be a bitwise op?
