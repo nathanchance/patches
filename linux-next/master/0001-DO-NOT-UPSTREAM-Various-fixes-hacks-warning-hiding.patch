@@ -1,7 +1,7 @@
-From 17e37c4de8359240fffcabd615056e4156f2faf0 Mon Sep 17 00:00:00 2001
+From 97df012f0df0267c43345f76e6b284f1ef936522 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/12] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -60,7 +60,7 @@ index 6bb7f2905821..a12361f2cf1e 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 739e37f56b90..6a1446cdbe2f 100644
+index d6ac946d0407..48aaf0b66437 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
@@ -72,10 +72,10 @@ index 739e37f56b90..6a1446cdbe2f 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 5385b081a376..09256d2e4621 100644
+index 0b1a46a0d866..70668ec877a6 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1652,8 +1652,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+@@ -1669,8 +1669,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
@@ -112,10 +112,10 @@ index 6bd7e405e830..6cfc9d2532d2 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 78361f0abe3a..5661a9822f14 100644
+index dd7d8d35b2a5..4335892c481f 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -296,8 +296,9 @@ config GDB_SCRIPTS
+@@ -295,8 +295,9 @@ config GDB_SCRIPTS
  endif # DEBUG_INFO
  
  config FRAME_WARN
@@ -140,7 +140,7 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 
-base-commit: 647060f3b592d3c8df0c85dd887557b03e6ea897
+base-commit: bc085f8fc88fc16796c9f2364e2bfb3fef305cad
 -- 
 2.30.0
 
