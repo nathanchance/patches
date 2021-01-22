@@ -1,7 +1,7 @@
 From 65d261e40f03bf23fa694b429961e11d05523bef Mon Sep 17 00:00:00 2001
 From: Tian Tao <tiantao6@hisilicon.com>
 Date: Thu, 21 Jan 2021 17:57:10 +0800
-Subject: [PATCH 13/13] mm/zswap: fix variable 'entry' is uninitialized when
+Subject: [PATCH 13/14] mm/zswap: fix variable 'entry' is uninitialized when
  used
 
 the entry has not been initialized when it is used, so allocate PAGE_SIZE

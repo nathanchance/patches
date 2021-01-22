@@ -1,7 +1,7 @@
 From c0fbcf8383a59de1e7262b6b17465e71c61fd9a7 Mon Sep 17 00:00:00 2001
 From: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
 Date: Wed, 20 Jan 2021 12:23:06 -0500
-Subject: [PATCH 11/13] drm/amd/display: Fix unused variable warning
+Subject: [PATCH 11/14] drm/amd/display: Fix unused variable warning
 
 [Why]
 The dm struct is only being used if DCN config is defined and this
