@@ -1,7 +1,7 @@
-From 97df012f0df0267c43345f76e6b284f1ef936522 Mon Sep 17 00:00:00 2001
+From 8f04fe5a84fcec3b8251a2665b890fd81d514a1a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -60,7 +60,7 @@ index 6bb7f2905821..a12361f2cf1e 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index d6ac946d0407..48aaf0b66437 100644
+index ea1cc5736049..74e6fd8b1e01 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
@@ -72,10 +72,10 @@ index d6ac946d0407..48aaf0b66437 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 0b1a46a0d866..70668ec877a6 100644
+index 22e39d938f17..95bed558b167 100644
 --- a/drivers/gpu/drm/i915/i915_request.c
 +++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1669,8 +1669,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
+@@ -1676,8 +1676,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
  static bool busywait_stop(unsigned long timeout, unsigned int cpu)
  {
  	unsigned int this_cpu;
@@ -140,7 +140,7 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 
-base-commit: bc085f8fc88fc16796c9f2364e2bfb3fef305cad
+base-commit: 226871e2eda4832d94c3239add7e52ad17b81ce5
 -- 
 2.30.0
 
