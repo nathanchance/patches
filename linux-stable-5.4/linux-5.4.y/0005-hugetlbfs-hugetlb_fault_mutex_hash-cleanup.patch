@@ -1,7 +1,7 @@
-From 4a0debd316b4235561eb73922c1d72254e68a6dc Mon Sep 17 00:00:00 2001
+From 13cefec8bfbee0ee8eb34b437c04cbbf6ad0bf70 Mon Sep 17 00:00:00 2001
 From: Mike Kravetz <mike.kravetz@oracle.com>
 Date: Sat, 30 Nov 2019 17:56:30 -0800
-Subject: [PATCH 05/19] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
+Subject: [PATCH 05/20] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
 
 A new clang diagnostic (-Wsizeof-array-div) warns about the calculation
 to determine the number of u32's in an array of unsigned longs.
