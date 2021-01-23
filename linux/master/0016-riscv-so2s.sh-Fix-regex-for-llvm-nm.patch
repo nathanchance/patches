@@ -1,6 +1,6 @@
-From c7462cd2c740e8b097e41ad39b74991f6ce5fbb3 Mon Sep 17 00:00:00 2001
+From bfcdc1e2dc13e42c30deab25484fe5c33976291f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Thu, 21 Jan 2021 20:43:48 -0700
+Date: Sat, 23 Jan 2021 12:08:08 -0700
 Subject: [PATCH 16/16] riscv: so2s.sh: Fix regex for llvm-nm
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1266
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/so2s.sh b/arch/riscv/kernel/vdso/so2s.sh
-index e64cb6d9440e..09f8979a30f8 100755
+index e64cb6d9440e..04182cf3a991 100755
 --- a/arch/riscv/kernel/vdso/so2s.sh
 +++ b/arch/riscv/kernel/vdso/so2s.sh
 @@ -2,5 +2,5 @@
@@ -18,7 +18,7 @@ index e64cb6d9440e..09f8979a30f8 100755
  # Copyright 2020 Palmer Dabbelt <palmerdabbelt@google.com>
  
 -sed 's!\([0-9a-f]*\) T \([a-z0-9_]*\)\(@@LINUX_4.15\)*!.global \2\n.set \2,0x\1!' \
-+sed 's!\([0-9a-f]*\) T \([a-z0-9_]*\)\(@*LINUX_4.15\)*!.global \2\n.set \2,0x\1!' \
++sed 's!\([0-9a-f]*\) T \([a-z0-9_]*\)\(@@\?LINUX_4.15\)*!.global \2\n.set \2,0x\1!' \
  | grep '^\.'
 -- 
 2.30.0
