@@ -1,4 +1,4 @@
-From 8b3026feede995da2dce5f426b4ef4c752411c52 Mon Sep 17 00:00:00 2001
+From 8314e5d53b9ccc70e3f80e2180b24e583b38e048 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 13 Nov 2020 19:37:22 +0200
 Subject: [PATCH 02/12] arm: lib: xor-neon: remove unnecessary GCC < 4.6
@@ -23,7 +23,7 @@ Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 Link: https://lore.kernel.org/r/20201113173723.2078845-2-adrian.ratiu@collabora.com
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/arm/lib/xor-neon.c | 9 +--------
  1 file changed, 1 insertion(+), 8 deletions(-)

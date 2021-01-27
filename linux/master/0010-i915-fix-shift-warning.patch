@@ -1,4 +1,4 @@
-From 5286781f71d2816fbc7571ffbfe9022d30cb7fbb Mon Sep 17 00:00:00 2001
+From d022dd12a27193c286c158ca2f694197eff64ecd Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Sun, 3 Jan 2021 14:51:44 +0100
 Subject: [PATCH 10/12] i915: fix shift warning
@@ -17,7 +17,7 @@ Change it to hweight_long() to avoid the warning.
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by:: Chris Wilson <chris@chris-wilson.co.uk>
 Link: https://lore.kernel.org/r/20210103135158.3591442-1-arnd@kernel.org
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

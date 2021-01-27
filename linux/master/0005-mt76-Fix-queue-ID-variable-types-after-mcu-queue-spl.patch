@@ -1,4 +1,4 @@
-From dc21637faa41659a8604eb7e09666d0b22321cda Mon Sep 17 00:00:00 2001
+From 80bbba452825845f5beb6cd2efc18988bdb85aa9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 29 Dec 2020 14:15:48 -0700
 Subject: [PATCH 05/12] mt76: Fix queue ID variable types after mcu queue split
@@ -44,7 +44,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Link: https://github.com/nbd168/wireless/commit/69cd419756fc673e8e90dd5e19a4fdd3277e7d2a
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/net/wireless/mediatek/mt76/mt7615/mcu.c |  2 +-
  drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 10 +++++-----

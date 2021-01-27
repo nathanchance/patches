@@ -1,4 +1,4 @@
-From 90da59ee3e8b444e5d685ea96c0802f0b4a12dd6 Mon Sep 17 00:00:00 2001
+From 7c94333e0c8970aa62785414b63ff87467365782 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Jan 2021 23:34:15 +0100
 Subject: [PATCH 08/12] x86: efi: avoid BUILD_BUG_ON() for non-constant
@@ -18,7 +18,7 @@ Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
 Tested-by: Nathan Chancellor <natechancellor@gmail.com>
 Link: https://lore.kernel.org/r/20210107223424.4135538-1-arnd@kernel.org
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/platform/efi/efi_64.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

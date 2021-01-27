@@ -1,4 +1,4 @@
-From ce032e7c622321847113a8396b1e04a45d843f6f Mon Sep 17 00:00:00 2001
+From 23fb3d334c6728b7f8f2e0aebf2eeab03fa48054 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:40:40 +0100
 Subject: [PATCH 06/12] mm/mremap: fix BUILD_BUG_ON() error in get_extent
@@ -16,7 +16,7 @@ Mark the function as __always_inline to avoid it.
 Fixes: 9ad9718bfa41 ("mm/mremap: calculate extent in one place")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://lore.kernel.org/r/20201230154104.522605-1-arnd@kernel.org
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  mm/mremap.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)

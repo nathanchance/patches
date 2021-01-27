@@ -1,4 +1,4 @@
-From e31067247e4aeea0d3bc50b93933bab17bc298eb Mon Sep 17 00:00:00 2001
+From 9db78c666d6b85515da79a1abc7c441fed449da4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 21 Dec 2020 19:59:31 -0700
 Subject: [PATCH 04/12] i3c/master/mipi-i3c-hci: Fix position of __maybe_unused
@@ -31,7 +31,7 @@ Acked-by: Nicolas Pitre <npitre@baylibre.com>
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Link: https://lore.kernel.org/r/20201222025931.3043480-1-natechancellor@gmail.com
 Link: https://git.kernel.org/i3c/c/291b5c9870fc546376d69cf792b7885cd0c9c1b3
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/i3c/master/mipi-i3c-hci/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

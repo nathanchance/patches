@@ -1,4 +1,4 @@
-From 57a104afe54241e4a5dc54bb88c822251acaccb7 Mon Sep 17 00:00:00 2001
+From 1919d7801b9237665f2c90cadf734f0264387667 Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Wed, 6 Jan 2021 16:17:39 -0800
 Subject: [PATCH 09/12] x86: Treat R_386_PLT32 as R_386_PC32
@@ -36,7 +36,7 @@ Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
 Tested-by: Nathan Chancellor <natechancellor@gmail.com>
 Link: https://lore.kernel.org/r/20210107001739.1321725-1-maskray@google.com
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/kernel/module.c | 1 +
  arch/x86/tools/relocs.c  | 2 ++
