@@ -1,7 +1,7 @@
-From 8efb978d76da90c55dc4dbe61d186204168f8d0f Mon Sep 17 00:00:00 2001
+From 1fcaf87e5026741b0641d1605b31c1c1b28dd69c Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:31:24 +0200
-Subject: [PATCH 03/10] drm/rockchip: cdn-dp-core: Make
+Subject: [PATCH 3/9] drm/rockchip: cdn-dp-core: Make
  cdn_dp_core_suspend/resume __maybe_unused
 
 With the new static annotation, the compiler warns when the functions
@@ -17,7 +17,7 @@ Fixes: 7c49abb4c2f8 ("drm/rockchip: cdn-dp-core: Make cdn_dp_core_suspend/resume
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
 Link: https://lore.kernel.org/r/20200428213138.3171708-1-arnd@arndb.de
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/rockchip/cdn-dp-core.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

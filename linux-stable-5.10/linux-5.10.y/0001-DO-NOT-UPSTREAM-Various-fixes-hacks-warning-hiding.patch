@@ -1,7 +1,7 @@
-From 7d77333ba84c5738a5fbd87af63a73aefcd4ff36 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 15 Dec 2020 13:50:37 -0700
-Subject: [PATCH 01/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+From 9c91282934419037c5e03c5ee0c2ec3ef4bef340 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 27 Jan 2021 10:08:59 -0700
+Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -19,7 +19,7 @@ fixed is a long term project.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/riscv/kernel/vdso/Makefile            | 3 ++-
  drivers/gpu/drm/i915/Makefile              | 1 -
@@ -126,7 +126,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 8dc0fcbcfa97bdeb514fa229125791a467e0e319
+base-commit: b97134d151275424dc83864d6d2cf52f327adaef
 -- 
 2.30.0
 
