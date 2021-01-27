@@ -1,4 +1,4 @@
-From 704afb11f7e37b5d741be00ee37839e3faed4730 Mon Sep 17 00:00:00 2001
+From 59a015686ad5db7c227f0e2658ff9e6f47320c3e Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 12/20] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
@@ -12,7 +12,7 @@ Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: linux-arch@vger.kernel.org
 Link: https://lore.kernel.org/r/20200821194310.3089815-5-keescook@chromium.org
 Link: https://git.kernel.org/linus/c604abc3f6e3030f3a3022b184ed7d3780c34d30
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/alpha/kernel/vmlinux.lds.S           | 1 +
  arch/arc/kernel/vmlinux.lds.S             | 1 +
@@ -208,10 +208,10 @@ index 99cd24f2ea01..a4d4aac52bfa 100644
  
  	/* Sections to be discarded */
 diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
-index a9a78fd5a97b..d7aa8a8b79fb 100644
+index 88858ed9d295..d647d7ee12a6 100644
 --- a/arch/powerpc/kernel/vmlinux.lds.S
 +++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -397,8 +397,8 @@ SECTIONS
+@@ -388,8 +388,8 @@ SECTIONS
  	PROVIDE32 (end = .);
  
  	STABS_DEBUG

@@ -1,4 +1,4 @@
-From 13cefec8bfbee0ee8eb34b437c04cbbf6ad0bf70 Mon Sep 17 00:00:00 2001
+From 0a7bf55e75bd3950186e7dfdc2851cf93912b381 Mon Sep 17 00:00:00 2001
 From: Mike Kravetz <mike.kravetz@oracle.com>
 Date: Sat, 30 Nov 2019 17:56:30 -0800
 Subject: [PATCH 05/20] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
@@ -25,7 +25,7 @@ Cc: David Bolvansky <david.bolvansky@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Link: https://git.kernel.org/linus/552546366a30d88bd1d6f5efe848b2ab50fd57e5
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  fs/hugetlbfs/inode.c    |  4 ++--
  include/linux/hugetlb.h |  2 +-

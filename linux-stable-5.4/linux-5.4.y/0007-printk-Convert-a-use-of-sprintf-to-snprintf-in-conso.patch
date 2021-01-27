@@ -1,4 +1,4 @@
-From 61ced678716a4e558b6cf4874095f2c5c8ad4aba Mon Sep 17 00:00:00 2001
+From b4711ff99222fc37011ff66b5a8719efc565a138 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 30 Jan 2020 15:16:44 -0700
 Subject: [PATCH 07/20] printk: Convert a use of sprintf to snprintf in
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Reviewed-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
 Signed-off-by: Petr Mladek <pmladek@suse.com>
 Link: https://git.kernel.org/linus/5661dd95a2958634485bb1a53f90a6ab621d4b0c
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  kernel/printk/printk.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)

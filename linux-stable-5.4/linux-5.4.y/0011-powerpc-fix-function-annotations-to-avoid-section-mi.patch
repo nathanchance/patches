@@ -1,4 +1,4 @@
-From 32fc98d079461e108357036352ebae7c58265a91 Mon Sep 17 00:00:00 2001
+From 6c6ed36a7d734d00966fb68d7bb931cc5bb7ff54 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
 Subject: [PATCH 11/20] powerpc: fix function annotations to avoid section
@@ -27,7 +27,7 @@ Signed-off-by: Vladis Dronov <vdronov@redhat.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Link: https://lore.kernel.org/r/20200729133741.62789-1-vdronov@redhat.com
 Link: https://git.kernel.org/linus/aff779515a070df7e23da9e86f1096f7d10d647e
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/kernel/prom_init.c          | 4 ++--
  arch/powerpc/mm/book3s64/radix_pgtable.c | 4 ++--

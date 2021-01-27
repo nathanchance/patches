@@ -1,4 +1,4 @@
-From 28012c365c9c3b867f4341876d5c2bb73e03c4ed Mon Sep 17 00:00:00 2001
+From c3f8f1e4e60162b64762afee924b7209bfbfd782 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 23 Jun 2020 20:59:20 -0700
 Subject: [PATCH 08/20] powerpc/boot: Use address-of operator on section
@@ -27,7 +27,7 @@ Tested-by: Geoff Levand <geoff@infradead.org>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Link: https://lore.kernel.org/r/20200624035920.835571-1-natechancellor@gmail.com
 Link: https://git.kernel.org/linus/df4232d96e724d09e54a623362f9f610727f059f
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/boot/main.c | 4 ++--
  arch/powerpc/boot/ps3.c  | 2 +-

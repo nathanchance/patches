@@ -1,4 +1,4 @@
-From 6a764be130ccb4399f97e2ac0167a5d8b1eb53a1 Mon Sep 17 00:00:00 2001
+From bdf756e81fe6f699c42c2f0a833d7d221d6a7cf4 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Tue, 25 Feb 2020 14:13:28 +1100
 Subject: [PATCH 09/20] powerpc/64s: Fix section mismatch warnings from boot
@@ -73,7 +73,7 @@ Reported-by: Roman Bolshakov <r.bolshakov@yadro.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Link: https://lore.kernel.org/r/20200225031328.14676-1-mpe@ellerman.id.au
 Link: https://git.kernel.org/linus/6eeb9b3b9ce588f14a697737a30d0702b5a20293
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/kernel/head_64.S | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

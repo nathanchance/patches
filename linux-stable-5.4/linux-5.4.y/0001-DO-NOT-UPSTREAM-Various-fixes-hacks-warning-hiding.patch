@@ -1,6 +1,6 @@
-From 5212a86392002d3a1f174b1914de238028112ae7 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <natechancellor@gmail.com>
-Date: Tue, 15 Dec 2020 13:50:37 -0700
+From 2e2847dbb75643b5c7aafafa1c9f0294a89cb32b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 27 Jan 2021 10:19:15 -0700
 Subject: [PATCH 01/20] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
@@ -19,7 +19,7 @@ fixed is a long term project.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/riscv/kernel/vdso/Makefile            | 3 ++-
  drivers/gpu/drm/i915/Makefile              | 1 -
@@ -126,7 +126,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 09f983f0c7fc0db79a5f6c883ec3510d424c369c
+base-commit: 131f8d8a889a5ca66a835eea82bba043ac91a7cf
 -- 
 2.30.0
 

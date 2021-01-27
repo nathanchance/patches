@@ -1,4 +1,4 @@
-From 61816df708727aaca74ffdbc1d302c40fde78c15 Mon Sep 17 00:00:00 2001
+From 8c0ff8d075ed56ac4e4496c4b93ae96d6d1c4d88 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 1 Sep 2020 00:08:34 -0700
 Subject: [PATCH 02/20] mwifiex: Remove unnecessary braces from
@@ -30,7 +30,7 @@ Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 Link: https://lore.kernel.org/r/20200901070834.1015754-1-natechancellor@gmail.com
 Link: https://git.kernel.org/linus/6a953dc4dbd1c7057fb765a24f37a5e953c85fb0
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/net/wireless/marvell/mwifiex/cmdevt.c | 4 ++--
  drivers/net/wireless/marvell/mwifiex/fw.h     | 8 ++++----

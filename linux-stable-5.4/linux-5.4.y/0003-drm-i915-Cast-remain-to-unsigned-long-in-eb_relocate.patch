@@ -1,4 +1,4 @@
-From ca29a4f64d0ec76048e70131f82a9d781d01aea9 Mon Sep 17 00:00:00 2001
+From d6a5ff4a7ee64884ba40d01a8be58385945a8d81 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 22:47:07 -0700
 Subject: [PATCH 03/20] drm/i915: Cast remain to unsigned long in
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200214054706.33870-1-natechancellor@gmail.com
 Link: https://git.kernel.org/linus/7bf03e7504e433da274963c447648876902b86df
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

@@ -1,4 +1,4 @@
-From 4aae95b6575466f1b741a35b19ecb357d2ff88f2 Mon Sep 17 00:00:00 2001
+From 723d7c1e74cb958a444db7bb5208794ba8fab318 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
 Subject: [PATCH 13/20] vmlinux.lds.h: Add .symtab, .strtab, and .shstrtab to
@@ -22,7 +22,7 @@ Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: linux-arch@vger.kernel.org
 Link: https://lore.kernel.org/r/20200821194310.3089815-6-keescook@chromium.org
 Link: https://git.kernel.org/linus/a840c4de569f610bc5ee043b613c35b779d23186
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  include/asm-generic/vmlinux.lds.h | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)

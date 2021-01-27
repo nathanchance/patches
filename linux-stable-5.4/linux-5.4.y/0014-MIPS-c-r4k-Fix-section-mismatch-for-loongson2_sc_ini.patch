@@ -1,4 +1,4 @@
-From 32c5e51cdcdce1362024511ceb17a2d200405246 Mon Sep 17 00:00:00 2001
+From 83f45c08a2d4caa1452a0ace22172eeb704adf72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 5 Jan 2021 13:34:56 -0700
 Subject: [PATCH 14/20] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
@@ -19,7 +19,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Reviewed-by: Huacai Chen <chenhuacai@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Link: https://git.kernel.org/mips/c/c58734eee6a2151ba033c0dcb31902c89e310374
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/mips/mm/c-r4k.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

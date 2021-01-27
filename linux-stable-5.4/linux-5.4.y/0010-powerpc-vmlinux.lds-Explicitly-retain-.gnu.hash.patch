@@ -1,4 +1,4 @@
-From 6523e7560ec519239d87cfa7598ca1bc7373da56 Mon Sep 17 00:00:00 2001
+From dea2d35e2a253f8941ff73d3d47c833fbc09b390 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
 Subject: [PATCH 10/20] powerpc/vmlinux.lds: Explicitly retain .gnu.hash
@@ -23,16 +23,16 @@ So add an entry to explicitly retain it, as we do for .hash.
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Link: https://lore.kernel.org/r/20200227045933.22967-1-mpe@ellerman.id.au
 Link: https://git.kernel.org/linus/ead983604c5a390f1e3ce085945b60e82f08dbbe
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/kernel/vmlinux.lds.S | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
-index 4def51c12e1b..a9a78fd5a97b 100644
+index a4e576019d79..88858ed9d295 100644
 --- a/arch/powerpc/kernel/vmlinux.lds.S
 +++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -293,6 +293,7 @@ SECTIONS
+@@ -284,6 +284,7 @@ SECTIONS
  		*(.dynamic)
  	}
  	.hash : AT(ADDR(.hash) - LOAD_OFFSET) { *(.hash) }

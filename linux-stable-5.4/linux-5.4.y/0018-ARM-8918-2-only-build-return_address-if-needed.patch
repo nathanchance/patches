@@ -1,4 +1,4 @@
-From f082698cd624209fb2b6f3dfbdecc51a1679a598 Mon Sep 17 00:00:00 2001
+From c2a7b6369649650a31ec4837a2bed84765de8d63 Mon Sep 17 00:00:00 2001
 From: Ben Dooks <ben-linux@fluff.org>
 Date: Mon, 4 Nov 2019 18:15:15 +0100
 Subject: [PATCH 18/20] ARM: 8918/2: only build return_address() if needed
@@ -18,7 +18,7 @@ Fixes: aeea3592a13b ("ARM: 8158/1: LLVMLinux: use static inline in ARM ftrace.h"
 Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Link: https://git.kernel.org/linus/fb033c95c94ca1ee3d16e04ebdb85d65fb55fff8
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/arm/kernel/Makefile         | 6 +++++-
  arch/arm/kernel/return_address.c | 4 ----
