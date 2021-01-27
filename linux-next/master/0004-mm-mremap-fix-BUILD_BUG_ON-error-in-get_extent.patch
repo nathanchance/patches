@@ -1,7 +1,7 @@
-From 9d0ba3e7473bbe36ab5575791363936d1cbddbef Mon Sep 17 00:00:00 2001
+From c5c6da525f57cc0fd26aff0eb115b28dd0d890a2 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:40:40 +0100
-Subject: [PATCH 04/13] mm/mremap: fix BUILD_BUG_ON() error in get_extent
+Subject: [PATCH 4/9] mm/mremap: fix BUILD_BUG_ON() error in get_extent
 
 clang cannt evaluate this function argument at compile time
 when the function is not inlined, which leads to a link
@@ -16,7 +16,7 @@ Mark the function as __always_inline to avoid it.
 Fixes: 9ad9718bfa41 ("mm/mremap: calculate extent in one place")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://lore.kernel.org/r/20201230154104.522605-1-arnd@kernel.org
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  mm/mremap.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)

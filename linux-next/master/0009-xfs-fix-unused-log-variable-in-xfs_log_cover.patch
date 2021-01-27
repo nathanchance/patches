@@ -1,0 +1,38 @@
+From 0c2e3b95942fb0800da18d4ea271df620c39201b Mon Sep 17 00:00:00 2001
+From: Brian Foster <bfoster@redhat.com>
+Date: Mon, 25 Jan 2021 08:22:56 -0500
+Subject: [PATCH 9/9] xfs: fix unused log variable in xfs_log_cover()
+
+The log variable is only used in kernels with asserts enabled.
+Remove it and open code the dereference to avoid unused variable
+warnings.
+
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Link: https://lore.kernel.org/r/20210125132616.GB2047559@bfoster/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/xfs/xfs_log.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
+index 58699881c100..d8b814227734 100644
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -1108,12 +1108,11 @@ static int
+ xfs_log_cover(
+ 	struct xfs_mount	*mp)
+ {
+-	struct xlog		*log = mp->m_log;
+ 	int			error = 0;
+ 	bool			need_covered;
+ 
+-	ASSERT((xlog_cil_empty(log) && xlog_iclogs_empty(log) &&
+-	        !xfs_ail_min_lsn(log->l_ailp)) ||
++	ASSERT((xlog_cil_empty(mp->m_log) && xlog_iclogs_empty(mp->m_log) &&
++	        !xfs_ail_min_lsn(mp->m_log->l_ailp)) ||
+ 	       XFS_FORCED_SHUTDOWN(mp));
+ 
+ 	if (!xfs_log_writable(mp))
+-- 
+2.30.0
+

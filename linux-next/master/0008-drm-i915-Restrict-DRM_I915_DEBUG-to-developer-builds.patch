@@ -1,7 +1,7 @@
-From d4f58999feb71c067541623da26208a7f44acab4 Mon Sep 17 00:00:00 2001
+From 31c4af9c6295de3a2eab259cae9b70e4ed64b8bc Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Fri, 22 Jan 2021 09:10:58 +0000
-Subject: [PATCH 11/13] drm/i915: Restrict DRM_I915_DEBUG to developer builds
+Subject: [PATCH 8/9] drm/i915: Restrict DRM_I915_DEBUG to developer builds
 
 Let's not encourage everybody to build i915's debug code, and certainly
 not the build robots who need to scrutinise the production build. Since
@@ -14,7 +14,7 @@ Fixes: 4f86975f539d ("drm/i915: Add DEBUG_GEM to the recommended CI config")
 Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
 Acked-by: Jani Nikula <jani.nikula@intel.com>
 Link: https://lore.kernel.org/r/20210122091058.5145-1-chris@chris-wilson.co.uk
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/Kconfig.debug | 2 ++
  1 file changed, 2 insertions(+)

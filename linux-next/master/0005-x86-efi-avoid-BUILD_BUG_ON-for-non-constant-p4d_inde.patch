@@ -1,8 +1,7 @@
-From cf52020304d9b4eacd9c98bd92bd0d02caf06867 Mon Sep 17 00:00:00 2001
+From c4173a429cb5997081d656f79ff157a5b42c84cf Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Jan 2021 23:34:15 +0100
-Subject: [PATCH 05/13] x86: efi: avoid BUILD_BUG_ON() for non-constant
- p4d_index
+Subject: [PATCH 5/9] x86: efi: avoid BUILD_BUG_ON() for non-constant p4d_index
 
 When 5-level page tables are enabled, clang triggers a BUILD_BUG_ON():
 
@@ -15,10 +14,10 @@ so it only triggers for constant input.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/256
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
-Tested-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 Link: https://lore.kernel.org/r/20210107223424.4135538-1-arnd@kernel.org
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/platform/efi/efi_64.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
