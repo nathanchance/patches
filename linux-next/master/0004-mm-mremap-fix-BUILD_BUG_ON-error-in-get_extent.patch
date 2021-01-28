@@ -1,4 +1,4 @@
-From c5c6da525f57cc0fd26aff0eb115b28dd0d890a2 Mon Sep 17 00:00:00 2001
+From 665a3d30bcbf0aff7e1eeefe7987cebdcdecec57 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:40:40 +0100
 Subject: [PATCH 4/9] mm/mremap: fix BUILD_BUG_ON() error in get_extent
@@ -22,7 +22,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/mm/mremap.c b/mm/mremap.c
-index 6367534f3a6f..03d2eb290172 100644
+index b2e3ea9c2be8..ec8f840399ed 100644
 --- a/mm/mremap.c
 +++ b/mm/mremap.c
 @@ -335,8 +335,9 @@ enum pgt_entry {
