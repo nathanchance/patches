@@ -1,7 +1,7 @@
-From 93c42fedf167e0951f72464eee9a4c026f9ce659 Mon Sep 17 00:00:00 2001
+From 813e293ec30d0f689d76553f7969daf7e53dc298 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Jan 2021 23:34:15 +0100
-Subject: [PATCH 5/9] x86: efi: avoid BUILD_BUG_ON() for non-constant p4d_index
+Subject: [PATCH 5/8] x86: efi: avoid BUILD_BUG_ON() for non-constant p4d_index
 
 When 5-level page tables are enabled, clang triggers a BUILD_BUG_ON():
 
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/platform/efi/efi_64.c b/arch/x86/platform/efi/efi_64.c
-index e1e8d4e3a213..62bb1616b4a5 100644
+index 62a6c8650773..f90dbc71e861 100644
 --- a/arch/x86/platform/efi/efi_64.c
 +++ b/arch/x86/platform/efi/efi_64.c
-@@ -137,8 +137,8 @@ void efi_sync_low_kernel_mappings(void)
+@@ -134,8 +134,8 @@ void efi_sync_low_kernel_mappings(void)
  	 * As with PGDs, we share all P4D entries apart from the one entry
  	 * that covers the EFI runtime mapping space.
  	 */
