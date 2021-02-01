@@ -1,0 +1,26 @@
+From 0d62e14ee90daf519d214d08dca043bd829a93b4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 31 Jan 2021 18:43:58 -0700
+Subject: [PATCH 10/10] btrfs: Disable -Wnull-pointer-arithmetic
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1285
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/btrfs/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/btrfs/Makefile b/fs/btrfs/Makefile
+index b634c42115ea..5049093a252c 100644
+--- a/fs/btrfs/Makefile
++++ b/fs/btrfs/Makefile
+@@ -15,6 +15,7 @@ subdir-ccflags-y += $(call cc-option, -Wstringop-truncation)
+ subdir-ccflags-y += -Wno-missing-field-initializers
+ subdir-ccflags-y += -Wno-sign-compare
+ subdir-ccflags-y += -Wno-type-limits
++subdir-ccflags-y += $(call cc-disable-warning, null-pointer-arithmetic)
+ 
+ obj-$(CONFIG_BTRFS_FS) := btrfs.o
+ 
+-- 
+2.30.0
+
