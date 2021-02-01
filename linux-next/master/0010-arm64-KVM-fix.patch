@@ -1,0 +1,27 @@
+From 38e23c352deabcd037eaa684ffdf1dc6ba57d733 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 1 Feb 2021 14:09:01 -0700
+Subject: [PATCH 10/10] arm64: KVM fix
+
+Link: https://lore.kernel.org/kvmarm/20210201104251.5foc64qq3ewgnhuz@google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm64/kvm/hyp/nvhe/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+index 09d04dd50eb8..ed10fcf1b345 100644
+--- a/arch/arm64/kvm/hyp/nvhe/Makefile
++++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+@@ -7,7 +7,7 @@ asflags-y := -D__KVM_NVHE_HYPERVISOR__
+ ccflags-y := -D__KVM_NVHE_HYPERVISOR__
+ 
+ hostprogs := gen-hyprel
+-HOST_EXTRACFLAGS += -I$(srctree)/include
++HOST_EXTRACFLAGS += -I$(objtree)/include
+ 
+ obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o \
+ 	 hyp-main.o hyp-smp.o psci-relay.o
+-- 
+2.30.0
+

@@ -1,4 +1,4 @@
-From 813e293ec30d0f689d76553f7969daf7e53dc298 Mon Sep 17 00:00:00 2001
+From 677bed4cf647c6f7190baf0e30ba78912bece541 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Jan 2021 23:34:15 +0100
 Subject: [PATCH 05/10] x86: efi: avoid BUILD_BUG_ON() for non-constant
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/platform/efi/efi_64.c b/arch/x86/platform/efi/efi_64.c
-index 62a6c8650773..f90dbc71e861 100644
+index e0a2b037da25..0bb33b834cf8 100644
 --- a/arch/x86/platform/efi/efi_64.c
 +++ b/arch/x86/platform/efi/efi_64.c
 @@ -134,8 +134,8 @@ void efi_sync_low_kernel_mappings(void)
