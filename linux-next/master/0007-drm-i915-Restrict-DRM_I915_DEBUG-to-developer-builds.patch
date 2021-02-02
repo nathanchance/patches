@@ -1,7 +1,7 @@
-From 77acb380fdc2d503a8ed0050e770f84ef4cf34ff Mon Sep 17 00:00:00 2001
+From d3bae5d664a1c279d86d730b443ce8397f4fb6a0 Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Fri, 22 Jan 2021 09:10:58 +0000
-Subject: [PATCH 07/10] drm/i915: Restrict DRM_I915_DEBUG to developer builds
+Subject: [PATCH 07/11] drm/i915: Restrict DRM_I915_DEBUG to developer builds
 
 Let's not encourage everybody to build i915's debug code, and certainly
 not the build robots who need to scrutinise the production build. Since

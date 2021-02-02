@@ -1,0 +1,41 @@
+From f065d26cf3227fa5ba18e899447e575970e7a642 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 2 Feb 2021 13:11:26 -0700
+Subject: [PATCH 11/11] mm: Apply fixup
+
+Link: https://lore.kernel.org/linux-mm/CA+CK2bBjC8=cRsL5VhWkcevPsqSXWhsANVjsFNMERLT8vWtiQw@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/mm.h | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index a608feb0d42e..673772747c57 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1127,10 +1127,19 @@ static inline bool is_zone_movable_page(const struct page *page)
+ 	return page_zonenum(page) == ZONE_MOVABLE;
+ }
+ 
++#ifdef CONFIG_MIGRATION
+ /* MIGRATE_CMA and ZONE_MOVABLE do not allow pin pages */
+-#define is_pinnable_page(page)		\
+-	(!(is_zone_movable_page(page) || is_migrate_cma_page(page)) ||	\
+-		is_zero_pfn(page_to_pfn(page)))
++static inline bool is_pinnable_page(struct page *page)
++{
++	return !(is_zone_movable_page(page) || is_migrate_cma_page(page)) ||
++		is_zero_pfn(page_to_pfn(page));
++}
++#else
++static inline bool is_pinnable_page(struct page *page)
++{
++	return true;
++}
++#endif
+ 
+ #ifdef CONFIG_DEV_PAGEMAP_OPS
+ void free_devmap_managed_page(struct page *page);
+-- 
+2.30.0
+
