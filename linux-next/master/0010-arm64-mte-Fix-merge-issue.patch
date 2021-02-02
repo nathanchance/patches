@@ -1,4 +1,4 @@
-From a9745efc70562666431649fe992e121ed85a7620 Mon Sep 17 00:00:00 2001
+From 1feaf0dfa181c4629a0c04648f04f7a4d9d28980 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Feb 2021 12:58:58 -0700
 Subject: [PATCH 10/11] arm64/mte: Fix merge issue
@@ -10,14 +10,14 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/kernel/mte.c b/arch/arm64/kernel/mte.c
-index 275b5d0f38b8..4033aadc4955 100644
+index 275b5d0f38b8..8c7e32054172 100644
 --- a/arch/arm64/kernel/mte.c
 +++ b/arch/arm64/kernel/mte.c
 @@ -113,12 +113,12 @@ void mte_enable_kernel(void)
  	sysreg_clear_set(sctlr_el1, SCTLR_ELx_TCF_MASK, SCTLR_ELx_TCF_SYNC);
  	isb();
  }
-+EXPORT_SYMBOL(mte_enable_kernel;
++EXPORT_SYMBOL(mte_enable_kernel);
  
  void mte_set_report_once(bool state)
  {
