@@ -1,0 +1,42 @@
+From f0bf90fbf153d21f7b15c100b04f308b8947294e Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Wed, 3 Feb 2021 13:38:34 +0000
+Subject: [PATCH 11/14] staging: qlge: fix read of an uninitialized pointer
+
+Currently the pointer 'reporter' is not being initialized and is
+being read in a netdev_warn message.  The pointer is not used
+and is redundant, fix this by removing it and replacing the reference
+to it with priv->reporter instead.
+
+Addresses-Coverity: ("Uninitialized pointer read")
+Fixes: 1053c27804df ("staging: qlge: coredump via devlink health reporter")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Reviewed-by: Coiby Xu <coiby.xu@gmail.com>
+Link: https://lore.kernel.org/r/20210203133834.22388-1-colin.king@canonical.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/staging/qlge/qlge_devlink.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/staging/qlge/qlge_devlink.c b/drivers/staging/qlge/qlge_devlink.c
+index c6ef5163e241..86834d96cebf 100644
+--- a/drivers/staging/qlge/qlge_devlink.c
++++ b/drivers/staging/qlge/qlge_devlink.c
+@@ -150,7 +150,6 @@ static const struct devlink_health_reporter_ops qlge_reporter_ops = {
+ 
+ void qlge_health_create_reporters(struct qlge_adapter *priv)
+ {
+-	struct devlink_health_reporter *reporter;
+ 	struct devlink *devlink;
+ 
+ 	devlink = priv_to_devlink(priv);
+@@ -160,5 +159,5 @@ void qlge_health_create_reporters(struct qlge_adapter *priv)
+ 	if (IS_ERR(priv->reporter))
+ 		netdev_warn(priv->ndev,
+ 			    "Failed to create reporter, err = %ld\n",
+-			    PTR_ERR(reporter));
++			    PTR_ERR(priv->reporter));
+ }
+-- 
+2.30.0
+

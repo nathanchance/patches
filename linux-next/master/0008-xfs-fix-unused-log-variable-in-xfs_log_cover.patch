@@ -1,7 +1,7 @@
-From 9bfa510ce3f5a0241e3cef08bf5cc59c2476532d Mon Sep 17 00:00:00 2001
+From 3639d01806cee01ccfeb8171fae928592d8e3d29 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Mon, 25 Jan 2021 08:22:56 -0500
-Subject: [PATCH 08/11] xfs: fix unused log variable in xfs_log_cover()
+Subject: [PATCH 08/14] xfs: fix unused log variable in xfs_log_cover()
 
 The log variable is only used in kernels with asserts enabled.
 Remove it and open code the dereference to avoid unused variable
