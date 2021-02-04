@@ -1,0 +1,34 @@
+From b56399ae6d3e4f9c2e37092279d8307659e5d5a7 Mon Sep 17 00:00:00 2001
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Thu, 4 Feb 2021 17:05:08 +0200
+Subject: [PATCH 14/14] platform/x86: intel_scu_wdt: Drop mistakenly added
+ const
+
+Neither original structure nor platform_data is declared with const.
+Drop mistakenly added const when assing platform_data.
+
+Fixes: a507e5d90f3d ("platform/x86: intel_scu_wdt: Get rid of custom x86 model comparison")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20210204150508.62659-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/platform/x86/intel_scu_wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/platform/x86/intel_scu_wdt.c b/drivers/platform/x86/intel_scu_wdt.c
+index 85ee85ca2215..c2479777a1d6 100644
+--- a/drivers/platform/x86/intel_scu_wdt.c
++++ b/drivers/platform/x86/intel_scu_wdt.c
+@@ -63,7 +63,7 @@ static int __init register_mid_wdt(void)
+ 	if (!id)
+ 		return -ENODEV;
+ 
+-	wdt_dev.dev.platform_data = (const struct intel_mid_wdt_pdata *)id->driver_data;
++	wdt_dev.dev.platform_data = (struct intel_mid_wdt_pdata *)id->driver_data;
+ 	return platform_device_register(&wdt_dev);
+ }
+ arch_initcall(register_mid_wdt);
+-- 
+2.30.0
+
