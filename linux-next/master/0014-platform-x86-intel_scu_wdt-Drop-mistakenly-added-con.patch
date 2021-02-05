@@ -1,7 +1,7 @@
 From b56399ae6d3e4f9c2e37092279d8307659e5d5a7 Mon Sep 17 00:00:00 2001
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Date: Thu, 4 Feb 2021 17:05:08 +0200
-Subject: [PATCH 14/14] platform/x86: intel_scu_wdt: Drop mistakenly added
+Subject: [PATCH 14/15] platform/x86: intel_scu_wdt: Drop mistakenly added
  const
 
 Neither original structure nor platform_data is declared with const.

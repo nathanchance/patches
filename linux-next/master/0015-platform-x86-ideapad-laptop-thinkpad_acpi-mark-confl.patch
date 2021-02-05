@@ -1,0 +1,120 @@
+From caa31c044883c04d28450a35fff99274f978294d Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Thu, 4 Feb 2021 16:38:54 +0100
+Subject: [PATCH 15/15] platform/x86: ideapad-laptop/thinkpad_acpi: mark
+ conflicting symbols static
+
+Three of the newly added functions are accidently not marked 'static' which
+causes a warning when building with W=1
+
+drivers/platform/x86/thinkpad_acpi.c:10081:5: warning: no previous prototype for function 'dytc_profile_get' [-Wmissing-prototypes]
+drivers/platform/x86/thinkpad_acpi.c:10095:5: warning: no previous prototype for function 'dytc_cql_command' [-Wmissing-prototypes]
+drivers/platform/x86/thinkpad_acpi.c:10133:5: warning: no previous prototype for function 'dytc_profile_set' [-Wmissing-prototypes]
+
+The functions are also present in two files, causing a link error when
+both are built into the kernel:
+
+ld.lld: error: duplicate symbol: dytc_cql_command
+>>> defined at ideapad-laptop.c
+>>>            platform/x86/ideapad-laptop.o:(dytc_cql_command) in archive drivers/built-in.a
+>>> defined at thinkpad_acpi.c
+>>>            platform/x86/thinkpad_acpi.o:(.text+0x20) in archive drivers/built-in.a
+
+ld.lld: error: duplicate symbol: dytc_profile_get
+>>> defined at ideapad-laptop.c
+>>>            platform/x86/ideapad-laptop.o:(dytc_profile_get) in archive drivers/built-in.a
+>>> defined at thinkpad_acpi.c
+>>>            platform/x86/thinkpad_acpi.o:(.text+0x0) in archive drivers/built-in.a
+
+ld.lld: error: duplicate symbol: dytc_profile_set
+>>> defined at ideapad-laptop.c
+>>>            platform/x86/ideapad-laptop.o:(dytc_profile_set) in archive drivers/built-in.a
+>>> defined at thinkpad_acpi.c
+>>>            platform/x86/thinkpad_acpi.o:(.text+0x220) in archive drivers/built-in.a
+
+Mark these all as static to avoid both problems.
+
+Fixes: eabe533904cb ("platform/x86: ideapad-laptop: DYTC Platform profile support")
+Fixes: c3bfcd4c6762 ("platform/x86: thinkpad_acpi: Add platform profile support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20210204153924.1534813-1-arnd@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/platform/x86/ideapad-laptop.c | 11 ++++++-----
+ drivers/platform/x86/thinkpad_acpi.c  | 10 +++++-----
+ 2 files changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index cc42af2a0a98..6095a4d54881 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -656,8 +656,8 @@ static int convert_profile_to_dytc(enum platform_profile_option profile, int *pe
+  * dytc_profile_get: Function to register with platform_profile
+  * handler. Returns current platform profile.
+  */
+-int dytc_profile_get(struct platform_profile_handler *pprof,
+-			enum platform_profile_option *profile)
++static int dytc_profile_get(struct platform_profile_handler *pprof,
++			    enum platform_profile_option *profile)
+ {
+ 	struct ideapad_dytc_priv *dytc;
+ 
+@@ -673,7 +673,8 @@ int dytc_profile_get(struct platform_profile_handler *pprof,
+  *  - enable CQL
+  *  If not in CQL mode, just run the command
+  */
+-int dytc_cql_command(struct ideapad_private *priv, int command, int *output)
++static int dytc_cql_command(struct ideapad_private *priv, int command,
++			    int *output)
+ {
+ 	int err, cmd_err, dummy;
+ 	int cur_funcmode;
+@@ -710,8 +711,8 @@ int dytc_cql_command(struct ideapad_private *priv, int command, int *output)
+  * dytc_profile_set: Function to register with platform_profile
+  * handler. Sets current platform profile.
+  */
+-int dytc_profile_set(struct platform_profile_handler *pprof,
+-			enum platform_profile_option profile)
++static int dytc_profile_set(struct platform_profile_handler *pprof,
++			    enum platform_profile_option profile)
+ {
+ 	struct ideapad_dytc_priv *dytc;
+ 	struct ideapad_private *priv;
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 18b390153e7f..42e0a497d69e 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10078,8 +10078,8 @@ static int convert_profile_to_dytc(enum platform_profile_option profile, int *pe
+  * dytc_profile_get: Function to register with platform_profile
+  * handler. Returns current platform profile.
+  */
+-int dytc_profile_get(struct platform_profile_handler *pprof,
+-			enum platform_profile_option *profile)
++static int dytc_profile_get(struct platform_profile_handler *pprof,
++			    enum platform_profile_option *profile)
+ {
+ 	*profile = dytc_current_profile;
+ 	return 0;
+@@ -10092,7 +10092,7 @@ int dytc_profile_get(struct platform_profile_handler *pprof,
+  *  - enable CQL
+  *  If not in CQL mode, just run the command
+  */
+-int dytc_cql_command(int command, int *output)
++static int dytc_cql_command(int command, int *output)
+ {
+ 	int err, cmd_err, dummy;
+ 	int cur_funcmode;
+@@ -10130,8 +10130,8 @@ int dytc_cql_command(int command, int *output)
+  * dytc_profile_set: Function to register with platform_profile
+  * handler. Sets current platform profile.
+  */
+-int dytc_profile_set(struct platform_profile_handler *pprof,
+-			enum platform_profile_option profile)
++static int dytc_profile_set(struct platform_profile_handler *pprof,
++			    enum platform_profile_option profile)
+ {
+ 	int output;
+ 	int err;
+-- 
+2.30.0
+
