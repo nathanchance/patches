@@ -1,7 +1,7 @@
-From 4a108ddf22f05540ef5cddc0482e6cfe5c5a03f7 Mon Sep 17 00:00:00 2001
+From f1e4e1d342a023e548c212f43ad32c211565b5b5 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 11/20] powerpc: fix function annotations to avoid section
+Subject: [PATCH 11/21] powerpc: fix function annotations to avoid section
  mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10
