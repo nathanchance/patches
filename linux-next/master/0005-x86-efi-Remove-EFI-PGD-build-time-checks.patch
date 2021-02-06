@@ -1,7 +1,7 @@
 From afb7ea9112e4788712a93f38aa547f7b83128706 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Fri, 5 Feb 2021 12:39:30 +0100
-Subject: [PATCH 05/13] x86/efi: Remove EFI PGD build time checks
+Subject: [PATCH 05/14] x86/efi: Remove EFI PGD build time checks
 
 With CONFIG_X86_5LEVEL, CONFIG_UBSAN and CONFIG_UBSAN_UNSIGNED_OVERFLOW
 enabled, clang fails the build with

@@ -1,7 +1,7 @@
 From eaaf5c668625f3fb6c04e71f6e7537e99097795e Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 3 Feb 2021 13:38:34 +0000
-Subject: [PATCH 10/13] staging: qlge: fix read of an uninitialized pointer
+Subject: [PATCH 10/14] staging: qlge: fix read of an uninitialized pointer
 
 Currently the pointer 'reporter' is not being initialized and is
 being read in a netdev_warn message.  The pointer is not used
