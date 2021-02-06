@@ -1,7 +1,7 @@
-From 7dc7a8a51b8fafc6d43ef93f92f9727a6e6bb070 Mon Sep 17 00:00:00 2001
+From 8d2b66b5de11a6118959693a1e11f96783e48a33 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 5 Jan 2021 13:34:56 -0700
-Subject: [PATCH 5/8] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
+Subject: [PATCH 5/9] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
 
 When building with clang, the following section mismatch warning occurs:
 
