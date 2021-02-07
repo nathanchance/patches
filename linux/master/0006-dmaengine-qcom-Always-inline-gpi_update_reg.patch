@@ -1,7 +1,7 @@
-From 12e41cbb9bc6afe89593945d7c00ad0678d10678 Mon Sep 17 00:00:00 2001
+From 5ed68c9818ab3226614e535eb2ba109be6c6bc09 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 12 Jan 2021 12:12:14 -0700
-Subject: [PATCH 06/12] dmaengine: qcom: Always inline gpi_update_reg
+Subject: [PATCH 06/11] dmaengine: qcom: Always inline gpi_update_reg
 
 When building with CONFIG_UBSAN_UNSIGNED_OVERFLOW, clang decides not to
 inline gpi_update_reg, which causes a linkage failure around __bad_mask:
