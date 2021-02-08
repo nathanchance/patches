@@ -1,7 +1,7 @@
-From 03ff08d42567c2bca7cf1b9656568262a0a6dd52 Mon Sep 17 00:00:00 2001
+From f2a2db22bbbe71168f24bac9eeb358333939d0ff Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:40:40 +0100
-Subject: [PATCH 04/14] mm/mremap: fix BUILD_BUG_ON() error in get_extent
+Subject: [PATCH 4/9] mm/mremap: fix BUILD_BUG_ON() error in get_extent
 
 clang cannt evaluate this function argument at compile time
 when the function is not inlined, which leads to a link
