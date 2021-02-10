@@ -1,0 +1,68 @@
+From a1d18b83b6b845b7a6d02a821c0c61398396d970 Mon Sep 17 00:00:00 2001
+From: Sean Wang <sean.wang@mediatek.com>
+Date: Tue, 9 Feb 2021 11:54:06 +0100
+Subject: [PATCH 15/15] mt76: mt7921: fix uninitialized pointer access in
+ mt7921_get_wtbl_info
+
+fix possible uninitialized pointer access in mt7921_get_wtbl_info
+routine
+
+[  270.073205] wlp1s0: deauthenticating from 9c:5c:8e:c9:93:14 by local choice (Reason: 3=DEAUTH_LEAVING)
+[  270.094918] 8<--- cut here ---
+[  270.097988] Unable to handle kernel NULL pointer dereference at virtual address 0000000a
+[  270.106120] pgd = 7ac68838
+[  270.108842] [0000000a] *pgd=00000000
+[  270.112426] Internal error: Oops: 805 [#1] SMP ARM
+[  270.117216] Modules linked in: mt7921e mt76_connac_lib mt76
+[  270.122803] CPU: 0 PID: 7 Comm: kworker/u8:0 Tainted: G        W         5.11.0-rc2+ #67
+[  270.130891] Hardware name: Mediatek Cortex-A7 (Device Tree)
+[  270.136459] Workqueue: phy0 mt7921_mac_work [mt7921e]
+[  270.141557] PC is at mt7921_get_wtbl_info+0x224/0x2d8 [mt7921e]
+[  270.147498] LR is at 0x0
+[  270.150026] pc : [<bf030398>]    lr : [<00000000>]    psr: 60000013
+
+...
+
+[  270.317696] 7fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[  270.325869] 7fe0: 00000000 00000000 00000000 00000000 00000013 00000000 00000000 00000000
+[  270.334043] [<bf030398>] (mt7921_get_wtbl_info [mt7921e]) from [<bf02ea9c>] (mt7921_mac_work+0x298/0x2c0 [mt7921e])
+[  270.344529] [<bf02ea9c>] (mt7921_mac_work [mt7921e]) from [<c013cde8>] (process_one_work+0x1f0/0x538)
+[  270.353780] [<c013cde8>] (process_one_work) from [<c013d17c>] (worker_thread+0x4c/0x55c)
+[  270.361874] [<c013d17c>] (worker_thread) from [<c01447a8>] (kthread+0x124/0x150)
+[  270.369275] [<c01447a8>] (kthread) from [<c0100150>] (ret_from_fork+0x14/0x24)
+[  270.376501] Exception stack(0xc19c7fb0 to 0xc19c7ff8)
+[  270.381550] 7fa0:                                     00000000 00000000 00000000 00000000
+[  270.389724] 7fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[  270.397896] 7fe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[  270.404509] Code: e59de012 e1cdc1b6 e1cdc1b8 e59dc016 (e582e00a)
+
+Fixes: 1c099ab44727c ("mt76: mt7921: add MCU support")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/857ff74f736d4e593f5ad602cee7ac67ebfca5ca.1612867656.git.lorenzo@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index db125cd22b91..e502dbe8061d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -404,11 +404,10 @@ mt7921_mcu_tx_rate_report(struct mt7921_dev *dev, struct sk_buff *skb,
+ 
+ 	if (wlan_idx >= MT76_N_WCIDS)
+ 		return;
++
+ 	wcid = rcu_dereference(dev->mt76.wcid[wlan_idx]);
+-	if (!wcid) {
+-		stats->tx_rate = rate;
++	if (!wcid)
+ 		return;
+-	}
+ 
+ 	msta = container_of(wcid, struct mt7921_sta, wcid);
+ 	stats = &msta->stats;
+-- 
+2.30.1
+
