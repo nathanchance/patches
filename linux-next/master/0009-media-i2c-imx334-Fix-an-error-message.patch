@@ -1,7 +1,7 @@
 From d0fbadc92e8a27d7e5f18d05537f0f3c016baff4 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 9 Feb 2021 14:04:48 +0300
-Subject: [PATCH 09/15] media: i2c: imx334: Fix an error message
+Subject: [PATCH 09/16] media: i2c: imx334: Fix an error message
 
 The "ret" variable is uninitialized in this error message.
 

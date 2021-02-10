@@ -1,7 +1,7 @@
 From 9077790e47247cd54a897ae948856cc02ba81ecf Mon Sep 17 00:00:00 2001
 From: Vlad Buslov <vladbu@nvidia.com>
 Date: Tue, 9 Feb 2021 12:37:22 -0800
-Subject: [PATCH 13/15] net/mlx5e: Fix tc_tun.h to verify MLX5_ESWITCH config
+Subject: [PATCH 13/16] net/mlx5e: Fix tc_tun.h to verify MLX5_ESWITCH config
 
 Exclude contents of tc_tun.h header when CONFIG_MLX5_ESWITCH is disabled to
 prevent compile-time errors when compiling with such config.
