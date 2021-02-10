@@ -1,4 +1,4 @@
-From 558e0634c93286d897829fc71d282b70566845e0 Mon Sep 17 00:00:00 2001
+From 1913983b2ac7bc4b684879ea395b41f2cd5ec4a1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 5 Jan 2021 13:34:56 -0700
 Subject: [PATCH 5/9] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
@@ -38,5 +38,5 @@ index c9644c38ec28..96adc3d23bd2 100644
  	struct cpuinfo_mips *c = &current_cpu_data;
  
 -- 
-2.30.0
+2.30.1
 

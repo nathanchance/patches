@@ -1,4 +1,4 @@
-From 30411f2bf74aaa5e63020cc4cb62a592f3016583 Mon Sep 17 00:00:00 2001
+From 7d37a9b571c39c03edb606704ff9db85e6ab8df4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 6 Feb 2021 16:01:31 -0700
 Subject: [PATCH 9/9] powerpc/kvm: Add noinline_for_stack for byteswap_pt_regs
@@ -23,5 +23,5 @@ index 33b58549a9aa..81f3401603de 100644
  	unsigned long *addr = (unsigned long *) regs;
  
 -- 
-2.30.0
+2.30.1
 
