@@ -1,4 +1,4 @@
-From 6fd4bb6f783a3d814416d11d57e673c1e0181c74 Mon Sep 17 00:00:00 2001
+From 3ac44608b0dc6bbcec2ae52208b651b97ebb564c Mon Sep 17 00:00:00 2001
 From: Mike Kravetz <mike.kravetz@oracle.com>
 Date: Sat, 30 Nov 2019 17:56:30 -0800
 Subject: [PATCH 05/20] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
@@ -34,7 +34,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  4 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index 5fff7cb3582f..4fc1717272da 100644
+index cf3af2140c3d..a2e9354b9d53 100644
 --- a/fs/hugetlbfs/inode.c
 +++ b/fs/hugetlbfs/inode.c
 @@ -440,7 +440,7 @@ static void remove_inode_hugepages(struct inode *inode, loff_t lstart,
@@ -56,7 +56,7 @@ index 5fff7cb3582f..4fc1717272da 100644
  
  		/* See if already present in mapping to avoid alloc/free */
 diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 8a03f392f368..b9eb79fe1f62 100644
+index 0e080ba5efbc..fc717aeb2b3d 100644
 --- a/include/linux/hugetlb.h
 +++ b/include/linux/hugetlb.h
 @@ -106,7 +106,7 @@ void free_huge_page(struct page *page);
@@ -69,10 +69,10 @@ index 8a03f392f368..b9eb79fe1f62 100644
  pte_t *huge_pmd_share(struct mm_struct *mm, unsigned long addr, pud_t *pud);
  
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 3bc33fa83817..aabb65265172 100644
+index d5b03b9262d4..df688fb91b45 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -3978,7 +3978,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
+@@ -4016,7 +4016,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
  			 * handling userfault.  Reacquire after handling
  			 * fault to make calling code simpler.
  			 */
@@ -81,7 +81,7 @@ index 3bc33fa83817..aabb65265172 100644
  			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
  			ret = handle_userfault(&vmf, VM_UFFD_MISSING);
  			mutex_lock(&hugetlb_fault_mutex_table[hash]);
-@@ -4106,7 +4106,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
+@@ -4144,7 +4144,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
  
  #ifdef CONFIG_SMP
  u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
@@ -90,7 +90,7 @@ index 3bc33fa83817..aabb65265172 100644
  {
  	unsigned long key[2];
  	u32 hash;
-@@ -4114,7 +4114,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
+@@ -4152,7 +4152,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
  	key[0] = (unsigned long) mapping;
  	key[1] = idx;
  
@@ -99,7 +99,7 @@ index 3bc33fa83817..aabb65265172 100644
  
  	return hash & (num_fault_mutexes - 1);
  }
-@@ -4124,7 +4124,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
+@@ -4162,7 +4162,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
   * return 0 and avoid the hashing overhead.
   */
  u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
@@ -108,7 +108,7 @@ index 3bc33fa83817..aabb65265172 100644
  {
  	return 0;
  }
-@@ -4168,7 +4168,7 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -4206,7 +4206,7 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  	 * get spurious allocation failures if two CPUs race to instantiate
  	 * the same page in the page cache.
  	 */
@@ -131,5 +131,5 @@ index c7ae74ce5ff3..640ff2bd9a69 100644
  
  		err = -ENOMEM;
 -- 
-2.30.0
+2.30.1
 
