@@ -1,0 +1,74 @@
+From 143487babcd401e4961d62fb80c9741bd5552182 Mon Sep 17 00:00:00 2001
+From: Waiman Long <longman@redhat.com>
+Date: Wed, 10 Feb 2021 09:45:56 -0500
+Subject: [PATCH 12/14] locking/arch: Move qrwlock.h include after qspinlock.h
+
+The queued rwlock code has a dependency on the current spinlock
+implementation (likely to be qspinlock), but not vice versa. Including
+qrwlock.h before qspinlock.h can be problematic when expanding qrwlock
+functionality.
+
+If both qspinlock.h and qrwlock.h are to be included, the qrwlock.h
+include should always be after qspinlock.h. Update the current set of
+asm/spinlock.h files to enforce that.
+
+Signed-off-by: Waiman Long <longman@redhat.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20210210144556.10932-1-longman@redhat.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm64/include/asm/spinlock.h  | 2 +-
+ arch/mips/include/asm/spinlock.h   | 2 +-
+ arch/xtensa/include/asm/spinlock.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/include/asm/spinlock.h b/arch/arm64/include/asm/spinlock.h
+index 9083d6992603..0525c0b089ed 100644
+--- a/arch/arm64/include/asm/spinlock.h
++++ b/arch/arm64/include/asm/spinlock.h
+@@ -5,8 +5,8 @@
+ #ifndef __ASM_SPINLOCK_H
+ #define __ASM_SPINLOCK_H
+ 
+-#include <asm/qrwlock.h>
+ #include <asm/qspinlock.h>
++#include <asm/qrwlock.h>
+ 
+ /* See include/linux/spinlock.h */
+ #define smp_mb__after_spinlock()	smp_mb()
+diff --git a/arch/mips/include/asm/spinlock.h b/arch/mips/include/asm/spinlock.h
+index 8a88eb265516..6ce2117e49f6 100644
+--- a/arch/mips/include/asm/spinlock.h
++++ b/arch/mips/include/asm/spinlock.h
+@@ -10,7 +10,6 @@
+ #define _ASM_SPINLOCK_H
+ 
+ #include <asm/processor.h>
+-#include <asm/qrwlock.h>
+ 
+ #include <asm-generic/qspinlock_types.h>
+ 
+@@ -27,5 +26,6 @@ static inline void queued_spin_unlock(struct qspinlock *lock)
+ }
+ 
+ #include <asm/qspinlock.h>
++#include <asm/qrwlock.h>
+ 
+ #endif /* _ASM_SPINLOCK_H */
+diff --git a/arch/xtensa/include/asm/spinlock.h b/arch/xtensa/include/asm/spinlock.h
+index 584b0de6f2ca..41c449ece2d8 100644
+--- a/arch/xtensa/include/asm/spinlock.h
++++ b/arch/xtensa/include/asm/spinlock.h
+@@ -12,8 +12,8 @@
+ #define _XTENSA_SPINLOCK_H
+ 
+ #include <asm/barrier.h>
+-#include <asm/qrwlock.h>
+ #include <asm/qspinlock.h>
++#include <asm/qrwlock.h>
+ 
+ #define smp_mb__after_spinlock()	smp_mb()
+ 
+-- 
+2.30.1
+
