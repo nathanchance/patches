@@ -1,26 +1,37 @@
-From 143487babcd401e4961d62fb80c9741bd5552182 Mon Sep 17 00:00:00 2001
-From: Waiman Long <longman@redhat.com>
-Date: Wed, 10 Feb 2021 09:45:56 -0500
-Subject: [PATCH 12/14] locking/arch: Move qrwlock.h include after qspinlock.h
+From 3ea52c8244040f7b2005649d83d944f229a0e6cc Mon Sep 17 00:00:00 2001
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 10 Feb 2021 13:33:01 -0500
+Subject: [PATCH 12/15] locking/arch: Move qrwlock.h include after qspinlock.h
 
-The queued rwlock code has a dependency on the current spinlock
-implementation (likely to be qspinlock), but not vice versa. Including
-qrwlock.h before qspinlock.h can be problematic when expanding qrwlock
-functionality.
+include/asm-generic/qrwlock.h was trying to get arch_spin_is_locked via
+asm-generic/qspinlock.h.  However, this does not work because architectures
+might be using queued rwlocks but not queued spinlocks (csky), or because they
+might be defining their own queued_* macros before including asm/qspinlock.h.
 
-If both qspinlock.h and qrwlock.h are to be included, the qrwlock.h
-include should always be after qspinlock.h. Update the current set of
-asm/spinlock.h files to enforce that.
+To fix this, ensure that asm/spinlock.h always includes qrwlock.h after
+defining arch_spin_is_locked (either directly for csky, or via
+asm/qspinlock.h for other architectures).  The only inclusion elsewhere
+is in kernel/locking/qrwlock.c.  That one is really unnecessary because
+the file is only compiled in SMP configurations (config QUEUED_RWLOCKS
+depends on SMP) and in that case linux/spinlock.h already includes
+asm/qrwlock.h if needed, via asm/spinlock.h.
 
-Signed-off-by: Waiman Long <longman@redhat.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Waiman Long <longman@redhat.com>
+Fixes: 26128cb6c7e6 ("locking/rwlocks: Add contention detection for rwlocks")
 Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20210210144556.10932-1-longman@redhat.com
+Reviewed-by: Ben Gardon <bgardon@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20210210183301.453422-1-pbonzini@redhat.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/arm64/include/asm/spinlock.h  | 2 +-
- arch/mips/include/asm/spinlock.h   | 2 +-
- arch/xtensa/include/asm/spinlock.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/spinlock.h    | 2 +-
+ arch/mips/include/asm/spinlock.h     | 2 +-
+ arch/sparc/include/asm/spinlock_64.h | 2 +-
+ arch/xtensa/include/asm/spinlock.h   | 2 +-
+ include/asm-generic/qrwlock.h        | 3 ++-
+ kernel/locking/qrwlock.c             | 1 -
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/arch/arm64/include/asm/spinlock.h b/arch/arm64/include/asm/spinlock.h
 index 9083d6992603..0525c0b089ed 100644
@@ -55,6 +66,20 @@ index 8a88eb265516..6ce2117e49f6 100644
 +#include <asm/qrwlock.h>
  
  #endif /* _ASM_SPINLOCK_H */
+diff --git a/arch/sparc/include/asm/spinlock_64.h b/arch/sparc/include/asm/spinlock_64.h
+index 7fc82a233f49..3a9a0b0c7465 100644
+--- a/arch/sparc/include/asm/spinlock_64.h
++++ b/arch/sparc/include/asm/spinlock_64.h
+@@ -11,8 +11,8 @@
+ 
+ #include <asm/processor.h>
+ #include <asm/barrier.h>
+-#include <asm/qrwlock.h>
+ #include <asm/qspinlock.h>
++#include <asm/qrwlock.h>
+ 
+ #endif /* !(__ASSEMBLY__) */
+ 
 diff --git a/arch/xtensa/include/asm/spinlock.h b/arch/xtensa/include/asm/spinlock.h
 index 584b0de6f2ca..41c449ece2d8 100644
 --- a/arch/xtensa/include/asm/spinlock.h
@@ -69,6 +94,32 @@ index 584b0de6f2ca..41c449ece2d8 100644
  
  #define smp_mb__after_spinlock()	smp_mb()
  
+diff --git a/include/asm-generic/qrwlock.h b/include/asm-generic/qrwlock.h
+index 0020d3b820a7..7ae0ece07b4e 100644
+--- a/include/asm-generic/qrwlock.h
++++ b/include/asm-generic/qrwlock.h
+@@ -14,7 +14,8 @@
+ #include <asm/processor.h>
+ 
+ #include <asm-generic/qrwlock_types.h>
+-#include <asm-generic/qspinlock.h>
++
++/* Must be included from asm/spinlock.h after defining arch_spin_is_locked.  */
+ 
+ /*
+  * Writer states & reader shift and bias.
+diff --git a/kernel/locking/qrwlock.c b/kernel/locking/qrwlock.c
+index fe9ca92faa2a..4786dd271b45 100644
+--- a/kernel/locking/qrwlock.c
++++ b/kernel/locking/qrwlock.c
+@@ -12,7 +12,6 @@
+ #include <linux/percpu.h>
+ #include <linux/hardirq.h>
+ #include <linux/spinlock.h>
+-#include <asm/qrwlock.h>
+ 
+ /**
+  * queued_read_lock_slowpath - acquire read lock of a queue rwlock
 -- 
 2.30.1
 
