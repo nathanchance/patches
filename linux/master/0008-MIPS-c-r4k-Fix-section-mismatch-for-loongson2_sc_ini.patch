@@ -1,7 +1,7 @@
-From 568aa778ccfa8fc6876c930fff0c633faed4ff23 Mon Sep 17 00:00:00 2001
+From 37e46ab7ecb9967ddd772c098192507218d9ad70 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 5 Jan 2021 13:34:56 -0700
-Subject: [PATCH 10/11] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
+Subject: [PATCH 8/9] MIPS: c-r4k: Fix section mismatch for loongson2_sc_init
 
 When building with clang, the following section mismatch warning occurs:
 
@@ -38,5 +38,5 @@ index 4f976d687ab0..f67297b3175f 100644
  	struct cpuinfo_mips *c = &current_cpu_data;
  
 -- 
-2.30.0
+2.30.1
 
