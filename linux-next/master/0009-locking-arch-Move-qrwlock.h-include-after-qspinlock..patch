@@ -1,7 +1,7 @@
-From 3ea52c8244040f7b2005649d83d944f229a0e6cc Mon Sep 17 00:00:00 2001
+From 0f249f294a9abec91b8bc130947bfeabcf98205e Mon Sep 17 00:00:00 2001
 From: Paolo Bonzini <pbonzini@redhat.com>
 Date: Wed, 10 Feb 2021 13:33:01 -0500
-Subject: [PATCH 12/16] locking/arch: Move qrwlock.h include after qspinlock.h
+Subject: [PATCH 09/13] locking/arch: Move qrwlock.h include after qspinlock.h
 
 include/asm-generic/qrwlock.h was trying to get arch_spin_is_locked via
 asm-generic/qspinlock.h.  However, this does not work because architectures

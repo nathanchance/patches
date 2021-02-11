@@ -1,7 +1,7 @@
-From 58124f42e6aec1efc82704fbafe25ce96fe00902 Mon Sep 17 00:00:00 2001
+From 19eaf317c9dee74accf972b8af050551e28a07b9 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 10 Feb 2021 15:26:44 +0000
-Subject: [PATCH 15/16] net: hns3: Fix uninitialized return from function
+Subject: [PATCH 11/13] net: hns3: Fix uninitialized return from function
 
 Currently function hns3_reset_notify_uninit_enet is returning
 the contents of the uninitialized variable ret.  Fix this by
