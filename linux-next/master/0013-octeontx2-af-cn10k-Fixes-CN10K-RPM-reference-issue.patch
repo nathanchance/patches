@@ -1,0 +1,111 @@
+From c5d543ec278ef655504442940f04b79d8f7bee4e Mon Sep 17 00:00:00 2001
+From: Geetha sowjanya <gakula@marvell.com>
+Date: Tue, 16 Feb 2021 17:09:36 +0530
+Subject: [PATCH 13/13] octeontx2-af: cn10k: Fixes CN10K RPM reference issue
+
+This patch fixes references to uninitialized variables and
+debugfs entry name for CN10K platform and HW_TSO flag check.
+
+Fixes: 3ad3f8f93c81 ("octeontx2-af: cn10k: MAC internal loopback support").
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+
+v1-v2
+- Clear HW_TSO flag for 96xx B0 version.
+
+This patch fixes the bug introduced by the commit
+3ad3f8f93c81 ("octeontx2-af: cn10k: MAC internal loopback support").
+These changes are not yet merged into net branch, hence submitting
+to net-next.
+
+Link: https://lore.kernel.org/r/20210216113936.26580-1-gakula@marvell.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c   |  2 ++
+ .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c   |  2 +-
+ .../net/ethernet/marvell/octeontx2/nic/otx2_common.h  |  3 +++
+ .../net/ethernet/marvell/octeontx2/nic/otx2_txrx.c    | 11 ++++++-----
+ 4 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 3a1809c28e83..e668e482383a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -722,12 +722,14 @@ u32 rvu_cgx_get_fifolen(struct rvu *rvu)
+ 
+ static int rvu_cgx_config_intlbk(struct rvu *rvu, u16 pcifunc, bool en)
+ {
++	int pf = rvu_get_pf(pcifunc);
+ 	struct mac_ops *mac_ops;
+ 	u8 cgx_id, lmac_id;
+ 
+ 	if (!is_cgx_config_permitted(rvu, pcifunc))
+ 		return -EPERM;
+ 
++	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+ 	mac_ops = get_mac_ops(rvu_cgx_pdata(cgx_id, rvu));
+ 
+ 	return mac_ops->mac_lmac_intl_lbk(rvu_cgx_pdata(cgx_id, rvu),
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index 48a84c65804c..094124b695dc 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -2432,7 +2432,7 @@ void rvu_dbg_init(struct rvu *rvu)
+ 		debugfs_create_file("rvu_pf_cgx_map", 0444, rvu->rvu_dbg.root,
+ 				    rvu, &rvu_dbg_rvu_pf_cgx_map_fops);
+ 	else
+-		debugfs_create_file("rvu_pf_cgx_map", 0444, rvu->rvu_dbg.root,
++		debugfs_create_file("rvu_pf_rpm_map", 0444, rvu->rvu_dbg.root,
+ 				    rvu, &rvu_dbg_rvu_pf_cgx_map_fops);
+ 
+ create:
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+index 4c472646a0ac..f14d388efb51 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+@@ -407,6 +407,9 @@ static inline void otx2_setup_dev_hw_settings(struct otx2_nic *pfvf)
+ 		pfvf->hw.rq_skid = 600;
+ 		pfvf->qset.rqe_cnt = Q_COUNT(Q_SIZE_1K);
+ 	}
++	if (is_96xx_B0(pfvf->pdev))
++		__clear_bit(HW_TSO, &hw->cap_flag);
++
+ 	if (!is_dev_otx2(pfvf->pdev)) {
+ 		__set_bit(CN10K_MBOX, &hw->cap_flag);
+ 		__set_bit(CN10K_LMTST, &hw->cap_flag);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+index 3f778fc054b5..22ec03a618b1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+@@ -816,22 +816,23 @@ static bool is_hw_tso_supported(struct otx2_nic *pfvf,
+ {
+ 	int payload_len, last_seg_size;
+ 
++	if (test_bit(HW_TSO, &pfvf->hw.cap_flag))
++		return true;
++
++	/* On 96xx A0, HW TSO not supported */
++	if (!is_96xx_B0(pfvf->pdev))
++		return false;
+ 
+ 	/* HW has an issue due to which when the payload of the last LSO
+ 	 * segment is shorter than 16 bytes, some header fields may not
+ 	 * be correctly modified, hence don't offload such TSO segments.
+ 	 */
+-	if (!is_96xx_B0(pfvf->pdev))
+-		return true;
+ 
+ 	payload_len = skb->len - (skb_transport_offset(skb) + tcp_hdrlen(skb));
+ 	last_seg_size = payload_len % skb_shinfo(skb)->gso_size;
+ 	if (last_seg_size && last_seg_size < 16)
+ 		return false;
+ 
+-	if (!test_bit(HW_TSO, &pfvf->hw.cap_flag))
+-		return false;
+-
+ 	return true;
+ }
+ 
+-- 
+2.30.1
+
