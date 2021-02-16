@@ -1,7 +1,7 @@
-From 41d719e65c74d5f484e8ff96e534946dfc7df7f3 Mon Sep 17 00:00:00 2001
+From 539e3da617638e87c72b9e1dfdd11bd5c59bed35 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jan 2021 09:44:50 -0700
-Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -99,7 +99,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index da8715297a9a..e655c8a20ca7 100644
+index 8edba5ea90f0..79cb1a0f13a0 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -832,7 +832,7 @@
@@ -140,7 +140,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 07f7e57c63aaa2afb4ea31edef05e08699a63a00
+base-commit: 6553715b6db5ff5d4898895dad1b2926cfe406cf
 -- 
 2.30.1
 

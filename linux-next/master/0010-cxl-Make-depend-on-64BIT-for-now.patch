@@ -1,0 +1,27 @@
+From e738d79176ac2868cb9e74889435f1586438dbec Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 16 Feb 2021 11:49:38 -0700
+Subject: [PATCH 10/10] cxl: Make depend on 64BIT for now
+
+Link: https://lore.kernel.org/lkml/f6121dec-1a65-bd25-03b7-bcaf22d0f3b2@infradead.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/cxl/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/cxl/Kconfig b/drivers/cxl/Kconfig
+index 97dc4d751651..7e9bd3043bac 100644
+--- a/drivers/cxl/Kconfig
++++ b/drivers/cxl/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig CXL_BUS
+ 	tristate "CXL (Compute Express Link) Devices Support"
+-	depends on PCI
++	depends on PCI && 64BIT
+ 	help
+ 	  CXL is a bus that is electrically compatible with PCI Express, but
+ 	  layers three protocols on that signalling (CXL.io, CXL.cache, and
+-- 
+2.30.1
+
