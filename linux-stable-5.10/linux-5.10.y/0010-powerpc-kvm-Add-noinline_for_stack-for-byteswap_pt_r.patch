@@ -1,7 +1,8 @@
-From 7d37a9b571c39c03edb606704ff9db85e6ab8df4 Mon Sep 17 00:00:00 2001
+From 53c6b403d9de3630a15fd4d6a2e391fcb4b72dd2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 6 Feb 2021 16:01:31 -0700
-Subject: [PATCH 9/9] powerpc/kvm: Add noinline_for_stack for byteswap_pt_regs
+Subject: [PATCH 10/10] powerpc/kvm: Add noinline_for_stack for
+ byteswap_pt_regs
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1292
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
