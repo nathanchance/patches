@@ -1,13 +1,10 @@
-From f0587960a48864358b1cb1d55b459190c86a2071 Mon Sep 17 00:00:00 2001
+From 9582e5b0ac7fee978fd19d759d437eb46dc24688 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 27 Jan 2021 09:50:50 -0700
-Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Date: Wed, 17 Feb 2021 13:47:46 -0700
+Subject: [PATCH 01/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
-
-* drivers/gpu/drm/i915: Avoid false positive -Wuninitialized warning and
-allows use to continue to find bugs (https://github.com/ClangBuiltLinux/linux/issues/415).
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -23,13 +20,11 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/riscv/kernel/vdso/Makefile             | 3 ++-
  drivers/gpu/drm/amd/display/dc/dml/Makefile | 2 +-
- drivers/gpu/drm/i915/Makefile               | 1 -
- drivers/gpu/drm/i915/i915_request.c         | 3 ++-
  drivers/input/joystick/analog.c             | 1 -
  drivers/net/ethernet/marvell/mvpp2/mvpp2.h  | 2 +-
  lib/Kconfig.debug                           | 3 ++-
  scripts/checksyscalls.sh                    | 2 +-
- 8 files changed, 9 insertions(+), 8 deletions(-)
+ 6 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
 index 0cfd6da784f8..55d85cec076d 100644
@@ -59,33 +54,6 @@ index 6bb7f2905821..a12361f2cf1e 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
-diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 6d9e81ea67f4..60b60204004f 100644
---- a/drivers/gpu/drm/i915/Makefile
-+++ b/drivers/gpu/drm/i915/Makefile
-@@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
- subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
- subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
- subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
--subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
- subdir-ccflags-y += $(call cc-disable-warning, frame-address)
- subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
- 
-diff --git a/drivers/gpu/drm/i915/i915_request.c b/drivers/gpu/drm/i915/i915_request.c
-index 5385b081a376..09256d2e4621 100644
---- a/drivers/gpu/drm/i915/i915_request.c
-+++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1652,8 +1652,9 @@ static unsigned long local_clock_ns(unsigned int *cpu)
- static bool busywait_stop(unsigned long timeout, unsigned int cpu)
- {
- 	unsigned int this_cpu;
-+	unsigned long local_clock = local_clock_ns(&this_cpu);
- 
--	if (time_after(local_clock_ns(&this_cpu), timeout))
-+	if (time_after(local_clock, timeout))
- 		return true;
- 
- 	return this_cpu != cpu;
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
