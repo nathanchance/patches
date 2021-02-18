@@ -1,0 +1,61 @@
+From 0fd3438289e69eaf710e3187072f91c5e00e5c08 Mon Sep 17 00:00:00 2001
+From: Lakshmi Ramasubramanian <nramas@linux.microsoft.com>
+Date: Thu, 18 Feb 2021 14:33:05 -0800
+Subject: [PATCH 11/12] of: error: 'const struct kimage' has no member named
+ 'arch'
+
+of_kexec_alloc_and_setup_fdt() defined in drivers/of/kexec.c builds
+a new device tree object that includes architecture specific data
+for kexec system call.  This should be defined only if the architecture
+being built defines kexec architecture structure "struct kimage_arch".
+
+Define a new boolean config OF_KEXEC that is enabled if
+CONFIG_KEXEC_FILE and CONFIG_OF_FLATTREE are enabled, and
+the architecture is arm64 or powerpc64.  Build drivers/of/kexec.c
+if CONFIG_OF_KEXEC is enabled.
+
+Signed-off-by: Lakshmi Ramasubramanian <nramas@linux.microsoft.com>
+Fixes: 33488dc4d61f ("of: Add a common kexec FDT setup function")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20210218223305.2044-1-nramas@linux.microsoft.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/of/Kconfig  | 6 ++++++
+ drivers/of/Makefile | 7 +------
+ 2 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
+index 18450437d5d5..f2e8fa54862a 100644
+--- a/drivers/of/Kconfig
++++ b/drivers/of/Kconfig
+@@ -100,4 +100,10 @@ config OF_DMA_DEFAULT_COHERENT
+ 	# arches should select this if DMA is coherent by default for OF devices
+ 	bool
+ 
++config OF_KEXEC
++	bool
++	depends on KEXEC_FILE
++	depends on OF_FLATTREE
++	default y if ARM64 || PPC64
++
+ endif # OF
+diff --git a/drivers/of/Makefile b/drivers/of/Makefile
+index c13b982084a3..287579dd1695 100644
+--- a/drivers/of/Makefile
++++ b/drivers/of/Makefile
+@@ -13,11 +13,6 @@ obj-$(CONFIG_OF_RESERVED_MEM) += of_reserved_mem.o
+ obj-$(CONFIG_OF_RESOLVE)  += resolver.o
+ obj-$(CONFIG_OF_OVERLAY) += overlay.o
+ obj-$(CONFIG_OF_NUMA) += of_numa.o
+-
+-ifdef CONFIG_KEXEC_FILE
+-ifdef CONFIG_OF_FLATTREE
+-obj-y	+= kexec.o
+-endif
+-endif
++obj-$(CONFIG_OF_KEXEC) += kexec.o
+ 
+ obj-$(CONFIG_OF_UNITTEST) += unittest-data/
+-- 
+2.30.1
+
