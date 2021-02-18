@@ -1,0 +1,27 @@
+From 66b5e8b7e55e8bd524fe714ae4020ac6939db818 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 18 Feb 2021 15:59:18 -0700
+Subject: [PATCH 13/13] amdgpu hack
+
+Link: https://lore.kernel.org/amd-gfx/20210218223158.GA52356@24bbad8f3778/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index eed6d04e9572..d494414c871b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9808,7 +9808,7 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+ 	} else if (edid && amdgpu_dm_connector->dc_sink->sink_signal == SIGNAL_TYPE_HDMI_TYPE_A) {
+ 		hdmi_valid_vsdb_found = parse_hdmi_amd_vsdb(amdgpu_dm_connector, edid, &vsdb_info);
+ 		if (hdmi_valid_vsdb_found && vsdb_info.freesync_supported) {
+-			timing  = &edid->detailed_timings[i];
++			timing  = &edid->detailed_timings[0];
+ 			data    = &timing->data.other_data;
+ 
+ 			amdgpu_dm_connector->min_vfreq = vsdb_info.min_refresh_rate_hz;
+-- 
+2.30.1
+

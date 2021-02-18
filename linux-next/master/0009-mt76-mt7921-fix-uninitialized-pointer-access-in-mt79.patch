@@ -1,7 +1,7 @@
 From 7e76657fc629930e1392811467f14ef638ecc982 Mon Sep 17 00:00:00 2001
 From: Sean Wang <sean.wang@mediatek.com>
 Date: Tue, 9 Feb 2021 11:54:06 +0100
-Subject: [PATCH 09/12] mt76: mt7921: fix uninitialized pointer access in
+Subject: [PATCH 09/13] mt76: mt7921: fix uninitialized pointer access in
  mt7921_get_wtbl_info
 
 fix possible uninitialized pointer access in mt7921_get_wtbl_info
