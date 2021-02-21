@@ -1,7 +1,7 @@
-From 9582e5b0ac7fee978fd19d759d437eb46dc24688 Mon Sep 17 00:00:00 2001
+From a997976d84636acb94275289f7fb3aa0c395df7b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 01/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -67,10 +67,10 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 6bd7e405e830..6cfc9d2532d2 100644
+index 8edba5ea90f0..79cb1a0f13a0 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -750,7 +750,7 @@
+@@ -832,7 +832,7 @@
  
  /* RX buffer constants */
  #define MVPP2_SKB_SHINFO_SIZE \
@@ -80,7 +80,7 @@ index 6bd7e405e830..6cfc9d2532d2 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 7937265ef879..fc8421b7c262 100644
+index 5ea0c1773b0a..ab561d5c92f4 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -296,8 +296,9 @@ config GDB_SCRIPTS
@@ -108,7 +108,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: f40ddce88593482919761f74910f42f4b84c004b
+base-commit: d310ec03a34e92a77302edb804f7d68ee4f01ba0
 -- 
 2.30.1
 
