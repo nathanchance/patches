@@ -1,7 +1,7 @@
-From 7c09d740f6168b2bae4166f757d2c345a8bc2cbe Mon Sep 17 00:00:00 2001
+From 07b3b2bb2d299f3a97951583571efd53fe1db072 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 6 Feb 2021 16:01:31 -0700
-Subject: [PATCH 9/9] powerpc/kvm: Add noinline_for_stack for byteswap_pt_regs
+Subject: [PATCH 7/7] powerpc/kvm: Add noinline_for_stack for byteswap_pt_regs
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1292
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,11 +10,11 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
-index 33b58549a9aa..81f3401603de 100644
+index 0cd0e7aad588..af27015f561e 100644
 --- a/arch/powerpc/kvm/book3s_hv_nested.c
 +++ b/arch/powerpc/kvm/book3s_hv_nested.c
-@@ -51,7 +51,7 @@ void kvmhv_save_hv_regs(struct kvm_vcpu *vcpu, struct hv_guest_state *hr)
- 	hr->ppr = vcpu->arch.ppr;
+@@ -53,7 +53,7 @@ void kvmhv_save_hv_regs(struct kvm_vcpu *vcpu, struct hv_guest_state *hr)
+ 	hr->dawrx1 = vcpu->arch.dawrx1;
  }
  
 -static void byteswap_pt_regs(struct pt_regs *regs)
