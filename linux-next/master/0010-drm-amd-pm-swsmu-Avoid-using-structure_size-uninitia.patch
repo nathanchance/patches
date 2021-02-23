@@ -1,7 +1,7 @@
-From 30b133e9320d9f6a2e6703a1d9456c84cd8f481f Mon Sep 17 00:00:00 2001
+From ac48badfc8b1495fd272d7f120f4fc120e75ad67 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 18 Feb 2021 15:44:22 -0700
-Subject: [PATCH 11/13] drm/amd/pm/swsmu: Avoid using structure_size
+Subject: [PATCH 10/12] drm/amd/pm/swsmu: Avoid using structure_size
  uninitialized in smu_cmn_init_soft_gpu_metrics
 
 Clang warns:
