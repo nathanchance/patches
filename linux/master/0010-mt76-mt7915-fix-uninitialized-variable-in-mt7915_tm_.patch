@@ -1,0 +1,46 @@
+From 9787a8ec8a3813f9bd7eb7ad5ee2fe51ad301ba7 Mon Sep 17 00:00:00 2001
+From: Lorenzo Bianconi <lorenzo@kernel.org>
+Date: Thu, 11 Feb 2021 10:11:29 +0100
+Subject: [PATCH 10/10] mt76: mt7915: fix uninitialized variable in
+ mt7915_tm_set_tx_cont()
+
+Set MT_PHY_TYPE_OFDM as default value for mode variable in
+mt7915_tm_set_tx_cont routine in order to proper initialize it even
+for default case.
+
+Fixes: 3f0caa3cbf94: "mt76: mt7915: add support for continuous tx in testmode"
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/44ad7cca29f159aa2ae721b8f7a2d1b5ab540b31.1613034563.git.lorenzo@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/wireless/mediatek/mt76/mt7915/testmode.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c b/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
+index 7fb2170a9561..a76af0701179 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
+@@ -569,9 +569,6 @@ mt7915_tm_set_tx_cont(struct mt7915_phy *phy, bool en)
+ 	case MT76_TM_TX_MODE_CCK:
+ 		mode = MT_PHY_TYPE_CCK;
+ 		break;
+-	case MT76_TM_TX_MODE_OFDM:
+-		mode = MT_PHY_TYPE_OFDM;
+-		break;
+ 	case MT76_TM_TX_MODE_HT:
+ 		mode = MT_PHY_TYPE_HT;
+ 		break;
+@@ -590,7 +587,9 @@ mt7915_tm_set_tx_cont(struct mt7915_phy *phy, bool en)
+ 	case MT76_TM_TX_MODE_HE_MU:
+ 		mode = MT_PHY_TYPE_HE_MU;
+ 		break;
++	case MT76_TM_TX_MODE_OFDM:
+ 	default:
++		mode = MT_PHY_TYPE_OFDM;
+ 		break;
+ 	}
+ 
+-- 
+2.30.1
+
