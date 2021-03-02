@@ -1,7 +1,7 @@
-From 08ae468dd7913aeac6f5081ad7ee7cd953db7282 Mon Sep 17 00:00:00 2001
+From 23311cf7a6f265aebb4488b21d24fe2e5802fb93 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/7] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -27,10 +27,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 0cfd6da784f8..55d85cec076d 100644
+index 71a315e73cbe..b41fd6a8af3a 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -61,8 +61,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
+@@ -62,8 +62,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
  # The DSO images are built using a special linker script
  # Add -lgcc so rv32 gets static muldi3 and lshrdi3 definitions.
  # Make sure only to export the intended __vdso_xxx symbol offsets.
@@ -80,10 +80,10 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 5ea0c1773b0a..ab561d5c92f4 100644
+index 2779c29d9981..5aa2cf4adc3d 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -296,8 +296,9 @@ config GDB_SCRIPTS
+@@ -333,8 +333,9 @@ config GDB_SCRIPTS
  endif # DEBUG_INFO
  
  config FRAME_WARN
@@ -108,7 +108,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 29c395c77a9a514c5857c45ceae2665e9bd99ac7
+base-commit: 7a7fd0de4a9804299793e564a555a49c1fc924cb
 -- 
-2.30.1
+2.31.0.rc0.75.gec125d1bc1
 
