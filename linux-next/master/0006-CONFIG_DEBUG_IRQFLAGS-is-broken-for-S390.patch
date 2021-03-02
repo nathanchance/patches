@@ -1,7 +1,7 @@
-From 24a1e578038c7549f429bdf00fa408cd77753940 Mon Sep 17 00:00:00 2001
+From 12aa211abebee9540b8b7634ccb35ead27de3d65 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 3 Feb 2021 11:40:44 -0700
-Subject: [PATCH 6/8] CONFIG_DEBUG_IRQFLAGS is broken for S390
+Subject: [PATCH 6/6] CONFIG_DEBUG_IRQFLAGS is broken for S390
 
 Link: https://lore.kernel.org/lkml/871re5dzsy.fsf@nanos.tec.linutronix.de/
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -31,5 +31,5 @@ index 16cdc8d360aa..18d6c61172cf 100644
  	  Enables checks for potentially unsafe enabling or disabling of
  	  interrupts, such as calling raw_local_irq_restore() when interrupts
 -- 
-2.30.1
+2.31.0.rc0.75.gec125d1bc1
 
