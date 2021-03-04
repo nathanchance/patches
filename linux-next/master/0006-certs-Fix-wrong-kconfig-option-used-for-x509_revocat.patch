@@ -1,7 +1,7 @@
-From fbbdd6282eed84775bcaf88a7afbea2299c62a6e Mon Sep 17 00:00:00 2001
+From c796275d9ea3c8bc4c5646cfd0909e3b99d7364b Mon Sep 17 00:00:00 2001
 From: Eric Snowberg <eric.snowberg@oracle.com>
 Date: Thu, 4 Mar 2021 12:50:30 -0500
-Subject: [PATCH 7/7] certs: Fix wrong kconfig option used for
+Subject: [PATCH 6/6] certs: Fix wrong kconfig option used for
  x509_revocation_list
 
 Fix a build issue when x509_revocation_list is not defined.
