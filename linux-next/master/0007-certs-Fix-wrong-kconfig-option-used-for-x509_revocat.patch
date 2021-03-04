@@ -1,0 +1,101 @@
+From fbbdd6282eed84775bcaf88a7afbea2299c62a6e Mon Sep 17 00:00:00 2001
+From: Eric Snowberg <eric.snowberg@oracle.com>
+Date: Thu, 4 Mar 2021 12:50:30 -0500
+Subject: [PATCH 7/7] certs: Fix wrong kconfig option used for
+ x509_revocation_list
+
+Fix a build issue when x509_revocation_list is not defined.
+
+$ make ARCH=x86_64 O=build64 all
+
+ EXTRACT_CERTS   ../
+At main.c:154:
+- SSL error:0909006C:PEM routines:get_name:no start line: crypto/pem/pem_lib.c:745
+extract-cert: ../: Is a directory
+make[2]: [../certs/Makefile:119: certs/x509_revocation_list] Error 1 (ignored)
+
+When the new CONFIG_SYSTEM_REVOCATION_LIST was added [1], it was not carried
+into the code for preloading the revocation certificates [2].  Change from
+using the original CONFIG_SYSTEM_BLACKLIST_KEYRING  to the new
+CONFIG_SYSTEM_REVOCATION_LIST.
+
+[1] https://lore.kernel.org/keyrings/EDA280F9-F72D-4181-93C7-CDBE95976FF7@oracle.com/T/#m562c1b27bf402190e7bb573ad20eff5b6310d08f
+[2] https://lore.kernel.org/keyrings/EDA280F9-F72D-4181-93C7-CDBE95976FF7@oracle.com/T/#m07e258bf019ccbac23820fad5192ceffa74fc6ab
+
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Eric Snowberg <eric.snowberg@oracle.com>
+Link: https://lore.kernel.org/r/20210304175030.184131-1-eric.snowberg@oracle.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ certs/Makefile    | 5 +++--
+ certs/blacklist.c | 4 ++++
+ scripts/Makefile  | 2 +-
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/certs/Makefile b/certs/Makefile
+index e3f4926fd21e..b6db52ebf0be 100644
+--- a/certs/Makefile
++++ b/certs/Makefile
+@@ -4,7 +4,8 @@
+ #
+ 
+ obj-$(CONFIG_SYSTEM_TRUSTED_KEYRING) += system_keyring.o system_certificates.o common.o
+-obj-$(CONFIG_SYSTEM_BLACKLIST_KEYRING) += blacklist.o revocation_certificates.o common.o
++obj-$(CONFIG_SYSTEM_BLACKLIST_KEYRING) += blacklist.o common.o
++obj-$(CONFIG_SYSTEM_REVOCATION_LIST) += revocation_certificates.o
+ ifneq ($(CONFIG_SYSTEM_BLACKLIST_HASH_LIST),"")
+ obj-$(CONFIG_SYSTEM_BLACKLIST_KEYRING) += blacklist_hashes.o
+ else
+@@ -105,7 +106,7 @@ $(obj)/signing_key.x509: scripts/extract-cert $(X509_DEP) FORCE
+ 	$(call if_changed,extract_certs,$(MODULE_SIG_KEY_SRCPREFIX)$(CONFIG_MODULE_SIG_KEY))
+ endif # CONFIG_MODULE_SIG
+ 
+-ifeq ($(CONFIG_SYSTEM_BLACKLIST_KEYRING),y)
++ifeq ($(CONFIG_SYSTEM_REVOCATION_LIST),y)
+ 
+ $(eval $(call config_filename,SYSTEM_REVOCATION_KEYS))
+ 
+diff --git a/certs/blacklist.c b/certs/blacklist.c
+index 723b19c96256..c9a435b15af4 100644
+--- a/certs/blacklist.c
++++ b/certs/blacklist.c
+@@ -21,8 +21,10 @@
+ 
+ static struct key *blacklist_keyring;
+ 
++#ifdef CONFIG_SYSTEM_REVOCATION_LIST
+ extern __initconst const u8 revocation_certificate_list[];
+ extern __initconst const unsigned long revocation_certificate_list_size;
++#endif
+ 
+ /*
+  * The description must be a type prefix, a colon and then an even number of
+@@ -225,6 +227,7 @@ static int __init blacklist_init(void)
+  */
+ device_initcall(blacklist_init);
+ 
++#ifdef CONFIG_SYSTEM_REVOCATION_LIST
+ /*
+  * Load the compiled-in list of revocation X.509 certificates.
+  */
+@@ -237,3 +240,4 @@ static __init int load_revocation_certificate_list(void)
+ 				     blacklist_keyring);
+ }
+ late_initcall(load_revocation_certificate_list);
++#endif
+diff --git a/scripts/Makefile b/scripts/Makefile
+index b49bf932ccdc..9adb6d247818 100644
+--- a/scripts/Makefile
++++ b/scripts/Makefile
+@@ -14,7 +14,7 @@ hostprogs-always-$(CONFIG_ASN1)				+= asn1_compiler
+ hostprogs-always-$(CONFIG_MODULE_SIG_FORMAT)		+= sign-file
+ hostprogs-always-$(CONFIG_SYSTEM_TRUSTED_KEYRING)	+= extract-cert
+ hostprogs-always-$(CONFIG_SYSTEM_EXTRA_CERTIFICATE)	+= insert-sys-cert
+- hostprogs-always-$(CONFIG_SYSTEM_BLACKLIST_KEYRING)	+= extract-cert
++hostprogs-always-$(CONFIG_SYSTEM_REVOCATION_LIST)	+= extract-cert
+ 
+ HOSTCFLAGS_sorttable.o = -I$(srctree)/tools/include
+ HOSTCFLAGS_asn1_compiler.o = -I$(srctree)/include
+-- 
+2.31.0.rc1
+
