@@ -1,7 +1,7 @@
-From 31b8d34643b1a54b3798695c06c1aaf548b83410 Mon Sep 17 00:00:00 2001
+From a916abfc29c0a31357063e1e3f0da222da143ca1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
-Subject: [PATCH 1/8] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/7] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -94,7 +94,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 83be32b6c9e55d5b04181fc9788591d5611d4a96
+base-commit: 012f78dadb7186c479343b77e97df2925caf681e
 -- 
 2.31.0.rc1
 
