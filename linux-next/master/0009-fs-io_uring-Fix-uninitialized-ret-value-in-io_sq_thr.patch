@@ -1,0 +1,27 @@
+From 6cdeff1e8c77cd5ce7daf990a4e57bc00d7a1104 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 6 Mar 2021 21:51:15 -0700
+Subject: [PATCH 9/9] fs/io_uring: Fix uninitialized ret value in
+ io_sq_thread_fork
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/io_uring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/io_uring.c b/fs/io_uring.c
+index b52ef6df4aac..4e3dec7c9ed6 100644
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -7787,7 +7787,7 @@ static int io_sq_thread_fork(struct io_sq_data *sqd, struct io_ring_ctx *ctx)
+ 	sqd->task_pid = current->pid;
+ 	tsk = create_io_thread(io_sq_thread, sqd, NUMA_NO_NODE);
+ 	if (IS_ERR(tsk))
+-		return ret;
++		return PTR_ERR(tsk);
+ 	ret = io_uring_alloc_task_context(tsk, ctx);
+ 	if (ret)
+ 		set_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
+-- 
+2.31.0.rc1
+
