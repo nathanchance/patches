@@ -1,7 +1,7 @@
-From 27de6826ecb5f97769f2dee628cdf5752db838ca Mon Sep 17 00:00:00 2001
+From 31b8d34643b1a54b3798695c06c1aaf548b83410 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
-Subject: [PATCH 1/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 1/8] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -26,10 +26,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  5 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 0cfd6da784f8..55d85cec076d 100644
+index 71a315e73cbe..b41fd6a8af3a 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -61,8 +61,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
+@@ -62,8 +62,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
  # The DSO images are built using a special linker script
  # Add -lgcc so rv32 gets static muldi3 and lshrdi3 definitions.
  # Make sure only to export the intended __vdso_xxx symbol offsets.
@@ -94,7 +94,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: 63b9d2e001fd7ceae418ee124ae228f63f921323
+base-commit: 83be32b6c9e55d5b04181fc9788591d5611d4a96
 -- 
-2.30.1
+2.31.0.rc1
 
