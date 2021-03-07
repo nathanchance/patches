@@ -1,7 +1,7 @@
-From a14d16a4061599bab703ccc046ba9622c94eda2e Mon Sep 17 00:00:00 2001
+From 65ffa4b47d09cdbcdeacfc30aa31da844e34e226 Mon Sep 17 00:00:00 2001
 From: Ben Dooks <ben-linux@fluff.org>
 Date: Mon, 4 Nov 2019 18:15:15 +0100
-Subject: [PATCH 17/19] ARM: 8918/2: only build return_address() if needed
+Subject: [PATCH 16/18] ARM: 8918/2: only build return_address() if needed
 
 The system currently warns if the config conditions for
 building return_address in arch/arm/kernel/return_address.c

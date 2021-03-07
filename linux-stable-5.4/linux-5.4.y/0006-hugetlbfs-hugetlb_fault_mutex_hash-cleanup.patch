@@ -1,7 +1,7 @@
-From f7d9dd1188c595626d86a9cbe29fe9cd698b07f3 Mon Sep 17 00:00:00 2001
+From 65ddd3a52255d78af10424a7cc092840c5962122 Mon Sep 17 00:00:00 2001
 From: Mike Kravetz <mike.kravetz@oracle.com>
 Date: Sat, 30 Nov 2019 17:56:30 -0800
-Subject: [PATCH 06/19] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
+Subject: [PATCH 06/18] hugetlbfs: hugetlb_fault_mutex_hash() cleanup
 
 A new clang diagnostic (-Wsizeof-array-div) warns about the calculation
 to determine the number of u32's in an array of unsigned longs.
@@ -69,7 +69,7 @@ index 0e080ba5efbc..fc717aeb2b3d 100644
  pte_t *huge_pmd_share(struct mm_struct *mm, unsigned long addr, pud_t *pud);
  
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 2cd4c7f43dcd..0d300e59f8d6 100644
+index 4033b6ce01c4..5253c67acb1d 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
 @@ -4020,7 +4020,7 @@ static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
