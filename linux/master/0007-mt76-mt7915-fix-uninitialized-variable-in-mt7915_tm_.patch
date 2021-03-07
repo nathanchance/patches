@@ -1,7 +1,7 @@
 From 85258b56d73e1b6f8a9eda6feb2d407ca1227081 Mon Sep 17 00:00:00 2001
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 Date: Thu, 11 Feb 2021 10:11:29 +0100
-Subject: [PATCH 7/7] mt76: mt7915: fix uninitialized variable in
+Subject: [PATCH 7/9] mt76: mt7915: fix uninitialized variable in
  mt7915_tm_set_tx_cont()
 
 Set MT_PHY_TYPE_OFDM as default value for mode variable in
