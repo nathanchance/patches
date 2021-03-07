@@ -1,7 +1,7 @@
-From 0958e7237b19aef94e86a486859331ec261b25d0 Mon Sep 17 00:00:00 2001
+From 7d7a4724984857d3b9a6bf40db91f0c1289eb000 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 25 Sep 2019 11:09:06 -0700
-Subject: [PATCH 07/20] x86/realmode: Explicitly set entry point via ENTRY in
+Subject: [PATCH 07/19] x86/realmode: Explicitly set entry point via ENTRY in
  linker script
 
 Linking with ld.lld via
@@ -57,5 +57,5 @@ index 3bb980800c58..64d135d1ee63 100644
  SECTIONS
  {
 -- 
-2.30.1
+2.31.0.rc1
 

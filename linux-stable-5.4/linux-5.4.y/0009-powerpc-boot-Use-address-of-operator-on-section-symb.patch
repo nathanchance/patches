@@ -1,7 +1,7 @@
-From e625aba6c8c73b72b4a7a8c5b41efc70bb84c34e Mon Sep 17 00:00:00 2001
+From fe31e7c49ae5c9ec0e6792161106e02fd475af82 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 23 Jun 2020 20:59:20 -0700
-Subject: [PATCH 09/20] powerpc/boot: Use address-of operator on section
+Subject: [PATCH 09/19] powerpc/boot: Use address-of operator on section
  symbols
 
 Clang warns:
@@ -69,5 +69,5 @@ index c52552a681c5..6e4efbdb6b7c 100644
  		setprop_val(chosen, "linux,initrd-end", (u32)(_initrd_end));
  	}
 -- 
-2.30.1
+2.31.0.rc1
 

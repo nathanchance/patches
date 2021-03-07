@@ -1,7 +1,7 @@
-From 24e6c72599d086253cb50ea897249e301b4c6c30 Mon Sep 17 00:00:00 2001
+From 503398266a57766dd7e8de6c3d693da8fd56298f Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 12/20] powerpc: fix function annotations to avoid section
+Subject: [PATCH 12/19] powerpc: fix function annotations to avoid section
  mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10
@@ -35,10 +35,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
-index 689664cd4e79..1217361a831a 100644
+index 1b65fb7c0bda..b29480db80e1 100644
 --- a/arch/powerpc/kernel/prom_init.c
 +++ b/arch/powerpc/kernel/prom_init.c
-@@ -3242,7 +3242,7 @@ static int enter_secure_mode(unsigned long kbase, unsigned long fdt)
+@@ -3238,7 +3238,7 @@ static int enter_secure_mode(unsigned long kbase, unsigned long fdt)
  /*
   * Call the Ultravisor to transfer us to secure memory if we have an ESM blob.
   */
@@ -47,7 +47,7 @@ index 689664cd4e79..1217361a831a 100644
  {
  	int ret;
  
-@@ -3272,7 +3272,7 @@ static void setup_secure_guest(unsigned long kbase, unsigned long fdt)
+@@ -3268,7 +3268,7 @@ static void setup_secure_guest(unsigned long kbase, unsigned long fdt)
  	}
  }
  #else
@@ -92,5 +92,5 @@ index 3f15615712b5..5e3fb9955b93 100644
  	const u8 *vec5_xive;
  
 -- 
-2.30.1
+2.31.0.rc1
 
