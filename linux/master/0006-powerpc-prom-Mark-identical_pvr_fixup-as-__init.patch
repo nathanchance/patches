@@ -1,7 +1,7 @@
 From a1eb1079a5b8b0e7eec4d125cfa811913225312e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 13:08:29 -0700
-Subject: [PATCH 6/9] powerpc/prom: Mark identical_pvr_fixup as __init
+Subject: [PATCH 6/8] powerpc/prom: Mark identical_pvr_fixup as __init
 
 If identical_pvr_fixup() is not inlined, there are two modpost warnings:
 
