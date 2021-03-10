@@ -1,0 +1,71 @@
+From f3b942ae6d5c54992601fa9108e319a4b37f3ac0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Mar 2021 09:01:35 -0700
+Subject: [PATCH 8/9] sched/fair: Shuffle update_nohz_stats
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/sched/fair.c | 40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
+
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index f5d6541334b3..2460f63b872f 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8381,28 +8381,6 @@ group_type group_classify(unsigned int imbalance_pct,
+ 	return group_has_spare;
+ }
+ 
+-static bool update_nohz_stats(struct rq *rq)
+-{
+-#ifdef CONFIG_NO_HZ_COMMON
+-	unsigned int cpu = rq->cpu;
+-
+-	if (!rq->has_blocked_load)
+-		return false;
+-
+-	if (!cpumask_test_cpu(cpu, nohz.idle_cpus_mask))
+-		return false;
+-
+-	if (!time_after(jiffies, READ_ONCE(rq->last_blocked_load_update_tick)))
+-		return true;
+-
+-	update_blocked_averages(cpu);
+-
+-	return rq->has_blocked_load;
+-#else
+-	return false;
+-#endif
+-}
+-
+ /**
+  * update_sg_lb_stats - Update sched_group's statistics for load balancing.
+  * @env: The load balancing environment.
+@@ -10366,6 +10344,24 @@ void nohz_balance_enter_idle(int cpu)
+ 	WRITE_ONCE(nohz.has_blocked, 1);
+ }
+ 
++static bool update_nohz_stats(struct rq *rq)
++{
++	unsigned int cpu = rq->cpu;
++
++	if (!rq->has_blocked_load)
++		return false;
++
++	if (!cpumask_test_cpu(cpu, nohz.idle_cpus_mask))
++		return false;
++
++	if (!time_after(jiffies, READ_ONCE(rq->last_blocked_load_update_tick)))
++		return true;
++
++	update_blocked_averages(cpu);
++
++	return rq->has_blocked_load;
++}
++
+ /*
+  * Internal function that runs load balance for all idle cpus. The load balance
+  * can be a simple update of blocked load or a complete load balance with
+-- 
+2.31.0.rc1
+
