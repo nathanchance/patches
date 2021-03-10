@@ -1,0 +1,64 @@
+From f8948862439d9580f94f0a2b83414880b1c7a6ed Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Mar 2021 16:11:57 -0700
+Subject: [PATCH 23/24] kbuild: Add macros for controlling warnings to
+ compiler-clang.h
+
+Similar to commit 8793bb7f4a9d ("kbuild: add macro for controlling
+warnings to linux/compiler.h") but for clang. This allows developers to
+have more local control over clang warnings.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/compiler-clang.h | 22 ++++++++++++++++++++++
+ include/linux/compiler_types.h |  4 ++++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
+index 0e06df20928c..79121a8a7e40 100644
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -36,3 +36,25 @@
+     __has_builtin(__builtin_sub_overflow)
+ #define COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW 1
+ #endif
++
++/*
++ * Turn individual warnings and errors on and off locally, depending
++ * on version.
++ */
++#define __diag_clang(version, severity, s) \
++		__diag_clang_ ## version(__diag_clang_ ## severity s)
++
++/* Severity used in pragma directives */
++#define __diag_clang_ignore	ignored
++#define __diag_clang_warn	warning
++#define __diag_clang_error	error
++
++#define __diag_str1(s)		#s
++#define __diag_str(s)		__diag_str1(s)
++#define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
++
++#if CONFIG_CLANG_VERSION >= 130000
++#define __diag_clang_13(s)		__diag(s)
++#else
++#define __diag_clang_13(s)
++#endif
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index b94d08d055ff..94051f9c4c9a 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -229,6 +229,10 @@ struct ftrace_likely_data {
+ #define __diag(string)
+ #endif
+ 
++#ifndef __diag_clang
++#define __diag_clang(version, severity, string)
++#endif
++
+ #ifndef __diag_GCC
+ #define __diag_GCC(version, severity, string)
+ #endif
+-- 
+2.31.0.rc1
+
