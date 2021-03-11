@@ -1,0 +1,33 @@
+From 085fcfb6e4645de35393a180a82487208128f7a0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Mar 2021 13:09:38 -0700
+Subject: [PATCH 14/14] x86/vmemmap: Add __maybe_unused to
+ vmemmap_pmd_is_unused
+
+arch/x86/mm/init_64.c:835:23: error: unused function
+'vmemmap_pmd_is_unused' [-Werror,-Wunused-function]
+static bool __meminit vmemmap_pmd_is_unused(unsigned long addr, unsigned long end)
+                      ^
+1 error generated.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/mm/init_64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/mm/init_64.c b/arch/x86/mm/init_64.c
+index 0b5d6459391e..ec070f2720e4 100644
+--- a/arch/x86/mm/init_64.c
++++ b/arch/x86/mm/init_64.c
+@@ -832,7 +832,7 @@ void __init paging_init(void)
+ #define PAGE_UNUSED 0xFD
+ 
+ /* Returns true if the PMD is completely unused and thus it can be freed */
+-static bool __meminit vmemmap_pmd_is_unused(unsigned long addr, unsigned long end)
++static bool __maybe_unused __meminit vmemmap_pmd_is_unused(unsigned long addr, unsigned long end)
+ {
+ 	unsigned long start = ALIGN_DOWN(addr, PMD_SIZE);
+ 
+-- 
+2.31.0.rc1
+
