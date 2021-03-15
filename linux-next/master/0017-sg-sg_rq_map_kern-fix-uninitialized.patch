@@ -1,0 +1,31 @@
+From b339c01e2bfe0a018784e0e8babad1111d237e04 Mon Sep 17 00:00:00 2001
+From: Douglas Gilbert <dgilbert@interlog.com>
+Date: Thu, 11 Mar 2021 13:14:20 -0500
+Subject: [PATCH 17/17] sg: sg_rq_map_kern: fix uninitialized
+
+Variable k should not be used in call to sg_mk_kern_bio().
+
+Reported-by: Colin Ian King <colin.king@canonical.com>
+Signed-off-by: Douglas Gilbert <dgilbert@interlog.com>
+Link: https://lore.kernel.org/r/20210311181423.137646-2-dgilbert@interlog.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/sg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index 6b31b2bc8f9a..37fea28449d5 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2987,7 +2987,7 @@ sg_rq_map_kern(struct sg_request *srp, struct request_queue *q, struct request *
+ 		return 0;
+ 	if (rw_ind == WRITE)
+ 		op_flags = REQ_SYNC | REQ_IDLE;
+-	bio = sg_mk_kern_bio(num_sgat - k);
++	bio = sg_mk_kern_bio(num_sgat);
+ 	if (!bio)
+ 		return -ENOMEM;
+ 	bio->bi_opf = req_op(rqq) | op_flags;
+-- 
+2.31.0.rc2
+

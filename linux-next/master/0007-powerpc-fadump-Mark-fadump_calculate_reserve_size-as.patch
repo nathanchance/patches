@@ -1,4 +1,4 @@
-From 8fd88344b348d8983f22daca7cbfe684374d1fcb Mon Sep 17 00:00:00 2001
+From bb3362d03ee6e78d17a49810d30d38f11e18fb42 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 12:50:14 -0700
 Subject: [PATCH 07/17] powerpc/fadump: Mark fadump_calculate_reserve_size as
@@ -47,5 +47,5 @@ index 8482739d42f3..eddf362caedc 100644
  	u64 base, size, bootmem_min;
  	int ret;
 -- 
-2.31.0.rc1
+2.31.0.rc2
 

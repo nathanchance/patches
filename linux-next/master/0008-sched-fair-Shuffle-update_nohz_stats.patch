@@ -1,4 +1,4 @@
-From 22341059d91b434a3d387e489bee80cd453cd44b Mon Sep 17 00:00:00 2001
+From fe8e91a25d252fb5af50c437d4385ddd554392d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 09:01:35 -0700
 Subject: [PATCH 08/17] sched/fair: Shuffle update_nohz_stats
@@ -67,5 +67,5 @@ index 2e2ab1e00ef9..0e8ab70d4909 100644
   * Internal function that runs load balance for all idle cpus. The load balance
   * can be a simple update of blocked load or a complete load balance with
 -- 
-2.31.0.rc1
+2.31.0.rc2
 

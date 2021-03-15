@@ -1,7 +1,7 @@
-From 2dc9a70308f83e45151da08e65115eb453d5cb81 Mon Sep 17 00:00:00 2001
+From 90a692110492dbc50bd2b8662be29e64ff2db7d2 Mon Sep 17 00:00:00 2001
 From: Oak Zeng <Oak.Zeng@amd.com>
 Date: Wed, 10 Mar 2021 21:29:04 -0600
-Subject: [PATCH 16/17] drm/amdgpu: fix a few compiler warnings
+Subject: [PATCH 15/17] drm/amdgpu: fix a few compiler warnings
 
 1. make function mmhub_v1_7_setup_vm_pt_regs static
 2. indent a if statement
@@ -52,5 +52,5 @@ index 4df0b730774f..ae7d8a1738a3 100644
  {
  	struct amdgpu_vmhub *hub = &adev->vmhub[AMDGPU_MMHUB_0];
 -- 
-2.31.0.rc1
+2.31.0.rc2
 
