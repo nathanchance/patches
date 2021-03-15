@@ -1,4 +1,4 @@
-From a01da24dce79205a4c1d698e961ac602f59ccb25 Mon Sep 17 00:00:00 2001
+From 7bb1d0c2edbe770e2f46b4690804c7d5f592da43 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:54:56 +0100
 Subject: [PATCH 04/11] ARM: avoid cpuidle link warning
@@ -52,5 +52,5 @@ index 0d67ed682e07..bc4ffa7ca04c 100644
  extern int arm_cpuidle_suspend(int index);
  
 -- 
-2.31.0.rc1
+2.31.0.rc2
 
