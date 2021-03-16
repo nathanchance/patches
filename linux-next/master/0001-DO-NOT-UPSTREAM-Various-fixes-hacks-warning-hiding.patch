@@ -1,7 +1,7 @@
-From 60a28e91606f85340daad0e3950b43b366025370 Mon Sep 17 00:00:00 2001
+From dbf1e7fc12dbcfa00cb47f88986b2575eec39ed2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:48:40 -0700
-Subject: [PATCH 01/17] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -80,7 +80,7 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index a2d04c00cda2..16cdc8d360aa 100644
+index 5a698fc34d56..b6e8cf95ab14 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -333,8 +333,9 @@ config GDB_SCRIPTS
@@ -108,7 +108,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: fa80526a716c09dca484d9dfefeebdf2df385b76
+base-commit: 0f4b0bb396f6f424a7b074d00cb71f5966edcb8a
 -- 
-2.31.0.rc2
+2.31.0
 

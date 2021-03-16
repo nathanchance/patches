@@ -1,7 +1,7 @@
-From 1efe19e5651575b4220b9ebd4aef37f246ff90cd Mon Sep 17 00:00:00 2001
+From cd80f3965681e5b8f5e1d1ffef466fd205c92868 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:11:57 -0700
-Subject: [PATCH 11/17] kbuild: Add macros for controlling warnings to
+Subject: [PATCH 11/14] kbuild: Add macros for controlling warnings to
  compiler-clang.h
 
 Similar to commit 8793bb7f4a9d ("kbuild: add macro for controlling
@@ -60,5 +60,5 @@ index e5dd5a4ae946..a505d8a4302d 100644
  #define __diag_GCC(version, severity, string)
  #endif
 -- 
-2.31.0.rc2
+2.31.0
 

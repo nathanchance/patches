@@ -1,7 +1,7 @@
-From b339c01e2bfe0a018784e0e8babad1111d237e04 Mon Sep 17 00:00:00 2001
+From 229ccff3ad42f943474bc8275fef7f53a270f8e1 Mon Sep 17 00:00:00 2001
 From: Douglas Gilbert <dgilbert@interlog.com>
 Date: Thu, 11 Mar 2021 13:14:20 -0500
-Subject: [PATCH 17/17] sg: sg_rq_map_kern: fix uninitialized
+Subject: [PATCH 14/14] sg: sg_rq_map_kern: fix uninitialized
 
 Variable k should not be used in call to sg_mk_kern_bio().
 
@@ -27,5 +27,5 @@ index 6b31b2bc8f9a..37fea28449d5 100644
  		return -ENOMEM;
  	bio->bi_opf = req_op(rqq) | op_flags;
 -- 
-2.31.0.rc2
+2.31.0
 
