@@ -1,7 +1,7 @@
-From 7897bf3aa1d8690b29aa7aec08b63eb64fec426b Mon Sep 17 00:00:00 2001
+From a0bc7fef47809c7d080c0599ab2abafc01f8d7db Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:15:17 -0700
-Subject: [PATCH 13/13] blk-mq: Disable -Walign-mismatch in
+Subject: [PATCH 12/12] blk-mq: Disable -Walign-mismatch in
  blk_mq_complete_request_remote
 
 When compiling with clang-13:
@@ -40,5 +40,5 @@ index 2a1eff60c797..2fb33d1c4056 100644
  		if (rq->q->nr_hw_queues > 1)
  			return false;
 -- 
-2.31.0.rc1
+2.31.0
 

@@ -1,7 +1,7 @@
-From fdbd4ef1cb43f29d07381af1de17aa339d35c751 Mon Sep 17 00:00:00 2001
+From a17ba0e3c8dacdd2ee58c79efb8b12e36761d16f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:11:57 -0700
-Subject: [PATCH 12/13] kbuild: Add macros for controlling warnings to
+Subject: [PATCH 11/12] kbuild: Add macros for controlling warnings to
  compiler-clang.h
 
 Similar to commit 8793bb7f4a9d ("kbuild: add macro for controlling
@@ -15,10 +15,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 26 insertions(+)
 
 diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
-index 98cff1b4b088..a21934776531 100644
+index 189149de77a9..7debedbfec09 100644
 --- a/include/linux/compiler-clang.h
 +++ b/include/linux/compiler-clang.h
-@@ -65,3 +65,25 @@
+@@ -71,3 +71,25 @@
  #if __has_feature(shadow_call_stack)
  # define __noscs	__attribute__((__no_sanitize__("shadow-call-stack")))
  #endif
@@ -60,5 +60,5 @@ index ac3fa37a84f9..02ccaec4720f 100644
  #define __diag_GCC(version, severity, string)
  #endif
 -- 
-2.31.0.rc1
+2.31.0
 
