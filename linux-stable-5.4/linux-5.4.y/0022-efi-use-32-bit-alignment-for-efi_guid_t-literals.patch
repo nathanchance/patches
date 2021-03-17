@@ -1,6 +1,6 @@
-From 38eb4cdbec4d79b67a756de429be24846cca4239 Mon Sep 17 00:00:00 2001
+From ca7fc99a9bccde23d0b4d1d23f29e2fca9beaaab Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 10 Mar 2021 09:12:10 +0100
+Date: Wed, 10 Mar 2021 08:33:19 +0100
 Subject: [PATCH 22/24] efi: use 32-bit alignment for efi_guid_t literals
 
 Commit 494c704f9af0 ("efi: Use 32-bit alignment for efi_guid_t") updated
@@ -30,76 +30,34 @@ fully, but 32-bit ARM's load-multiple instructions fall into that category,
 and these are likely to be emitted by the compiler that built the firmware
 for loading word-aligned 128-bit GUIDs from memory
 
-Instead of bodging this further, let's simply switch to our own definition
-of efi_guid_t that carries a uint32_t as well. Since efi_guid_t is used as
-an opaque type everywhere in the EFI code, this is only a minor code change.
+So re-implement the initializer in terms of our own efi_guid_t type, so that
+the alignment becomes a property of the literal's type.
 
 Reported-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210310081210.95147-1-ardb@kernel.org
+Link: https://git.kernel.org/ardb/c/17bdef976555d001276f0dc188201399e03b0e90
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- fs/efivarfs/inode.c |  3 ++-
- include/linux/efi.h | 15 ++++++++++-----
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ include/linux/efi.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/efivarfs/inode.c b/fs/efivarfs/inode.c
-index 0297ad95eb5c..8df12792153d 100644
---- a/fs/efivarfs/inode.c
-+++ b/fs/efivarfs/inode.c
-@@ -84,7 +84,8 @@ static int efivarfs_create(struct inode *dir, struct dentry *dentry,
- 	/* length of the variable name itself: remove GUID and separator */
- 	namelen = dentry->d_name.len - EFI_VARIABLE_GUID_LEN - 1;
- 
--	err = guid_parse(dentry->d_name.name + namelen + 1, &var->var.VendorGuid);
-+	err = guid_parse(dentry->d_name.name + namelen + 1,
-+			 (guid_t *)&var->var.VendorGuid);
- 	if (err)
- 		goto out;
- 
 diff --git a/include/linux/efi.h b/include/linux/efi.h
-index 13ed2c6b13f8..00de7dba3204 100644
+index 13ed2c6b13f8..0ec4bff43020 100644
 --- a/include/linux/efi.h
 +++ b/include/linux/efi.h
-@@ -54,17 +54,22 @@ typedef void *efi_handle_t;
-  * is 32 bits not 8 bits like our guid_t. In some cases (i.e., on 32-bit ARM),
-  * this means that firmware services invoked by the kernel may assume that
-  * efi_guid_t* arguments are 32-bit aligned, and use memory accessors that
-- * do not tolerate misalignment. So let's set the minimum alignment to 32 bits.
-+ * do not tolerate misalignment.
-  *
-  * Note that the UEFI spec as well as some comments in the EDK2 code base
-  * suggest that EFI_GUID should be 64-bit aligned, but this appears to be
-  * a mistake, given that no code seems to exist that actually enforces that
-  * or relies on it.
+@@ -63,8 +63,10 @@ typedef void *efi_handle_t;
   */
--typedef guid_t efi_guid_t __aligned(__alignof__(u32));
-+typedef struct {
-+	u32	a;
-+	u16	b;
-+	u16	c;
-+	u8	d[8];
-+} efi_guid_t;
+ typedef guid_t efi_guid_t __aligned(__alignof__(u32));
  
- #define EFI_GUID(a,b,c,d0,d1,d2,d3,d4,d5,d6,d7) \
+-#define EFI_GUID(a,b,c,d0,d1,d2,d3,d4,d5,d6,d7) \
 -	GUID_INIT(a, b, c, d0, d1, d2, d3, d4, d5, d6, d7)
-+	(efi_guid_t){ a, b, c, { d0,d1,d2,d3,d4,d5,d6,d7 }}
++#define EFI_GUID(a, b, c, d...)	(efi_guid_t){ {				\
++	(u8)(a), (u8)((a) >> 8), (u8)((a) >> 16), (u8)((a) >> 24),	\
++	(u8)(b), (u8)((b) >> 8),					\
++	(u8)(c), (u8)((c) >> 8), d } }
  
  /*
   * Generic EFI table header
-@@ -1030,8 +1035,8 @@ efi_guidcmp (efi_guid_t left, efi_guid_t right)
- static inline char *
- efi_guid_to_str(efi_guid_t *guid, char *out)
- {
--	sprintf(out, "%pUl", guid->b);
--        return out;
-+	sprintf(out, "%pUl", guid);
-+	return out;
- }
- 
- extern void efi_init (void);
 -- 
-2.31.0.rc1
+2.31.0
 

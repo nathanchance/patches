@@ -1,4 +1,4 @@
-From f392457c6236800a7b37b22b386de85fd47046ba Mon Sep 17 00:00:00 2001
+From 0754997fb8a2f6c3e268c66b15ac55e947ad8c5b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:15:17 -0700
 Subject: [PATCH 24/24] blk-mq: Disable -Walign-mismatch in
@@ -40,5 +40,5 @@ index 057a634396a9..d49f4fef2785 100644
  		q->mq_ops->complete(rq);
  	}
 -- 
-2.31.0.rc1
+2.31.0
 
