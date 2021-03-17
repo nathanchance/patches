@@ -1,4 +1,4 @@
-From c6dc7c5ab7499b769c6756e24e9301b455699f6a Mon Sep 17 00:00:00 2001
+From a227b6e875787fd1065f950f02f50f05cd944098 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:11:57 -0700
 Subject: [PATCH 10/11] kbuild: Add macros for controlling warnings to
@@ -60,5 +60,5 @@ index e5dd5a4ae946..a505d8a4302d 100644
  #define __diag_GCC(version, severity, string)
  #endif
 -- 
-2.31.0.rc2
+2.31.0
 

@@ -1,4 +1,4 @@
-From 59a6fe493e5d20a9088304c206768e5e4fd37fc8 Mon Sep 17 00:00:00 2001
+From 21e332c135bd8d3cb191bbe64e51afcdd1b1c8eb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 31 Jan 2021 18:43:58 -0700
 Subject: [PATCH 05/11] btrfs: Disable -Wnull-pointer-arithmetic
@@ -22,5 +22,5 @@ index b634c42115ea..5049093a252c 100644
  obj-$(CONFIG_BTRFS_FS) := btrfs.o
  
 -- 
-2.31.0.rc2
+2.31.0
 

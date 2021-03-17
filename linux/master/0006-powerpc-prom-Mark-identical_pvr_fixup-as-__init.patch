@@ -1,4 +1,4 @@
-From 9fd1639f804bcbcb831876318553bec8e37383a1 Mon Sep 17 00:00:00 2001
+From f694d3a64f54decb7910181b71902c3a77e3b974 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 13:08:29 -0700
 Subject: [PATCH 06/11] powerpc/prom: Mark identical_pvr_fixup as __init
@@ -50,5 +50,5 @@ index 9a4797d1d40d..a8b2d6bfc1ca 100644
  	unsigned int pvr;
  	const char *model = of_get_flat_dt_prop(node, "model", NULL);
 -- 
-2.31.0.rc2
+2.31.0
 
