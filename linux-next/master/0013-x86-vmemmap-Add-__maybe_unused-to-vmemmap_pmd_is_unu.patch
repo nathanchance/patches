@@ -1,7 +1,7 @@
-From b53b4c1252ca5ec2171c63bdbc8aa2684d87aafa Mon Sep 17 00:00:00 2001
+From 5afbc0a4aa02f7f73752e9f8a11551e935a1e822 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 13:09:38 -0700
-Subject: [PATCH 13/14] x86/vmemmap: Add __maybe_unused to
+Subject: [PATCH 13/13] x86/vmemmap: Add __maybe_unused to
  vmemmap_pmd_is_unused
 
 arch/x86/mm/init_64.c:835:23: error: unused function
