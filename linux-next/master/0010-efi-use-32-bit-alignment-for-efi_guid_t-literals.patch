@@ -1,7 +1,7 @@
-From 59d54f80ce251571e3b81d6bf0168e540c1476a1 Mon Sep 17 00:00:00 2001
+From 17d37306e565d2eb06e9ba965a182e69fde01c26 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Wed, 10 Mar 2021 08:33:19 +0100
-Subject: [PATCH 10/13] efi: use 32-bit alignment for efi_guid_t literals
+Subject: [PATCH 10/15] efi: use 32-bit alignment for efi_guid_t literals
 
 Commit 494c704f9af0 ("efi: Use 32-bit alignment for efi_guid_t") updated
 the type definition of efi_guid_t to ensure that it always appears

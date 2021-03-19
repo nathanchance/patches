@@ -1,7 +1,7 @@
-From a25dbcb7d146aed6bcd84a288d13568614927f9d Mon Sep 17 00:00:00 2001
+From f60851fbee52fef3f94fb973bedcc16651fac6ef Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 13:09:38 -0700
-Subject: [PATCH 13/13] x86/vmemmap: Add __maybe_unused to
+Subject: [PATCH 13/15] x86/vmemmap: Add __maybe_unused to
  vmemmap_pmd_is_unused
 
 arch/x86/mm/init_64.c:835:23: error: unused function
@@ -16,10 +16,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/mm/init_64.c b/arch/x86/mm/init_64.c
-index 79375f5ddf43..24ca18ef9f5f 100644
+index 5430c81eefc9..8299ded1c27e 100644
 --- a/arch/x86/mm/init_64.c
 +++ b/arch/x86/mm/init_64.c
-@@ -851,7 +851,7 @@ static void __meminit vmemmap_flush_unused_pmd(void)
+@@ -849,7 +849,7 @@ static void __meminit vmemmap_flush_unused_pmd(void)
  
  #ifdef CONFIG_MEMORY_HOTPLUG
  /* Returns true if the PMD is completely unused and thus it can be freed */

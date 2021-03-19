@@ -1,7 +1,7 @@
-From 49e0a8edb310cbd1d0d36770f0df6ecd7ee217ab Mon Sep 17 00:00:00 2001
+From 8cc64475facf07b5944ab68a39d3346e22c0e8dc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:48:40 -0700
-Subject: [PATCH 01/13] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 01/15] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
 unused (https://github.com/ClangBuiltLinux/linux/issues/803).
@@ -80,7 +80,7 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 5a698fc34d56..b6e8cf95ab14 100644
+index 4a4f78b1ed9d..594de85a624c 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -333,8 +333,9 @@ config GDB_SCRIPTS
@@ -95,10 +95,10 @@ index 5a698fc34d56..b6e8cf95ab14 100644
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index a18b47695f55..b3a6de55d18a 100755
+index b7609958ee36..5f42da1b0a1a 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -255,7 +255,7 @@ EOF
+@@ -259,7 +259,7 @@ EOF
  syscall_list() {
      grep '^[0-9]' "$1" | sort -n |
  	while read nr abi name entry ; do
@@ -108,7 +108,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: fa903833ae344e4f4d798a8b85ba3ef0c5ce96c9
+base-commit: f00397ee41c79b6155b9b44abd0055b2c0621349
 -- 
 2.31.0
 

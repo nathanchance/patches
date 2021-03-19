@@ -1,7 +1,7 @@
-From 0857f4cf6420aa19b02f175d332d5febd5b54767 Mon Sep 17 00:00:00 2001
+From 4da5e60e54f7e3ece6bf84c476ef8abf1a76f875 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 31 Jan 2021 18:43:58 -0700
-Subject: [PATCH 05/13] btrfs: Disable -Wnull-pointer-arithmetic
+Subject: [PATCH 05/15] btrfs: Disable -Wnull-pointer-arithmetic
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1285
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/fs/btrfs/Makefile b/fs/btrfs/Makefile
-index fdba34b10a98..392da5f9ff33 100644
+index cec88a66bd6c..abe706d87c43 100644
 --- a/fs/btrfs/Makefile
 +++ b/fs/btrfs/Makefile
-@@ -15,6 +15,7 @@ subdir-ccflags-y += $(call cc-option, -Wstringop-truncation)
+@@ -17,6 +17,7 @@ subdir-ccflags-y += $(condflags)
  subdir-ccflags-y += -Wno-missing-field-initializers
  subdir-ccflags-y += -Wno-sign-compare
  subdir-ccflags-y += -Wno-type-limits
