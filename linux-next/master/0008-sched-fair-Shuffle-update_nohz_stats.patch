@@ -1,7 +1,7 @@
-From 5193b0bab323df31f2a809be5ecd73e05f4d0b83 Mon Sep 17 00:00:00 2001
+From ea8583cebb8873ee034e3c353ccdebf28914a5ac Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 09:01:35 -0700
-Subject: [PATCH 08/15] sched/fair: Shuffle update_nohz_stats
+Subject: [PATCH 08/12] sched/fair: Shuffle update_nohz_stats
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 18 insertions(+), 22 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2e2ab1e00ef9..0e8ab70d4909 100644
+index 6aad02876346..f283608616e9 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -8384,28 +8384,6 @@ group_type group_classify(unsigned int imbalance_pct,
