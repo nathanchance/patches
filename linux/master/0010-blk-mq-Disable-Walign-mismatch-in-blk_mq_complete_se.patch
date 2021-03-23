@@ -1,7 +1,7 @@
-From 5dfa8dabf9f79fabebbe6fa9493eccb668f0fd9f Mon Sep 17 00:00:00 2001
+From 1566c32ea5189eb7a7b3510846f1a290a4e4fa6c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 16:15:17 -0700
-Subject: [PATCH 11/11] blk-mq: Disable -Walign-mismatch in
+Subject: [PATCH 10/10] blk-mq: Disable -Walign-mismatch in
  blk_mq_complete_send_ipi
 
 When compiling with clang-13:

@@ -1,7 +1,7 @@
-From 03a245704148bdcc1412bc38216ffa06de4073fb Mon Sep 17 00:00:00 2001
+From b599795f8b60a7d5ba3dddf5516439b787caa8c7 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:31:24 +0200
-Subject: [PATCH 03/11] drm/rockchip: cdn-dp-core: Make
+Subject: [PATCH 03/10] drm/rockchip: cdn-dp-core: Make
  cdn_dp_core_suspend/resume __maybe_unused
 
 With the new static annotation, the compiler warns when the functions
