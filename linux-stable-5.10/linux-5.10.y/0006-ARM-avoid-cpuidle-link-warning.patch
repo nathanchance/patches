@@ -1,7 +1,7 @@
-From 936e9516c6f3bd8081baba0b9ac485aa0ccc109c Mon Sep 17 00:00:00 2001
+From d78c28182abdb837eb11b700a36d6aa50089c67c Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 30 Dec 2020 16:54:56 +0100
-Subject: [PATCH 06/12] ARM: avoid cpuidle link warning
+Subject: [PATCH 06/11] ARM: avoid cpuidle link warning
 
 Since commit 83109d5d5fba ("x86/build: Warn on orphan section placement"),
 we get a warning for objects in orphan sections. The cpuidle implementation
