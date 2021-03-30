@@ -1,7 +1,7 @@
-From e369b7981715fb7f7f78563464a132f0d8fbf8bb Mon Sep 17 00:00:00 2001
+From ef29f6030d6d9ab074ffaff7aad767c111ee4bf6 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
-Subject: [PATCH 11/23] powerpc/vmlinux.lds: Explicitly retain .gnu.hash
+Subject: [PATCH 14/26] powerpc/vmlinux.lds: Explicitly retain .gnu.hash
 
 Relocatable kernel builds produce a warning about .gnu.hash being an
 orphan section:

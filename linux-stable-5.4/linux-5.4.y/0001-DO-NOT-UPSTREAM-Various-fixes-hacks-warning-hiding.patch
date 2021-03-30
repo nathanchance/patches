@@ -1,10 +1,7 @@
-From c580c0220aaec706638316b257fca2718a55c359 Mon Sep 17 00:00:00 2001
+From 76db6d4093c786dcc2cddd0d6b6263590188f8c7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:51:03 -0700
-Subject: [PATCH 01/23] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
-
-* arch/riscv/kernel/vdso/Makefile: Avoids warning that '-no-pie' is
-unused (https://github.com/ClangBuiltLinux/linux/issues/803).
+Subject: [PATCH 01/26] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -18,28 +15,12 @@ fixed is a long term project.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile            | 3 ++-
  drivers/input/joystick/analog.c            | 1 -
  drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
  lib/Kconfig.debug                          | 3 ++-
  scripts/checksyscalls.sh                   | 2 +-
- 5 files changed, 6 insertions(+), 5 deletions(-)
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index a4ee3a0e7d20..f47517c5d6c0 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -54,8 +54,9 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
- # The DSO images are built using a special linker script
- # Add -lgcc so rv32 gets static muldi3 and lshrdi3 definitions.
- # Make sure only to export the intended __vdso_xxx symbol offsets.
-+no-pie-$(CONFIG_CC_IS_GCC) := $(call cc-option, -no-pie)
- quiet_cmd_vdsold = VDSOLD  $@
--      cmd_vdsold = $(CC) $(KBUILD_CFLAGS) $(call cc-option, -no-pie) -nostdlib -nostartfiles $(SYSCFLAGS_$(@F)) \
-+      cmd_vdsold = $(CC) $(KBUILD_CFLAGS) $(no-pie-y) -nostdlib -nostartfiles $(SYSCFLAGS_$(@F)) \
-                            -Wl,-T,$(filter-out FORCE,$^) -o $@.tmp && \
-                    $(CROSS_COMPILE)objcopy \
-                            $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index 2b625ebef914..3935f8c95eef 100644
 --- a/drivers/input/joystick/analog.c
@@ -94,7 +75,7 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 
-base-commit: b90344f7d6000deba0709d75225f30cbf79ec2f0
+base-commit: 4e85f8a712cddf2ceeaac50a26b239fbbcb7091f
 -- 
 2.31.0
 
