@@ -1,4 +1,4 @@
-From ea8583cebb8873ee034e3c353ccdebf28914a5ac Mon Sep 17 00:00:00 2001
+From fbfe1202f1a9edcdd736277df288131a211b4ac7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Mar 2021 09:01:35 -0700
 Subject: [PATCH 08/12] sched/fair: Shuffle update_nohz_stats
@@ -9,10 +9,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 18 insertions(+), 22 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6aad02876346..f283608616e9 100644
+index 6d73bdbb2d40..2a20ada83cbb 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -8384,28 +8384,6 @@ group_type group_classify(unsigned int imbalance_pct,
+@@ -8395,28 +8395,6 @@ group_type group_classify(unsigned int imbalance_pct,
  	return group_has_spare;
  }
  
@@ -41,7 +41,7 @@ index 6aad02876346..f283608616e9 100644
  /**
   * update_sg_lb_stats - Update sched_group's statistics for load balancing.
   * @env: The load balancing environment.
-@@ -10369,6 +10347,24 @@ void nohz_balance_enter_idle(int cpu)
+@@ -10380,6 +10358,24 @@ void nohz_balance_enter_idle(int cpu)
  	WRITE_ONCE(nohz.has_blocked, 1);
  }
  
