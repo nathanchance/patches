@@ -1,7 +1,7 @@
-From 93197f0505645c0fff224c56e2a259df1e0c18e5 Mon Sep 17 00:00:00 2001
+From ca52f08d3420a198d0f6c51615081cd64cf7e510 Mon Sep 17 00:00:00 2001
 From: Alexandru Ardelean <aardelean@deviqon.com>
 Date: Wed, 24 Mar 2021 20:27:46 +0200
-Subject: [PATCH 13/13] iio: adc: Kconfig: make AD9467 depend on ADI_AXI_ADC
+Subject: [PATCH 12/12] iio: adc: Kconfig: make AD9467 depend on ADI_AXI_ADC
  symbol
 
 Because a dependency on HAS_IOMEM and OF was added for the ADI AXI ADC
