@@ -1,7 +1,7 @@
 From 0020d650a541dc309d86b8bb4b3b6a836cad4cf9 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
-Subject: [PATCH 02/25] kbuild: explicitly specify the build id style
+Subject: [PATCH 02/26] kbuild: explicitly specify the build id style
 
 ld's --build-id defaults to "sha1" style, while lld defaults to "fast".
 The build IDs are very different between the two, which may confuse
