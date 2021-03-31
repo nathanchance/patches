@@ -1,7 +1,7 @@
 From a423d6cba6c5960dc55b6e662ce58527abdccac1 Mon Sep 17 00:00:00 2001
 From: Jian Cai <jiancai@google.com>
 Date: Tue, 30 Mar 2021 16:02:49 -0700
-Subject: [PATCH 11/11] blk-mq: fix alignment mismatch.
+Subject: [PATCH 11/12] blk-mq: fix alignment mismatch.
 
 This fixes the mismatch of alignments between csd and its use as an
 argument to smp_call_function_single_async, which causes build failure

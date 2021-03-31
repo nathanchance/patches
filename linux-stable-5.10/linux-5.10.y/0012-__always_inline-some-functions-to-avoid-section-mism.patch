@@ -1,0 +1,58 @@
+From a7f78179aa7f885737e23a81b2f7f99f6cafa51d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 30 Mar 2021 08:03:40 -0700
+Subject: [PATCH 12/12] __always_inline some functions to avoid section
+ mismatch warnings
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/asm-generic/bitops/instrumented-non-atomic.h | 2 +-
+ include/linux/nodemask.h                             | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/asm-generic/bitops/instrumented-non-atomic.h b/include/asm-generic/bitops/instrumented-non-atomic.h
+index 37363d570b9b..aef7c766f335 100644
+--- a/include/asm-generic/bitops/instrumented-non-atomic.h
++++ b/include/asm-generic/bitops/instrumented-non-atomic.h
+@@ -129,7 +129,7 @@ static inline bool __test_and_change_bit(long nr, volatile unsigned long *addr)
+  * @nr: bit number to test
+  * @addr: Address to start counting from
+  */
+-static inline bool test_bit(long nr, const volatile unsigned long *addr)
++static __always_inline bool test_bit(long nr, const volatile unsigned long *addr)
+ {
+ 	instrument_atomic_read(addr + BIT_WORD(nr), sizeof(long));
+ 	return arch_test_bit(nr, addr);
+diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
+index ac398e143c9a..a34be5098bbb 100644
+--- a/include/linux/nodemask.h
++++ b/include/linux/nodemask.h
+@@ -235,7 +235,7 @@ static inline int __nodes_full(const nodemask_t *srcp, unsigned int nbits)
+ }
+ 
+ #define nodes_weight(nodemask) __nodes_weight(&(nodemask), MAX_NUMNODES)
+-static inline int __nodes_weight(const nodemask_t *srcp, unsigned int nbits)
++static __always_inline int __nodes_weight(const nodemask_t *srcp, unsigned int nbits)
+ {
+ 	return bitmap_weight(srcp->bits, nbits);
+ }
+@@ -260,13 +260,13 @@ static inline void __nodes_shift_left(nodemask_t *dstp,
+           > MAX_NUMNODES, then the silly min_ts could be dropped. */
+ 
+ #define first_node(src) __first_node(&(src))
+-static inline int __first_node(const nodemask_t *srcp)
++static __always_inline int __first_node(const nodemask_t *srcp)
+ {
+ 	return min_t(int, MAX_NUMNODES, find_first_bit(srcp->bits, MAX_NUMNODES));
+ }
+ 
+ #define next_node(n, src) __next_node((n), &(src))
+-static inline int __next_node(int n, const nodemask_t *srcp)
++static __always_inline int __next_node(int n, const nodemask_t *srcp)
+ {
+ 	return min_t(int,MAX_NUMNODES,find_next_bit(srcp->bits, MAX_NUMNODES, n+1));
+ }
+-- 
+2.31.0
+
