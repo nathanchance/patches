@@ -1,4 +1,4 @@
-From 089e63c6604fc50c263dbddd2f1c2052908fd0d6 Mon Sep 17 00:00:00 2001
+From 71f6de6fb3ea7282ec4ba38bff6e16c8046aed76 Mon Sep 17 00:00:00 2001
 From: Jian Cai <jiancai@google.com>
 Date: Tue, 30 Mar 2021 16:02:49 -0700
 Subject: [PATCH 10/12] blk-mq: fix alignment mismatch.
@@ -19,10 +19,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index bc6bc8383b43..3b92330d95ad 100644
+index 158aefae1030..b94686b45938 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -231,7 +231,7 @@ struct request {
+@@ -229,7 +229,7 @@ struct request {
  	unsigned long deadline;
  
  	union {
