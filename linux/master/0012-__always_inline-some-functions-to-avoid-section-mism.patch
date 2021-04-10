@@ -1,4 +1,4 @@
-From aa54e498b341586f4b908c2609604e65db0791a7 Mon Sep 17 00:00:00 2001
+From a3431599bbbb37f6495611e446c7494fa69bf720 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
 Subject: [PATCH 12/12] __always_inline some functions to avoid section
@@ -54,5 +54,5 @@ index ac398e143c9a..a34be5098bbb 100644
  	return min_t(int,MAX_NUMNODES,find_next_bit(srcp->bits, MAX_NUMNODES, n+1));
  }
 -- 
-2.31.0
+2.31.1.189.g2e36527f23
 
