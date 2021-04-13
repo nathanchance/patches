@@ -1,18 +1,33 @@
-From fca539bfe06de48183a5bc884fc5cc51c56d743a Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 10 Mar 2021 09:01:35 -0700
-Subject: [PATCH 07/12] sched/fair: Shuffle update_nohz_stats
+From bdef1e0837218fe374a333dfb2fccb394b902425 Mon Sep 17 00:00:00 2001
+From: YueHaibing <yuehaibing@huawei.com>
+Date: Mon, 29 Mar 2021 22:40:29 +0800
+Subject: [PATCH 6/9] sched/fair: Fix unused function warning
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+while CONFIG_NO_HZ_COMMON is not enabled, gcc warn this:
+
+kernel/sched/fair.c:8398:13: warning: ‘update_nohz_stats’ defined but not used [-Wunused-function]
+ static bool update_nohz_stats(struct rq *rq)
+             ^~~~~~~~~~~~~~~~~
+
+Move update_nohz_stats() to #ifdef checking this.
+
+Fixes: 0826530de3cb ("sched/fair: Remove update of blocked load from newidle_balance")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20210329144029.29200-1-yuehaibing@huawei.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  kernel/sched/fair.c | 40 ++++++++++++++++++----------------------
  1 file changed, 18 insertions(+), 22 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6d73bdbb2d40..2a20ada83cbb 100644
+index 9b8ae02f1994..06e78bd7d10e 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -8395,28 +8395,6 @@ group_type group_classify(unsigned int imbalance_pct,
+@@ -8425,28 +8425,6 @@ group_type group_classify(unsigned int imbalance_pct,
  	return group_has_spare;
  }
  
@@ -41,7 +56,7 @@ index 6d73bdbb2d40..2a20ada83cbb 100644
  /**
   * update_sg_lb_stats - Update sched_group's statistics for load balancing.
   * @env: The load balancing environment.
-@@ -10380,6 +10358,24 @@ void nohz_balance_enter_idle(int cpu)
+@@ -10401,6 +10379,24 @@ void nohz_balance_enter_idle(int cpu)
  	WRITE_ONCE(nohz.has_blocked, 1);
  }
  
@@ -67,5 +82,5 @@ index 6d73bdbb2d40..2a20ada83cbb 100644
   * Internal function that runs load balance for all idle cpus. The load balance
   * can be a simple update of blocked load or a complete load balance with
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 
