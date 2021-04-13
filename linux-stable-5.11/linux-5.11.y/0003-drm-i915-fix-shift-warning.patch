@@ -1,7 +1,7 @@
-From 3ab9d19fb4e233c18b2be9b3faff8b12bf7a6f31 Mon Sep 17 00:00:00 2001
+From 406dd521c29984c9befd2a9a1172b329ca297941 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Sun, 3 Jan 2021 14:51:44 +0100
-Subject: [PATCH 07/13] i915: fix shift warning
+Subject: [PATCH 03/15] drm/i915: fix shift warning
 
 Randconfig builds on 32-bit machines show lots of warnings for
 the i915 driver for passing a 32-bit value into __const_hweight64():
@@ -15,8 +15,10 @@ include/asm-generic/bitops/const_hweight.h:29:49: note: expanded from macro 'hwe
 Change it to hweight_long() to avoid the warning.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by:: Chris Wilson <chris@chris-wilson.co.uk>
-Link: https://lore.kernel.org/r/20210103135158.3591442-1-arnd@kernel.org
+Reviewed-by: Chris Wilson <chris@chris-wilson.co.uk>
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210103135158.3591442-1-arnd@kernel.org
+Link: https://git.kernel.org/linus/bb80d8784d2a90f9c465c1fe95d240c73c4ba650
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
@@ -36,5 +38,5 @@ index bd3046e5a934..8fea210a21fe 100644
  
  /*
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 

@@ -1,7 +1,7 @@
-From 73843fec15f1188ee51032ba86c13c90b407f40b Mon Sep 17 00:00:00 2001
+From 1d7ab01558bc223283441f90479b0190acb25d8b Mon Sep 17 00:00:00 2001
 From: Alexandru Ardelean <aardelean@deviqon.com>
 Date: Wed, 24 Mar 2021 20:27:46 +0200
-Subject: [PATCH 12/13] iio: adc: Kconfig: make AD9467 depend on ADI_AXI_ADC
+Subject: [PATCH 08/15] iio: adc: Kconfig: make AD9467 depend on ADI_AXI_ADC
  symbol
 
 Because a dependency on HAS_IOMEM and OF was added for the ADI AXI ADC
@@ -24,6 +24,8 @@ Reported-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Alexandru Ardelean <aardelean@deviqon.com>
 Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Link: https://lore.kernel.org/r/20210324182746.9337-1-aardelean@deviqon.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://git.kernel.org/jic23/iio/c/194eafc9c1d49b53b59de9821fb63d423344cae3
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/iio/adc/Kconfig | 2 +-
@@ -43,5 +45,5 @@ index be1f73166a32..6840c1205e6d 100644
  	  Say yes here to build support for Analog Devices:
  	  * AD9467 16-Bit, 200 MSPS/250 MSPS Analog-to-Digital Converter
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 
