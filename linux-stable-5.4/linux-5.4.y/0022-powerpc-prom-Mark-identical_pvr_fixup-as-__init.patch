@@ -1,7 +1,7 @@
-From b1b36d227e5224e9abd04229d3e703b955b06d2d Mon Sep 17 00:00:00 2001
+From 4729c58d216c66cf92f75888ff4f050e07b8f82b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 13:08:29 -0700
-Subject: [PATCH 23/26] powerpc/prom: Mark identical_pvr_fixup as __init
+Subject: [PATCH 22/27] powerpc/prom: Mark identical_pvr_fixup as __init
 
 If identical_pvr_fixup() is not inlined, there are two modpost warnings:
 
@@ -29,9 +29,12 @@ if it feels it is worthwhile since commit 889b3c1245de ("compiler:
 remove CONFIG_OPTIMIZE_INLINING entirely").
 
 Fixes: 14b3d926a22b ("[POWERPC] 4xx: update 440EP(x)/440GR(x) identical PVR issue workaround")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1316
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1316
 Link: https://lore.kernel.org/r/20210302200829.2680663-1-nathan@kernel.org
+Link: https://git.kernel.org/powerpc/c/1ef1dd9c7ed27b080445e1576e8a05957e0e4dfc
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/kernel/prom.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -50,5 +53,5 @@ index e13e96e665e0..537142b877b8 100644
  	unsigned int pvr;
  	const char *model = of_get_flat_dt_prop(node, "model", NULL);
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 

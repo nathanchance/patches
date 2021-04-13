@@ -1,7 +1,7 @@
-From a2c467e6369442c93ac6a19026357385efa6065e Mon Sep 17 00:00:00 2001
+From 6a8ab90dc57d686eb1059515f8c9ddbf0b209aab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:51:03 -0700
-Subject: [PATCH 01/26] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 26/27] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -74,8 +74,6 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#warning syscall ${name} not implemented"
  		echo "#endif"
  	done
-
-base-commit: 59c8e332926875d337f426fde14fec986faab414
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 

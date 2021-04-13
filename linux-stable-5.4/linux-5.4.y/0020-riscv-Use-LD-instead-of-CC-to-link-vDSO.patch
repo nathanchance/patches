@@ -1,7 +1,7 @@
-From 663530afee9a9014bfa29732f28b6c0587601856 Mon Sep 17 00:00:00 2001
+From 6b524a5a32a01951651356c247e1ebe8df049375 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
-Subject: [PATCH 05/26] riscv: Use $(LD) instead of $(CC) to link vDSO
+Subject: [PATCH 20/27] riscv: Use $(LD) instead of $(CC) to link vDSO
 
 Currently, the VDSO is being linked through $(CC). This does not match
 how the rest of the kernel links objects, which is through the $(LD)
@@ -45,6 +45,10 @@ user's choice of objcopy binary is respected.
 Link: https://github.com/ClangBuiltLinux/linux/issues/803
 Link: https://github.com/ClangBuiltLinux/linux/issues/970
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fangrui Song <maskray@google.com>
+Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
+Link: https://git.kernel.org/riscv/c/7ad85ab93d0339ee3ca3189ae656a5e4b038e127
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/riscv/kernel/vdso/Makefile | 12 ++++--------
  1 file changed, 4 insertions(+), 8 deletions(-)
@@ -84,5 +88,5 @@ index b4b9b8f9fc36..1c088958e182 100644
  
  # Extracts symbol offsets from the VDSO, converting them into an assembly file
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 
