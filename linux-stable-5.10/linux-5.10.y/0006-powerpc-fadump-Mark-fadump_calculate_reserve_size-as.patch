@@ -1,7 +1,7 @@
-From be214e4ccb265726d06b85a46ef083dbc5741dd2 Mon Sep 17 00:00:00 2001
+From a0ed63c806a7a4bbff721e027ca701c9f295c796 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 12:50:14 -0700
-Subject: [PATCH 10/12] powerpc/fadump: Mark fadump_calculate_reserve_size as
+Subject: [PATCH 06/15] powerpc/fadump: Mark fadump_calculate_reserve_size as
  __init
 
 If fadump_calculate_reserve_size() is not inlined, there is a modpost
@@ -26,9 +26,12 @@ it is worthwhile since commit 889b3c1245de ("compiler: remove
 CONFIG_OPTIMIZE_INLINING entirely").
 
 Fixes: 11550dc0a00b ("powerpc/fadump: reuse crashkernel parameter for fadump memory reservation")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1300
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1300
 Link: https://lore.kernel.org/r/20210302195013.2626335-1-nathan@kernel.org
+Link: https://git.kernel.org/powerpc/c/fbced1546eaaab57a32e56c974ea8acf10c6abd8
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/powerpc/kernel/fadump.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -47,5 +50,5 @@ index 8482739d42f3..eddf362caedc 100644
  	u64 base, size, bootmem_min;
  	int ret;
 -- 
-2.31.0
+2.31.1.272.g89b43f80a5
 
