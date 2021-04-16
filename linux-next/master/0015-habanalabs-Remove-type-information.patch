@@ -1,0 +1,55 @@
+From 593ce0ebc7d9d9eee52b37e159c6021931c4ba3d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 15 Apr 2021 08:11:09 -0700
+Subject: [PATCH 15/16] habanalabs: Remove type information
+
+Link: https://lore.kernel.org/r/YHhK4twu3feLG3AR@archlinux-ax161/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/misc/habanalabs/common/habanalabs.h | 2 +-
+ drivers/misc/habanalabs/gaudi/gaudi.c       | 2 +-
+ drivers/misc/habanalabs/goya/goya.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/misc/habanalabs/common/habanalabs.h b/drivers/misc/habanalabs/common/habanalabs.h
+index 44e89da30b4a..fd550a0a4bff 100644
+--- a/drivers/misc/habanalabs/common/habanalabs.h
++++ b/drivers/misc/habanalabs/common/habanalabs.h
+@@ -2071,7 +2071,7 @@ struct hl_device {
+ 	struct hl_mmu_priv		mmu_priv;
+ 	struct hl_mmu_funcs		mmu_func[MMU_NUM_PGT_LOCATIONS];
+ 
+-	enum pll_index			*legacy_pll_map;
++	int				*legacy_pll_map;
+ 
+ 	atomic64_t			dram_used_mem;
+ 	u64				timeout_jiffies;
+diff --git a/drivers/misc/habanalabs/gaudi/gaudi.c b/drivers/misc/habanalabs/gaudi/gaudi.c
+index b751652f80a8..902f5818821f 100644
+--- a/drivers/misc/habanalabs/gaudi/gaudi.c
++++ b/drivers/misc/habanalabs/gaudi/gaudi.c
+@@ -122,7 +122,7 @@ enum gaudi_pll_index {
+ 	GAUDI_IF_PLL,
+ };
+ 
+-static enum pll_index gaudi_pll_map[PLL_MAX] = {
++static int gaudi_pll_map[PLL_MAX] = {
+ 	[CPU_PLL] = GAUDI_CPU_PLL,
+ 	[PCI_PLL] = GAUDI_PCI_PLL,
+ 	[SRAM_PLL] = GAUDI_SRAM_PLL,
+diff --git a/drivers/misc/habanalabs/goya/goya.c b/drivers/misc/habanalabs/goya/goya.c
+index e27338f4aad2..db5c948f0580 100644
+--- a/drivers/misc/habanalabs/goya/goya.c
++++ b/drivers/misc/habanalabs/goya/goya.c
+@@ -132,7 +132,7 @@ enum goya_pll_index {
+ 	GOYA_TPC_PLL,
+ };
+ 
+-static enum pll_index goya_pll_map[PLL_MAX] = {
++static int goya_pll_map[PLL_MAX] = {
+ 	[CPU_PLL] = GOYA_CPU_PLL,
+ 	[IC_PLL] = GOYA_IC_PLL,
+ 	[MC_PLL] = GOYA_MC_PLL,
+-- 
+2.31.1.272.g89b43f80a5
+

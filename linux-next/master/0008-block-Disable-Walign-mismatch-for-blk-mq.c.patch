@@ -1,7 +1,7 @@
-From 29aa7aff250fe42828711b813022a7ff39603c97 Mon Sep 17 00:00:00 2001
+From ad1d35260f797a79ec812b3fd456c5539ecb9931 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 8 Apr 2021 12:44:58 -0700
-Subject: [PATCH 7/9] block: Disable -Walign-mismatch for blk-mq.c
+Subject: [PATCH 08/16] block: Disable -Walign-mismatch for blk-mq.c
 
 LLVM 13 adds a new warning, -Walign-mismatch, which has an instance in
 blk_mq_complete_send_ipi():

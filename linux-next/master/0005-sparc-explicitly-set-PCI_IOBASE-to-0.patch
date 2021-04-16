@@ -1,0 +1,34 @@
+From e40c1a7694aeadb0837a735690916d0b152634f9 Mon Sep 17 00:00:00 2001
+From: Niklas Schnelle <schnelle@linux.ibm.com>
+Date: Thu, 15 Apr 2021 14:36:59 +0200
+Subject: [PATCH 05/16] sparc: explicitly set PCI_IOBASE to 0
+
+Instead of relying on the fallback in asm-generic/io.h which sets
+PCI_IOBASE 0 if it is not defined set it explicitly.
+
+Link: https://lore.kernel.org/lkml/CAK8P3a3PK9zyeP4ymELtc2ZYnymECoACiigw9Za+pvSJpCk5=g@mail.gmail.com/
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20210415123700.3030728-2-schnelle@linux.ibm.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/sparc/include/asm/io.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/sparc/include/asm/io.h b/arch/sparc/include/asm/io.h
+index 2eefa526b38f..100992ba1317 100644
+--- a/arch/sparc/include/asm/io.h
++++ b/arch/sparc/include/asm/io.h
+@@ -1,6 +1,10 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef ___ASM_SPARC_IO_H
+ #define ___ASM_SPARC_IO_H
++
++/* On LEON I/O Space is accessed through low iomem */
++#define PCI_IOBASE ((void __iomem *)0)
++
+ #if defined(__sparc__) && defined(__arch64__)
+ #include <asm/io_64.h>
+ #else
+-- 
+2.31.1.272.g89b43f80a5
+

@@ -1,0 +1,53 @@
+From 39903b8a76b1c1538bf2746ce7c1fdddfe8f3a22 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 15 Apr 2021 08:15:58 -0700
+Subject: [PATCH 16/16] pci: Shuffle pci_vpd_set_size
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pci/vpd.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/pci/vpd.c b/drivers/pci/vpd.c
+index 6909253bb13c..ee8c41a88548 100644
+--- a/drivers/pci/vpd.c
++++ b/drivers/pci/vpd.c
+@@ -286,17 +286,6 @@ static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
+ 	return ret ? ret : count;
+ }
+ 
+-static void pci_vpd_set_size(struct pci_dev *dev, size_t len)
+-{
+-	struct pci_vpd *vpd = dev->vpd;
+-
+-	if (!vpd || len == 0 || len > PCI_VPD_MAX_SIZE)
+-		return;
+-
+-	vpd->valid = 1;
+-	vpd->len = len;
+-}
+-
+ static const struct pci_vpd_ops pci_vpd_ops = {
+ 	.read = pci_vpd_read,
+ 	.write = pci_vpd_write,
+@@ -482,6 +471,17 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_QLOGIC, 0x2261, quirk_blacklist_vpd);
+ DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031,
+ 			      PCI_CLASS_BRIDGE_PCI, 8, quirk_blacklist_vpd);
+ 
++static void pci_vpd_set_size(struct pci_dev *dev, size_t len)
++{
++	struct pci_vpd *vpd = dev->vpd;
++
++	if (!vpd || len == 0 || len > PCI_VPD_MAX_SIZE)
++		return;
++
++	vpd->valid = 1;
++	vpd->len = len;
++}
++
+ static void quirk_chelsio_extend_vpd(struct pci_dev *dev)
+ {
+ 	int chip = (dev->device & 0xf000) >> 12;
+-- 
+2.31.1.272.g89b43f80a5
+

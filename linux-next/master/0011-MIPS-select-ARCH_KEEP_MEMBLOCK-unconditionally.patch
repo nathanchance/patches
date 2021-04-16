@@ -1,0 +1,52 @@
+From fd0833d696ca0024ace369c7fdabe36e89dc930b Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 7 Apr 2021 10:35:43 -0700
+Subject: [PATCH 11/16] MIPS: select ARCH_KEEP_MEMBLOCK unconditionally
+
+While removing allnoconfig_y from Kconfig, ARCH=mips allnoconfig builds
+started failing with the error:
+
+WARNING: modpost: vmlinux.o(.text+0x9c70): Section mismatch in reference
+from the function reserve_exception_space() to the function
+.meminit.text:memblock_reserve()
+The function reserve_exception_space() references the function __meminit
+memblock_reserve().
+This is often because reserve_exception_space lacks a __meminit
+annotation or the annotation of memblock_reserve is wrong.
+ERROR: modpost: Section mismatches detected.
+Set CONFIG_SECTION_MISMATCH_WARN_ONLY=y to allow them.
+
+allnoconfig disables DEBUG_KERNEL and thus ARCH_KEEP_MEMBLOCK, which
+changes __init_memblock to be equivalent to __meminit triggering the
+above error.
+
+DEBUG_KERNEL to enable sysfs memblock debug")
+
+Link: https://lore.kernel.org/linux-kbuild/20210313194836.372585-11-masahiroy@kernel.org/
+Fixes: commit a8c0f1c634507 ("MIPS: Select ARCH_KEEP_MEMBLOCK if
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20210407173543.3598006-1-ndesaulniers@google.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/mips/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index 7a174ea61ca5..ed51970c08e7 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -12,7 +12,7 @@ config MIPS
+ 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
+ 	select ARCH_HAS_UBSAN_SANITIZE_ALL
+ 	select ARCH_HAS_GCOV_PROFILE_ALL
+-	select ARCH_KEEP_MEMBLOCK if DEBUG_KERNEL
++	select ARCH_KEEP_MEMBLOCK
+ 	select ARCH_SUPPORTS_UPROBES
+ 	select ARCH_USE_BUILTIN_BSWAP
+ 	select ARCH_USE_CMPXCHG_LOCKREF if 64BIT
+-- 
+2.31.1.272.g89b43f80a5
+
