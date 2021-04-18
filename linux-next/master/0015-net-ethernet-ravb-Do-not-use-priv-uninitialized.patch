@@ -1,7 +1,7 @@
-From 6726b67272141eec5a7029fa67c4380d7cbcbd26 Mon Sep 17 00:00:00 2001
+From 96064a78b549eabd6e329644bab02dbfdf12ee50 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 14 Apr 2021 09:29:10 -0700
-Subject: [PATCH 14/16] net: ethernet: ravb: Do not use priv uninitialized
+Subject: [PATCH 15/16] net: ethernet: ravb: Do not use priv uninitialized
 
 Fixes: 8ef7adc6beb2 ("net: ethernet: ravb: Enable optional refclk")
 Link: https://lore.kernel.org/r/CAHCN7xKp1Lp+KAHwo_GobZoDKQCV9_7Yx2ZNKmTzkkShRBzm_Q@mail.gmail.com/
