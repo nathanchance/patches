@@ -1,0 +1,28 @@
+From eca4a1baf6f36903b2b4ce9325d6569a2a937e45 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 16 Apr 2021 13:53:21 -0700
+Subject: [PATCH 3/3] PCI: Remove unused 'rdev' variable in
+ quirk_amd_nvme_fixup
+
+Fixes: 9597624ef606 ("nvme: put some AMD PCIE downstream NVME device to simple suspend/resume path")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pci/quirks.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 2e24dced699a..c86ede081534 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -309,8 +309,6 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD,	PCI_DEVICE_ID_AMD_8151_0,	quirk_nopci
+ 
+ static void quirk_amd_nvme_fixup(struct pci_dev *dev)
+ {
+-	struct pci_dev *rdev;
+-
+ 	dev->dev_flags |= PCI_DEV_FLAGS_AMD_NVME_SIMPLE_SUSPEND;
+ 	pci_info(dev, "AMD simple suspend opt enabled\n");
+ 
+-- 
+2.31.1.272.g89b43f80a5
+
