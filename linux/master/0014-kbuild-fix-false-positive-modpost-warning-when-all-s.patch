@@ -1,4 +1,4 @@
-From b12599dcba9a30513cd93938738faec19a34e96e Mon Sep 17 00:00:00 2001
+From efa954b76948c50c04b612c062bf09492919f72d Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 14/16] kbuild: fix false-positive modpost warning when all
@@ -161,5 +161,5 @@ index 10c3fba26f03..7c6bec78fa34 100644
  
  	return error_occurred ? 1 : 0;
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 
