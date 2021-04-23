@@ -1,8 +1,23 @@
-From 8a3db9af99ddffb16d47149a1b72db48e236faed Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 15 Apr 2021 08:15:58 -0700
-Subject: [PATCH 16/16] pci: Shuffle pci_vpd_set_size
+From 7ebe0a9222bd77d78040ee2c358ebc7ffd22e00b Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Wed, 21 Apr 2021 16:03:27 +0200
+Subject: [PATCH 13/17] PCI/VPD: fix unused pci_vpd_set_size function warning
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+The only user of this function is now in an #ifdef, causing
+a warning when that symbol is not defined:
+
+drivers/pci/vpd.c:289:13: error: 'pci_vpd_set_size' defined but not used [-Werror=unused-function]
+  289 | static void pci_vpd_set_size(struct pci_dev *dev, size_t len)
+
+Move the function into that #ifdef block.
+
+Fixes: f349223f076e ("PCI/VPD: Remove pci_set_vpd_size()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Krzysztof Wilczyński <kw@linux.com>
+Link: https://lore.kernel.org/r/20210421140334.3847155-1-arnd@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/pci/vpd.c | 22 +++++++++++-----------
@@ -49,5 +64,5 @@ index 6909253bb13c..ee8c41a88548 100644
  {
  	int chip = (dev->device & 0xf000) >> 12;
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

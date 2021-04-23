@@ -1,7 +1,7 @@
-From 1afb969d1e6ac1ff44d27d8f794d775ef9b59727 Mon Sep 17 00:00:00 2001
+From 95c49965826b6434037a0ed489062e3fe9c9f808 Mon Sep 17 00:00:00 2001
 From: Bixuan Cui <cuibixuan@huawei.com>
 Date: Tue, 6 Apr 2021 11:05:22 +0800
-Subject: [PATCH 10/16] ASoC: tegra: fix build warning
+Subject: [PATCH 10/17] ASoC: tegra: fix build warning
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -109,5 +109,5 @@ index 8730ffa0f691..36344f0a64c1 100644
  	struct tegra30_i2s *i2s = dev_get_drvdata(dev);
  	int ret;
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

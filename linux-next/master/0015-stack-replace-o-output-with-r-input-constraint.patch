@@ -1,0 +1,51 @@
+From afe208bf19199965b24a5f66462165b7b76c7a37 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 19 Apr 2021 16:17:41 -0700
+Subject: [PATCH 15/17] stack: replace "o" output with "r" input constraint
+
+"o" isn't a common asm() constraint to use; it triggers an assertion in
+assert-enabled builds of LLVM that it's not recognized when targeting
+aarch64 (though it appears to fall back to "m"). I've fixed this in LLVM
+13 now, but there isn't really a good reason to be using "o" in particular
+here. To avoid causing build issues for those using assert-enabled builds
+of earlier LLVM versions, the constraint needs changing.
+
+Instead, if the point is to retain the __builtin_alloca(), we can make ptr
+appear to "escape" via being an input to an empty inline asm block. This
+is preferable anyways, since otherwise this looks like a dead store.
+
+While the use of "r" was considered in
+https://lore.kernel.org/lkml/202104011447.2E7F543@keescook/
+it was only tested as an output (which looks like a dead store, and
+wasn't sufficient). Use "r" as an input constraint instead, which
+behaves correctly across compilers and architectures:
+https://godbolt.org/z/E9cd411ob
+
+Link: https://reviews.llvm.org/D100412
+Link: https://bugs.llvm.org/show_bug.cgi?id=49956
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Kees Cook <keescook@chromium.org>
+Fixes: 39218ff4c625 ("stack: Optionally randomize kernel stack offset each syscall")
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20210419231741.4084415-1-keescook@chromium.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/randomize_kstack.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/randomize_kstack.h b/include/linux/randomize_kstack.h
+index fd80fab663a9..bebc911161b6 100644
+--- a/include/linux/randomize_kstack.h
++++ b/include/linux/randomize_kstack.h
+@@ -38,7 +38,7 @@ void *__builtin_alloca(size_t size);
+ 		u32 offset = raw_cpu_read(kstack_offset);		\
+ 		u8 *ptr = __builtin_alloca(KSTACK_OFFSET_MAX(offset));	\
+ 		/* Keep allocation even after "ptr" loses scope. */	\
+-		asm volatile("" : "=o"(*ptr) :: "memory");		\
++		asm volatile("" :: "r"(ptr) : "memory");		\
+ 	}								\
+ } while (0)
+ 
+-- 
+2.31.1.362.g311531c9de
+

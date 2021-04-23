@@ -1,7 +1,7 @@
-From ff9054bd837ae2eb9d3f984424f4ef650b6f888d Mon Sep 17 00:00:00 2001
+From e84f1edf9269d30409ee1aed3ef4340359809ae4 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
-Date: Thu, 15 Apr 2021 14:37:00 +0200
-Subject: [PATCH 06/16] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
+Date: Wed, 21 Apr 2021 13:17:59 +0200
+Subject: [PATCH 07/17] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
  warning on PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -15,14 +15,15 @@ friends fail with WARN_ONCE() and a 0xff... return in case PCI_IOBASE is
 not defined.
 
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210415123700.3030728-3-schnelle@linux.ibm.com
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20210421111759.2059976-4-schnelle@linux.ibm.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/asm-generic/io.h | 55 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 51 insertions(+), 4 deletions(-)
+ include/asm-generic/io.h | 64 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 60 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index e93375c710b9..13a7a421e131 100644
+index e93375c710b9..e0e73ef8a46f 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -440,10 +440,6 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
@@ -204,6 +205,34 @@ index e93375c710b9..13a7a421e131 100644
  }
  #endif
  
+@@ -1020,18 +1067,27 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+ #define ioport_map ioport_map
+ static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
+ {
++#ifdef PCI_IOBASE
+ 	port &= IO_SPACE_LIMIT;
+ 	return (port > MMIO_UPPER_LIMIT) ? NULL : PCI_IOBASE + port;
++#else
++	WARN_ONCE(1, "No I/O port support\n");
++	return NULL;
++#endif
+ }
+ #define __pci_ioport_unmap __pci_ioport_unmap
+ static inline void __pci_ioport_unmap(void __iomem *p)
+ {
++#ifdef PCI_IOBASE
+ 	uintptr_t start = (uintptr_t) PCI_IOBASE;
+ 	uintptr_t addr = (uintptr_t) p;
+ 
+ 	if (addr >= start && addr < start + IO_SPACE_LIMIT)
+ 		return;
+ 	iounmap(p);
++#else
++	WARN_ONCE(1, "No I/O port support\n");
++#endif
+ }
+ #endif
+ 
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

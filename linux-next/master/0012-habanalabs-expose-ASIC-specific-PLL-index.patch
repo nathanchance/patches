@@ -1,7 +1,7 @@
-From dbbe59aced69f22e7f10587fc2dad80a0f0d5f09 Mon Sep 17 00:00:00 2001
+From 732174f578bc7fd87a75684a9c947ddc064ddce7 Mon Sep 17 00:00:00 2001
 From: Bharat Jauhari <bjauhari@habana.ai>
 Date: Sat, 17 Apr 2021 12:06:32 +0300
-Subject: [PATCH 12/16] habanalabs: expose ASIC specific PLL index
+Subject: [PATCH 12/17] habanalabs: expose ASIC specific PLL index
 
 Currently the user cannot interpret the PLL information based on index
 as its exposed as an integer.
@@ -598,5 +598,5 @@ index d3e017b5f0db..6d2d34c9f375 100644
  	HL_DEVICE_STATUS_OPERATIONAL,
  	HL_DEVICE_STATUS_IN_RESET,
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

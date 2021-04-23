@@ -1,7 +1,7 @@
-From fd0833d696ca0024ace369c7fdabe36e89dc930b Mon Sep 17 00:00:00 2001
+From 8560e247a64e25dc0d4e1d3512365935f23eb167 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 7 Apr 2021 10:35:43 -0700
-Subject: [PATCH 11/16] MIPS: select ARCH_KEEP_MEMBLOCK unconditionally
+Subject: [PATCH 11/17] MIPS: select ARCH_KEEP_MEMBLOCK unconditionally
 
 While removing allnoconfig_y from Kconfig, ARCH=mips allnoconfig builds
 started failing with the error:
@@ -48,5 +48,5 @@ index 7a174ea61ca5..ed51970c08e7 100644
  	select ARCH_USE_BUILTIN_BSWAP
  	select ARCH_USE_CMPXCHG_LOCKREF if 64BIT
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

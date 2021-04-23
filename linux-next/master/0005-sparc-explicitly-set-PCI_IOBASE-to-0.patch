@@ -1,34 +1,38 @@
-From e40c1a7694aeadb0837a735690916d0b152634f9 Mon Sep 17 00:00:00 2001
+From 5fa2e71f77b99c0c307450bdc97a0a0393ad6dfe Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
-Date: Thu, 15 Apr 2021 14:36:59 +0200
-Subject: [PATCH 05/16] sparc: explicitly set PCI_IOBASE to 0
+Date: Wed, 21 Apr 2021 13:17:57 +0200
+Subject: [PATCH 05/17] sparc: explicitly set PCI_IOBASE to 0
 
 Instead of relying on the fallback in asm-generic/io.h which sets
 PCI_IOBASE 0 if it is not defined set it explicitly.
 
 Link: https://lore.kernel.org/lkml/CAK8P3a3PK9zyeP4ymELtc2ZYnymECoACiigw9Za+pvSJpCk5=g@mail.gmail.com/
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210415123700.3030728-2-schnelle@linux.ibm.com
+Link: https://lore.kernel.org/r/20210421111759.2059976-2-schnelle@linux.ibm.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/sparc/include/asm/io.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/sparc/include/asm/io.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/sparc/include/asm/io.h b/arch/sparc/include/asm/io.h
-index 2eefa526b38f..100992ba1317 100644
+index 2eefa526b38f..c019e50702c1 100644
 --- a/arch/sparc/include/asm/io.h
 +++ b/arch/sparc/include/asm/io.h
-@@ -1,6 +1,10 @@
+@@ -1,6 +1,14 @@
  /* SPDX-License-Identifier: GPL-2.0 */
  #ifndef ___ASM_SPARC_IO_H
  #define ___ASM_SPARC_IO_H
 +
-+/* On LEON I/O Space is accessed through low iomem */
++/*
++ * On LEON PCI addresses below 64k are converted to IO accesses.
++ * io_remap_xxx() returns a kernel virtual address in the PCI window so
++ * inb() doesn't need to add an offset.
++ */
 +#define PCI_IOBASE ((void __iomem *)0)
 +
  #if defined(__sparc__) && defined(__arch64__)
  #include <asm/io_64.h>
  #else
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

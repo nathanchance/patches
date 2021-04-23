@@ -1,7 +1,7 @@
-From f1a9e79dcd1b4a062c3c38101bc7687f08b0f02a Mon Sep 17 00:00:00 2001
+From 463ad9aec26e13f2f1461a2cf1c068f41b4fc266 Mon Sep 17 00:00:00 2001
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Date: Sat, 10 Apr 2021 04:19:01 +0300
-Subject: [PATCH 09/16] drm/msm/dsi: dsi_phy_28nm_8960: fix uninitialized
+Subject: [PATCH 09/17] drm/msm/dsi: dsi_phy_28nm_8960: fix uninitialized
  variable access
 
 The parent_name initialization was lost in refactoring, restore it now.
@@ -31,5 +31,5 @@ index 582b1428f971..86e40a0d41a3 100644
  	if (!clk_name)
  		return -ENOMEM;
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 
