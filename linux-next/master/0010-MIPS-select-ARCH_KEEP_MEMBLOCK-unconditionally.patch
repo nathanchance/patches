@@ -1,7 +1,7 @@
-From 8560e247a64e25dc0d4e1d3512365935f23eb167 Mon Sep 17 00:00:00 2001
+From a8bbe6bc31dc721ec9a49dc64030fa112782bb31 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 7 Apr 2021 10:35:43 -0700
-Subject: [PATCH 11/17] MIPS: select ARCH_KEEP_MEMBLOCK unconditionally
+Subject: [PATCH 10/16] MIPS: select ARCH_KEEP_MEMBLOCK unconditionally
 
 While removing allnoconfig_y from Kconfig, ARCH=mips allnoconfig builds
 started failing with the error:

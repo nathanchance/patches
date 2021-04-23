@@ -1,7 +1,7 @@
-From c6b0eb11652dacdb5732c725373fd0ea554a3767 Mon Sep 17 00:00:00 2001
+From e18f19185cc47e8a86063c4af7199c909b5e50a5 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Tue, 20 Apr 2021 18:08:50 -0700
-Subject: [PATCH 14/17] KVM: x86: Fix implicit enum conversion goof in
+Subject: [PATCH 13/16] KVM: x86: Fix implicit enum conversion goof in
  scattered reverse CPUID code
 
 Take "enum kvm_only_cpuid_leafs" in scattered specific CPUID helpers
