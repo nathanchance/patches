@@ -1,4 +1,4 @@
-From 980f7b43ffc9615cebba92e14ad5099283fe67be Mon Sep 17 00:00:00 2001
+From 4b04572315c33c9f9313c4e5e6d5a2870cc94258 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
 Subject: [PATCH 11/27] powerpc/vmlinux.lds: Explicitly retain .gnu.hash
@@ -41,5 +41,5 @@ index 3ea360cad337..515abfa4ac55 100644
  	.rela.dyn : AT(ADDR(.rela.dyn) - LOAD_OFFSET)
  	{
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 
