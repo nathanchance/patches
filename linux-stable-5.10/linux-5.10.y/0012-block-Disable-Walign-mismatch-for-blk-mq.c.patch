@@ -1,4 +1,4 @@
-From b03cfbdb76094773f63bcef5eaaf629aab4f539b Mon Sep 17 00:00:00 2001
+From 05c9e8db9669b0495fda88b0edb232e82a0fa6f1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 8 Apr 2021 12:44:58 -0700
 Subject: [PATCH 12/15] block: Disable -Walign-mismatch for blk-mq.c
@@ -42,5 +42,5 @@ index 8d841f5f986f..d69ac0bd8e61 100644
  obj-$(CONFIG_BLK_SCSI_REQUEST)	+= scsi_ioctl.o
  obj-$(CONFIG_BLK_DEV_BSG)	+= bsg.o
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 

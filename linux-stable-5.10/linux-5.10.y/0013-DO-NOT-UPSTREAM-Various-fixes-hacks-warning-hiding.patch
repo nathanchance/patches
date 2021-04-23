@@ -1,4 +1,4 @@
-From 6c8ce0b7c187dfaabd8ac92246348c29eea43f7d Mon Sep 17 00:00:00 2001
+From a1a0822e73f4f95ee2cc098febbc1494ad87101f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
 Subject: [PATCH 13/15] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -47,7 +47,7 @@ index 834775843067..323e1c061f1d 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index c789b39ed527..0bee1553fbf2 100644
+index dcf4a9028e16..fe52baf6dbf0 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -295,8 +295,9 @@ config ENABLE_MUST_CHECK
@@ -75,5 +75,5 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 -- 
-2.31.1.272.g89b43f80a5
+2.31.1.362.g311531c9de
 
