@@ -1,7 +1,7 @@
-From 371e6256caa3bd7adcf8b85c06cbf4e576f962b7 Mon Sep 17 00:00:00 2001
+From 004e7b4d945e652c79391b45836dabbe0336eb03 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Tue, 13 Apr 2021 13:54:39 +0200
-Subject: [PATCH 10/16] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
+Subject: [PATCH 09/15] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
  warning on PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index c6af40ce03be..8eb00bdef7ad 100644
+index 76d456c516a1..a342ba056a1d 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -441,7 +441,7 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,

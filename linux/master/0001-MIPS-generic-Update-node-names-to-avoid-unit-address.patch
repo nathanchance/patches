@@ -1,7 +1,7 @@
-From b22aae17ac980e13a87e68f9181cac377a3f1356 Mon Sep 17 00:00:00 2001
+From d003aa71348137ec94489dfad5909d1de04f953f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 9 Apr 2021 12:21:28 -0700
-Subject: [PATCH 01/16] MIPS: generic: Update node names to avoid unit
+Subject: [PATCH 01/15] MIPS: generic: Update node names to avoid unit
  addresses
 
 With the latest mkimage from U-Boot 2021.04, the generic defconfigs no
@@ -338,7 +338,7 @@ index 1a08438fd893..3e254676540f 100644
  	};
  };
 
-base-commit: 18a3c5f7abfdf97f88536d35338ebbee119c355c
+base-commit: d72cd4ad4174cfd2257c426ad51e4f53bcfde9c9
 -- 
 2.31.1.362.g311531c9de
 

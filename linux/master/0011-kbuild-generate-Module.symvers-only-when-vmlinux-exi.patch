@@ -1,7 +1,7 @@
-From 79cf6eb8c0cc7c32aaa6753119c7bc49ec98f405 Mon Sep 17 00:00:00 2001
+From 7eed0ce482ac6ad931d458278fc68e44af58c7a2 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:09 +0900
-Subject: [PATCH 12/16] kbuild: generate Module.symvers only when vmlinux
+Subject: [PATCH 11/15] kbuild: generate Module.symvers only when vmlinux
  exists
 
 The external module build shows the following warning if Module.symvers
@@ -66,10 +66,10 @@ index e361fc95ca29..82e3eee7363b 100644
  modules.builtin.modinfo
  modules.nsdeps
 diff --git a/Makefile b/Makefile
-index bc19584fee59..aafff2b2fdfd 100644
+index f03888cdba4e..a63a155e4cfd 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1513,7 +1513,7 @@ endif # CONFIG_MODULES
+@@ -1534,7 +1534,7 @@ endif # CONFIG_MODULES
  # make distclean Remove editor backup files, patch leftover files and the like
  
  # Directories & files removed with 'make clean'
