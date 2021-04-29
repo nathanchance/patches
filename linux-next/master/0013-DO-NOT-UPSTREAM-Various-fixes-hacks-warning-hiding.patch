@@ -1,7 +1,7 @@
-From d42a3dfe106c87ab38210410d8ef8d0eee19e294 Mon Sep 17 00:00:00 2001
+From 6bda3f2af718792d6553b09dd419aa07848f45be Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:48:40 -0700
-Subject: [PATCH 15/16] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 13/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -61,7 +61,7 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 6e7b5a6f6f33..f8193251a94e 100644
+index d1467658361f..d67b3e2e3f57 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -332,8 +332,9 @@ config GDB_SCRIPTS

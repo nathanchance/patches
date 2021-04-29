@@ -1,7 +1,7 @@
-From fcc67cc87af97a089fb9579df35b54a12688d46f Mon Sep 17 00:00:00 2001
+From e405306329a354c505a1e1c62fbe11bb5ba8855c Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
 Date: Wed, 21 Apr 2021 13:17:58 +0200
-Subject: [PATCH 06/16] ARC: io.h: Include asm/bug.h
+Subject: [PATCH 06/14] ARC: io.h: Include asm/bug.h
 
 In a future change asm-generic/io.h will make inb() and friends
 WARN_ONCE() on systems without I/O port support. This requires
