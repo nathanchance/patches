@@ -1,7 +1,7 @@
-From 4f85b06f8829370885bcae5a1d1ccdd91b568ea7 Mon Sep 17 00:00:00 2001
+From d16dff072fec9f0de072c03bc8a3b4272d6b6b92 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 19 Apr 2021 16:17:41 -0700
-Subject: [PATCH 12/14] stack: replace "o" output with "r" input constraint
+Subject: [PATCH 11/13] stack: replace "o" output with "r" input constraint
 
 "o" isn't a common asm() constraint to use; it triggers an assertion in
 assert-enabled builds of LLVM that it's not recognized when targeting

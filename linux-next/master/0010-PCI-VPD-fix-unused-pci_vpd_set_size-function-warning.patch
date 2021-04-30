@@ -1,7 +1,7 @@
-From 2b53017c56b6300a69026756d3590f469b3080e0 Mon Sep 17 00:00:00 2001
+From 77774a2db2591f7cc0a401890f2a784d532023fd Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 21 Apr 2021 16:03:27 +0200
-Subject: [PATCH 11/14] PCI/VPD: fix unused pci_vpd_set_size function warning
+Subject: [PATCH 10/13] PCI/VPD: fix unused pci_vpd_set_size function warning
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/pci/vpd.c b/drivers/pci/vpd.c
-index 6909253bb13c..ee8c41a88548 100644
+index 44ba47eb251f..26bf7c877de5 100644
 --- a/drivers/pci/vpd.c
 +++ b/drivers/pci/vpd.c
-@@ -286,17 +286,6 @@ static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
+@@ -291,17 +291,6 @@ static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
  	return ret ? ret : count;
  }
  
@@ -45,7 +45,7 @@ index 6909253bb13c..ee8c41a88548 100644
  static const struct pci_vpd_ops pci_vpd_ops = {
  	.read = pci_vpd_read,
  	.write = pci_vpd_write,
-@@ -482,6 +471,17 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_QLOGIC, 0x2261, quirk_blacklist_vpd);
+@@ -504,6 +493,17 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATTANSIC, PCI_ANY_ID,
  DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031,
  			      PCI_CLASS_BRIDGE_PCI, 8, quirk_blacklist_vpd);
  
