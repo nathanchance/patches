@@ -1,7 +1,7 @@
-From 004e7b4d945e652c79391b45836dabbe0336eb03 Mon Sep 17 00:00:00 2001
+From 69aec5f7ca2b59d7e1dd5973a3906a0405172f60 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Tue, 13 Apr 2021 13:54:39 +0200
-Subject: [PATCH 09/15] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
+Subject: [PATCH 08/11] asm-generic/io.h: Silence -Wnull-pointer-arithmetic
  warning on PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
