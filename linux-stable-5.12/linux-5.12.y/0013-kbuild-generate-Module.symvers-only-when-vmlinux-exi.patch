@@ -1,7 +1,7 @@
-From d7544f9233bb831b6a86c329c23547c2541122ef Mon Sep 17 00:00:00 2001
+From 46c30929da921669a7faf7f34a767ba079abf0cc Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:09 +0900
-Subject: [PATCH 11/15] kbuild: generate Module.symvers only when vmlinux
+Subject: [PATCH 13/17] kbuild: generate Module.symvers only when vmlinux
  exists
 
 The external module build shows the following warning if Module.symvers
