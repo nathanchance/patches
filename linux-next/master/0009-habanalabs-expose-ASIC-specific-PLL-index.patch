@@ -1,7 +1,7 @@
-From fcfa4d63ab4e0b83fabc1ac7b56a3e4cbac08133 Mon Sep 17 00:00:00 2001
+From 116db5485d2b1f254273318d4810bd37add98119 Mon Sep 17 00:00:00 2001
 From: Bharat Jauhari <bjauhari@habana.ai>
 Date: Sat, 17 Apr 2021 12:06:32 +0300
-Subject: [PATCH 09/13] habanalabs: expose ASIC specific PLL index
+Subject: [PATCH 09/12] habanalabs: expose ASIC specific PLL index
 
 Currently the user cannot interpret the PLL information based on index
 as its exposed as an integer.
