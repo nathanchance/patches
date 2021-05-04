@@ -1,26 +1,37 @@
-From 6ebc0767bb552a48fb72f982c05c4289067e669c Mon Sep 17 00:00:00 2001
+From 030deb0d6c6c350a98fe6eea1326cc074dbfdb71 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 10/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 15/16] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+
+* drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
-* drivers/net/ethernet/marvell/mvpp2/mvpp2.h: Avoid
--Wconstant-conversion warning (https://github.com/ClangBuiltLinux/linux/issues/997).
+* drivers/net/ethernet/marvell/mvpp2/mvpp2.h: Hide an overflow warning.
+
+* include/linux/surface_aggregator/device.h: Hide an overflow warning
+  that is intentional.
 
 * lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
-fixed is a long term project.
+  fixed is a long term project.
+  drivers/gpu/drm/amd/display/dc/dml/Makefile is modified for the same
+  reason.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
+Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
+Link: https://github.com/ClangBuiltLinux/linux/issues/997
+Link: https://github.com/ClangBuiltLinux/linux/issues/1366
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/amd/display/dc/dml/Makefile | 2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c   | 2 +-
  drivers/input/joystick/analog.c             | 1 -
  drivers/net/ethernet/marvell/mvpp2/mvpp2.h  | 2 +-
+ include/linux/surface_aggregator/device.h   | 2 +-
  lib/Kconfig.debug                           | 3 ++-
  scripts/checksyscalls.sh                    | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
 index 6bb7f2905821..a12361f2cf1e 100644
@@ -35,6 +46,19 @@ index 6bb7f2905821..a12361f2cf1e 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index e76ce40a12ab..dad91b905a87 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -972,7 +972,7 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+ 		.restore_pll_state = dsi_7nm_pll_restore_state,
+ 	},
+ 	.min_pll_rate = 600000000UL,
+-	.max_pll_rate = (5000000000ULL < ULONG_MAX) ? 5000000000ULL : ULONG_MAX,
++	.max_pll_rate = (5000000000ULL < ULONG_MAX) ? (unsigned long)5000000000ULL : ULONG_MAX,
+ 	.io_start = { 0xae94400, 0xae96400 },
+ 	.num_dsi_phy = 2,
+ 	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
@@ -60,6 +84,19 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
+diff --git a/include/linux/surface_aggregator/device.h b/include/linux/surface_aggregator/device.h
+index 4441ad667c3f..41e1f0d83865 100644
+--- a/include/linux/surface_aggregator/device.h
++++ b/include/linux/surface_aggregator/device.h
+@@ -99,7 +99,7 @@ struct ssam_device_uid {
+ 	.domain   = d,								\
+ 	.category = cat,							\
+ 	.target   = ((tid) != SSAM_ANY_TID) ? (tid) : 0,			\
+-	.instance = ((iid) != SSAM_ANY_IID) ? (iid) : 0,			\
++	.instance = ((iid) != SSAM_ANY_IID) ? (__u8)(iid) : 0,			\
+ 	.function = ((fun) != SSAM_ANY_FUN) ? (fun) : 0				\
+ 
+ /**
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
 index 678c13967580..8e90f17cc47d 100644
 --- a/lib/Kconfig.debug

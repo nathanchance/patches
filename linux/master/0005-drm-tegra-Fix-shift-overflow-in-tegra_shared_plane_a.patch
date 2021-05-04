@@ -1,0 +1,42 @@
+From 6cd34ee93644ea752d0a2037500cc0b8128b4322 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 15 Apr 2021 08:29:14 -0700
+Subject: [PATCH 05/16] drm/tegra: Fix shift overflow in
+ tegra_shared_plane_atomic_update
+
+Clang warns:
+
+drivers/gpu/drm/tegra/hub.c:513:11: warning: shift count >= width of
+type [-Wshift-count-overflow]
+                base |= BIT(39);
+                        ^~~~~~~
+
+BIT is unsigned long, which is 32-bit on ARCH=arm, hence the overflow
+warning. Switch to BIT_ULL, which is 64-bit and will not overflow.
+
+Fixes: 7b6f846785f4 ("drm/tegra: Support sector layout on Tegra194")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1351
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://cgit.freedesktop.org/tegra/linux/commit/?id=c79184a9c029dbbc0b37279c9cb7a6ac57461654
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/tegra/hub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/tegra/hub.c b/drivers/gpu/drm/tegra/hub.c
+index 79bff8b48271..bfae8a02f55b 100644
+--- a/drivers/gpu/drm/tegra/hub.c
++++ b/drivers/gpu/drm/tegra/hub.c
+@@ -510,7 +510,7 @@ static void tegra_shared_plane_atomic_update(struct drm_plane *plane,
+ 	 * dGPU sector layout.
+ 	 */
+ 	if (tegra_plane_state->tiling.sector_layout == TEGRA_BO_SECTOR_LAYOUT_GPU)
+-		base |= BIT(39);
++		base |= BIT_ULL(39);
+ #endif
+ 
+ 	tegra_plane_writel(p, tegra_plane_state->format, DC_WIN_COLOR_DEPTH);
+-- 
+2.31.1.362.g311531c9de
+
