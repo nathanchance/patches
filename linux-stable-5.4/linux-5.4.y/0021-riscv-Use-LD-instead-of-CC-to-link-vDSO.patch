@@ -1,7 +1,7 @@
-From 7440d66a2cd414993aa6fd29d4f5a2d96e6f887d Mon Sep 17 00:00:00 2001
+From 626bd05b59f0d9c8a17f81c8ed0e6f5a064e5027 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
-Subject: [PATCH 20/27] riscv: Use $(LD) instead of $(CC) to link vDSO
+Subject: [PATCH 21/28] riscv: Use $(LD) instead of $(CC) to link vDSO
 
 Currently, the VDSO is being linked through $(CC). This does not match
 how the rest of the kernel links objects, which is through the $(LD)

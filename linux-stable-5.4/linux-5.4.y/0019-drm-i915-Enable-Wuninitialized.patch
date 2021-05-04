@@ -1,7 +1,7 @@
-From d07751d7a1dcb68e77cc38cdd31c43d4d3f17085 Mon Sep 17 00:00:00 2001
+From 6efd47582ecbea1dcc7a59dee0fb59c6d48a1bc9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 16 Feb 2021 14:29:54 -0700
-Subject: [PATCH 18/27] drm/i915: Enable -Wuninitialized
+Subject: [PATCH 19/28] drm/i915: Enable -Wuninitialized
 
 -Wunintialized was disabled in commit c5627461490e ("drm/i915: Disable
 -Wuninitialized") because there were two warnings that were false
@@ -33,7 +33,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 2587ea834f06..39f00fb0fc21 100644
+index a4e385f68713..de8719971225 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -21,7 +21,6 @@ subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
@@ -41,9 +41,9 @@ index 2587ea834f06..39f00fb0fc21 100644
  subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
  subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
 -subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, frame-address)
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
- # Fine grained warnings disable
 -- 
 2.31.1.362.g311531c9de
 
