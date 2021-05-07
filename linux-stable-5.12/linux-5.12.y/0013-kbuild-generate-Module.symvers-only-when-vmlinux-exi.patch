@@ -1,4 +1,4 @@
-From ac536c0870a90f07f59e9f9de5d477d36b372e0c Mon Sep 17 00:00:00 2001
+From 082b57a401f18af0bd121617801974169f194f9d Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:09 +0900
 Subject: [PATCH 13/17] kbuild: generate Module.symvers only when vmlinux
@@ -66,7 +66,7 @@ index e361fc95ca29..82e3eee7363b 100644
  modules.builtin.modinfo
  modules.nsdeps
 diff --git a/Makefile b/Makefile
-index 78b0941f0de4..50c82ed67f6d 100644
+index 5077411a1874..22d8e3201146 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1513,7 +1513,7 @@ endif # CONFIG_MODULES
@@ -138,5 +138,5 @@ index 24725e50c7b4..10c3fba26f03 100644
  				buf_printf(&buf, "0x%08x\t%s\t%s\t%s\t%s\n",
  					   symbol->crc, symbol->name,
 -- 
-2.31.1.362.g311531c9de
+2.31.1.442.g7e39198978
 
