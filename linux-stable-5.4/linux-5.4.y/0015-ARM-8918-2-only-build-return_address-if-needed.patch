@@ -1,4 +1,4 @@
-From b6956dafa34bb773d7ce864b49cb4be4c82433c3 Mon Sep 17 00:00:00 2001
+From cfa8b8ff71f9d97824a6557fbd250416dd9fd89f Mon Sep 17 00:00:00 2001
 From: Ben Dooks <ben-linux@fluff.org>
 Date: Mon, 4 Nov 2019 18:15:15 +0100
 Subject: [PATCH 15/28] ARM: 8918/2: only build return_address() if needed
@@ -65,5 +65,5 @@ index b0d2f1fe891d..7b42ac010fdf 100644
 -
  EXPORT_SYMBOL_GPL(return_address);
 -- 
-2.31.1.362.g311531c9de
+2.31.1.442.g7e39198978
 
