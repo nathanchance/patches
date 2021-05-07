@@ -1,7 +1,7 @@
-From adbc043af3bdd54a638d9c624d480de8f2cdbc37 Mon Sep 17 00:00:00 2001
+From d0babbcf36d0249eedd359c5b3625e0b54a4a7bf Mon Sep 17 00:00:00 2001
 From: Mikita Lipski <mikita.lipski@amd.com>
 Date: Wed, 14 Apr 2021 14:15:52 -0400
-Subject: [PATCH 02/16] drm/amd/display: fix wrong statement in mst hpd debugfs
+Subject: [PATCH 01/15] drm/amd/display: fix wrong statement in mst hpd debugfs
 
 [why]
 Previous statement would always evaluate to true
@@ -34,6 +34,8 @@ index 529545045a3e..1b6b15708b96 100644
  				continue;
  
  			link = aconnector->dc_link;
+
+base-commit: dd860052c99b1e088352bdd4fb7aef46f8d2ef47
 -- 
-2.31.1.362.g311531c9de
+2.31.1.442.g7e39198978
 
