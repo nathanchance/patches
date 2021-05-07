@@ -1,4 +1,4 @@
-From 860b1cf7bbf69fcd2afcbc95b78d1322aed6dce6 Mon Sep 17 00:00:00 2001
+From 1c8a827090b63448b835b503645a7c5773552857 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 20:01:36 +0100
 Subject: [PATCH 01/15] s390/bitops: remove small optimization to fix clang
@@ -89,7 +89,7 @@ index 431e208a5ea4..31121d32f81d 100644
  	__atomic64_xor(mask, (long *)addr);
  }
 
-base-commit: 0aa66717f684f0280cc9bccf50f603e80d05495b
+base-commit: f53a3a4808625f876aebc5a0bfb354480bbf0c21
 -- 
-2.31.1.362.g311531c9de
+2.31.1.442.g7e39198978
 
