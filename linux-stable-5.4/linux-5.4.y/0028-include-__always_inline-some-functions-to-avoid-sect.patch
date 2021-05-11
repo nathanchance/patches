@@ -1,4 +1,4 @@
-From 682f426be4dfb29904c66ed341267c7d1465ce4a Mon Sep 17 00:00:00 2001
+From 81e7cdc27e6e92e193c5247a44cf70e699b50d0e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
 Subject: [PATCH 28/28] include: __always_inline some functions to avoid
@@ -54,5 +54,5 @@ index 27e7fa36f707..6bbe30053d4b 100644
  	return min_t(int,MAX_NUMNODES,find_next_bit(srcp->bits, MAX_NUMNODES, n+1));
  }
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 
