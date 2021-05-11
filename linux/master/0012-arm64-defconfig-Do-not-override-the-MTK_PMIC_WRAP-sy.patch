@@ -1,7 +1,7 @@
-From e3b8bc829de211a2db0c0c074cb68737bb1a5bcf Mon Sep 17 00:00:00 2001
+From 5f8e7e66f224176e56744400d2b403183ea47914 Mon Sep 17 00:00:00 2001
 From: Enric Balletbo i Serra <enric.balletbo@collabora.com>
 Date: Fri, 23 Apr 2021 09:52:01 +0200
-Subject: [PATCH 13/15] arm64: defconfig: Do not override the MTK_PMIC_WRAP
+Subject: [PATCH 12/14] arm64: defconfig: Do not override the MTK_PMIC_WRAP
  symbol
 
 Commit 'fbbe38309d56 ("arm64: defconfig: Allow mt8173-based boards to boot
@@ -35,5 +35,5 @@ index 08c6f769df9a..9907a431db0d 100644
  CONFIG_PINCTRL_SINGLE=y
  CONFIG_PINCTRL_MAX77620=y
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 

@@ -1,7 +1,7 @@
-From 6c7a9f32355bc5c164f536221b46c0750a93d391 Mon Sep 17 00:00:00 2001
+From 6f28aef9c41e395f6c1b1bf1100fa605f83a28cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 14/15] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 13/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -126,5 +126,5 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 
