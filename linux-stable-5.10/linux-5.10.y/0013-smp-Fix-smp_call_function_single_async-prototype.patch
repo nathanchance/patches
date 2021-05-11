@@ -1,7 +1,7 @@
-From 8ebca90c62df404bcac69c448f0079c66c26b874 Mon Sep 17 00:00:00 2001
+From b3fe7ddacbe9c24f9dbd3bcadc4ec5d344917380 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 5 May 2021 23:12:42 +0200
-Subject: [PATCH 10/16] smp: Fix smp_call_function_single_async prototype
+Subject: [PATCH 13/19] smp: Fix smp_call_function_single_async prototype
 
 As of commit 966a967116e6 ("smp: Avoid using two cache lines for struct
 call_single_data"), the smp code prefers 32-byte aligned call_single_data
