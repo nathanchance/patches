@@ -1,28 +1,25 @@
-From afdc0f7828bc281e6a0cc998ecd8e17f6b31f328 Mon Sep 17 00:00:00 2001
+From a1356929c12ef8f4940966221c44145f75ecef05 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
-Subject: [PATCH 15/17] kbuild: fix false-positive modpost warning when all
+Subject: [PATCH 07/17] kbuild: fix false-positive modpost warning when all
  symbols are trimmed
 
 Nathan reports that the mips defconfig emits the following warning:
 
   WARNING: modpost: Symbol info of vmlinux is missing. Unresolved symbol check will be entirely skipped.
 
-This false-positive happens under the following combination:
-
- - CONFIG_TRIM_UNUSED_KSYMS=y
- - CONFIG_MODULES=y
- - No CONFIG option is set to 'm'
+This false-positive happens when CONFIG_TRIM_UNUSED_KSYMS is enabled,
+but no CONFIG option is set to 'm'.
 
 Commit a0590473c5e6 ("nfs: fix PNFS_FLEXFILE_LAYOUT Kconfig default")
 turned the last 'm' into 'y' for the mips defconfig, and uncovered
 this issue.
 
 In this case, the module feature itself is enabled, but we have no
-module. As a result, CONFIG_TRIM_UNUSED_KSYMS drops all the instances
-of EXPORT_SYMBOL. Then, modpost wrongly assumes vmlinux is missing
-because vmlinux.symvers is empty. (Or, you can create a module that
-does not use any symbol of vmlinux).
+module to build. As a result, CONFIG_TRIM_UNUSED_KSYMS drops all the
+instances of EXPORT_SYMBOL. Then, modpost wrongly assumes vmlinux is
+missing because vmlinux.symvers is empty. (As another false-positive
+case, you can create a module that does not use any symbol of vmlinux).
 
 The current behavior is to entirely suppress the unresolved symbol
 warnings when vmlinux is missing just because there are too many.
@@ -35,7 +32,7 @@ You will get a bit noisier logs when you run 'make modules' without
 vmlinux, but such warnings are better to show because you never know
 the resulting modules are actually loadable or not.
 
-This commit changes as follows:
+This commit changes the following:
 
  - If any of input *.symver files is missing, pass -w option to let
    the module build keep going with warnings instead of errors.
@@ -47,8 +44,7 @@ This commit changes as follows:
 
 Reported-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210325185412.2352951-3-masahiroy@kernel.org
+Link: https://git.kernel.org/linus/4475dff55c54d855ef0179a055b3ce20a9c1ab3e
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/Makefile.modpost |  7 +++++--
@@ -161,5 +157,5 @@ index 10c3fba26f03..7c6bec78fa34 100644
  
  	return error_occurred ? 1 : 0;
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 

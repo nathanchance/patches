@@ -1,7 +1,7 @@
-From f0111ee6174c1cac1de6d0ca38149ec037b010e9 Mon Sep 17 00:00:00 2001
+From 2a91defafa09e9302cf28b3f94510b2206919151 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
-Subject: [PATCH 14/17] kbuild: do not set -w for vmlinux.o modpost
+Subject: [PATCH 06/17] kbuild: do not set -w for vmlinux.o modpost
 
 The -w option is meaningless for the first pass of modpost (vmlinux.o).
 
@@ -14,7 +14,7 @@ See the following part in the for-loop.
             continue;
 
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20210325185412.2352951-2-masahiroy@kernel.org
+Link: https://git.kernel.org/linus/5ab70ff4286f74732c082b65366bad39146d2b10
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/Makefile.modpost | 8 +++++---
@@ -54,5 +54,5 @@ index 4ca5579af4e4..dd078277c597 100644
  # Otherwise, allmodconfig would fail with "Argument list too long".
  quiet_cmd_modpost = MODPOST $@
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 
