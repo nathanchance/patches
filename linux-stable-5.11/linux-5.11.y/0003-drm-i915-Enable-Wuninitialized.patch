@@ -1,7 +1,7 @@
-From 6d149e63c10a5885de3d9fc5bcdc4f547e283d1c Mon Sep 17 00:00:00 2001
+From 5945f06d5b53261d0a6425812342a52f709db555 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 16 Feb 2021 14:29:54 -0700
-Subject: [PATCH 02/15] drm/i915: Enable -Wuninitialized
+Subject: [PATCH 03/16] drm/i915: Enable -Wuninitialized
 
 -Wunintialized was disabled in commit c5627461490e ("drm/i915: Disable
 -Wuninitialized") because there were two warnings that were false
@@ -45,5 +45,5 @@ index 6d9e81ea67f4..60b60204004f 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 

@@ -1,7 +1,7 @@
-From 378240ed69a70994f8eab8a69c45625f3d3f6a7b Mon Sep 17 00:00:00 2001
+From 5051ce1ae276f30c8a1c571072883c43963b02a1 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 25 Feb 2021 12:22:41 +0100
-Subject: [PATCH 12/15] x86: mark some mpspec inline functions as __init
+Subject: [PATCH 14/16] x86: mark some mpspec inline functions as __init
 
 clang-13 sometimes decides to not inline early_get_smp_config(),
 which leads to a link-time warning:
@@ -48,5 +48,5 @@ index e90ac7e9ae2c..b41066dbf5c2 100644
  	x86_init.mpparse.find_smp_config();
  }
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 

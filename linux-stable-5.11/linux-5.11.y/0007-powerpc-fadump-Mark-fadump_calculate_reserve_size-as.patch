@@ -1,7 +1,7 @@
-From 16b57ea1dcc0ae8047163d9b479b8e1980f67700 Mon Sep 17 00:00:00 2001
+From 14c7feda573deec0ab991090299c2d7db75ea818 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 12:50:14 -0700
-Subject: [PATCH 06/15] powerpc/fadump: Mark fadump_calculate_reserve_size as
+Subject: [PATCH 07/16] powerpc/fadump: Mark fadump_calculate_reserve_size as
  __init
 
 If fadump_calculate_reserve_size() is not inlined, there is a modpost
@@ -50,5 +50,5 @@ index 8482739d42f3..eddf362caedc 100644
  	u64 base, size, bootmem_min;
  	int ret;
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 

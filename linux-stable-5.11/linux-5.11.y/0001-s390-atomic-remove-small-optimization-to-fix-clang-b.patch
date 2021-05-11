@@ -1,0 +1,70 @@
+From e99aaa92f48488f64c21959509a25a73d1c71aaa Mon Sep 17 00:00:00 2001
+From: Heiko Carstens <hca@linux.ibm.com>
+Date: Fri, 15 Jan 2021 19:39:23 +0100
+Subject: [PATCH 01/16] s390/atomic: remove small optimization to fix clang
+ build
+
+With commit f0cbd3b83ed4 ("s390/atomic: circumvent gcc 10 build
+regression") there was an attempt to workaroud a gcc build bug,
+however with the workaround a similar problem with clang appeared.
+It was recommended to use a workaround which would fail again with
+gcc. Therefore simply remove the optimization. It is just not worth
+the effort.
+
+Besides that all of this will be changed to use compiler atomic
+builtins instead anyway.
+
+See https://reviews.llvm.org/D90231
+and https://reviews.llvm.org/D91786
+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://git.kernel.org/linus/6110ccecd3c0c025ab7d5224a5feba5a664e084e
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/s390/include/asm/atomic.h | 20 --------------------
+ 1 file changed, 20 deletions(-)
+
+diff --git a/arch/s390/include/asm/atomic.h b/arch/s390/include/asm/atomic.h
+index 11c5952e1afa..5860ae790f2d 100644
+--- a/arch/s390/include/asm/atomic.h
++++ b/arch/s390/include/asm/atomic.h
+@@ -44,16 +44,6 @@ static inline int atomic_fetch_add(int i, atomic_t *v)
+ 
+ static inline void atomic_add(int i, atomic_t *v)
+ {
+-#ifdef CONFIG_HAVE_MARCH_Z196_FEATURES
+-	/*
+-	 * Order of conditions is important to circumvent gcc 10 bug:
+-	 * https://gcc.gnu.org/pipermail/gcc-patches/2020-July/549318.html
+-	 */
+-	if ((i > -129) && (i < 128) && __builtin_constant_p(i)) {
+-		__atomic_add_const(i, &v->counter);
+-		return;
+-	}
+-#endif
+ 	__atomic_add(i, &v->counter);
+ }
+ 
+@@ -115,16 +105,6 @@ static inline s64 atomic64_fetch_add(s64 i, atomic64_t *v)
+ 
+ static inline void atomic64_add(s64 i, atomic64_t *v)
+ {
+-#ifdef CONFIG_HAVE_MARCH_Z196_FEATURES
+-	/*
+-	 * Order of conditions is important to circumvent gcc 10 bug:
+-	 * https://gcc.gnu.org/pipermail/gcc-patches/2020-July/549318.html
+-	 */
+-	if ((i > -129) && (i < 128) && __builtin_constant_p(i)) {
+-		__atomic64_add_const(i, (long *)&v->counter);
+-		return;
+-	}
+-#endif
+ 	__atomic64_add(i, (long *)&v->counter);
+ }
+ 
+
+base-commit: 44a3370d47be9adf7532431a6d69583bb350ee57
+-- 
+2.31.1.527.g2d677e5b15
+
