@@ -1,7 +1,7 @@
-From dbf41e6e9f4d732dc86bde101224b65c3a12821d Mon Sep 17 00:00:00 2001
+From 5ef3eee3ca1646d8fd2f32cc95f831f10e2ed101 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Mar 2021 13:08:29 -0700
-Subject: [PATCH 07/15] powerpc/prom: Mark identical_pvr_fixup as __init
+Subject: [PATCH 08/16] powerpc/prom: Mark identical_pvr_fixup as __init
 
 If identical_pvr_fixup() is not inlined, there are two modpost warnings:
 
@@ -53,5 +53,5 @@ index c1545f22c077..7a14a094be8a 100644
  	unsigned int pvr;
  	const char *model = of_get_flat_dt_prop(node, "model", NULL);
 -- 
-2.31.1.442.g7e39198978
+2.31.1.527.g2d677e5b15
 
