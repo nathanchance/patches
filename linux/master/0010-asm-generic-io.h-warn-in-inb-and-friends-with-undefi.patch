@@ -1,7 +1,7 @@
-From 408429e95bbfd73a46763dd28249594f0db6b87c Mon Sep 17 00:00:00 2001
+From f0feb39e02293006a4a5dc7c062bc6598d3498d8 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
-Date: Fri, 30 Apr 2021 13:16:41 +0200
-Subject: [PATCH 10/14] asm-generic/io.h: warn in inb() and friends with
+Date: Mon, 10 May 2021 16:52:34 +0200
+Subject: [PATCH 10/13] asm-generic/io.h: warn in inb() and friends with
  undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -13,15 +13,16 @@ Make things explicit and silence the warning by letting inb() and
 friends fail with WARN_ONCE() and a 0xff... return in case PCI_IOBASE is
 not defined.
 
+Link: https://lore.kernel.org/lkml/20210421111759.2059976-1-schnelle@linux.ibm.com/
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210430111641.1911207-4-schnelle@linux.ibm.com
+Link: https://lore.kernel.org/r/20210510145234.594814-4-schnelle@linux.ibm.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/asm-generic/io.h | 65 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 61 insertions(+), 4 deletions(-)
+ include/asm-generic/io.h | 68 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index e93375c710b9..7b523683c241 100644
+index e93375c710b9..4a3af97a832d 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -139,43 +140,46 @@ index e93375c710b9..7b523683c241 100644
  }
  #endif
  
-@@ -606,7 +630,11 @@ static inline void outl_p(u32 value, unsigned long addr)
+@@ -606,7 +630,12 @@ static inline void outl_p(u32 value, unsigned long addr)
  #define insb insb
  static inline void insb(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
  	readsb(PCI_IOBASE + addr, buffer, count);
 +#else
++	memset(buffer, 0xff, count);
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
  #endif
  
-@@ -614,7 +642,11 @@ static inline void insb(unsigned long addr, void *buffer, unsigned int count)
+@@ -614,7 +643,12 @@ static inline void insb(unsigned long addr, void *buffer, unsigned int count)
  #define insw insw
  static inline void insw(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
  	readsw(PCI_IOBASE + addr, buffer, count);
 +#else
++	memset(buffer, 0xff, count);
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
  #endif
  
-@@ -622,7 +654,11 @@ static inline void insw(unsigned long addr, void *buffer, unsigned int count)
+@@ -622,7 +656,12 @@ static inline void insw(unsigned long addr, void *buffer, unsigned int count)
  #define insl insl
  static inline void insl(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
  	readsl(PCI_IOBASE + addr, buffer, count);
 +#else
++	memset(buffer, 0xff, count);
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
  #endif
  
-@@ -631,7 +667,11 @@ static inline void insl(unsigned long addr, void *buffer, unsigned int count)
+@@ -631,7 +670,11 @@ static inline void insl(unsigned long addr, void *buffer, unsigned int count)
  static inline void outsb(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -187,7 +191,7 @@ index e93375c710b9..7b523683c241 100644
  }
  #endif
  
-@@ -640,7 +680,11 @@ static inline void outsb(unsigned long addr, const void *buffer,
+@@ -640,7 +683,11 @@ static inline void outsb(unsigned long addr, const void *buffer,
  static inline void outsw(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -199,7 +203,7 @@ index e93375c710b9..7b523683c241 100644
  }
  #endif
  
-@@ -649,7 +693,11 @@ static inline void outsw(unsigned long addr, const void *buffer,
+@@ -649,7 +696,11 @@ static inline void outsw(unsigned long addr, const void *buffer,
  static inline void outsl(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -211,7 +215,7 @@ index e93375c710b9..7b523683c241 100644
  }
  #endif
  
-@@ -1020,18 +1068,27 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+@@ -1020,18 +1071,27 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {

@@ -1,20 +1,24 @@
-From ce00bcb6694939d4b15d78e32c2890e6f4b11fcf Mon Sep 17 00:00:00 2001
+From 3198b6b5d21802bc388eea736b1fbbc3aef39248 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
-Date: Fri, 30 Apr 2021 13:16:40 +0200
-Subject: [PATCH 09/14] risc-v: Use generic io.h helpers for nommu
+Date: Mon, 10 May 2021 16:52:33 +0200
+Subject: [PATCH 09/13] risc-v: Use generic io.h helpers for nommu
 
 Without MMU support PCI_IOBASE is left undefined because PCI_IO_END is
 VMEMMAP_START. Nevertheless the in*()/out*() helper macros are left
-defined with uses of PCI_IOBASE. At the moment this only compiles
-because asm-generic/io.h defines PCI_IOBASE as 0 if it is undefined and
-so at macro expansion the macro is defined. This is suprising at the
-least and leads to compilation errors when asm-generic/io.h is changed
-to leave PCI_IOBASE undefined. Instead only define the in*()/out*()
-helper macros with MMU support and fall back to the asm-generic/io.h
-helper stubs otherwise.
+defined with uses of PCI_IOBASE.
+
+At the moment this only compiles because asm-generic/io.h defines
+PCI_IOBASE as 0 if it is undefined and so at macro expansion PCI_IOBASE
+is defined. This leads to compilation errors when asm-generic/io.h is
+changed to leave PCI_IOBASE undefined.  More importantly it is currently
+broken at runtime, as accessing a fixed I/O port number of an ISA device
+on NOMMU RISC-V would turn into a NULL pointer dereference.
+
+Instead only define the in*()/out*() helper macros with MMU support and
+fall back to the asm-generic/io.h helper stubs otherwise.
 
 Signed-off-by: Niklas Schnelle <niklas@komani.de>
-Link: https://lore.kernel.org/r/20210430111641.1911207-3-schnelle@linux.ibm.com
+Link: https://lore.kernel.org/r/20210510145234.594814-3-schnelle@linux.ibm.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/riscv/include/asm/io.h | 5 +++--
