@@ -1,7 +1,7 @@
-From eba06eab55efd8f5537383df2c7977129e53c86d Mon Sep 17 00:00:00 2001
+From 3842f148cd07772c46db3680cb1fc49d29fd39bb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 16/17] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 12/13] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -48,7 +48,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 8edba5ea90f0..79cb1a0f13a0 100644
+index 8edba5ea90f0..1de4ddb46436 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -832,7 +832,7 @@
@@ -56,7 +56,7 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  /* RX buffer constants */
  #define MVPP2_SKB_SHINFO_SIZE \
 -	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-+	SKB_DATA_ALIGN(((int)(sizeof(struct skb_shared_info))))
++	SKB_DATA_ALIGN(((ssize_t)sizeof(struct skb_shared_info)))
  
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
