@@ -1,7 +1,7 @@
-From 01ade8c40b28c4d168ed01ef472a3a859699e67b Mon Sep 17 00:00:00 2001
+From bb9bbfd610f49eed770985808e89d767f6b74152 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 17 Feb 2021 13:48:40 -0700
-Subject: [PATCH 7/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Date: Fri, 14 May 2021 10:36:23 -0700
+Subject: [PATCH 7/8] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -72,7 +72,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 8edba5ea90f0..79cb1a0f13a0 100644
+index 8edba5ea90f0..1de4ddb46436 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -832,7 +832,7 @@
@@ -80,7 +80,7 @@ index 8edba5ea90f0..79cb1a0f13a0 100644
  /* RX buffer constants */
  #define MVPP2_SKB_SHINFO_SIZE \
 -	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-+	SKB_DATA_ALIGN(((int)(sizeof(struct skb_shared_info))))
++	SKB_DATA_ALIGN(((ssize_t)sizeof(struct skb_shared_info)))
  
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
@@ -98,7 +98,7 @@ index 4441ad667c3f..41e1f0d83865 100644
  
  /**
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index bacaca3252fb..251c5265887f 100644
+index b566c01b76db..73d291d298f1 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -343,8 +343,9 @@ config GDB_SCRIPTS

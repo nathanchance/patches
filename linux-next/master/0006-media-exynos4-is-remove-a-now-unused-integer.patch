@@ -1,0 +1,32 @@
+From 40cd5e6afa2f3fdbe8c2f5cf960a6023cd82c715 Mon Sep 17 00:00:00 2001
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Date: Tue, 11 May 2021 17:04:42 +0200
+Subject: [PATCH 6/8] media: exynos4-is: remove a now unused integer
+
+The usage of pm_runtime_resume_and_get() removed the need of a
+temporary integer. So, drop it.
+
+Fixes: 59f96244af94 ("media: exynos4-is: fix pm_runtime_get_sync() usage count")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/29dd19e3ac7b2a8671ebeac02859232ce0e34f58.1620745479.git.mchehab+huawei@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/media/platform/exynos4-is/media-dev.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index e025178db06c..3b8a24bb724c 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -1284,7 +1284,6 @@ static DEVICE_ATTR(subdev_conf_mode, S_IWUSR | S_IRUGO,
+ static int cam_clk_prepare(struct clk_hw *hw)
+ {
+ 	struct cam_clk *camclk = to_cam_clk(hw);
+-	int ret;
+ 
+ 	if (camclk->fmd->pmf == NULL)
+ 		return -ENODEV;
+-- 
+2.31.1.527.g2d677e5b15
+
