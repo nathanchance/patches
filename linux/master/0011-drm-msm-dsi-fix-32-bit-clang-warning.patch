@@ -1,7 +1,7 @@
-From 764d6400795466c55298eaad79510fc9219763e3 Mon Sep 17 00:00:00 2001
+From d263cff2b2dd175ba12d02f4033bc35f62ac925f Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 23:30:17 +0200
-Subject: [PATCH 12/15] drm/msm/dsi: fix 32-bit clang warning
+Subject: [PATCH 11/14] drm/msm/dsi: fix 32-bit clang warning
 
 clang is a little overzealous with warning about a constant conversion
 in an untaken branch of a ternary expression:

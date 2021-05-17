@@ -1,7 +1,7 @@
-From e2e25a2f09c7392fa51c40c52569292955ea7e25 Mon Sep 17 00:00:00 2001
+From 20f972ca60f7b4a7305ab539f8cd0924f5d57f3c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 15 Apr 2021 08:29:14 -0700
-Subject: [PATCH 03/15] drm/tegra: Fix shift overflow in
+Subject: [PATCH 02/14] drm/tegra: Fix shift overflow in
  tegra_shared_plane_atomic_update
 
 Clang warns:
