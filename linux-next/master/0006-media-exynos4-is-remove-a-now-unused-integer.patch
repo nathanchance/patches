@@ -1,4 +1,4 @@
-From 40cd5e6afa2f3fdbe8c2f5cf960a6023cd82c715 Mon Sep 17 00:00:00 2001
+From d32ef6779f9aeb25834df3d9477396c5bc003cd5 Mon Sep 17 00:00:00 2001
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Date: Tue, 11 May 2021 17:04:42 +0200
 Subject: [PATCH 06/10] media: exynos4-is: remove a now unused integer
@@ -28,5 +28,5 @@ index e025178db06c..3b8a24bb724c 100644
  	if (camclk->fmd->pmf == NULL)
  		return -ENODEV;
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.rc0
 

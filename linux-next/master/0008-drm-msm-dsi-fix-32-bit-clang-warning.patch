@@ -1,4 +1,4 @@
-From 97f7e66ef59dae56e37b21cc9182ae3e24b12b4f Mon Sep 17 00:00:00 2001
+From 528be6d70b93c42cd7f03b806e3bb4e1c1a6447c Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 23:30:17 +0200
 Subject: [PATCH 08/10] drm/msm/dsi: fix 32-bit clang warning
@@ -40,5 +40,5 @@ index e76ce40a12ab..accd6b4eb7c2 100644
  	.num_dsi_phy = 2,
  	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.rc0
 
