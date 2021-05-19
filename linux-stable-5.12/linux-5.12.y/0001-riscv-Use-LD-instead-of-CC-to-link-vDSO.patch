@@ -1,7 +1,7 @@
-From 709d8b6fdb8957069fc78bef572ec1d78c51361a Mon Sep 17 00:00:00 2001
+From fefe4d5b3cdd485554114eac810c7aa1b57aaf2c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
-Subject: [PATCH 01/13] riscv: Use $(LD) instead of $(CC) to link vDSO
+Subject: [PATCH 01/12] riscv: Use $(LD) instead of $(CC) to link vDSO
 
 Currently, the VDSO is being linked through $(CC). This does not match
 how the rest of the kernel links objects, which is through the $(LD)
@@ -88,7 +88,7 @@ index 71a315e73cbe..ca2b40dfd24b 100644
  
  # Extracts symbol offsets from the VDSO, converting them into an assembly file
 
-base-commit: 4bcf3b752d59b1ef839afcc4b1c0731652ef40d6
+base-commit: 761ea31e416adf1291edf31c8daa0f9b1b94f03d
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.rc0
 
