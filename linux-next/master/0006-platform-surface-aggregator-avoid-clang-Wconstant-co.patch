@@ -1,7 +1,7 @@
-From b4dac2bb584263130e156179493e8fef29c7f1a9 Mon Sep 17 00:00:00 2001
+From 2f3d62a650a717bb93752f4719b96ab911db7152 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 22:04:36 +0200
-Subject: [PATCH 07/10] platform/surface: aggregator: avoid clang
+Subject: [PATCH 6/9] platform/surface: aggregator: avoid clang
  -Wconstant-conversion warning
 
 Clang complains about the assignment of SSAM_ANY_IID to
