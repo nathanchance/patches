@@ -1,7 +1,7 @@
-From 8a70c94f3575af868341b5674817469e0870a0eb Mon Sep 17 00:00:00 2001
+From 84570e6b0eb6ff29f6afab73a5777630f629fe8d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 15 Apr 2021 08:29:14 -0700
-Subject: [PATCH 02/14] drm/tegra: Fix shift overflow in
+Subject: [PATCH 01/12] drm/tegra: Fix shift overflow in
  tegra_shared_plane_atomic_update
 
 Clang warns:
@@ -37,6 +37,8 @@ index 79bff8b48271..bfae8a02f55b 100644
  #endif
  
  	tegra_plane_writel(p, tegra_plane_state->format, DC_WIN_COLOR_DEPTH);
+
+base-commit: f01da525b3de8e59b2656b55d40c60462098651f
 -- 
 2.32.0.rc0
 
