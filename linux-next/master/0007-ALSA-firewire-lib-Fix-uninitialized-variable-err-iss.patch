@@ -1,0 +1,61 @@
+From 83f875f2313d77a9a121320f3fa559e6732bd9a4 Mon Sep 17 00:00:00 2001
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Date: Thu, 20 May 2021 21:59:50 +0900
+Subject: [PATCH 07/10] ALSA: firewire-lib: Fix uninitialized variable err
+ issue
+
+The check of error is just done for the case that CIP header is available.
+
+This commit moves auto variable into the branch to process CIP header.
+
+Addresses-Coverity: ("Uninitialized scalar variable")
+Fixes: c09010eeb373 ("ALSA: firewire-lib: handle the case that empty isochronous packet payload for CIP")
+Suggested-by: Colin Ian King <colin.king@canonical.com>
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20210520130409.GA170303@workstation/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/firewire/amdtp-stream.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
+index a6a7a72a2452..3713188aac25 100644
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -652,7 +652,6 @@ static int parse_ir_ctx_header(struct amdtp_stream *s, unsigned int cycle,
+ 	unsigned int payload_length;
+ 	const __be32 *cip_header;
+ 	unsigned int cip_header_size;
+-	int err;
+ 
+ 	payload_length = be32_to_cpu(ctx_header[0]) >> ISO_DATA_LENGTH_SHIFT;
+ 
+@@ -670,6 +669,8 @@ static int parse_ir_ctx_header(struct amdtp_stream *s, unsigned int cycle,
+ 
+ 	if (cip_header_size > 0) {
+ 		if (payload_length >= cip_header_size) {
++			int err;
++
+ 			cip_header = ctx_header + IR_CTX_HEADER_DEFAULT_QUADLETS;
+ 			err = check_cip_header(s, cip_header, payload_length - cip_header_size,
+ 					       data_blocks, data_block_counter, syt);
+@@ -683,7 +684,6 @@ static int parse_ir_ctx_header(struct amdtp_stream *s, unsigned int cycle,
+ 		}
+ 	} else {
+ 		cip_header = NULL;
+-		err = 0;
+ 		*data_blocks = payload_length / sizeof(__be32) / s->data_block_quadlets;
+ 		*syt = 0;
+ 
+@@ -694,7 +694,7 @@ static int parse_ir_ctx_header(struct amdtp_stream *s, unsigned int cycle,
+ 	trace_amdtp_packet(s, cycle, cip_header, payload_length, *data_blocks,
+ 			   *data_block_counter, packet_index, index);
+ 
+-	return err;
++	return 0;
+ }
+ 
+ // In CYCLE_TIMER register of IEEE 1394, 7 bits are used to represent second. On
+-- 
+2.32.0.rc0
+
