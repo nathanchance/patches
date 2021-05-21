@@ -1,0 +1,46 @@
+From 5f66bdfeb8c3d0cbcb43d68c2d2d31d03fab993b Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Fri, 21 May 2021 10:51:01 +0100
+Subject: [PATCH 08/11] dm space maps: Fix uninitialized variable r2
+
+In the case where recursing(mm) is true variable r2 is not
+inintialized and an uninitialized value is being used in the
+call combine_errors later on. Fix this by setting r2 to zero.
+
+Addresses-Coverity: ("Uninitialized scalar variable")
+Fixes: def6a7a9a7f0 ("dm space maps: improve performance with inc/dec on ranges of blocks")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Link: https://lore.kernel.org/r/20210521095101.42737-1-colin.king@canonical.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/md/persistent-data/dm-space-map-metadata.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/md/persistent-data/dm-space-map-metadata.c b/drivers/md/persistent-data/dm-space-map-metadata.c
+index 3b70ee861cf5..a9a362777fad 100644
+--- a/drivers/md/persistent-data/dm-space-map-metadata.c
++++ b/drivers/md/persistent-data/dm-space-map-metadata.c
+@@ -417,6 +417,7 @@ static int sm_metadata_inc_blocks(struct dm_space_map *sm, dm_block_t b, dm_bloc
+ 		r = add_bop(smm, BOP_INC, b, e);
+ 		if (r)
+ 			return r;
++		r2 = 0;
+ 	} else {
+ 		in(smm);
+ 		r = sm_ll_inc(&smm->ll, b, e, &nr_allocations);
+@@ -432,9 +433,10 @@ static int sm_metadata_dec_blocks(struct dm_space_map *sm, dm_block_t b, dm_bloc
+ 	int32_t nr_allocations;
+ 	struct sm_metadata *smm = container_of(sm, struct sm_metadata, sm);
+ 
+-	if (recursing(smm))
++	if (recursing(smm)) {
+ 		r = add_bop(smm, BOP_DEC, b, e);
+-	else {
++		r2 = 0;
++	} else {
+ 		in(smm);
+ 		r = sm_ll_dec(&smm->ll, b, e, &nr_allocations);
+ 		r2 = out(smm);
+-- 
+2.32.0.rc0
+

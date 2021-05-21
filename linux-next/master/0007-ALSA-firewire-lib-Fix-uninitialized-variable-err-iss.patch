@@ -1,7 +1,7 @@
 From 83f875f2313d77a9a121320f3fa559e6732bd9a4 Mon Sep 17 00:00:00 2001
 From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Date: Thu, 20 May 2021 21:59:50 +0900
-Subject: [PATCH 07/10] ALSA: firewire-lib: Fix uninitialized variable err
+Subject: [PATCH 07/11] ALSA: firewire-lib: Fix uninitialized variable err
  issue
 
 The check of error is just done for the case that CIP header is available.
