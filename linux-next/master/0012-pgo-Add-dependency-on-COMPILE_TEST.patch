@@ -1,0 +1,26 @@
+From c349c30d6db1c3396949523f7fb1ad7bcc2acf1a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 21 May 2021 19:58:04 -0700
+Subject: [PATCH 12/12] pgo: Add dependency on !COMPILE_TEST
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1383
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/pgo/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/pgo/Kconfig b/kernel/pgo/Kconfig
+index 76a640b6cf6e..49c7e5acdb6b 100644
+--- a/kernel/pgo/Kconfig
++++ b/kernel/pgo/Kconfig
+@@ -6,6 +6,7 @@ config ARCH_SUPPORTS_PGO_CLANG
+ 
+ config PGO_CLANG
+ 	bool "Enable clang's PGO-based kernel profiling"
++	depends on !COMPILE_TEST
+ 	depends on DEBUG_FS
+ 	depends on ARCH_SUPPORTS_PGO_CLANG
+ 	depends on CC_IS_CLANG && CLANG_VERSION >= 120000
+-- 
+2.32.0.rc0
+

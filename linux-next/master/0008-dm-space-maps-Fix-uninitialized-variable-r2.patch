@@ -1,7 +1,7 @@
 From 5f66bdfeb8c3d0cbcb43d68c2d2d31d03fab993b Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 21 May 2021 10:51:01 +0100
-Subject: [PATCH 08/11] dm space maps: Fix uninitialized variable r2
+Subject: [PATCH 08/12] dm space maps: Fix uninitialized variable r2
 
 In the case where recursing(mm) is true variable r2 is not
 inintialized and an uninitialized value is being used in the
