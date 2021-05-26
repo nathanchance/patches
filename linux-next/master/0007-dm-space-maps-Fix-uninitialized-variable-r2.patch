@@ -1,7 +1,7 @@
-From 5f66bdfeb8c3d0cbcb43d68c2d2d31d03fab993b Mon Sep 17 00:00:00 2001
+From 1fe3a42b182d38feb07688abc2fa6761658ea0c7 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 21 May 2021 10:51:01 +0100
-Subject: [PATCH 08/12] dm space maps: Fix uninitialized variable r2
+Subject: [PATCH 07/10] dm space maps: Fix uninitialized variable r2
 
 In the case where recursing(mm) is true variable r2 is not
 inintialized and an uninitialized value is being used in the
@@ -17,7 +17,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/md/persistent-data/dm-space-map-metadata.c b/drivers/md/persistent-data/dm-space-map-metadata.c
-index 3b70ee861cf5..a9a362777fad 100644
+index 392ae26134a4..0ccffe416c53 100644
 --- a/drivers/md/persistent-data/dm-space-map-metadata.c
 +++ b/drivers/md/persistent-data/dm-space-map-metadata.c
 @@ -417,6 +417,7 @@ static int sm_metadata_inc_blocks(struct dm_space_map *sm, dm_block_t b, dm_bloc
