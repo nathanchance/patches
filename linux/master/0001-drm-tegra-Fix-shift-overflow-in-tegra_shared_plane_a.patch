@@ -1,4 +1,4 @@
-From a8dd8b5ffbcf57c72d55a90f812dffb391a32158 Mon Sep 17 00:00:00 2001
+From 6a81e48e0b79cbe06bb85d7310ad52bc315a9d65 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 15 Apr 2021 08:29:14 -0700
 Subject: [PATCH 01/12] drm/tegra: Fix shift overflow in
@@ -38,7 +38,7 @@ index 79bff8b48271..bfae8a02f55b 100644
  
  	tegra_plane_writel(p, tegra_plane_state->format, DC_WIN_COLOR_DEPTH);
 
-base-commit: 5df7ae7bed412aa3f2e26ee8271abb24885ee557
+base-commit: 5ff2756afde08b266fbb673849899fec694f39f1
 -- 
 2.32.0.rc0
 
