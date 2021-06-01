@@ -1,4 +1,4 @@
-From 6642cbf3f31b41debe65bead2081a89c76772db0 Mon Sep 17 00:00:00 2001
+From dd4c63b556fad99c0e944a775ec4ed88908f2cad Mon Sep 17 00:00:00 2001
 From: Enric Balletbo i Serra <enric.balletbo@collabora.com>
 Date: Fri, 23 Apr 2021 09:52:01 +0200
 Subject: [PATCH 05/11] arm64: defconfig: Do not override the MTK_PMIC_WRAP
@@ -23,7 +23,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 6d2979879593..c37735ea14b6 100644
+index 3396b16cd063..d50097e95452 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
 @@ -491,7 +491,6 @@ CONFIG_SPI_S3C64XX=y
