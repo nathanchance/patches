@@ -1,4 +1,4 @@
-From 30773162ab50017db016e993772aae5aa3c1d6f9 Mon Sep 17 00:00:00 2001
+From 18fc07c220eebac07f495767cc774abd2712d158 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
 Subject: [PATCH 12/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -34,7 +34,7 @@ index 2b625ebef914..3935f8c95eef 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 834775843067..f45c0537b794 100644
+index a1aefce55e65..62ef68e0fecd 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -748,7 +748,7 @@
