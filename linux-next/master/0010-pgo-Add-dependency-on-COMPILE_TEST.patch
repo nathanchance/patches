@@ -1,7 +1,7 @@
-From 5e43c586c958b1185f797e1502ab3e87bbafd1a3 Mon Sep 17 00:00:00 2001
+From c36f655fec34e28b852209f673822dede89d0de1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 21 May 2021 19:58:04 -0700
-Subject: [PATCH 11/11] pgo: Add dependency on !COMPILE_TEST
+Subject: [PATCH 10/10] pgo: Add dependency on !COMPILE_TEST
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1383
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/kernel/pgo/Kconfig b/kernel/pgo/Kconfig
-index 76a640b6cf6e..49c7e5acdb6b 100644
+index d2053df1111c..f41fccf3fbc8 100644
 --- a/kernel/pgo/Kconfig
 +++ b/kernel/pgo/Kconfig
 @@ -6,6 +6,7 @@ config ARCH_SUPPORTS_PGO_CLANG
@@ -22,5 +22,5 @@ index 76a640b6cf6e..49c7e5acdb6b 100644
  	depends on ARCH_SUPPORTS_PGO_CLANG
  	depends on CC_IS_CLANG && CLANG_VERSION >= 120000
 -- 
-2.32.0.rc0
+2.32.0.rc3
 

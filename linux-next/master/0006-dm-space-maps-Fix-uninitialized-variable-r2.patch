@@ -1,7 +1,7 @@
-From 12a4a6bda26b9ec665a173a581e834d150290afa Mon Sep 17 00:00:00 2001
+From 1276f7bf3ca6ef3c3252c043e1d500560af9dd98 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 21 May 2021 10:51:01 +0100
-Subject: [PATCH 07/11] dm space maps: Fix uninitialized variable r2
+Subject: [PATCH 06/10] dm space maps: Fix uninitialized variable r2
 
 In the case where recursing(mm) is true variable r2 is not
 inintialized and an uninitialized value is being used in the
@@ -42,5 +42,5 @@ index 392ae26134a4..0ccffe416c53 100644
  		r = sm_ll_dec(&smm->ll, b, e, &nr_allocations);
  		r2 = out(smm);
 -- 
-2.32.0.rc0
+2.32.0.rc3
 
