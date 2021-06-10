@@ -1,4 +1,4 @@
-From 2de04a9feb0c81d6a5fae369848481def8546503 Mon Sep 17 00:00:00 2001
+From 726724584d28c69e761f3134a4a413b928888e56 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 07/14] kbuild: fix false-positive modpost warning when all
@@ -152,5 +152,5 @@ index e08f75aed429..34bbb5b9e05a 100644
  
  	return err;
 -- 
-2.32.0.rc0
+2.32.0
 
