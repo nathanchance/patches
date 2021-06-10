@@ -1,4 +1,4 @@
-From c36f655fec34e28b852209f673822dede89d0de1 Mon Sep 17 00:00:00 2001
+From ce97b54420ce19301b82bb6058554ddf066add8c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 21 May 2021 19:58:04 -0700
 Subject: [PATCH 10/10] pgo: Add dependency on !COMPILE_TEST
@@ -22,5 +22,5 @@ index d2053df1111c..f41fccf3fbc8 100644
  	depends on ARCH_SUPPORTS_PGO_CLANG
  	depends on CC_IS_CLANG && CLANG_VERSION >= 120000
 -- 
-2.32.0.rc3
+2.32.0
 

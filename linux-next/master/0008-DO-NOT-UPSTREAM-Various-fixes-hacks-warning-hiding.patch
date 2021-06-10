@@ -1,4 +1,4 @@
-From 4497bb7f770b18a253755ad5b1c025efeacf8a4d Mon Sep 17 00:00:00 2001
+From 2c886fd69ed4358d62fd303f211e7ecd024b3d3e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
 Subject: [PATCH 08/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -32,7 +32,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  5 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index 6bb7f2905821..a12361f2cf1e 100644
+index 11ab03abc0fe..bab842144ba7 100644
 --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
 +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
 @@ -60,7 +60,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
@@ -42,8 +42,8 @@ index 6bb7f2905821..a12361f2cf1e 100644
 -CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags) -Wframe-larger-than=2048
 +CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
+ ifdef CONFIG_DRM_AMD_DC_DCN3_1
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_mode_vba_31.o := $(dml_ccflags) -Wframe-larger-than=2048
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
@@ -70,7 +70,7 @@ index 4a61c90003b5..1c60f53e3e66 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 150f13baa6cc..8830532b9fc4 100644
+index 3cf48998a374..1ebf11694042 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -346,8 +346,9 @@ config GDB_SCRIPTS
@@ -98,5 +98,5 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 -- 
-2.32.0.rc3
+2.32.0
 
