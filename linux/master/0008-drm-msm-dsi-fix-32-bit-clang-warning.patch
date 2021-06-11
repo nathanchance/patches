@@ -1,4 +1,4 @@
-From 6b49f0a2ab068941d8909f6c64d830822f902a51 Mon Sep 17 00:00:00 2001
+From 5927b67d716f40ca1ea60a64fb790c98c1a9e603 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 23:30:17 +0200
 Subject: [PATCH 08/11] drm/msm/dsi: fix 32-bit clang warning
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index e76ce40a12ab..accd6b4eb7c2 100644
+index 6f96fbac8282..ff9931c70aa7 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -972,7 +972,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+@@ -973,7 +973,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
  		.restore_pll_state = dsi_7nm_pll_restore_state,
  	},
  	.min_pll_rate = 600000000UL,
