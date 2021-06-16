@@ -1,4 +1,4 @@
-From ddcb4e92d8bb4a04c1216801f2423812efc19c4c Mon Sep 17 00:00:00 2001
+From 41b1a7766c1e4230c239fddf3649d2685d9f0af4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 13 Nov 2020 19:37:22 +0200
 Subject: [PATCH 01/11] arm: lib: xor-neon: remove unnecessary GCC < 4.6
@@ -50,7 +50,7 @@ index b99dd8e1c93f..e1e76186ec23 100644
  
  #pragma GCC diagnostic ignored "-Wunused-variable"
 
-base-commit: f21b807c3cf8cd7c5ca9e406b27bf1cd2f1c1238
+base-commit: 94f0b2d4a1d0c52035aef425da5e022bd2cb1c71
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 
