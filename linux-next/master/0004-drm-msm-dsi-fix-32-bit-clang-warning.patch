@@ -1,7 +1,7 @@
-From 29db5ff95e3a2e0810c079a04cd3c283ce23dd48 Mon Sep 17 00:00:00 2001
+From 5490de2b0d74ad894e88e7b37d305f05e4e617e8 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 23:30:17 +0200
-Subject: [PATCH 05/10] drm/msm/dsi: fix 32-bit clang warning
+Subject: [PATCH 4/7] drm/msm/dsi: fix 32-bit clang warning
 
 clang is a little overzealous with warning about a constant conversion
 in an untaken branch of a ternary expression:
@@ -23,10 +23,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index e76ce40a12ab..accd6b4eb7c2 100644
+index 6f96fbac8282..ff9931c70aa7 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -972,7 +972,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+@@ -973,7 +973,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
  		.restore_pll_state = dsi_7nm_pll_restore_state,
  	},
  	.min_pll_rate = 600000000UL,
@@ -40,5 +40,5 @@ index e76ce40a12ab..accd6b4eb7c2 100644
  	.num_dsi_phy = 2,
  	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 
