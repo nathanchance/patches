@@ -1,7 +1,7 @@
-From 0b7dad6f0959082b43c62dd1d026e2d050059360 Mon Sep 17 00:00:00 2001
+From a068acf2e0233db5ee0c1ec020f116c4a8018d23 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 28 May 2021 11:27:52 -0700
-Subject: [PATCH 10/12] powerpc/barrier: Avoid collision with clang's __lwsync
+Subject: [PATCH 09/11] powerpc/barrier: Avoid collision with clang's __lwsync
  macro
 
 A change in clang 13 results in the __lwsync macro being defined as
@@ -52,5 +52,5 @@ index aecfde829d5d..6274b864f363 100644
  #define dma_rmb()	__lwsync()
  #define dma_wmb()	__asm__ __volatile__ (stringify_in_c(SMPWMB) : : :"memory")
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 
