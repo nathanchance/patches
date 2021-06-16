@@ -1,7 +1,7 @@
-From 475c273de36a325f56b457a8f90723cbfe369479 Mon Sep 17 00:00:00 2001
+From bfed22145ddc466aa090f25753769243e3c52b9e Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
-Subject: [PATCH 06/14] kbuild: do not set -w for vmlinux.o modpost
+Subject: [PATCH 06/13] kbuild: do not set -w for vmlinux.o modpost
 
 The -w option is meaningless for the first pass of modpost (vmlinux.o).
 
@@ -54,5 +54,5 @@ index 12a87be0fb44..a928b040bdb7 100644
  # Otherwise, allmodconfig would fail with "Argument list too long".
  quiet_cmd_modpost = MODPOST $@
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 
