@@ -1,4 +1,4 @@
-From 1c743fce5459f36b7db8dadbca8e50468d578c47 Mon Sep 17 00:00:00 2001
+From 6e17fa3fb3693f530bdacb509202bc02bd307990 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Nov 2020 13:37:37 -0700
 Subject: [PATCH 03/26] riscv: Explicitly specify the build id style in vDSO
@@ -37,5 +37,5 @@ index 2b6dd6bb372b..b4b9b8f9fc36 100644
  # We also create a special relocatable object that should mirror the symbol
  # table and layout of the linked DSO. With ld --just-symbols we can then
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 

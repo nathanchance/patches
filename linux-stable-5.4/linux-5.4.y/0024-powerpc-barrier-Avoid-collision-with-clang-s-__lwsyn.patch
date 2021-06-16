@@ -1,4 +1,4 @@
-From 9626931f1bdeffcd608ada4478431269bebfc572 Mon Sep 17 00:00:00 2001
+From 77c9b3c0da983978ffd31b4a0f06fc63e7ed7511 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 28 May 2021 11:27:52 -0700
 Subject: [PATCH 24/26] powerpc/barrier: Avoid collision with clang's __lwsync
@@ -52,5 +52,5 @@ index fbe8df433019..dc953d22e3c6 100644
  #define dma_rmb()	__lwsync()
  #define dma_wmb()	__asm__ __volatile__ (stringify_in_c(SMPWMB) : : :"memory")
 -- 
-2.32.0
+2.32.0.93.g670b81a890
 
