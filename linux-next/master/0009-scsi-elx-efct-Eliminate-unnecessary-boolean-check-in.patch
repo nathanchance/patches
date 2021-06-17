@@ -1,0 +1,43 @@
+From c9a33cdcc94cbb91668424c04ded34cc4d8de4b0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 16 Jun 2021 23:31:23 -0700
+Subject: [PATCH 09/11] scsi: elx: efct: Eliminate unnecessary boolean check in
+ efct_hw_command_cancel()
+
+clang warns:
+
+drivers/scsi/elx/efct/efct_hw.c:1523:17: warning: address of array
+'ctx->buf' will always evaluate to 'true' [-Wpointer-bool-conversion]
+                              (!ctx->buf ? U32_MAX : *((u32 *)ctx->buf)));
+                               ~~~~~~^~~
+
+buf is an array in the middle of a struct so deferencing it is not a
+problem as long as ctx is not NULL. Eliminate the check, which fixes the
+warning.
+
+Fixes: 580c0255e4ef ("scsi: elx: efct: RQ buffer, memory pool allocation and deallocation APIs")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1398
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210617063123.21239-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/elx/efct/efct_hw.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/scsi/elx/efct/efct_hw.c b/drivers/scsi/elx/efct/efct_hw.c
+index ce4736c41564..5b508d49e5a5 100644
+--- a/drivers/scsi/elx/efct/efct_hw.c
++++ b/drivers/scsi/elx/efct/efct_hw.c
+@@ -1519,8 +1519,7 @@ efct_hw_command_cancel(struct efct_hw *hw)
+ 				       struct efct_command_ctx, list_entry);
+ 
+ 		efc_log_debug(hw->os, "hung command %08x\n",
+-			      !ctx ? U32_MAX :
+-			      (!ctx->buf ? U32_MAX : *((u32 *)ctx->buf)));
++			      !ctx ? U32_MAX : *((u32 *)ctx->buf));
+ 		spin_unlock_irqrestore(&hw->cmd_lock, flags);
+ 		rc = efct_hw_command_process(hw, -1, mqe, SLI4_BMBX_SIZE);
+ 		spin_lock_irqsave(&hw->cmd_lock, flags);
+-- 
+2.32.0.93.g670b81a890
+
