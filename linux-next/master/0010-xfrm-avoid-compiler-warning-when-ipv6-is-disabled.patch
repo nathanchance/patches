@@ -1,0 +1,39 @@
+From e5dc4ec5fcb072c2a282b7153f5b5b439cd96c4a Mon Sep 17 00:00:00 2001
+From: Florian Westphal <fw@strlen.de>
+Date: Tue, 15 Jun 2021 16:27:20 +0200
+Subject: [PATCH 10/13] xfrm: avoid compiler warning when ipv6 is disabled
+
+with CONFIG_IPV6=n:
+xfrm_output.c:140:12: warning: 'xfrm6_hdr_offset' defined but not used
+
+Fixes: 9acf4d3b9ec1 ("xfrm: ipv6: add xfrm6_hdr_offset helper")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/r/20210615142720.2749-1-fw@strlen.de
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ net/xfrm/xfrm_output.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index 51992c23898f..8d2611814fe6 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -137,6 +137,7 @@ static int mip6_rthdr_offset(struct sk_buff *skb, u8 **nexthdr, int type)
+ }
+ #endif
+ 
++#if IS_ENABLED(CONFIG_IPV6)
+ static int xfrm6_hdr_offset(struct xfrm_state *x, struct sk_buff *skb, u8 **prevhdr)
+ {
+ 	switch (x->type->proto) {
+@@ -151,6 +152,7 @@ static int xfrm6_hdr_offset(struct xfrm_state *x, struct sk_buff *skb, u8 **prev
+ 
+ 	return ip6_find_1stfragopt(skb, prevhdr);
+ }
++#endif
+ 
+ /* Add encapsulation header.
+  *
+-- 
+2.32.0.93.g670b81a890
+

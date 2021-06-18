@@ -1,7 +1,7 @@
 From 8f554388fdf982bc92c038b708837968ee04254b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 16 Jun 2021 23:31:23 -0700
-Subject: [PATCH 6/8] scsi: elx: efct: Eliminate unnecessary boolean check in
+Subject: [PATCH 06/13] scsi: elx: efct: Eliminate unnecessary boolean check in
  efct_hw_command_cancel()
 
 clang warns:

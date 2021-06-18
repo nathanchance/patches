@@ -1,7 +1,7 @@
 From 3ffca4bc26ffff4c45beeb8add593b391898bfa9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 16 Jun 2021 23:17:21 -0700
-Subject: [PATCH 5/8] scsi: elx: efct: Do not use id uninitialized in
+Subject: [PATCH 05/13] scsi: elx: efct: Do not use id uninitialized in
  efct_lio_setup_session()
 
 clang warns:
