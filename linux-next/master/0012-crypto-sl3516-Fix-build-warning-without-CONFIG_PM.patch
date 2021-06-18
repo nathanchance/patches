@@ -1,0 +1,39 @@
+From d3283403d30f0e8a65f79764ea840aeba21559ef Mon Sep 17 00:00:00 2001
+From: YueHaibing <yuehaibing@huawei.com>
+Date: Fri, 18 Jun 2021 17:35:51 +0800
+Subject: [PATCH 12/16] crypto: sl3516 - Fix build warning without CONFIG_PM
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+drivers/crypto/gemini/sl3516-ce-core.c:345:12:
+ warning: ‘sl3516_ce_pm_resume’ defined but not used [-Wunused-function]
+ static int sl3516_ce_pm_resume(struct device *dev)
+            ^~~~~~~~~~~~~~~~~~~
+
+The driver needs PM, otherwise clock and resets are never set.
+So make it depends on PM to fix this warning.
+
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Suggested-by: LABBE Corentin <clabbe@baylibre.com>
+Link: https://lore.kernel.org/r/20210618093551.23748-1-yuehaibing@huawei.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/crypto/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/crypto/Kconfig b/drivers/crypto/Kconfig
+index 99b090790178..6f14f39d32e3 100644
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -273,6 +273,7 @@ config CRYPTO_DEV_SL3516
+ 	select CRYPTO_ECB
+ 	select CRYPTO_AES
+ 	select HW_RANDOM
++	depends on PM
+ 	help
+ 	  This option allows you to have support for SL3516 crypto offloader.
+ 
+-- 
+2.32.0.93.g670b81a890
+

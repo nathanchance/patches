@@ -1,0 +1,47 @@
+From c04beacfbe6426655a39ec23109f6411067527ae Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 17 Jun 2021 17:03:59 -0700
+Subject: [PATCH 13/16] net/mlx5: Use cpumask_available() in
+ mlx5_eq_create_generic()
+
+When CONFIG_CPUMASK_OFFSTACK is unset, cpumask_var_t is not a pointer
+but a single element array, meaning its address in a structure cannot be
+NULL as long as it is not the first element, which it is not. This
+results in a clang warning:
+
+drivers/net/ethernet/mellanox/mlx5/core/eq.c:715:14: warning: address of
+array 'param->affinity' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (!param->affinity)
+            ~~~~~~~~^~~~~~~~
+1 warning generated.
+
+The helper cpumask_available was added in commit f7e30f01a9e2 ("cpumask:
+Add helper cpumask_available()") to handle situations like this so use
+it to keep the meaning of the code the same while resolving the warning.
+
+Fixes: e4e3f24b822f ("net/mlx5: Provide cpumask at EQ creation phase")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1400
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210618000358.2402567-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/eq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eq.c b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
+index c7efd177da1f..6e074cc457de 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eq.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
+@@ -712,7 +712,7 @@ mlx5_eq_create_generic(struct mlx5_core_dev *dev,
+ 	struct mlx5_eq *eq = kvzalloc(sizeof(*eq), GFP_KERNEL);
+ 	int err;
+ 
+-	if (!param->affinity)
++	if (!cpumask_available(param->affinity))
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	if (!eq)
+-- 
+2.32.0.93.g670b81a890
+

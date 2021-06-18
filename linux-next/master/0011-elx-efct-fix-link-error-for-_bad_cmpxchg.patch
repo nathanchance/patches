@@ -1,0 +1,37 @@
+From 062ed0d56dbca5724d6534209866c77b490d5052 Mon Sep 17 00:00:00 2001
+From: James Smart <jsmart2021@gmail.com>
+Date: Fri, 18 Jun 2021 10:40:50 -0700
+Subject: [PATCH 11/16] elx: efct: fix link error for _bad_cmpxchg
+
+cmpxchg is being used on a bool type, which is requiring architecture
+support that isn't compatible with a bool.
+
+Convert variable abort_in_progress from bool to int.
+
+Fixes: ebc076b3eddc ("scsi: elx: efct: Tie into kernel Kconfig and build process")
+Reported-by: kernel test robot <lkp@intel.com>
+Co-developed-by: Ram Vegesna <ram.vegesna@broadcom.com>
+Signed-off-by: Ram Vegesna <ram.vegesna@broadcom.com>
+Signed-off-by: James Smart <jsmart2021@gmail.com>
+Link: https://lore.kernel.org/r/20210618174050.80302-1-jsmart2021@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/elx/efct/efct_hw.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/elx/efct/efct_hw.h b/drivers/scsi/elx/efct/efct_hw.h
+index 32cff5548f0e..f3f4aa78dce9 100644
+--- a/drivers/scsi/elx/efct/efct_hw.h
++++ b/drivers/scsi/elx/efct/efct_hw.h
+@@ -223,7 +223,7 @@ struct efct_hw_io {
+ 	struct efc_dma		xfer_rdy;
+ 	u16			type;
+ 	bool			xbusy;
+-	bool			abort_in_progress;
++	int			abort_in_progress;
+ 	bool			status_saved;
+ 	u8			wq_class;
+ 	u16			reqtag;
+-- 
+2.32.0.93.g670b81a890
+

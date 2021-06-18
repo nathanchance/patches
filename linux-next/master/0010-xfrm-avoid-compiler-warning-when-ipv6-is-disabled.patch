@@ -1,7 +1,7 @@
 From e98a9f4be811682ea3bf202305e25c211ed2b463 Mon Sep 17 00:00:00 2001
 From: Florian Westphal <fw@strlen.de>
 Date: Tue, 15 Jun 2021 16:27:20 +0200
-Subject: [PATCH 10/13] xfrm: avoid compiler warning when ipv6 is disabled
+Subject: [PATCH 10/16] xfrm: avoid compiler warning when ipv6 is disabled
 
 with CONFIG_IPV6=n:
 xfrm_output.c:140:12: warning: 'xfrm6_hdr_offset' defined but not used

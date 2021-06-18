@@ -1,7 +1,7 @@
 From 98aee2565c283cc2e0fb841c6da66211fc5213d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 17 Jun 2021 16:37:59 -0700
-Subject: [PATCH 07/13] scsi: lpfc: Reduce scope of uuid in lpfc_queuecommand()
+Subject: [PATCH 07/16] scsi: lpfc: Reduce scope of uuid in lpfc_queuecommand()
 
 When CONFIG_SCSI_LPFC_DEBUG_FS is unset, uuid's declaration is not
 present, resulting in a compiler error:
