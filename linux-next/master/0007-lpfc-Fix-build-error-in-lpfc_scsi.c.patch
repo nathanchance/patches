@@ -1,0 +1,39 @@
+From e0b03231a9e5dc15da9173eddf9703ea69d26507 Mon Sep 17 00:00:00 2001
+From: James Smart <jsmart2021@gmail.com>
+Date: Fri, 18 Jun 2021 10:18:42 -0700
+Subject: [PATCH 07/16] lpfc: Fix build error in lpfc_scsi.c
+
+Integration with VMID patches resulted in a build error when
+CONFIG_DEBUG_FS is disabled and driver option CONFIG_SCSI_LPFC_DEBUG_FS
+is disabled.
+
+It results in an undefined variable:
+lpfc_scsi:5595:3: error: 'uuid' undeclared (first use in this function); did you mean 'upid'?
+
+Fixes: 33c79741deaf ("scsi: lpfc: vmid: Introduce VMID in I/O path")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: James Smart <jsmart2021@gmail.com>
+Link: https://lore.kernel.org/r/20210618171842.79710-1-jsmart2021@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/lpfc/lpfc_scsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 46bfe251c2fe..1b248c237be1 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -5455,9 +5455,9 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
+ 	struct lpfc_io_buf *lpfc_cmd;
+ 	struct fc_rport *rport = starget_to_rport(scsi_target(cmnd->device));
+ 	int err, idx;
++	u8 *uuid = NULL;
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+ 	uint64_t start = 0L;
+-	u8 *uuid = NULL;
+ 
+ 	if (phba->ktime_on)
+ 		start = ktime_get_ns();
+-- 
+2.32.0.93.g670b81a890
+
