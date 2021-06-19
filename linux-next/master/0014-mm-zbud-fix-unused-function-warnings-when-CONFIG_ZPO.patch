@@ -1,14 +1,23 @@
-From 92c14f98468467632cfc0f23efd73b4715afabbe Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 18 Jun 2021 16:11:14 -0700
-Subject: [PATCH 16/16] mm: Make CONFIG_ZBUD depend on CONFIG_ZPOOL
+From f03201f3599d3578f860357499d5d6e9aa42d752 Mon Sep 17 00:00:00 2001
+From: Miaohe Lin <linmiaohe@huawei.com>
+Date: Sat, 19 Jun 2021 10:55:08 +0800
+Subject: [PATCH 14/16] mm/zbud: fix unused function warnings when CONFIG_ZPOOL
+ is disabled
 
-Link: https://lore.kernel.org/r/813ac556-4a48-1e29-ad87-1ddb74546ef1@huawei.com/
+There are several -Wunused-function warnings when CONFIG_ZPOOL is disabled.
+As zbud won't do anything when CONFIG_ZPOOL is disabled, we can make zbud
+depends on ZPOOL and eliminate the CONFIG_ZPOOL macro in zbud.c to fix
+these warnings.
+
+Fixes: 962b7e9ad124 ("mm/zbud: don't export any zbud API")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Link: https://lore.kernel.org/r/20210619025508.1239386-1-linmiaohe@huawei.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- mm/Kconfig | 1 +
- mm/zbud.c  | 9 ---------
- 2 files changed, 1 insertion(+), 9 deletions(-)
+ mm/Kconfig |  1 +
+ mm/zbud.c  | 10 ----------
+ 2 files changed, 1 insertion(+), 10 deletions(-)
 
 diff --git a/mm/Kconfig b/mm/Kconfig
 index 8f748010f7ea..5dc28e9205e0 100644
@@ -23,7 +32,7 @@ index 8f748010f7ea..5dc28e9205e0 100644
  	  A special purpose allocator for storing compressed pages.
  	  It is designed to store up to two compressed pages per physical
 diff --git a/mm/zbud.c b/mm/zbud.c
-index 3f61304405cb..40ee0e53246b 100644
+index 3f61304405cb..6348932430b8 100644
 --- a/mm/zbud.c
 +++ b/mm/zbud.c
 @@ -111,10 +111,8 @@ struct zbud_pool {
@@ -54,7 +63,7 @@ index 3f61304405cb..40ee0e53246b 100644
  
  static int __init init_zbud(void)
  {
-@@ -626,18 +621,14 @@ static int __init init_zbud(void)
+@@ -626,19 +621,14 @@ static int __init init_zbud(void)
  	BUILD_BUG_ON(sizeof(struct zbud_header) > ZHDR_SIZE_ALIGNED);
  	pr_info("loaded\n");
  
@@ -70,9 +79,10 @@ index 3f61304405cb..40ee0e53246b 100644
 -#ifdef CONFIG_ZPOOL
  	zpool_unregister_driver(&zbud_zpool_driver);
 -#endif
- 
+-
  	pr_info("unloaded\n");
  }
+ 
 -- 
 2.32.0.93.g670b81a890
 
