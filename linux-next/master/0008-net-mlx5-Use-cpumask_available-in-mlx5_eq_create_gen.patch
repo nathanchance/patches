@@ -1,7 +1,7 @@
-From ddaa2551e362698118dc143cf7ff6a962965c59d Mon Sep 17 00:00:00 2001
+From 91a33f13b114d91d7e51eee8858151eb8dd1b060 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 17 Jun 2021 17:03:59 -0700
-Subject: [PATCH 13/16] net/mlx5: Use cpumask_available() in
+Subject: [PATCH 08/12] net/mlx5: Use cpumask_available() in
  mlx5_eq_create_generic()
 
 When CONFIG_CPUMASK_OFFSTACK is unset, cpumask_var_t is not a pointer

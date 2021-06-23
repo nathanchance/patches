@@ -1,7 +1,7 @@
-From 47252d81301b82d2e1e193dc8a3124e702f182cb Mon Sep 17 00:00:00 2001
+From 00e33bc2e0d3f05904450daa55afbb1ba8302502 Mon Sep 17 00:00:00 2001
 From: Miaohe Lin <linmiaohe@huawei.com>
 Date: Sat, 19 Jun 2021 10:55:08 +0800
-Subject: [PATCH 14/16] mm/zbud: fix unused function warnings when CONFIG_ZPOOL
+Subject: [PATCH 09/12] mm/zbud: fix unused function warnings when CONFIG_ZPOOL
  is disabled
 
 There are several -Wunused-function warnings when CONFIG_ZPOOL is disabled.

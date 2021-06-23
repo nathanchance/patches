@@ -1,0 +1,56 @@
+From 32320166766bcc34ccf8494b8b8321ac1713632b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 21 Jun 2021 11:56:45 -0700
+Subject: [PATCH 10/12] mailbox: imx: Avoid using val uninitialized in
+ imx_mu_isr()
+
+Clang warns:
+
+drivers/mailbox/imx-mailbox.c:284:2: warning: variable 'val' is used
+uninitialized whenever switch default is taken
+[-Wsometimes-uninitialized]
+        default:
+        ^~~~~~~
+drivers/mailbox/imx-mailbox.c:288:7: note: uninitialized use occurs here
+        if (!val)
+             ^~~
+drivers/mailbox/imx-mailbox.c:263:9: note: initialize the variable 'val'
+to silence this warning
+        u32 val, ctrl;
+               ^
+                = 0
+1 warning generated.
+
+Prior to commit 91c8c1fbe498 ("mailbox: imx: add xSR/xCR register
+array"), val was always initialized in imx_mu_isr() but now, it is not
+initialized in the default case. Return IRQ_NONE like the statement
+below does and add a message that there is an unhandled type for this
+switch statement so that it can be updated.
+
+Fixes: 91c8c1fbe498 ("mailbox: imx: add xSR/xCR register array")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1404
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210621185645.2373845-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/mailbox/imx-mailbox.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index bc51bd3c1999..0ce75c6b36b6 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -282,7 +282,9 @@ static irqreturn_t imx_mu_isr(int irq, void *p)
+ 			(ctrl & IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
+ 		break;
+ 	default:
+-		break;
++		dev_warn_ratelimited(priv->dev, "Unhandled channel type %d\n",
++				     cp->type);
++		return IRQ_NONE;
+ 	}
+ 
+ 	if (!val)
+-- 
+2.32.0.93.g670b81a890
+

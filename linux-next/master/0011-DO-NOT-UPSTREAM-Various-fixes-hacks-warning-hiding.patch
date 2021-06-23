@@ -1,7 +1,7 @@
-From edc4eab7e6de52891a3a1f6ba305f8d8fe32a6b1 Mon Sep 17 00:00:00 2001
+From e3f0706cf8b238b2510008f5b6bb70820be72f02 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 15/16] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 11/12] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -32,7 +32,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  5 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index 11ab03abc0fe..bab842144ba7 100644
+index d34024fd798a..2b480beb3f19 100644
 --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
 +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
 @@ -60,7 +60,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
@@ -42,8 +42,8 @@ index 11ab03abc0fe..bab842144ba7 100644
 -CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags) -Wframe-larger-than=2048
 +CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags)
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
- ifdef CONFIG_DRM_AMD_DC_DCN3_1
  CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_mode_vba_31.o := $(dml_ccflags) -Wframe-larger-than=2048
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_rq_dlg_calc_31.o := $(dml_ccflags)
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
