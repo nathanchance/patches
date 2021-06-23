@@ -1,7 +1,7 @@
-From 7b87d7b7bb276fd76bffad25c418c0f185b539ee Mon Sep 17 00:00:00 2001
+From 19d3755361d045c014286c644e465aba5ed725c9 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Tue, 25 Feb 2020 14:13:28 +1100
-Subject: [PATCH 10/26] powerpc/64s: Fix section mismatch warnings from boot
+Subject: [PATCH 10/27] powerpc/64s: Fix section mismatch warnings from boot
  code
 
 We currently have two section mismatch warnings:
