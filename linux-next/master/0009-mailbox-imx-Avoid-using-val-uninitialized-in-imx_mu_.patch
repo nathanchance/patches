@@ -1,7 +1,7 @@
-From 32320166766bcc34ccf8494b8b8321ac1713632b Mon Sep 17 00:00:00 2001
+From 2f9a81311e27eea977dedf545b904995f5a8c1e6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 21 Jun 2021 11:56:45 -0700
-Subject: [PATCH 10/12] mailbox: imx: Avoid using val uninitialized in
+Subject: [PATCH 09/11] mailbox: imx: Avoid using val uninitialized in
  imx_mu_isr()
 
 Clang warns:

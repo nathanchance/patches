@@ -1,7 +1,7 @@
-From e3f0706cf8b238b2510008f5b6bb70820be72f02 Mon Sep 17 00:00:00 2001
+From cd63f101efa1de7238c122328111e676e621e6be Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 11/12] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 10/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -57,7 +57,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 4a61c90003b5..1c60f53e3e66 100644
+index b9fbc9f000f2..2645beb33a74 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -832,7 +832,7 @@
