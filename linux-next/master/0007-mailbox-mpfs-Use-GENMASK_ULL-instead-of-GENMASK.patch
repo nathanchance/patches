@@ -1,0 +1,36 @@
+From d8318fd1dab5e3b06b066fdf1000833af03013c5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 24 Jun 2021 10:21:39 -0700
+Subject: [PATCH 07/11] mailbox-mpfs: Use GENMASK_ULL instead of GENMASK
+
+Link: https://lore.kernel.org/r/20210624150055.11298-1-conor.dooley@microchip.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/mailbox/mailbox-mpfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
+index 854338a40e8f..0d6e2231a2c7 100644
+--- a/drivers/mailbox/mailbox-mpfs.c
++++ b/drivers/mailbox/mailbox-mpfs.c
+@@ -39,7 +39,7 @@
+ #define SCB_CTRL_NOTIFY_MASK BIT(SCB_CTRL_NOTIFY)
+ 
+ #define SCB_CTRL_POS (16)
+-#define SCB_CTRL_MASK GENMASK(SCB_CTRL_POS + SCB_MASK_WIDTH, SCB_CTRL_POS)
++#define SCB_CTRL_MASK GENMASK_ULL(SCB_CTRL_POS + SCB_MASK_WIDTH, SCB_CTRL_POS)
+ 
+ /* SCBCTRL service status register */
+ 
+@@ -56,7 +56,7 @@
+ #define SCB_STATUS_NOTIFY_MASK BIT(SCB_STATUS_NOTIFY)
+ 
+ #define SCB_STATUS_POS (16)
+-#define SCB_STATUS_MASK GENMASK(SCB_STATUS_POS + SCB_MASK_WIDTH, SCB_STATUS_POS)
++#define SCB_STATUS_MASK GENMASK_ULL(SCB_STATUS_POS + SCB_MASK_WIDTH, SCB_STATUS_POS)
+ 
+ struct mpfs_mbox {
+ 	struct mbox_controller controller;
+-- 
+2.32.0.93.g670b81a890
+
