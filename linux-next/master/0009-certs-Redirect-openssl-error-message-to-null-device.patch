@@ -1,0 +1,38 @@
+From c0d80ee31a45c961c9239fb1b3f9547d9ef9cafa Mon Sep 17 00:00:00 2001
+From: Stefan Berger <stefanb@linux.ibm.com>
+Date: Fri, 25 Jun 2021 08:29:02 -0400
+Subject: [PATCH 09/12] certs: Redirect openssl error message to null device
+
+Address the following issue detected by the kernel test robot when
+there's no certificate file at the time when checking for the type
+of key in the cert:
+
+Can't open certs/signing_key.pem for reading, No such file or directory
+
+The simplest solution is to redirect openssl's stderr output to /dev/null.
+
+Fixes: 28d62d945ded ("certs: Trigger creation of RSA module signing key if it's not an RSA key")
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20210625122902.4058783-1-stefanb@linux.vnet.ibm.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ certs/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/certs/Makefile b/certs/Makefile
+index 4eb69bdadc79..bc2fd147cc8d 100644
+--- a/certs/Makefile
++++ b/certs/Makefile
+@@ -65,7 +65,7 @@ openssl_available       = $(shell openssl help 2>/dev/null && echo yes)
+ ifeq ($(CONFIG_MODULE_SIG_KEY),"certs/signing_key.pem")
+ 
+ ifeq ($(openssl_available),yes)
+-X509TEXT=$(shell openssl x509 -in $(CONFIG_MODULE_SIG_KEY) -text)
++X509TEXT=$(shell openssl x509 -in $(CONFIG_MODULE_SIG_KEY) -text 2>/dev/null)
+ endif
+ 
+ # Support user changing key type
+-- 
+2.32.0.93.g670b81a890
+
