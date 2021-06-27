@@ -1,0 +1,52 @@
+From 90792c82cfbbac461c4ed42d337fb25cd87a2532 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 3 Jun 2021 10:43:11 -0700
+Subject: [PATCH 11/13] btrfs: remove total_data_size variable in
+ btrfs_batch_insert_items()
+
+clang warns:
+
+  fs/btrfs/delayed-inode.c:684:6: warning: variable 'total_data_size' set
+  but not used [-Wunused-but-set-variable]
+	  int total_data_size = 0, total_size = 0;
+	      ^
+  1 warning generated.
+
+This variable's value has been unused since commit fc0d82e103c7 ("btrfs:
+sink total_data parameter in setup_items_for_insert"). Eliminate it.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1391
+Reviewed-by: Nikolay Borisov <nborisov@suse.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://git.kernel.org/kdave/c/bfaa324e9a8073f539e5cf2d4fe14fe55e317525
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/btrfs/delayed-inode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index c1d2b6786129..c9d07b5eda36 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -697,7 +697,7 @@ static int btrfs_batch_insert_items(struct btrfs_root *root,
+ {
+ 	struct btrfs_delayed_item *curr, *next;
+ 	int free_space;
+-	int total_data_size = 0, total_size = 0;
++	int total_size = 0;
+ 	struct extent_buffer *leaf;
+ 	char *data_ptr;
+ 	struct btrfs_key *keys;
+@@ -722,7 +722,6 @@ static int btrfs_batch_insert_items(struct btrfs_root *root,
+ 	 */
+ 	while (total_size + next->data_len + sizeof(struct btrfs_item) <=
+ 	       free_space) {
+-		total_data_size += next->data_len;
+ 		total_size += next->data_len + sizeof(struct btrfs_item);
+ 		list_add_tail(&next->tree_list, &head);
+ 		nitems++;
+-- 
+2.32.0.93.g670b81a890
+
