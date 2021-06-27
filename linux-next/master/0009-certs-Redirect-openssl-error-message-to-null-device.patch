@@ -1,7 +1,7 @@
 From c0d80ee31a45c961c9239fb1b3f9547d9ef9cafa Mon Sep 17 00:00:00 2001
 From: Stefan Berger <stefanb@linux.ibm.com>
 Date: Fri, 25 Jun 2021 08:29:02 -0400
-Subject: [PATCH 09/12] certs: Redirect openssl error message to null device
+Subject: [PATCH 09/13] certs: Redirect openssl error message to null device
 
 Address the following issue detected by the kernel test robot when
 there's no certificate file at the time when checking for the type
