@@ -1,7 +1,7 @@
 From a165a10d8e22f97944308eef39739d72fa8f748c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 27 Jun 2021 11:45:43 -0700
-Subject: [PATCH 10/13] net: sparx5: Do not use mac_addr uninitialized in
+Subject: [PATCH 10/14] net: sparx5: Do not use mac_addr uninitialized in
  mchp_sparx5_probe()
 
 Clang warns:
