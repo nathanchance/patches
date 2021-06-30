@@ -1,7 +1,7 @@
-From 63908583e0a7c990418852cea4612e9490868a5a Mon Sep 17 00:00:00 2001
+From b735aa347a31b41c7be70102d84839c57843c539 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 21 Jun 2021 11:24:40 -0700
-Subject: [PATCH 08/14] KVM: PPC: Book3S HV: Workaround high stack usage with
+Subject: [PATCH 07/13] KVM: PPC: Book3S HV: Workaround high stack usage with
  clang
 
 LLVM does not emit optimal byteswap assembly, which results in high
