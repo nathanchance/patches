@@ -1,7 +1,7 @@
-From 4dce87fb66a2cd9fb8418f0bef8a4bdab4bc5d25 Mon Sep 17 00:00:00 2001
+From 1403cda762d5942fcefdadc759236553ef4c19dc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 11/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 7/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -14,8 +14,6 @@ Subject: [PATCH 11/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
   fixed is a long term project.
-  drivers/gpu/drm/amd/display/dc/dml/Makefile is modified for the same
-  reason.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
@@ -24,29 +22,12 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/997
 Link: https://github.com/ClangBuiltLinux/linux/issues/1366
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile | 4 ++--
- drivers/input/joystick/analog.c             | 1 -
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h  | 2 +-
- lib/Kconfig.debug                           | 3 ++-
- scripts/checksyscalls.sh                    | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/input/joystick/analog.c            | 1 -
+ drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
+ lib/Kconfig.debug                          | 3 ++-
+ scripts/checksyscalls.sh                   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index d34024fd798a..23e0a7f24fdd 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -60,9 +60,9 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_rq_dlg_calc_20v2.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_mode_vba_21.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_rq_dlg_calc_21.o := $(dml_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags) -Wframe-larger-than=2048
-+CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_mode_vba_31.o := $(dml_ccflags) -Wframe-larger-than=2048
-+CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_mode_vba_31.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/display_rq_dlg_calc_31.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
 --- a/drivers/input/joystick/analog.c
@@ -60,7 +41,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index 4a61c90003b5..1c60f53e3e66 100644
+index b9fbc9f000f2..2645beb33a74 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
 @@ -832,7 +832,7 @@
