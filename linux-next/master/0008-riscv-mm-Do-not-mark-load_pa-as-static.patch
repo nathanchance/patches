@@ -1,7 +1,7 @@
-From 8e5718e6bab26a2859fa597de9ac42864e97bfb8 Mon Sep 17 00:00:00 2001
+From 3359bdaacec0a87e00447da2c9e8609a0df04a4b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 27 Jun 2021 15:06:50 -0700
-Subject: [PATCH 9/9] riscv: mm: Do not mark load_pa as static
+Subject: [PATCH 8/8] riscv: mm: Do not mark load_pa as static
 
 Link: https://lore.kernel.org/r/YLaWseLdg5JYElVx@Ryzen-9-3900X.localdomain/
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,16 +10,16 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 8d1eb2e6aa3b..02bf3dfed04b 100644
+index 12f956b3a674..4042955f87fa 100644
 --- a/arch/riscv/mm/init.c
 +++ b/arch/riscv/mm/init.c
-@@ -509,7 +509,7 @@ static __init pgprot_t pgprot_from_va(uintptr_t va)
+@@ -510,7 +510,7 @@ static __init pgprot_t pgprot_from_va(uintptr_t va)
  #error "setup_vm() is called from head.S before relocate so it should not use absolute addressing."
  #endif
  
 -static uintptr_t load_pa __initdata;
 +uintptr_t load_pa __initdata;
- uintptr_t load_sz __initdata;
+ uintptr_t load_sz;
  #ifdef CONFIG_XIP_KERNEL
  #define load_pa        (*((uintptr_t *)XIP_FIXUP(&load_pa)))
 -- 

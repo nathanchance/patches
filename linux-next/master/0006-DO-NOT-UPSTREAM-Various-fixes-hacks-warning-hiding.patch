@@ -1,7 +1,7 @@
-From 1403cda762d5942fcefdadc759236553ef4c19dc Mon Sep 17 00:00:00 2001
+From 131bcdff9752a993393d3a0ad99b5b8f9e44ac93 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 7/9] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 6/8] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -54,7 +54,7 @@ index b9fbc9f000f2..2645beb33a74 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index fb370c7c4756..20b481c19cb3 100644
+index 81d0ba0775d3..c0d2abbf3508 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -346,8 +346,9 @@ config GDB_SCRIPTS
