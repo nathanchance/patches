@@ -1,4 +1,4 @@
-From d8a70bd98d78731a8bd5d5a39ba4473eb14a4b5f Mon Sep 17 00:00:00 2001
+From 797dc9bf5e669bf98609a9cdc957904fa6f3cfe2 Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Thu, 17 Jun 2021 11:13:26 +0800
 Subject: [PATCH 01/14] scsi: ufs: Fix build warning without CONFIG_PM
@@ -64,7 +64,7 @@ index b87ff68aa9aa..708b3b62fc4d 100644
  static const struct dev_pm_ops ufs_rpmb_pm_ops = {
  	SET_RUNTIME_PM_OPS(NULL, ufshcd_rpmb_resume, NULL)
 
-base-commit: 77d34a4683b053108ecd466cc7c4193b45805528
+base-commit: e9f1cbc0c4114880090c7a578117d3b9cf184ad4
 -- 
 2.32.0.93.g670b81a890
 
