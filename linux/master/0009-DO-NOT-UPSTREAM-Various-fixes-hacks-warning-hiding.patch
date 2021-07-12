@@ -1,7 +1,7 @@
-From 8f3a2b1ea62bc36b1e4e4f9c7af7bc05d61516bb Mon Sep 17 00:00:00 2001
+From f068ee258a2f8f2db60be5961e41ff823c1c1f4b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 13/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 09/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -54,10 +54,10 @@ index b9fbc9f000f2..e654eb34dd2a 100644
  #define MVPP2_RX_PKT_SIZE(mtu) \
  	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 8acc01d7d816..f078f69dd418 100644
+index 831212722924..803d98cc8245 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -335,8 +335,9 @@ config GDB_SCRIPTS
+@@ -343,8 +343,9 @@ config GDB_SCRIPTS
  endif # DEBUG_INFO
  
  config FRAME_WARN
@@ -69,10 +69,10 @@ index 8acc01d7d816..f078f69dd418 100644
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index a18b47695f55..b3a6de55d18a 100755
+index b7609958ee36..5f42da1b0a1a 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -255,7 +255,7 @@ EOF
+@@ -259,7 +259,7 @@ EOF
  syscall_list() {
      grep '^[0-9]' "$1" | sort -n |
  	while read nr abi name entry ; do
