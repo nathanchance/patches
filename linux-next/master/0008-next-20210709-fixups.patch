@@ -1,4 +1,4 @@
-From 346497ad1ecf93bd28396f07f9e0530116f397b0 Mon Sep 17 00:00:00 2001
+From 4d72e6f297b2a5fe0cf1d732f4c22e7ad493ff12 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 9 Jul 2021 13:45:21 -0700
 Subject: [PATCH 8/8] next-20210709 fixups
@@ -23,7 +23,7 @@ index 7912ce991d30..9122dcf42c46 100644
  #endif
  		} else {
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 0d24a68ad2cf..4e53d63d28f1 100644
+index 42a4063de7cd..d701ceae9794 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
 @@ -12052,7 +12052,6 @@ static int jit_subprogs(struct bpf_verifier_env *env)

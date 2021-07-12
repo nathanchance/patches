@@ -1,4 +1,4 @@
-From eac3ac6b2f3a08bdc2a67f2e3bc268586545878e Mon Sep 17 00:00:00 2001
+From 8fdc78f447e6593941ef238a9ffa08f0e4b7724a Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Sat, 12 Jun 2021 11:35:38 +0800
 Subject: [PATCH 4/8] drm/vmwgfx/ttm: Fix build error without
@@ -25,12 +25,12 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-index 6f5ea00973e0..6eb93aa2f311 100644
+index dde8b35bb950..056f4dfdaefc 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -37,6 +37,7 @@
- #include <drm/drm_sysfs.h>
+@@ -39,6 +39,7 @@
  #include <drm/ttm/ttm_bo_driver.h>
+ #include <drm/ttm/ttm_range_manager.h>
  #include <drm/ttm/ttm_placement.h>
 +#include <drm/ttm/ttm_range_manager.h>
  #include <generated/utsrelease.h>
