@@ -1,7 +1,7 @@
-From 3ba10ebbf8c06f42f8da1179d8d78555e679d685 Mon Sep 17 00:00:00 2001
+From 3a5739efedafabead9712e21592a92fb3554688c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 28 May 2021 11:27:52 -0700
-Subject: [PATCH 11/13] powerpc/barrier: Avoid collision with clang's __lwsync
+Subject: [PATCH 10/12] powerpc/barrier: Avoid collision with clang's __lwsync
  macro
 
 A change in clang 13 results in the __lwsync macro being defined as
