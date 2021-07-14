@@ -1,7 +1,7 @@
-From 59118b951ef9e7f43c487b6519ddfc9313fa3452 Mon Sep 17 00:00:00 2001
+From 9229cabe968864cc02699845e96fee10ef9cafa1 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
-Subject: [PATCH 13/26] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
+Subject: [PATCH 13/25] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
 
 The .comment section doesn't belong in STABS_DEBUG. Split it out into a
 new macro named ELF_DETAILS. This will gain other non-debug sections
@@ -89,10 +89,10 @@ index 23150c0f0f4d..1066cabeb37b 100644
  
  #ifdef CONFIG_STRICT_KERNEL_RWX
 diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 0bab37b1acbe..935f33b57fb2 100644
+index 1f82cf631c3c..233134ecde2c 100644
 --- a/arch/arm64/kernel/vmlinux.lds.S
 +++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -259,6 +259,7 @@ SECTIONS
+@@ -257,6 +257,7 @@ SECTIONS
  	_end = .;
  
  	STABS_DEBUG

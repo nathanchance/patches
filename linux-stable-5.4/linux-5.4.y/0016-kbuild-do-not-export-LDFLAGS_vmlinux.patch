@@ -1,7 +1,7 @@
-From 1e977f1c8b6146143659caacb4664c26b36cf2d2 Mon Sep 17 00:00:00 2001
+From 248884bcbdf37e947274295e5309230d6c914d11 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 2 Jul 2020 04:29:36 +0900
-Subject: [PATCH 16/26] kbuild: do not export LDFLAGS_vmlinux
+Subject: [PATCH 16/25] kbuild: do not export LDFLAGS_vmlinux
 
 When you clean the build tree for ARCH=arm, you may see the following
 error message from 'nm' command:
@@ -105,7 +105,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 5e8716dbbadc..ce2548fbcea0 100644
+index 58ea876fa183..160501d8645a 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1062,7 +1062,6 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
