@@ -1,7 +1,7 @@
-From 8fdc78f447e6593941ef238a9ffa08f0e4b7724a Mon Sep 17 00:00:00 2001
+From da9479c797788efdc8a9bce26b52a7b176eb7722 Mon Sep 17 00:00:00 2001
 From: YueHaibing <yuehaibing@huawei.com>
 Date: Sat, 12 Jun 2021 11:35:38 +0800
-Subject: [PATCH 4/8] drm/vmwgfx/ttm: Fix build error without
+Subject: [PATCH 4/7] drm/vmwgfx/ttm: Fix build error without
  CONFIG_TRANSPARENT_HUGEPAGE
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -25,10 +25,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-index dde8b35bb950..056f4dfdaefc 100644
+index 40864ce19ae1..1c606e4bf650 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -39,6 +39,7 @@
+@@ -38,6 +38,7 @@
  #include <drm/ttm/ttm_bo_driver.h>
  #include <drm/ttm/ttm_range_manager.h>
  #include <drm/ttm/ttm_placement.h>
