@@ -1,4 +1,4 @@
-From c8b3d9477b574fdb3692b3b0ea3665327b4bc3ff Mon Sep 17 00:00:00 2001
+From 232f4a9bfe994de9fe2f11860d6a873685b84270 Mon Sep 17 00:00:00 2001
 From: Sean Wang <sean.wang@mediatek.com>
 Date: Sun, 20 Jun 2021 15:48:07 +0800
 Subject: [PATCH 08/10] mt76: fix build error implicit enumeration conversion
@@ -63,7 +63,7 @@ index edd3ba3a0c2d..5b9b425bd836 100644
  	MCU_CIPHER_WEP128,
  	MCU_CIPHER_TKIP,
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index c2c4dc196802..81633be09e90 100644
+index cd690c64f65b..058ff35b6bfa 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
 @@ -111,7 +111,7 @@ mt7921_mcu_get_cipher(int cipher)
@@ -99,5 +99,5 @@ index d76cf8f8dfdf..3334afd8aea9 100644
  	MCU_CIPHER_WEP128,
  	MCU_CIPHER_TKIP,
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 
