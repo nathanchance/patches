@@ -1,7 +1,7 @@
-From df4f964191c7b12c5f2ee35eaced681dcda5b6c7 Mon Sep 17 00:00:00 2001
+From c3be03471188e9102cdb49c8561420959522c69f Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:31:24 +0200
-Subject: [PATCH 2/7] drm/rockchip: cdn-dp-core: Make
+Subject: [PATCH 2/8] drm/rockchip: cdn-dp-core: Make
  cdn_dp_core_suspend/resume __maybe_unused
 
 With the new static annotation, the compiler warns when the functions
@@ -45,5 +45,5 @@ index 8ab3247dbc4a..4d74578970be 100644
  	struct cdn_dp_device *dp = dev_get_drvdata(dev);
  
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 
