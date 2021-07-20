@@ -1,7 +1,7 @@
-From d435dd02b1afc71c32442214f2765e954e8413f0 Mon Sep 17 00:00:00 2001
+From 18865e8fa3d69d571fad9abcc695336a1fb39e4e Mon Sep 17 00:00:00 2001
 From: Ben Dooks <ben-linux@fluff.org>
 Date: Mon, 4 Nov 2019 18:15:15 +0100
-Subject: [PATCH 15/25] ARM: 8918/2: only build return_address() if needed
+Subject: [PATCH 15/24] ARM: 8918/2: only build return_address() if needed
 
 The system currently warns if the config conditions for
 building return_address in arch/arm/kernel/return_address.c
@@ -65,5 +65,5 @@ index b0d2f1fe891d..7b42ac010fdf 100644
 -
  EXPORT_SYMBOL_GPL(return_address);
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 
