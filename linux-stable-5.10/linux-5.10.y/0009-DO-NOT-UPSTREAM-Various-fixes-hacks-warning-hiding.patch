@@ -1,7 +1,7 @@
-From 9be51d01c0ab0fc8711af3cbb6bb4b2ed35107b3 Mon Sep 17 00:00:00 2001
+From 935e4987bc044e13f28cfcb298269724a38fbb9f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
-Subject: [PATCH 10/12] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 09/11] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -75,5 +75,5 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 
