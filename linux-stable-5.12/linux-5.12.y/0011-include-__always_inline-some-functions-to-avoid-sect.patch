@@ -1,7 +1,7 @@
-From 43327c7920a11d5908302b4459e423082617868a Mon Sep 17 00:00:00 2001
+From 93287ef36caceead8aec4159da8570804b9e478c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 13 Apr 2021 11:15:00 -0700
-Subject: [PATCH 12/12] include: __always_inline some functions to avoid
+Subject: [PATCH 11/11] include: __always_inline some functions to avoid
  section mismatch warnings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
@@ -54,5 +54,5 @@ index ac398e143c9a..a34be5098bbb 100644
  	return min_t(int,MAX_NUMNODES,find_next_bit(srcp->bits, MAX_NUMNODES, n+1));
  }
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 

@@ -1,7 +1,7 @@
-From 78bdcac9f8795c59d507eea9fea78920e5884aa2 Mon Sep 17 00:00:00 2001
+From 95e6cd1cb80a2638119e9c17f8f3c92c7a56ed9b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Jun 2021 10:43:11 -0700
-Subject: [PATCH 10/12] btrfs: remove total_data_size variable in
+Subject: [PATCH 09/11] btrfs: remove total_data_size variable in
  btrfs_batch_insert_items()
 
 clang warns:
@@ -48,5 +48,5 @@ index 55dad12a5ce0..1462779f4928 100644
  		list_add_tail(&next->tree_list, &head);
  		nitems++;
 -- 
-2.32.0.93.g670b81a890
+2.32.0.264.g75ae10bc75
 
