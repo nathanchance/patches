@@ -1,4 +1,4 @@
-From 83724e33bf799a19d6d36498010fb9fd91885e44 Mon Sep 17 00:00:00 2001
+From dcf14f0c398e8a6ceb139b54950383c6e4e65d58 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 17 Jul 2021 00:34:03 -0700
 Subject: [PATCH 8/8] Revert "kbuild: decouple build from userspace headers"
@@ -710,7 +710,7 @@ index 7dd1f01ec4f9..a7330eb3ec64 100644
  #include <linux/errno.h>
  #include <linux/socket.h>
 diff --git a/include/linux/printk.h b/include/linux/printk.h
-index 9f3f29ea348e..e834d78f0478 100644
+index 8c4f006a6c73..2651b82ed352 100644
 --- a/include/linux/printk.h
 +++ b/include/linux/printk.h
 @@ -2,7 +2,7 @@
