@@ -1,7 +1,7 @@
-From 882f4514f5cb6eee41c2309dc9dc2ed2a6e197e7 Mon Sep 17 00:00:00 2001
+From 0aa219d95b3ce3becf6438f90161f22f8780104c Mon Sep 17 00:00:00 2001
 From: Subbaraya Sundeep <sbhatta@marvell.com>
 Date: Fri, 23 Jul 2021 13:36:18 +0530
-Subject: [PATCH 11/16] octeontx2-af: Fix uninitialized variables in rvu_switch
+Subject: [PATCH 05/16] octeontx2-af: Fix uninitialized variables in rvu_switch
 
 Get the number of VFs of a PF correctly by calling
 rvu_get_pf_numvfs in rvu_switch_disable function.
@@ -12,7 +12,8 @@ Reported-by: kernel test robot <lkp@intel.com>
 Reported-by: Colin Ian King <colin.king@canonical.com>
 Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
 Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://lore.kernel.org/r/1627027578-24848-1-git-send-email-sbhatta@marvell.com
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://git.kernel.org/netdev/net/c/9986066d94c971edf19464ed7bf5b26a91520e97
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/net/ethernet/marvell/octeontx2/af/rvu.c       |  6 ++++--

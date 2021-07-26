@@ -1,7 +1,7 @@
-From 4528e596aed0563539f378d4189f80bd5c09906b Mon Sep 17 00:00:00 2001
+From 3d5ed6f18fcef1ea4dd71c80d88ebbdd4e66b404 Mon Sep 17 00:00:00 2001
 From: Dave Jiang <dave.jiang@intel.com>
 Date: Wed, 21 Jul 2021 11:35:03 -0700
-Subject: [PATCH 10/16] dmaengine: idxd: fix uninit var for alt_drv
+Subject: [PATCH 11/16] dmaengine: idxd: fix uninit var for alt_drv
 
 0-day detected uninitialized alt_drv variable in the bind_store() function.
 The branch can be taken when device is not idxd device or wq 'struct
