@@ -1,0 +1,40 @@
+From de1d9d540a7370f5c1e9834f2af15b2953d474e9 Mon Sep 17 00:00:00 2001
+From: Petr Mladek <pmladek@suse.com>
+Date: Fri, 23 Jul 2021 09:25:30 +0200
+Subject: [PATCH 02/16] MIPS/asm/printk: Fix build failure caused by printk
+
+The commit 337015573718b161 ("printk: Userspace format indexing support")
+caused the following build failure:
+
+arch/mips/kernel/genex.o: In function `handle_mcheck_int':
+(.text+0x190c): undefined reference to `printk'
+arch/mips/kernel/genex.o: In function `handle_reserved_int':
+(.text+0x1c8c): undefined reference to `printk'
+
+Fixes: 337015573718b161 ("printk: Userspace format indexing support")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Suggested-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/YPbBfdz9srIpI+bb@chrisdown.name
+Link: https://git.kernel.org/printk/c/86ce91d5568de02f92ab9d4fb507683f8429a3e2
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/mips/include/asm/asm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/mips/include/asm/asm.h b/arch/mips/include/asm/asm.h
+index ea4b62ece336..2f8ce94ebaaf 100644
+--- a/arch/mips/include/asm/asm.h
++++ b/arch/mips/include/asm/asm.h
+@@ -114,7 +114,7 @@ symbol		=	value
+ 		.set	push;				\
+ 		.set	reorder;			\
+ 		PTR_LA	a0, 8f;				\
+-		jal	printk;				\
++		jal	_printk;			\
+ 		.set	pop;				\
+ 		TEXT(string)
+ #else
+-- 
+2.32.0.264.g75ae10bc75
+

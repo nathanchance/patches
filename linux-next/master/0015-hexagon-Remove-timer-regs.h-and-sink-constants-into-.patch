@@ -1,0 +1,92 @@
+From 25d9daa1f3f8a768f2b50330e8284d10379885ff Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 25 Jul 2021 17:00:16 -0700
+Subject: [PATCH 15/16] hexagon: Remove timer-regs.h and sink constants into
+ time.c
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/hexagon/include/asm/timer-regs.h | 26 --------------------------
+ arch/hexagon/include/asm/timex.h      |  3 +--
+ arch/hexagon/kernel/time.c            |  8 +++++++-
+ 3 files changed, 8 insertions(+), 29 deletions(-)
+ delete mode 100644 arch/hexagon/include/asm/timer-regs.h
+
+diff --git a/arch/hexagon/include/asm/timer-regs.h b/arch/hexagon/include/asm/timer-regs.h
+deleted file mode 100644
+index ee6c61423a05..000000000000
+--- a/arch/hexagon/include/asm/timer-regs.h
++++ /dev/null
+@@ -1,26 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Timer support for Hexagon
+- *
+- * Copyright (c) 2010-2011, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _ASM_TIMER_REGS_H
+-#define _ASM_TIMER_REGS_H
+-
+-/*  This stuff should go into a platform specific file  */
+-#define TCX0_CLK_RATE		19200
+-#define TIMER_ENABLE		0
+-#define TIMER_CLR_ON_MATCH	1
+-
+-/*
+- * 8x50 HDD Specs 5-8.  Simulator co-sim not fixed until
+- * release 1.1, and then it's "adjustable" and probably not defaulted.
+- */
+-#define RTOS_TIMER_INT		3
+-#ifdef CONFIG_HEXAGON_COMET
+-#define RTOS_TIMER_REGS_ADDR	0xAB000000UL
+-#endif
+-#define SLEEP_CLK_RATE		32000
+-
+-#endif
+diff --git a/arch/hexagon/include/asm/timex.h b/arch/hexagon/include/asm/timex.h
+index 8d4ec76fceb4..dfe69e118b2b 100644
+--- a/arch/hexagon/include/asm/timex.h
++++ b/arch/hexagon/include/asm/timex.h
+@@ -7,11 +7,10 @@
+ #define _ASM_TIMEX_H
+ 
+ #include <asm-generic/timex.h>
+-#include <asm/timer-regs.h>
+ #include <asm/hexagon_vm.h>
+ 
+ /* Using TCX0 as our clock.  CLOCK_TICK_RATE scheduled to be removed. */
+-#define CLOCK_TICK_RATE              TCX0_CLK_RATE
++#define CLOCK_TICK_RATE              19200
+ 
+ #define ARCH_HAS_READ_CURRENT_TIMER
+ 
+diff --git a/arch/hexagon/kernel/time.c b/arch/hexagon/kernel/time.c
+index feffe527ac92..c8e928b3d6a0 100644
+--- a/arch/hexagon/kernel/time.c
++++ b/arch/hexagon/kernel/time.c
+@@ -17,7 +17,6 @@
+ #include <linux/of_irq.h>
+ #include <linux/module.h>
+ 
+-#include <asm/timer-regs.h>
+ #include <asm/hexagon_vm.h>
+ 
+ /*
+@@ -33,6 +32,13 @@ cycles_t	pcycle_freq_mhz;
+ cycles_t	thread_freq_mhz;
+ cycles_t	sleep_clk_freq;
+ 
++/*
++ * 8x50 HDD Specs 5-8.  Simulator co-sim not fixed until
++ * release 1.1, and then it's "adjustable" and probably not defaulted.
++ */
++#define RTOS_TIMER_INT		3
++#define RTOS_TIMER_REGS_ADDR	0xAB000000UL
++
+ static struct resource rtos_timer_resources[] = {
+ 	{
+ 		.start	= RTOS_TIMER_REGS_ADDR,
+-- 
+2.32.0.264.g75ae10bc75
+

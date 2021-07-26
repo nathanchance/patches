@@ -1,7 +1,7 @@
-From 89d964d07c23cb0e35f817ca091f326870dea2f0 Mon Sep 17 00:00:00 2001
+From 6edef7996667af0b4a8d2fc2083db4fb592a898f Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Thu, 15 Jul 2021 14:23:21 +0100
-Subject: [PATCH 6/9] ARM: imx: fix missing 3rd argument in macro
+Subject: [PATCH 04/16] ARM: imx: fix missing 3rd argument in macro
  imx_mmdc_perf_init
 
 The function imx_mmdc_perf_init recently had a 3rd argument added to
@@ -11,7 +11,8 @@ mmdc_ipg_clk.
 
 Fixes: f07ec8536580 ("ARM: imx: add missing clk_disable_unprepare()")
 Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Link: https://lore.kernel.org/r/20210715132321.25388-1-colin.king@canonical.com
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Link: https://git.kernel.org/shawnguo/c/20fb73911fec01f06592de1cdbca00b66602ebd7
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/arm/mach-imx/mmdc.c | 2 +-

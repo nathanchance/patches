@@ -1,0 +1,27 @@
+From e5e840e18177bd85101c988519dd9a0a3e8d9f53 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 25 Jul 2021 17:23:54 -0700
+Subject: [PATCH 16/16] drm/exynos: Initialize mapping in
+ exynos_drm_register_dma()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/exynos/exynos_drm_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_dma.c b/drivers/gpu/drm/exynos/exynos_drm_dma.c
+index 0644936afee2..6afe2c86a267 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_dma.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dma.c
+@@ -108,7 +108,7 @@ int exynos_drm_register_dma(struct drm_device *drm, struct device *dev,
+ 		return 0;
+ 
+ 	if (!priv->mapping) {
+-		void *mapping;
++		void *mapping = ERR_PTR(-EINVAL);
+ 
+ 		if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU))
+ 			mapping = arm_iommu_create_mapping(&platform_bus_type,
+-- 
+2.32.0.264.g75ae10bc75
+
