@@ -1,4 +1,4 @@
-From b189e7d86f25195d9b6a9029076d52322b4c350b Mon Sep 17 00:00:00 2001
+From 3ffeef4d1b0783dbe66cb1ddac516bc4cefed12d Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 03/10] asm-generic/io.h: warn in inb() and friends with
@@ -13,9 +13,10 @@ Make things explicit and silence the warning by letting inb() and
 friends fail with WARN_ONCE() and a 0xff... return in case PCI_IOBASE is
 not defined.
 
-Link: https://lore.kernel.org/lkml/20210421111759.2059976-1-schnelle@linux.ibm.com/
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210510145234.594814-4-schnelle@linux.ibm.com
+Link: https://lore.kernel.org/lkml/20210421111759.2059976-1-schnelle@linux.ibm.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://git.kernel.org/arnd/asm-generic/c/5ae6eadfdaf431f47adbdf1754f3b5a5fd638de2
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  include/asm-generic/io.h | 68 +++++++++++++++++++++++++++++++++++++---
