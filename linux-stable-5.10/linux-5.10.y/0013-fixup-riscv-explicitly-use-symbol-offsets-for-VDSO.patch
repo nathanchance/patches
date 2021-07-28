@@ -1,0 +1,30 @@
+From 68955a92c948c02765e82b2750fd71bf7d38a26c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 26 Jul 2021 17:17:16 -0700
+Subject: [PATCH 13/13] fixup! riscv: explicitly use symbol offsets for VDSO
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/kernel/vdso/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
+index fa60e8241e42..f8cb9144a284 100644
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -23,10 +23,10 @@ ifneq ($(c-gettimeofday-y),)
+ endif
+ 
+ # Build rules
+-targets := $(obj-vdso) vdso.so vdso.so.dbg vdso.lds vdso-syms.S
++targets := $(obj-vdso) vdso.so vdso.so.dbg vdso.lds
+ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
+ 
+-obj-y += vdso.o vdso-syms.o
++obj-y += vdso.o
+ CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
+ 
+ # Disable -pg to prevent insert call site
+-- 
+2.32.0.264.g75ae10bc75
+

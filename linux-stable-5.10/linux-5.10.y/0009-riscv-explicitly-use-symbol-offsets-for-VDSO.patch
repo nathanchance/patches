@@ -1,7 +1,7 @@
-From 6169f95cdcf1e418aa74d7ed7ef19355e46cb316 Mon Sep 17 00:00:00 2001
+From a957e09d99934a326b0621e32adb20967ce1e9c8 Mon Sep 17 00:00:00 2001
 From: Saleem Abdulrasool <abdulras@google.com>
 Date: Wed, 7 Jul 2021 18:51:05 +0000
-Subject: [PATCH 09/12] riscv: explicitly use symbol offsets for VDSO
+Subject: [PATCH 09/13] riscv: explicitly use symbol offsets for VDSO
 
 The current implementation of the `__rt_sigaction` reference computed an
 absolute offset relative to the mapped base of the VDSO.  While this can
