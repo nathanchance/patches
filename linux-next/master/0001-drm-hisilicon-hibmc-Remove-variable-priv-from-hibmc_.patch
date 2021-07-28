@@ -1,7 +1,7 @@
-From 24bdfceb1cd8b2373092e780fcc01f0dbabb3bf7 Mon Sep 17 00:00:00 2001
+From 78c429c9558fc830a6b643d267d6c40d17fd05a6 Mon Sep 17 00:00:00 2001
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Date: Wed, 21 Jul 2021 15:17:04 +0200
-Subject: [PATCH 03/16] drm/hisilicon/hibmc: Remove variable 'priv' from
+Subject: [PATCH 01/11] drm/hisilicon/hibmc: Remove variable 'priv' from
  hibmc_unload()
 
 The variable 'priv' got introduced in commit 39a364a19e03
@@ -37,6 +37,8 @@ index f73a8e0ea12e..610fc8e135f9 100644
  	struct pci_dev *pdev = to_pci_dev(dev->dev);
  
  	drm_atomic_helper_shutdown(dev);
+
+base-commit: 42d0b5f52c9b633a10626da27786049c76d4ea75
 -- 
 2.32.0.264.g75ae10bc75
 

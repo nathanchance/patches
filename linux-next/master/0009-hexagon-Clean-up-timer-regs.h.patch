@@ -1,15 +1,44 @@
-From cfeae78285c4ef053e81da724a2e82047dd35ccd Mon Sep 17 00:00:00 2001
+From 981520b8d035d704cb743409c2b973b20c7549ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Sun, 25 Jul 2021 17:00:16 -0700
-Subject: [PATCH 15/16] hexagon: Remove timer-regs.h and sink constants into
- time.c
+Date: Tue, 27 Jul 2021 17:17:29 -0700
+Subject: [PATCH 09/11] hexagon: Clean up timer-regs.h
+
+When building allmodconfig, there is a warning about TIMER_ENABLE being
+redefined:
+
+ drivers/clocksource/timer-oxnas-rps.c:39:9: warning: 'TIMER_ENABLE'
+ macro redefined [-Wmacro-redefined]
+ #define TIMER_ENABLE            BIT(7)
+         ^
+ arch/hexagon/include/asm/timer-regs.h:13:9: note: previous definition
+ is here
+ #define TIMER_ENABLE            0
+         ^
+ 1 warning generated.
+
+The values in this header are only used in one file each, if they are
+used at all. Remove the header and sink all of the constants into their
+respective files.
+
+TCX0_CLK_RATE is only used in arch/hexagon/include/asm/timex.h
+
+TIMER_ENABLE, RTOS_TIMER_INT, RTOS_TIMER_REGS_ADDR are only used in
+arch/hexagon/kernel/time.c.
+
+SLEEP_CLK_RATE and TIMER_CLR_ON_MATCH have both been unused since the
+file's introduction in commit 71e4a47f32f4 ("Hexagon: Add time and timer
+functions").
+
+TIMER_ENABLE is redefined as BIT(0) so the shift is moved into the
+definition, rather than its use.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210728001729.1960182-1-nathan@kernel.org
 ---
  arch/hexagon/include/asm/timer-regs.h | 26 --------------------------
  arch/hexagon/include/asm/timex.h      |  3 +--
- arch/hexagon/kernel/time.c            |  8 +++++++-
- 3 files changed, 8 insertions(+), 29 deletions(-)
+ arch/hexagon/kernel/time.c            | 12 ++++++++++--
+ 3 files changed, 11 insertions(+), 30 deletions(-)
  delete mode 100644 arch/hexagon/include/asm/timer-regs.h
 
 diff --git a/arch/hexagon/include/asm/timer-regs.h b/arch/hexagon/include/asm/timer-regs.h
@@ -62,18 +91,22 @@ index 8d4ec76fceb4..dfe69e118b2b 100644
  #define ARCH_HAS_READ_CURRENT_TIMER
  
 diff --git a/arch/hexagon/kernel/time.c b/arch/hexagon/kernel/time.c
-index feffe527ac92..c8e928b3d6a0 100644
+index feffe527ac92..febc95714d75 100644
 --- a/arch/hexagon/kernel/time.c
 +++ b/arch/hexagon/kernel/time.c
-@@ -17,7 +17,6 @@
+@@ -17,9 +17,10 @@
  #include <linux/of_irq.h>
  #include <linux/module.h>
  
 -#include <asm/timer-regs.h>
  #include <asm/hexagon_vm.h>
  
++#define TIMER_ENABLE		BIT(0)
++
  /*
-@@ -33,6 +32,13 @@ cycles_t	pcycle_freq_mhz;
+  * For the clocksource we need:
+  *	pcycle frequency (600MHz)
+@@ -33,6 +34,13 @@ cycles_t	pcycle_freq_mhz;
  cycles_t	thread_freq_mhz;
  cycles_t	sleep_clk_freq;
  
@@ -87,6 +120,15 @@ index feffe527ac92..c8e928b3d6a0 100644
  static struct resource rtos_timer_resources[] = {
  	{
  		.start	= RTOS_TIMER_REGS_ADDR,
+@@ -80,7 +88,7 @@ static int set_next_event(unsigned long delta, struct clock_event_device *evt)
+ 	iowrite32(0, &rtos_timer->clear);
+ 
+ 	iowrite32(delta, &rtos_timer->match);
+-	iowrite32(1 << TIMER_ENABLE, &rtos_timer->enable);
++	iowrite32(TIMER_ENABLE, &rtos_timer->enable);
+ 	return 0;
+ }
+ 
 -- 
 2.32.0.264.g75ae10bc75
 
