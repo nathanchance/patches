@@ -1,4 +1,4 @@
-From 319ed3931f86319c5a88d8d484660bba27fbd974 Mon Sep 17 00:00:00 2001
+From cd8055d5f45df3db4fdf8f153216e9f308024aa4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Jun 2021 10:43:11 -0700
 Subject: [PATCH 01/10] btrfs: remove total_data_size variable in
@@ -48,7 +48,7 @@ index 3bb8b919d2c1..1fc530c9dd8d 100644
  		list_add_tail(&next->tree_list, &head);
  		nitems++;
 
-base-commit: 25423f4bd9a9ac3e6b0ce7ecfe56c36f4e514893
+base-commit: 6fdb13a7e573640853c481ddabf7a192fff42bba
 -- 
 2.32.0.264.g75ae10bc75
 
