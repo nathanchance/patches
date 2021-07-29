@@ -1,0 +1,38 @@
+From 0dc95d4c864eab738846b6893c7c7227a9765806 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 29 Jul 2021 12:06:39 -0700
+Subject: [PATCH 11/11] powerpc: Apply Will's suggested fix for boot crash
+
+Link: https://lore.kernel.org/r/20210729161335.GA22016@willie-the-truck/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/platforms/pseries/svm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/powerpc/platforms/pseries/svm.c b/arch/powerpc/platforms/pseries/svm.c
+index 1d829e257996..87f001b4c4e4 100644
+--- a/arch/powerpc/platforms/pseries/svm.c
++++ b/arch/powerpc/platforms/pseries/svm.c
+@@ -63,6 +63,9 @@ void __init svm_swiotlb_init(void)
+ 
+ int set_memory_encrypted(unsigned long addr, int numpages)
+ {
++	if (!mem_encrypt_active())
++		return 0;
++
+ 	if (!PAGE_ALIGNED(addr))
+ 		return -EINVAL;
+ 
+@@ -73,6 +76,9 @@ int set_memory_encrypted(unsigned long addr, int numpages)
+ 
+ int set_memory_decrypted(unsigned long addr, int numpages)
+ {
++	if (!mem_encrypt_active())
++		return 0;
++
+ 	if (!PAGE_ALIGNED(addr))
+ 		return -EINVAL;
+ 
+-- 
+2.32.0.264.g75ae10bc75
+
