@@ -1,7 +1,7 @@
 From 123c3f0ced556399607f86fd43cc3b0c117356f7 Mon Sep 17 00:00:00 2001
 From: Subbaraya Sundeep <sbhatta@marvell.com>
 Date: Fri, 23 Jul 2021 13:36:18 +0530
-Subject: [PATCH 04/10] octeontx2-af: Fix uninitialized variables in rvu_switch
+Subject: [PATCH 04/11] octeontx2-af: Fix uninitialized variables in rvu_switch
 
 Get the number of VFs of a PF correctly by calling
 rvu_get_pf_numvfs in rvu_switch_disable function.
