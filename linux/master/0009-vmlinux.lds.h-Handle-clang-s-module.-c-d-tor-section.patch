@@ -1,19 +1,25 @@
-From f77440998e2fe5054f0297c3375f7fa5921b09ca Mon Sep 17 00:00:00 2001
+From baacc816e6f8c62baf7779203b1bc9f53cec4891 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 29 Jul 2021 19:39:24 -0700
-Subject: [PATCH 11/11] vmlinux.lds.h: Handle clang's module.{c,d}tor sections
+Date: Fri, 30 Jul 2021 15:38:15 -0700
+Subject: [PATCH 09/11] vmlinux.lds.h: Handle clang's module.{c,d}tor sections
 
 A recent change in LLVM causes module_{c,d}tor sections to appear when
-CONFIG_K{A,C}SAN are enabled, which results in orphan section warnings:
+CONFIG_K{A,C}SAN are enabled, which results in orphan section warnings
+because these are not handled anywhere:
 
 ld.lld: warning: arch/x86/pci/built-in.a(legacy.o):(.text.asan.module_ctor) is being placed in '.text.asan.module_ctor'
 ld.lld: warning: arch/x86/pci/built-in.a(legacy.o):(.text.asan.module_dtor) is being placed in '.text.asan.module_dtor'
 ld.lld: warning: arch/x86/pci/built-in.a(legacy.o):(.text.tsan.module_ctor) is being placed in '.text.tsan.module_ctor'
 
+Place them in the TEXT_TEXT section so that these technologies continue
+to work with the newer compiler versions. All of the KASAN and KCSAN
+KUnit tests continue to pass after this change.
+
 Cc: stable@vger.kernel.org
 Link: https://github.com/ClangBuiltLinux/linux/issues/1432
 Link: https://github.com/llvm/llvm-project/commit/7b789562244ee941b7bf2cefeb3fc08a59a01865
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210730223815.1382706-1-nathan@kernel.org
 ---
  include/asm-generic/vmlinux.lds.h | 1 +
  1 file changed, 1 insertion(+)
