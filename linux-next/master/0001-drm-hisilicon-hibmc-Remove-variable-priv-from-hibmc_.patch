@@ -1,4 +1,4 @@
-From bca0fbe45fb73d24e29fe735bb15375ab01eaa14 Mon Sep 17 00:00:00 2001
+From 08f59d66c8946634215a12e88d2b96c01d17228b Mon Sep 17 00:00:00 2001
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Date: Wed, 21 Jul 2021 15:17:04 +0200
 Subject: [PATCH 01/12] drm/hisilicon/hibmc: Remove variable 'priv' from
@@ -38,7 +38,7 @@ index f73a8e0ea12e..610fc8e135f9 100644
  
  	drm_atomic_helper_shutdown(dev);
 
-base-commit: 4ccc9e2db7ac33f450a1ff6ce158a71e5a81ded9
+base-commit: 8d4b477da1a807199ca60e0829357ce7aa6758d5
 -- 
 2.32.0.264.g75ae10bc75
 
