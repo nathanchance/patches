@@ -1,4 +1,4 @@
-From ae5c046197271ed14ab68b548cf0ce30eb1959df Mon Sep 17 00:00:00 2001
+From e47ff2f6e97dc4127a12321ffe25281410654145 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jan 2021 10:09:11 -0700
 Subject: [PATCH 11/12] rcu-tasks: Add missing inline qualifier to
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 73bbe792fe1e..b228a25d0555 100644
+index b338f514ee5a..8dc7702952aa 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
 @@ -705,7 +705,7 @@ static void show_rcu_tasks_rude_gp_kthread(void)
