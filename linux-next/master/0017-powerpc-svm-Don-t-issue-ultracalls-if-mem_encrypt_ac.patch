@@ -1,7 +1,7 @@
-From 69f60833f882eb1093fec8370a6c2c7a89fed608 Mon Sep 17 00:00:00 2001
+From 5b6c197768b4bcc3e1217fdac1b6ef23fad3937a Mon Sep 17 00:00:00 2001
 From: Will Deacon <will@kernel.org>
 Date: Fri, 30 Jul 2021 12:42:31 +0100
-Subject: [PATCH 09/12] powerpc/svm: Don't issue ultracalls if
+Subject: [PATCH 17/24] powerpc/svm: Don't issue ultracalls if
  !mem_encrypt_active()
 
 Commit ad6c00283163 ("swiotlb: Free tbl memory in swiotlb_exit()")

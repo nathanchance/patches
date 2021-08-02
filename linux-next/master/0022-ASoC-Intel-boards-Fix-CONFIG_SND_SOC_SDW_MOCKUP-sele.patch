@@ -1,0 +1,58 @@
+From 1e41901490a6936ccdf6d583ab0b233702f06485 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 2 Aug 2021 14:24:10 -0700
+Subject: [PATCH 22/24] ASoC: Intel: boards: Fix CONFIG_SND_SOC_SDW_MOCKUP
+ select
+
+When CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH is enabled without
+CONFIG_EXPERT, there is a Kconfig warning about unmet dependencies:
+
+WARNING: unmet direct dependencies detected for SND_SOC_SDW_MOCKUP
+  Depends on [n]: SOUND [=y] && !UML && SND [=y] && SND_SOC [=y] &&
+EXPERT [=n] && SOUNDWIRE [=y]
+  Selected by [y]:
+  - SND_SOC_INTEL_SOUNDWIRE_SOF_MACH [=y] && ...
+
+Selecting a symbol does not account for dependencies. There are three
+ways to resolve this:
+
+1. Make CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH select
+   CONFIG_SND_SOC_SDW_MOCKUP only if CONFIG_EXPERT is set.
+
+2. Make CONFIG_SND_SOC_SDW_MOCKUP's prompt depend on CONFIG_EXPERT so
+   that it can be selected by options that only depend on
+   CONFIG_SOUNDWIRE but still appear as a prompt to the user when
+   CONFIG_EXPERT is set.
+
+3. Make CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH imply
+   CONFIG_SND_SOC_SDW_MOCKUP, which will select
+   CONFIG_SND_SOC_SDW_MOCKUP when its dependencies are enabled but still
+   allow the user to disable it.
+
+Go with the third option as it gives the most flexibility while
+retaining the original intent of the select.
+
+Fixes: 0ccac3bcf356 ("ASoC: Intel: boards: sof_sdw: add SoundWire mockup codecs for tests")
+Suggested-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210802212409.3207648-1-nathan@kernel.org
+---
+ sound/soc/intel/boards/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index 046955bf717c..61b71d6c44cf 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -602,7 +602,7 @@ config SND_SOC_INTEL_SOUNDWIRE_SOF_MACH
+ 	select SND_SOC_DMIC
+ 	select SND_SOC_INTEL_HDA_DSP_COMMON
+ 	select SND_SOC_INTEL_SOF_MAXIM_COMMON
+-	select SND_SOC_SDW_MOCKUP
++	imply SND_SOC_SDW_MOCKUP
+ 	help
+ 	  Add support for Intel SoundWire-based platforms connected to
+ 	  MAX98373, RT700, RT711, RT1308 and RT715
+-- 
+2.32.0.264.g75ae10bc75
+

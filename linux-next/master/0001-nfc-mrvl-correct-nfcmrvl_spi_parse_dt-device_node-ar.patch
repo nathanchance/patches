@@ -1,0 +1,33 @@
+From b89abb0cd5b86fea953850bfaeff6d84fa46a248 Mon Sep 17 00:00:00 2001
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Date: Fri, 30 Jul 2021 16:41:56 +0200
+Subject: [PATCH 01/24] nfc: mrvl: correct nfcmrvl_spi_parse_dt() device_node
+ argument
+
+The device_node in nfcmrvl_spi_parse_dt() cannot be const as it is
+passed to OF functions which modify it.
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Link: https://lore.kernel.org/r/20210730144202.255890-2-krzysztof.kozlowski@canonical.com
+---
+ drivers/nfc/nfcmrvl/spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
+index d64abd0c4df3..b182ab2e03c0 100644
+--- a/drivers/nfc/nfcmrvl/spi.c
++++ b/drivers/nfc/nfcmrvl/spi.c
+@@ -106,7 +106,7 @@ static const struct nfcmrvl_if_ops spi_ops = {
+ 	.nci_update_config = nfcmrvl_spi_nci_update_config,
+ };
+ 
+-static int nfcmrvl_spi_parse_dt(const struct device_node *node,
++static int nfcmrvl_spi_parse_dt(struct device_node *node,
+ 				struct nfcmrvl_platform_data *pdata)
+ {
+ 	int ret;
+
+base-commit: 8d4b477da1a807199ca60e0829357ce7aa6758d5
+-- 
+2.32.0.264.g75ae10bc75
+
