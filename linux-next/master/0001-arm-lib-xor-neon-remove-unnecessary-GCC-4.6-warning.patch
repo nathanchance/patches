@@ -1,7 +1,7 @@
-From d5bbdab120030225bdeeed368c141a2c6532c57d Mon Sep 17 00:00:00 2001
+From 7a85d755beba8c24462ec28b253d07282a5f76e9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jan 2021 09:45:03 -0700
-Subject: [PATCH 10/24] arm: lib: xor-neon: remove unnecessary GCC < 4.6
+Subject: [PATCH 01/13] arm: lib: xor-neon: remove unnecessary GCC < 4.6
  warning
 
 Drop warning because kernel now requires GCC >= v4.9 after
@@ -49,6 +49,8 @@ index b99dd8e1c93f..e1e76186ec23 100644
  #endif
  
  #pragma GCC diagnostic ignored "-Wunused-variable"
+
+base-commit: 3a928c58ca10d61051e6a2be65a81418615ef92c
 -- 
-2.32.0.264.g75ae10bc75
+2.33.0.rc0
 
