@@ -1,4 +1,4 @@
-From 6f676e428d768b21082b757b5cd220d25bdcb561 Mon Sep 17 00:00:00 2001
+From cdca82e943600b7b40e55b4ccdbd2e908f89ebd3 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 20:01:36 +0100
 Subject: [PATCH 02/12] s390/bitops: remove small optimization to fix clang
@@ -89,5 +89,5 @@ index 431e208a5ea4..31121d32f81d 100644
  	__atomic64_xor(mask, (long *)addr);
  }
 -- 
-2.32.0.264.g75ae10bc75
+2.33.0.rc0
 
