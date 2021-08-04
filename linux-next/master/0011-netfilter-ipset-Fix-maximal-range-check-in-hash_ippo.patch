@@ -1,0 +1,68 @@
+From 2dd2cc376efa51f795ea9b63bfdbd17c61a20580 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 3 Aug 2021 12:18:13 -0700
+Subject: [PATCH 11/20] netfilter: ipset: Fix maximal range check in
+ hash_ipportnet4_uadt()
+
+Clang warns:
+
+net/netfilter/ipset/ip_set_hash_ipportnet.c:249:29: warning: variable
+'port_to' is uninitialized when used here [-Wuninitialized]
+        if (((u64)ip_to - ip + 1)*(port_to - port + 1) > IPSET_MAX_RANGE)
+                                   ^~~~~~~
+net/netfilter/ipset/ip_set_hash_ipportnet.c:167:45: note: initialize the
+variable 'port_to' to silence this warning
+        u32 ip = 0, ip_to = 0, p = 0, port, port_to;
+                                                   ^
+                                                    = 0
+net/netfilter/ipset/ip_set_hash_ipportnet.c:249:39: warning: variable
+'port' is uninitialized when used here [-Wuninitialized]
+        if (((u64)ip_to - ip + 1)*(port_to - port + 1) > IPSET_MAX_RANGE)
+                                             ^~~~
+net/netfilter/ipset/ip_set_hash_ipportnet.c:167:36: note: initialize the
+variable 'port' to silence this warning
+        u32 ip = 0, ip_to = 0, p = 0, port, port_to;
+                                          ^
+                                           = 0
+2 warnings generated.
+
+The range check was added before port and port_to are initialized.
+Shuffle the check after the initialization so that the check works
+properly.
+
+Fixes: 7fb6c63025ff ("netfilter: ipset: Limit the maximal range of consecutive elements to add/delete")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Link: https://lore.kernel.org/r/20210803191813.282980-1-nathan@kernel.org
+---
+ net/netfilter/ipset/ip_set_hash_ipportnet.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/net/netfilter/ipset/ip_set_hash_ipportnet.c b/net/netfilter/ipset/ip_set_hash_ipportnet.c
+index b293aa1ff258..7df94f437f60 100644
+--- a/net/netfilter/ipset/ip_set_hash_ipportnet.c
++++ b/net/netfilter/ipset/ip_set_hash_ipportnet.c
+@@ -246,9 +246,6 @@ hash_ipportnet4_uadt(struct ip_set *set, struct nlattr *tb[],
+ 		ip_set_mask_from_to(ip, ip_to, cidr);
+ 	}
+ 
+-	if (((u64)ip_to - ip + 1)*(port_to - port + 1) > IPSET_MAX_RANGE)
+-		return -ERANGE;
+-
+ 	port_to = port = ntohs(e.port);
+ 	if (tb[IPSET_ATTR_PORT_TO]) {
+ 		port_to = ip_set_get_h16(tb[IPSET_ATTR_PORT_TO]);
+@@ -256,6 +253,9 @@ hash_ipportnet4_uadt(struct ip_set *set, struct nlattr *tb[],
+ 			swap(port, port_to);
+ 	}
+ 
++	if (((u64)ip_to - ip + 1)*(port_to - port + 1) > IPSET_MAX_RANGE)
++		return -ERANGE;
++
+ 	ip2_to = ip2_from;
+ 	if (tb[IPSET_ATTR_IP2_TO]) {
+ 		ret = ip_set_get_hostipaddr4(tb[IPSET_ATTR_IP2_TO], &ip2_to);
+-- 
+2.33.0.rc0
+

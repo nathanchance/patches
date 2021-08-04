@@ -1,7 +1,7 @@
-From 9dbbf936e1166fd86dd92bbcf054fffa73514925 Mon Sep 17 00:00:00 2001
+From 64c0022e4adbf47c8ae4ca5bdccf1d77babf20ee Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 27 Jul 2021 16:36:56 -0700
-Subject: [PATCH 06/13] drm/exynos: Always initialize mapping in
+Subject: [PATCH 06/20] drm/exynos: Always initialize mapping in
  exynos_drm_register_dma()
 
 In certain randconfigs, clang warns:

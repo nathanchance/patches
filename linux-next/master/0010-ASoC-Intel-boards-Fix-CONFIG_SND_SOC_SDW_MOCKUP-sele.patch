@@ -1,7 +1,7 @@
-From 64be2d55a5b0c2cac6b74100f2f3abf0d501ef4d Mon Sep 17 00:00:00 2001
+From 271bbff8a46ab82f1565106ac177df308ec095d5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:24:10 -0700
-Subject: [PATCH 11/13] ASoC: Intel: boards: Fix CONFIG_SND_SOC_SDW_MOCKUP
+Subject: [PATCH 10/20] ASoC: Intel: boards: Fix CONFIG_SND_SOC_SDW_MOCKUP
  select
 
 When CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH is enabled without

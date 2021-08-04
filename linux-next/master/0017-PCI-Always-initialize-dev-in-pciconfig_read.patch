@@ -1,0 +1,51 @@
+From 6aadd9d9c96b4fe2c7ba89353f2e9d3a607b1a3c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 3 Aug 2021 13:08:36 -0700
+Subject: [PATCH 17/20] PCI: Always initialize dev in pciconfig_read
+
+Clang warns:
+
+drivers/pci/syscall.c:25:6: warning: variable 'dev' is used
+uninitialized whenever 'if' condition is true
+[-Wsometimes-uninitialized]
+        if (!capable(CAP_SYS_ADMIN))
+            ^~~~~~~~~~~~~~~~~~~~~~~
+drivers/pci/syscall.c:81:14: note: uninitialized use occurs here
+        pci_dev_put(dev);
+                    ^~~
+drivers/pci/syscall.c:25:2: note: remove the 'if' if its condition is
+always false
+        if (!capable(CAP_SYS_ADMIN))
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/pci/syscall.c:18:21: note: initialize the variable 'dev' to
+silence this warning
+        struct pci_dev *dev;
+                           ^
+                            = NULL
+1 warning generated.
+
+pci_dev_put accounts for a NULL pointer so initialize dev to NULL before
+the capability check so that there is no use of uninitialized memory.
+
+Fixes: 61a6199787d9 ("PCI: Return ~0 data on pciconfig_read() CAP_SYS_ADMIN failure")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210803200836.500658-1-nathan@kernel.org
+---
+ drivers/pci/syscall.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pci/syscall.c b/drivers/pci/syscall.c
+index 525f16caed1d..61a6fe3cde21 100644
+--- a/drivers/pci/syscall.c
++++ b/drivers/pci/syscall.c
+@@ -22,6 +22,7 @@ SYSCALL_DEFINE5(pciconfig_read, unsigned long, bus, unsigned long, dfn,
+ 	int err, cfg_ret;
+ 
+ 	err = -EPERM;
++	dev = NULL;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		goto error;
+ 
+-- 
+2.33.0.rc0
+
