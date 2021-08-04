@@ -1,0 +1,102 @@
+From 4a52fb9c54cf2f6c2f0d715fb16ec7e6f64e9f90 Mon Sep 17 00:00:00 2001
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 4 Aug 2021 01:27:46 +0200
+Subject: [PATCH 12/20] brcmfmac: firmware: Fix firmware loading
+
+The patch that would first try the board-specific firmware
+had a bug because the fallback would not be called: the
+asynchronous interface is used meaning request_firmware_nowait()
+returns 0 immediately.
+
+Harden the firmware loading like this:
+
+- If we cannot build an alt_path (like if no board_type is
+  specified) just request the first firmware without any
+  suffix, like in the past.
+
+- If the lookup of a board specific firmware fails, we get
+  a NULL fw in the async callback, so just try again without
+  the alt_path. Use a static variable to check that we do not
+  try this indefinitely.
+
+- Rename the brcm_fw_request_done to brcm_fw_request_done_first
+  reflecting the fact that this callback is only used for the
+  first (main) firmware file, and drop the unnecessary
+  prototype.
+
+Fixes: 5ff013914c62 ("brcmfmac: firmware: Allow per-board firmware binaries")
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Cc: Stefan Hansson <newbyte@disroot.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://lore.kernel.org/r/20210803232746.3389570-1-linus.walleij@linaro.org
+---
+ .../broadcom/brcm80211/brcmfmac/firmware.c    | 29 +++++++++++++------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+index adfdfc654b10..71ca4a517e42 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -431,8 +431,6 @@ struct brcmf_fw {
+ 	void (*done)(struct device *dev, int err, struct brcmf_fw_request *req);
+ };
+ 
+-static void brcmf_fw_request_done(const struct firmware *fw, void *ctx);
+-
+ #ifdef CONFIG_EFI
+ /* In some cases the EFI-var stored nvram contains "ccode=ALL" or "ccode=XV"
+  * to specify "worldwide" compatible settings, but these 2 ccode-s do not work
+@@ -638,11 +636,26 @@ static int brcmf_fw_request_firmware(const struct firmware **fw,
+ 	return request_firmware(fw, cur->path, fwctx->dev);
+ }
+ 
+-static void brcmf_fw_request_done(const struct firmware *fw, void *ctx)
++static void brcmf_fw_request_done_first(const struct firmware *fw, void *ctx)
+ {
+ 	struct brcmf_fw *fwctx = ctx;
++	struct brcmf_fw_item *first = &fwctx->req->items[0];
++	static bool retry = true;
+ 	int ret;
+ 
++	/*Something failed with the first firmware request , such as not
++	 * getting the per-board firmware. Retry this, now using the less
++	 * specific path for the first firmware item, i.e. without the board
++	 * suffix.
++	 */
++	if (!fw && retry) {
++		ret = request_firmware_nowait(THIS_MODULE, true, first->path,
++					      fwctx->dev, GFP_KERNEL, fwctx,
++					      brcmf_fw_request_done_first);
++		retry = false;
++		return;
++	}
++
+ 	ret = brcmf_fw_complete_request(fw, fwctx);
+ 
+ 	while (ret == 0 && ++fwctx->curpos < fwctx->req->n_items) {
+@@ -702,17 +715,15 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+ 	if (alt_path) {
+ 		ret = request_firmware_nowait(THIS_MODULE, true, alt_path,
+ 					      fwctx->dev, GFP_KERNEL, fwctx,
+-					      brcmf_fw_request_done);
++					      brcmf_fw_request_done_first);
+ 		kfree(alt_path);
+-	}
+-	/* Else try canonical path */
+-	if (ret) {
++	} else {
+ 		ret = request_firmware_nowait(THIS_MODULE, true, first->path,
+ 					      fwctx->dev, GFP_KERNEL, fwctx,
+-					      brcmf_fw_request_done);
++					      brcmf_fw_request_done_first);
+ 	}
+ 	if (ret < 0)
+-		brcmf_fw_request_done(NULL, fwctx);
++		brcmf_fw_request_done_first(NULL, fwctx);
+ 
+ 	return 0;
+ }
+-- 
+2.33.0.rc0
+
