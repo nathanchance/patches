@@ -1,7 +1,7 @@
-From e47c13bc79dd309b75831c102fc8b8b7612d54f9 Mon Sep 17 00:00:00 2001
+From 1827627d9a3cfd25337804edcee46d588e87d01d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Jul 2021 19:31:08 -0700
-Subject: [PATCH 08/20] vmlinux.lds.h: Handle clang's module.{c,d}tor sections
+Subject: [PATCH 08/18] vmlinux.lds.h: Handle clang's module.{c,d}tor sections
 
 A recent change in LLVM causes module_{c,d}tor sections to appear when
 CONFIG_K{A,C}SAN are enabled, which results in orphan section warnings
