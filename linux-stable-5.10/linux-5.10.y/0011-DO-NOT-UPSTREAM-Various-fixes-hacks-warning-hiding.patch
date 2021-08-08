@@ -1,7 +1,7 @@
-From 98172a7455d54d80cc5f8f127310d268e82950ff Mon Sep 17 00:00:00 2001
+From 49e0d547e07d0bfb2ff4dbaceb8e7bac6ed0000b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:46:40 -0700
-Subject: [PATCH 10/12] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 11/13] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -15,11 +15,10 @@ fixed is a long term project.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/input/joystick/analog.c            | 1 -
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
- lib/Kconfig.debug                          | 3 ++-
- scripts/checksyscalls.sh                   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/joystick/analog.c | 1 -
+ lib/Kconfig.debug               | 3 ++-
+ scripts/checksyscalls.sh        | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index 2b625ebef914..3935f8c95eef 100644
@@ -33,19 +32,6 @@ index 2b625ebef914..3935f8c95eef 100644
  #endif
  
  static inline u64 get_time(void)
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index a1aefce55e65..62ef68e0fecd 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -748,7 +748,7 @@
- 
- /* RX buffer constants */
- #define MVPP2_SKB_SHINFO_SIZE \
--	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-+	SKB_DATA_ALIGN(((ssize_t)sizeof(struct skb_shared_info)))
- 
- #define MVPP2_RX_PKT_SIZE(mtu) \
- 	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
 index ffccc13d685b..22c14368cc38 100644
 --- a/lib/Kconfig.debug
@@ -75,5 +61,5 @@ index a18b47695f55..b3a6de55d18a 100755
  		echo "#endif"
  	done
 -- 
-2.33.0.rc0
+2.33.0.rc1
 
