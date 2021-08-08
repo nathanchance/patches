@@ -1,7 +1,7 @@
-From bc8f663668711a68ac6664fc499fe8870d326429 Mon Sep 17 00:00:00 2001
+From 8b2fe031482a5c036291c2e9d50a840aaa61b809 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 09/10] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 13/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
 
@@ -22,11 +22,11 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/997
 Link: https://github.com/ClangBuiltLinux/linux/issues/1366
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/input/joystick/analog.c            | 1 -
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
- lib/Kconfig.debug                          | 3 ++-
- scripts/checksyscalls.sh                   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/joystick/analog.c | 1 -
+ lib/Kconfig.debug               | 3 ++-
+ lib/Makefile                    | 1 -
+ scripts/checksyscalls.sh        | 2 +-
+ 4 files changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
@@ -40,19 +40,6 @@ index f798922a4598..dea166758af1 100644
  #endif
  
  static inline u64 get_time(void)
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index b9fbc9f000f2..e654eb34dd2a 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -832,7 +832,7 @@
- 
- /* RX buffer constants */
- #define MVPP2_SKB_SHINFO_SIZE \
--	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-+	SKB_DATA_ALIGN(((int)(sizeof(struct skb_shared_info))))
- 
- #define MVPP2_RX_PKT_SIZE(mtu) \
- 	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
 index 5ddd575159fb..e299f71a48af 100644
 --- a/lib/Kconfig.debug
@@ -68,6 +55,18 @@ index 5ddd575159fb..e299f71a48af 100644
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
+diff --git a/lib/Makefile b/lib/Makefile
+index 5efd1b435a37..eea1027b4206 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -351,7 +351,6 @@ obj-$(CONFIG_OBJAGG) += objagg.o
+ obj-$(CONFIG_PLDMFW) += pldmfw/
+ 
+ # KUnit tests
+-CFLAGS_bitfield_kunit.o := $(call cc-option,-Wframe-larger-than=10240)
+ obj-$(CONFIG_BITFIELD_KUNIT) += bitfield_kunit.o
+ obj-$(CONFIG_LIST_KUNIT_TEST) += list-test.o
+ obj-$(CONFIG_LINEAR_RANGES_TEST) += test_linear_ranges.o
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
 index b7609958ee36..5f42da1b0a1a 100755
 --- a/scripts/checksyscalls.sh
@@ -82,5 +81,5 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 -- 
-2.33.0.rc0
+2.33.0.rc1
 
