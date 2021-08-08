@@ -1,25 +1,16 @@
-From 8b2fe031482a5c036291c2e9d50a840aaa61b809 Mon Sep 17 00:00:00 2001
+From 660b5729d272965b77a21ecf2d436203f314d88c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
 Subject: [PATCH 13/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
-* drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
-
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
-* drivers/net/ethernet/marvell/mvpp2/mvpp2.h: Hide an overflow warning.
-
-* include/linux/surface_aggregator/device.h: Hide an overflow warning
-  that is intentional.
-
-* lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
-  fixed is a long term project.
+* lib/{Kconfig.debug,Makefile}: Disable -Wframe-larger-than=. Getting
+  all of these fixed is a long term project.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
 Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
-Link: https://github.com/ClangBuiltLinux/linux/issues/997
-Link: https://github.com/ClangBuiltLinux/linux/issues/1366
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/input/joystick/analog.c | 1 -
