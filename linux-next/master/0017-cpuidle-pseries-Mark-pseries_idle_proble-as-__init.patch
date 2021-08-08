@@ -1,7 +1,7 @@
-From 74ec93b22048b5b4837372d369af692485046c9f Mon Sep 17 00:00:00 2001
+From f9db1d123669370e8112c5eb3748ce6bb498db22 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 3 Aug 2021 14:15:47 -0700
-Subject: [PATCH 16/18] cpuidle: pseries: Mark pseries_idle_proble() as __init
+Subject: [PATCH 17/19] cpuidle: pseries: Mark pseries_idle_proble() as __init
 
 After commit 7cbd631d4dec ("cpuidle: pseries: Fixup CEDE0 latency only
 for POWER10 onwards"), pseries_idle_probe() is no longer inlined when
@@ -42,5 +42,5 @@ index bba449b77641..7e7ab5597d7a 100644
  
  	if (cpuidle_disable != IDLE_NO_OVERRIDE)
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

@@ -1,7 +1,7 @@
-From aad4d2c0e0a44a415e01fdaa8dc3f53da91a7805 Mon Sep 17 00:00:00 2001
+From 048118e76c2fee4562cade0570b37f6562bca959 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 3 Aug 2021 15:36:07 -0700
-Subject: [PATCH 13/18] staging: r8188eu: Remove unnecessary parentheses
+Subject: [PATCH 14/19] staging: r8188eu: Remove unnecessary parentheses
 
 Clang warns several times across the driver along the lines of:
 
@@ -110,5 +110,5 @@ index d985894c0f30..ec7badfd72aa 100644
  		rtw_write8(Adapter, REG_BCN_CTRL, 0x1a);
  	} else if (mode == _HW_STATE_AP_) {
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

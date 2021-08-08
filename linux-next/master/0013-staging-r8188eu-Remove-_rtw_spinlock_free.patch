@@ -1,7 +1,7 @@
-From a78e5873618f28272d1215111db47d99ddf5390a Mon Sep 17 00:00:00 2001
+From c29f1a4223a5c0bf56c4f3ba9aa126e5f94425a7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 3 Aug 2021 15:36:06 -0700
-Subject: [PATCH 12/18] staging: r8188eu: Remove _rtw_spinlock_free()
+Subject: [PATCH 13/19] staging: r8188eu: Remove _rtw_spinlock_free()
 
 Clang warns:
 
@@ -289,5 +289,5 @@ index 71d4fa25db86..a23f5e448bf4 100644
  {
  	INIT_LIST_HEAD(&(pqueue->queue));
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

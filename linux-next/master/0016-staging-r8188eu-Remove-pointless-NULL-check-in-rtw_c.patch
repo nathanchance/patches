@@ -1,7 +1,7 @@
-From 35970be15dcedb13d612d72e94c8ed2af7281d80 Mon Sep 17 00:00:00 2001
+From 3ced7612c5bfd6a59636305c7d37e809bf13fa5d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 3 Aug 2021 15:36:09 -0700
-Subject: [PATCH 15/18] staging: r8188eu: Remove pointless NULL check in
+Subject: [PATCH 16/19] staging: r8188eu: Remove pointless NULL check in
  rtw_check_join_candidate()
 
 Clang warns:
@@ -36,5 +36,5 @@ index fa4df4a3a2df..16d8f7317897 100644
  		    memcmp(competitor->network.Ssid.Ssid, pmlmepriv->assoc_ssid.Ssid, pmlmepriv->assoc_ssid.SsidLength))
  			goto exit;
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

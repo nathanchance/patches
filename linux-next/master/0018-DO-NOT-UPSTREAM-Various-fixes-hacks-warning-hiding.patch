@@ -1,16 +1,10 @@
-From 304b2d3343419161c67984d5169c114ee41911eb Mon Sep 17 00:00:00 2001
+From dd4b2cddb53016ab628ca818933f925226130f59 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 17/18] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 18/19] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
-* drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c: Hide an overflow warning.
-
-* drivers/input/joystick/analog.c: Avoid this warning on s390.
-
-* drivers/net/ethernet/marvell/mvpp2/mvpp2.h: Hide an overflow warning.
-
-* include/linux/surface_aggregator/device.h: Hide an overflow warning
-  that is intentional.
+* drivers/input/joystick/analog.c: Avoid this warning on certain
+  architectures.
 
 * lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
   fixed is a long term project.
@@ -18,16 +12,13 @@ Subject: [PATCH 17/18] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 * scripts/checksyscalls.sh: I do not care for this warning.
 
 Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
-Link: https://github.com/ClangBuiltLinux/linux/issues/997
-Link: https://github.com/ClangBuiltLinux/linux/issues/1366
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/input/joystick/analog.c            | 1 -
- drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
- lib/Kconfig.debug                          | 3 ++-
- lib/Makefile                               | 1 -
- scripts/checksyscalls.sh                   | 2 +-
- 5 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/input/joystick/analog.c | 1 -
+ lib/Kconfig.debug               | 3 ++-
+ lib/Makefile                    | 1 -
+ scripts/checksyscalls.sh        | 2 +-
+ 4 files changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
 index f798922a4598..dea166758af1 100644
@@ -41,19 +32,6 @@ index f798922a4598..dea166758af1 100644
  #endif
  
  static inline u64 get_time(void)
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-index b9fbc9f000f2..2645beb33a74 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
-@@ -832,7 +832,7 @@
- 
- /* RX buffer constants */
- #define MVPP2_SKB_SHINFO_SIZE \
--	SKB_DATA_ALIGN(sizeof(struct skb_shared_info))
-+	SKB_DATA_ALIGN(((ssize_t)sizeof(struct skb_shared_info)))
- 
- #define MVPP2_RX_PKT_SIZE(mtu) \
- 	ALIGN((mtu) + MVPP2_MH_SIZE + MVPP2_VLAN_TAG_LEN + \
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
 index 090fb54ecff1..e8b01dd284f3 100644
 --- a/lib/Kconfig.debug
@@ -95,5 +73,5 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

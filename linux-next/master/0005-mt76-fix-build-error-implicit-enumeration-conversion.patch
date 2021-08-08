@@ -1,7 +1,7 @@
-From cf092fd6681d6172e20d3b354f9c6f73419bd953 Mon Sep 17 00:00:00 2001
+From 47266fee6f5e1567b0e26fc961118687063a4735 Mon Sep 17 00:00:00 2001
 From: Sean Wang <sean.wang@mediatek.com>
 Date: Sun, 20 Jun 2021 15:48:07 +0800
-Subject: [PATCH 04/18] mt76: fix build error implicit enumeration conversion
+Subject: [PATCH 05/19] mt76: fix build error implicit enumeration conversion
 
 drivers/net/wireless/mediatek/mt76/mt7915/mcu.c:114:10: error: implicit
 conversion from enumeration type 'enum mt76_cipher_type' to different
@@ -99,5 +99,5 @@ index d76cf8f8dfdf..3334afd8aea9 100644
  	MCU_CIPHER_WEP128,
  	MCU_CIPHER_TKIP,
 -- 
-2.33.0.rc0
+2.33.0.rc1
 
