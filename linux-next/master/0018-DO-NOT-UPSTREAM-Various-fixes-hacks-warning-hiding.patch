@@ -1,4 +1,4 @@
-From dd4b2cddb53016ab628ca818933f925226130f59 Mon Sep 17 00:00:00 2001
+From 86452cc20b9f42824451687ec4f9b0197391b10a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
 Subject: [PATCH 18/19] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
@@ -6,8 +6,8 @@ Subject: [PATCH 18/19] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 * drivers/input/joystick/analog.c: Avoid this warning on certain
   architectures.
 
-* lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
-  fixed is a long term project.
+* lib/{Kconfig.debug,Makefile}: Disable -Wframe-larger-than=. Getting
+  all of these fixed is a long term project.
 
 * scripts/checksyscalls.sh: I do not care for this warning.
 
