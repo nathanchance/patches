@@ -1,7 +1,7 @@
-From 79fc05bef7ff7850e5bb60c7a5a57cdd47aed2e7 Mon Sep 17 00:00:00 2001
+From c5f8b3d9ed053a959cc8272b35d3549b4f49c0a8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Jun 2021 10:43:11 -0700
-Subject: [PATCH 01/11] btrfs: remove total_data_size variable in
+Subject: [PATCH 02/13] btrfs: remove total_data_size variable in
  btrfs_batch_insert_items()
 
 clang warns:
@@ -20,7 +20,7 @@ Reviewed-by: Nikolay Borisov <nborisov@suse.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Link: https://git.kernel.org/kdave/p/88f91a37db4d85d7f3e024f316513624bc268b7b
+Link: https://git.kernel.org/linus/bfaa324e9a8073f539e5cf2d4fe14fe55e317525
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  fs/btrfs/delayed-inode.c | 3 +--
@@ -47,8 +47,6 @@ index 3bb8b919d2c1..1fc530c9dd8d 100644
  		total_size += next->data_len + sizeof(struct btrfs_item);
  		list_add_tail(&next->tree_list, &head);
  		nitems++;
-
-base-commit: 3cfdd7252e00ecf3f3dc9508525acf1e67b7d343
 -- 
-2.33.0.rc0
+2.33.0.rc1
 

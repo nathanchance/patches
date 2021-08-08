@@ -1,0 +1,63 @@
+From f2171de06a5702140c9f15800e7b8e989b3dfc8c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 17 Feb 2021 13:47:46 -0700
+Subject: [PATCH 12/13] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+
+* drivers/input/joystick/analog.c: Avoid this warning on s390.
+
+* lib/Kconfig.debug: Disable -Wframe-larger-than=. Getting all of these
+  fixed is a long term project.
+
+* scripts/checksyscalls.sh: I do not care for this warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/input/joystick/analog.c | 1 -
+ lib/Kconfig.debug               | 3 ++-
+ scripts/checksyscalls.sh        | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/input/joystick/analog.c b/drivers/input/joystick/analog.c
+index f798922a4598..dea166758af1 100644
+--- a/drivers/input/joystick/analog.c
++++ b/drivers/input/joystick/analog.c
+@@ -157,7 +157,6 @@ static unsigned long analog_faketime = 0;
+ #define GET_TIME(x)     do { x = analog_faketime++; } while(0)
+ #define DELTA(x,y)	((y)-(x))
+ #define TIME_NAME	"Unreliable"
+-#warning Precise timer not defined for this architecture.
+ #endif
+ 
+ static inline u64 get_time(void)
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 1e1bd6f4a13d..eb4ff0028b33 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -332,8 +332,9 @@ config GDB_SCRIPTS
+ endif # DEBUG_INFO
+ 
+ config FRAME_WARN
+-	int "Warn for stack frames larger than"
++	int "Warn for stack frames larger than" if !CC_IS_CLANG
+ 	range 0 8192
++	default 0 if CC_IS_CLANG
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+ 	default 1280 if (!64BIT && PARISC)
+ 	default 1024 if (!64BIT && !PARISC)
+diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
+index a18b47695f55..b3a6de55d18a 100755
+--- a/scripts/checksyscalls.sh
++++ b/scripts/checksyscalls.sh
+@@ -255,7 +255,7 @@ EOF
+ syscall_list() {
+     grep '^[0-9]' "$1" | sort -n |
+ 	while read nr abi name entry ; do
+-		echo "#if !defined(__NR_${name}) && !defined(__IGNORE_${name})"
++		echo "#if 0"
+ 		echo "#warning syscall ${name} not implemented"
+ 		echo "#endif"
+ 	done
+-- 
+2.33.0.rc1
+
