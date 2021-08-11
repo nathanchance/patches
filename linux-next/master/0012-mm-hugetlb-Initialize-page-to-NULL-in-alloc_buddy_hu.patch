@@ -1,7 +1,7 @@
-From 680e35a1b038c30632cd7ca0f52f6036b6750aa2 Mon Sep 17 00:00:00 2001
+From c0d5e804885dda9c31dcdcbe8c1401fa28fe342d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 10 Aug 2021 13:03:48 -0700
-Subject: [PATCH 11/13] mm/hugetlb: Initialize page to NULL in
+Subject: [PATCH 12/17] mm/hugetlb: Initialize page to NULL in
  alloc_buddy_huge_page_with_mpol()
 
 Clang warns:

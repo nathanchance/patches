@@ -1,0 +1,42 @@
+From 1794fbab911ef1dd3966b86a169d149e30128537 Mon Sep 17 00:00:00 2001
+From: Christoph Hellwig <hch@lst.de>
+Date: Tue, 10 Aug 2021 14:39:24 +0200
+Subject: [PATCH 01/17] writeback: make the laptop_mode prototypes available
+ unconditionally
+
+Fix the !CONFIG_BLOCK build after the recent cleanup.
+
+Fixes: 5ed964f8e54e ("mm: hide laptop_mode_wb_timer entirely behind the BDI API")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://git.kernel.org/axboe/linux-block/c/99d26de2f6d79badc80f55b54bd90d4cb9d1ad90
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/writeback.h | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/include/linux/writeback.h b/include/linux/writeback.h
+index 109e0dcd1d21..3571f383dfb6 100644
+--- a/include/linux/writeback.h
++++ b/include/linux/writeback.h
+@@ -336,14 +336,9 @@ static inline void cgroup_writeback_umount(void)
+ /*
+  * mm/page-writeback.c
+  */
+-#ifdef CONFIG_BLOCK
+ void laptop_io_completion(struct backing_dev_info *info);
+ void laptop_sync_completion(void);
+-void laptop_mode_sync(struct work_struct *work);
+ void laptop_mode_timer_fn(struct timer_list *t);
+-#else
+-static inline void laptop_sync_completion(void) { }
+-#endif
+ bool node_dirty_ok(struct pglist_data *pgdat);
+ int wb_domain_init(struct wb_domain *dom, gfp_t gfp);
+ #ifdef CONFIG_CGROUP_WRITEBACK
+
+base-commit: 92d00774360dfd4151f15ab9905c643347b9f242
+-- 
+2.33.0.rc1
+

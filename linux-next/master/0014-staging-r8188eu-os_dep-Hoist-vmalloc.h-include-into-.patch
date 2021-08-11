@@ -1,0 +1,59 @@
+From 526eba95242d5ff99a2fcfe1af4f4efbe4f60e2b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 10 Aug 2021 17:55:05 -0700
+Subject: [PATCH 14/17] staging: r8188eu: os_dep: Hoist vmalloc.h include into
+ osdep_service.h
+
+After commit 71f09c5ae9d2 ("staging: r8188eu: Remove wrapper around
+vfree"), the driver fails to build on Hexagon due to an implicit
+declaration in several different files:
+
+drivers/staging/r8188eu/core/rtw_mlme.c:129:3: error: implicit
+declaration of function 'vfree'
+[-Werror,-Wimplicit-function-declaration]
+                vfree(pmlmepriv->free_bss_buf);
+                ^
+1 error generated.
+
+Previously, vfree() was only called in osdep_service.c, which includes
+vmalloc.h for vmalloc() and vfree(). Now, the driver relies on vfree()
+getting implicitly included from another file.
+
+Hoist the vmalloc.h include from osdep_service.c to osdep_service.h so
+that the driver continues to build fine on all architectures.
+
+Fixes: 71f09c5ae9d2 ("staging: r8188eu: Remove wrapper around vfree")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210811005505.3953122-1-nathan@kernel.org
+---
+ drivers/staging/r8188eu/include/osdep_service.h | 1 +
+ drivers/staging/r8188eu/os_dep/osdep_service.c  | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/staging/r8188eu/include/osdep_service.h b/drivers/staging/r8188eu/include/osdep_service.h
+index 7e002009f9a0..0d1419af8274 100644
+--- a/drivers/staging/r8188eu/include/osdep_service.h
++++ b/drivers/staging/r8188eu/include/osdep_service.h
+@@ -39,6 +39,7 @@
+ #include <linux/interrupt.h>	/*  for struct tasklet_struct */
+ #include <linux/ip.h>
+ #include <linux/kthread.h>
++#include <linux/vmalloc.h>
+ 
+ #include <linux/usb.h>
+ #include <linux/usb/ch9.h>
+diff --git a/drivers/staging/r8188eu/os_dep/osdep_service.c b/drivers/staging/r8188eu/os_dep/osdep_service.c
+index 9f097f2b3ddd..06d9f168fe71 100644
+--- a/drivers/staging/r8188eu/os_dep/osdep_service.c
++++ b/drivers/staging/r8188eu/os_dep/osdep_service.c
+@@ -6,7 +6,6 @@
+ #include "../include/osdep_service.h"
+ #include "../include/drv_types.h"
+ #include "../include/recv_osdep.h"
+-#include "../include/linux/vmalloc.h"
+ #include "../include/rtw_ioctl_set.h"
+ 
+ /*
+-- 
+2.33.0.rc1
+
