@@ -1,4 +1,4 @@
-From 52e197d639bc17f1497f6b14a75aa26a3a21a858 Mon Sep 17 00:00:00 2001
+From ff991f57be0ada42c16062406d82444142a2aa55 Mon Sep 17 00:00:00 2001
 From: John Hubbard <jhubbard@nvidia.com>
 Date: Thu, 5 Aug 2021 23:53:30 -0700
 Subject: [PATCH 07/13] net: mvvp2: fix short frame size on s390
@@ -56,5 +56,5 @@ index a1aefce55e65..d825eb021b22 100644
  #define MVPP2_BM_JUMBO_FRAME_SIZE	10432	/* frame size 9856 */
  /* BM short pool packet size
 -- 
-2.33.0.rc1
+2.33.0.rc2
 

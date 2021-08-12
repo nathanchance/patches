@@ -1,4 +1,4 @@
-From 35994ca8e1416b266ffc7a11b9b6ca5a5ab55f8a Mon Sep 17 00:00:00 2001
+From f7dbc10dd7926fd75ca80f56d073cb4985a4e92e Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Sun, 3 Jan 2021 14:51:44 +0100
 Subject: [PATCH 04/13] drm/i915: fix shift warning
@@ -25,10 +25,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index e5ac0936a587..fff5e1f694c1 100644
+index 0c083af5a59d..5b03f7a8e2c7 100644
 --- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2437,7 +2437,7 @@ static int eb_submit(struct i915_execbuffer *eb, struct i915_vma *batch)
+@@ -2444,7 +2444,7 @@ static int eb_submit(struct i915_execbuffer *eb, struct i915_vma *batch)
  
  static int num_vcs_engines(const struct drm_i915_private *i915)
  {
@@ -38,5 +38,5 @@ index e5ac0936a587..fff5e1f694c1 100644
  
  /*
 -- 
-2.33.0.rc1
+2.33.0.rc2
 
