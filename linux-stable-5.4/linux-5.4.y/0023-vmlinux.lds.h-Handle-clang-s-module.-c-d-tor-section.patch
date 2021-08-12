@@ -1,4 +1,4 @@
-From 3384d7979f5fa0cbc298e7f648f32de9a629699b Mon Sep 17 00:00:00 2001
+From f6a53dfd82f091a7896070bcb10770dad37ef894 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Jul 2021 19:31:08 -0700
 Subject: [PATCH 23/25] vmlinux.lds.h: Handle clang's module.{c,d}tor sections
@@ -41,5 +41,5 @@ index e5d0976e7e4b..f46cb39e34b4 100644
  	MEM_KEEP(exit.text*)						\
  
 -- 
-2.33.0.rc1
+2.33.0.rc2
 
