@@ -1,0 +1,117 @@
+From d887944bc35f1992e9538c0b8e34b9c9ef4f8620 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 2 Aug 2021 13:23:20 -0700
+Subject: [PATCH 12/14] compiler_attributes.h: move
+ __compiletime_{error|warning}
+
+I'm working on adding support for __attribute__((__error__(""))) and
+__attribute__((__warning__(""))) to Clang. To make use of these in
+__compiletime_error and __compiletime_warning (as used by BUILD_BUG and
+friends) for newer clang and detect/fallback for older versions of
+clang, move these to compiler_attributes.h and guard them with
+__has_attribute preprocessor guards.
+
+Link: https://reviews.llvm.org/D106030
+Link: https://bugs.llvm.org/show_bug.cgi?id=16428
+Link: https://github.com/ClangBuiltLinux/linux/issues/1173
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20210802202326.1817503-1-ndesaulniers@google.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/compiler-gcc.h        |  3 ---
+ include/linux/compiler_attributes.h | 24 ++++++++++++++++++++++++
+ include/linux/compiler_types.h      |  6 ------
+ 3 files changed, 24 insertions(+), 9 deletions(-)
+
+diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
+index cb9217fc60af..21c36b69eb06 100644
+--- a/include/linux/compiler-gcc.h
++++ b/include/linux/compiler-gcc.h
+@@ -43,9 +43,6 @@
+ 
+ #define __compiletime_object_size(obj) __builtin_object_size(obj, 0)
+ 
+-#define __compiletime_warning(message) __attribute__((__warning__(message)))
+-#define __compiletime_error(message) __attribute__((__error__(message)))
+-
+ #if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
+ #define __latent_entropy __attribute__((latent_entropy))
+ #endif
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 67c5667f8042..fb08b843ab47 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -30,6 +30,7 @@
+ # define __GCC4_has_attribute___assume_aligned__      1
+ # define __GCC4_has_attribute___copy__                0
+ # define __GCC4_has_attribute___designated_init__     0
++# define __GCC4_has_attribute___error__               1
+ # define __GCC4_has_attribute___externally_visible__  1
+ # define __GCC4_has_attribute___no_caller_saved_registers__ 0
+ # define __GCC4_has_attribute___noclone__             1
+@@ -39,6 +40,7 @@
+ # define __GCC4_has_attribute___no_sanitize_undefined__ 1
+ # define __GCC4_has_attribute___no_sanitize_coverage__ 0
+ # define __GCC4_has_attribute___fallthrough__         0
++# define __GCC4_has_attribute___warning__             1
+ #endif
+ 
+ /*
+@@ -138,6 +140,17 @@
+ # define __designated_init
+ #endif
+ 
++/*
++ * Optional: only supported since clang >= 13.0
++ *
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
++ */
++#if __has_attribute(__error__)
++# define __compiletime_error(msg)       __attribute__((__error__(msg)))
++#else
++# define __compiletime_error(msg)
++#endif
++
+ /*
+  * Optional: not supported by clang
+  *
+@@ -299,6 +312,17 @@
+  */
+ #define __must_check                    __attribute__((__warn_unused_result__))
+ 
++/*
++ * Optional: only supported since clang >= 13.0
++ *
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-warning-function-attribute
++ */
++#if __has_attribute(__warning__)
++# define __compiletime_warning(msg)     __attribute__((__warning__(msg)))
++#else
++# define __compiletime_warning(msg)
++#endif
++
+ /*
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index e4ea86fc584d..b6ff83a714ca 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -294,12 +294,6 @@ struct ftrace_likely_data {
+ #ifndef __compiletime_object_size
+ # define __compiletime_object_size(obj) -1
+ #endif
+-#ifndef __compiletime_warning
+-# define __compiletime_warning(message)
+-#endif
+-#ifndef __compiletime_error
+-# define __compiletime_error(message)
+-#endif
+ 
+ #ifdef __OPTIMIZE__
+ # define __compiletime_assert(condition, msg, prefix, suffix)		\
+-- 
+2.33.0.rc2
+
