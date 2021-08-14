@@ -1,7 +1,7 @@
-From b777a53fd5d634e771c8997323c819dd0a243ae1 Mon Sep 17 00:00:00 2001
+From 0f719acb7d63c0b7b9b6c58fdcdff47cbaff23e3 Mon Sep 17 00:00:00 2001
 From: Yang Yingliang <yangyingliang@huawei.com>
 Date: Tue, 10 Aug 2021 22:24:05 +0800
-Subject: [PATCH 13/17] spi: mxic: add missing braces
+Subject: [PATCH 10/14] spi: mxic: add missing braces
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,5 +41,5 @@ index 32e757a04f14..45889947afed 100644
  
  	writel(ss_ctrl, mxic->regs + SS_CTRL(mem->spi->chip_select));
 -- 
-2.33.0.rc1
+2.33.0.rc2
 

@@ -1,7 +1,7 @@
-From 7f67b61a87aaafeb0c7e991810a911da52600b37 Mon Sep 17 00:00:00 2001
+From f567aa1fa77addceaf3a8f095589a24af7787625 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 3 Aug 2021 14:15:47 -0700
-Subject: [PATCH 11/17] cpuidle: pseries: Mark pseries_idle_proble() as __init
+Subject: [PATCH 01/14] cpuidle: pseries: Mark pseries_idle_proble() as __init
 
 After commit 7cbd631d4dec ("cpuidle: pseries: Fixup CEDE0 latency only
 for POWER10 onwards"), pseries_idle_probe() is no longer inlined when
@@ -23,7 +23,10 @@ pseries_idle_probe() as __init so there is no more warning.
 
 Fixes: 054e44ba99ae ("cpuidle: pseries: Add function to parse extended CEDE records")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Link: https://lore.kernel.org/r/20210803211547.1093820-1-nathan@kernel.org
+Link: https://git.kernel.org/powerpc/c/d04691d373e75c83424b85c0e68e4a3f9370c10d
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/cpuidle/cpuidle-pseries.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -41,6 +44,8 @@ index bba449b77641..7e7ab5597d7a 100644
  {
  
  	if (cpuidle_disable != IDLE_NO_OVERRIDE)
+
+base-commit: 4b358aabb93a2c654cd1dcab1a25a589f6e2b153
 -- 
-2.33.0.rc1
+2.33.0.rc2
 

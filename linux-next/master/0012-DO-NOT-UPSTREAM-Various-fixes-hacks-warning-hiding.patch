@@ -1,7 +1,7 @@
-From a1a0ebd3ab01d00db126226ec6f6e7f5ff18f4b6 Mon Sep 17 00:00:00 2001
+From 7e28046a14870114875ff7bbf127625e7e35170f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 15/17] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 12/14] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on certain
   architectures.
@@ -33,7 +33,7 @@ index f798922a4598..dea166758af1 100644
  
  static inline u64 get_time(void)
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index b6b951b0ed46..d00df8938e46 100644
+index a4a431606be2..c4e472c41dd5 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -343,8 +343,9 @@ config GDB_SCRIPTS
@@ -73,5 +73,5 @@ index b7609958ee36..5f42da1b0a1a 100755
  		echo "#endif"
  	done
 -- 
-2.33.0.rc1
+2.33.0.rc2
 
