@@ -1,0 +1,26 @@
+From 02db4214f824b78d88f05de7594e6198c6f3709b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Aug 2021 18:28:20 -0700
+Subject: [PATCH 24/24] kbuild: Enable -Wbool-operation for clang
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index f17e5439f97a..69aa3e9337ed 100644
+--- a/Makefile
++++ b/Makefile
+@@ -859,6 +859,8 @@ KBUILD_CFLAGS += -Wno-gnu
+ # source of a reference will be _MergedGlobals and not on of the whitelisted names.
+ # See modpost pattern 2
+ KBUILD_CFLAGS += -mno-global-merge
++# GCC enables this with -Wall, clang does not
++KBUILD_CFLAGS += -Wbool-operation
+ endif
+ 
+ # These warnings generated too much noise in a regular build.
+-- 
+2.33.0.rc2
+

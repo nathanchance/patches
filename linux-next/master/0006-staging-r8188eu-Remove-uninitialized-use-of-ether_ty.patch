@@ -1,7 +1,7 @@
 From 9f99c19240903022a11798d2d3108c06ad176fde Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 12 Aug 2021 13:40:26 -0700
-Subject: [PATCH 06/19] staging: r8188eu: Remove uninitialized use of
+Subject: [PATCH 06/24] staging: r8188eu: Remove uninitialized use of
  ether_type in portctrl()
 
 After commit 987219ad34a6 ("staging: r8188eu: remove lines from Makefile
