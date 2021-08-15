@@ -1,7 +1,7 @@
 From 5441c59db3da7f6b5518433208fda3447fcb60f9 Mon Sep 17 00:00:00 2001
 From: Martin Kaiser <martin@kaiser.cx>
 Date: Wed, 11 Aug 2021 22:14:47 +0200
-Subject: [PATCH 04/24] staging: r8188eu: remove unused function parameters
+Subject: [PATCH 04/26] staging: r8188eu: remove unused function parameters
 
 rtw_usb_if1_init and chip_by_usb_id do not need a
 struct usb_device_id parameter.

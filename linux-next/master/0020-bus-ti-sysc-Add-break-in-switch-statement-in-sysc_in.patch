@@ -1,0 +1,45 @@
+From cec7fa48c449fa5a0063b807b3b14c18c95b9089 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 15 Aug 2021 12:18:52 -0700
+Subject: [PATCH 20/26] bus: ti-sysc: Add break in switch statement in
+ sysc_init_soc()
+
+After commit a6d90e9f2232 ("bus: ti-sysc: AM3: RNG is GP only"), clang
+with -Wimplicit-fallthrough enabled warns:
+
+drivers/bus/ti-sysc.c:2958:3: warning: unannotated fall-through between
+switch labels [-Wimplicit-fallthrough]
+                default:
+                ^
+drivers/bus/ti-sysc.c:2958:3: note: insert 'break;' to avoid
+fall-through
+                default:
+                ^
+                break;
+1 warning generated.
+
+Clang's version of this warning is a little bit more pedantic than
+GCC's. Add the missing break to satisfy it to match what has been done
+all over the kernel tree.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210815191852.52271-1-nathan@kernel.org
+---
+ drivers/bus/ti-sysc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index a51c2a8feed9..484bfe5fdcac 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2954,6 +2954,7 @@ static int sysc_init_soc(struct sysc *ddata)
+ 			break;
+ 		case SOC_AM3:
+ 			sysc_add_disabled(0x48310000);  /* rng */
++			break;
+ 		default:
+ 			break;
+ 		}
+-- 
+2.33.0.rc2
+
