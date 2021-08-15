@@ -1,7 +1,7 @@
 From ebf5a75ecd5b71abec539db46a4295c6ec3bc25a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 17:41:54 -0700
-Subject: [PATCH 15/19] lib/zstd: Fix bitwise vs logical operators
+Subject: [PATCH 15/20] lib/zstd: Fix bitwise vs logical operators
 
 clang warns several times along the lines of:
 

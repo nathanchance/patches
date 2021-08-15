@@ -1,0 +1,44 @@
+From 6cb42a3107d030c9e548dbfa9660be85c01b0d51 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 15 Aug 2021 12:29:59 -0700
+Subject: [PATCH 17/20] drm/radeon: Add break to switch statement in
+ radeonfb_create_pinned_object()
+
+Clang + -Wimplicit-fallthrough warns:
+
+drivers/gpu/drm/radeon/radeon_fb.c:170:2: warning: unannotated
+fall-through between switch labels [-Wimplicit-fallthrough]
+        default:
+        ^
+drivers/gpu/drm/radeon/radeon_fb.c:170:2: note: insert 'break;' to avoid
+fall-through
+        default:
+        ^
+        break;
+1 warning generated.
+
+Clang's version of this warning is a little bit more pedantic than
+GCC's. Add the missing break to satisfy it to match what has been done
+all over the kernel tree.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210815192959.90142-1-nathan@kernel.org
+---
+ drivers/gpu/drm/radeon/radeon_fb.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/radeon/radeon_fb.c b/drivers/gpu/drm/radeon/radeon_fb.c
+index 0b206b052972..c8b545181497 100644
+--- a/drivers/gpu/drm/radeon/radeon_fb.c
++++ b/drivers/gpu/drm/radeon/radeon_fb.c
+@@ -167,6 +167,7 @@ static int radeonfb_create_pinned_object(struct radeon_fbdev *rfbdev,
+ 		break;
+ 	case 2:
+ 		tiling_flags |= RADEON_TILING_SWAP_16BIT;
++		break;
+ 	default:
+ 		break;
+ 	}
+-- 
+2.33.0.rc2
+
