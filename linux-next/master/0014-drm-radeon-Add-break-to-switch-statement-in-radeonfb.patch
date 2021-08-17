@@ -1,7 +1,7 @@
-From ac191e586676245c83536d5d5d54b20fac7b50aa Mon Sep 17 00:00:00 2001
+From 5306a86e8d98a9093203df9849724b2c42eaf832 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Aug 2021 12:29:59 -0700
-Subject: [PATCH 21/26] drm/radeon: Add break to switch statement in
+Subject: [PATCH 14/22] drm/radeon: Add break to switch statement in
  radeonfb_create_pinned_object()
 
 Clang + -Wimplicit-fallthrough warns:
@@ -40,5 +40,5 @@ index 6640b7c947fe..ca382fbf7a86 100644
  		break;
  	}
 -- 
-2.33.0.rc2
+2.33.0
 

@@ -1,0 +1,38 @@
+From 864e843a2bbe479e03a09f240dfe5b996d437d09 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 16 Aug 2021 16:42:47 -0700
+Subject: [PATCH 17/22] f2fs: Add missing inline to f2fs_sanity_check_cluster()
+ stub
+
+Without this, there is a warning in nearly every fs/f2fs/ file when
+F2FS_FS_COMPRESSION is not set:
+
+In file included from fs/f2fs/super.c:31:
+fs/f2fs/f2fs.h:4251:13: warning: unused function 'f2fs_sanity_check_cluster' [-Wunused-function]
+static bool f2fs_sanity_check_cluster(struct dnode_of_data *dn) { return false; }
+            ^
+1 warning generated.
+
+Fixes: 1495870233e7 ("f2fs: compress: do sanity check on cluster")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210816234247.139528-1-nathan@kernel.org
+---
+ fs/f2fs/f2fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 1980d372545c..2e9cfe6064d8 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -4247,7 +4247,7 @@ static inline void f2fs_put_page_dic(struct page *page)
+ 	WARN_ON_ONCE(1);
+ }
+ static inline unsigned int f2fs_cluster_blocks_are_contiguous(struct dnode_of_data *dn) { return 0; }
+-static bool f2fs_sanity_check_cluster(struct dnode_of_data *dn) { return false; }
++static inline bool f2fs_sanity_check_cluster(struct dnode_of_data *dn) { return false; }
+ static inline int f2fs_init_compress_inode(struct f2fs_sb_info *sbi) { return 0; }
+ static inline void f2fs_destroy_compress_inode(struct f2fs_sb_info *sbi) { }
+ static inline int f2fs_init_page_array_cache(struct f2fs_sb_info *sbi) { return 0; }
+-- 
+2.33.0
+

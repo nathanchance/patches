@@ -1,7 +1,7 @@
-From 72644bf683b6e548473a698daaaa9eb1b2aa3bdc Mon Sep 17 00:00:00 2001
+From 0d3e66b6c79c1d84d2ec3ef329f941add36fc5cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 10 Aug 2021 18:00:18 -0700
-Subject: [PATCH 24/26] spi: tegra20-slink: Mark suspend/resume functions as
+Subject: [PATCH 21/22] spi: tegra20-slink: Mark suspend/resume functions as
  maybe unused
 
 Fixes: e4bb903fda0e ("spi: tegra20-slink: Improve runtime PM usage")
@@ -43,5 +43,5 @@ index deff16ba6d58..94d76fed10f3 100644
  	struct spi_master *master = dev_get_drvdata(dev);
  	struct tegra_slink_data *tspi = spi_master_get_devdata(master);
 -- 
-2.33.0.rc2
+2.33.0
 

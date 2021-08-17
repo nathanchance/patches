@@ -1,7 +1,7 @@
-From 81107369d86853ecfd226860b65e173ec64a6a33 Mon Sep 17 00:00:00 2001
+From 07a05451a2443453317d355909b7571f64f6a356 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:24:10 -0700
-Subject: [PATCH 14/26] ASoC: Intel: boards: Fix CONFIG_SND_SOC_SDW_MOCKUP
+Subject: [PATCH 07/22] ASoC: Intel: boards: Fix CONFIG_SND_SOC_SDW_MOCKUP
  select
 
 When CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH is enabled without
@@ -54,5 +54,5 @@ index 046955bf717c..61b71d6c44cf 100644
  	  Add support for Intel SoundWire-based platforms connected to
  	  MAX98373, RT700, RT711, RT1308 and RT715
 -- 
-2.33.0.rc2
+2.33.0
 

@@ -1,7 +1,7 @@
-From 69f38280a31eaeeff1f459aad164c6956724b95b Mon Sep 17 00:00:00 2001
+From 7daf2433cac26321cef7bd1c42b2c50575ac8cc1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 19:44:35 -0700
-Subject: [PATCH 26/26] Revert 'pktgen: Add IMIX mode' series
+Subject: [PATCH 22/22] Revert 'pktgen: Add IMIX mode' series
 
 Link: https://lore.kernel.org/r/CA+G9fYszRMoz-FKDJKzOuw7VkEyy-YQF1NR_0q4dc5Dpvb6ykw@mail.gmail.com/
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -265,5 +265,5 @@ index 94008536a9d6..314f97acf39d 100644
  	mbps = bps;
  	do_div(mbps, 1000000);
 -- 
-2.33.0.rc2
+2.33.0
 

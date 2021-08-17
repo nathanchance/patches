@@ -1,0 +1,74 @@
+From 37d78f0402e8415b719edce08d7828179aaa16eb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 16 Aug 2021 17:56:24 -0700
+Subject: [PATCH 18/22] kbuild: Enable -Wimplicit-fallthrough for clang 14.0.0+
+
+Clang prior to 14.0.0 warns when a fallthrough annotation is in an
+unreachable spot, which can occur when IS_ENABLED(CONFIG_...) in a
+conditional statement prior to the fallthrough annotation such as
+
+  if (IS_ENABLED(CONFIG_...))
+      break;
+  fallthrough;
+
+which to clang looks like
+
+  break;
+  fallthrough;
+
+if CONFIG_... is enabled due to the control flow graph. Example of the
+warning in practice:
+
+sound/core/pcm_native.c:3812:3: warning: fallthrough annotation in
+unreachable code [-Wimplicit-fallthrough]
+                fallthrough;
+                ^
+
+Warning on unreachable annotations makes the warning too noisy and
+pointless for the kernel due to the nature of guarding some code on
+configuration options so it was disabled in commit d936eb238744 ("Revert
+"Makefile: Enable -Wimplicit-fallthrough for Clang"").
+
+This has been resolved in clang 14.0.0 by moving the unreachable warning
+to its own flag under -Wunreachable-code, which the kernel will most
+likely never enable due to situations like this.
+
+Enable -Wimplicit-fallthrough for clang 14+ so that issues such as the
+one in commit 652b44453ea9 ("habanalabs/gaudi: fix missing code in ECC
+handling") can be caught before they enter the tree.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/236
+Link: https://github.com/llvm/llvm-project/commit/9ed4a94d6451046a51ef393cd62f00710820a7e8
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210817005624.1455428-1-nathan@kernel.org
+---
+ Makefile | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 72f9e2b0202c..52a9d46860f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -859,11 +859,17 @@ KBUILD_CFLAGS += -Wno-gnu
+ # source of a reference will be _MergedGlobals and not on of the whitelisted names.
+ # See modpost pattern 2
+ KBUILD_CFLAGS += -mno-global-merge
++
++# Warn about unmarked fall-throughs in switch statement.
++# Clang prior to 14.0.0 warned on unreachable fallthroughs with
++# -Wimplicit-fallthrough, which is unacceptable due to IS_ENABLED().
++# https://bugs.llvm.org/show_bug.cgi?id=51094
++ifeq ($(shell test $(CONFIG_CLANG_VERSION) -ge 140000; echo $$?),0)
++KBUILD_CFLAGS += -Wimplicit-fallthrough
++endif
+ else
+ 
+ # Warn about unmarked fall-throughs in switch statement.
+-# Disabled for clang while comment to attribute conversion happens and
+-# https://github.com/ClangBuiltLinux/linux/issues/636 is discussed.
+ KBUILD_CFLAGS += $(call cc-option,-Wimplicit-fallthrough=5,)
+ endif
+ 
+-- 
+2.33.0
+

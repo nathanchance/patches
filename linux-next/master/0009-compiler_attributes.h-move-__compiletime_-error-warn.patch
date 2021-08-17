@@ -1,7 +1,7 @@
-From 97b4f217f11e10b04dedc24be1cb907263844a12 Mon Sep 17 00:00:00 2001
+From 18a84eca0a5891857588a0d034ad1e446a339b50 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
-Subject: [PATCH 16/26] compiler_attributes.h: move
+Subject: [PATCH 09/22] compiler_attributes.h: move
  __compiletime_{error|warning}
 
 I'm working on adding support for __attribute__((__error__(""))) and
@@ -112,5 +112,5 @@ index e4ea86fc584d..b6ff83a714ca 100644
  #ifdef __OPTIMIZE__
  # define __compiletime_assert(condition, msg, prefix, suffix)		\
 -- 
-2.33.0.rc2
+2.33.0
 
