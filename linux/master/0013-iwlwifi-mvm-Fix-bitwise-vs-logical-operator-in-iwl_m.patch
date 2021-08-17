@@ -1,7 +1,7 @@
-From 3495c516efed63a71ba167995345ff6fba1843f1 Mon Sep 17 00:00:00 2001
+From 23b8e2ab08616512cd0eee8d42f7f279a9fd5bb1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 16:42:48 -0700
-Subject: [PATCH 13/20] iwlwifi: mvm: Fix bitwise vs logical operator in
+Subject: [PATCH 13/21] iwlwifi: mvm: Fix bitwise vs logical operator in
  iwl_mvm_scan_fits()
 
 Clang warns:
@@ -38,5 +38,5 @@ index 0368b7101222..494379fc9224 100644
  		 ies->len[NL80211_BAND_2GHZ] +
  		 ies->len[NL80211_BAND_5GHZ] <=
 -- 
-2.33.0.rc2
+2.33.0
 

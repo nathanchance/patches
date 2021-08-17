@@ -1,7 +1,7 @@
-From f895dc9aa1670a6db66870bacb076666c1c4cab2 Mon Sep 17 00:00:00 2001
+From 3f4660c0e40d880e136e2bac1956502dcc542d1b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 17:41:54 -0700
-Subject: [PATCH 15/20] lib/zstd: Fix bitwise vs logical operators
+Subject: [PATCH 15/21] lib/zstd: Fix bitwise vs logical operators
 
 clang warns several times along the lines of:
 
@@ -99,5 +99,5 @@ index b080264ed3ad..0e515d1d4237 100644
  			matchLength = ZSTD_count(ip + EQUAL_READ32, ip + EQUAL_READ32 - offset_2, iend) + EQUAL_READ32;
  			offset = offset_2;
 -- 
-2.33.0.rc2
+2.33.0
 

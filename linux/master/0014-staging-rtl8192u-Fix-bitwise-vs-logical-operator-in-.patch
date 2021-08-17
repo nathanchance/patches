@@ -1,7 +1,7 @@
-From 70a7bb457a73b04d85f146abf17e4e728c108614 Mon Sep 17 00:00:00 2001
+From 76b39508b848cc7e43179dd7d7fe9dea8b758b4f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 16:56:26 -0700
-Subject: [PATCH 14/20] staging: rtl8192u: Fix bitwise vs logical operator in
+Subject: [PATCH 14/21] staging: rtl8192u: Fix bitwise vs logical operator in
  TranslateRxSignalStuff819xUsb()
 
 clang warns:
@@ -37,5 +37,5 @@ index db26edeccea6..b6698656fc01 100644
  
  	if (WLAN_FC_GET_FRAMETYPE(fc) == IEEE80211_STYPE_BEACON)
 -- 
-2.33.0.rc2
+2.33.0
 

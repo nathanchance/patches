@@ -1,7 +1,7 @@
-From e71067fa74a8af9751f9ef0a4f955840a14ceb9d Mon Sep 17 00:00:00 2001
+From 085913e54d071b046db72acb290059801bc163ab Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 21 Jul 2021 17:06:56 +0200
-Subject: [PATCH 04/20] mt76: fix enum type mismatch
+Subject: [PATCH 04/21] mt76: fix enum type mismatch
 
 There is no 'NONE' version of 'enum mcu_cipher_type', and returning
 'MT_CIPHER_NONE' causes a warning:
@@ -82,5 +82,5 @@ index d76cf8f8dfdf..de3c091f6736 100644
  	MCU_CIPHER_WEP128,
  	MCU_CIPHER_TKIP,
 -- 
-2.33.0.rc2
+2.33.0
 
