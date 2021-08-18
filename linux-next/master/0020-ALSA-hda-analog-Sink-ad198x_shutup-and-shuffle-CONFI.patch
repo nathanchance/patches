@@ -1,7 +1,7 @@
-From 2781f3a3191efb1d4041e8e46a306214e92d188c Mon Sep 17 00:00:00 2001
+From c1c2f0c66ed753622fefe936cf653bd0dbd90eec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 18:27:05 -0700
-Subject: [PATCH 20/31] ALSA: hda/analog - Sink ad198x_shutup() and shuffle
+Subject: [PATCH 20/30] ALSA: hda/analog - Sink ad198x_shutup() and shuffle
  CONFIG_PM guards
 
 When CONFIG_PM is not set, there is an unused function warning:

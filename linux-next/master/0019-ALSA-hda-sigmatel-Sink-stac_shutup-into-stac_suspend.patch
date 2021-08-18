@@ -1,7 +1,7 @@
-From c615d70ed1f43437e4bbde55395f5e6478711692 Mon Sep 17 00:00:00 2001
+From 0d3dc369060e1aa94366e006a797cb4e8336dc60 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 18:27:04 -0700
-Subject: [PATCH 19/31] ALSA: hda/sigmatel - Sink stac_shutup() into
+Subject: [PATCH 19/30] ALSA: hda/sigmatel - Sink stac_shutup() into
  stac_suspend()
 
 When CONFIG_PM is not set, there is an unused function warning:

@@ -1,7 +1,7 @@
-From 5b0fbad231e9b565a8a0a122e928103ed150f371 Mon Sep 17 00:00:00 2001
+From 1cbb5d40b64fcdf818fa7c61d16a60e928e26f2c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Aug 2021 11:57:11 -0700
-Subject: [PATCH 16/31] powerpc/xive: Do not mark xive_request_ipi() as __init
+Subject: [PATCH 16/30] powerpc/xive: Do not mark xive_request_ipi() as __init
 
 Compiling ppc64le_defconfig with clang-14 shows a modpost warning:
 

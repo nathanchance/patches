@@ -1,7 +1,7 @@
-From 73ad42412de66492e2e9d8198a9f459e5501d622 Mon Sep 17 00:00:00 2001
+From 62bce63290e6476c1d2c8d53c5c3fb5f7fd13c92 Mon Sep 17 00:00:00 2001
 From: Linus Walleij <linus.walleij@linaro.org>
 Date: Sun, 8 Aug 2021 21:05:10 +0300
-Subject: [PATCH 11/31] brcmfmac: firmware: Fix firmware loading
+Subject: [PATCH 11/30] brcmfmac: firmware: Fix firmware loading
 
 The patch that would first try the board-specific firmware
 had a bug because the fallback would not be called: the

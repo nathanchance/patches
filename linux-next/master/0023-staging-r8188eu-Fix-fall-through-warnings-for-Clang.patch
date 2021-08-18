@@ -1,0 +1,67 @@
+From 45211ecf34f1acede6ac2105f2c655841c9db52b Mon Sep 17 00:00:00 2001
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Date: Wed, 18 Aug 2021 17:14:18 -0500
+Subject: [PATCH 23/30] staging: r8188eu: Fix fall-through warnings for Clang
+
+Fix the following fallthrough warnings:
+
+drivers/staging/r8188eu/core/rtw_mlme_ext.c:1498:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+drivers/staging/r8188eu/core/rtw_wlan_util.c:1113:4: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+drivers/staging/r8188eu/core/rtw_wlan_util.c:1147:4: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+drivers/staging/r8188eu/core/rtw_wlan_util.c:1405:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+
+This helps with the ongoing efforts to globally enable
+-Wimplicit-fallthrough for Clang.
+
+Link: https://github.com/KSPP/linux/issues/115
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210818221418.GA311735@embeddedor
+---
+ drivers/staging/r8188eu/core/rtw_mlme_ext.c  | 1 +
+ drivers/staging/r8188eu/core/rtw_wlan_util.c | 3 +++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/drivers/staging/r8188eu/core/rtw_mlme_ext.c b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
+index 61b239651e1a..590a4572c23f 100644
+--- a/drivers/staging/r8188eu/core/rtw_mlme_ext.c
++++ b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
+@@ -1495,6 +1495,7 @@ unsigned int OnAssocRsp(struct adapter *padapter, struct recv_frame *precv_frame
+ 			break;
+ 		case _ERPINFO_IE_:
+ 			ERP_IE_handler(padapter, pIE);
++			break;
+ 		default:
+ 			break;
+ 		}
+diff --git a/drivers/staging/r8188eu/core/rtw_wlan_util.c b/drivers/staging/r8188eu/core/rtw_wlan_util.c
+index cddacf023fa6..e0ce2b796abe 100644
+--- a/drivers/staging/r8188eu/core/rtw_wlan_util.c
++++ b/drivers/staging/r8188eu/core/rtw_wlan_util.c
+@@ -1110,6 +1110,7 @@ unsigned int is_ap_in_tkip(struct adapter *padapter)
+ 			case _RSN_IE_2_:
+ 				if (!memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
+ 					return true;
++				break;
+ 			default:
+ 				break;
+ 			}
+@@ -1144,6 +1145,7 @@ unsigned int should_forbid_n_rate(struct adapter *padapter)
+ 				if  ((!memcmp((pIE->data + 8), RSN_CIPHER_SUITE_CCMP, 4))  ||
+ 				     (!memcmp((pIE->data + 12), RSN_CIPHER_SUITE_CCMP, 4)))
+ 					return false;
++				break;
+ 			default:
+ 				break;
+ 			}
+@@ -1401,6 +1403,7 @@ unsigned char check_assoc_AP(u8 *pframe, uint len)
+ 			} else {
+ 				break;
+ 			}
++			break;
+ 
+ 		default:
+ 			break;
+-- 
+2.33.0
+
