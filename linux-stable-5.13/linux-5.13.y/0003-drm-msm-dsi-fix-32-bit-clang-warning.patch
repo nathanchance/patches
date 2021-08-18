@@ -1,7 +1,7 @@
-From 5be43b89d7231c9ff7413dd984b8bbb514cd0e5c Mon Sep 17 00:00:00 2001
+From 1795d5a0cc37da7369b4cd672cfdd5e380c7a555 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 14 May 2021 23:30:17 +0200
-Subject: [PATCH 03/13] drm/msm/dsi: fix 32-bit clang warning
+Subject: [PATCH 03/11] drm/msm/dsi: fix 32-bit clang warning
 
 clang is a little overzealous with warning about a constant conversion
 in an untaken branch of a ternary expression:
@@ -44,5 +44,5 @@ index 6f96fbac8282..ff9931c70aa7 100644
  	.num_dsi_phy = 2,
  	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
 -- 
-2.33.0.rc2
+2.33.0
 
