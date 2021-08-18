@@ -1,0 +1,47 @@
+From 9a299025cbe57ee662f57122ac1bab2e5af24fa5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 17 Aug 2021 16:55:31 -0700
+Subject: [PATCH 28/31] scsi: st: Add missing break in switch statement in
+ st_ioctl()
+
+Clang + -Wimplicit-fallthrough warns:
+
+drivers/scsi/st.c:3831:2: warning: unannotated fall-through between
+switch labels [-Wimplicit-fallthrough]
+        default:
+        ^
+drivers/scsi/st.c:3831:2: note: insert 'break;' to avoid fall-through
+        default:
+        ^
+        break;
+1 warning generated.
+
+Clang's -Wimplicit-fallthrough is a little bit more pedantic than GCC's,
+requiring every case block to end in break, return, or fallthrough,
+rather than allowing implicit fallthroughs to cases that just contain
+break or return. Add a break so that there is no more warning, as has
+been done all over the tree already.
+
+Fixes: 2e27f576abc6 ("scsi: scsi_ioctl: Call scsi_cmd_ioctl() from scsi_ioctl()")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20210817235531.172995-1-nathan@kernel.org
+---
+ drivers/scsi/st.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 2d1b0594af69..0e36a36ed24d 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3828,6 +3828,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 	case CDROM_SEND_PACKET:
+ 		if (!capable(CAP_SYS_RAWIO))
+ 			return -EPERM;
++		break;
+ 	default:
+ 		break;
+ 	}
+-- 
+2.33.0
+

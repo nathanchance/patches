@@ -1,0 +1,57 @@
+From 50dbbb847d31fdf22840714f96e77ff1a78df515 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 17 Aug 2021 17:07:31 -0700
+Subject: [PATCH 29/31] r8188eu: Fix clang -Wimplicit-fallthrough instances
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/staging/r8188eu/core/rtw_mlme_ext.c  | 1 +
+ drivers/staging/r8188eu/core/rtw_wlan_util.c | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/staging/r8188eu/core/rtw_mlme_ext.c b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
+index 61b239651e1a..590a4572c23f 100644
+--- a/drivers/staging/r8188eu/core/rtw_mlme_ext.c
++++ b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
+@@ -1495,6 +1495,7 @@ unsigned int OnAssocRsp(struct adapter *padapter, struct recv_frame *precv_frame
+ 			break;
+ 		case _ERPINFO_IE_:
+ 			ERP_IE_handler(padapter, pIE);
++			break;
+ 		default:
+ 			break;
+ 		}
+diff --git a/drivers/staging/r8188eu/core/rtw_wlan_util.c b/drivers/staging/r8188eu/core/rtw_wlan_util.c
+index cddacf023fa6..0e63cd73417b 100644
+--- a/drivers/staging/r8188eu/core/rtw_wlan_util.c
++++ b/drivers/staging/r8188eu/core/rtw_wlan_util.c
+@@ -1110,6 +1110,7 @@ unsigned int is_ap_in_tkip(struct adapter *padapter)
+ 			case _RSN_IE_2_:
+ 				if (!memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
+ 					return true;
++				break;
+ 			default:
+ 				break;
+ 			}
+@@ -1144,6 +1145,7 @@ unsigned int should_forbid_n_rate(struct adapter *padapter)
+ 				if  ((!memcmp((pIE->data + 8), RSN_CIPHER_SUITE_CCMP, 4))  ||
+ 				     (!memcmp((pIE->data + 12), RSN_CIPHER_SUITE_CCMP, 4)))
+ 					return false;
++				break;
+ 			default:
+ 				break;
+ 			}
+@@ -1398,9 +1400,8 @@ unsigned char check_assoc_AP(u8 *pframe, uint len)
+ 				} else {
+ 					DBG_88E("Capture EPIGRAM_OUI\n");
+ 				}
+-			} else {
+-				break;
+ 			}
++			break;
+ 
+ 		default:
+ 			break;
+-- 
+2.33.0
+

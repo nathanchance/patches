@@ -1,7 +1,7 @@
-From 864e843a2bbe479e03a09f240dfe5b996d437d09 Mon Sep 17 00:00:00 2001
+From 568fcb4762beafe543214b2915d182c2a89c9df5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Aug 2021 16:42:47 -0700
-Subject: [PATCH 17/22] f2fs: Add missing inline to f2fs_sanity_check_cluster()
+Subject: [PATCH 18/31] f2fs: Add missing inline to f2fs_sanity_check_cluster()
  stub
 
 Without this, there is a warning in nearly every fs/f2fs/ file when
