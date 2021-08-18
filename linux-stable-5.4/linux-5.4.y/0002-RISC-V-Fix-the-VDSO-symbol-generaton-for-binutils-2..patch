@@ -1,7 +1,7 @@
-From 183e1f828fd77be6b489786550134a1b611e49c6 Mon Sep 17 00:00:00 2001
+From 8fde405e4aa4ce07d58930e01e870d5e914be9ac Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Fri, 23 Oct 2020 21:50:47 -0700
-Subject: [PATCH 02/25] RISC-V: Fix the VDSO symbol generaton for
+Subject: [PATCH 02/24] RISC-V: Fix the VDSO symbol generaton for
  binutils-2.35+
 
 We were relying on GNU ld's ability to re-link executable files in order
@@ -92,5 +92,5 @@ index 000000000000..e64cb6d9440e
 +sed 's!\([0-9a-f]*\) T \([a-z0-9_]*\)\(@@LINUX_4.15\)*!.global \2\n.set \2,0x\1!' \
 +| grep '^\.'
 -- 
-2.33.0.rc2
+2.33.0
 

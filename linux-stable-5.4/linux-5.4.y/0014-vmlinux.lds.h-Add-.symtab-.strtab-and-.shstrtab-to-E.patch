@@ -1,7 +1,7 @@
-From fd3d719f35c2482c02044d45578b182b034c1dd6 Mon Sep 17 00:00:00 2001
+From ecd452e78ab7b1ffce15da6a4aacddb5bb6a243d Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
-Subject: [PATCH 14/25] vmlinux.lds.h: Add .symtab, .strtab, and .shstrtab to
+Subject: [PATCH 14/24] vmlinux.lds.h: Add .symtab, .strtab, and .shstrtab to
  ELF_DETAILS
 
 When linking vmlinux with LLD, the synthetic sections .symtab, .strtab,
@@ -28,10 +28,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index a043469ab35b..e5d0976e7e4b 100644
+index 2551bec5306c..f46cb39e34b4 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
-@@ -776,7 +776,10 @@
+@@ -777,7 +777,10 @@
  
  /* Required sections not related to debugging. */
  #define ELF_DETAILS							\
@@ -44,5 +44,5 @@ index a043469ab35b..e5d0976e7e4b 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.33.0.rc2
+2.33.0
 
