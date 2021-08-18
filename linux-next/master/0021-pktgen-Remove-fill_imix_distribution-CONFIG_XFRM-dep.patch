@@ -1,9 +1,17 @@
-From e62240541327126c278d073907541055d90606e3 Mon Sep 17 00:00:00 2001
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 17 Aug 2021 16:59:48 -0700
-Subject: [PATCH 27/31] pktgen: Apply v3 diff of 'pktgen: Add IMIX mode'
+From abef6f76aa5fd941f696dc3d7bbb36f63e43846a Mon Sep 17 00:00:00 2001
+From: Nick Richardson <richardsonnick@google.com>
+Date: Wed, 18 Aug 2021 01:31:26 +0000
+Subject: [PATCH 21/31] pktgen: Remove fill_imix_distribution() CONFIG_XFRM
+ dependency
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Currently, the declaration of fill_imix_distribution() is dependent
+on CONFIG_XFRM. This is incorrect.
+
+Move fill_imix_distribution() declaration out of #ifndef CONFIG_XFRM
+block.
+
+Signed-off-by: Nick Richardson <richardsonnick@google.com>
+Link: https://lore.kernel.org/r/20210818013129.1147350-1-richardsonnick@google.com
 ---
  net/core/pktgen.c | 53 +++++++++++++++++++++++------------------------
  1 file changed, 26 insertions(+), 27 deletions(-)
