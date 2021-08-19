@@ -1,7 +1,7 @@
-From 45211ecf34f1acede6ac2105f2c655841c9db52b Mon Sep 17 00:00:00 2001
+From 8ea7bbebe07e92e388997a92eb6a6e706285c099 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 18 Aug 2021 17:14:18 -0500
-Subject: [PATCH 23/30] staging: r8188eu: Fix fall-through warnings for Clang
+Subject: [PATCH 20/27] staging: r8188eu: Fix fall-through warnings for Clang
 
 Fix the following fallthrough warnings:
 
@@ -23,7 +23,7 @@ Link: https://lore.kernel.org/r/20210818221418.GA311735@embeddedor
  2 files changed, 4 insertions(+)
 
 diff --git a/drivers/staging/r8188eu/core/rtw_mlme_ext.c b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
-index 61b239651e1a..590a4572c23f 100644
+index f6ee72d5af09..5325fe41fbee 100644
 --- a/drivers/staging/r8188eu/core/rtw_mlme_ext.c
 +++ b/drivers/staging/r8188eu/core/rtw_mlme_ext.c
 @@ -1495,6 +1495,7 @@ unsigned int OnAssocRsp(struct adapter *padapter, struct recv_frame *precv_frame
@@ -35,7 +35,7 @@ index 61b239651e1a..590a4572c23f 100644
  			break;
  		}
 diff --git a/drivers/staging/r8188eu/core/rtw_wlan_util.c b/drivers/staging/r8188eu/core/rtw_wlan_util.c
-index cddacf023fa6..e0ce2b796abe 100644
+index 96f03e84b7e5..7290313dcc22 100644
 --- a/drivers/staging/r8188eu/core/rtw_wlan_util.c
 +++ b/drivers/staging/r8188eu/core/rtw_wlan_util.c
 @@ -1110,6 +1110,7 @@ unsigned int is_ap_in_tkip(struct adapter *padapter)

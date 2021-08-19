@@ -1,7 +1,7 @@
-From 37d5f06f85ed4c7ce5852a5524d92ab1981c8f53 Mon Sep 17 00:00:00 2001
+From 4ca79b0dc03ec1b070536e1f0173803cb3755ad6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 13:52:58 -0700
-Subject: [PATCH 30/30] next-20210817 unused variables
+Subject: [PATCH 27/27] next-20210817 unused variables
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
@@ -22,7 +22,7 @@ index 284b6bd040b1..d295f405c4bb 100644
  	cpu_dev = get_cpu_device(policy->cpu);
  	if (!cpu_dev) {
 diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 3177c4a0e753..8ca5b37a9014 100644
+index 4de907f3e66a..fa2c76416735 100644
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
 @@ -1251,7 +1251,9 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
