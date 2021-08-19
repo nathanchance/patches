@@ -1,0 +1,47 @@
+From 03f5293f11c92a1afe81abe7d0550bac83911c39 Mon Sep 17 00:00:00 2001
+From: Tim Gardner <tim.gardner@canonical.com>
+Date: Wed, 18 Aug 2021 09:52:10 -0600
+Subject: [PATCH 24/30] net/mlx5: Bridge, fix uninitialized variable in
+ mlx5_esw_bridge_port_changeupper()
+
+A recent change removed code that initialized the return code variable 'err'. It
+is now possible for mlx5_esw_bridge_port_changeupper() to return an error code
+using this uninitialized variable. Fix it by initializing to 0.
+
+Addresses-Coverity: ("Uninitialized scalar variable (UNINIT)")
+
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Vlad Buslov <vladbu@nvidia.com>
+Cc: Jianbo Liu <jianbol@nvidia.com>
+Cc: Mark Bloch <mbloch@nvidia.com>
+Cc: Roi Dayan <roid@nvidia.com>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: netdev@vger.kernel.org
+Cc: linux-rdma@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Link: https://lore.kernel.org/r/20210818155210.14522-1-tim.gardner@canonical.com
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+index 0c38c2e319be..c6435c69b7c4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+@@ -137,7 +137,7 @@ static int mlx5_esw_bridge_port_changeupper(struct notifier_block *nb, void *ptr
+ 	u16 vport_num, esw_owner_vhca_id;
+ 	struct netlink_ext_ack *extack;
+ 	int ifindex = upper->ifindex;
+-	int err;
++	int err = 0;
+ 
+ 	if (!netif_is_bridge_master(upper))
+ 		return 0;
+-- 
+2.33.0
+
