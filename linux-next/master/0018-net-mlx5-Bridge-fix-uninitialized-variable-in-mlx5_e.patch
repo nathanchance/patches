@@ -1,7 +1,7 @@
-From 03f5293f11c92a1afe81abe7d0550bac83911c39 Mon Sep 17 00:00:00 2001
+From 42cceb66cc50122691e4b3839dd72c692db702e1 Mon Sep 17 00:00:00 2001
 From: Tim Gardner <tim.gardner@canonical.com>
 Date: Wed, 18 Aug 2021 09:52:10 -0600
-Subject: [PATCH 24/30] net/mlx5: Bridge, fix uninitialized variable in
+Subject: [PATCH 18/30] net/mlx5: Bridge, fix uninitialized variable in
  mlx5_esw_bridge_port_changeupper()
 
 A recent change removed code that initialized the return code variable 'err'. It

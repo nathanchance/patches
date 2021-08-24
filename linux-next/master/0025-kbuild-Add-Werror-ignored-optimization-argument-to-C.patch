@@ -1,0 +1,52 @@
+From 7cb794f118c224282ff0c60e48fcb4cc348826d6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 23 Aug 2021 19:26:40 -0700
+Subject: [PATCH 25/30] kbuild: Add -Werror=ignored-optimization-argument to
+ CLANG_FLAGS
+
+Similar to commit 589834b3a009 ("kbuild: Add
+-Werror=unknown-warning-option to CLANG_FLAGS").
+
+Clang ignores certain GCC flags that it has not implemented, only
+emitting a warning:
+
+$ echo | clang -fsyntax-only -falign-jumps -x c -
+clang-14: warning: optimization flag '-falign-jumps' is not supported
+[-Wignored-optimization-argument]
+
+When one of these flags gets added to KBUILD_CFLAGS unconditionally, all
+subsequent cc-{disable-warning,option} calls fail because -Werror was
+added to these invocations to turn the above warning and the equivalent
+-W flag warning into errors.
+
+To catch the presence of these flags earlier, turn
+-Wignored-optimization-argument into an error so that the flags can
+either be implemented or ignored via cc-option and there are no more
+weird errors.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20210824022640.2170859-3-nathan@kernel.org
+---
+ scripts/Makefile.clang | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.clang b/scripts/Makefile.clang
+index f88ceb3d076e..c20683f5b19d 100644
+--- a/scripts/Makefile.clang
++++ b/scripts/Makefile.clang
+@@ -12,7 +12,11 @@ CLANG_TARGET_FLAGS_s390		:= s390x-linux-gnu
+ CLANG_TARGET_FLAGS_x86		:= x86_64-linux-gnu
+ CLANG_TARGET_FLAGS		:= $(CLANG_TARGET_FLAGS_$(SRCARCH))
+ 
+-TENTATIVE_CLANG_FLAGS := -Werror=unknown-warning-option
++# By default, clang only warns on unknown warning or optimization flags
++# Make it behave more like gcc by erroring when these flags are encountered
++# so they can be implemented or wrapped in cc-option.
++TENTATIVE_CLANG_FLAGS	:= -Werror=unknown-warning-option
++TENTATIVE_CLANG_FLAGS	+= -Werror=ignored-optimization-argument
+ 
+ ifeq ($(CROSS_COMPILE),)
+ ifeq ($(CLANG_TARGET_FLAGS),)
+-- 
+2.33.0
+

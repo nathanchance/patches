@@ -1,7 +1,7 @@
-From 3f04f5f49a0a2cc5dfa377ccd00538d2b2045c87 Mon Sep 17 00:00:00 2001
+From 3b67ec42cce6c0ca502aee4f017f7eddd2375375 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 13 Aug 2021 10:11:58 -0700
-Subject: [PATCH 18/30] drm/i915/selftest: Fix use of err in igt_reset_{fail,
+Subject: [PATCH 15/30] drm/i915/selftest: Fix use of err in igt_reset_{fail,
  nop}_engine()
 
 Clang warns:

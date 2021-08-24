@@ -1,0 +1,74 @@
+From eae1a9b010cac4e7421d9510c4b4442bbe4bf1a6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 23 Aug 2021 15:20:14 -0700
+Subject: [PATCH 20/30] rtlwifi: rtl8192de: Fix initialization of place in
+ _rtl92c_phy_get_rightchnlplace()
+
+Clang warns:
+
+drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c:901:6: warning:
+variable 'place' is used uninitialized whenever 'if' condition is false
+[-Wsometimes-uninitialized]
+        if (chnl > 14) {
+            ^~~~~~~~~
+drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c:909:9: note:
+uninitialized use occurs here
+        return place;
+               ^~~~~
+drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c:901:2: note: remove
+the 'if' if its condition is always true
+        if (chnl > 14) {
+        ^~~~~~~~~~~~~~~
+drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c:899:10: note:
+initialize the variable 'place' to silence this warning
+        u8 place;
+                ^
+                 = '\0'
+1 warning generated.
+
+Commit 369956ae5720 ("rtlwifi: rtl8192de: Remove redundant variable
+initializations") removed the initialization of place but it appears
+that this removal was in the wrong function.
+
+_rtl92c_phy_get_rightchnlplace() returns place's value at the end of the
+function so now if the if statement is false, place never gets
+initialized. Add that initialization back to address the warning.
+
+place's initialization is not necessary in
+rtl92d_get_rightchnlplace_for_iqk() as place is only used within the if
+statement so it can be removed, which is likely what was intended in the
+first place.
+
+Fixes: 369956ae5720 ("rtlwifi: rtl8192de: Remove redundant variable initializations")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/20210823222014.764557-1-nathan@kernel.org
+---
+ drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+index 8ae69d914312..9b83c710c9b8 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+@@ -896,7 +896,7 @@ static void _rtl92d_ccxpower_index_check(struct ieee80211_hw *hw,
+ 
+ static u8 _rtl92c_phy_get_rightchnlplace(u8 chnl)
+ {
+-	u8 place;
++	u8 place = chnl;
+ 
+ 	if (chnl > 14) {
+ 		for (place = 14; place < sizeof(channel5g); place++) {
+@@ -1363,7 +1363,7 @@ static void _rtl92d_phy_switch_rf_setting(struct ieee80211_hw *hw, u8 channel)
+ 
+ u8 rtl92d_get_rightchnlplace_for_iqk(u8 chnl)
+ {
+-	u8 place = chnl;
++	u8 place;
+ 
+ 	if (chnl > 14) {
+ 		for (place = 14; place < sizeof(channel_all); place++) {
+-- 
+2.33.0
+

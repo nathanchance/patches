@@ -1,7 +1,7 @@
-From 310fa7a4a7ee6839da9036f6641d571126aa4a76 Mon Sep 17 00:00:00 2001
+From 6b03c1ea5f9878397aadcfefb9d6fed5f420655c Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 18 Aug 2021 15:25:58 +0100
-Subject: [PATCH 25/30] net/mlx5: Bridge: Fix uninitialized variable err
+Subject: [PATCH 19/30] net/mlx5: Bridge: Fix uninitialized variable err
 
 A recent change removed the assignment of err to the return from
 the call mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get, so now

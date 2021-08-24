@@ -1,7 +1,7 @@
-From d408a19e2e6627dbdbeeed9e44ff38e259d32289 Mon Sep 17 00:00:00 2001
+From b1ee5a453165cdb1c97dc4949ab42e8eb448f10f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 16:55:31 -0700
-Subject: [PATCH 19/30] scsi: st: Add missing break in switch statement in
+Subject: [PATCH 16/30] scsi: st: Add missing break in switch statement in
  st_ioctl()
 
 Clang + -Wimplicit-fallthrough warns:
@@ -31,10 +31,10 @@ Link: https://lore.kernel.org/r/20210817235531.172995-1-nathan@kernel.org
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 2d1b0594af69..0e36a36ed24d 100644
+index 9d04929f03a1..ae8636d3780b 100644
 --- a/drivers/scsi/st.c
 +++ b/drivers/scsi/st.c
-@@ -3828,6 +3828,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+@@ -3823,6 +3823,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
  	case CDROM_SEND_PACKET:
  		if (!capable(CAP_SYS_RAWIO))
  			return -EPERM;

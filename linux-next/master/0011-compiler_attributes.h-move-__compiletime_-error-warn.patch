@@ -1,7 +1,7 @@
-From eed9ede318067d1f5cd83411aa2708729c633941 Mon Sep 17 00:00:00 2001
+From e3efce3bcb7e7bdab179d0252c177cfc6762840a Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
-Subject: [PATCH 12/30] compiler_attributes.h: move
+Subject: [PATCH 11/30] compiler_attributes.h: move
  __compiletime_{error|warning}
 
 I'm working on adding support for __attribute__((__error__(""))) and
@@ -21,16 +21,16 @@ Link: https://lore.kernel.org/r/20210802202326.1817503-1-ndesaulniers@google.com
 ---
  include/linux/compiler-gcc.h        |  3 ---
  include/linux/compiler_attributes.h | 24 ++++++++++++++++++++++++
- include/linux/compiler_types.h      |  6 ------
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ include/linux/compiler_types.h      |  7 -------
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
-index cb9217fc60af..21c36b69eb06 100644
+index 01985821944b..80aec0500376 100644
 --- a/include/linux/compiler-gcc.h
 +++ b/include/linux/compiler-gcc.h
-@@ -43,9 +43,6 @@
+@@ -41,9 +41,6 @@
  
- #define __compiletime_object_size(obj) __builtin_object_size(obj, 0)
+ #define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
  
 -#define __compiletime_warning(message) __attribute__((__warning__(message)))
 -#define __compiletime_error(message) __attribute__((__error__(message)))
@@ -39,7 +39,7 @@ index cb9217fc60af..21c36b69eb06 100644
  #define __latent_entropy __attribute__((latent_entropy))
  #endif
 diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
-index 67c5667f8042..fb08b843ab47 100644
+index 203b0ac62d15..3cf9bc072e68 100644
 --- a/include/linux/compiler_attributes.h
 +++ b/include/linux/compiler_attributes.h
 @@ -30,6 +30,7 @@
@@ -58,7 +58,7 @@ index 67c5667f8042..fb08b843ab47 100644
  #endif
  
  /*
-@@ -138,6 +140,17 @@
+@@ -144,6 +146,17 @@
  # define __designated_init
  #endif
  
@@ -76,7 +76,7 @@ index 67c5667f8042..fb08b843ab47 100644
  /*
   * Optional: not supported by clang
   *
-@@ -299,6 +312,17 @@
+@@ -305,6 +318,17 @@
   */
  #define __must_check                    __attribute__((__warn_unused_result__))
  
@@ -95,22 +95,23 @@ index 67c5667f8042..fb08b843ab47 100644
   *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
   *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
 diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index e4ea86fc584d..b6ff83a714ca 100644
+index c43308b0a9a9..05ceb2e92b0e 100644
 --- a/include/linux/compiler_types.h
 +++ b/include/linux/compiler_types.h
-@@ -294,12 +294,6 @@ struct ftrace_likely_data {
- #ifndef __compiletime_object_size
- # define __compiletime_object_size(obj) -1
- #endif
+@@ -290,13 +290,6 @@ struct ftrace_likely_data {
+ 	(sizeof(t) == sizeof(char) || sizeof(t) == sizeof(short) || \
+ 	 sizeof(t) == sizeof(int) || sizeof(t) == sizeof(long))
+ 
 -#ifndef __compiletime_warning
 -# define __compiletime_warning(message)
 -#endif
 -#ifndef __compiletime_error
 -# define __compiletime_error(message)
 -#endif
- 
+-
  #ifdef __OPTIMIZE__
  # define __compiletime_assert(condition, msg, prefix, suffix)		\
+ 	do {								\
 -- 
 2.33.0
 
