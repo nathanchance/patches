@@ -1,0 +1,62 @@
+From 1820f9dc6cfefca685e2d73c0e041a1f8bf8034b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 25 Aug 2021 14:40:25 -0700
+Subject: [PATCH 33/33] lpfc debugfs fixups
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/lpfc/lpfc_init.c | 2 +-
+ drivers/scsi/lpfc/lpfc_nvme.c | 2 --
+ drivers/scsi/lpfc/lpfc_scsi.c | 7 +------
+ 3 files changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 0ec322f0e3cb..8e17bb4c020a 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -8277,8 +8277,8 @@ lpfc_sli4_driver_resource_setup(struct lpfc_hba *phba)
+ 	return 0;
+ 
+ out_free_hba_hdwq_info:
+-	free_percpu(phba->sli4_hba.c_stat);
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
++	free_percpu(phba->sli4_hba.c_stat);
+ out_free_hba_idle_stat:
+ 	kfree(phba->sli4_hba.idle_stat);
+ #endif
+diff --git a/drivers/scsi/lpfc/lpfc_nvme.c b/drivers/scsi/lpfc/lpfc_nvme.c
+index 73a3568ff17e..479b3eed6208 100644
+--- a/drivers/scsi/lpfc/lpfc_nvme.c
++++ b/drivers/scsi/lpfc/lpfc_nvme.c
+@@ -1489,9 +1489,7 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
+ 	struct lpfc_nvme_qhandle *lpfc_queue_info;
+ 	struct lpfc_nvme_fcpreq_priv *freqpriv;
+ 	struct nvme_common_command *sqe;
+-#ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+ 	uint64_t start = 0;
+-#endif
+ 
+ 	/* Validate pointers. LLDD fault handling with transport does
+ 	 * have timing races.
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 0fde1e874c7a..423a45fc01cf 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -5578,13 +5578,8 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
+ 	struct fc_rport *rport = starget_to_rport(scsi_target(cmnd->device));
+ 	int err, idx;
+ 	u8 *uuid = NULL;
+-#ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+-	uint64_t start = 0L;
++	uint64_t start = ktime_get_ns();
+ 
+-	if (phba->ktime_on)
+-		start = ktime_get_ns();
+-#endif
+-	start = ktime_get_ns();
+ 	rdata = lpfc_rport_data_from_scsi_device(cmnd->device);
+ 
+ 	/* sanity check on references */
+-- 
+2.33.0
+

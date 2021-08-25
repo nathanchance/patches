@@ -1,7 +1,7 @@
-From b1ee5a453165cdb1c97dc4949ab42e8eb448f10f Mon Sep 17 00:00:00 2001
+From cdc44a9a4f998f13f7825e0df6fb94ff79137136 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 16:55:31 -0700
-Subject: [PATCH 16/30] scsi: st: Add missing break in switch statement in
+Subject: [PATCH 16/33] scsi: st: Add missing break in switch statement in
  st_ioctl()
 
 Clang + -Wimplicit-fallthrough warns:

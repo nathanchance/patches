@@ -1,7 +1,7 @@
-From a5312ba80b780550147726fbf3c31a5c9dc0cba2 Mon Sep 17 00:00:00 2001
+From 00b394039932897b174e5fcc67393f6244302644 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 26/30] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 28/33] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on certain
   architectures.
@@ -55,7 +55,7 @@ index 39448e5b7f1e..de1b626e12b0 100644
 +# https://github.com/ClangBuiltLinux/linux/issues/1439
 +CFLAGS_farch.o := $(call cc-disable-warning, shift-count-negative)
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index d07a811dd9e8..bcb24f39a76b 100644
+index 488d0bab547e..012d58428318 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -343,8 +343,9 @@ config GDB_SCRIPTS
