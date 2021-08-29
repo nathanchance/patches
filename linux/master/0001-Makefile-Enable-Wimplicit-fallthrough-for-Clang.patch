@@ -1,0 +1,69 @@
+From 6511e2f04261557250beab1d696fb52a1cd63eb2 Mon Sep 17 00:00:00 2001
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Date: Tue, 17 Aug 2021 15:33:33 -0500
+Subject: [PATCH 01/21] Makefile: Enable -Wimplicit-fallthrough for Clang
+
+With the recent fixes for fallthrough warnings, it is now possible to
+enable -Wimplicit-fallthrough for Clang.
+
+Special thanks to Nathan Chancellor who fixed the Clang bug[1][2]
+that put the application of this patch to a halt, temporarily. This
+bugfix only appears in Clang 14.0.0, so older versions still contain
+the bug and -Wimplicit-fallthrough won't be enabled for them, for
+now.
+
+As Masahiro noted, the "ifeq" conditional "will break when Clang
+version 100.0.0 is released. But, before that, we will raise the
+minimum supported clang version, and this conditional will go away."[3]
+
+This concludes a long journey and now we are finally getting rid
+of the unintentional fallthrough bug-class in the kernel, entirely.
+
+[1] https://github.com/llvm/llvm-project/commit/9ed4a94d6451046a51ef393cd62f00710820a7e8
+[2] https://bugs.llvm.org/show_bug.cgi?id=51094
+[3] https://lore.kernel.org/lkml/CAK7LNAQFgYgavTP2ZG9Y16XBVdPuJ98J_Ty1OrQy1GXHq6JjQQ@mail.gmail.com/
+
+Link: https://github.com/KSPP/linux/issues/115
+Link: https://github.com/ClangBuiltLinux/linux/issues/236
+["firstword" and "sort" was idea of Masahiro]
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+[The conditional "ifeq" was idea of Nathan]
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Co-developed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ Makefile | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 80aa85170d6b..14520c2266da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -797,11 +797,17 @@ KBUILD_CFLAGS += -Wno-gnu
+ # source of a reference will be _MergedGlobals and not on of the whitelisted names.
+ # See modpost pattern 2
+ KBUILD_CFLAGS += -mno-global-merge
++
++# Warn about unmarked fall-throughs in switch statement.
++# Clang prior to 14.0.0 warned on unreachable fallthroughs with
++# -Wimplicit-fallthrough, which is unacceptable due to IS_ENABLED().
++# https://bugs.llvm.org/show_bug.cgi?id=51094
++ifeq ($(firstword $(sort $(CONFIG_CLANG_VERSION) 140000)),140000)
++KBUILD_CFLAGS += -Wimplicit-fallthrough
++endif
+ else
+ 
+ # Warn about unmarked fall-throughs in switch statement.
+-# Disabled for clang while comment to attribute conversion happens and
+-# https://github.com/ClangBuiltLinux/linux/issues/636 is discussed.
+ KBUILD_CFLAGS += $(call cc-option,-Wimplicit-fallthrough=5,)
+ endif
+ 
+
+base-commit: 90ac80dcd3136da7c5694835d6cad2010aa08798
+-- 
+2.33.0
+

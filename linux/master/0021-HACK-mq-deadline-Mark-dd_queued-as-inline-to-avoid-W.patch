@@ -1,0 +1,27 @@
+From be3ceda0a196948325d4e87859b231d98f011ac6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 29 Aug 2021 15:17:17 -0700
+Subject: [PATCH 21/21] HACK: mq-deadline: Mark dd_queued as inline to avoid
+ -Wunused-function
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ block/mq-deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index 36920670dccc..f25cd3e4eb1f 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -271,7 +271,7 @@ deadline_move_request(struct deadline_data *dd, struct dd_per_prio *per_prio,
+ }
+ 
+ /* Number of requests queued for a given priority level. */
+-static u32 dd_queued(struct deadline_data *dd, enum dd_prio prio)
++static inline u32 dd_queued(struct deadline_data *dd, enum dd_prio prio)
+ {
+ 	return dd_sum(dd, inserted, prio) - dd_sum(dd, completed, prio);
+ }
+-- 
+2.33.0
+

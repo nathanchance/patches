@@ -1,4 +1,4 @@
-From 015108b7deafbbe099e8e659cb09eb970b15de5b Mon Sep 17 00:00:00 2001
+From fe57bc8bc30c2baed07c6d0f52a0d317ab012836 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Aug 2021 12:18:52 -0700
 Subject: [PATCH 16/21] bus: ti-sysc: Add break in switch statement in
@@ -29,7 +29,7 @@ Link: https://lore.kernel.org/r/20210815191852.52271-1-nathan@kernel.org
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 0ef98e3ba341..afe8222db7cd 100644
+index 148a4dd8cb9a..10fcb75df68a 100644
 --- a/drivers/bus/ti-sysc.c
 +++ b/drivers/bus/ti-sysc.c
 @@ -2955,6 +2955,7 @@ static int sysc_init_soc(struct sysc *ddata)
