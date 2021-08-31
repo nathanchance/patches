@@ -1,4 +1,4 @@
-From 0e63a556ec5d5d924620e4b4239e59d91df17e86 Mon Sep 17 00:00:00 2001
+From d063be0c442ff2164ca5d878dde347d617d8f1d8 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 17 Aug 2021 15:33:33 -0500
 Subject: [PATCH 01/21] Makefile: Enable -Wimplicit-fallthrough for Clang
@@ -63,7 +63,7 @@ index 61741e9d9c6e..c7afb3231eab 100644
  endif
  
 
-base-commit: 8596e589b787732c8346f0482919e83cc9362db1
+base-commit: b91db6a0b52e019b6bdabea3f1dbe36d85c7e52c
 -- 
 2.33.0
 
