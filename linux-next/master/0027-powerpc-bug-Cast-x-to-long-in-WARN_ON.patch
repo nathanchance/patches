@@ -1,0 +1,27 @@
+From 8198cc9920e80eb13ac4df6db13664578dd68139 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 26 Aug 2021 17:03:48 -0700
+Subject: [PATCH 27/28] powerpc/bug: Cast x to long in WARN_ON()
+
+Link: https://lore.kernel.org/r/YSa1O4fcX1nNKqN%2F@Ryzen-9-3900X.localdomain/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/include/asm/bug.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/include/asm/bug.h b/arch/powerpc/include/asm/bug.h
+index 1ee0f22313ee..35022667f57d 100644
+--- a/arch/powerpc/include/asm/bug.h
++++ b/arch/powerpc/include/asm/bug.h
+@@ -119,7 +119,7 @@ __label_warn_on:						\
+ 								\
+ 			WARN_ENTRY(PPC_TLNEI " %4, 0",		\
+ 				   BUGFLAG_WARNING | BUGFLAG_TAINT(TAINT_WARN),	\
+-				   __label_warn_on, "r" (x));	\
++				   __label_warn_on, "r" ((__force long)(x)));	\
+ 			break;					\
+ __label_warn_on:						\
+ 			__ret_warn_on = true;			\
+-- 
+2.33.0
+

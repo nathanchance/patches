@@ -1,7 +1,7 @@
-From 00b394039932897b174e5fcc67393f6244302644 Mon Sep 17 00:00:00 2001
+From f8e3138a3f65f7f365ff9dfc73ebb36230a6ed81 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 14 May 2021 10:36:23 -0700
-Subject: [PATCH 28/33] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 22/28] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on certain
   architectures.
@@ -70,10 +70,10 @@ index 488d0bab547e..012d58428318 100644
  	default 1536 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
 diff --git a/lib/Makefile b/lib/Makefile
-index 8a4c8bdb38a2..7119e605594b 100644
+index 2cfd33917ad5..0014b2ac911c 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
-@@ -352,7 +352,6 @@ obj-$(CONFIG_OBJAGG) += objagg.o
+@@ -351,7 +351,6 @@ obj-$(CONFIG_OBJAGG) += objagg.o
  obj-$(CONFIG_PLDMFW) += pldmfw/
  
  # KUnit tests

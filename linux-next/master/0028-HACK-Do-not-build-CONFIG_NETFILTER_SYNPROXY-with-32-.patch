@@ -1,0 +1,56 @@
+From 9941a1a75cf378d162c089de1c7a398186d283cb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 26 Aug 2021 17:08:27 -0700
+Subject: [PATCH 28/28] HACK: Do not build CONFIG_NETFILTER_SYNPROXY with
+ 32-bit x86 and no CONFIG_FORTIFY_SOURCE
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1442
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ net/ipv4/netfilter/Kconfig | 2 ++
+ net/ipv6/netfilter/Kconfig | 2 ++
+ net/netfilter/Kconfig      | 2 ++
+ 3 files changed, 6 insertions(+)
+
+diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
+index 63cb953bd019..6390cb590c94 100644
+--- a/net/ipv4/netfilter/Kconfig
++++ b/net/ipv4/netfilter/Kconfig
+@@ -203,6 +203,8 @@ config IP_NF_TARGET_REJECT
+ config IP_NF_TARGET_SYNPROXY
+ 	tristate "SYNPROXY target support"
+ 	depends on NF_CONNTRACK && NETFILTER_ADVANCED
++	# https://github.com/ClangBuiltLinux/linux/issues/1442
++	depends on !(CC_IS_CLANG && X86_32 && !FORTIFY_SOURCE)
+ 	select NETFILTER_SYNPROXY
+ 	select SYN_COOKIES
+ 	help
+diff --git a/net/ipv6/netfilter/Kconfig b/net/ipv6/netfilter/Kconfig
+index f22233e44ee9..331a5d439f56 100644
+--- a/net/ipv6/netfilter/Kconfig
++++ b/net/ipv6/netfilter/Kconfig
+@@ -216,6 +216,8 @@ config IP6_NF_TARGET_REJECT
+ config IP6_NF_TARGET_SYNPROXY
+ 	tristate "SYNPROXY target support"
+ 	depends on NF_CONNTRACK && NETFILTER_ADVANCED
++	# https://github.com/ClangBuiltLinux/linux/issues/1442
++	depends on !(CC_IS_CLANG && X86_32 && !FORTIFY_SOURCE)
+ 	select NETFILTER_SYNPROXY
+ 	select SYN_COOKIES
+ 	help
+diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
+index 54395266339d..d1ef8660b113 100644
+--- a/net/netfilter/Kconfig
++++ b/net/netfilter/Kconfig
+@@ -660,6 +660,8 @@ config NFT_TPROXY
+ config NFT_SYNPROXY
+ 	tristate "Netfilter nf_tables SYNPROXY expression support"
+ 	depends on NF_CONNTRACK && NETFILTER_ADVANCED
++	# https://github.com/ClangBuiltLinux/linux/issues/1442
++	depends on !(CC_IS_CLANG && X86_32 && !FORTIFY_SOURCE)
+ 	select NETFILTER_SYNPROXY
+ 	select SYN_COOKIES
+ 	help
+-- 
+2.33.0
+

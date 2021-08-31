@@ -1,7 +1,7 @@
-From 4e50e2a045f6c5e292f3c2f1bc5c81f3d2210deb Mon Sep 17 00:00:00 2001
+From f827ef65c6b39e8cb913221200d9e6a3b4dc22c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 16:42:48 -0700
-Subject: [PATCH 13/33] iwlwifi: mvm: Fix bitwise vs logical operator in
+Subject: [PATCH 11/28] iwlwifi: mvm: Fix bitwise vs logical operator in
  iwl_mvm_scan_fits()
 
 Clang warns:
@@ -25,7 +25,7 @@ Link: https://lore.kernel.org/r/20210814234248.1755703-1-nathan@kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 0368b7101222..494379fc9224 100644
+index d78e436fa8b5..21b007fa7561 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
 @@ -832,7 +832,7 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,

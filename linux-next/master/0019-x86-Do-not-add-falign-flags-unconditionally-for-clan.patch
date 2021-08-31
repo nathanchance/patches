@@ -1,7 +1,7 @@
-From aa407c651397c692f2c648e23d3a3259e0b939e4 Mon Sep 17 00:00:00 2001
+From 4055376c4c11e5ccc4486e3461d3ba4762794d16 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 23 Aug 2021 19:26:39 -0700
-Subject: [PATCH 24/33] x86: Do not add -falign flags unconditionally for clang
+Subject: [PATCH 19/28] x86: Do not add -falign flags unconditionally for clang
 
 clang does not support -falign-jumps and only recently gained support
 for -falign-loops. When one of the configuration options that adds these
@@ -27,12 +27,12 @@ Link: https://lore.kernel.org/r/20210824022640.2170859-2-nathan@kernel.org
  1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/arch/x86/Makefile_32.cpu b/arch/x86/Makefile_32.cpu
-index cd3056759880..e8c65f990afd 100644
+index e7355f8b51c2..94834c4b5e5e 100644
 --- a/arch/x86/Makefile_32.cpu
 +++ b/arch/x86/Makefile_32.cpu
-@@ -10,6 +10,12 @@ else
- tune		= $(call cc-option,-mcpu=$(1),$(2))
- endif
+@@ -4,6 +4,12 @@
+ 
+ tune		= $(call cc-option,-mtune=$(1),$(2))
  
 +ifdef CONFIG_CC_IS_CLANG
 +align		:= -falign-functions=0 $(call cc-option,-falign-jumps=0) $(call cc-option,-falign-loops=0)
@@ -43,7 +43,7 @@ index cd3056759880..e8c65f990afd 100644
  cflags-$(CONFIG_M486SX)		+= -march=i486
  cflags-$(CONFIG_M486)		+= -march=i486
  cflags-$(CONFIG_M586)		+= -march=i586
-@@ -25,11 +31,11 @@ cflags-$(CONFIG_MK6)		+= -march=k6
+@@ -19,11 +25,11 @@ cflags-$(CONFIG_MK6)		+= -march=k6
  # They make zero difference whatsosever to performance at this time.
  cflags-$(CONFIG_MK7)		+= -march=athlon
  cflags-$(CONFIG_MK8)		+= $(call cc-option,-march=k8,-march=athlon)
