@@ -1,7 +1,7 @@
-From 4055376c4c11e5ccc4486e3461d3ba4762794d16 Mon Sep 17 00:00:00 2001
+From 59364b1251f1eca433b02427a985098c8e1593db Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 23 Aug 2021 19:26:39 -0700
-Subject: [PATCH 19/28] x86: Do not add -falign flags unconditionally for clang
+Subject: [PATCH 19/27] x86: Do not add -falign flags unconditionally for clang
 
 clang does not support -falign-jumps and only recently gained support
 for -falign-loops. When one of the configuration options that adds these

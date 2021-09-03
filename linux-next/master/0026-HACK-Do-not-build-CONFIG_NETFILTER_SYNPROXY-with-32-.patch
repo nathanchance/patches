@@ -1,7 +1,7 @@
-From 9941a1a75cf378d162c089de1c7a398186d283cb Mon Sep 17 00:00:00 2001
+From 9211618800ae4e255c82ddc969c5c160e1d9622c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 26 Aug 2021 17:08:27 -0700
-Subject: [PATCH 28/28] HACK: Do not build CONFIG_NETFILTER_SYNPROXY with
+Subject: [PATCH 26/27] HACK: Do not build CONFIG_NETFILTER_SYNPROXY with
  32-bit x86 and no CONFIG_FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1442
