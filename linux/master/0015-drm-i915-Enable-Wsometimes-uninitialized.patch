@@ -1,7 +1,7 @@
-From 812c4cfe6f2ab79a9e86961d0a64f7fc4f55fa05 Mon Sep 17 00:00:00 2001
+From 65508d66aabe3f2b5abb9921e8a17c6d9ab99652 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:27 -0700
-Subject: [PATCH 18/22] drm/i915: Enable -Wsometimes-uninitialized
+Subject: [PATCH 15/18] drm/i915: Enable -Wsometimes-uninitialized
 
 This warning helps catch uninitialized variables. It should have been
 enabled at the same time as commit b2423184ac33 ("drm/i915: Enable
@@ -15,7 +15,7 @@ Link: https://lore.kernel.org/r/20210824225427.2065517-4-nathan@kernel.org
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
-index 4f22cac1c49b..b36a921d54f7 100644
+index 642a5b5a1b81..335ba9f43d8f 100644
 --- a/drivers/gpu/drm/i915/Makefile
 +++ b/drivers/gpu/drm/i915/Makefile
 @@ -19,7 +19,6 @@ subdir-ccflags-y += $(call cc-disable-warning, missing-field-initializers)

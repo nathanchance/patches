@@ -1,7 +1,7 @@
-From f8d8e2eb0f15547b615f3079ad87e38dda2dba66 Mon Sep 17 00:00:00 2001
+From 3dd301e9012b841d0922ad77955eb5c124ab66a1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Aug 2021 16:42:48 -0700
-Subject: [PATCH 13/22] iwlwifi: mvm: Fix bitwise vs logical operator in
+Subject: [PATCH 12/18] iwlwifi: mvm: Fix bitwise vs logical operator in
  iwl_mvm_scan_fits()
 
 Clang warns:
