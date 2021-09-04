@@ -1,0 +1,34 @@
+From df05dd9b81c3c1593221e3d8cc377e8f73d5f7fa Mon Sep 17 00:00:00 2001
+From: Colin Ian King <colin.king@canonical.com>
+Date: Fri, 3 Sep 2021 12:35:35 +0100
+Subject: [PATCH 21/28] io_uring: Fix a read of ununitialized pointer tctx
+
+In the unlikely case where ctx->flags & IORING_SETUP_SQPOLL is true
+and sqd is NULL the pointer tctx is not assigned a valid value and
+can contain a garbage value when it is dereferenced. Fix this by
+initializing it to NULL.
+
+Addresses-Coverity: ("Uninitialized pointer read")
+Fixes: 9e30726065ea ("io_uring: ensure IORING_REGISTER_IOWQ_MAX_WORKERS works with SQPOLL")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Link: https://lore.kernel.org/r/20210903113535.11257-1-colin.king@canonical.com
+---
+ fs/io_uring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/io_uring.c b/fs/io_uring.c
+index 132dd38e89ce..843362bebd8c 100644
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -10525,7 +10525,7 @@ static int io_register_iowq_max_workers(struct io_ring_ctx *ctx,
+ 					void __user *arg)
+ {
+ 	struct io_sq_data *sqd = NULL;
+-	struct io_uring_task *tctx;
++	struct io_uring_task *tctx = NULL;
+ 	__u32 new_count[2];
+ 	int i, ret;
+ 
+-- 
+2.33.0
+
