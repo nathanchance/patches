@@ -1,4 +1,4 @@
-From a284fcb5e07131f7222162cc7e80d31835d9798b Mon Sep 17 00:00:00 2001
+From 3de1cbc5d3cbf083984f19b54533d2a5e9c039f4 Mon Sep 17 00:00:00 2001
 From: Reka Norman <rekanorman@chromium.org>
 Date: Tue, 29 Jun 2021 11:27:18 +1000
 Subject: [PATCH 01/11] drm/amd/display: Respect CONFIG_FRAME_WARN=0 in dml
@@ -52,7 +52,7 @@ index 6bb7f2905821..fa351ae0a5e0 100644
  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
  CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_rcflags)
 
-base-commit: 7aeadb5bb82ad21ffbcd54c81d77727b7a05e6c1
+base-commit: a603798fb16829e56f80f57879611e67bba4910d
 -- 
 2.33.0
 
