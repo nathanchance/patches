@@ -1,7 +1,7 @@
-From 940b86b50132227bd6a0243882aab2230774e22a Mon Sep 17 00:00:00 2001
+From 4d9d93533a05c95c056c6e5642746121bd463b39 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
-Subject: [PATCH 11/18] compiler_attributes.h: move
+Subject: [PATCH 11/17] compiler_attributes.h: move
  __compiletime_{error|warning}
 
 I'm working on adding support for __attribute__((__error__(""))) and

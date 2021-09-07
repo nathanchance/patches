@@ -1,7 +1,7 @@
-From 1d2c78a886e91431026293991248ef56b2c734d3 Mon Sep 17 00:00:00 2001
+From 5208791db90c7130a301e9020c436798c8ed79f1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 17 Feb 2021 13:47:46 -0700
-Subject: [PATCH 17/18] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
+Subject: [PATCH 16/17] DO-NOT-UPSTREAM: Various fixes/hacks/warning hiding
 
 * drivers/input/joystick/analog.c: Avoid this warning on s390.
 
@@ -59,7 +59,7 @@ index 5efd1b435a37..eea1027b4206 100644
  obj-$(CONFIG_LIST_KUNIT_TEST) += list-test.o
  obj-$(CONFIG_LINEAR_RANGES_TEST) += test_linear_ranges.o
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index b7609958ee36..5f42da1b0a1a 100755
+index fd9777f63f14..091209b71c28 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
 @@ -259,7 +259,7 @@ EOF
