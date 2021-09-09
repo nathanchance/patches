@@ -1,0 +1,35 @@
+From 7e097b912f22e3ed76a8f6918b29f9e22e8c7c35 Mon Sep 17 00:00:00 2001
+From: Guenter Roeck <linux@roeck-us.net>
+Date: Thu, 9 Sep 2021 11:47:14 -0700
+Subject: [PATCH 17/23] cpufreq: vexpress: Drop unused variable
+
+arm:allmodconfig fails to build with the following error.
+
+drivers/cpufreq/vexpress-spc-cpufreq.c:454:13: error:
+					unused variable 'cur_cluster'
+
+Remove the unused variable.
+
+Fixes: bb8c26d9387f ("cpufreq: vexpress: Set CPUFREQ_IS_COOLING_DEV flag")
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20210909184714.153068-1-linux@roeck-us.net
+---
+ drivers/cpufreq/vexpress-spc-cpufreq.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/cpufreq/vexpress-spc-cpufreq.c b/drivers/cpufreq/vexpress-spc-cpufreq.c
+index 284b6bd040b1..d295f405c4bb 100644
+--- a/drivers/cpufreq/vexpress-spc-cpufreq.c
++++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
+@@ -451,7 +451,6 @@ static int ve_spc_cpufreq_init(struct cpufreq_policy *policy)
+ static int ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev;
+-	int cur_cluster = cpu_to_cluster(policy->cpu);
+ 
+ 	cpu_dev = get_cpu_device(policy->cpu);
+ 	if (!cpu_dev) {
+-- 
+2.33.0
+

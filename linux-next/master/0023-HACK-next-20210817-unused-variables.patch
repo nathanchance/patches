@@ -1,0 +1,27 @@
+From fb1f6145c679c165fb6899b44e486d8e13d5e7fa Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 9 Sep 2021 16:38:25 -0700
+Subject: [PATCH 23/23] HACK: next-20210817 unused variables
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 4de907f3e66a..fa2c76416735 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1251,7 +1251,9 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
+ 	struct kfd_process_device *pdd;
+ 	void *mem;
+ 	struct kfd_dev *dev;
++#if IS_ENABLED(CONFIG_HSA_AMD_SVM)
+ 	struct svm_range_list *svms = &p->svms;
++#endif
+ 	int idr_handle;
+ 	long err;
+ 	uint64_t offset = args->mmap_offset;
+-- 
+2.33.0
+

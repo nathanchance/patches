@@ -1,0 +1,36 @@
+From 129983ee89ee2b31b644974387a42592dd8c3efc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 7 Sep 2021 16:52:02 -0700
+Subject: [PATCH 22/23] HACK: net: sfc: Disable -Wshift-count-overflow for
+ farch.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1439
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/sfc/Makefile        | 2 ++
+ drivers/net/ethernet/sfc/falcon/Makefile | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/drivers/net/ethernet/sfc/Makefile b/drivers/net/ethernet/sfc/Makefile
+index 8bd01c429f91..4331ed72bd69 100644
+--- a/drivers/net/ethernet/sfc/Makefile
++++ b/drivers/net/ethernet/sfc/Makefile
+@@ -13,3 +13,5 @@ sfc-$(CONFIG_SFC_SRIOV)	+= sriov.o siena_sriov.o ef10_sriov.o
+ obj-$(CONFIG_SFC)	+= sfc.o
+ 
+ obj-$(CONFIG_SFC_FALCON) += falcon/
++# https://github.com/ClangBuiltLinux/linux/issues/1439
++CFLAGS_farch.o := $(call cc-disable-warning, shift-count-negative)
+diff --git a/drivers/net/ethernet/sfc/falcon/Makefile b/drivers/net/ethernet/sfc/falcon/Makefile
+index 39448e5b7f1e..de1b626e12b0 100644
+--- a/drivers/net/ethernet/sfc/falcon/Makefile
++++ b/drivers/net/ethernet/sfc/falcon/Makefile
+@@ -5,3 +5,5 @@ sfc-falcon-y		+= efx.o nic.o farch.o falcon.o tx.o rx.o selftest.o \
+ 
+ sfc-falcon-$(CONFIG_SFC_FALCON_MTD)	+= mtd.o
+ obj-$(CONFIG_SFC_FALCON)		+= sfc-falcon.o
++# https://github.com/ClangBuiltLinux/linux/issues/1439
++CFLAGS_farch.o := $(call cc-disable-warning, shift-count-negative)
+-- 
+2.33.0
+
