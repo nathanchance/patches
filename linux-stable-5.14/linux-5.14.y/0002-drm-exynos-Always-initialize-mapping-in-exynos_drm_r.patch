@@ -1,7 +1,7 @@
-From 7e4bee16c1f28fed9553ed0271bda9d75ff46cc3 Mon Sep 17 00:00:00 2001
+From bf996bc8c79fc527d0c3d2cd206bb2f334db8e2e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 27 Jul 2021 16:36:56 -0700
-Subject: [PATCH 09/18] drm/exynos: Always initialize mapping in
+Subject: [PATCH 02/20] drm/exynos: Always initialize mapping in
  exynos_drm_register_dma()
 
 In certain randconfigs, clang warns:
@@ -37,7 +37,9 @@ runtime.
 
 Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210727233656.753002-1-nathan@kernel.org
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Link: https://git.kernel.org/linus/c626f3864bbbb28bbe06476b0b497c1330aa4463
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/exynos/exynos_drm_dma.c | 2 ++
  1 file changed, 2 insertions(+)

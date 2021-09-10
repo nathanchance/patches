@@ -1,7 +1,7 @@
-From e6184f2fdb9a3262fbc9021eba9da4a6bd96b452 Mon Sep 17 00:00:00 2001
+From 7422ac29affdfd67fc2c4e548651917a092163d7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 8 Jul 2021 16:38:50 -0700
-Subject: [PATCH 11/18] Hexagon: Export raw I/O routines for modules
+Subject: [PATCH 16/20] Hexagon: Export raw I/O routines for modules
 
 When building ARCH=hexagon allmodconfig, the following errors occur:
 

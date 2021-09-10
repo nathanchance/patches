@@ -1,7 +1,7 @@
-From 3277b249716f796fd30a1a3f1250dd5cbca28939 Mon Sep 17 00:00:00 2001
+From 9057aa74e31963ce828e0e2fc3dd6d0e0dbb0a43 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Mon, 30 Aug 2021 11:11:28 +0200
-Subject: [PATCH 16/18] block/mq-deadline: Move dd_queued() to fix defined but
+Subject: [PATCH 01/20] block/mq-deadline: Move dd_queued() to fix defined but
  not used warning
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -21,6 +21,9 @@ Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Fixes: 38ba64d12d4c ("block/mq-deadline: Track I/O statistics")
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Link: https://lore.kernel.org/r/20210830091128.1854266-1-geert@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://git.kernel.org/linus/55a51ea14094a1e7dd0d7f33237d246033dd39ab
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  block/mq-deadline.c | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
@@ -55,6 +58,8 @@ index 36920670dccc..c2c724d4e668 100644
  static int dd_queued_show(void *data, struct seq_file *m)
  {
  	struct request_queue *q = data;
+
+base-commit: bbdd3de144fc142f2f4b9834c9241cc4e7f3d3fc
 -- 
 2.33.0
 

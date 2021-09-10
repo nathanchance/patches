@@ -1,8 +1,11 @@
-From c597404032ed7ce2a92e37fcef84988d5ecc5711 Mon Sep 17 00:00:00 2001
+From fd4919af03edc567fd27c76791341b9b7d7f5a99 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Aug 2021 12:29:59 -0700
-Subject: [PATCH 14/18] drm/radeon: Add break to switch statement in
+Subject: [PATCH 03/20] drm/radeon: Add break to switch statement in
  radeonfb_create_pinned_object()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Clang + -Wimplicit-fallthrough warns:
 
@@ -21,8 +24,11 @@ Clang's version of this warning is a little bit more pedantic than
 GCC's. Add the missing break to satisfy it to match what has been done
 all over the kernel tree.
 
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210815192959.90142-1-nathan@kernel.org
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://git.kernel.org/linus/3a6e4106a8fdb87fd3ede0eb242b70b0c4c82bd5
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/radeon/radeon_fb.c | 1 +
  1 file changed, 1 insertion(+)
