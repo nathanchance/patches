@@ -1,7 +1,7 @@
 From ae6a5069b00ecd3106c54fdb03c2fd36ca9bf761 Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Mon, 6 Sep 2021 21:53:58 -0700
-Subject: [PATCH 01/23] spi: tegra20-slink: Declare runtime suspend and resume
+Subject: [PATCH 01/25] spi: tegra20-slink: Declare runtime suspend and resume
  functions conditionally
 
 The following build error is seen with CONFIG_PM=n.

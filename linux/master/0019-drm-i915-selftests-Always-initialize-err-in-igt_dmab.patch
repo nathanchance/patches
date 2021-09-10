@@ -1,7 +1,7 @@
 From 20daa08ef9a0691af16e5e96a3a5a5eee385e29d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:26 -0700
-Subject: [PATCH 19/23] drm/i915/selftests: Always initialize err in
+Subject: [PATCH 19/25] drm/i915/selftests: Always initialize err in
  igt_dmabuf_import_same_driver_lmem()
 
 Clang warns:

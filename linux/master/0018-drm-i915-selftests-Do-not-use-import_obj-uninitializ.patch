@@ -1,7 +1,7 @@
 From fb51a9cea9ae79f9915b0dbbecad33b35fcfadaa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:25 -0700
-Subject: [PATCH 18/23] drm/i915/selftests: Do not use import_obj uninitialized
+Subject: [PATCH 18/25] drm/i915/selftests: Do not use import_obj uninitialized
 
 Clang warns a couple of times:
 

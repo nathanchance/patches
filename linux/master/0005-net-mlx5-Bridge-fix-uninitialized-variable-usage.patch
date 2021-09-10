@@ -1,7 +1,7 @@
 From 33f257403779ed1fe53c62e59859ce9ab1992cf4 Mon Sep 17 00:00:00 2001
 From: Vlad Buslov <vladbu@nvidia.com>
 Date: Wed, 18 Aug 2021 14:19:13 +0300
-Subject: [PATCH 05/23] net/mlx5: Bridge, fix uninitialized variable usage
+Subject: [PATCH 05/25] net/mlx5: Bridge, fix uninitialized variable usage
 
 In some conditions variable 'err' is not assigned with value in
 mlx5_esw_bridge_port_obj_attr_set() and mlx5_esw_bridge_port_changeupper()
