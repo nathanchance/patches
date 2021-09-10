@@ -1,11 +1,11 @@
-From 4d9d93533a05c95c056c6e5642746121bd463b39 Mon Sep 17 00:00:00 2001
+From 14cc58631e85190ad068688a1f7e29538c6e4492 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
-Subject: [PATCH 11/17] compiler_attributes.h: move
+Subject: [PATCH 08/23] compiler_attributes.h: move
  __compiletime_{error|warning}
 
-I'm working on adding support for __attribute__((__error__(""))) and
-__attribute__((__warning__(""))) to Clang. To make use of these in
+Clang 14 will add support for __attribute__((__error__(""))) and
+__attribute__((__warning__(""))). To make use of these in
 __compiletime_error and __compiletime_warning (as used by BUILD_BUG and
 friends) for newer clang and detect/fallback for older versions of
 clang, move these to compiler_attributes.h and guard them with
@@ -17,7 +17,9 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/1173
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20210802202326.1817503-1-ndesaulniers@google.com
+[Reworded, landed in Clang 14]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/ojeda/linux/commit/b83a908498d68fafca931e1276e145b339cac5fb
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  include/linux/compiler-gcc.h        |  3 ---
@@ -40,7 +42,7 @@ index cb9217fc60af..21c36b69eb06 100644
  #define __latent_entropy __attribute__((latent_entropy))
  #endif
 diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
-index 67c5667f8042..fb08b843ab47 100644
+index 67c5667f8042..8f2106e9e5c1 100644
 --- a/include/linux/compiler_attributes.h
 +++ b/include/linux/compiler_attributes.h
 @@ -30,6 +30,7 @@
@@ -64,7 +66,7 @@ index 67c5667f8042..fb08b843ab47 100644
  #endif
  
 +/*
-+ * Optional: only supported since clang >= 13.0
++ * Optional: only supported since clang >= 14.0
 + *
 + *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
 + */
@@ -82,7 +84,7 @@ index 67c5667f8042..fb08b843ab47 100644
  #define __must_check                    __attribute__((__warn_unused_result__))
  
 +/*
-+ * Optional: only supported since clang >= 13.0
++ * Optional: only supported since clang >= 14.0
 + *
 + *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-warning-function-attribute
 + */

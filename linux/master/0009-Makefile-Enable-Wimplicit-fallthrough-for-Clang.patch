@@ -1,7 +1,7 @@
-From a62cc0e80e35b64953a2c3df84156aa0ee03b310 Mon Sep 17 00:00:00 2001
+From 56b24420d3b07bd1822e9d5ecd750b1e297f71b4 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 17 Aug 2021 15:33:33 -0500
-Subject: [PATCH 01/17] Makefile: Enable -Wimplicit-fallthrough for Clang
+Subject: [PATCH 09/23] Makefile: Enable -Wimplicit-fallthrough for Clang
 
 With the recent fixes for fallthrough warnings, it is now possible to
 enable -Wimplicit-fallthrough for Clang.
@@ -39,7 +39,7 @@ Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d45fc2edf186..cf0b5c621d4f 100644
+index 2d1e491f7737..251d78e5cb6e 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -796,11 +796,17 @@ KBUILD_CFLAGS += -Wno-gnu
@@ -60,10 +60,8 @@ index d45fc2edf186..cf0b5c621d4f 100644
 -# Disabled for clang while comment to attribute conversion happens and
 -# https://github.com/ClangBuiltLinux/linux/issues/636 is discussed.
  KBUILD_CFLAGS += $(call cc-option,-Wimplicit-fallthrough=5,)
- endif
- 
-
-base-commit: 4b93c544e90e2b28326182d31ee008eb80e02074
+ # gcc inanely warns about local variables called 'main'
+ KBUILD_CFLAGS += -Wno-main
 -- 
 2.33.0
 
