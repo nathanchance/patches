@@ -1,7 +1,7 @@
 From 6cfa64def3b6bcd38bc339de3f05343fd27dd2d5 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Fri, 23 Oct 2020 21:50:47 -0700
-Subject: [PATCH 02/24] RISC-V: Fix the VDSO symbol generaton for
+Subject: [PATCH 02/25] RISC-V: Fix the VDSO symbol generaton for
  binutils-2.35+
 
 We were relying on GNU ld's ability to re-link executable files in order
