@@ -1,7 +1,10 @@
-From 86c5958a9d2e4528e52164b3659bab6fafd2db36 Mon Sep 17 00:00:00 2001
+From 1cfbd2aa35140ff3ad603826a385ddd287f91ce7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:25 -0700
-Subject: [PATCH 09/21] drm/i915/selftests: Do not use import_obj uninitialized
+Subject: [PATCH 01/20] drm/i915/selftests: Do not use import_obj uninitialized
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Clang warns a couple of times:
 
@@ -29,8 +32,12 @@ it is not used uninitialized.
 
 Fixes: d7b2cb380b3a ("drm/i915/gem: Correct the locking and pin pattern for dma-buf (v8)")
 Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210824225427.2065517-2-nathan@kernel.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210824225427.2065517-2-nathan@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-intel/commit/?id=4796054b381a586f4177a24e3d8b5a6a0a32ce62
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
@@ -71,6 +78,8 @@ index ffae7df5e4d7..532c7955b300 100644
  	i915_gem_object_lock(import_obj, NULL);
  	err = __i915_gem_object_get_pages(import_obj);
  	if (err) {
+
+base-commit: 815c5020b5ab041761fdd4272783a6104a92fd9e
 -- 
 2.33.0
 
