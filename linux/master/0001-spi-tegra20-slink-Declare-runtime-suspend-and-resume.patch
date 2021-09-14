@@ -1,7 +1,7 @@
-From ae6a5069b00ecd3106c54fdb03c2fd36ca9bf761 Mon Sep 17 00:00:00 2001
+From 07f4bf1a20d2c928c2b4c0b4bdd2e497e5efc07f Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Mon, 6 Sep 2021 21:53:58 -0700
-Subject: [PATCH 01/25] spi: tegra20-slink: Declare runtime suspend and resume
+Subject: [PATCH 01/22] spi: tegra20-slink: Declare runtime suspend and resume
  functions conditionally
 
 The following build error is seen with CONFIG_PM=n.
@@ -56,7 +56,7 @@ index ebd27f883033..8ce840c7ecc8 100644
  static const struct dev_pm_ops slink_pm_ops = {
  	SET_RUNTIME_PM_OPS(tegra_slink_runtime_suspend,
 
-base-commit: 926de8c4326c14fcf35f1de142019043597a4fac
+base-commit: 3ca706c189db861b2ca2019a0901b94050ca49d8
 -- 
 2.33.0
 

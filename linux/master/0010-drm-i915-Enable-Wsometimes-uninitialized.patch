@@ -1,15 +1,19 @@
-From 94b5bd1ac9e2d3110bd7634b647d038974fb8748 Mon Sep 17 00:00:00 2001
+From c31772537b1ce3ad874c6a0eb9c69b7631d6132a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:27 -0700
-Subject: [PATCH 20/25] drm/i915: Enable -Wsometimes-uninitialized
+Subject: [PATCH 10/22] drm/i915: Enable -Wsometimes-uninitialized
 
 This warning helps catch uninitialized variables. It should have been
 enabled at the same time as commit b2423184ac33 ("drm/i915: Enable
 -Wuninitialized") but I did not realize they were disabled separately.
 Enable it now that i915 is clean so that it stays that way.
 
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210824225427.2065517-4-nathan@kernel.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210824225427.2065517-4-nathan@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-intel/commit/?id=43192617f7816bb74584c1df06f57363afd15337
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/Makefile | 1 -
  1 file changed, 1 deletion(-)

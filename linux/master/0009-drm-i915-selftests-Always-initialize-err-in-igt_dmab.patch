@@ -1,8 +1,11 @@
-From 20daa08ef9a0691af16e5e96a3a5a5eee385e29d Mon Sep 17 00:00:00 2001
+From ba53adac91f81b8b9d73a9197730e6585991f7f7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:26 -0700
-Subject: [PATCH 19/25] drm/i915/selftests: Always initialize err in
+Subject: [PATCH 09/22] drm/i915/selftests: Always initialize err in
  igt_dmabuf_import_same_driver_lmem()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Clang warns:
 
@@ -30,8 +33,12 @@ The test is expected to pass if i915_gem_prime_import() returns
 
 Fixes: cdb35d1ed6d2 ("drm/i915/gem: Migrate to system at dma-buf attach time (v7)")
 Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210824225427.2065517-3-nathan@kernel.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210824225427.2065517-3-nathan@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-intel/commit/?id=46f20a353b80d02492655d99714f0566018a17e8
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c | 2 ++
  1 file changed, 2 insertions(+)
