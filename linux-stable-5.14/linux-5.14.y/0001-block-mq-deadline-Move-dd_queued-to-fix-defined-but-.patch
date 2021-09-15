@@ -1,4 +1,4 @@
-From 0f0d6aaea706f2fe37112aba19864ed8be52352a Mon Sep 17 00:00:00 2001
+From a932f769b91884625cc4f3a63dd44a5e39b3ae64 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Mon, 30 Aug 2021 11:11:28 +0200
 Subject: [PATCH 01/20] block/mq-deadline: Move dd_queued() to fix defined but
@@ -29,7 +29,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 36920670dccc..c2c724d4e668 100644
+index 3c3693c34f06..7f3c3932b723 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
 @@ -270,12 +270,6 @@ deadline_move_request(struct deadline_data *dd, struct dd_per_prio *per_prio,
@@ -45,7 +45,7 @@ index 36920670dccc..c2c724d4e668 100644
  /*
   * deadline_check_fifo returns 0 if there are no expired requests on the fifo,
   * 1 otherwise. Requires !list_empty(&dd->fifo_list[data_dir])
-@@ -951,6 +945,12 @@ static int dd_async_depth_show(void *data, struct seq_file *m)
+@@ -953,6 +947,12 @@ static int dd_async_depth_show(void *data, struct seq_file *m)
  	return 0;
  }
  
@@ -59,7 +59,7 @@ index 36920670dccc..c2c724d4e668 100644
  {
  	struct request_queue *q = data;
 
-base-commit: d27a14321366788cef927dbe69854f34460b3f7c
+base-commit: d6f7bb5bb29096b2935c55deeb545616dab74406
 -- 
 2.33.0
 
