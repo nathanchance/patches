@@ -1,7 +1,7 @@
-From 0a79247e8c5e79a107a41a6c653cd5a22217ed0a Mon Sep 17 00:00:00 2001
+From eb1cb556e934b3d2b0fa1863e6f80ef86a381f43 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 30 Aug 2021 14:38:43 -0700
-Subject: [PATCH 18/22] ARM: select HAVE_FUTEX_CMPXCHG
+Subject: [PATCH 14/18] ARM: select HAVE_FUTEX_CMPXCHG
 
 tglx notes:
   This function [futex_detect_cmpxchg] is only needed when an

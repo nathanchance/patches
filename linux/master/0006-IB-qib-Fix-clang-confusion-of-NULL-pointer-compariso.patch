@@ -1,7 +1,7 @@
-From 5b2bcea8fa4cf3122ddee4eab8071126cf6554e3 Mon Sep 17 00:00:00 2001
+From 492c6e6de1819c6e3ee4cc356bc42cbd2d242a4d Mon Sep 17 00:00:00 2001
 From: Jason Gunthorpe <jgg@nvidia.com>
 Date: Mon, 13 Sep 2021 16:25:56 -0300
-Subject: [PATCH 07/22] IB/qib: Fix clang confusion of NULL pointer comparison
+Subject: [PATCH 06/18] IB/qib: Fix clang confusion of NULL pointer comparison
 
 clang becomes confused due to the comparison to NULL in a integer constant
 expression context:
