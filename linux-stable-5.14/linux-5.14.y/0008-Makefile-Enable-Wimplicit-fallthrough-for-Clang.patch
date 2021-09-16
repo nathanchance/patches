@@ -1,4 +1,4 @@
-From 7c145d1c2c34e178448d5fd46469ac30801be551 Mon Sep 17 00:00:00 2001
+From da6c6ea06f683d976d384da6804ef719acc8db62 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 17 Aug 2021 15:33:33 -0500
 Subject: [PATCH 08/20] Makefile: Enable -Wimplicit-fallthrough for Clang
@@ -39,7 +39,7 @@ Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e16a1a80074c..8300ca72c24d 100644
+index 0eaa5623f406..5fe6b9acc717 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -797,11 +797,17 @@ KBUILD_CFLAGS += -Wno-gnu
