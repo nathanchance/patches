@@ -1,7 +1,7 @@
-From 18a70b967024c4961d66cd3b78f829d07290313d Mon Sep 17 00:00:00 2001
+From 36bf885a9073f77849a445ed56ec05539cb0ef33 Mon Sep 17 00:00:00 2001
 From: James Smart <jsmart2021@gmail.com>
 Date: Tue, 7 Sep 2021 22:09:27 -0700
-Subject: [PATCH 03/23] scsi: lpfc: Fix compilation errors on kernels with no
+Subject: [PATCH 03/22] scsi: lpfc: Fix compilation errors on kernels with no
  CONFIG_DEBUG_FS
 
 The Kernel test robot flagged the following warning:
