@@ -1,0 +1,62 @@
+From e4fbc37f264a28c885290c990c9e49db5ec89a8c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 16 Sep 2021 21:52:05 -0700
+Subject: [PATCH 01/17] ptp: ocp: Avoid operator precedence warning in
+ ptp_ocp_summary_show()
+
+Clang warns twice:
+
+drivers/ptp/ptp_ocp.c:2065:16: error: operator '?:' has lower precedence
+than '&'; '&' will be evaluated first
+[-Werror,-Wbitwise-conditional-parentheses]
+                           on & map ? " ON" : "OFF", src);
+                           ~~~~~~~~ ^
+drivers/ptp/ptp_ocp.c:2065:16: note: place parentheses around the '&'
+expression to silence this warning
+                           on & map ? " ON" : "OFF", src);
+                                    ^
+                           (       )
+drivers/ptp/ptp_ocp.c:2065:16: note: place parentheses around the '?:'
+expression to evaluate it first
+                           on & map ? " ON" : "OFF", src);
+                                    ^
+
+on and map are both booleans so this should be a logical AND, which
+clears up the operator precedence issue.
+
+Fixes: a62a56d04e63 ("ptp: ocp: Enable 4th timestamper / PPS generator")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1457
+Suggested-by: Jonathan Lemon <jonathan.lemon@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Jonathan Lemon <jonathan.lemon@gmail.com>
+Link: https://lore.kernel.org/r/20210917045204.1385801-1-nathan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://git.kernel.org/netdev/net-next/c/1a575cde596c44aee04d2853d3d7067942a9612c
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/ptp/ptp_ocp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index 844b1401cc5d..c26708f486cf 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -2062,11 +2062,11 @@ ptp_ocp_summary_show(struct seq_file *s, void *data)
+ 		on = ioread32(&ts_reg->enable);
+ 		map = !!(bp->pps_req_map & OCP_REQ_TIMESTAMP);
+ 		seq_printf(s, "%7s: %s, src: %s\n", "TS3",
+-			   on & map ? " ON" : "OFF", src);
++			   on && map ? " ON" : "OFF", src);
+ 
+ 		map = !!(bp->pps_req_map & OCP_REQ_PPS);
+ 		seq_printf(s, "%7s: %s, src: %s\n", "PPS",
+-			   on & map ? " ON" : "OFF", src);
++			   on && map ? " ON" : "OFF", src);
+ 	}
+ 
+ 	if (bp->irig_out) {
+
+base-commit: 9004fd387338b1104499b2c52ef5729a32c408f0
+-- 
+2.33.0
+
