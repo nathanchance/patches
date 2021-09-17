@@ -1,4 +1,4 @@
-From 592c800ef0231c20e34c45f0b681ac02d75c81ab Mon Sep 17 00:00:00 2001
+From 7d2de5d6ea38b08abcbebb5a106ccc49589f057a Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Mon, 6 Sep 2021 21:53:58 -0700
 Subject: [PATCH 01/18] spi: tegra20-slink: Declare runtime suspend and resume
@@ -56,7 +56,7 @@ index ebd27f883033..8ce840c7ecc8 100644
  static const struct dev_pm_ops slink_pm_ops = {
  	SET_RUNTIME_PM_OPS(tegra_slink_runtime_suspend,
 
-base-commit: bdb575f872175ed0ecf2638369da1cb7a6e86a14
+base-commit: 4357f03d6611753936e4d52fc251b54a6afb1b54
 -- 
 2.33.0
 
