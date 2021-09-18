@@ -1,7 +1,7 @@
-From 4a1b796b10d5ada197c71dac0e79d4d1ab7dce2c Mon Sep 17 00:00:00 2001
+From 25f5c6a7f29b510f47bfa0ae423e0dc022814b9c Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Mon, 30 Aug 2021 11:11:28 +0200
-Subject: [PATCH 01/20] block/mq-deadline: Move dd_queued() to fix defined but
+Subject: [PATCH 01/19] block/mq-deadline: Move dd_queued() to fix defined but
  not used warning
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -59,7 +59,7 @@ index 3c3693c34f06..7f3c3932b723 100644
  {
  	struct request_queue *q = data;
 
-base-commit: d92805b6228532148fe7e597b615fdae199e9de7
+base-commit: 6a7ababc0268063d0798c46d5859a90ee996612f
 -- 
 2.33.0
 

@@ -1,7 +1,7 @@
-From 759717d34d23b041c7709a1684cd2867328fe700 Mon Sep 17 00:00:00 2001
+From cae1f107068fb356ae553f57d71e007cff5ce62e Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Tue, 7 Sep 2021 18:37:08 -0700
-Subject: [PATCH 07/20] Input: analog - always use ktime functions
+Subject: [PATCH 06/19] Input: analog - always use ktime functions
 
 m68k, mips, s390, and sparc allmodconfig images fail to build with the
 following error.

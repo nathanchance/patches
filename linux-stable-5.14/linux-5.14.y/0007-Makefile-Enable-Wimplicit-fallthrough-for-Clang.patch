@@ -1,7 +1,7 @@
-From da6c6ea06f683d976d384da6804ef719acc8db62 Mon Sep 17 00:00:00 2001
+From 29c0721d9661d655ddd6d3fa69f0872f7f2e7f68 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 17 Aug 2021 15:33:33 -0500
-Subject: [PATCH 08/20] Makefile: Enable -Wimplicit-fallthrough for Clang
+Subject: [PATCH 07/19] Makefile: Enable -Wimplicit-fallthrough for Clang
 
 With the recent fixes for fallthrough warnings, it is now possible to
 enable -Wimplicit-fallthrough for Clang.
@@ -39,10 +39,10 @@ Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0eaa5623f406..5fe6b9acc717 100644
+index f9c8bbf8cf71..3649114abff7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -797,11 +797,17 @@ KBUILD_CFLAGS += -Wno-gnu
+@@ -802,11 +802,17 @@ KBUILD_CFLAGS += -Wno-gnu
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
  KBUILD_CFLAGS += -mno-global-merge
@@ -60,8 +60,8 @@ index 0eaa5623f406..5fe6b9acc717 100644
 -# Disabled for clang while comment to attribute conversion happens and
 -# https://github.com/ClangBuiltLinux/linux/issues/636 is discussed.
  KBUILD_CFLAGS += $(call cc-option,-Wimplicit-fallthrough=5,)
- endif
- 
+ # gcc inanely warns about local variables called 'main'
+ KBUILD_CFLAGS += -Wno-main
 -- 
 2.33.0
 
