@@ -1,4 +1,4 @@
-From 7d2de5d6ea38b08abcbebb5a106ccc49589f057a Mon Sep 17 00:00:00 2001
+From b2f297dfc096963f4043515876d935d917bf8d53 Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Mon, 6 Sep 2021 21:53:58 -0700
 Subject: [PATCH 01/18] spi: tegra20-slink: Declare runtime suspend and resume
@@ -22,11 +22,11 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
 Link: https://git.kernel.org/broonie/spi/c/2bab94090b01bc593d8bc25f68df41f198721173
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/spi/spi-tegra20-slink.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/spi/spi-tegra20-slink.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index ebd27f883033..8ce840c7ecc8 100644
+index 56c6feb2ba3e..89772a6e6e97 100644
 --- a/drivers/spi/spi-tegra20-slink.c
 +++ b/drivers/spi/spi-tegra20-slink.c
 @@ -204,9 +204,6 @@ struct tegra_slink_data {
@@ -39,15 +39,17 @@ index ebd27f883033..8ce840c7ecc8 100644
  static inline u32 tegra_slink_readl(struct tegra_slink_data *tspi,
  		unsigned long reg)
  {
-@@ -1185,6 +1182,7 @@ static int tegra_slink_resume(struct device *dev)
+@@ -1185,7 +1182,8 @@ static int tegra_slink_resume(struct device *dev)
  }
  #endif
  
+-static int __maybe_unused tegra_slink_runtime_suspend(struct device *dev)
 +#ifdef CONFIG_PM
- static int tegra_slink_runtime_suspend(struct device *dev)
++static int tegra_slink_runtime_suspend(struct device *dev)
  {
  	struct spi_master *master = dev_get_drvdata(dev);
-@@ -1210,6 +1208,7 @@ static int tegra_slink_runtime_resume(struct device *dev)
+ 	struct tegra_slink_data *tspi = spi_master_get_devdata(master);
+@@ -1210,6 +1208,7 @@ static int __maybe_unused tegra_slink_runtime_resume(struct device *dev)
  	}
  	return 0;
  }
@@ -56,7 +58,7 @@ index ebd27f883033..8ce840c7ecc8 100644
  static const struct dev_pm_ops slink_pm_ops = {
  	SET_RUNTIME_PM_OPS(tegra_slink_runtime_suspend,
 
-base-commit: 4357f03d6611753936e4d52fc251b54a6afb1b54
+base-commit: e4e737bb5c170df6135a127739a9e6148ee3da82
 -- 
 2.33.0
 
