@@ -1,4 +1,4 @@
-From d2b2f4f98e0554dfc8e52ae13b5da3ec85312d70 Mon Sep 17 00:00:00 2001
+From fb505cd1ea81bee4ee47ed406c1d1e81c38b01c0 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
 Subject: [PATCH 14/24] vmlinux.lds.h: Add .symtab, .strtab, and .shstrtab to
@@ -44,5 +44,5 @@ index 2551bec5306c..f46cb39e34b4 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 
