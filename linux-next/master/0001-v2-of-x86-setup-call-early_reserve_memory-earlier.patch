@@ -1,0 +1,41 @@
+From 60c684ac9ba9eb710ee93daa02de51e066d21a88 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 21 Sep 2021 18:07:13 -0700
+Subject: [PATCH 01/16] v2 of x86/setup: call early_reserve_memory() earlier
+
+Link: https://lore.kernel.org/r/20210920120421.29276-1-jgross@suse.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/kernel/setup.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+index 79f164141116..37df7822a820 100644
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -830,6 +830,20 @@ void __init setup_arch(char **cmdline_p)
+ 
+ 	x86_init.oem.arch_setup();
+ 
++	/*
++	 * Do some memory reservations *before* memory is added to memblock, so
++	 * memblock allocations won't overwrite it.
++	 *
++	 * After this point, everything still needed from the boot loader or
++	 * firmware or kernel text should be early reserved or marked not RAM in
++	 * e820. All other memory is free game.
++	 *
++	 * This call needs to happen before e820__memory_setup() which calls the
++	 * xen_memory_setup() on Xen dom0 which relies on the fact that those
++	 * early reservations have happened already.
++	 */
++	early_reserve_memory();
++
+ 	iomem_resource.end = (1ULL << boot_cpu_data.x86_phys_bits) - 1;
+ 	e820__memory_setup();
+ 	parse_setup_data();
+
+base-commit: e90f9946ba2858ebca541c15378f5290bf2184fb
+-- 
+2.33.0.514.g99c99ed825
+
