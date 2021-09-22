@@ -1,7 +1,7 @@
-From f27ad4b54a3c95cdfc4aa77c366bdf980bd7dd89 Mon Sep 17 00:00:00 2001
+From 9e9eca25874487847a12105bc1a431f0613a5621 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 17 Aug 2021 16:55:31 -0700
-Subject: [PATCH 04/18] scsi: st: Add missing break in switch statement in
+Subject: [PATCH 03/17] scsi: st: Add missing break in switch statement in
  st_ioctl()
 
 Clang + -Wimplicit-fallthrough warns:
@@ -46,5 +46,5 @@ index 9d04929f03a1..ae8636d3780b 100644
  		break;
  	}
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 
