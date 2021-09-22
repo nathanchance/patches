@@ -1,4 +1,4 @@
-From 549217d751e8f397aba81896a11fad06f572efbe Mon Sep 17 00:00:00 2001
+From 8499266f6cfd8557d71146345f03e0ae3e33ca7b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:27 -0700
 Subject: [PATCH 16/19] drm/i915: Enable -Wsometimes-uninitialized
@@ -27,5 +27,5 @@ index 4f22cac1c49b..b36a921d54f7 100644
  subdir-ccflags-y += $(call cc-disable-warning, frame-address)
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 

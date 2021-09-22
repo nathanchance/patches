@@ -1,4 +1,4 @@
-From 3714ef7371fc7aaa91271326bcaa9584b76ff882 Mon Sep 17 00:00:00 2001
+From 3473d4cb76b04b08427259d825ef236a379305e4 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
 Subject: [PATCH 05/19] compiler_attributes.h: move
@@ -115,5 +115,5 @@ index e4ea86fc584d..b6ff83a714ca 100644
  #ifdef __OPTIMIZE__
  # define __compiletime_assert(condition, msg, prefix, suffix)		\
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 

@@ -1,4 +1,4 @@
-From d922b2fbf4293bc2efd057741dc912d7718ec301 Mon Sep 17 00:00:00 2001
+From 61c072fbdb6b6328c03c3e607b2b71db3381b5a5 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Apr 2020 23:31:24 +0200
 Subject: [PATCH 12/19] drm/rockchip: cdn-dp-core: Make
@@ -19,11 +19,11 @@ Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
 Link: https://lore.kernel.org/r/20200428213138.3171708-1-arnd@arndb.de
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/rockchip/cdn-dp-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-index 8ab3247dbc4a..4d74578970be 100644
+index 13c6b857158f..4d74578970be 100644
 --- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
 +++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
 @@ -1109,7 +1109,7 @@ static const struct component_ops cdn_dp_component_ops = {
@@ -35,15 +35,6 @@ index 8ab3247dbc4a..4d74578970be 100644
  {
  	struct cdn_dp_device *dp = dev_get_drvdata(dev);
  	int ret = 0;
-@@ -1123,7 +1123,7 @@ static int cdn_dp_suspend(struct device *dev)
- 	return ret;
- }
- 
--static int cdn_dp_resume(struct device *dev)
-+static __maybe_unused int cdn_dp_resume(struct device *dev)
- {
- 	struct cdn_dp_device *dp = dev_get_drvdata(dev);
- 
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 
