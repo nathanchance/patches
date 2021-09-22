@@ -1,7 +1,7 @@
-From 811815ae76f847a9e836aac71e456c7146161e1f Mon Sep 17 00:00:00 2001
+From 0aa72916e871bad767a50d818efdb379393f0eb6 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 04/17] asm-generic/io.h: warn in inb() and friends with
+Subject: [PATCH 03/15] asm-generic/io.h: warn in inb() and friends with
  undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -19,11 +19,12 @@ Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://git.kernel.org/arnd/asm-generic/c/5ae6eadfdaf431f47adbdf1754f3b5a5fd638de2
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/asm-generic/io.h | 68 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 64 insertions(+), 4 deletions(-)
+ include/asm-generic/io.h | 64 +++++++++++++++++++++++++++++++++++++---
+ lib/pci_iomap.c          |  4 +++
+ 2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index e93375c710b9..4a3af97a832d 100644
+index cc7338f9e0d1..98e5d22815a1 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -216,7 +217,7 @@ index e93375c710b9..4a3af97a832d 100644
  }
  #endif
  
-@@ -1020,18 +1071,27 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+@@ -1020,8 +1071,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {
@@ -228,9 +229,16 @@ index e93375c710b9..4a3af97a832d 100644
 +	return NULL;
 +#endif
  }
- #define __pci_ioport_unmap __pci_ioport_unmap
- static inline void __pci_ioport_unmap(void __iomem *p)
+ #define ARCH_HAS_GENERIC_IOPORT_MAP
+ #endif
+diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
+index ce39ce9f3526..2952fcaaf67e 100644
+--- a/lib/pci_iomap.c
++++ b/lib/pci_iomap.c
+@@ -165,12 +165,16 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
+ void pci_iounmap(struct pci_dev *dev, void __iomem *p)
  {
+ #ifdef ARCH_HAS_GENERIC_IOPORT_MAP
 +#ifdef PCI_IOBASE
  	uintptr_t start = (uintptr_t) PCI_IOBASE;
  	uintptr_t addr = (uintptr_t) p;
@@ -241,9 +249,9 @@ index e93375c710b9..4a3af97a832d 100644
 +#else
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
- }
  #endif
- 
+ }
+ EXPORT_SYMBOL(pci_iounmap);
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 

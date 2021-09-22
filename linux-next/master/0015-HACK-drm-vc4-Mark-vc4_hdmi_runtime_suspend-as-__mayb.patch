@@ -1,0 +1,27 @@
+From cd1594da9883199f2ce3979b28ad284b3bfb1d0f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 18 Sep 2021 14:00:31 -0700
+Subject: [PATCH 15/15] HACK: drm/vc4: Mark vc4_hdmi_runtime_suspend as
+ __maybe_unused
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 500cdd56b335..1f2690ed8542 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2122,7 +2122,7 @@ static int vc5_hdmi_init_resources(struct vc4_hdmi *vc4_hdmi)
+ 	return 0;
+ }
+ 
+-static int vc4_hdmi_runtime_suspend(struct device *dev)
++static int __maybe_unused vc4_hdmi_runtime_suspend(struct device *dev)
+ {
+ 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+ 
+-- 
+2.33.0.514.g99c99ed825
+

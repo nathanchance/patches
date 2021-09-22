@@ -1,7 +1,7 @@
-From 4159722a9838707bceefdae7bc7156a27996b90f Mon Sep 17 00:00:00 2001
+From fa4e5604a8b5a2e6b7aa23f5c5e4026753ee2b7d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 10 Sep 2021 13:49:42 -0700
-Subject: [PATCH 12/17] HACK: drm/amd: Fix -Wunused-variable in
+Subject: [PATCH 09/15] HACK: drm/amd: Fix -Wunused-variable in
  kfd_ioctl_alloc_memory_of_gpu()
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -24,5 +24,5 @@ index 4de907f3e66a..fa2c76416735 100644
  	long err;
  	uint64_t offset = args->mmap_offset;
 -- 
-2.33.0
+2.33.0.514.g99c99ed825
 
