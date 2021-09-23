@@ -1,7 +1,7 @@
-From bb9c833983d829d11bb9a2dc6e8036890960a89e Mon Sep 17 00:00:00 2001
+From fb5d9526f2eecc1a7bce6ec107f9261aad418423 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 22 Sep 2021 07:58:22 -0700
-Subject: [PATCH 10/16] locking/ww-mutex: Fix uninitialized use of ret in
+Subject: [PATCH 09/15] locking/ww-mutex: Fix uninitialized use of ret in
  test_aa()
 
 Clang warns:

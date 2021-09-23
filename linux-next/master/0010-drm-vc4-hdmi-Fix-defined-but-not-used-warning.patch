@@ -1,0 +1,42 @@
+From 2c57711000f80c01ae8f282505d6dbe0e1fcf675 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime@cerno.tech>
+Date: Thu, 23 Sep 2021 17:57:28 +0200
+Subject: [PATCH 10/15] drm/vc4: hdmi: Fix defined but not used warning
+
+On platforms without CONFIG_PM, SET_RUNTIME_PM_OPS will be a nop and the
+functions vc4_hdmi_runtime_resume and vc4_hdmi_runtime_suspend will not
+be used anywhere leading to
+
+warning: 'vc4_hdmi_runtime_suspend' defined but not used [-Wunused-function]
+
+Since we select CONFIG_PM anyway, vc4_hdmi_runtime_suspend() and
+vc4_hdmi_runtime_suspend() will always be used and we can thus always
+assign them in struct dev_pm_ops without using the SET_RUNTIME_PM_OPS
+macro.
+
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://lore.kernel.org/r/20210923155728.703312-1-maxime@cerno.tech
+---
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 500cdd56b335..5cf3a9aae147 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2411,9 +2411,8 @@ static const struct of_device_id vc4_hdmi_dt_match[] = {
+ };
+ 
+ static const struct dev_pm_ops vc4_hdmi_pm_ops = {
+-	SET_RUNTIME_PM_OPS(vc4_hdmi_runtime_suspend,
+-			   vc4_hdmi_runtime_resume,
+-			   NULL)
++	.runtime_resume = vc4_hdmi_runtime_resume,
++	.runtime_suspend = vc4_hdmi_runtime_suspend,
+ };
+ 
+ struct platform_driver vc4_hdmi_driver = {
+-- 
+2.33.0.514.g99c99ed825
+
