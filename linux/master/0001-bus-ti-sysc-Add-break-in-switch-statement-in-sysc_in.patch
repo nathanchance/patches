@@ -1,7 +1,7 @@
-From 80b1fe329c364833e6a0a6c27120082205d4a5ec Mon Sep 17 00:00:00 2001
+From d8090cd3aa54fbb524ce8dff905ccb11e375bb62 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Aug 2021 12:18:52 -0700
-Subject: [PATCH 01/17] bus: ti-sysc: Add break in switch statement in
+Subject: [PATCH 01/15] bus: ti-sysc: Add break in switch statement in
  sysc_init_soc()
 
 After commit a6d90e9f2232 ("bus: ti-sysc: AM3: RNG is GP only"), clang
@@ -45,7 +45,7 @@ index a51c2a8feed9..484bfe5fdcac 100644
  			break;
  		}
 
-base-commit: 58e2cf5d794616b84f591d4d1276c8953278ce24
+base-commit: 42d43c92fc577dca59ed74aec7868abec8d6ca6e
 -- 
 2.33.0.514.g99c99ed825
 
