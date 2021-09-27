@@ -1,0 +1,57 @@
+From 70f97e1ddbc21e4e3e188c0bdb1d3757706245cb Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime@cerno.tech>
+Date: Fri, 24 Sep 2021 17:23:34 +0200
+Subject: [PATCH 10/16] drm/vc4: Unselect PM
+
+It turns out we can't select PM when allowing the compilation for
+COMPILE_TEST. Indeed, PM might not be defined at all, or come with extra
+requirements we can't meet.
+
+This select was initially introduced since we need to call the
+vc4_hdmi_runtime_resume() at probe time to make sure our device is
+properly powered at bind time, no matter whether PM is there or not, and
+we needed to make sure we didn't have a defined but not used warning for
+vc4_hdmi_runtime_suspend().
+
+This will still happen on platforms that don't define PM though, since
+SET_RUNTIME_PM_OPS will then be a nop. In order to fix both issues,
+let's remove the select, and add a __maybe_unused attribute to
+vc4_hdmi_runtime_resume().
+
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+---
+ drivers/gpu/drm/vc4/Kconfig    | 1 -
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/vc4/Kconfig b/drivers/gpu/drm/vc4/Kconfig
+index 52a1c309cb4a..345a5570a3da 100644
+--- a/drivers/gpu/drm/vc4/Kconfig
++++ b/drivers/gpu/drm/vc4/Kconfig
+@@ -9,7 +9,6 @@ config DRM_VC4
+ 	select DRM_KMS_CMA_HELPER
+ 	select DRM_GEM_CMA_HELPER
+ 	select DRM_PANEL_BRIDGE
+-	select PM
+ 	select SND_PCM
+ 	select SND_PCM_ELD
+ 	select SND_SOC_GENERIC_DMAENGINE_PCM
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 500cdd56b335..1f2690ed8542 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2122,7 +2122,7 @@ static int vc5_hdmi_init_resources(struct vc4_hdmi *vc4_hdmi)
+ 	return 0;
+ }
+ 
+-static int vc4_hdmi_runtime_suspend(struct device *dev)
++static int __maybe_unused vc4_hdmi_runtime_suspend(struct device *dev)
+ {
+ 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+ 
+-- 
+2.33.0.514.g99c99ed825
+
