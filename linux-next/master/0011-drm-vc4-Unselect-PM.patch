@@ -1,7 +1,7 @@
-From 33026ac341878f88b139baf84431a7c46cf06f92 Mon Sep 17 00:00:00 2001
+From c37a8e3c4d149e7201cbf5116a3dcff59eb64b8e Mon Sep 17 00:00:00 2001
 From: Maxime Ripard <maxime@cerno.tech>
 Date: Fri, 24 Sep 2021 17:23:34 +0200
-Subject: [PATCH 10/16] drm/vc4: Unselect PM
+Subject: [PATCH 11/17] drm/vc4: Unselect PM
 
 It turns out we can't select PM when allowing the compilation for
 COMPILE_TEST. Indeed, PM might not be defined at all, or come with extra
@@ -40,10 +40,10 @@ index 52a1c309cb4a..345a5570a3da 100644
  	select SND_PCM_ELD
  	select SND_SOC_GENERIC_DMAENGINE_PCM
 diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 500cdd56b335..1f2690ed8542 100644
+index 8cbe82187856..9dd2262b3a46 100644
 --- a/drivers/gpu/drm/vc4/vc4_hdmi.c
 +++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2122,7 +2122,7 @@ static int vc5_hdmi_init_resources(struct vc4_hdmi *vc4_hdmi)
+@@ -2123,7 +2123,7 @@ static int vc5_hdmi_init_resources(struct vc4_hdmi *vc4_hdmi)
  	return 0;
  }
  
@@ -53,5 +53,5 @@ index 500cdd56b335..1f2690ed8542 100644
  	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
  
 -- 
-2.33.0.514.g99c99ed825
+2.33.0.591.gddb1055343
 

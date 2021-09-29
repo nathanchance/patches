@@ -1,7 +1,7 @@
-From c6eecdd3f739176ff370ecbd279eae26c464be27 Mon Sep 17 00:00:00 2001
+From a73641308abec42ca63c2fda25408701cd9df31c Mon Sep 17 00:00:00 2001
 From: Hans de Goede <hdegoede@redhat.com>
 Date: Tue, 28 Sep 2021 16:16:06 +0200
-Subject: [PATCH 11/16] platform/x86: amd-pmc: Fix compilation when
+Subject: [PATCH 12/17] platform/x86: amd-pmc: Fix compilation when
  CONFIG_DEBUGFS is disabled
 
 The amd_pmc_get_smu_version() and amd_pmc_idlemask_read() functions are
@@ -128,5 +128,5 @@ index 1303366c31af..f185c43bbaa4 100644
  {
  	struct amd_pmc_dev *dev = s->private;
 -- 
-2.33.0.514.g99c99ed825
+2.33.0.591.gddb1055343
 

@@ -1,7 +1,7 @@
-From f710b534a6f912810789ab9a6a340707adce1b60 Mon Sep 17 00:00:00 2001
+From 12ff6b58ce7bb6d9ed7e472a8ad07e267ec51e5a Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 30 Aug 2021 14:38:43 -0700
-Subject: [PATCH 08/16] ARM: select HAVE_FUTEX_CMPXCHG
+Subject: [PATCH 09/17] ARM: select HAVE_FUTEX_CMPXCHG
 
 tglx notes:
   This function [futex_detect_cmpxchg] is only needed when an
@@ -38,5 +38,5 @@ index fc196421b2ce..b760dd45b734 100644
  	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
  	select HAVE_IRQ_TIME_ACCOUNTING
 -- 
-2.33.0.514.g99c99ed825
+2.33.0.591.gddb1055343
 
