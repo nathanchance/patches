@@ -1,4 +1,4 @@
-From 1f24428220f4ea5df353c4a6330009d6f3c30fdb Mon Sep 17 00:00:00 2001
+From b9227002332128f82cecbdc7b5fac2683a6475fc Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert@linux-m68k.org>
 Date: Mon, 30 Aug 2021 11:11:28 +0200
 Subject: [PATCH 01/19] block/mq-deadline: Move dd_queued() to fix defined but
@@ -59,7 +59,7 @@ index 3c3693c34f06..7f3c3932b723 100644
  {
  	struct request_queue *q = data;
 
-base-commit: c34892e1995da8ca0dfbdcb115d6156f15000435
+base-commit: 70248e7b378b96f208d5544ee25b808a8ef2ddc2
 -- 
-2.33.0.514.g99c99ed825
+2.33.0.591.gddb1055343
 
