@@ -1,7 +1,7 @@
-From 3109298baec64f8684485467c64cfdff388ec478 Mon Sep 17 00:00:00 2001
+From 2da557aa7de7f68714cbdb8d4bca575375708156 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Wed, 14 Jul 2021 17:01:59 +0200
-Subject: [PATCH 04/19] Compiler Attributes: fix
+Subject: [PATCH 03/18] Compiler Attributes: fix
  __has_attribute(__no_sanitize_coverage__) for GCC 4
 
 Fix __has_attribute(__no_sanitize_coverage__) for GCC 4 by defining
