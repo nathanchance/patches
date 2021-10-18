@@ -1,4 +1,4 @@
-From fd306664e6b850f91de335cf8fc2a680cfab58db Mon Sep 17 00:00:00 2001
+From 8ba3e3187d06294df4c3f37de73457f58d2cf407 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 25 Feb 2021 12:22:41 +0100
 Subject: [PATCH 21/24] x86: mark some mpspec inline functions as __init
@@ -48,5 +48,5 @@ index 606cbaebd336..6b98d8fb869c 100644
  	x86_init.mpparse.find_smp_config();
  }
 -- 
-2.33.0.591.gddb1055343
+2.33.1.637.gf443b226ca
 
