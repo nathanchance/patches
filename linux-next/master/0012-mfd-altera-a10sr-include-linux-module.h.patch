@@ -1,0 +1,32 @@
+From eb8af9ee5722bc0525439f3ca2ed574ef50c6115 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Wed, 13 Oct 2021 16:43:55 +0200
+Subject: [PATCH 12/21] mfd: altera-a10sr: include linux/module.h
+
+Without the header, the MODULE_DEVICE_TABLE() declaration fails:
+
+drivers/mfd/altera-a10sr.c:153:1: error: data definition has no type or storage class [-Werror]
+  153 | MODULE_DEVICE_TABLE(of, altr_a10sr_spi_of_match);
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211013144402.2292128-1-arnd@kernel.org
+---
+ drivers/mfd/altera-a10sr.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mfd/altera-a10sr.c b/drivers/mfd/altera-a10sr.c
+index 6d04fdd09ca2..34ef526f4aee 100644
+--- a/drivers/mfd/altera-a10sr.c
++++ b/drivers/mfd/altera-a10sr.c
+@@ -14,6 +14,7 @@
+ #include <linux/mfd/altera-a10sr.h>
+ #include <linux/mfd/core.h>
+ #include <linux/init.h>
++#include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/spi/spi.h>
+ 
+-- 
+2.33.1.637.gf443b226ca
+

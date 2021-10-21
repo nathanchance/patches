@@ -1,7 +1,7 @@
-From f9a4222871e9426d19df854d03fd1e20321e14f8 Mon Sep 17 00:00:00 2001
+From 831643fbc5ac5480690aadcc872c335009cc2f6e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:44:34 -0700
-Subject: [PATCH 16/17] HACK: Disable syscall not implemented warning
+Subject: [PATCH 18/21] HACK: Disable syscall not implemented warning
 
 This used to impact -Werror and it is noisy at times so just ignore it
 for the sake of this project.
@@ -12,10 +12,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index fd9777f63f14..091209b71c28 100755
+index 9dbab13329fa..204b6c4aca07 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
-@@ -259,7 +259,7 @@ EOF
+@@ -261,7 +261,7 @@ EOF
  syscall_list() {
      grep '^[0-9]' "$1" | sort -n |
  	while read nr abi name entry ; do
@@ -25,5 +25,5 @@ index fd9777f63f14..091209b71c28 100755
  		echo "#endif"
  	done
 -- 
-2.33.0.591.gddb1055343
+2.33.1.637.gf443b226ca
 

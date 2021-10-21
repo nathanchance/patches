@@ -1,0 +1,71 @@
+From c6351d3d0b663584401b64100f558d0684577e40 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 20 Oct 2021 15:21:16 -0700
+Subject: [PATCH 21/21] -Wbitwise-instead-of-logical
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/soc/tegra/fuse/speedo-tegra20.c | 8 ++++----
+ fs/namei.c                              | 2 +-
+ lib/zstd/decompress/huf_decompress.c    | 6 +++---
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/soc/tegra/fuse/speedo-tegra20.c b/drivers/soc/tegra/fuse/speedo-tegra20.c
+index 2546bddbab93..f6881cf2e80d 100644
+--- a/drivers/soc/tegra/fuse/speedo-tegra20.c
++++ b/drivers/soc/tegra/fuse/speedo-tegra20.c
+@@ -69,8 +69,8 @@ void __init tegra20_init_speedo_data(struct tegra_sku_info *sku_info)
+ 
+ 	val = 0;
+ 	for (i = CPU_SPEEDO_MSBIT; i >= CPU_SPEEDO_LSBIT; i--) {
+-		reg = tegra_fuse_read_spare(i) |
+-			tegra_fuse_read_spare(i + CPU_SPEEDO_REDUND_OFFS);
++		reg = tegra_fuse_read_spare(i);
++		reg |= tegra_fuse_read_spare(i + CPU_SPEEDO_REDUND_OFFS);
+ 		val = (val << 1) | (reg & 0x1);
+ 	}
+ 	val = val * SPEEDO_MULT;
+@@ -84,8 +84,8 @@ void __init tegra20_init_speedo_data(struct tegra_sku_info *sku_info)
+ 
+ 	val = 0;
+ 	for (i = SOC_SPEEDO_MSBIT; i >= SOC_SPEEDO_LSBIT; i--) {
+-		reg = tegra_fuse_read_spare(i) |
+-			tegra_fuse_read_spare(i + SOC_SPEEDO_REDUND_OFFS);
++		reg = tegra_fuse_read_spare(i);
++		reg |= tegra_fuse_read_spare(i + SOC_SPEEDO_REDUND_OFFS);
+ 		val = (val << 1) | (reg & 0x1);
+ 	}
+ 	val = val * SPEEDO_MULT;
+diff --git a/fs/namei.c b/fs/namei.c
+index 1946d9667790..c1ed391ef403 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2146,7 +2146,7 @@ static inline u64 hash_name(const void *salt, const char *name)
+ inside:
+ 		a = load_unaligned_zeropad(name+len);
+ 		b = a ^ REPEAT_BYTE('/');
+-	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
++	} while (!((unsigned long)has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
+ 
+ 	adata = prep_zero_mask(a, adata, &constants);
+ 	bdata = prep_zero_mask(b, bdata, &constants);
+diff --git a/lib/zstd/decompress/huf_decompress.c b/lib/zstd/decompress/huf_decompress.c
+index 05570ed5f8be..86e734d17033 100644
+--- a/lib/zstd/decompress/huf_decompress.c
++++ b/lib/zstd/decompress/huf_decompress.c
+@@ -888,9 +888,9 @@ HUF_decompress4X2_usingDTable_internal_body(
+             HUF_DECODE_SYMBOLX2_0(op4, &bitD4);
+             endSignal = (U32)LIKELY(
+                         (BIT_reloadDStreamFast(&bitD1) == BIT_DStream_unfinished)
+-                      & (BIT_reloadDStreamFast(&bitD2) == BIT_DStream_unfinished)
+-                      & (BIT_reloadDStreamFast(&bitD3) == BIT_DStream_unfinished)
+-                      & (BIT_reloadDStreamFast(&bitD4) == BIT_DStream_unfinished));
++                      && (BIT_reloadDStreamFast(&bitD2) == BIT_DStream_unfinished)
++                      && (BIT_reloadDStreamFast(&bitD3) == BIT_DStream_unfinished)
++                      && (BIT_reloadDStreamFast(&bitD4) == BIT_DStream_unfinished));
+ #endif
+         }
+ 
+-- 
+2.33.1.637.gf443b226ca
+

@@ -1,7 +1,7 @@
-From 163d905c0b11614c17257947162630907cb9701b Mon Sep 17 00:00:00 2001
+From 43eb2086cc95f50f79964ff6eb66c30299f5a532 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 26 Aug 2021 17:08:27 -0700
-Subject: [PATCH 13/17] HACK: Disable NETFILTER_SYNPROXY with X86_32 and
+Subject: [PATCH 15/21] HACK: Disable NETFILTER_SYNPROXY with X86_32 and
  !FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1442
@@ -39,10 +39,10 @@ index f22233e44ee9..331a5d439f56 100644
  	select SYN_COOKIES
  	help
 diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index 54395266339d..d1ef8660b113 100644
+index 3646fc195e7d..e1d035e032c0 100644
 --- a/net/netfilter/Kconfig
 +++ b/net/netfilter/Kconfig
-@@ -660,6 +660,8 @@ config NFT_TPROXY
+@@ -671,6 +671,8 @@ config NFT_TPROXY
  config NFT_SYNPROXY
  	tristate "Netfilter nf_tables SYNPROXY expression support"
  	depends on NF_CONNTRACK && NETFILTER_ADVANCED
@@ -52,5 +52,5 @@ index 54395266339d..d1ef8660b113 100644
  	select SYN_COOKIES
  	help
 -- 
-2.33.0.591.gddb1055343
+2.33.1.637.gf443b226ca
 
