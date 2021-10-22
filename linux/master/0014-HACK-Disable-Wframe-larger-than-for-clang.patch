@@ -1,7 +1,7 @@
-From aaa984b511f6c180d72bbeab3118d149b5e414e4 Mon Sep 17 00:00:00 2001
+From 27e91399c9f32d436451c36523108b05bd78b376 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:41:55 -0700
-Subject: [PATCH 12/15] HACK: Disable -Wframe-larger-than= for clang
+Subject: [PATCH 14/17] HACK: Disable -Wframe-larger-than= for clang
 
 There are a lot of these warnings right now so disable the warning for
 now until they can be triaged and fixed.
@@ -10,8 +10,7 @@ Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  lib/Kconfig.debug | 3 ++-
- lib/Makefile      | 1 -
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
 index 2a9b6dcdac4f..a19e175a214c 100644
@@ -28,18 +27,6 @@ index 2a9b6dcdac4f..a19e175a214c 100644
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
  	default 1536 if (!64BIT && (PARISC || XTENSA))
  	default 1024 if (!64BIT && !PARISC)
-diff --git a/lib/Makefile b/lib/Makefile
-index 5efd1b435a37..eea1027b4206 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -351,7 +351,6 @@ obj-$(CONFIG_OBJAGG) += objagg.o
- obj-$(CONFIG_PLDMFW) += pldmfw/
- 
- # KUnit tests
--CFLAGS_bitfield_kunit.o := $(call cc-option,-Wframe-larger-than=10240)
- obj-$(CONFIG_BITFIELD_KUNIT) += bitfield_kunit.o
- obj-$(CONFIG_LIST_KUNIT_TEST) += list-test.o
- obj-$(CONFIG_LINEAR_RANGES_TEST) += test_linear_ranges.o
 -- 
-2.33.0.514.g99c99ed825
+2.33.1.637.gf443b226ca
 

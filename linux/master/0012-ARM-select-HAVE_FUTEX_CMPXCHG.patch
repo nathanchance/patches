@@ -1,7 +1,7 @@
-From 091dc4d1bc9a12e55e9b0a0e2f2918222ef6e362 Mon Sep 17 00:00:00 2001
+From 61cf3991b3016cf5639c64b230b0431d5442c9d8 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 30 Aug 2021 14:38:43 -0700
-Subject: [PATCH 11/15] ARM: select HAVE_FUTEX_CMPXCHG
+Subject: [PATCH 12/17] ARM: select HAVE_FUTEX_CMPXCHG
 
 tglx notes:
   This function [futex_detect_cmpxchg] is only needed when an
@@ -26,7 +26,7 @@ Link: https://lore.kernel.org/r/20210830213846.2609349-1-ndesaulniers@google.com
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index fc196421b2ce..b760dd45b734 100644
+index 59baf6c132a7..dcf2df6da98f 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
 @@ -92,6 +92,7 @@ config ARM
@@ -38,5 +38,5 @@ index fc196421b2ce..b760dd45b734 100644
  	select HAVE_HW_BREAKPOINT if PERF_EVENTS && (CPU_V6 || CPU_V6K || CPU_V7)
  	select HAVE_IRQ_TIME_ACCOUNTING
 -- 
-2.33.0.514.g99c99ed825
+2.33.1.637.gf443b226ca
 
