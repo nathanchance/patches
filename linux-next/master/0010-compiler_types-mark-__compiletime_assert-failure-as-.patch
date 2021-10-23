@@ -1,7 +1,7 @@
-From d1cf68aaf58da8ca461412054f6c2e897c791fe6 Mon Sep 17 00:00:00 2001
+From 5b9db3ffca04c9c75e7bf49a1d05fbf5f61d92d0 Mon Sep 17 00:00:00 2001
 From: Miguel Ojeda <ojeda@kernel.org>
 Date: Thu, 14 Oct 2021 15:23:31 +0200
-Subject: [PATCH 11/21] compiler_types: mark __compiletime_assert failure as
+Subject: [PATCH 10/28] compiler_types: mark __compiletime_assert failure as
  __noreturn
 
 `__compiletime_assert` declares a fake `extern` function

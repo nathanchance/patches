@@ -1,7 +1,7 @@
-From bc1841677d6af0b4eed8781be23e76ef8ed8a59f Mon Sep 17 00:00:00 2001
+From ff74d5eb24eb2112e013d3690b6152abef3f660b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Oct 2021 18:42:03 -0700
-Subject: [PATCH 10/21] ice: Fix clang -Wimplicit-fallthrough in
+Subject: [PATCH 09/28] ice: Fix clang -Wimplicit-fallthrough in
  ice_pull_qvec_from_rc()
 
 Clang warns:
@@ -31,10 +31,10 @@ Link: https://lore.kernel.org/r/20211019014203.1926130-1-nathan@kernel.org
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 8afc1c6ac81f..295204679788 100644
+index 77dceab9fbbe..159c52b9b9d4 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -1903,6 +1903,7 @@ static struct ice_q_vector *ice_pull_qvec_from_rc(struct ice_ring_container *rc)
+@@ -1983,6 +1983,7 @@ static struct ice_q_vector *ice_pull_qvec_from_rc(struct ice_ring_container *rc)
  	case ICE_TX_CONTAINER:
  		if (rc->tx_ring)
  			return rc->tx_ring->q_vector;

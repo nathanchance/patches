@@ -1,7 +1,7 @@
-From 51b96cd0b9d98f64e380e582c634e4f0033e96fa Mon Sep 17 00:00:00 2001
+From c28b2de8271ce77e1846f22e9c039032c43e961e Mon Sep 17 00:00:00 2001
 From: Yanteng Si <siyanteng01@gmail.com>
 Date: Thu, 14 Oct 2021 16:51:34 +0800
-Subject: [PATCH 14/21] drm/msm: Fix missing include files in
+Subject: [PATCH 13/28] drm/msm: Fix missing include files in
  msm_gem_shrinker.c
 
 Include linux/vmalloc.h to fix below errors:

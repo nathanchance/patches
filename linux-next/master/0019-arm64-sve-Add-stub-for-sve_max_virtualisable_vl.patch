@@ -1,0 +1,34 @@
+From 22739e0f1e3a8dbbc0e97828215018323ea32cbd Mon Sep 17 00:00:00 2001
+From: Mark Brown <broonie@kernel.org>
+Date: Fri, 22 Oct 2021 15:16:34 +0100
+Subject: [PATCH 19/28] arm64/sve: Add stub for sve_max_virtualisable_vl()
+
+Fixes build problems for configurations with KVM enabled but SVE disabled.
+
+Reported-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211022141635.2360415-2-broonie@kernel.org
+---
+ arch/arm64/include/asm/fpsimd.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/include/asm/fpsimd.h b/arch/arm64/include/asm/fpsimd.h
+index 1d0b5fa253a0..dbb4b30a5648 100644
+--- a/arch/arm64/include/asm/fpsimd.h
++++ b/arch/arm64/include/asm/fpsimd.h
+@@ -215,6 +215,11 @@ static inline void fpsimd_release_task(struct task_struct *task) { }
+ static inline void sve_sync_to_fpsimd(struct task_struct *task) { }
+ static inline void sve_sync_from_fpsimd_zeropad(struct task_struct *task) { }
+ 
++static inline int sve_max_virtualisable_vl(void)
++{
++	return 0;
++}
++
+ static inline int sve_set_current_vl(unsigned long arg)
+ {
+ 	return -EINVAL;
+-- 
+2.33.1.637.gf443b226ca
+

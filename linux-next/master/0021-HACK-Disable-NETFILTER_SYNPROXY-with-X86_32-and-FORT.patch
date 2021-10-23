@@ -1,7 +1,7 @@
-From 43eb2086cc95f50f79964ff6eb66c30299f5a532 Mon Sep 17 00:00:00 2001
+From 1acab13af35f59331501a5526cadd43a57684d49 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 26 Aug 2021 17:08:27 -0700
-Subject: [PATCH 15/21] HACK: Disable NETFILTER_SYNPROXY with X86_32 and
+Subject: [PATCH 21/28] HACK: Disable NETFILTER_SYNPROXY with X86_32 and
  !FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1442

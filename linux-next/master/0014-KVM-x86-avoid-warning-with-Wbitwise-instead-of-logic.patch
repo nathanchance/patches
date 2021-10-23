@@ -1,7 +1,7 @@
-From 01251291676b80a3c293dfdb31e4b247aae4995f Mon Sep 17 00:00:00 2001
+From 205edd891522b94b1e66f7a178fcd677d354fc70 Mon Sep 17 00:00:00 2001
 From: Paolo Bonzini <pbonzini@redhat.com>
 Date: Fri, 15 Oct 2021 04:51:48 -0400
-Subject: [PATCH 20/21] KVM: x86: avoid warning with
+Subject: [PATCH 14/28] KVM: x86: avoid warning with
  -Wbitwise-instead-of-logical
 
 This is a new warning in clang top-of-tree (will be clang 14):

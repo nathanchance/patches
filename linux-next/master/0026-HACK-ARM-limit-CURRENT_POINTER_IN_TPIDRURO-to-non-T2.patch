@@ -1,0 +1,36 @@
+From 0f438aa62fc8eb4c9e7f04c4c7ce0b3420d918f7 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Fri, 22 Oct 2021 17:46:22 -0700
+Subject: [PATCH 26/28] HACK: ARM: limit CURRENT_POINTER_IN_TPIDRURO to non-T2
+ kernel
+
+ld.lld: error: undefined symbol: __aeabi_read_tp
+>>> referenced by main.c
+>>>               main.o:(start_kernel) in archive init/built-in.a
+>>> referenced by main.c
+>>>               main.o:(do_one_initcall) in archive init/built-in.a
+>>> referenced by main.c
+>>>               main.o:(trace_initcall_start_cb) in archive init/built-in.a
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index b9f72337224c..741a7326026b 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1161,7 +1161,7 @@ config SMP_ON_UP
+ 
+ config CURRENT_POINTER_IN_TPIDRURO
+ 	def_bool y
+-	depends on SMP && CPU_32v6K && !CPU_V6
++	depends on SMP && CPU_32v6K && !CPU_V6 && !THUMB2_KERNEL
+ 
+ config ARM_CPU_TOPOLOGY
+ 	bool "Support cpu topology definition"
+-- 
+2.33.1.637.gf443b226ca
+

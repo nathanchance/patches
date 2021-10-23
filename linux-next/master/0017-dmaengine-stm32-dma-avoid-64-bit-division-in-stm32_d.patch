@@ -1,0 +1,69 @@
+From b6684b861766e9f58765ec6e74cce3485daaaf67 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 19 Oct 2021 17:35:27 +0200
+Subject: [PATCH 17/28] dmaengine: stm32-dma: avoid 64-bit division in
+ stm32_dma_get_max_width
+
+Using the % operator on a 64-bit variable is expensive and can
+cause a link failure:
+
+arm-linux-gnueabi-ld: drivers/dma/stm32-dma.o: in function `stm32_dma_get_max_width':
+stm32-dma.c:(.text+0x170): undefined reference to `__aeabi_uldivmod'
+arm-linux-gnueabi-ld: drivers/dma/stm32-dma.o: in function `stm32_dma_set_xfer_param':
+stm32-dma.c:(.text+0x1cd4): undefined reference to `__aeabi_uldivmod'
+
+As we know that we just want to check the alignment in
+stm32_dma_get_max_width(), there is no need for a full division, and
+using a simple mask is a faster replacement.
+
+In stm32_dma_set_xfer_param(), it is possible to pass a non-power-of-two
+length, so this does not work. I assume this would in fact be a mistake,
+and the hardware does not work correctly with a burst of e.g. 5 bytes
+on a five-byte aligned address. Change this to only allow burst
+transfers if the address is a multiple of the length, and that length
+is a power-of-two number.
+
+Fixes: b20fd5fa310c ("dmaengine: stm32-dma: fix stm32_dma_get_max_width")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Tested-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211019153532.366429-1-arnd@kernel.org
+---
+ drivers/dma/stm32-dma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+index 2283c500f4ce..102278f7d13e 100644
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -280,7 +280,7 @@ static enum dma_slave_buswidth stm32_dma_get_max_width(u32 buf_len,
+ 	       max_width > DMA_SLAVE_BUSWIDTH_1_BYTE)
+ 		max_width = max_width >> 1;
+ 
+-	if (buf_addr % max_width)
++	if (buf_addr & (max_width - 1))
+ 		max_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
+ 
+ 	return max_width;
+@@ -757,7 +757,7 @@ static int stm32_dma_set_xfer_param(struct stm32_dma_chan *chan,
+ 		 * Set memory burst size - burst not possible if address is not aligned on
+ 		 * the address boundary equal to the size of the transfer
+ 		 */
+-		if (buf_addr % buf_len)
++		if (!is_power_of_2(buf_len) || (buf_addr & (buf_len -1)))
+ 			src_maxburst = 1;
+ 		else
+ 			src_maxburst = STM32_DMA_MAX_BURST;
+@@ -813,7 +813,7 @@ static int stm32_dma_set_xfer_param(struct stm32_dma_chan *chan,
+ 		 * Set memory burst size - burst not possible if address is not aligned on
+ 		 * the address boundary equal to the size of the transfer
+ 		 */
+-		if (buf_addr % buf_len)
++		if (!is_power_of_2(buf_len) || (buf_addr & (buf_len -1)))
+ 			dst_maxburst = 1;
+ 		else
+ 			dst_maxburst = STM32_DMA_MAX_BURST;
+-- 
+2.33.1.637.gf443b226ca
+

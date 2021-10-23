@@ -1,7 +1,7 @@
-From d5f5b21a8d438030987bfc2e28ec6c5cf72357d0 Mon Sep 17 00:00:00 2001
+From e7a29244fab409f9c42a0c28c8847882b022b184 Mon Sep 17 00:00:00 2001
 From: Yanteng Si <siyanteng01@gmail.com>
 Date: Thu, 14 Oct 2021 16:51:33 +0800
-Subject: [PATCH 13/21] drm/msm: Fix missing include files in msm_gem.c
+Subject: [PATCH 12/28] drm/msm: Fix missing include files in msm_gem.c
 
 Include linux/vmalloc.h to fix below errors:
 error: implicit declaration of function 'vmap'
@@ -14,7 +14,7 @@ Link: https://lore.kernel.org/r/15f30165e94574e4cd7c4da9f9c6fd1e320d4d8e.1634200
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 0e491cd21c53..104fdfc14027 100644
+index 38fb1e6f31b6..4db6f7c82d3f 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
 @@ -5,6 +5,7 @@

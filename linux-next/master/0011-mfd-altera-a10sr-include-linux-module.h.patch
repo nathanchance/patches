@@ -1,7 +1,7 @@
-From eb8af9ee5722bc0525439f3ca2ed574ef50c6115 Mon Sep 17 00:00:00 2001
+From 6b6e2463fadd0d076a211c537da719522a77010d Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 13 Oct 2021 16:43:55 +0200
-Subject: [PATCH 12/21] mfd: altera-a10sr: include linux/module.h
+Subject: [PATCH 11/28] mfd: altera-a10sr: include linux/module.h
 
 Without the header, the MODULE_DEVICE_TABLE() declaration fails:
 
