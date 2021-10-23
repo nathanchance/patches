@@ -1,7 +1,7 @@
-From 22739e0f1e3a8dbbc0e97828215018323ea32cbd Mon Sep 17 00:00:00 2001
+From 80f232a370d23f61b6858e9f6878c8ef38eb78a8 Mon Sep 17 00:00:00 2001
 From: Mark Brown <broonie@kernel.org>
 Date: Fri, 22 Oct 2021 15:16:34 +0100
-Subject: [PATCH 19/28] arm64/sve: Add stub for sve_max_virtualisable_vl()
+Subject: [PATCH 20/28] arm64/sve: Add stub for sve_max_virtualisable_vl()
 
 Fixes build problems for configurations with KVM enabled but SVE disabled.
 

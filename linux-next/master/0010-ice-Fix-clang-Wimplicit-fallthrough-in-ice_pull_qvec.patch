@@ -1,7 +1,7 @@
-From ff74d5eb24eb2112e013d3690b6152abef3f660b Mon Sep 17 00:00:00 2001
+From d0ca8ec1ffd1e9cd0b16567c7cd1c8e2dc84a4ab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Oct 2021 18:42:03 -0700
-Subject: [PATCH 09/28] ice: Fix clang -Wimplicit-fallthrough in
+Subject: [PATCH 10/28] ice: Fix clang -Wimplicit-fallthrough in
  ice_pull_qvec_from_rc()
 
 Clang warns:

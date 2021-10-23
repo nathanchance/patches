@@ -1,7 +1,7 @@
-From 3e0576dd042d5d34c2affc0aa96c17017411df62 Mon Sep 17 00:00:00 2001
+From e41132d38d958ffbcf552cc1cd3429d00c3a826a Mon Sep 17 00:00:00 2001
 From: Mark Brown <broonie@kernel.org>
 Date: Fri, 22 Oct 2021 15:16:35 +0100
-Subject: [PATCH 20/28] arm64/sve: Fix warnings when SVE is disabled
+Subject: [PATCH 21/28] arm64/sve: Fix warnings when SVE is disabled
 
 In configurations where SVE is disabled we define but never reference the
 functions for retrieving the default vector length, causing warnings. Fix

@@ -1,7 +1,7 @@
-From f5d6d6853ce717b8fdf80e86a135a405a0ac2754 Mon Sep 17 00:00:00 2001
+From 782c229b92b340de871d4bea98e4b1eacc95d793 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Oct 2021 17:43:35 -0700
-Subject: [PATCH 08/28] regulator: lp872x: Remove lp872x_dvs_state
+Subject: [PATCH 09/28] regulator: lp872x: Remove lp872x_dvs_state
 
 After this driver was converted to gpiod, clang started warning:
 

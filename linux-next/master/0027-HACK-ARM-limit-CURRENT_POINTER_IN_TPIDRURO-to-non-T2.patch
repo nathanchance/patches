@@ -1,7 +1,7 @@
-From 0f438aa62fc8eb4c9e7f04c4c7ce0b3420d918f7 Mon Sep 17 00:00:00 2001
+From 6777cf6fe7e90a8b2652060f1b3ab77aa4aacd93 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 22 Oct 2021 17:46:22 -0700
-Subject: [PATCH 26/28] HACK: ARM: limit CURRENT_POINTER_IN_TPIDRURO to non-T2
+Subject: [PATCH 27/28] HACK: ARM: limit CURRENT_POINTER_IN_TPIDRURO to non-T2
  kernel
 
 ld.lld: error: undefined symbol: __aeabi_read_tp
