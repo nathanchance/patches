@@ -1,0 +1,44 @@
+From c1414f55cf420ea2cfa1601a1e7406986a2ddee1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 27 Oct 2021 08:31:22 -0700
+Subject: [PATCH 14/22] net/mlx5: Add esw assignment back in
+ mlx5e_tc_sample_unoffload()
+
+Clang warns:
+
+drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c:635:34: error: variable 'esw' is uninitialized when used here [-Werror,-Wuninitialized]
+        mlx5_eswitch_del_offloaded_rule(esw, sample_flow->pre_rule, sample_flow->pre_attr);
+                                        ^~~
+drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c:626:26: note: initialize the variable 'esw' to silence this warning
+        struct mlx5_eswitch *esw;
+                                ^
+                                 = NULL
+1 error generated.
+
+It appears that the assignment should have been shuffled instead of
+removed outright like in mlx5e_tc_sample_offload(). Add it back so there
+is no use of esw uninitialized.
+
+Fixes: a64c5edbd20e ("net/mlx5: Remove unnecessary checks for slow path flag")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1494
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211027153122.3224673-1-nathan@kernel.org
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+index 1046b7ea5c88..df6888c4793c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+@@ -631,6 +631,7 @@ mlx5e_tc_sample_unoffload(struct mlx5e_tc_psample *tc_psample,
+ 	/* The following delete order can't be changed, otherwise,
+ 	 * will hit fw syndromes.
+ 	 */
++	esw = tc_psample->esw;
+ 	sample_flow = attr->sample_attr->sample_flow;
+ 	mlx5_eswitch_del_offloaded_rule(esw, sample_flow->pre_rule, sample_flow->pre_attr);
+ 
+-- 
+2.33.1.637.gf443b226ca
+

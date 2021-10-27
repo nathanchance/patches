@@ -1,0 +1,47 @@
+From 45779b1bb843e1b5c132690fbf463d1d7e64c13e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 27 Oct 2021 12:08:23 -0700
+Subject: [PATCH 15/22] ASoC: qdsp6: audioreach: Fix clang
+ -Wimplicit-fallthrough
+
+Clang warns:
+
+sound/soc/qcom/qdsp6/topology.c:465:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+                default:
+                ^
+sound/soc/qcom/qdsp6/topology.c:465:3: note: insert 'break;' to avoid fall-through
+                default:
+                ^
+                break;
+1 warning generated.
+
+Clang is a little more pedantic than GCC, which permits implicit
+fallthroughs to cases that contain just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to fix
+the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1495
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211027190823.4057382-1-nathan@kernel.org
+---
+ sound/soc/qcom/qdsp6/topology.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
+index f31895379925..bd649c232a06 100644
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -461,7 +461,7 @@ static struct audioreach_module *audioreach_parse_common_tokens(struct q6apm *ap
+ 			break;
+ 		case AR_TKN_U32_MODULE_DST_IN_PORT_ID:
+ 			dst_mod_ip_port_id = le32_to_cpu(mod_elem->value);
+-
++			break;
+ 		default:
+ 			break;
+ 
+-- 
+2.33.1.637.gf443b226ca
+
