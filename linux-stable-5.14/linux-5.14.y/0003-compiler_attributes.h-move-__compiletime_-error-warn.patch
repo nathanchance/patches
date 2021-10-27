@@ -1,7 +1,7 @@
-From e25dc9de41786266069665ca2d80a4cc274be0c1 Mon Sep 17 00:00:00 2001
+From db9900668e0af639b08b65d71ba6e0cdf324335a Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 2 Aug 2021 13:23:20 -0700
-Subject: [PATCH 04/18] compiler_attributes.h: move
+Subject: [PATCH 03/17] compiler_attributes.h: move
  __compiletime_{error|warning}
 
 Clang 14 will add support for __attribute__((__error__(""))) and

@@ -1,7 +1,7 @@
-From de84e3bb41ef2868f3f6c43688a6843fab18bbe8 Mon Sep 17 00:00:00 2001
+From a39f574174c2ac491698a3d20c262101b3a18b2c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 24 Aug 2021 15:54:27 -0700
-Subject: [PATCH 15/18] drm/i915: Enable -Wsometimes-uninitialized
+Subject: [PATCH 14/17] drm/i915: Enable -Wsometimes-uninitialized
 
 This warning helps catch uninitialized variables. It should have been
 enabled at the same time as commit b2423184ac33 ("drm/i915: Enable

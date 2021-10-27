@@ -1,7 +1,7 @@
-From e95ca6b81292c1a7d37e7f50cbfc7d40b653caed Mon Sep 17 00:00:00 2001
+From 7b4d4f2db733e815c0e51a4e70607f87477251de Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Aug 2021 12:29:59 -0700
-Subject: [PATCH 02/18] drm/radeon: Add break to switch statement in
+Subject: [PATCH 01/17] drm/radeon: Add break to switch statement in
  radeonfb_create_pinned_object()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -45,6 +45,8 @@ index 0b206b052972..c8b545181497 100644
  	default:
  		break;
  	}
+
+base-commit: b46092c7497e5aaede15b10f162e32d6473f1862
 -- 
 2.33.1.637.gf443b226ca
 
