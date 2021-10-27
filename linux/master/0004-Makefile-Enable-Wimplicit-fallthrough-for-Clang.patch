@@ -1,7 +1,7 @@
-From 55a7a92a13e4eb15b32f80f716c0b7bb738cd237 Mon Sep 17 00:00:00 2001
+From b3710d8aa05a1492d444e7781ee89496fc67d261 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 13 Sep 2021 16:45:28 -0500
-Subject: [PATCH 04/17] Makefile: Enable -Wimplicit-fallthrough for Clang
+Subject: [PATCH 04/16] Makefile: Enable -Wimplicit-fallthrough for Clang
 
 With the recent fixes for fallthrough warnings, it is now possible to
 enable -Wimplicit-fallthrough for Clang.
@@ -34,7 +34,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 91297670da8e..6ce2837f19ee 100644
+index 30c7c81d0437..7c19a1061923 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -796,6 +796,14 @@ KBUILD_CFLAGS += -Wno-gnu
