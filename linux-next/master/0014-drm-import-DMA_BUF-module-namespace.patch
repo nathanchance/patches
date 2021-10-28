@@ -1,7 +1,7 @@
-From e2a950bd2f875ee3ab0e933ce281b23d5d068599 Mon Sep 17 00:00:00 2001
+From 69fa10662f6b142498c99e26bf1ce7483a800cc9 Mon Sep 17 00:00:00 2001
 From: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Date: Wed, 27 Oct 2021 17:25:34 +0200
-Subject: [PATCH 14/20] drm: import DMA_BUF module namespace
+Date: Wed, 27 Oct 2021 23:25:05 +0200
+Subject: [PATCH 14/22] drm: import DMA_BUF module namespace
 
 Today's -next fails building arm64 defconfig as follows:
 
@@ -14,24 +14,41 @@ Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Fixes: commit 4b2b5e142ff4 ("drm: Move GEM memory managers into modules")
 Signed-off-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20211027152534.3366799-1-marcel@ziswiler.com
+Link: https://lore.kernel.org/r/20211027212506.3418521-1-marcel@ziswiler.com
 ---
- drivers/gpu/drm/drm_gem_cma_helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_gem_cma_helper.c   | 1 +
+ drivers/gpu/drm/drm_gem_shmem_helper.c | 3 +--
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_gem_cma_helper.c b/drivers/gpu/drm/drm_gem_cma_helper.c
-index 6f7b3f8ec04d..69f8564ad11c 100644
+index 6f7b3f8ec04d..2a34241fee02 100644
 --- a/drivers/gpu/drm/drm_gem_cma_helper.c
 +++ b/drivers/gpu/drm/drm_gem_cma_helper.c
-@@ -23,6 +23,8 @@
- #include <drm/drm_gem_cma_helper.h>
- #include <drm/drm_vma_manager.h>
+@@ -581,4 +581,5 @@ drm_gem_cma_prime_import_sg_table_vmap(struct drm_device *dev,
+ EXPORT_SYMBOL(drm_gem_cma_prime_import_sg_table_vmap);
  
+ MODULE_DESCRIPTION("DRM CMA memory-management helpers");
 +MODULE_IMPORT_NS(DMA_BUF);
-+
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
+index f7324582afe7..a5b743a83ce9 100644
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -22,8 +22,6 @@
+ #include <drm/drm_prime.h>
+ #include <drm/drm_print.h>
+ 
+-MODULE_IMPORT_NS(DMA_BUF);
+-
  /**
-  * DOC: cma helpers
+  * DOC: overview
   *
+@@ -779,4 +777,5 @@ drm_gem_shmem_prime_import_sg_table(struct drm_device *dev,
+ EXPORT_SYMBOL_GPL(drm_gem_shmem_prime_import_sg_table);
+ 
+ MODULE_DESCRIPTION("DRM SHMEM memory-management helpers");
++MODULE_IMPORT_NS(DMA_BUF);
+ MODULE_LICENSE("GPL v2");
 -- 
 2.33.1.637.gf443b226ca
 
