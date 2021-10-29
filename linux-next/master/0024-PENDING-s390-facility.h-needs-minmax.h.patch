@@ -1,0 +1,25 @@
+From e55064675d3033e4905b79fe712d7ca77ccbfe67 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 28 Oct 2021 16:07:52 -0700
+Subject: [PATCH 24/24] PENDING: s390: facility.h needs minmax.h
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/s390/include/asm/facility.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/s390/include/asm/facility.h b/arch/s390/include/asm/facility.h
+index e3aa354ab9f4..47086bbabb15 100644
+--- a/arch/s390/include/asm/facility.h
++++ b/arch/s390/include/asm/facility.h
+@@ -9,6 +9,7 @@
+ #define __ASM_FACILITY_H
+ 
+ #include <asm/facility-defs.h>
++#include <linux/minmax.h>
+ #include <linux/string.h>
+ #include <linux/preempt.h>
+ #include <asm/lowcore.h>
+-- 
+2.33.1.637.gf443b226ca
+

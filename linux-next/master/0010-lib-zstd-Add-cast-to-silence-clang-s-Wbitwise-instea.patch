@@ -1,7 +1,7 @@
-From a5a5b5ef26a5ed8fc74e37f4db05b8c7f7922957 Mon Sep 17 00:00:00 2001
+From c79c424ead600fa7a461c266e40fa7aad5354b12 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 21 Oct 2021 13:23:53 -0700
-Subject: [PATCH 09/22] lib: zstd: Add cast to silence clang's
+Subject: [PATCH 10/24] lib: zstd: Add cast to silence clang's
  -Wbitwise-instead-of-logical
 
 A new warning in clang warns that there is an instance where boolean
