@@ -1,6 +1,6 @@
-From 0fb8cc8f221977abf4f987e671016c92aa0b40d7 Mon Sep 17 00:00:00 2001
+From 13a0e6cf7e6eaf82129305c7d6b47fa0d414ed86 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Tue, 19 Oct 2021 17:35:27 +0200
+Date: Wed, 3 Nov 2021 16:33:12 +0100
 Subject: [PATCH 11/18] dmaengine: stm32-dma: avoid 64-bit division in
  stm32_dma_get_max_width
 
@@ -16,25 +16,23 @@ As we know that we just want to check the alignment in
 stm32_dma_get_max_width(), there is no need for a full division, and
 using a simple mask is a faster replacement.
 
-In stm32_dma_set_xfer_param(), it is possible to pass a non-power-of-two
-length, so this does not work. I assume this would in fact be a mistake,
-and the hardware does not work correctly with a burst of e.g. 5 bytes
-on a five-byte aligned address. Change this to only allow burst
-transfers if the address is a multiple of the length, and that length
-is a power-of-two number.
+Same in stm32_dma_set_xfer_param(), change this to only allow burst
+transfers if the address is a multiple of the length.
+stm32_dma_get_best_burst just after will take buf_len into account to fix
+burst in case of misalignment.
 
 Fixes: b20fd5fa310c ("dmaengine: stm32-dma: fix stm32_dma_get_max_width")
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Tested-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20211019153532.366429-1-arnd@kernel.org
+Link: https://lore.kernel.org/r/20211103153312.41483-1-amelie.delaunay@foss.st.com
 ---
  drivers/dma/stm32-dma.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index 2283c500f4ce..102278f7d13e 100644
+index 2283c500f4ce..83a37a6955a3 100644
 --- a/drivers/dma/stm32-dma.c
 +++ b/drivers/dma/stm32-dma.c
 @@ -280,7 +280,7 @@ static enum dma_slave_buswidth stm32_dma_get_max_width(u32 buf_len,
@@ -51,7 +49,7 @@ index 2283c500f4ce..102278f7d13e 100644
  		 * the address boundary equal to the size of the transfer
  		 */
 -		if (buf_addr % buf_len)
-+		if (!is_power_of_2(buf_len) || (buf_addr & (buf_len -1)))
++		if (buf_addr & (buf_len - 1))
  			src_maxburst = 1;
  		else
  			src_maxburst = STM32_DMA_MAX_BURST;
@@ -60,7 +58,7 @@ index 2283c500f4ce..102278f7d13e 100644
  		 * the address boundary equal to the size of the transfer
  		 */
 -		if (buf_addr % buf_len)
-+		if (!is_power_of_2(buf_len) || (buf_addr & (buf_len -1)))
++		if (buf_addr & (buf_len - 1))
  			dst_maxburst = 1;
  		else
  			dst_maxburst = STM32_DMA_MAX_BURST;
