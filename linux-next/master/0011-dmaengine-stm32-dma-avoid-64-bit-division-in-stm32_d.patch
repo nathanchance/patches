@@ -1,7 +1,7 @@
-From 3b8df40d25762b02a01d3ae6d0b0962dcc4e720c Mon Sep 17 00:00:00 2001
+From 0fb8cc8f221977abf4f987e671016c92aa0b40d7 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 19 Oct 2021 17:35:27 +0200
-Subject: [PATCH 12/22] dmaengine: stm32-dma: avoid 64-bit division in
+Subject: [PATCH 11/18] dmaengine: stm32-dma: avoid 64-bit division in
  stm32_dma_get_max_width
 
 Using the % operator on a 64-bit variable is expensive and can
@@ -65,5 +65,5 @@ index 2283c500f4ce..102278f7d13e 100644
  		else
  			dst_maxburst = STM32_DMA_MAX_BURST;
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 

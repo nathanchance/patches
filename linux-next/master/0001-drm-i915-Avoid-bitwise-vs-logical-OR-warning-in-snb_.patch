@@ -1,7 +1,7 @@
-From cbabdfc0540860f2e593d117c5b5a7bd75b24f1b Mon Sep 17 00:00:00 2001
+From 887b5645bc4cd02236bc20c39394b531c4399378 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 14 Oct 2021 14:19:16 -0700
-Subject: [PATCH 01/22] drm/i915: Avoid bitwise vs logical OR warning in
+Subject: [PATCH 01/18] drm/i915: Avoid bitwise vs logical OR warning in
  snb_wm_latency_quirk()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -54,7 +54,7 @@ index ecbb3d141632..201477ca408a 100644
  	if (!changed)
  		return;
 
-base-commit: bdcc9f6a568275aed4cc32fd2312432d2ff1b704
+base-commit: 9150de4aac1eb6e6441b2b086f6ca8132aaea040
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 

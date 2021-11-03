@@ -1,7 +1,7 @@
-From 6c7f7bf5b17ca2d755a3159740b304b9bf9c6187 Mon Sep 17 00:00:00 2001
+From 0ba6b7b1ea5a7411d32f21e481952745dec68e74 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 29 Oct 2021 13:30:16 +0200
-Subject: [PATCH 16/22] arm64: export this_cpu_has_cap
+Subject: [PATCH 12/18] arm64: export this_cpu_has_cap
 
 It's now used in a coresight driver that can be a loadable module:
 
@@ -30,5 +30,5 @@ index ecbdff795f5e..beccbcfa7391 100644
  /*
   * This helper function is used in a narrow window when,
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 

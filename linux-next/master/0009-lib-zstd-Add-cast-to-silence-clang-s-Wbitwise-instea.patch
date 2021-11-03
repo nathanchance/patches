@@ -1,7 +1,7 @@
-From 207d1f3e52b22bfb4df96a3e327a7181e24a6553 Mon Sep 17 00:00:00 2001
+From 4bca08d1ca6fe4e1761ba4419689e262ac9e31fa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 21 Oct 2021 13:23:53 -0700
-Subject: [PATCH 10/22] lib: zstd: Add cast to silence clang's
+Subject: [PATCH 09/18] lib: zstd: Add cast to silence clang's
  -Wbitwise-instead-of-logical
 
 A new warning in clang warns that there is an instance where boolean
@@ -52,5 +52,5 @@ index 05570ed5f8be..5105e59ac04a 100644
                        & (BIT_reloadDStreamFast(&bitD2) == BIT_DStream_unfinished)
                        & (BIT_reloadDStreamFast(&bitD3) == BIT_DStream_unfinished)
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 
