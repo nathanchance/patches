@@ -1,4 +1,4 @@
-From ec9c7c24fd61cb2f664237d104e53dae0628a505 Mon Sep 17 00:00:00 2001
+From ffed154742a2f8a9f1ef77300bbfe008738b38ba Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 29 Oct 2021 13:30:16 +0200
 Subject: [PATCH 12/18] arm64: export this_cpu_has_cap
@@ -18,10 +18,10 @@ Link: https://lore.kernel.org/r/20211029113023.760421-1-arnd@kernel.org
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index ecbdff795f5e..beccbcfa7391 100644
+index 7de96196ae14..b1fc8dedfbb7 100644
 --- a/arch/arm64/kernel/cpufeature.c
 +++ b/arch/arm64/kernel/cpufeature.c
-@@ -2864,6 +2864,7 @@ bool this_cpu_has_cap(unsigned int n)
+@@ -2868,6 +2868,7 @@ bool this_cpu_has_cap(unsigned int n)
  
  	return false;
  }
