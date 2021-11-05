@@ -1,7 +1,7 @@
-From e6bd6a7383fecea30f7873e4d063fdec7a27c820 Mon Sep 17 00:00:00 2001
+From 24ff299c9a64fea441293822db17c0deca31bbc0 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 3 Nov 2021 16:33:12 +0100
-Subject: [PATCH 11/18] dmaengine: stm32-dma: avoid 64-bit division in
+Subject: [PATCH 11/21] dmaengine: stm32-dma: avoid 64-bit division in
  stm32_dma_get_max_width
 
 Using the % operator on a 64-bit variable is expensive and can
