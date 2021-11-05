@@ -1,7 +1,7 @@
-From b31f1e93339df42d13d475a076cae75052a1bfc1 Mon Sep 17 00:00:00 2001
+From 8f92efce491cdc848b1dfd9cd9634c986f43cc7e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 27 Jul 2021 17:17:29 -0700
-Subject: [PATCH 11/18] hexagon: Clean up timer-regs.h
+Subject: [PATCH 09/18] hexagon: Clean up timer-regs.h
 
 When building allmodconfig, there is a warning about TIMER_ENABLE being
 redefined:
@@ -130,5 +130,5 @@ index feffe527ac92..febc95714d75 100644
  }
  
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 

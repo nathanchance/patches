@@ -1,4 +1,4 @@
-From f56ca6c4d51d8c805d5db07f28a4dd607e8ca5cd Mon Sep 17 00:00:00 2001
+From 7c03676e0e57fad684a645bd187b03d380e3465f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
 Subject: [PATCH 18/18] HACK: fs/namei.c: -Wbitwise-instead-of-logical
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/namei.c b/fs/namei.c
-index 1946d9667790..c1ed391ef403 100644
+index 1f9d2187c765..761d0a8a4b49 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
 @@ -2146,7 +2146,7 @@ static inline u64 hash_name(const void *salt, const char *name)
@@ -22,5 +22,5 @@ index 1946d9667790..c1ed391ef403 100644
  	adata = prep_zero_mask(a, adata, &constants);
  	bdata = prep_zero_mask(b, bdata, &constants);
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 

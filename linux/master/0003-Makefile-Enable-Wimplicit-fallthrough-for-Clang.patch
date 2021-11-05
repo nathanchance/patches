@@ -1,7 +1,7 @@
-From a76b982b7287b5ec45856f437f058172d43f94f0 Mon Sep 17 00:00:00 2001
+From 7d5360a4103f41914e50c03456c8f735afc311bf Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 13 Sep 2021 16:45:28 -0500
-Subject: [PATCH 05/18] Makefile: Enable -Wimplicit-fallthrough for Clang
+Subject: [PATCH 03/18] Makefile: Enable -Wimplicit-fallthrough for Clang
 
 With the recent fixes for fallthrough warnings, it is now possible to
 enable -Wimplicit-fallthrough for Clang.
@@ -34,10 +34,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 30c7c81d0437..7c19a1061923 100644
+index 6f2e233c7bc0..52f928ccea33 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -796,6 +796,14 @@ KBUILD_CFLAGS += -Wno-gnu
+@@ -799,6 +799,14 @@ KBUILD_CFLAGS += -Wno-gnu
  # source of a reference will be _MergedGlobals and not on of the whitelisted names.
  # See modpost pattern 2
  KBUILD_CFLAGS += -mno-global-merge
@@ -53,5 +53,5 @@ index 30c7c81d0437..7c19a1061923 100644
  
  # Warn about unmarked fall-throughs in switch statement.
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 
