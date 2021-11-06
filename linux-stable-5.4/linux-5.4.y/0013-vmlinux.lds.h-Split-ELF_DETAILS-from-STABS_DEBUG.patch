@@ -1,4 +1,4 @@
-From 95c4b09dadd1d4e5195a97937166e441f03200d2 Mon Sep 17 00:00:00 2001
+From 9ea7259741ee162d3651e8ab47a2b451f253dc60 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 13/24] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
@@ -65,7 +65,7 @@ index 0391b8293ad8..06cd415cbcf7 100644
  
  	.arcextmap 0 : {
 diff --git a/arch/arm/kernel/vmlinux-xip.lds.S b/arch/arm/kernel/vmlinux-xip.lds.S
-index 8c74037ade22..77e7150412e7 100644
+index b1f366df620b..53067374f088 100644
 --- a/arch/arm/kernel/vmlinux-xip.lds.S
 +++ b/arch/arm/kernel/vmlinux-xip.lds.S
 @@ -154,6 +154,7 @@ SECTIONS
@@ -354,5 +354,5 @@ index 8a5ced9cf527..2551bec5306c 100644
  
  #ifdef CONFIG_GENERIC_BUG
 -- 
-2.33.1.637.gf443b226ca
+2.34.0.rc0
 
