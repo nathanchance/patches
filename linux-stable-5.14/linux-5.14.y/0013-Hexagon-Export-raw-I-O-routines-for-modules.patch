@@ -1,4 +1,4 @@
-From bbf4d509fb9ac200482814d5250e2000526ebb5a Mon Sep 17 00:00:00 2001
+From 2b24c6a76d61e89a62faeafab9c0a03e46788940 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 8 Jul 2021 16:38:50 -0700
 Subject: [PATCH 13/17] Hexagon: Export raw I/O routines for modules
@@ -55,5 +55,5 @@ index d35d69d6588c..55f75392857b 100644
  }
 +EXPORT_SYMBOL(__raw_writesl);
 -- 
-2.34.0.rc0
+2.34.0
 
