@@ -1,0 +1,30 @@
+From ac8c29c2d7c41404ba0f27d44c2144198db33254 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 15 Nov 2021 10:42:51 -0700
+Subject: [PATCH 05/17] hexagon: Ignore vmlinux.lds
+
+After building allmodconfig, there is an untracked vmlinux.lds file in
+arch/hexagon/kernel:
+
+$ git ls-files . --exclude-standard --others
+arch/hexagon/kernel/vmlinux.lds
+
+Ignore it as all other architectures have.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211115174250.1994179-4-nathan@kernel.org
+---
+ arch/hexagon/kernel/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 arch/hexagon/kernel/.gitignore
+
+diff --git a/arch/hexagon/kernel/.gitignore b/arch/hexagon/kernel/.gitignore
+new file mode 100644
+index 000000000000..c5f676c3c224
+--- /dev/null
++++ b/arch/hexagon/kernel/.gitignore
+@@ -0,0 +1 @@
++vmlinux.lds
+-- 
+2.34.0
+

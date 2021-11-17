@@ -1,20 +1,18 @@
-From 2b88c5cbe35d6dd459bb16f54210ab8a9b69afac Mon Sep 17 00:00:00 2001
+From 3990c7bff513cf387bffcf9a2e96bdf8119a2c53 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 27 Jul 2021 17:17:29 -0700
-Subject: [PATCH 08/21] hexagon: Clean up timer-regs.h
+Date: Mon, 15 Nov 2021 10:42:50 -0700
+Subject: [PATCH 04/17] hexagon: Clean up timer-regs.h
 
 When building allmodconfig, there is a warning about TIMER_ENABLE being
 redefined:
 
- drivers/clocksource/timer-oxnas-rps.c:39:9: warning: 'TIMER_ENABLE'
- macro redefined [-Wmacro-redefined]
+ drivers/clocksource/timer-oxnas-rps.c:39:9: error: 'TIMER_ENABLE' macro redefined [-Werror,-Wmacro-redefined]
  #define TIMER_ENABLE            BIT(7)
          ^
- arch/hexagon/include/asm/timer-regs.h:13:9: note: previous definition
- is here
+ ./arch/hexagon/include/asm/timer-regs.h:13:9: note: previous definition is here
  #define TIMER_ENABLE            0
          ^
- 1 warning generated.
+ 1 error generated.
 
 The values in this header are only used in one file each, if they are
 used at all. Remove the header and sink all of the constants into their
@@ -32,8 +30,10 @@ functions").
 TIMER_ENABLE is redefined as BIT(0) so the shift is moved into the
 definition, rather than its use.
 
+Cc: stable@vger.kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210728001729.1960182-1-nathan@kernel.org
+Acked-by: Brian Cain <bcain@codeaurora.org>
+Link: https://lore.kernel.org/r/20211115174250.1994179-3-nathan@kernel.org
 ---
  arch/hexagon/include/asm/timer-regs.h | 26 --------------------------
  arch/hexagon/include/asm/timex.h      |  3 +--
@@ -130,5 +130,5 @@ index feffe527ac92..febc95714d75 100644
  }
  
 -- 
-2.34.0.rc0
+2.34.0
 

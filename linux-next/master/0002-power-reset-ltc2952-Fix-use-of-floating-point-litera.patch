@@ -1,7 +1,7 @@
-From ff99243a9df28e6295d75e191b14cd9d3bb449b9 Mon Sep 17 00:00:00 2001
+From 5d8b085ed1641f44b650a7cb3de8e0615485a17a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 5 Nov 2021 08:20:50 -0700
-Subject: [PATCH 15/21] power: reset: ltc2952: Fix use of floating point
+Subject: [PATCH 02/17] power: reset: ltc2952: Fix use of floating point
  literals
 
 A new commit in LLVM causes an error on the use of 'long double' when
@@ -34,7 +34,9 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/1497
 Link: https://github.com/llvm/llvm-project/commit/a8083d42b1c346e21623a1d36d1f0cadd7801d83
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20211105152049.2522250-1-nathan@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://git.kernel.org/sre/linux-power-supply/c/644106cdb89844be2496b21175b7c0c2e0fab381
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/power/reset/ltc2952-poweroff.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
@@ -55,5 +57,5 @@ index fbb344353fe4..65d9528cc989 100644
  	hrtimer_init(&data->timer_trigger, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
  	data->timer_trigger.function = ltc2952_poweroff_timer_trigger;
 -- 
-2.34.0.rc0
+2.34.0
 
