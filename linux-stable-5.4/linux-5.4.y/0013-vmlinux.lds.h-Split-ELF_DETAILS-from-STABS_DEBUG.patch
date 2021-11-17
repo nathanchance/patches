@@ -1,4 +1,4 @@
-From addf4f56fa60400f9f1484286417fc1fec61bcb9 Mon Sep 17 00:00:00 2001
+From 512b1d059150973b5d4c5d63903aba60eb03135d Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 13/24] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
@@ -197,10 +197,10 @@ index 2ac3a643f2eb..ab7b43990857 100644
  
  	/* Sections to be discarded */
 diff --git a/arch/parisc/kernel/vmlinux.lds.S b/arch/parisc/kernel/vmlinux.lds.S
-index 99cd24f2ea01..a4d4aac52bfa 100644
+index 164483b37d85..4ae341049737 100644
 --- a/arch/parisc/kernel/vmlinux.lds.S
 +++ b/arch/parisc/kernel/vmlinux.lds.S
-@@ -167,6 +167,7 @@ SECTIONS
+@@ -168,6 +168,7 @@ SECTIONS
  	_end = . ;
  
  	STABS_DEBUG
@@ -354,5 +354,5 @@ index 8a5ced9cf527..2551bec5306c 100644
  
  #ifdef CONFIG_GENERIC_BUG
 -- 
-2.34.0.rc0
+2.34.0
 

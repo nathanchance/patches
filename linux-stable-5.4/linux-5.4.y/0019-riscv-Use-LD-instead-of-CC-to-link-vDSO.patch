@@ -1,4 +1,4 @@
-From ae39b134044c9f0a2d666bff29b77bcd5682fed6 Mon Sep 17 00:00:00 2001
+From 2af9b67fb684906fb32b03bf822ab3d670a0e78b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
 Subject: [PATCH 19/24] riscv: Use $(LD) instead of $(CC) to link vDSO
@@ -88,5 +88,5 @@ index b4b9b8f9fc36..1c088958e182 100644
  
  # Extracts symbol offsets from the VDSO, converting them into an assembly file
 -- 
-2.34.0.rc0
+2.34.0
 
