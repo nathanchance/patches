@@ -1,7 +1,7 @@
 From 5ad3593258d878f8f35f4ab6d564adc0d060b623 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 21 Oct 2021 14:45:00 -0700
-Subject: [PATCH 10/16] soc/tegra: fuse: Fix bitwise vs. logical OR warning
+Subject: [PATCH 10/17] soc/tegra: fuse: Fix bitwise vs. logical OR warning
 
 A new warning in clang points out two instances where boolean
 expressions are being used with a bitwise OR instead of logical OR:
