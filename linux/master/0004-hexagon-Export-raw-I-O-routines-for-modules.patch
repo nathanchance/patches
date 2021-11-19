@@ -1,7 +1,7 @@
-From bdd00be57f47f78dd23b24c2454d8ea63da7baa0 Mon Sep 17 00:00:00 2001
+From 859af09e6f63c66a39dfc868c93fd6fa5eb93467 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 8 Jul 2021 16:38:50 -0700
-Subject: [PATCH 10/18] Hexagon: Export raw I/O routines for modules
+Date: Mon, 15 Nov 2021 10:42:49 -0700
+Subject: [PATCH 04/18] hexagon: Export raw I/O routines for modules
 
 When building ARCH=hexagon allmodconfig, the following errors occur:
 
@@ -13,10 +13,11 @@ ERROR: modpost: "__raw_readsl" [drivers/i3c/master/i3c-master-cdns.ko] undefined
 
 Export these symbols so that modules can use them without any errors.
 
+Cc: stable@vger.kernel.org
 Fixes: 013bf24c3829 ("Hexagon: Provide basic implementation and/or stubs for I/O routines.")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20210708233849.3140194-1-nathan@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Brian Cain <bcain@codeaurora.org>
+Link: https://lore.kernel.org/r/20211115174250.1994179-2-nathan@kernel.org
 ---
  arch/hexagon/lib/io.c | 4 ++++
  1 file changed, 4 insertions(+)
@@ -55,5 +56,5 @@ index d35d69d6588c..55f75392857b 100644
  }
 +EXPORT_SYMBOL(__raw_writesl);
 -- 
-2.34.0.rc0
+2.34.0
 
