@@ -1,7 +1,7 @@
 From 78575449eea9a9645303eb677a7f046e35a4b50b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 15 Nov 2021 10:42:51 -0700
-Subject: [PATCH 06/18] hexagon: Ignore vmlinux.lds
+Subject: [PATCH 06/19] hexagon: Ignore vmlinux.lds
 
 After building allmodconfig, there is an untracked vmlinux.lds file in
 arch/hexagon/kernel:

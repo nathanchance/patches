@@ -1,7 +1,7 @@
 From a0b312dc3e2d256dd3ead55399464cc0e796f175 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 5 Nov 2021 07:58:03 -0700
-Subject: [PATCH 03/18] usb: dwc2: hcd_queue: Fix use of floating point literal
+Subject: [PATCH 03/19] usb: dwc2: hcd_queue: Fix use of floating point literal
 
 A new commit in LLVM causes an error on the use of 'long double' when
 '-mno-x87' is used, which the kernel does through an alias,
