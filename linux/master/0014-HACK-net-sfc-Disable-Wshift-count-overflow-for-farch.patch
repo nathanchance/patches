@@ -1,7 +1,7 @@
-From 2c26ad617737309b917de727d553bbadf80a7b4f Mon Sep 17 00:00:00 2001
+From 84f3c66515d6b877475a7d0d643f13dd3a648a7f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:52:02 -0700
-Subject: [PATCH 18/19] HACK: net: sfc: Disable -Wshift-count-overflow for
+Subject: [PATCH 14/15] HACK: net: sfc: Disable -Wshift-count-overflow for
  farch.c
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1439
@@ -32,5 +32,5 @@ index 39448e5b7f1e..de1b626e12b0 100644
 +# https://github.com/ClangBuiltLinux/linux/issues/1439
 +CFLAGS_farch.o := $(call cc-disable-warning, shift-count-negative)
 -- 
-2.34.0
+2.34.1
 

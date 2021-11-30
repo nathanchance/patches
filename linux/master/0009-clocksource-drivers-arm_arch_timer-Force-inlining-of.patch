@@ -1,7 +1,7 @@
-From 6c7569e192c1b1bdc63ebf1860fe0a237b0ff7bc Mon Sep 17 00:00:00 2001
+From 7611bb7102ad62c4d786305df8dd5130fa0fef05 Mon Sep 17 00:00:00 2001
 From: Marc Zyngier <maz@kernel.org>
 Date: Wed, 17 Nov 2021 11:35:32 +0000
-Subject: [PATCH 13/19] clocksource/drivers/arm_arch_timer: Force inlining of
+Subject: [PATCH 09/15] clocksource/drivers/arm_arch_timer: Force inlining of
  erratum_set_next_event_generic()
 
 With some specific kernel configuration and Clang, the kernel fails
@@ -61,5 +61,5 @@ index 9a04eacc4412..1ecd52f903b8 100644
  	unsigned long ctrl;
  	u64 cval;
 -- 
-2.34.0
+2.34.1
 
