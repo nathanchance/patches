@@ -1,7 +1,7 @@
-From 01263961933d53ec29978c803a16a5587df73600 Mon Sep 17 00:00:00 2001
+From 71dc493a5d6d5c31c034bc39db9ee696b55e384c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 5 Nov 2021 08:20:50 -0700
-Subject: [PATCH 01/17] power: reset: ltc2952: Fix use of floating point
+Subject: [PATCH 01/18] power: reset: ltc2952: Fix use of floating point
  literals
 
 A new commit in LLVM causes an error on the use of 'long double' when
@@ -57,7 +57,7 @@ index fbb344353fe4..65d9528cc989 100644
  	hrtimer_init(&data->timer_trigger, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
  	data->timer_trigger.function = ltc2952_poweroff_timer_trigger;
 
-base-commit: 5191249f880367a4cd675825cd721a8d78f26a45
+base-commit: 34f255a1e91ab44ff8926cf8294ff9144e62e861
 -- 
-2.34.0
+2.34.1
 

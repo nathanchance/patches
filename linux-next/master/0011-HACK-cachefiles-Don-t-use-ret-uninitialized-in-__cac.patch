@@ -1,0 +1,47 @@
+From ffdcfc74b7a857d72c2946eb5272be413074c993 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 30 Nov 2021 14:47:47 -0700
+Subject: [PATCH 11/18] HACK: cachefiles: Don't use ret uninitialized in
+ __cachefiles_prepare_write()
+
+Clang warns:
+
+fs/cachefiles/io.c:489:6: error: variable 'ret' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+        if (pos == 0)
+            ^~~~~~~~
+fs/cachefiles/io.c:492:6: note: uninitialized use occurs here
+        if (ret < 0) {
+            ^~~
+fs/cachefiles/io.c:489:2: note: remove the 'if' if its condition is always true
+        if (pos == 0)
+        ^~~~~~~~~~~~~
+fs/cachefiles/io.c:440:9: note: initialize the variable 'ret' to silence this warning
+        int ret;
+               ^
+                = 0
+1 error generated.
+
+Link: https://lore.kernel.org/r/YaZOCk9zxApPattb@archlinux-ax161/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/cachefiles/io.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/cachefiles/io.c b/fs/cachefiles/io.c
+index 74ef4d1fc562..60b1eac2ce78 100644
+--- a/fs/cachefiles/io.c
++++ b/fs/cachefiles/io.c
+@@ -485,8 +485,8 @@ static int __cachefiles_prepare_write(struct netfs_cache_resources *cres,
+ 
+ 	/* Partially allocated, but insufficient space: cull. */
+ 	fscache_count_no_write_space();
+-	pos = cachefiles_inject_remove_error();
+-	if (pos == 0)
++	ret = cachefiles_inject_remove_error();
++	if (ret == 0)
+ 		ret = vfs_fallocate(file, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
+ 				    *_start, *_len);
+ 	if (ret < 0) {
+-- 
+2.34.1
+
