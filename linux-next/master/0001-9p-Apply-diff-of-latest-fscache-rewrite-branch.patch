@@ -1,0 +1,29 @@
+From 471c741647b8820dc16651993b2d886a7a29bd8f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 1 Dec 2021 17:30:41 -0700
+Subject: [PATCH 01/18] 9p: Apply diff of latest fscache-rewrite branch
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/9p/vfs_addr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
+index 1279970e9157..68a3d8f708b2 100644
+--- a/fs/9p/vfs_addr.c
++++ b/fs/9p/vfs_addr.c
+@@ -147,8 +147,8 @@ static int v9fs_release_page(struct page *page, gfp_t gfp)
+ 			return 0;
+ 		folio_wait_fscache(folio);
+ 	}
+-	fscache_note_page_release(v9fs_inode_cookie(V9FS_I(inode)));
+ #endif
++	fscache_note_page_release(v9fs_inode_cookie(V9FS_I(inode)));
+ 	return 1;
+ }
+ 
+
+base-commit: 048aeae86c3967f4c40666cd26f2c1eb73a4b805
+-- 
+2.34.1
+

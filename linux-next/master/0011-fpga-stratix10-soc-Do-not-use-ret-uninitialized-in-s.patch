@@ -1,7 +1,7 @@
-From c7b7423bf09c0ca08bc3daeb13c9798b8e31ce0b Mon Sep 17 00:00:00 2001
+From 3ba1a9767e40a7ab0825e557fe644cce242eac6d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Nov 2021 15:11:24 -0700
-Subject: [PATCH 09/18] fpga: stratix10-soc: Do not use ret uninitialized in
+Subject: [PATCH 11/18] fpga: stratix10-soc: Do not use ret uninitialized in
  s10_probe()
 
 Clang warns:
