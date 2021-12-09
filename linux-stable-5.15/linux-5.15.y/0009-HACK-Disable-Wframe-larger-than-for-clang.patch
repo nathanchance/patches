@@ -1,0 +1,32 @@
+From cde729f0cf63c6abdb776533a4214d0ac707cb9c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 7 Sep 2021 16:41:55 -0700
+Subject: [PATCH 09/13] HACK: Disable -Wframe-larger-than= for clang
+
+There are a lot of these warnings right now so disable the warning for
+now until they can be triaged and fixed.
+
+Link: https://github.com/ClangBuiltLinux/linux/labels/-Wframe-larger-than%3D
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/Kconfig.debug | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 2a9b6dcdac4f..a19e175a214c 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -343,8 +343,9 @@ config GDB_SCRIPTS
+ endif # DEBUG_INFO
+ 
+ config FRAME_WARN
+-	int "Warn for stack frames larger than"
++	int "Warn for stack frames larger than" if !CC_IS_CLANG
+ 	range 0 8192
++	default 0 if CC_IS_CLANG
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+ 	default 1536 if (!64BIT && (PARISC || XTENSA))
+ 	default 1024 if (!64BIT && !PARISC)
+-- 
+2.34.1
+

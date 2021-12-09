@@ -1,0 +1,57 @@
+From 15a239aff958c178791bd5b6d707a26371362daa Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 21 Oct 2021 14:45:00 -0700
+Subject: [PATCH 08/13] soc/tegra: fuse: Fix bitwise vs. logical OR warning
+
+A new warning in clang points out two instances where boolean
+expressions are being used with a bitwise OR instead of logical OR:
+
+drivers/soc/tegra/fuse/speedo-tegra20.c:72:9: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
+                reg = tegra_fuse_read_spare(i) |
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               ||
+drivers/soc/tegra/fuse/speedo-tegra20.c:72:9: note: cast one or both operands to int to silence this warning
+drivers/soc/tegra/fuse/speedo-tegra20.c:87:9: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
+                reg = tegra_fuse_read_spare(i) |
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               ||
+drivers/soc/tegra/fuse/speedo-tegra20.c:87:9: note: cast one or both operands to int to silence this warning
+2 warnings generated.
+
+The motivation for the warning is that logical operations short circuit
+while bitwise operations do not. In this case, it does not seem like
+short circuiting is harmful so implement the suggested fix of changing
+to a logical operation to fix the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1488
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20211021214500.2388146-1-nathan@kernel.org
+---
+ drivers/soc/tegra/fuse/speedo-tegra20.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/tegra/fuse/speedo-tegra20.c b/drivers/soc/tegra/fuse/speedo-tegra20.c
+index 2546bddbab93..4984246605ae 100644
+--- a/drivers/soc/tegra/fuse/speedo-tegra20.c
++++ b/drivers/soc/tegra/fuse/speedo-tegra20.c
+@@ -69,7 +69,7 @@ void __init tegra20_init_speedo_data(struct tegra_sku_info *sku_info)
+ 
+ 	val = 0;
+ 	for (i = CPU_SPEEDO_MSBIT; i >= CPU_SPEEDO_LSBIT; i--) {
+-		reg = tegra_fuse_read_spare(i) |
++		reg = tegra_fuse_read_spare(i) ||
+ 			tegra_fuse_read_spare(i + CPU_SPEEDO_REDUND_OFFS);
+ 		val = (val << 1) | (reg & 0x1);
+ 	}
+@@ -84,7 +84,7 @@ void __init tegra20_init_speedo_data(struct tegra_sku_info *sku_info)
+ 
+ 	val = 0;
+ 	for (i = SOC_SPEEDO_MSBIT; i >= SOC_SPEEDO_LSBIT; i--) {
+-		reg = tegra_fuse_read_spare(i) |
++		reg = tegra_fuse_read_spare(i) ||
+ 			tegra_fuse_read_spare(i + SOC_SPEEDO_REDUND_OFFS);
+ 		val = (val << 1) | (reg & 0x1);
+ 	}
+-- 
+2.34.1
+
