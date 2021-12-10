@@ -1,7 +1,7 @@
-From ce5ad2253a0e129db1fb7498c4bf03f3573e7367 Mon Sep 17 00:00:00 2001
+From dd5561895496c3b0cf5968b5556013909ace7b19 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 3 Dec 2021 09:07:56 +0100
-Subject: [PATCH 12/17] futex: Fix additional regressions
+Subject: [PATCH 10/15] futex: Fix additional regressions
 
 Naresh reported another architecture that was broken by the same typo
 that I already fixed for three architectures: mips also refers to the
