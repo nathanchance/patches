@@ -1,7 +1,7 @@
-From fdfdf4444b6213e5b84b092dc08a41c962fbdb3a Mon Sep 17 00:00:00 2001
+From a9e8a17a8855f1cb8df80033e67999979d8610e9 Mon Sep 17 00:00:00 2001
 From: Marc Zyngier <maz@kernel.org>
 Date: Wed, 17 Nov 2021 11:35:32 +0000
-Subject: [PATCH 08/15] clocksource/drivers/arm_arch_timer: Force inlining of
+Subject: [PATCH 02/16] clocksource/drivers/arm_arch_timer: Force inlining of
  erratum_set_next_event_generic()
 
 With some specific kernel configuration and Clang, the kernel fails
@@ -31,11 +31,13 @@ Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
 Cc: Sami Tolvanen <samitolvanen@google.com>
 Cc: Nick Desaulniers <ndesaulniers@google.com>
-Fixes: 4775bc63f880 ("clocksource/arm_arch_timer: Add build-time guards for unhandled register accesses")
+Tested-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 Tested-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Sami Tolvanen <samitolvanen@google.com>
 Link: https://lore.kernel.org/r/20211117113532.3895208-1-maz@kernel.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://git.kernel.org/linus/1edb7e74a7d3d64dc4e69e7059b4eea526d19a10
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/clocksource/arm_arch_timer.c | 9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)

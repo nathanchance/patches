@@ -1,35 +1,33 @@
-From dd5561895496c3b0cf5968b5556013909ace7b19 Mon Sep 17 00:00:00 2001
+From 74a88add667615ff49d6684412fff7dd64b197a1 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 3 Dec 2021 09:07:56 +0100
-Subject: [PATCH 10/15] futex: Fix additional regressions
+Subject: [PATCH 01/16] futex: Fix additional regressions
 
-Naresh reported another architecture that was broken by the same typo
-that I already fixed for three architectures: mips also refers to the
-futex_atomic_op_inuser_local() function by the wrong name and runs into
-a missing closing '}' as well.
+Naresh reported another architecture that was broken by the same typo that
+was already fixed for three architectures: mips also refers to the
+futex_atomic_op_inuser_local() function by the wrong name and runs into a
+missing closing '}' as well.
 
-Going through the source tree I found that I also had the same typo in the
-documentation as well as the xtensa code, both of which ended up escaping
-the regression testing so far. In the case of xtensa, it appears that
-the broken code path is only used when building for platforms that are
-not supported by the default gcc configuration, so they are impossible
-to test for with my setup.
+Going through the source tree the same typo was found in the documentation
+as well as in the xtensa code, both of which ended up escaping the
+regression testing so far. In the case of xtensa, it appears that the
+broken code path is only used when building for platforms that are not
+supported by the default gcc configuration, so they are impossible to test
+for with default setups.
 
-After going through these more carefully and fixing up the typos, I
-build-tested all architectures again to ensure I'm not introducing a
-new regression or missing one more obvious issue with my series.
+After going through these more carefully and fixing up the typos, all
+architectures have been build-tested again to ensure that this is now
+complete.
 
 Fixes: 4e0d84634445 ("futex: Fix sparc32/m68k/nds32 build regression")
 Fixes: 3f2bedabb62c ("futex: Ensure futex_atomic_cmpxchg_inatomic() is present")
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: linux-mips@vger.kernel.org
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: linux-xtensa@linux-xtensa.org
-Cc: Chris Zankel <chris@zankel.net>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Link: https://lore.kernel.org/r/20211203080823.2938839-1-arnd@kernel.org
+Link: https://git.kernel.org/tip/0f09c274698590d508c43f924d9dffc7130b782d
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/mips/include/asm/futex.h   | 6 +++---
  arch/xtensa/include/asm/futex.h | 2 +-
@@ -79,6 +77,8 @@ index 66d6843bfd02..2a19215baae5 100644
   *			  argument and comparison of the previous
   *			  futex value with another constant.
   *
+
+base-commit: ea922272cbe547bdf58da2aaf240d59782c6a009
 -- 
 2.34.1
 

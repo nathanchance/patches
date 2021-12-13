@@ -1,0 +1,58 @@
+From 0565be3484a603e71d04a619cf158110798619e2 Mon Sep 17 00:00:00 2001
+From: Sean Christopherson <seanjc@google.com>
+Date: Mon, 13 Dec 2021 17:45:56 +0000
+Subject: [PATCH 11/16] KVM: PPC: Book3S HV P9: Use kvm_arch_vcpu_get_wait() to
+ get rcuwait object
+
+Use kvm_arch_vcpu_get_wait() to get a vCPU's rcuwait object instead of
+using vcpu->wait directly in kvmhv_run_single_vcpu().  Functionally, this
+is a nop as vcpu->arch.waitp is guaranteed to point at vcpu->wait.  But
+that is not obvious at first glance, and a future change coming in via
+the KVM tree, commit 510958e99721 ("KVM: Force PPC to define its own
+rcuwait object"), will hide vcpu->wait from architectures that define
+__KVM_HAVE_ARCH_WQP to prevent generic KVM from attepting to wake a vCPU
+with the wrong rcuwait object.
+
+Reported-by: Sachin Sant <sachinp@linux.vnet.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20211213174556.3871157-1-seanjc@google.com
+---
+ arch/powerpc/kvm/book3s_hv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+index 787bb06f6cb3..0ba94f1142c8 100644
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -4442,6 +4442,7 @@ static int kvmppc_run_vcpu(struct kvm_vcpu *vcpu)
+ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+ 			  unsigned long lpcr)
+ {
++	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
+ 	struct kvm_run *run = vcpu->run;
+ 	int trap, r, pcpu;
+ 	int srcu_idx;
+@@ -4588,7 +4589,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+ 	if (is_kvmppc_resume_guest(r) && !kvmppc_vcpu_check_block(vcpu)) {
+ 		kvmppc_set_timer(vcpu);
+ 
+-		prepare_to_rcuwait(&vcpu->wait);
++		prepare_to_rcuwait(wait);
+ 		for (;;) {
+ 			set_current_state(TASK_INTERRUPTIBLE);
+ 			if (signal_pending(current)) {
+@@ -4605,7 +4606,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+ 			schedule();
+ 			trace_kvmppc_vcore_blocked(vc, 1);
+ 		}
+-		finish_rcuwait(&vcpu->wait);
++		finish_rcuwait(wait);
+ 	}
+ 	vcpu->arch.ceded = 0;
+ 
+-- 
+2.34.1
+
