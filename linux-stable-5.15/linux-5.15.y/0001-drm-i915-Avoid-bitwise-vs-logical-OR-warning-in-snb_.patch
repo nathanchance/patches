@@ -1,4 +1,4 @@
-From df0e61ccb5d21c131b44c270895c43f5a3c61026 Mon Sep 17 00:00:00 2001
+From 3a9edb3f6516d0e8ce15e73ba3c0607e059f8f8a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 14 Oct 2021 14:19:16 -0700
 Subject: [PATCH 01/13] drm/i915: Avoid bitwise vs logical OR warning in
@@ -54,7 +54,7 @@ index a725792d5248..7f0964645d0c 100644
  	if (!changed)
  		return;
 
-base-commit: 4e8c680af6d51ba9315e31bd4f7599e080561a2d
+base-commit: 43e577d7a2cb60ad478387155c9de352f152101e
 -- 
 2.34.1
 
