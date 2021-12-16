@@ -1,4 +1,4 @@
-From 7f5ae2bb89fd315926140659b94cf058a62f39c0 Mon Sep 17 00:00:00 2001
+From 81f90a524f3b97e892ce229ae050e654f8e16288 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 2 Jul 2020 04:29:36 +0900
 Subject: [PATCH 15/24] kbuild: do not export LDFLAGS_vmlinux
@@ -105,7 +105,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 4a7a89de832b..b5971ff9d34c 100644
+index b1e5f7c6206e..5e27a89d9c57 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1062,7 +1062,6 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
