@@ -1,7 +1,7 @@
-From afa22e3074364753121bd2270f01f7b3681a69a1 Mon Sep 17 00:00:00 2001
+From f97af898233c2c747c03f7fa72b4b365e2b61115 Mon Sep 17 00:00:00 2001
 From: Tom Rix <trix@redhat.com>
 Date: Sat, 18 Dec 2021 07:27:12 -0800
-Subject: [PATCH 07/14] gpio: sim: fix uninitialized ret variable
+Subject: [PATCH 08/12] gpio: sim: fix uninitialized ret variable
 
 Building with clang returns this error:
 
