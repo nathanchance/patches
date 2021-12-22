@@ -1,7 +1,7 @@
-From 0cffeb7f40a6a0f7167b43391c3099f99e925ab9 Mon Sep 17 00:00:00 2001
+From abef573f655639a3e10cc9c49bae41b6a46ec9eb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 14 Oct 2021 14:57:03 -0700
-Subject: [PATCH 01/14] staging: wlan-ng: Avoid bitwise vs logical OR warning
+Subject: [PATCH 01/13] staging: wlan-ng: Avoid bitwise vs logical OR warning
  in hfa384x_usb_throttlefn()
 
 A new warning in clang points out a place in this file where a bitwise
@@ -68,7 +68,7 @@ index 8c8524679ba3..0d869b5e309c 100644
  
  	spin_unlock_irqrestore(&hw->ctlxq.lock, flags);
 
-base-commit: 57dcae4a8b93271c4e370920ea0dbb94a0215d30
+base-commit: fb6ad5cb3b6745e7bffc5fe19b130f3594375634
 -- 
 2.34.1
 
