@@ -1,7 +1,7 @@
-From a6ca8e3e39323b9a5490091fe8f1cc5bce741dc4 Mon Sep 17 00:00:00 2001
+From 62b7b68323fc845b5a3764e08c21475d890c9220 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 5 Nov 2021 08:20:50 -0700
-Subject: [PATCH 02/14] power: reset: ltc2952: Fix use of floating point
+Subject: [PATCH 02/12] power: reset: ltc2952: Fix use of floating point
  literals
 
 A new commit in LLVM causes an error on the use of 'long double' when
