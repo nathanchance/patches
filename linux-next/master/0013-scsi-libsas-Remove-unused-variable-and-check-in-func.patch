@@ -1,0 +1,45 @@
+From ad35472ae35d1574f8a9fda024b39e3a5ab99ab6 Mon Sep 17 00:00:00 2001
+From: Xiang Chen <chenxiang66@hisilicon.com>
+Date: Mon, 27 Dec 2021 20:52:17 -0700
+Subject: [PATCH 13/20] scsi: libsas: Remove unused variable and check in
+ function hisi_sas_send_ata_reset_each_phy()
+
+In commit 29e2bac87421 ("scsi: hisi_sas: Fix some issues related to
+asd_sas_port->phy_list"), we use asd_sas_port->phy_mask instead of
+accessing asd_sas_port->phy_list, and it is enough to use
+asd_sas_port->phy_mask to check the state of phy, so removing the
+old and unused check.
+
+Fixes: 29e2bac87421 ("scsi: hisi_sas: Fix some issues related to asd_sas_port->phy_list")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/3d20171c-f5ac-d01e-9f0e-ba51835d68f0@hisilicon.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index f46f679fe825..a05ec7aece5a 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1525,16 +1525,11 @@ static void hisi_sas_send_ata_reset_each_phy(struct hisi_hba *hisi_hba,
+ 	struct device *dev = hisi_hba->dev;
+ 	int s = sizeof(struct host_to_dev_fis);
+ 	int rc = TMF_RESP_FUNC_FAILED;
+-	struct asd_sas_phy *sas_phy;
+ 	struct ata_link *link;
+ 	u8 fis[20] = {0};
+-	u32 state;
+ 	int i;
+ 
+-	state = hisi_hba->hw->get_phys_state(hisi_hba);
+ 	for (i = 0; i < hisi_hba->n_phy; i++) {
+-		if (!(state & BIT(sas_phy->id)))
+-			continue;
+ 		if (!(sas_port->phy_mask & BIT(i)))
+ 			continue;
+ 
+-- 
+2.34.1
+
