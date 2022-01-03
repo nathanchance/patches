@@ -1,0 +1,62 @@
+From 9b472f1bfb8859363f862040750780722dcfc004 Mon Sep 17 00:00:00 2001
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+Date: Fri, 24 Sep 2021 15:43:44 -0700
+Subject: [PATCH 21/33] lib/zlib_inflate/inffast: check config in C to avoid
+ unused function warning
+
+Building Linux for ppc64le with Ubuntu clang version
+12.0.0-3ubuntu1~21.04.1 shows the warning below.
+
+    arch/powerpc/boot/inffast.c:20:1: warning: unused function 'get_unaligned16' [-Wunused-function]
+    get_unaligned16(const unsigned short *p)
+    ^
+    1 warning generated.
+
+Fix it by moving the check from the preprocessor to C, so the compiler
+sees the use.
+
+Link: https://lkml.kernel.org/r/20210920084332.5752-1-pmenzel@molgen.mpg.de
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Zhen Lei <thunder.leizhen@huawei.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://git.kernel.org/linus/b7cd9fa5ccc392d9f2269edc4cb82508632c28da
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/zlib_inflate/inffast.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/lib/zlib_inflate/inffast.c b/lib/zlib_inflate/inffast.c
+index ed1f3df27260..8f6b90deacca 100644
+--- a/lib/zlib_inflate/inffast.c
++++ b/lib/zlib_inflate/inffast.c
+@@ -253,13 +253,12 @@ void inflate_fast(z_streamp strm, unsigned start)
+ 
+ 			sfrom = (unsigned short *)(from);
+ 			loops = len >> 1;
+-			do
+-#ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
+-			    *sout++ = *sfrom++;
+-#else
+-			    *sout++ = get_unaligned16(sfrom++);
+-#endif
+-			while (--loops);
++			do {
++			    if (IS_ENABLED(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS))
++				*sout++ = *sfrom++;
++			    else
++				*sout++ = get_unaligned16(sfrom++);
++			} while (--loops);
+ 			out = (unsigned char *)sout;
+ 			from = (unsigned char *)sfrom;
+ 		    } else { /* dist == 1 or dist == 2 */
+-- 
+2.34.1
+
