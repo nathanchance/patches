@@ -1,7 +1,7 @@
 From f6f2a21edfd8e1a9729ee4463e268aa9e865c0ac Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 14 Oct 2021 14:57:03 -0700
-Subject: [PATCH 09/18] staging: wlan-ng: Avoid bitwise vs logical OR warning
+Subject: [PATCH 09/20] staging: wlan-ng: Avoid bitwise vs logical OR warning
  in hfa384x_usb_throttlefn()
 
 A new warning in clang points out a place in this file where a bitwise

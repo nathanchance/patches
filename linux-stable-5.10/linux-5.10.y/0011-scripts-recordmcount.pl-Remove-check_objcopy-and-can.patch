@@ -1,0 +1,119 @@
+From d7ce5293d574a008c73f9878b835221ddd04efc3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 2 Aug 2021 14:03:07 -0700
+Subject: [PATCH 11/20] scripts/recordmcount.pl: Remove check_objcopy() and
+ $can_use_local
+
+When building ARCH=riscv allmodconfig with llvm-objcopy, the objcopy
+version warning from this script appears:
+
+WARNING: could not find objcopy version or version is less than 2.17.
+        Local function references are disabled.
+
+The check_objcopy() function in scripts/recordmcount.pl is set up to
+parse GNU objcopy's version string, not llvm-objcopy's, which triggers
+the warning.
+
+Commit 799c43415442 ("kbuild: thin archives make default for all archs")
+made binutils 2.20 mandatory and commit ba64beb17493 ("kbuild: check the
+minimum assembler version in Kconfig") enforces this at configuration
+time so just remove check_objcopy() and $can_use_local instead, assuming
+--globalize-symbol is always available.
+
+llvm-objcopy has supported --globalize-symbol since LLVM 7.0.0 in 2018
+and the minimum version for building the kernel with LLVM is 10.0.1 so
+there is no issue introduced:
+
+Link: https://github.com/llvm/llvm-project/commit/ee5be798dae30d5f9414b01f76ff807edbc881aa
+Link: https://lkml.kernel.org/r/20210802210307.3202472-1-nathan@kernel.org
+
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Link: https://git.kernel.org/linus/b18b851ba85a5855cb53865fcff3cd2c17b44b0b
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Makefile                |  1 -
+ scripts/recordmcount.pl | 40 ----------------------------------------
+ 2 files changed, 41 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1500ea340424..dea6f5d02d71 100644
+--- a/Makefile
++++ b/Makefile
+@@ -534,7 +534,6 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn \
+ PHONY += scripts_basic
+ scripts_basic:
+ 	$(Q)$(MAKE) $(build)=scripts/basic
+-	$(Q)rm -f .tmp_quiet_recordmcount
+ 
+ PHONY += outputmakefile
+ # Before starting out-of-tree build, make sure the source tree is clean.
+diff --git a/scripts/recordmcount.pl b/scripts/recordmcount.pl
+index a4ca050815ab..99c1707ece4c 100755
+--- a/scripts/recordmcount.pl
++++ b/scripts/recordmcount.pl
+@@ -173,39 +173,6 @@ my $mcount_regex;	# Find the call site to mcount (return offset)
+ my $mcount_adjust;	# Address adjustment to mcount offset
+ my $alignment;		# The .align value to use for $mcount_section
+ my $section_type;	# Section header plus possible alignment command
+-my $can_use_local = 0; 	# If we can use local function references
+-
+-# Shut up recordmcount if user has older objcopy
+-my $quiet_recordmcount = ".tmp_quiet_recordmcount";
+-my $print_warning = 1;
+-$print_warning = 0 if ( -f $quiet_recordmcount);
+-
+-##
+-# check_objcopy - whether objcopy supports --globalize-symbols
+-#
+-#  --globalize-symbols came out in 2.17, we must test the version
+-#  of objcopy, and if it is less than 2.17, then we can not
+-#  record local functions.
+-sub check_objcopy
+-{
+-    open (IN, "$objcopy --version |") or die "error running $objcopy";
+-    while (<IN>) {
+-	if (/objcopy.*\s(\d+)\.(\d+)/) {
+-	    $can_use_local = 1 if ($1 > 2 || ($1 == 2 && $2 >= 17));
+-	    last;
+-	}
+-    }
+-    close (IN);
+-
+-    if (!$can_use_local && $print_warning) {
+-	print STDERR "WARNING: could not find objcopy version or version " .
+-	    "is less than 2.17.\n" .
+-	    "\tLocal function references are disabled.\n";
+-	open (QUIET, ">$quiet_recordmcount");
+-	printf QUIET "Disables the warning from recordmcount.pl\n";
+-	close QUIET;
+-    }
+-}
+ 
+ if ($arch =~ /(x86(_64)?)|(i386)/) {
+     if ($bits == 64) {
+@@ -437,8 +404,6 @@ if ($filename =~ m,^(.*)(\.\S),) {
+ my $mcount_s = $dirname . "/.tmp_mc_" . $prefix . ".s";
+ my $mcount_o = $dirname . "/.tmp_mc_" . $prefix . ".o";
+ 
+-check_objcopy();
+-
+ #
+ # Step 1: find all the local (static functions) and weak symbols.
+ #         't' is local, 'w/W' is weak
+@@ -476,11 +441,6 @@ sub update_funcs
+ 
+     # is this function static? If so, note this fact.
+     if (defined $locals{$ref_func}) {
+-
+-	# only use locals if objcopy supports globalize-symbols
+-	if (!$can_use_local) {
+-	    return;
+-	}
+ 	$convert{$ref_func} = 1;
+     }
+ 
+-- 
+2.34.1
+
