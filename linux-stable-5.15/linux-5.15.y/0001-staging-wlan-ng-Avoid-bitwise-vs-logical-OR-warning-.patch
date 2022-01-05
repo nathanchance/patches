@@ -1,4 +1,4 @@
-From 7fca8661c30ec5f49d01ec910d7a7cb928d29fba Mon Sep 17 00:00:00 2001
+From 3d8414afd3d8fc36a94a8645e5a85135108289bc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 14 Oct 2021 14:57:03 -0700
 Subject: [PATCH 01/13] staging: wlan-ng: Avoid bitwise vs logical OR warning
@@ -68,7 +68,7 @@ index 8c8524679ba3..0d869b5e309c 100644
  
  	spin_unlock_irqrestore(&hw->ctlxq.lock, flags);
 
-base-commit: 25960cafa06e6fcd830e6c792e6a7de68c1e25ed
+base-commit: 734eb1fd2073f503f5c6b44f1c0d453ca6986b84
 -- 
 2.34.1
 
