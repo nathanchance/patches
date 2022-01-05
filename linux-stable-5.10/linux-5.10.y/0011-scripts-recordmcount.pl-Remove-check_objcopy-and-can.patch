@@ -1,4 +1,4 @@
-From d7ce5293d574a008c73f9878b835221ddd04efc3 Mon Sep 17 00:00:00 2001
+From 1c9d3ebd131c3209c6354a2d6d3ad6f414a89b09 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:03:07 -0700
 Subject: [PATCH 11/20] scripts/recordmcount.pl: Remove check_objcopy() and
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 41 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 1500ea340424..dea6f5d02d71 100644
+index 556241a10821..e282594897db 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -534,7 +534,6 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn \
@@ -50,7 +50,7 @@ index 1500ea340424..dea6f5d02d71 100644
  PHONY += outputmakefile
  # Before starting out-of-tree build, make sure the source tree is clean.
 diff --git a/scripts/recordmcount.pl b/scripts/recordmcount.pl
-index a4ca050815ab..99c1707ece4c 100755
+index dc1d3696af6b..4e21580178b9 100755
 --- a/scripts/recordmcount.pl
 +++ b/scripts/recordmcount.pl
 @@ -173,39 +173,6 @@ my $mcount_regex;	# Find the call site to mcount (return offset)
