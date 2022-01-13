@@ -1,7 +1,7 @@
-From c656e62df640a518552fca08d274d501c17ced0c Mon Sep 17 00:00:00 2001
+From 1cc9dd63f88da148ba0cca2c0c46787241ef2f4d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Fri, 13 Nov 2020 19:37:22 +0200
-Subject: [PATCH 04/10] arm: lib: xor-neon: remove unnecessary GCC < 4.6
+Subject: [PATCH 04/11] arm: lib: xor-neon: remove unnecessary GCC < 4.6
  warning
 
 Drop warning because kernel now requires GCC >= v4.9 after
