@@ -1,7 +1,7 @@
-From 5e7ff7f9ce28c6a235d34df5bd6f4c8d351c2cd3 Mon Sep 17 00:00:00 2001
+From a11ebbb3a0f15379a0ce277605f71110261b69c4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 23 Dec 2021 17:36:29 -0700
-Subject: [PATCH 08/12] HACK: Drivers: hv: vmbus: Workaround clang bug
+Subject: [PATCH 06/10] HACK: Drivers: hv: vmbus: Workaround clang bug
 
  drivers/hv/vmbus_drv.c:2082:29: error: shift count >= width of type [-Werror,-Wshift-count-overflow]
  static u64 vmbus_dma_mask = DMA_BIT_MASK(64);
