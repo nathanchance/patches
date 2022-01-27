@@ -1,4 +1,4 @@
-From 417a31f05dab7043e10a4b440b6af65efa860f9f Mon Sep 17 00:00:00 2001
+From 43076246003de4204a2460450f8c5aad7c034491 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
 Subject: [PATCH 11/29] powerpc: fix function annotations to avoid section
@@ -35,7 +35,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
-index 1b65fb7c0bda..b29480db80e1 100644
+index 7f4e2c031a9a..f6c7c9241826 100644
 --- a/arch/powerpc/kernel/prom_init.c
 +++ b/arch/powerpc/kernel/prom_init.c
 @@ -3238,7 +3238,7 @@ static int enter_secure_mode(unsigned long kbase, unsigned long fdt)
@@ -92,5 +92,5 @@ index 3f15615712b5..5e3fb9955b93 100644
  	const u8 *vec5_xive;
  
 -- 
-2.34.1
+2.35.0
 

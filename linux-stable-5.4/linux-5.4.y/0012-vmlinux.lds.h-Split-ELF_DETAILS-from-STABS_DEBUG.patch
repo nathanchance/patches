@@ -1,4 +1,4 @@
-From f6a3239a4ab0dd19789308e05f5d2d96f108e2fa Mon Sep 17 00:00:00 2001
+From 58e7ef8347af489e5d06a3375702138b208b7e75 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 12/29] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
@@ -354,5 +354,5 @@ index 8a5ced9cf527..2551bec5306c 100644
  
  #ifdef CONFIG_GENERIC_BUG
 -- 
-2.34.1
+2.35.0
 
