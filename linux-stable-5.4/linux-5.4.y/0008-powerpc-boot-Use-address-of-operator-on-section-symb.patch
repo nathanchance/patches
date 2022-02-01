@@ -1,4 +1,4 @@
-From e3d5f9e648a9a1e71fe117a970e4f11f0ac171c7 Mon Sep 17 00:00:00 2001
+From b615e981003d7397932fa363ac7f0de43c4dd78d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 23 Jun 2020 20:59:20 -0700
 Subject: [PATCH 08/29] powerpc/boot: Use address-of operator on section
@@ -69,5 +69,5 @@ index c52552a681c5..6e4efbdb6b7c 100644
  		setprop_val(chosen, "linux,initrd-end", (u32)(_initrd_end));
  	}
 -- 
-2.35.0
+2.35.1
 
