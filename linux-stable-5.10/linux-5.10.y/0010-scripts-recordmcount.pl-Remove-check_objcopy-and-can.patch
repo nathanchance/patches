@@ -1,4 +1,4 @@
-From 3337651c68744cadfbe51be6c0110a6c6caa8790 Mon Sep 17 00:00:00 2001
+From 069c2f64b56355e2ff2d99ecb45b4f77351b88e7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:03:07 -0700
 Subject: [PATCH 10/17] scripts/recordmcount.pl: Remove check_objcopy() and
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 41 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index fa98893aae61..a6c8d691e42a 100644
+index c43133c8a5b1..86da1189a4c0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -534,7 +534,6 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn \
@@ -115,5 +115,5 @@ index dc1d3696af6b..4e21580178b9 100755
      }
  
 -- 
-2.35.0
+2.35.1
 

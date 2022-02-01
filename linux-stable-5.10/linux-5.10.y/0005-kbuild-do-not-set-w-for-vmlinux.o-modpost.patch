@@ -1,4 +1,4 @@
-From 2bb2587ea534a615525eeed6be13082957d74587 Mon Sep 17 00:00:00 2001
+From feb9f26a91848e8075e135161c30512d1e47fb9a Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
 Subject: [PATCH 05/17] kbuild: do not set -w for vmlinux.o modpost
@@ -54,5 +54,5 @@ index 12a87be0fb44..a928b040bdb7 100644
  # Otherwise, allmodconfig would fail with "Argument list too long".
  quiet_cmd_modpost = MODPOST $@
 -- 
-2.35.0
+2.35.1
 
