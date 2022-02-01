@@ -1,4 +1,4 @@
-From e477abfb6b3ebe7cbdf4f8de43b15e77a7a7250c Mon Sep 17 00:00:00 2001
+From ad65c2a4499bfd328789131eb4994e4310d7fc13 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 21 Oct 2021 14:45:00 -0700
 Subject: [PATCH 06/10] soc/tegra: fuse: Fix bitwise vs. logical OR warning
@@ -53,5 +53,5 @@ index 2546bddbab93..4984246605ae 100644
  		val = (val << 1) | (reg & 0x1);
  	}
 -- 
-2.35.0
+2.35.1
 
