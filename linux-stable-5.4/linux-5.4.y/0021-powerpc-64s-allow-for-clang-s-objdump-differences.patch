@@ -1,7 +1,7 @@
 From 5b7ad0a067ff62c6a85941562e44498fdf6bf9e2 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Fri, 24 Jul 2020 15:49:01 -0700
-Subject: [PATCH 21/29] powerpc/64s: allow for clang's objdump differences
+Subject: [PATCH 21/30] powerpc/64s: allow for clang's objdump differences
 
 Clang's objdump emits slightly different output from GNU's objdump,
 causing a list of warnings to be emitted during relocatable builds.
