@@ -1,4 +1,4 @@
-From ab51fa970f473eacf6d51348b625a988ce9dd269 Mon Sep 17 00:00:00 2001
+From edf7d5027c5549b9adf324d79b2066307d2a0139 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 23 Dec 2021 17:36:29 -0700
 Subject: [PATCH 08/12] HACK: Drivers: hv: vmbus: Workaround clang bug
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 17bf55fe3169..2376ee484362 100644
+index 6f1da72b7516..4809321557bc 100644
 --- a/drivers/hv/vmbus_drv.c
 +++ b/drivers/hv/vmbus_drv.c
 @@ -2079,7 +2079,7 @@ struct hv_device *vmbus_device_create(const guid_t *type,
