@@ -1,4 +1,4 @@
-From 2e5c6ed327bc431ba7b6bb4ed760d752dabf2647 Mon Sep 17 00:00:00 2001
+From 02fc71a75777d79c5288c0feaceb585429e3fd9a Mon Sep 17 00:00:00 2001
 From: Robert Hancock <robert.hancock@calian.com>
 Date: Thu, 27 Jan 2022 16:15:00 -0600
 Subject: [PATCH 01/13] usb: dwc3: xilinx: fix uninitialized return value
@@ -33,7 +33,7 @@ index e14ac15e24c3..a6f3a9b38789 100644
  
  	usb3_phy = devm_phy_optional_get(dev, "usb3-phy");
 
-base-commit: 88808fbbead481aedb46640a5ace69c58287f56a
+base-commit: 90c9e950c0def5c354b4a6154a2ddda3e5f214ac
 -- 
 2.35.1
 
