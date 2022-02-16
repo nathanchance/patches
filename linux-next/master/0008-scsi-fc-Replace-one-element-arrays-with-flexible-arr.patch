@@ -1,0 +1,62 @@
+From 98d28e2aa2ab0f0a683fccba898b5b27a9d82407 Mon Sep 17 00:00:00 2001
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Date: Mon, 14 Feb 2022 16:39:03 -0600
+Subject: [PATCH 08/15] scsi: fc: Replace one-element arrays with
+ flexible-array members
+
+Use flexible-array members in struct fc_fdmi_attr_entry and
+fs_fdmi_attrs instead of one-element arrays, and refactor the
+code accordingly.
+
+Also, this helps with the ongoing efforts to globally enable
+-Warray-bounds and get us closer to being able to tighten the
+FORTIFY_SOURCE routines on memcpy().
+
+https://github.com/KSPP/linux/issues/79
+https://github.com/ClangBuiltLinux/linux/issues/1590
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20220214223903.GA859464@embeddedor
+---
+ drivers/scsi/libfc/fc_encode.h | 2 +-
+ include/scsi/fc/fc_ms.h        | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/scsi/libfc/fc_encode.h b/drivers/scsi/libfc/fc_encode.h
+index 74ae7fd15d8d..7dcac3b6baa7 100644
+--- a/drivers/scsi/libfc/fc_encode.h
++++ b/drivers/scsi/libfc/fc_encode.h
+@@ -246,7 +246,7 @@ static inline int fc_ct_ms_fill(struct fc_lport *lport,
+ 				   &entry->type);
+ 		put_unaligned_be16(len, &entry->len);
+ 		put_unaligned_be64(lport->wwnn,
+-				   (__be64 *)&entry->value[0]);
++				   (__be64 *)&entry->value);
+ 
+ 		/* Manufacturer */
+ 		entry = (struct fc_fdmi_attr_entry *)((char *)entry->value +
+diff --git a/include/scsi/fc/fc_ms.h b/include/scsi/fc/fc_ms.h
+index 00191695233a..56a5d2b5a624 100644
+--- a/include/scsi/fc/fc_ms.h
++++ b/include/scsi/fc/fc_ms.h
+@@ -158,7 +158,7 @@ struct fc_fdmi_port_name {
+ struct fc_fdmi_attr_entry {
+ 	__be16		type;
+ 	__be16		len;
+-	__u8		value[1];
++	__u8		value[];
+ } __attribute__((__packed__));
+ 
+ /*
+@@ -166,7 +166,7 @@ struct fc_fdmi_attr_entry {
+  */
+ struct fs_fdmi_attrs {
+ 	__be32				numattrs;
+-	struct fc_fdmi_attr_entry	attr[1];
++	struct fc_fdmi_attr_entry	attr[];
+ } __attribute__((__packed__));
+ 
+ /*
+-- 
+2.35.1
+

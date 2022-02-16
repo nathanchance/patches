@@ -1,0 +1,107 @@
+From 3ee37d0aaf0748524320218e6425df4cf87dd6f6 Mon Sep 17 00:00:00 2001
+From: Tom Rix <trix@redhat.com>
+Date: Sun, 13 Feb 2022 09:19:07 -0800
+Subject: [PATCH 07/15] misc: rtsx: conditionally build rtsx_pm_power_saving()
+
+On s390 allyesconfig, there is this build error
+rtsx_pcr.c:1084:13: error: 'rtsx_pm_power_saving'
+  defined but not used
+ 1084 | static void rtsx_pm_power_saving(struct rtsx_pcr *pcr)
+      |             ^~~~~~~~~~~~~~~~~~~~
+
+rtsx_pm_power_saving() is only used by rtsx_pci_runtime_idle()
+which is conditional on CONFIG_PM.  So conditionally build
+rtsx_pm_power_saving() and the similar
+rtsx_comm_pm_power_saving() and rtsx_enable_aspm().
+
+Signed-off-by: Tom Rix <trix@redhat.com>
+Link: https://lore.kernel.org/r/20220213171907.2786442-1-trix@redhat.com
+---
+ drivers/misc/cardreader/rtsx_pcr.c | 64 +++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
+
+diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
+index 1cb6425e8369..2a2619e3c72c 100644
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1054,38 +1054,6 @@ static int rtsx_pci_acquire_irq(struct rtsx_pcr *pcr)
+ 	return 0;
+ }
+ 
+-static void rtsx_enable_aspm(struct rtsx_pcr *pcr)
+-{
+-	if (pcr->ops->set_aspm)
+-		pcr->ops->set_aspm(pcr, true);
+-	else
+-		rtsx_comm_set_aspm(pcr, true);
+-}
+-
+-static void rtsx_comm_pm_power_saving(struct rtsx_pcr *pcr)
+-{
+-	struct rtsx_cr_option *option = &pcr->option;
+-
+-	if (option->ltr_enabled) {
+-		u32 latency = option->ltr_l1off_latency;
+-
+-		if (rtsx_check_dev_flag(pcr, L1_SNOOZE_TEST_EN))
+-			mdelay(option->l1_snooze_delay);
+-
+-		rtsx_set_ltr_latency(pcr, latency);
+-	}
+-
+-	if (rtsx_check_dev_flag(pcr, LTR_L1SS_PWR_GATE_EN))
+-		rtsx_set_l1off_sub_cfg_d0(pcr, 0);
+-
+-	rtsx_enable_aspm(pcr);
+-}
+-
+-static void rtsx_pm_power_saving(struct rtsx_pcr *pcr)
+-{
+-	rtsx_comm_pm_power_saving(pcr);
+-}
+-
+ static void rtsx_base_force_power_down(struct rtsx_pcr *pcr)
+ {
+ 	/* Set relink_time to 0 */
+@@ -1701,6 +1669,38 @@ static int __maybe_unused rtsx_pci_resume(struct device *dev_d)
+ 
+ #ifdef CONFIG_PM
+ 
++static void rtsx_enable_aspm(struct rtsx_pcr *pcr)
++{
++	if (pcr->ops->set_aspm)
++		pcr->ops->set_aspm(pcr, true);
++	else
++		rtsx_comm_set_aspm(pcr, true);
++}
++
++static void rtsx_comm_pm_power_saving(struct rtsx_pcr *pcr)
++{
++	struct rtsx_cr_option *option = &pcr->option;
++
++	if (option->ltr_enabled) {
++		u32 latency = option->ltr_l1off_latency;
++
++		if (rtsx_check_dev_flag(pcr, L1_SNOOZE_TEST_EN))
++			mdelay(option->l1_snooze_delay);
++
++		rtsx_set_ltr_latency(pcr, latency);
++	}
++
++	if (rtsx_check_dev_flag(pcr, LTR_L1SS_PWR_GATE_EN))
++		rtsx_set_l1off_sub_cfg_d0(pcr, 0);
++
++	rtsx_enable_aspm(pcr);
++}
++
++static void rtsx_pm_power_saving(struct rtsx_pcr *pcr)
++{
++	rtsx_comm_pm_power_saving(pcr);
++}
++
+ static void rtsx_pci_shutdown(struct pci_dev *pcidev)
+ {
+ 	struct pcr_handle *handle = pci_get_drvdata(pcidev);
+-- 
+2.35.1
+
