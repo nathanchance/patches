@@ -1,7 +1,7 @@
-From 9da9e205fb2b78391fe1aa536b98fd84c02c11ae Mon Sep 17 00:00:00 2001
+From c2508131aab5a094d0de307d74e2665e97df059f Mon Sep 17 00:00:00 2001
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 Date: Sat, 12 Feb 2022 00:56:09 +0100
-Subject: [PATCH 09/15] netfilter: xt_socket: missing ifdef
+Subject: [PATCH 11/17] netfilter: xt_socket: missing ifdef
  CONFIG_IP6_NF_IPTABLES dependency
 
 nf_defrag_ipv6_disable() requires CONFIG_IP6_NF_IPTABLES.

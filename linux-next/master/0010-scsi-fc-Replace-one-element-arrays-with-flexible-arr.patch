@@ -1,7 +1,7 @@
-From 98d28e2aa2ab0f0a683fccba898b5b27a9d82407 Mon Sep 17 00:00:00 2001
+From fe3bf678835debc3d4dfea280106698bf6f7f6d3 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 14 Feb 2022 16:39:03 -0600
-Subject: [PATCH 08/15] scsi: fc: Replace one-element arrays with
+Subject: [PATCH 10/17] scsi: fc: Replace one-element arrays with
  flexible-array members
 
 Use flexible-array members in struct fc_fdmi_attr_entry and
