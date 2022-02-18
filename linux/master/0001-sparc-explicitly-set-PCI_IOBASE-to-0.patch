@@ -1,7 +1,7 @@
-From 1bd922189c7e97fb24db71889d36312415b12181 Mon Sep 17 00:00:00 2001
+From d37a4c131cbae7e901d40e7278bc97dd373dcf1a Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:32 +0200
-Subject: [PATCH 01/10] sparc: explicitly set PCI_IOBASE to 0
+Subject: [PATCH 01/11] sparc: explicitly set PCI_IOBASE to 0
 
 Instead of relying on the fallback in asm-generic/io.h which sets
 PCI_IOBASE 0 if it is not defined set it explicitly.
@@ -35,7 +35,7 @@ index 2eefa526b38f..c019e50702c1 100644
  #include <asm/io_64.h>
  #else
 
-base-commit: c5d9ae265b105d9a67575fb67bd4650a6fc08e25
+base-commit: 9195e5e0adbb8a9a5ee9ef0f9dedf6340d827405
 -- 
 2.35.1
 
