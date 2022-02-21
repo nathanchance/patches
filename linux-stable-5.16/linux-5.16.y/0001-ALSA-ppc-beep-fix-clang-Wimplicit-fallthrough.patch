@@ -1,0 +1,49 @@
+From d3929329e3e09ccacffce50ad1e9b0684eb68083 Mon Sep 17 00:00:00 2001
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Tue, 7 Dec 2021 12:00:53 +0100
+Subject: [PATCH 01/13] ALSA: ppc: beep: fix clang -Wimplicit-fallthrough
+
+Clang warns:
+
+sound/ppc/beep.c:103:2: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+        case SND_TONE: break;
+        ^
+sound/ppc/beep.c:103:2: note: insert 'break;' to avoid fall-through
+        case SND_TONE: break;
+        ^
+        break;
+1 warning generated.
+
+Clang is more pedantic than GCC, which does not warn when failing
+through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst.
+Add athe missing break to silence the warning.
+
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+Link: https://lore.kernel.org/r/20211207110053.695712-1-anders.roxell@linaro.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://git.kernel.org/linus/a98478f825862ddc1686a3335f9f1cc278fc5733
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/ppc/beep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/ppc/beep.c b/sound/ppc/beep.c
+index 0f4bce1c0d4f..bf289783eafd 100644
+--- a/sound/ppc/beep.c
++++ b/sound/ppc/beep.c
+@@ -99,7 +99,7 @@ static int snd_pmac_beep_event(struct input_dev *dev, unsigned int type,
+ 		return -1;
+ 
+ 	switch (code) {
+-	case SND_BELL: if (hz) hz = 1000;
++	case SND_BELL: if (hz) hz = 1000; break;
+ 	case SND_TONE: break;
+ 	default: return -1;
+ 	}
+
+base-commit: 528cecfa5af09631f0589efe9eacbd543c8c9db1
+-- 
+2.35.1
+
