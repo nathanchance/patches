@@ -1,7 +1,7 @@
-From f46b40319edb2503b9d3877cfc3477e9404b4e6a Mon Sep 17 00:00:00 2001
+From f5d210fd05e2d7731d366d78cf1de416be4f3516 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 21 Feb 2022 11:30:57 -0700
-Subject: [PATCH 17/22] HACK: ARM: configs: aspeed: Drop duplicate
+Subject: [PATCH 16/21] HACK: ARM: configs: aspeed: Drop duplicate
  CONFIG_FIRMWARE_MEMMAP
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
-index 9328145dc0c4..c39970bd8916 100644
+index ae4f3c56ae6b..fa5785340990 100644
 --- a/arch/arm/configs/aspeed_g5_defconfig
 +++ b/arch/arm/configs/aspeed_g5_defconfig
 @@ -36,7 +36,6 @@ CONFIG_KEXEC=y
