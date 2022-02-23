@@ -1,4 +1,4 @@
-From d3929329e3e09ccacffce50ad1e9b0684eb68083 Mon Sep 17 00:00:00 2001
+From 5025c1298c1afc3ee3945a4cc27c3d125441dc67 Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Tue, 7 Dec 2021 12:00:53 +0100
 Subject: [PATCH 01/13] ALSA: ppc: beep: fix clang -Wimplicit-fallthrough
@@ -43,7 +43,7 @@ index 0f4bce1c0d4f..bf289783eafd 100644
  	default: return -1;
  	}
 
-base-commit: 528cecfa5af09631f0589efe9eacbd543c8c9db1
+base-commit: f40e0f7a433b029c8cbe2cdfa6b3210e31053e27
 -- 
 2.35.1
 
