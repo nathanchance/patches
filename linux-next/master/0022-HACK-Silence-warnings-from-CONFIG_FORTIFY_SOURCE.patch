@@ -1,15 +1,13 @@
-From 8670d70918e3d35c168b89b1821388b90b1efef0 Mon Sep 17 00:00:00 2001
+From cd7eda444c1c9a5bb6f5f22da9ddd3deade7962c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 14 Feb 2022 16:19:15 -0700
-Subject: [PATCH 17/21] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
+Subject: [PATCH 22/26] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1591
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/net/ethernet/huawei/hinic/hinic_devlink.c | 2 ++
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c  | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
 index 60ae8bfc5f69..7791ddb7ea25 100644
@@ -27,19 +25,6 @@ index 60ae8bfc5f69..7791ddb7ea25 100644
  	}
  
  	if (len != fw_image->fw_len ||
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-index c73672d61356..5e2046a62ac3 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -74,7 +74,7 @@ static int iwl_dbg_tlv_add(const struct iwl_ucode_tlv *tlv,
- 	if (!node)
- 		return -ENOMEM;
- 
--	memcpy(&node->tlv, tlv, sizeof(node->tlv) + len);
-+	/* memcpy(&node->tlv, tlv, sizeof(node->tlv) + len); */
- 	list_add_tail(&node->list, list);
- 
- 	return 0;
 -- 
 2.35.1
 

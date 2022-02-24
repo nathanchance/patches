@@ -1,7 +1,7 @@
-From ed18673ad8a041d460b63e02db306202124eaaf2 Mon Sep 17 00:00:00 2001
+From 251efc282dc86ab24bc92398c1410687d43858ba Mon Sep 17 00:00:00 2001
 From: Tom Rix <trix@redhat.com>
 Date: Sun, 13 Feb 2022 09:19:07 -0800
-Subject: [PATCH 09/21] misc: rtsx: conditionally build rtsx_pm_power_saving()
+Subject: [PATCH 09/26] misc: rtsx: conditionally build rtsx_pm_power_saving()
 
 On s390 allyesconfig, there is this build error
 rtsx_pcr.c:1084:13: error: 'rtsx_pm_power_saving'

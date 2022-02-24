@@ -1,0 +1,188 @@
+From 4c0da7580780edbe622466d244b3267b7596f058 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 24 Feb 2022 14:17:12 -0700
+Subject: [PATCH 01/26] Revert "Merge branch 'for-5.18/io_uring-statx' into
+ for-next"
+
+This reverts commit 7e0469db34b87ff21c9294f8804f3701e9f2623b, reversing
+changes made to bc2959102cb9f0105e0da3a0df0192ba927b52d5.
+
+Link: https://lore.kernel.org/r/5e0084b9-0090-c2a6-ab64-58fd1887d95f@samsung.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/internal.h |  4 +---
+ fs/io_uring.c | 22 ++--------------------
+ fs/stat.c     | 47 +++++++++++++----------------------------------
+ 3 files changed, 16 insertions(+), 57 deletions(-)
+
+diff --git a/fs/internal.h b/fs/internal.h
+index 08503dc68d2b..7f59bf2d591e 100644
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -179,9 +179,7 @@ int sb_init_dio_done_wq(struct super_block *sb);
+ /*
+  * fs/stat.c:
+  */
+-
+-int getname_statx_lookup_flags(int flags);
+-int do_statx(int dfd, struct filename *filename, unsigned int flags,
++int do_statx(int dfd, const char __user *filename, unsigned flags,
+ 	     unsigned int mask, struct statx __user *buffer);
+ 
+ /*
+diff --git a/fs/io_uring.c b/fs/io_uring.c
+index 74714a405577..a2d476e0c94d 100644
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -647,7 +647,7 @@ struct io_statx {
+ 	int				dfd;
+ 	unsigned int			mask;
+ 	unsigned int			flags;
+-	struct filename			*filename;
++	const char __user		*filename;
+ 	struct statx __user		*buffer;
+ };
+ 
+@@ -4741,8 +4741,6 @@ static int io_fadvise(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ static int io_statx_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+-	const char __user *path;
+-
+ 	if (unlikely(req->ctx->flags & IORING_SETUP_IOPOLL))
+ 		return -EINVAL;
+ 	if (sqe->ioprio || sqe->buf_index || sqe->splice_fd_in)
+@@ -4752,22 +4750,10 @@ static int io_statx_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 
+ 	req->statx.dfd = READ_ONCE(sqe->fd);
+ 	req->statx.mask = READ_ONCE(sqe->len);
+-	path = u64_to_user_ptr(READ_ONCE(sqe->addr));
++	req->statx.filename = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	req->statx.buffer = u64_to_user_ptr(READ_ONCE(sqe->addr2));
+ 	req->statx.flags = READ_ONCE(sqe->statx_flags);
+ 
+-	req->statx.filename = getname_flags(path,
+-					getname_statx_lookup_flags(req->statx.flags),
+-					NULL);
+-
+-	if (IS_ERR(req->statx.filename)) {
+-		int ret = PTR_ERR(req->statx.filename);
+-
+-		req->statx.filename = NULL;
+-		return ret;
+-	}
+-
+-	req->flags |= REQ_F_NEED_CLEANUP;
+ 	return 0;
+ }
+ 
+@@ -6742,10 +6728,6 @@ static void io_clean_op(struct io_kiocb *req)
+ 			putname(req->hardlink.oldpath);
+ 			putname(req->hardlink.newpath);
+ 			break;
+-		case IORING_OP_STATX:
+-			if (req->statx.filename)
+-				putname(req->statx.filename);
+-			break;
+ 		}
+ 	}
+ 	if ((req->flags & REQ_F_POLLED) && req->apoll) {
+diff --git a/fs/stat.c b/fs/stat.c
+index f0a9702cee67..28d2020ba1f4 100644
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -184,20 +184,6 @@ int vfs_fstat(int fd, struct kstat *stat)
+ 	return error;
+ }
+ 
+-int getname_statx_lookup_flags(int flags)
+-{
+-	int lookup_flags = 0;
+-
+-	if (!(flags & AT_SYMLINK_NOFOLLOW))
+-		lookup_flags |= LOOKUP_FOLLOW;
+-	if (!(flags & AT_NO_AUTOMOUNT))
+-		lookup_flags |= LOOKUP_AUTOMOUNT;
+-	if (flags & AT_EMPTY_PATH)
+-		lookup_flags |= LOOKUP_EMPTY;
+-
+-	return lookup_flags;
+-}
+-
+ /**
+  * vfs_statx - Get basic and extra attributes by filename
+  * @dfd: A file descriptor representing the base dir for a relative filename
+@@ -213,7 +199,7 @@ int getname_statx_lookup_flags(int flags)
+  *
+  * 0 will be returned on success, and a -ve error code if unsuccessful.
+  */
+-static int vfs_statx(int dfd, struct filename *filename, int flags,
++static int vfs_statx(int dfd, const char __user *filename, int flags,
+ 	      struct kstat *stat, u32 request_mask)
+ {
+ 	struct path path;
+@@ -224,8 +210,15 @@ static int vfs_statx(int dfd, struct filename *filename, int flags,
+ 		      AT_STATX_SYNC_TYPE))
+ 		return -EINVAL;
+ 
++	if (!(flags & AT_SYMLINK_NOFOLLOW))
++		lookup_flags |= LOOKUP_FOLLOW;
++	if (!(flags & AT_NO_AUTOMOUNT))
++		lookup_flags |= LOOKUP_AUTOMOUNT;
++	if (flags & AT_EMPTY_PATH)
++		lookup_flags |= LOOKUP_EMPTY;
++
+ retry:
+-	error = filename_lookup(dfd, filename, flags, &path, NULL);
++	error = user_path_at(dfd, filename, lookup_flags, &path);
+ 	if (error)
+ 		goto out;
+ 
+@@ -247,15 +240,8 @@ static int vfs_statx(int dfd, struct filename *filename, int flags,
+ int vfs_fstatat(int dfd, const char __user *filename,
+ 			      struct kstat *stat, int flags)
+ {
+-	int ret;
+-	int statx_flags = flags | AT_NO_AUTOMOUNT;
+-	struct filename *name;
+-
+-	name = getname_flags(filename, getname_statx_lookup_flags(statx_flags), NULL);
+-	ret = vfs_statx(dfd, name, statx_flags, stat, STATX_BASIC_STATS);
+-	putname(name);
+-
+-	return ret;
++	return vfs_statx(dfd, filename, flags | AT_NO_AUTOMOUNT,
++			 stat, STATX_BASIC_STATS);
+ }
+ 
+ #ifdef __ARCH_WANT_OLD_STAT
+@@ -616,7 +602,7 @@ cp_statx(const struct kstat *stat, struct statx __user *buffer)
+ 	return copy_to_user(buffer, &tmp, sizeof(tmp)) ? -EFAULT : 0;
+ }
+ 
+-int do_statx(int dfd, struct filename *filename, unsigned int flags,
++int do_statx(int dfd, const char __user *filename, unsigned flags,
+ 	     unsigned int mask, struct statx __user *buffer)
+ {
+ 	struct kstat stat;
+@@ -650,14 +636,7 @@ SYSCALL_DEFINE5(statx,
+ 		unsigned int, mask,
+ 		struct statx __user *, buffer)
+ {
+-	int ret;
+-	struct filename *name;
+-
+-	name = getname_flags(filename, getname_statx_lookup_flags(flags), NULL);
+-	ret = do_statx(dfd, name, flags, mask, buffer);
+-	putname(name);
+-
+-	return ret;
++	return do_statx(dfd, filename, flags, mask, buffer);
+ }
+ 
+ #ifdef CONFIG_COMPAT
+
+base-commit: d4a0ae62a277377de396850ed4b709b6bd9b7326
+-- 
+2.35.1
+

@@ -1,0 +1,35 @@
+From e7903f8241afcf33b8f3f5177c81aadce627d8af Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 24 Feb 2022 14:24:49 -0700
+Subject: [PATCH 21/26] HACK: sched: Fix -Wunused-funtion for
+ sched_r{r,t}_handler()
+
+Link: https://lore.kernel.org/r/fbfc360c-d68f-d83b-5124-d6d930235b8c@infradead.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/sched/rt.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 95e4d5f31caa..fcb98ba037ab 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2978,6 +2978,7 @@ static void sched_rt_do_global(void)
+ 	raw_spin_unlock_irqrestore(&def_rt_bandwidth.rt_runtime_lock, flags);
+ }
+ 
++#ifdef CONFIG_SYSCTL
+ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+ 		size_t *lenp, loff_t *ppos)
+ {
+@@ -3038,6 +3039,7 @@ static int sched_rr_handler(struct ctl_table *table, int write, void *buffer,
+ 
+ 	return ret;
+ }
++#endif
+ 
+ #ifdef CONFIG_SCHED_DEBUG
+ void print_rt_stats(struct seq_file *m, int cpu)
+-- 
+2.35.1
+

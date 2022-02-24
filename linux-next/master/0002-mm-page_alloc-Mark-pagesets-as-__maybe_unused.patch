@@ -1,7 +1,7 @@
-From 69190ff2cb6455d17cee5286fb2374d84d94aafb Mon Sep 17 00:00:00 2001
+From 7135d6724d61e505fb5646839992d60cfc48b9e1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Feb 2022 11:43:22 -0700
-Subject: [PATCH 01/21] mm/page_alloc: Mark pagesets as __maybe_unused
+Subject: [PATCH 02/26] mm/page_alloc: Mark pagesets as __maybe_unused
 
 Commit 9983a9d577db ("locking/local_lock: Make the empty local_lock_*()
 function a macro.") in the -tip tree converted the local_lock_*()
@@ -45,8 +45,6 @@ index 02283598fd14..a2b73ff3dc1e 100644
  	.lock = INIT_LOCAL_LOCK(lock),
  };
  
-
-base-commit: 196d330d7fb1e7cc0d85641c89ce4602cb36f12e
 -- 
 2.35.1
 

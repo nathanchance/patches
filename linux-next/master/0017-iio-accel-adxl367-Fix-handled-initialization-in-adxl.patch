@@ -1,0 +1,45 @@
+From f9bf46ab149da49cb4537b62eb82fbb01be7871c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 24 Feb 2022 14:10:34 -0700
+Subject: [PATCH 17/26] iio: accel: adxl367: Fix handled initialization in
+ adxl367_irq_handler()
+
+Clang warns:
+
+  drivers/iio/accel/adxl367.c:887:2: error: variable 'handled' is uninitialized when used here [-Werror,-Wuninitialized]
+          handled |= adxl367_push_event(indio_dev, status);
+          ^~~~~~~
+  drivers/iio/accel/adxl367.c:879:14: note: initialize the variable 'handled' to silence this warning
+          bool handled;
+                      ^
+                       = 0
+  1 error generated.
+
+This should have used '=' instead of '|='; make that change to resolve
+the warning.
+
+Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1605
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220224211034.625130-1-nathan@kernel.org
+---
+ drivers/iio/accel/adxl367.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/iio/accel/adxl367.c b/drivers/iio/accel/adxl367.c
+index b452d74b1d4d..350a89b61179 100644
+--- a/drivers/iio/accel/adxl367.c
++++ b/drivers/iio/accel/adxl367.c
+@@ -884,7 +884,7 @@ static irqreturn_t adxl367_irq_handler(int irq, void *private)
+ 	if (ret)
+ 		return IRQ_NONE;
+ 
+-	handled |= adxl367_push_event(indio_dev, status);
++	handled = adxl367_push_event(indio_dev, status);
+ 	handled |= adxl367_push_fifo_data(indio_dev, status, fifo_entries);
+ 
+ 	return handled ? IRQ_HANDLED : IRQ_NONE;
+-- 
+2.35.1
+
