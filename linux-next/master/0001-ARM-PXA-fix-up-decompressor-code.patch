@@ -1,0 +1,35 @@
+From 551c4d8491b9388b301d6ee008c7ed5e3ec5935f Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 1 Mar 2022 11:16:57 +0100
+Subject: [PATCH 01/17] ARM: PXA: fix up decompressor code
+
+The earlier removal of two boards caused a build regression,
+fix it by removing the extraneous '||'.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 28f74201e37c ("ARM: pxa: remove Intel Imote2 and Stargate 2 boards")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://git.kernel.org/soc/soc/c/d9bdba07824c565e482741ac201a6e640cd0a11b
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm/mach-pxa/include/mach/uncompress.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-pxa/include/mach/uncompress.h b/arch/arm/mach-pxa/include/mach/uncompress.h
+index f71a8dafa6e0..1ed629e38ce6 100644
+--- a/arch/arm/mach-pxa/include/mach/uncompress.h
++++ b/arch/arm/mach-pxa/include/mach/uncompress.h
+@@ -59,7 +59,7 @@ static inline void arch_decomp_setup(void)
+ 	uart_is_pxa = 1;
+ 
+ 	if (machine_is_littleton() ||  machine_is_csb726() ||
+-	    || machine_is_cm_x300() || machine_is_balloon3())
++	    machine_is_cm_x300() || machine_is_balloon3())
+ 		uart_base = STUART_BASE;
+ 
+ 	if (machine_is_arcom_zeus()) {
+
+base-commit: e6ada6df471f847da3b09b357e246c62335bc0bb
+-- 
+2.35.1
+

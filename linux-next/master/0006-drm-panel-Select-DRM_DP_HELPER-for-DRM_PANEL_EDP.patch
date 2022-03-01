@@ -1,7 +1,7 @@
-From 58ed1dd0155e09c80969815a68cac95820a16873 Mon Sep 17 00:00:00 2001
+From 9c257410246c7e40b39aa9a3476f3575ec6e4b89 Mon Sep 17 00:00:00 2001
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Date: Thu, 3 Feb 2022 10:39:22 +0100
-Subject: [PATCH 07/26] drm/panel: Select DRM_DP_HELPER for DRM_PANEL_EDP
+Subject: [PATCH 06/17] drm/panel: Select DRM_DP_HELPER for DRM_PANEL_EDP
 
 As reported in [1], DRM_PANEL_EDP depends on DRM_DP_HELPER. Select
 the option to fix the build failure. The error message is shown

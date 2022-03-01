@@ -1,7 +1,7 @@
-From 271698b173bc8fa61d634f20e4163ee8b7ed783c Mon Sep 17 00:00:00 2001
+From 40729fd94cd21b320197d6714f31c9c4607caa8a Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Wed, 23 Feb 2022 16:23:55 +0000
-Subject: [PATCH 14/26] KVM: x86: Fix pointer mistmatch warning when patching
+Subject: [PATCH 11/17] KVM: x86: Fix pointer mistmatch warning when patching
  RET0 static calls
 
 Cast kvm_x86_ops.func to 'void *' when updating KVM static calls that are
