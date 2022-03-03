@@ -1,7 +1,7 @@
-From 92a8682f15c4888530bcfb2eab5b2eeca74183c6 Mon Sep 17 00:00:00 2001
+From f7da99fb6c66a2ac88a32a4428754cadf601b278 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Feb 2022 09:53:04 -0700
-Subject: [PATCH 07/17] drm/stm: Avoid using val uninitialized in
+Subject: [PATCH 05/17] drm/stm: Avoid using val uninitialized in
  ltdc_set_ycbcr_config()
 
 Clang warns:

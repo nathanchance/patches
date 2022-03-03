@@ -1,0 +1,44 @@
+From ad1826ed764bd1e6e106beab9de56a862db9cb5b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 3 Mar 2022 11:42:12 -0700
+Subject: [PATCH 09/17] clocksource/drivers/imx-tpm: Move
+ tpm_read_sched_clock() under CONFIG_ARM
+
+When building this driver for an architecture other than ARCH=arm:
+
+  drivers/clocksource/timer-imx-tpm.c:78:20: error: unused function 'tpm_read_sched_clock' [-Werror,-Wunused-function]
+  static u64 notrace tpm_read_sched_clock(void)
+                     ^
+  1 error generated.
+
+Move the function definition under the existing CONFIG_ARM section so
+there is no more warning.
+
+Fixes: 10720e120e2b ("clocksource/drivers/imx-tpm: Exclude sched clock for ARM64")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220303184212.2356245-1-nathan@kernel.org
+---
+ drivers/clocksource/timer-imx-tpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clocksource/timer-imx-tpm.c b/drivers/clocksource/timer-imx-tpm.c
+index 60cefc247b71..bd64a8a8427f 100644
+--- a/drivers/clocksource/timer-imx-tpm.c
++++ b/drivers/clocksource/timer-imx-tpm.c
+@@ -73,12 +73,12 @@ static unsigned long tpm_read_current_timer(void)
+ {
+ 	return tpm_read_counter();
+ }
+-#endif
+ 
+ static u64 notrace tpm_read_sched_clock(void)
+ {
+ 	return tpm_read_counter();
+ }
++#endif
+ 
+ static int tpm_set_next_event(unsigned long delta,
+ 				struct clock_event_device *evt)
+-- 
+2.35.1
+
