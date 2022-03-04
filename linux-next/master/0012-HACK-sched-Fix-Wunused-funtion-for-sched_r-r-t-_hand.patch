@@ -1,4 +1,4 @@
-From f2f1a2869b66e6a087ab8ec60332017fd6e451bb Mon Sep 17 00:00:00 2001
+From 19a0c522f12bd24a953cc5422e5a3df637579ad7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Mar 2022 13:51:08 -0700
 Subject: [PATCH 12/17] HACK: sched: Fix -Wunused-funtion for
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 95e4d5f31caa..0d83e7cf4d06 100644
+index f6282b90a4f6..97da89181cda 100644
 --- a/kernel/sched/rt.c
 +++ b/kernel/sched/rt.c
-@@ -2978,6 +2978,7 @@ static void sched_rt_do_global(void)
+@@ -2990,6 +2990,7 @@ static void sched_rt_do_global(void)
  	raw_spin_unlock_irqrestore(&def_rt_bandwidth.rt_runtime_lock, flags);
  }
  
@@ -22,7 +22,7 @@ index 95e4d5f31caa..0d83e7cf4d06 100644
  static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
  		size_t *lenp, loff_t *ppos)
  {
-@@ -3017,6 +3018,7 @@ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+@@ -3029,6 +3030,7 @@ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
  	return ret;
  }
  
