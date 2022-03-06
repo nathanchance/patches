@@ -1,4 +1,4 @@
-From a22ab9c897f102e0029800f80a01bc65f40155c7 Mon Sep 17 00:00:00 2001
+From ac8d6964d07a98129db87d173fe17a749f6c9707 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:32 +0200
 Subject: [PATCH 01/12] sparc: explicitly set PCI_IOBASE to 0
@@ -35,7 +35,7 @@ index 2eefa526b38f..c019e50702c1 100644
  #include <asm/io_64.h>
  #else
 
-base-commit: fb184c4af9b9f4563e7a126219389986a71d5b5b
+base-commit: ffb217a13a2eaf6d5bd974fc83036a53ca69f1e2
 -- 
 2.35.1
 
