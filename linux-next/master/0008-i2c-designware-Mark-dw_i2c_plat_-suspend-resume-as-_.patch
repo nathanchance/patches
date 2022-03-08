@@ -1,7 +1,7 @@
-From 766f1592a61834ebd724036a2f69ccd7698a5e0c Mon Sep 17 00:00:00 2001
+From a00aa66f8c434fef6e4a717d18f7313cb9f3e4b9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Mar 2022 12:17:13 -0700
-Subject: [PATCH 10/17] i2c: designware: Mark dw_i2c_plat_{suspend,resume}() as
+Subject: [PATCH 08/17] i2c: designware: Mark dw_i2c_plat_{suspend,resume}() as
  __maybe_unused
 
 When CONFIG_PM is set but CONFIG_PM_SLEEP is not, two compiler warnings
