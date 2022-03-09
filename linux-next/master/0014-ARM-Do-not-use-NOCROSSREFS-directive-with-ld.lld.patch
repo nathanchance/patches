@@ -1,10 +1,24 @@
-From 1fa692e298dcb8805f57e74d5a3ede6938e044b8 Mon Sep 17 00:00:00 2001
+From 73f68afeabeb9d8761afc7fa5b07687f1f0e2c9e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 9 Mar 2022 14:34:59 -0700
-Subject: [PATCH 14/20] HACK: ARM: Do not use NOCROSSREFS directive with ld.lld
+Date: Wed, 9 Mar 2022 15:07:27 -0700
+Subject: [PATCH 14/20] ARM: Do not use NOCROSSREFS directive with ld.lld
 
+ld.lld does not support the NOCROSSREFS directive at the moment, which
+breaks the build after commit b9baf5c8c5c3 ("ARM: Spectre-BHB
+workaround"):
+
+  ld.lld: error: ./arch/arm/kernel/vmlinux.lds:34: AT expected, but got NOCROSSREFS
+
+Support for this directive will eventually be implemented, at which
+point a version check can be added. To avoid breaking the build in the
+meantime, just define NOCROSSREFS to nothing when using ld.lld, with a
+link to the issue for tracking.
+
+Cc: stable@vger.kernel.org
+Fixes: b9baf5c8c5c3 ("ARM: Spectre-BHB workaround")
 Link: https://github.com/ClangBuiltLinux/linux/issues/1609
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220309220726.1525113-1-nathan@kernel.org
 ---
  arch/arm/include/asm/vmlinux.lds.h | 8 ++++++++
  1 file changed, 8 insertions(+)
