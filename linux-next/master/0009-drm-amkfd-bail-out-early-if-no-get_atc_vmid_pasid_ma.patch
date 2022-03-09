@@ -1,7 +1,7 @@
 From 9dac2b4b3d5b07d3e42826c473bd2844f24dfe56 Mon Sep 17 00:00:00 2001
 From: Yifan Zhang <yifan1.zhang@amd.com>
 Date: Wed, 9 Mar 2022 10:22:42 +0800
-Subject: [PATCH 09/17] drm/amkfd: bail out early if no
+Subject: [PATCH 09/20] drm/amkfd: bail out early if no
  get_atc_vmid_pasid_mapping_info
 
 it makes no sense to continue with an undefined vmid.
