@@ -1,7 +1,7 @@
-From 620868012741c01b1fde294f899171130f81a313 Mon Sep 17 00:00:00 2001
+From 6236f22393f85c9e6607611a3e3d7aabff316eaa Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Tue, 8 Mar 2022 21:51:18 -0800
-Subject: [PATCH 09/15] powerpc: Replace ppc64 DT_RELACOUNT usage with
+Subject: [PATCH 09/13] powerpc: Replace ppc64 DT_RELACOUNT usage with
  DT_RELASZ/24
 
 DT_RELACOUNT is an ELF dynamic tag inherited from SunOS indicating the
