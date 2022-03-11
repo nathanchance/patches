@@ -1,7 +1,7 @@
-From 7426505e59f7a1f7240dbf286850ff06a212de54 Mon Sep 17 00:00:00 2001
+From fc5ccc4cdf31d0201393a192164a09cdc55e7795 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 29 Jan 2022 23:45:29 +0100
-Subject: [PATCH 07/14] crypto: arm/xor - make vectorized C code Clang-friendly
+Subject: [PATCH 08/15] crypto: arm/xor - make vectorized C code Clang-friendly
 
 The ARM version of the accelerated XOR routines are simply the 8-way C
 routines passed through the auto-vectorizer with SIMD codegen enabled.
