@@ -1,7 +1,7 @@
-From 95ad14d9e30d676bf500996a121fe33a59f1e7c3 Mon Sep 17 00:00:00 2001
+From 0820e9b834bfcd9b216f605c9336e9fc318e7d66 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:03:07 -0700
-Subject: [PATCH 10/18] scripts/recordmcount.pl: Remove check_objcopy() and
+Subject: [PATCH 11/19] scripts/recordmcount.pl: Remove check_objcopy() and
  $can_use_local
 
 When building ARCH=riscv allmodconfig with llvm-objcopy, the objcopy
