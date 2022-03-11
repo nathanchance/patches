@@ -1,7 +1,7 @@
-From 000904f507e9205332680ca12e698b00a0aa8db1 Mon Sep 17 00:00:00 2001
+From 601f93cb7fdce2844ea2736777b8b807a99c773e Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 2 Jul 2020 04:29:36 +0900
-Subject: [PATCH 14/31] kbuild: do not export LDFLAGS_vmlinux
+Subject: [PATCH 15/32] kbuild: do not export LDFLAGS_vmlinux
 
 When you clean the build tree for ARCH=arm, you may see the following
 error message from 'nm' command:
