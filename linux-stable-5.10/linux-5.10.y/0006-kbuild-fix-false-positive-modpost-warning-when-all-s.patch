@@ -1,7 +1,7 @@
-From 902b68e98a9e3b8e554b123fdd7ee88b65413cc7 Mon Sep 17 00:00:00 2001
+From 71fd680e5c145faa6c4d853f08a6b60d92aa1fce Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
-Subject: [PATCH 07/19] kbuild: fix false-positive modpost warning when all
+Subject: [PATCH 06/18] kbuild: fix false-positive modpost warning when all
  symbols are trimmed
 
 Nathan reports that the mips defconfig emits the following warning:
