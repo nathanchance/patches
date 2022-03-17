@@ -1,7 +1,7 @@
-From 6eb98e429ae5647e17daa53aeb1ce7019e24f0c7 Mon Sep 17 00:00:00 2001
+From 8e1f02406abe85eb9beea2bda71ebae3446d5740 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 15 Feb 2022 13:00:34 -0600
-Subject: [PATCH 05/20] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 06/18] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -150,7 +150,7 @@ index 079fa0023bd8..c62576e442bd 100644
  
  /**
 diff --git a/drivers/net/wireless/intel/iwlwifi/fw/file.h b/drivers/net/wireless/intel/iwlwifi/fw/file.h
-index 196a3cc5003e..4484559238e5 100644
+index 5679a78758be..a7817d952022 100644
 --- a/drivers/net/wireless/intel/iwlwifi/fw/file.h
 +++ b/drivers/net/wireless/intel/iwlwifi/fw/file.h
 @@ -145,7 +145,7 @@ struct iwl_tlv_ucode_header {
@@ -162,7 +162,7 @@ index 196a3cc5003e..4484559238e5 100644
  };
  
  /*
-@@ -631,7 +631,7 @@ struct iwl_fw_dbg_dest_tlv_v1 {
+@@ -603,7 +603,7 @@ struct iwl_fw_dbg_dest_tlv_v1 {
  	__le32 wrap_count;
  	u8 base_shift;
  	u8 end_shift;
@@ -171,7 +171,7 @@ index 196a3cc5003e..4484559238e5 100644
  } __packed;
  
  /* Mask of the register for defining the LDBG MAC2SMEM buffer SMEM size */
-@@ -651,14 +651,14 @@ struct iwl_fw_dbg_dest_tlv {
+@@ -623,14 +623,14 @@ struct iwl_fw_dbg_dest_tlv {
  	__le32 wrap_count;
  	u8 base_shift;
  	u8 size_shift;
@@ -188,7 +188,7 @@ index 196a3cc5003e..4484559238e5 100644
  } __packed;
  
  /**
-@@ -733,7 +733,7 @@ struct iwl_fw_dbg_trigger_tlv {
+@@ -705,7 +705,7 @@ struct iwl_fw_dbg_trigger_tlv {
  	u8 flags;
  	u8 reserved[5];
  

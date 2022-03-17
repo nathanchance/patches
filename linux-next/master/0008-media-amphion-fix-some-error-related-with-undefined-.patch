@@ -1,7 +1,7 @@
-From f8863e5e8afe4fcdf3c9bc9033403161f188c527 Mon Sep 17 00:00:00 2001
+From d2a3c1960214923e2a2dae5694f777310dc790c8 Mon Sep 17 00:00:00 2001
 From: Ming Qian <ming.qian@nxp.com>
 Date: Wed, 9 Mar 2022 13:02:21 +0800
-Subject: [PATCH 10/20] media: amphion: fix some error related with undefined
+Subject: [PATCH 08/18] media: amphion: fix some error related with undefined
  reference to __divdi3
 
 1. use ns_to_timespec64 instead of division method

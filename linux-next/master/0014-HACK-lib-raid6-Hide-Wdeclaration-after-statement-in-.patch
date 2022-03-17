@@ -1,0 +1,30 @@
+From ef09e89ee137c0490836717e6fb4106261116980 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 11 Mar 2022 09:26:40 -0700
+Subject: [PATCH 14/18] HACK: lib/raid6: Hide -Wdeclaration-after-statement in
+ arm_neon.h
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1603
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/raid6/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/lib/raid6/Makefile b/lib/raid6/Makefile
+index 45e17619422b..a41ff71b90af 100644
+--- a/lib/raid6/Makefile
++++ b/lib/raid6/Makefile
+@@ -38,6 +38,10 @@ ifeq ($(CONFIG_KERNEL_MODE_NEON),y)
+ NEON_FLAGS := -ffreestanding
+ # Enable <arm_neon.h>
+ NEON_FLAGS += -isystem $(shell $(CC) -print-file-name=include)
++# https://github.com/ClangBuiltLinux/linux/issues/1603
++ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_CPU_BIG_ENDIAN),yy)
++NEON_FLAGS += -Wno-declaration-after-statement
++endif
+ ifeq ($(ARCH),arm)
+ NEON_FLAGS += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
+ endif
+-- 
+2.35.1
+

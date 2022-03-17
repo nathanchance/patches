@@ -1,7 +1,7 @@
-From 474efc210bc8c4100e59d6a3481957884f9a9544 Mon Sep 17 00:00:00 2001
+From 966913dbdb96eed62bad3a6617a65f5f1d1e3c78 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Mar 2022 13:51:08 -0700
-Subject: [PATCH 15/20] HACK: sched: Fix -Wunused-funtion for
+Subject: [PATCH 12/18] HACK: sched: Fix -Wunused-funtion for
  sched_r{r,t}_handler()
 
 Link: https://lore.kernel.org/r/fbfc360c-d68f-d83b-5124-d6d930235b8c@infradead.org/
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index f6282b90a4f6..97da89181cda 100644
+index 71791be36065..d458df88172e 100644
 --- a/kernel/sched/rt.c
 +++ b/kernel/sched/rt.c
-@@ -2990,6 +2990,7 @@ static void sched_rt_do_global(void)
+@@ -2975,6 +2975,7 @@ static void sched_rt_do_global(void)
  	raw_spin_unlock_irqrestore(&def_rt_bandwidth.rt_runtime_lock, flags);
  }
  
@@ -22,7 +22,7 @@ index f6282b90a4f6..97da89181cda 100644
  static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
  		size_t *lenp, loff_t *ppos)
  {
-@@ -3029,6 +3030,7 @@ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+@@ -3014,6 +3015,7 @@ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
  	return ret;
  }
  
