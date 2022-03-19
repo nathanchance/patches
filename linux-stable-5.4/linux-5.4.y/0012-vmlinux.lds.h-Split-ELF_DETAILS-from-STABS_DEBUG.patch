@@ -1,4 +1,4 @@
-From bf444d8c3cdf450e479f3ecbcfb8ce359c4fd301 Mon Sep 17 00:00:00 2001
+From 44f0cc026cf3681c5a63445efeb391936d30f107 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 12/31] vmlinux.lds.h: Split ELF_DETAILS from STABS_DEBUG
@@ -89,7 +89,7 @@ index 23150c0f0f4d..1066cabeb37b 100644
  
  #ifdef CONFIG_STRICT_KERNEL_RWX
 diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 1f82cf631c3c..233134ecde2c 100644
+index fbab044b3a39..4b1a802eaafc 100644
 --- a/arch/arm64/kernel/vmlinux.lds.S
 +++ b/arch/arm64/kernel/vmlinux.lds.S
 @@ -257,6 +257,7 @@ SECTIONS
