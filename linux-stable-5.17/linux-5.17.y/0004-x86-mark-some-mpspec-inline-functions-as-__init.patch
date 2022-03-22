@@ -1,0 +1,52 @@
+From 659a53023e417f4e824575cdb083f5300f46e812 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Thu, 25 Feb 2021 12:22:41 +0100
+Subject: [PATCH 04/13] x86: mark some mpspec inline functions as __init
+
+clang-13 sometimes decides to not inline early_get_smp_config(),
+which leads to a link-time warning:
+
+WARNING: modpost: vmlinux.o(.text+0x838cc): Section mismatch in reference from the function early_get_smp_config() to the variable .init.data:x86_init
+The function early_get_smp_config() references
+the variable __initdata x86_init.
+This is often because early_get_smp_config lacks a __initdata
+annotation or the annotation of x86_init is wrong.
+
+There are two other functions which may run into the same issue,
+so mark all three as __init.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20210225112247.2240389-1-arnd@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/include/asm/mpspec.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/x86/include/asm/mpspec.h b/arch/x86/include/asm/mpspec.h
+index e90ac7e9ae2c..b41066dbf5c2 100644
+--- a/arch/x86/include/asm/mpspec.h
++++ b/arch/x86/include/asm/mpspec.h
+@@ -49,17 +49,17 @@ extern int smp_found_config;
+ # define smp_found_config 0
+ #endif
+ 
+-static inline void get_smp_config(void)
++static inline __init void get_smp_config(void)
+ {
+ 	x86_init.mpparse.get_smp_config(0);
+ }
+ 
+-static inline void early_get_smp_config(void)
++static inline __init void early_get_smp_config(void)
+ {
+ 	x86_init.mpparse.get_smp_config(1);
+ }
+ 
+-static inline void find_smp_config(void)
++static inline __init void find_smp_config(void)
+ {
+ 	x86_init.mpparse.find_smp_config();
+ }
+-- 
+2.35.1
+
