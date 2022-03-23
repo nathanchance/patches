@@ -1,0 +1,101 @@
+From d3113c172205e5f27f238c57b59e644f679d943e Mon Sep 17 00:00:00 2001
+From: Baisong Zhong <zhongbaisong@huawei.com>
+Date: Fri, 18 Mar 2022 10:54:17 +0800
+Subject: [PATCH 09/17] sched/rt: fix build error when CONFIG_SYSCTL is disable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Avoid random build errors which do not select
+CONFIG_SYSCTL by depending on it in Kconfig.
+
+This fixes the following warning:
+
+In file included from kernel/sched/build_policy.c:43:
+At top level:
+kernel/sched/rt.c:3017:12: error: ‘sched_rr_handler’ defined but not used [-Werror=unused-function]
+ 3017 | static int sched_rr_handler(struct ctl_table *table, int write, void *buffer,
+      |            ^~~~~~~~~~~~~~~~
+kernel/sched/rt.c:2978:12: error: ‘sched_rt_handler’ defined but not used [-Werror=unused-function]
+ 2978 | static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+      |            ^~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[2]: *** [scripts/Makefile.build:310: kernel/sched/build_policy.o] Error 1
+make[1]: *** [scripts/Makefile.build:638: kernel/sched] Error 2
+make[1]: *** Waiting for unfinished jobs....
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20220318025417.3683430-1-zhongbaisong@huawei.com
+---
+ kernel/sched/rt.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 71791be36065..ee319581b1cd 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -5,7 +5,6 @@
+  */
+ 
+ int sched_rr_timeslice = RR_TIMESLICE;
+-static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+ /* More than 4 hours if BW_SHIFT equals 20. */
+ static const u64 max_rt_runtime = MAX_BW;
+ 
+@@ -25,11 +24,12 @@ unsigned int sysctl_sched_rt_period = 1000000;
+  */
+ int sysctl_sched_rt_runtime = 950000;
+ 
++#ifdef CONFIG_SYSCTL
++static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+ 		size_t *lenp, loff_t *ppos);
+ static int sched_rr_handler(struct ctl_table *table, int write, void *buffer,
+ 		size_t *lenp, loff_t *ppos);
+-#ifdef CONFIG_SYSCTL
+ static struct ctl_table sched_rt_sysctls[] = {
+ 	{
+ 		.procname       = "sched_rt_period_us",
+@@ -2911,6 +2911,7 @@ long sched_group_rt_period(struct task_group *tg)
+ 	return rt_period_us;
+ }
+ 
++#ifdef CONFIG_SYSCTL
+ static int sched_rt_global_constraints(void)
+ {
+ 	int ret = 0;
+@@ -2930,8 +2931,11 @@ int sched_rt_can_attach(struct task_group *tg, struct task_struct *tsk)
+ 
+ 	return 1;
+ }
++#endif /* CONFIG_SYSCTL */
+ 
+ #else /* !CONFIG_RT_GROUP_SCHED */
++
++#ifdef CONFIG_SYSCTL
+ static int sched_rt_global_constraints(void)
+ {
+ 	unsigned long flags;
+@@ -2949,8 +2953,10 @@ static int sched_rt_global_constraints(void)
+ 
+ 	return 0;
+ }
++#endif /* CONFIG_SYSCTL */
+ #endif /* CONFIG_RT_GROUP_SCHED */
+ 
++#ifdef CONFIG_SYSCTL
+ static int sched_rt_global_validate(void)
+ {
+ 	if (sysctl_sched_rt_period <= 0)
+@@ -3035,6 +3041,7 @@ static int sched_rr_handler(struct ctl_table *table, int write, void *buffer,
+ 
+ 	return ret;
+ }
++#endif /* CONFIG_SYSCTL */
+ 
+ #ifdef CONFIG_SCHED_DEBUG
+ void print_rt_stats(struct seq_file *m, int cpu)
+-- 
+2.35.1
+
