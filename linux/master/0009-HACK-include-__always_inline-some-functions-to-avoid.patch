@@ -1,4 +1,4 @@
-From 7e2c298d13f6d077dfed9dabab7fb72c72140fff Mon Sep 17 00:00:00 2001
+From 9cb3262aa185e9b19ba98d0b4007e7ccc0ab7a9f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
 Subject: [PATCH 09/10] HACK: include: __always_inline some functions to avoid
@@ -7,23 +7,9 @@ Subject: [PATCH 09/10] HACK: include: __always_inline some functions to avoid
 Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/asm-generic/bitops/instrumented-non-atomic.h | 2 +-
- include/linux/nodemask.h                             | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/linux/nodemask.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/asm-generic/bitops/instrumented-non-atomic.h b/include/asm-generic/bitops/instrumented-non-atomic.h
-index 37363d570b9b..aef7c766f335 100644
---- a/include/asm-generic/bitops/instrumented-non-atomic.h
-+++ b/include/asm-generic/bitops/instrumented-non-atomic.h
-@@ -129,7 +129,7 @@ static inline bool __test_and_change_bit(long nr, volatile unsigned long *addr)
-  * @nr: bit number to test
-  * @addr: Address to start counting from
-  */
--static inline bool test_bit(long nr, const volatile unsigned long *addr)
-+static __always_inline bool test_bit(long nr, const volatile unsigned long *addr)
- {
- 	instrument_atomic_read(addr + BIT_WORD(nr), sizeof(long));
- 	return arch_test_bit(nr, addr);
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
 index 567c3ddba2c4..6c5d0d138ac3 100644
 --- a/include/linux/nodemask.h
