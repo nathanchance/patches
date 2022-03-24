@@ -1,7 +1,7 @@
-From f9caebcce70223a2620524f90257a36655657c71 Mon Sep 17 00:00:00 2001
+From 9f56106b69a42c712f63fc3f59451a897e43c675 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 29 Jan 2022 23:45:28 +0100
-Subject: [PATCH 06/14] lib/xor: make xor prototypes more friendely to compiler
+Subject: [PATCH 07/16] lib/xor: make xor prototypes more friendely to compiler
  vectorization
 
 Modern compilers are perfectly capable of extracting parallelism from
