@@ -1,7 +1,7 @@
-From 1d3ce9a5efdc17136efe50dcdc6875c1f06c6524 Mon Sep 17 00:00:00 2001
+From d24b7c5844fa30381a1d40d354656a9f7e2d4636 Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Fri, 18 Feb 2022 00:12:09 -0800
-Subject: [PATCH 07/13] arm64 module: remove (NOLOAD)
+Subject: [PATCH 08/15] arm64 module: remove (NOLOAD)
 
 On ELF, (NOLOAD) sets the section type to SHT_NOBITS[1]. It is conceptually
 inappropriate for .plt and .text.* sections which are always

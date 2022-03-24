@@ -1,7 +1,7 @@
-From 5f8220371bde3fd23ec0bb731a1cd5f498fbab80 Mon Sep 17 00:00:00 2001
+From df811d51cd28b3bbe220f241ff9163d093df994e Mon Sep 17 00:00:00 2001
 From: Fangrui Song <maskray@google.com>
 Date: Fri, 18 Feb 2022 00:26:11 -0800
-Subject: [PATCH 08/13] riscv module: remove (NOLOAD)
+Subject: [PATCH 09/15] riscv module: remove (NOLOAD)
 
 On ELF, (NOLOAD) sets the section type to SHT_NOBITS[1]. It is conceptually
 inappropriate for .plt, .got, and .got.plt sections which are always
