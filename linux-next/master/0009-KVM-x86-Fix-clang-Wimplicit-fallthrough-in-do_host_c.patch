@@ -1,7 +1,7 @@
 From 8c49ecbfc384680f1418c81f0cf9e1eefb9bfbe4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 22 Mar 2022 08:29:06 -0700
-Subject: [PATCH 09/15] KVM: x86: Fix clang -Wimplicit-fallthrough in
+Subject: [PATCH 09/16] KVM: x86: Fix clang -Wimplicit-fallthrough in
  do_host_cpuid()
 
 Clang warns:
