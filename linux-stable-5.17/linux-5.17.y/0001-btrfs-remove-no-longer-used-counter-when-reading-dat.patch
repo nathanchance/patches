@@ -1,4 +1,4 @@
-From d9dc9e5f7648c0192de3cbd7f26a5431df78c09f Mon Sep 17 00:00:00 2001
+From 55cfc7ec67f93006de45cb0574ccb801cc32cce9 Mon Sep 17 00:00:00 2001
 From: Filipe Manana <fdmanana@suse.com>
 Date: Thu, 3 Feb 2022 15:36:44 +0000
 Subject: [PATCH 01/15] btrfs: remove no longer used counter when reading data
@@ -42,7 +42,7 @@ index 4c91060d103a..646ac4c4e75d 100644
  			end_page_read(page, false, cur, iosize);
  			goto out;
 
-base-commit: f443e374ae131c168a065ea1748feac6b2e76613
+base-commit: 59db887d13b3a4df2713c2a866fa2767e0dea569
 -- 
 2.35.1
 
