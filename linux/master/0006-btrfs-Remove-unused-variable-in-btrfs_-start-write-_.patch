@@ -1,7 +1,7 @@
-From ebc124d74ee9ed4a661d7652f42cf445e314ee41 Mon Sep 17 00:00:00 2001
+From 57495bfaab7ef7521fbe8eb1764172b8cdb93bb7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 24 Mar 2022 08:36:45 -0700
-Subject: [PATCH 07/13] btrfs: Remove unused variable in
+Subject: [PATCH 06/12] btrfs: Remove unused variable in
  btrfs_{start,write}_dirty_block_groups()
 
 Clang's version of -Wunused-but-set-variable recently gained support for
