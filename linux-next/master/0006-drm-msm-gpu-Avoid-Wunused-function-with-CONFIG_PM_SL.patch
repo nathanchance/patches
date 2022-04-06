@@ -1,7 +1,7 @@
-From f0c1d0c0676d4e6e54154962ad601711c23952e5 Mon Sep 17 00:00:00 2001
+From adcc7605279c438b4342be4dc5068a5d69d49fce Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 30 Mar 2022 11:05:41 -0700
-Subject: [PATCH 08/13] drm/msm/gpu: Avoid -Wunused-function with
+Subject: [PATCH 06/11] drm/msm/gpu: Avoid -Wunused-function with
  !CONFIG_PM_SLEEP
 
 When building with CONFIG_PM=y and CONFIG_PM_SLEEP=n (such as ARCH=riscv
