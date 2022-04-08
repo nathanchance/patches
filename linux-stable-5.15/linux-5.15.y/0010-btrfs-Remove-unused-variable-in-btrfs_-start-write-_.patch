@@ -1,7 +1,7 @@
-From 5fc9d97742c33d1d52f500feacc6b242143471d5 Mon Sep 17 00:00:00 2001
+From 22640e794c6816b7d03f254cf311a4213774bd8e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 24 Mar 2022 08:36:45 -0700
-Subject: [PATCH 12/16] btrfs: Remove unused variable in
+Subject: [PATCH 10/14] btrfs: Remove unused variable in
  btrfs_{start,write}_dirty_block_groups()
 
 Clang's version of -Wunused-but-set-variable recently gained support for
@@ -29,10 +29,10 @@ Link: https://lore.kernel.org/r/20220324153644.4079376-1-nathan@kernel.org
  1 file changed, 4 deletions(-)
 
 diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index e1c5c2114edf..3007c44d44d3 100644
+index 53ff3db9640e..37418b183b07 100644
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -2876,7 +2876,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
+@@ -2882,7 +2882,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
  	struct btrfs_path *path = NULL;
  	LIST_HEAD(dirty);
  	struct list_head *io = &cur_trans->io_bgs;
@@ -40,7 +40,7 @@ index e1c5c2114edf..3007c44d44d3 100644
  	int loops = 0;
  
  	spin_lock(&cur_trans->dirty_bgs_lock);
-@@ -2942,7 +2941,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
+@@ -2948,7 +2947,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
  			cache->io_ctl.inode = NULL;
  			ret = btrfs_write_out_cache(trans, cache, path);
  			if (ret == 0 && cache->io_ctl.inode) {
@@ -48,7 +48,7 @@ index e1c5c2114edf..3007c44d44d3 100644
  				should_put = 0;
  
  				/*
-@@ -3043,7 +3041,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+@@ -3049,7 +3047,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
  	int should_put;
  	struct btrfs_path *path;
  	struct list_head *io = &cur_trans->io_bgs;
@@ -56,7 +56,7 @@ index e1c5c2114edf..3007c44d44d3 100644
  
  	path = btrfs_alloc_path();
  	if (!path)
-@@ -3101,7 +3098,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+@@ -3107,7 +3104,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
  			cache->io_ctl.inode = NULL;
  			ret = btrfs_write_out_cache(trans, cache, path);
  			if (ret == 0 && cache->io_ctl.inode) {
