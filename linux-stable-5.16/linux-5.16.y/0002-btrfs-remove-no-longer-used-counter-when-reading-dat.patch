@@ -1,7 +1,7 @@
-From e641df86ea24263245c1eb72c3d8f9d6c8c0ff67 Mon Sep 17 00:00:00 2001
+From 88d304c7d3af30793627f12c57dead339c7104e3 Mon Sep 17 00:00:00 2001
 From: Filipe Manana <fdmanana@suse.com>
 Date: Thu, 3 Feb 2022 15:36:44 +0000
-Subject: [PATCH 02/16] btrfs: remove no longer used counter when reading data
+Subject: [PATCH 02/14] btrfs: remove no longer used counter when reading data
  page
 
 After commit 92082d40976ed0 ("btrfs: integrate page status update for
@@ -19,10 +19,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 5512d7028091..01737b59ddbd 100644
+index ced0195f3390..3220d59fdbfc 100644
 --- a/fs/btrfs/extent_io.c
 +++ b/fs/btrfs/extent_io.c
-@@ -3569,7 +3569,6 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
+@@ -3568,7 +3568,6 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
  	u64 cur_end;
  	struct extent_map *em;
  	int ret = 0;
@@ -30,7 +30,7 @@ index 5512d7028091..01737b59ddbd 100644
  	size_t pg_offset = 0;
  	size_t iosize;
  	size_t blocksize = inode->i_sb->s_blocksize;
-@@ -3736,9 +3735,7 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
+@@ -3735,9 +3734,7 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
  					 end_bio_extent_readpage, 0,
  					 this_bio_flag,
  					 force_bio_submit);
