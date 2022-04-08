@@ -1,7 +1,7 @@
-From 40e883dabc9b723967cf07ce580fedc33b77bdb4 Mon Sep 17 00:00:00 2001
+From b4140e92898645992ad4e05b8a85452c0470d231 Mon Sep 17 00:00:00 2001
 From: Alexey Kardashevskiy <aik@ozlabs.ru>
 Date: Wed, 9 Mar 2022 17:18:22 +1100
-Subject: [PATCH 10/15] powerpc/64: Add UADDR64 relocation support
+Subject: [PATCH 08/13] powerpc/64: Add UADDR64 relocation support
 
 When ld detects unaligned relocations, it emits R_PPC64_UADDR64
 relocations instead of R_PPC64_RELATIVE. Currently R_PPC64_UADDR64 are
