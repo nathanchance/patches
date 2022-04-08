@@ -1,7 +1,7 @@
-From 409b583ff43786b9d463606586a5aa4129b64d58 Mon Sep 17 00:00:00 2001
+From 49acc3adbb57d50b07e81fc2300fe41945755521 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 16 Feb 2021 14:29:54 -0700
-Subject: [PATCH 03/18] drm/i915: Enable -Wuninitialized
+Subject: [PATCH 03/17] drm/i915: Enable -Wuninitialized
 
 -Wunintialized was disabled in commit c5627461490e ("drm/i915: Disable
 -Wuninitialized") because there were two warnings that were false

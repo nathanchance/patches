@@ -1,7 +1,7 @@
-From 869379c7a767f0eb9ca71296a032b4af4684110e Mon Sep 17 00:00:00 2001
+From b6bdd54b615110cff72989ae2f76111e7f51aac8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Oct 2021 12:31:01 -0700
-Subject: [PATCH 08/18] nfp: bpf: silence bitwise vs. logical OR warning
+Subject: [PATCH 08/17] nfp: bpf: silence bitwise vs. logical OR warning
 
 A new warning in clang points out two places in this driver where
 boolean expressions are being used with a bitwise OR instead of a

@@ -1,7 +1,7 @@
-From 6b96d204b4a4f9a42f8ed2a48e6ad33d1b54f1fd Mon Sep 17 00:00:00 2001
+From db5af4728c946c54dc8073cb7e83313cf3862e25 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 20:01:36 +0100
-Subject: [PATCH 02/18] s390/bitops: remove small optimization to fix clang
+Subject: [PATCH 02/17] s390/bitops: remove small optimization to fix clang
  build
 
 clang does not know about the 'b1' construct used in bitops inline
