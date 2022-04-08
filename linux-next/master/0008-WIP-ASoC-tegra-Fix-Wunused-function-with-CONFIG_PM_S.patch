@@ -1,0 +1,36 @@
+From f62a1ad961db4ab0ded6eba1078b135e82dc4adb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 7 Apr 2022 16:40:19 -0700
+Subject: [PATCH 08/13] WIP: ASoC: tegra: Fix -Wunused-function with
+ CONFIG_PM_SLEEP=n
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/tegra/tegra186_asrc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/tegra/tegra186_asrc.c b/sound/soc/tegra/tegra186_asrc.c
+index 3c1e20cbb319..9f12faaa609d 100644
+--- a/sound/soc/tegra/tegra186_asrc.c
++++ b/sound/soc/tegra/tegra186_asrc.c
+@@ -77,7 +77,7 @@ static void tegra186_asrc_lock_stream(struct tegra186_asrc *asrc,
+ 		     1);
+ }
+ 
+-static int tegra186_asrc_runtime_suspend(struct device *dev)
++static int __maybe_unused tegra186_asrc_runtime_suspend(struct device *dev)
+ {
+ 	struct tegra186_asrc *asrc = dev_get_drvdata(dev);
+ 
+@@ -87,7 +87,7 @@ static int tegra186_asrc_runtime_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int tegra186_asrc_runtime_resume(struct device *dev)
++static int __maybe_unused tegra186_asrc_runtime_resume(struct device *dev)
+ {
+ 	struct tegra186_asrc *asrc = dev_get_drvdata(dev);
+ 	int id;
+-- 
+2.35.1
+
