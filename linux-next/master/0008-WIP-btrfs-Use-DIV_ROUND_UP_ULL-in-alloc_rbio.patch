@@ -1,0 +1,34 @@
+From 47480c182cd7a3e0ee681a9e16ba3fcdefdbd78c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 11 Apr 2022 16:16:43 -0700
+Subject: [PATCH 08/13] WIP: btrfs: Use DIV_ROUND_UP_ULL in alloc_rbio()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/btrfs/raid56.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
+index 5a0a51483757..30d687cbeb67 100644
+--- a/fs/btrfs/raid56.c
++++ b/fs/btrfs/raid56.c
+@@ -1030,12 +1030,12 @@ static struct btrfs_raid_bio *alloc_rbio(struct btrfs_fs_info *fs_info,
+ 					 u64 stripe_len)
+ {
+ 	const unsigned int real_stripes = bioc->num_stripes - bioc->num_tgtdevs;
+-	const unsigned int num_pages = DIV_ROUND_UP(stripe_len, PAGE_SIZE) *
++	const unsigned int num_pages = DIV_ROUND_UP_ULL(stripe_len, PAGE_SIZE) *
+ 				       real_stripes;
+-	const unsigned int num_sectors = DIV_ROUND_UP(stripe_len * real_stripes,
++	const unsigned int num_sectors = DIV_ROUND_UP_ULL(stripe_len * real_stripes,
+ 						      fs_info->sectorsize);
+-	const unsigned int stripe_npages = DIV_ROUND_UP(stripe_len, PAGE_SIZE);
+-	const unsigned int stripe_nsectors = DIV_ROUND_UP(stripe_len, fs_info->sectorsize);
++	const unsigned int stripe_npages = DIV_ROUND_UP_ULL(stripe_len, PAGE_SIZE);
++	const unsigned int stripe_nsectors = DIV_ROUND_UP_ULL(stripe_len, fs_info->sectorsize);
+ 	struct btrfs_raid_bio *rbio;
+ 	int nr_data = 0;
+ 	void *p;
+-- 
+2.35.1
+

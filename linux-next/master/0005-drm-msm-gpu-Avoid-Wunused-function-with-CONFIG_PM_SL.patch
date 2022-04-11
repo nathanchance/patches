@@ -1,6 +1,6 @@
-From ce43c322d0f88d0f531ac1d187c551271c8d0a0a Mon Sep 17 00:00:00 2001
+From 780398aa75b3c282013f33f36b2e89e9a5d1e2b6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 30 Mar 2022 11:05:41 -0700
+Date: Mon, 11 Apr 2022 11:12:50 -0700
 Subject: [PATCH 05/13] drm/msm/gpu: Avoid -Wunused-function with
  !CONFIG_PM_SLEEP
 
@@ -19,40 +19,45 @@ These functions are only used in SET_SYSTEM_SLEEP_PM_OPS(), which
 evaluates to empty when CONFIG_PM_SLEEP is not set, making these
 functions unused.
 
-Traditionally, these functions are marked as __maybe_unused but in this
-case, there is already an '#ifdef CONFIG_PM' in the code, so just do the
-same thing with CONFIG_PM_SLEEP to resolve the warning.
+To resolve this, use the SYSTEM_SLEEP_PM_OPS() and RUNTIME_PM_OPS()
+macros, which were introduced in commit 1a3c7bb08826 ("PM: core: Add new
+*_PM_OPS macros, deprecate old ones"). They are designed to avoid these
+compiler warnings while still guarding their use on
+CONFIG_PM{,_SLEEP}=y.
 
 Fixes: 7e4167c9e021 ("drm/msm/gpu: Park scheduler threads for system suspend")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20220330180541.62250-1-nathan@kernel.org
+Link: https://lore.kernel.org/r/20220411181249.2758344-1-nathan@kernel.org
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 661dfa7681fb..b25915230bab 100644
+index 661dfa7681fb..8706bcdd1472 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -621,6 +621,7 @@ static int adreno_runtime_suspend(struct device *dev)
- 	return gpu->funcs->pm_suspend(gpu);
- }
+@@ -599,7 +599,6 @@ static const struct of_device_id dt_match[] = {
+ 	{}
+ };
  
-+#ifdef CONFIG_PM_SLEEP
- static void suspend_scheduler(struct msm_gpu *gpu)
+-#ifdef CONFIG_PM
+ static int adreno_runtime_resume(struct device *dev)
  {
- 	int i;
-@@ -681,8 +682,8 @@ static int adreno_system_resume(struct device *dev)
- 	resume_scheduler(dev_to_gpu(dev));
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+@@ -682,11 +681,9 @@ static int adreno_system_resume(struct device *dev)
  	return pm_runtime_force_resume(dev);
  }
--
--#endif
-+#endif /* CONFIG_PM_SLEEP */
-+#endif /* CONFIG_PM */
  
+-#endif
+-
  static const struct dev_pm_ops adreno_pm_ops = {
- 	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
+-	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
+-	SET_RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume, NULL)
++	SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
++	RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume, NULL)
+ };
+ 
+ static struct platform_driver adreno_driver = {
 -- 
 2.35.1
 

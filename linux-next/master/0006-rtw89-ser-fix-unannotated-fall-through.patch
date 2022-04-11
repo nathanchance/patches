@@ -1,7 +1,7 @@
-From 13c2c8c4ecf2797011efb377aa98b82fc5d633c0 Mon Sep 17 00:00:00 2001
+From c40533f2fc856dd0d7ff320943d241a84abd966f Mon Sep 17 00:00:00 2001
 From: Zong-Zhe Yang <kevin_yang@realtek.com>
 Date: Thu, 7 Apr 2022 21:23:04 +0800
-Subject: [PATCH 07/13] rtw89: ser: fix unannotated fall-through
+Subject: [PATCH 06/13] rtw89: ser: fix unannotated fall-through
 
 add `break` to fix warning of unannotated fall-through between switch
 labels.
