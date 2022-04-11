@@ -1,7 +1,7 @@
 From fe587a00cccbb5844a9bdca1b0294dd6080b25ef Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
-Subject: [PATCH 23/31] gfs2: Rework how rgrp buffer_heads are managed
+Subject: [PATCH 23/33] gfs2: Rework how rgrp buffer_heads are managed
 
 Before this patch, the rgrp code had a serious problem related to
 how it managed buffer_heads for resource groups. The problem caused
