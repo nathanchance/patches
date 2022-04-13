@@ -1,4 +1,4 @@
-From 408ecf6157fdd41f2f3d6971c2fa6828f5d46ea7 Mon Sep 17 00:00:00 2001
+From 72fb30fc44f0c01ca6467a4009d7dd08814a8c4b Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
 Date: Mon, 10 May 2021 16:52:33 +0200
 Subject: [PATCH 04/14] risc-v: Use generic io.h helpers for nommu
@@ -53,5 +53,5 @@ index 69605a474270..94203bd69219 100644
  #include <asm-generic/io.h>
  
 -- 
-2.35.1
+2.35.2
 

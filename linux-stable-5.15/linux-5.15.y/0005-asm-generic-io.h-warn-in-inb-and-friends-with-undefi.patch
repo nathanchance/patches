@@ -1,4 +1,4 @@
-From 7130973bbecf4861e56c7f6d052d25b5a4e63a4c Mon Sep 17 00:00:00 2001
+From 3d526652858f5741fd1c03ccda35575ffee4e337 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 05/14] asm-generic/io.h: warn in inb() and friends with
@@ -253,5 +253,5 @@ index ce39ce9f3526..2952fcaaf67e 100644
  }
  EXPORT_SYMBOL(pci_iounmap);
 -- 
-2.35.1
+2.35.2
 
