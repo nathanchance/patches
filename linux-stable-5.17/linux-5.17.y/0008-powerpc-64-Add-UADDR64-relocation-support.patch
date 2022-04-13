@@ -1,4 +1,4 @@
-From b4140e92898645992ad4e05b8a85452c0470d231 Mon Sep 17 00:00:00 2001
+From b5ddc297df521e8032f237bc95b573c8888892de Mon Sep 17 00:00:00 2001
 From: Alexey Kardashevskiy <aik@ozlabs.ru>
 Date: Wed, 9 Mar 2022 17:18:22 +1100
 Subject: [PATCH 08/13] powerpc/64: Add UADDR64 relocation support
@@ -191,5 +191,5 @@ index 014e00e74d2b..63792af00417 100755
 -	echo "WARNING: You need at least binutils >= 2.19 to build a CONFIG_RELOCATABLE kernel"
 -fi
 -- 
-2.35.1
+2.35.2
 
