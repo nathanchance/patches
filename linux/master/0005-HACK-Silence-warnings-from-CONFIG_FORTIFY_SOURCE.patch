@@ -1,7 +1,7 @@
-From 59d513584b9f2e1d61de354176e29aaad904d5f2 Mon Sep 17 00:00:00 2001
+From b83dad92a288c43a38bdb4f75e8d05c77a364945 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 30 Mar 2022 11:20:53 -0700
-Subject: [PATCH 06/10] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
+Subject: [PATCH 5/9] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -40,5 +40,5 @@ index d0f3b6d7f408..b6697b90278f 100644
  		}
  	}
 -- 
-2.35.1
+2.35.3
 
