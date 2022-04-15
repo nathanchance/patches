@@ -1,7 +1,7 @@
-From 182ccc2310b4a0ed005d55712ec26ec4a32a59d7 Mon Sep 17 00:00:00 2001
+From c37b77e21828189de6167e4ec82ac9b9063fdd80 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Tue, 25 Feb 2020 14:13:28 +1100
-Subject: [PATCH 09/33] powerpc/64s: Fix section mismatch warnings from boot
+Subject: [PATCH 09/29] powerpc/64s: Fix section mismatch warnings from boot
  code
 
 We currently have two section mismatch warnings:
@@ -115,5 +115,5 @@ index 9019f1395d39..5ed56428b5b0 100644
  /*
   * We put a few things here that have to be page-aligned.
 -- 
-2.35.2
+2.35.3
 

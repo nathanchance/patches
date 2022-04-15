@@ -1,7 +1,7 @@
-From c07c64153be75840ed4b21fb569e5b85df055e56 Mon Sep 17 00:00:00 2001
+From 221e66e673aa048ab4cf2afbd3df482399bdf413 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Sun, 26 Apr 2020 14:42:15 -0700
-Subject: [PATCH 16/33] drm/i915: re-disable -Wframe-address
+Subject: [PATCH 16/29] drm/i915: re-disable -Wframe-address
 
 The top level Makefile disables this warning. When building an
 i386_defconfig with Clang, this warning is triggered a whole bunch via
@@ -31,5 +31,5 @@ index 2587ea834f06..a4e385f68713 100644
  
  # Fine grained warnings disable
 -- 
-2.35.2
+2.35.3
 

@@ -1,7 +1,7 @@
-From fe587a00cccbb5844a9bdca1b0294dd6080b25ef Mon Sep 17 00:00:00 2001
+From 7dd3458bec0bd3fbb982c1e29267ff92aa7eb516 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
-Subject: [PATCH 23/33] gfs2: Rework how rgrp buffer_heads are managed
+Subject: [PATCH 23/29] gfs2: Rework how rgrp buffer_heads are managed
 
 Before this patch, the rgrp code had a serious problem related to
 how it managed buffer_heads for resource groups. The problem caused
@@ -150,7 +150,7 @@ index 33a6b074209d..8d64a755ca2f 100644
  			const char *fs_id_buf);
  	void (*go_callback)(struct gfs2_glock *gl, bool remote);
 diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index c056ed5c6df3..0fb2a56a602f 100644
+index d7ec0ac87fc0..7e624848c320 100644
 --- a/fs/gfs2/rgrp.c
 +++ b/fs/gfs2/rgrp.c
 @@ -730,8 +730,12 @@ void gfs2_clear_rgrpd(struct gfs2_sbd *sdp)
@@ -204,5 +204,5 @@ index c14a673ae36f..a584f3096418 100644
  extern struct gfs2_alloc *gfs2_alloc_get(struct gfs2_inode *ip);
  
 -- 
-2.35.2
+2.35.3
 

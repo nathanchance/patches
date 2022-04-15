@@ -1,7 +1,7 @@
-From e63bc0af039e81b244009ea99a61bf0ad4d9ef16 Mon Sep 17 00:00:00 2001
+From cf402c8090a3894c73be5ed675fb815fd73d2559 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 3 Jan 2022 12:47:58 -0700
-Subject: [PATCH 22/33] powerpc: unrel_branch_check.sh: make it suck less
+Subject: [PATCH 22/29] powerpc: unrel_branch_check.sh: make it suck less
 
 6b1992bcdee8 powerpc: unrel_branch_check.sh: enable the use of llvm-objdump v9, 10 or 11
 b71dca9891b3 powerpc: unrel_branch_check.sh: use nm to find symbol value
@@ -170,5 +170,5 @@ index 6e6a30aea3ed..8301efee1e6c 100755
 +
 +}
 -- 
-2.35.2
+2.35.3
 

@@ -1,7 +1,7 @@
-From 199647465556117fca10585320f05d366acb5564 Mon Sep 17 00:00:00 2001
+From c29afa6e5b7b35209b18558fdeedb552f1285cf8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Thu, 13 Feb 2020 22:47:07 -0700
-Subject: [PATCH 04/33] drm/i915: Cast remain to unsigned long in
+Subject: [PATCH 04/29] drm/i915: Cast remain to unsigned long in
  eb_relocate_vma
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -57,5 +57,5 @@ index 198a91c76531..5c21c06189c1 100644
  
  	/*
 -- 
-2.35.2
+2.35.3
 
