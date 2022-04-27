@@ -1,4 +1,4 @@
-From f2bbc81f1917a6bb0d5f235118ec863f17cd8423 Mon Sep 17 00:00:00 2001
+From 95ffc326590787b119badf64766df95881977f30 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
 Subject: [PATCH 23/29] gfs2: Rework how rgrp buffer_heads are managed
@@ -150,7 +150,7 @@ index 33a6b074209d..8d64a755ca2f 100644
  			const char *fs_id_buf);
  	void (*go_callback)(struct gfs2_glock *gl, bool remote);
 diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index d7ec0ac87fc0..7e624848c320 100644
+index 8153a3eac540..ac82a3a48368 100644
 --- a/fs/gfs2/rgrp.c
 +++ b/fs/gfs2/rgrp.c
 @@ -730,8 +730,12 @@ void gfs2_clear_rgrpd(struct gfs2_sbd *sdp)
@@ -167,7 +167,7 @@ index d7ec0ac87fc0..7e624848c320 100644
  			gfs2_glock_put(gl);
  		}
  
-@@ -1300,23 +1304,6 @@ void gfs2_rgrp_brelse(struct gfs2_rgrpd *rgd)
+@@ -1301,23 +1305,6 @@ void gfs2_rgrp_brelse(struct gfs2_rgrpd *rgd)
  			bi->bi_bh = NULL;
  		}
  	}
