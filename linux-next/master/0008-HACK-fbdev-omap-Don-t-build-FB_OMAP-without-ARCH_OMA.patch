@@ -1,0 +1,28 @@
+From 50b599fd94b8489e0a2412a798ff59639c3b119d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 27 Apr 2022 10:33:15 -0700
+Subject: [PATCH 08/14] HACK: fbdev: omap: Don't build FB_OMAP without
+ ARCH_OMAP1
+
+Link: https://lore.kernel.org/202204231818.yVvV3Oxp-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/video/fbdev/omap/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/video/fbdev/omap/Kconfig b/drivers/video/fbdev/omap/Kconfig
+index b1786cf1b486..61099784c3bc 100644
+--- a/drivers/video/fbdev/omap/Kconfig
++++ b/drivers/video/fbdev/omap/Kconfig
+@@ -2,7 +2,7 @@
+ config FB_OMAP
+ 	tristate "OMAP frame buffer support"
+ 	depends on FB
+-	depends on ARCH_OMAP1 || (ARM && COMPILE_TEST)
++	depends on ARCH_OMAP1
+ 	select FB_CFB_FILLRECT
+ 	select FB_CFB_COPYAREA
+ 	select FB_CFB_IMAGEBLIT
+-- 
+2.36.0
+
