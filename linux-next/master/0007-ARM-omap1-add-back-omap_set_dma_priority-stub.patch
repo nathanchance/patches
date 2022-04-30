@@ -1,7 +1,7 @@
-From e2330314dd35940d5d4cc114a534c6de68b09552 Mon Sep 17 00:00:00 2001
+From 3847d123709e7803ac4d87cd01da640f713c4421 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 28 Apr 2022 12:28:59 +0200
-Subject: [PATCH 08/14] ARM: omap1: add back omap_set_dma_priority() stub
+Subject: [PATCH 07/13] ARM: omap1: add back omap_set_dma_priority() stub
 
 One of my multiplatform patches went a little too far and removed
 a declaration that is needed for compile-testing the omapfb

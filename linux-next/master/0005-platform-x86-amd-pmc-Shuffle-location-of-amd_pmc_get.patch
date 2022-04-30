@@ -1,7 +1,7 @@
-From d5a9ee17e373e1ee98b2ff8827143f67c8f20c74 Mon Sep 17 00:00:00 2001
+From 7abd4cf4879623b376880fcd825cddbedc9e24b2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Apr 2022 14:38:00 -0700
-Subject: [PATCH 05/14] platform/x86: amd-pmc: Shuffle location of
+Subject: [PATCH 05/13] platform/x86: amd-pmc: Shuffle location of
  amd_pmc_get_smu_version()
 
 When CONFIG_DEBUG_FS is disabled, amd_pmc_get_smu_version() is unused:
