@@ -1,0 +1,28 @@
+From a7e370eb7926d29c84d13682b3361d81115a9c16 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 3 May 2022 15:31:02 -0700
+Subject: [PATCH 06/16] fixup! mm/shmem: convert shmem_add_to_page_cache to
+ take a folio
+
+Link: https://lore.kernel.org/YnEolbTgbnfiRAnR@casper.infradead.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/shmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 107f1e4dd0aa..1bb3290014b8 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -717,7 +717,7 @@ static int shmem_add_to_page_cache(struct folio *folio,
+ 	if (!folio_test_swapcache(folio)) {
+ 		error = mem_cgroup_charge(folio, charge_mm, gfp);
+ 		if (error) {
+-			if (folio_test_large(folio)) {
++			if (folio_test_pmd_mappable(folio)) {
+ 				count_vm_event(THP_FILE_FALLBACK);
+ 				count_vm_event(THP_FILE_FALLBACK_CHARGE);
+ 			}
+-- 
+2.36.1
+

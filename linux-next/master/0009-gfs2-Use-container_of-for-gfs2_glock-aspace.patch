@@ -1,0 +1,103 @@
+From f3a6e9fd73fc30c390a8ae164f997c9e3a1c8249 Mon Sep 17 00:00:00 2001
+From: Kees Cook <keescook@chromium.org>
+Date: Sun, 8 May 2022 03:06:30 -0700
+Subject: [PATCH 09/16] gfs2: Use container_of() for gfs2_glock(aspace)
+
+Clang's structure layout randomization feature gets upset when it sees
+struct address_space (which is randomized) cast to struct gfs2_glock.
+This is due to seeing the mapping pointer as being treated as an array
+of gfs2_glock, rather than "something else, before struct address_space":
+
+In file included from fs/gfs2/acl.c:23:
+fs/gfs2/meta_io.h:44:12: error: casting from randomized structure pointer type 'struct address_space *' to 'struct gfs2_glock *'
+	return (((struct gfs2_glock *)mapping) - 1)->gl_name.ln_sbd;
+		^
+
+Replace the instances of open-coded pointer math with container_of()
+usage, and update the allocator to match.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/202205041550.naKxwCBj-lkp@intel.com
+Cc: Bob Peterson <rpeterso@redhat.com>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: cluster-devel@redhat.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20220508100630.2642320-1-keescook@chromium.org
+---
+ fs/gfs2/glock.h   |  8 +++++++-
+ fs/gfs2/main.c    | 10 ++++------
+ fs/gfs2/meta_io.h |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
+index 13e567645618..13733372f5c0 100644
+--- a/fs/gfs2/glock.h
++++ b/fs/gfs2/glock.h
+@@ -139,6 +139,12 @@ struct lm_lockops {
+ 	const match_table_t *lm_tokens;
+ };
+ 
++/* gfs2_glock_get(), "glock" must be first. */
++struct glock_aspace {
++	struct gfs2_glock	glock;
++	struct address_space	mapping;
++};
++
+ extern struct workqueue_struct *gfs2_delete_workqueue;
+ static inline struct gfs2_holder *gfs2_glock_is_locked_by_me(struct gfs2_glock *gl)
+ {
+@@ -181,7 +187,7 @@ static inline int gfs2_glock_is_held_shrd(struct gfs2_glock *gl)
+ static inline struct address_space *gfs2_glock2aspace(struct gfs2_glock *gl)
+ {
+ 	if (gl->gl_ops->go_flags & GLOF_ASPACE)
+-		return (struct address_space *)(gl + 1);
++		return &(container_of(gl, struct glock_aspace, glock)->mapping);
+ 	return NULL;
+ }
+ 
+diff --git a/fs/gfs2/main.c b/fs/gfs2/main.c
+index 28d0eb23e18e..984bd60d01db 100644
+--- a/fs/gfs2/main.c
++++ b/fs/gfs2/main.c
+@@ -62,11 +62,10 @@ static void gfs2_init_glock_once(void *foo)
+ 
+ static void gfs2_init_gl_aspace_once(void *foo)
+ {
+-	struct gfs2_glock *gl = foo;
+-	struct address_space *mapping = (struct address_space *)(gl + 1);
++	struct glock_aspace *gl_aspace = foo;
+ 
+-	gfs2_init_glock_once(gl);
+-	address_space_init_once(mapping);
++	gfs2_init_glock_once(&gl_aspace->glock);
++	address_space_init_once(&gl_aspace->mapping);
+ }
+ 
+ /**
+@@ -104,8 +103,7 @@ static int __init init_gfs2_fs(void)
+ 		goto fail_cachep1;
+ 
+ 	gfs2_glock_aspace_cachep = kmem_cache_create("gfs2_glock(aspace)",
+-					sizeof(struct gfs2_glock) +
+-					sizeof(struct address_space),
++					sizeof(struct glock_aspace),
+ 					0, 0, gfs2_init_gl_aspace_once);
+ 
+ 	if (!gfs2_glock_aspace_cachep)
+diff --git a/fs/gfs2/meta_io.h b/fs/gfs2/meta_io.h
+index 21880d72081a..2e2f88cfb7ad 100644
+--- a/fs/gfs2/meta_io.h
++++ b/fs/gfs2/meta_io.h
+@@ -41,7 +41,7 @@ static inline struct gfs2_sbd *gfs2_mapping2sbd(struct address_space *mapping)
+ {
+ 	struct inode *inode = mapping->host;
+ 	if (mapping->a_ops == &gfs2_meta_aops)
+-		return (((struct gfs2_glock *)mapping) - 1)->gl_name.ln_sbd;
++		return container_of(mapping, struct glock_aspace, mapping)->glock.gl_name.ln_sbd;
+ 	else if (mapping->a_ops == &gfs2_rgrp_aops)
+ 		return container_of(mapping, struct gfs2_sbd, sd_aspace);
+ 	else
+-- 
+2.36.1
+

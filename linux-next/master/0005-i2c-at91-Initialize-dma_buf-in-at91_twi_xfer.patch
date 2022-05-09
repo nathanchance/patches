@@ -1,0 +1,43 @@
+From b06ffaad6e5a453142b6b78b5b751a74c428ed34 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 5 May 2022 08:27:38 -0700
+Subject: [PATCH 05/16] i2c: at91: Initialize dma_buf in at91_twi_xfer()
+
+Clang warns:
+
+  drivers/i2c/busses/i2c-at91-master.c:707:6: warning: variable 'dma_buf' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+          if (dev->use_dma) {
+              ^~~~~~~~~~~~
+  drivers/i2c/busses/i2c-at91-master.c:717:27: note: uninitialized use occurs here
+          i2c_put_dma_safe_msg_buf(dma_buf, m_start, !ret);
+                                   ^~~~~~~
+
+Initialize dma_buf to NULL, as i2c_put_dma_safe_msg_buf() is a no-op
+when the first argument is NULL, which will work for the !dev->use_dma
+case.
+
+Fixes: 03fbb903c8bf ("i2c: at91: use dma safe buffers")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1629
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Link: https://lore.kernel.org/r/20220505152738.1440249-1-nathan@kernel.org
+---
+ drivers/i2c/busses/i2c-at91-master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
+index 5eca3b3bb609..c0c35785a0dc 100644
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -656,7 +656,7 @@ static int at91_twi_xfer(struct i2c_adapter *adap, struct i2c_msg *msg, int num)
+ 	unsigned int_addr_flag = 0;
+ 	struct i2c_msg *m_start = msg;
+ 	bool is_read;
+-	u8 *dma_buf;
++	u8 *dma_buf = NULL;
+ 
+ 	dev_dbg(&adap->dev, "at91_xfer: processing %d messages:\n", num);
+ 
+-- 
+2.36.1
+

@@ -1,0 +1,94 @@
+From 9aba77a7ebc53bb5f6d8a28e9ff5ed8eb2018f0c Mon Sep 17 00:00:00 2001
+From: Kees Cook <keescook@chromium.org>
+Date: Sun, 8 May 2022 03:22:17 -0700
+Subject: [PATCH 10/16] decnet: Use container_of() for struct dn_neigh casts
+
+Clang's structure layout randomization feature gets upset when it sees
+struct neighbor (which is randomized) cast to struct dn_neigh:
+
+net/decnet/dn_route.c:1123:15: error: casting from randomized structure pointer type 'struct neighbour *' to 'struct dn_neigh *'
+			gateway = ((struct dn_neigh *)neigh)->addr;
+				   ^
+
+Update all the open-coded casts to use container_of() to do the conversion
+instead of depending on strict member ordering.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/202205041247.WKBEHGS5-lkp@intel.com
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Yajun Deng <yajun.deng@linux.dev>
+Cc: Zheng Yongjun <zhengyongjun3@huawei.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: linux-decnet-user@lists.sourceforge.net
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20220508102217.2647184-1-keescook@chromium.org
+---
+ net/decnet/dn_dev.c   | 4 ++--
+ net/decnet/dn_neigh.c | 3 ++-
+ net/decnet/dn_route.c | 4 ++--
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/net/decnet/dn_dev.c b/net/decnet/dn_dev.c
+index 0ee7d4c0c955..a09ba642b5e7 100644
+--- a/net/decnet/dn_dev.c
++++ b/net/decnet/dn_dev.c
+@@ -854,7 +854,7 @@ static void dn_send_endnode_hello(struct net_device *dev, struct dn_ifaddr *ifa)
+ 	memcpy(msg->neighbor, dn_hiord, ETH_ALEN);
+ 
+ 	if (dn_db->router) {
+-		struct dn_neigh *dn = (struct dn_neigh *)dn_db->router;
++		struct dn_neigh *dn = container_of(dn_db->router, struct dn_neigh, n);
+ 		dn_dn2eth(msg->neighbor, dn->addr);
+ 	}
+ 
+@@ -902,7 +902,7 @@ static void dn_send_router_hello(struct net_device *dev, struct dn_ifaddr *ifa)
+ {
+ 	int n;
+ 	struct dn_dev *dn_db = rcu_dereference_raw(dev->dn_ptr);
+-	struct dn_neigh *dn = (struct dn_neigh *)dn_db->router;
++	struct dn_neigh *dn = container_of(dn_db->router, struct dn_neigh, n);
+ 	struct sk_buff *skb;
+ 	size_t size;
+ 	unsigned char *ptr;
+diff --git a/net/decnet/dn_neigh.c b/net/decnet/dn_neigh.c
+index 94b306f6d551..fbd98ac853ea 100644
+--- a/net/decnet/dn_neigh.c
++++ b/net/decnet/dn_neigh.c
+@@ -426,7 +426,8 @@ int dn_neigh_router_hello(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			if (!dn_db->router) {
+ 				dn_db->router = neigh_clone(neigh);
+ 			} else {
+-				if (msg->priority > ((struct dn_neigh *)dn_db->router)->priority)
++				if (msg->priority > container_of(dn_db->router,
++								 struct dn_neigh, n)->priority)
+ 					neigh_release(xchg(&dn_db->router, neigh_clone(neigh)));
+ 			}
+ 		}
+diff --git a/net/decnet/dn_route.c b/net/decnet/dn_route.c
+index 7e85f2a1ae25..d1d78a463a06 100644
+--- a/net/decnet/dn_route.c
++++ b/net/decnet/dn_route.c
+@@ -1120,7 +1120,7 @@ static int dn_route_output_slow(struct dst_entry **pprt, const struct flowidn *o
+ 		/* Ok then, we assume its directly connected and move on */
+ select_source:
+ 		if (neigh)
+-			gateway = ((struct dn_neigh *)neigh)->addr;
++			gateway = container_of(neigh, struct dn_neigh, n)->addr;
+ 		if (gateway == 0)
+ 			gateway = fld.daddr;
+ 		if (fld.saddr == 0) {
+@@ -1429,7 +1429,7 @@ static int dn_route_input_slow(struct sk_buff *skb)
+ 		/* Use the default router if there is one */
+ 		neigh = neigh_clone(dn_db->router);
+ 		if (neigh) {
+-			gateway = ((struct dn_neigh *)neigh)->addr;
++			gateway = container_of(neigh, struct dn_neigh, n)->addr;
+ 			goto make_route;
+ 		}
+ 
+-- 
+2.36.1
+
