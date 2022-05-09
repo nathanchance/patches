@@ -1,4 +1,4 @@
-From f022a725477a6ff32e18929ed2f011d43b95b152 Mon Sep 17 00:00:00 2001
+From 7d5ff6a657c4abac9c2fd90aad775835c7522a2b Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Fri, 23 Oct 2020 21:50:47 -0700
 Subject: [PATCH 02/29] RISC-V: Fix the VDSO symbol generaton for
@@ -92,5 +92,5 @@ index 000000000000..e64cb6d9440e
 +sed 's!\([0-9a-f]*\) T \([a-z0-9_]*\)\(@@LINUX_4.15\)*!.global \2\n.set \2,0x\1!' \
 +| grep '^\.'
 -- 
-2.36.0
+2.36.1
 

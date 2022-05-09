@@ -1,4 +1,4 @@
-From 8b31f879a9354d6b370305d82e931dbfe8aed466 Mon Sep 17 00:00:00 2001
+From 9dbd91a2c6cd396293f09515bbed8d8f7db5d924 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 16 Feb 2021 14:29:54 -0700
 Subject: [PATCH 17/29] drm/i915: Enable -Wuninitialized
@@ -45,5 +45,5 @@ index a4e385f68713..de8719971225 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 -- 
-2.36.0
+2.36.1
 
