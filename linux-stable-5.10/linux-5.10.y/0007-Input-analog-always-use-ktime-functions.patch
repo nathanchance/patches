@@ -1,4 +1,4 @@
-From 80eabfcdd1d45abeb94f187e73a6dd96365e1e9d Mon Sep 17 00:00:00 2001
+From 3dc72125f6ba516e949547b78a338ca260efcfac Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Tue, 7 Sep 2021 18:37:08 -0700
 Subject: [PATCH 07/16] Input: analog - always use ktime functions
@@ -219,5 +219,5 @@ index 2b625ebef914..c06ee88d8ded 100644
  		for (i = 0; i < ANALOG_INIT_RETRIES; i++) {
  			if (!analog_cooked_read(port))
 -- 
-2.36.0
+2.36.1
 
