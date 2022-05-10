@@ -1,7 +1,7 @@
 From fe3cd5809fb6c3f9f1c4d53db8af35db1c00b331 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 19:39:23 +0100
-Subject: [PATCH 01/16] s390/atomic: remove small optimization to fix clang
+Subject: [PATCH 01/18] s390/atomic: remove small optimization to fix clang
  build
 
 With commit f0cbd3b83ed4 ("s390/atomic: circumvent gcc 10 build

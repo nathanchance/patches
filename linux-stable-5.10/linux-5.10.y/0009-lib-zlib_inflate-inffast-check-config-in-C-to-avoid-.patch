@@ -1,7 +1,7 @@
 From 0c7fa07ceb19ce58deada8cf28c3736c9e7d4db5 Mon Sep 17 00:00:00 2001
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Date: Fri, 24 Sep 2021 15:43:44 -0700
-Subject: [PATCH 09/16] lib/zlib_inflate/inffast: check config in C to avoid
+Subject: [PATCH 09/18] lib/zlib_inflate/inffast: check config in C to avoid
  unused function warning
 
 Building Linux for ppc64le with Ubuntu clang version
