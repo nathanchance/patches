@@ -1,7 +1,7 @@
-From ee0ceafdf93f4218709f88a2c05009ba253378e1 Mon Sep 17 00:00:00 2001
+From aa1e06347af0bd9f519209ccdb1e4236af68e43e Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Mon, 9 May 2022 15:23:33 -0700
-Subject: [PATCH 11/16] niu: Add "overloaded" struct page union member
+Subject: [PATCH 11/17] niu: Add "overloaded" struct page union member
 
 The randstruct GCC plugin gets upset when it sees struct addresspace
 (which is randomized) being assigned to a struct page (which is not

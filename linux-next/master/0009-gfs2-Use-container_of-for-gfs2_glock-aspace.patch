@@ -1,7 +1,7 @@
-From f3a6e9fd73fc30c390a8ae164f997c9e3a1c8249 Mon Sep 17 00:00:00 2001
+From 7e8ced0b0cea94a582ac4a0a15cd8c9697f39c74 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Sun, 8 May 2022 03:06:30 -0700
-Subject: [PATCH 09/16] gfs2: Use container_of() for gfs2_glock(aspace)
+Subject: [PATCH 09/17] gfs2: Use container_of() for gfs2_glock(aspace)
 
 Clang's structure layout randomization feature gets upset when it sees
 struct address_space (which is randomized) cast to struct gfs2_glock.

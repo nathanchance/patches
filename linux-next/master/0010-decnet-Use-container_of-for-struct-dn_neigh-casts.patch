@@ -1,7 +1,7 @@
-From 9aba77a7ebc53bb5f6d8a28e9ff5ed8eb2018f0c Mon Sep 17 00:00:00 2001
+From 4b0a49c2505baa2f680143ebb3ef491822d35fc8 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Sun, 8 May 2022 03:22:17 -0700
-Subject: [PATCH 10/16] decnet: Use container_of() for struct dn_neigh casts
+Subject: [PATCH 10/17] decnet: Use container_of() for struct dn_neigh casts
 
 Clang's structure layout randomization feature gets upset when it sees
 struct neighbor (which is randomized) cast to struct dn_neigh:
