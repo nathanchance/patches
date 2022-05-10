@@ -1,7 +1,7 @@
-From 1b8e42fa584dd1d690f54be2f12e9c3dfc33f046 Mon Sep 17 00:00:00 2001
+From ec9bd5f0b9dae99eff8b5fbdaadac245591f4dd8 Mon Sep 17 00:00:00 2001
 From: Alan Stern <stern@rowland.harvard.edu>
 Date: Tue, 10 May 2022 11:51:29 -0400
-Subject: [PATCH 12/17] USB: gadget: Add ID numbers to gadget names
+Subject: [PATCH 11/18] USB: gadget: Add ID numbers to gadget names
 
 Putting USB gadgets on a new bus of their own encounters a problem
 when multiple gadgets are present: They all have the same name!  The
