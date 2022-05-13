@@ -1,0 +1,28 @@
+From e37b9a1872729450eca2dd35c8e4c267e07a01c0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 13 May 2022 09:55:34 -0700
+Subject: [PATCH 06/11] HACK: Disable CONFIG_MTD_SERCOMM_PARTS for some 32-bit
+ architectures
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1635
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/mtd/parsers/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/mtd/parsers/Kconfig b/drivers/mtd/parsers/Kconfig
+index 851f4670d89b..2d2a54a4c0aa 100644
+--- a/drivers/mtd/parsers/Kconfig
++++ b/drivers/mtd/parsers/Kconfig
+@@ -189,7 +189,7 @@ config MTD_QCOMSMEM_PARTS
+ 
+ config MTD_SERCOMM_PARTS
+ 	tristate "Sercomm partition table parser"
+-	depends on MTD
++	depends on MTD && !(ARM || X86_32)
+ 	help
+ 	  This provides partitions table parser for devices with Sercomm
+ 	  partition map. This partition table contains real partition
+-- 
+2.36.1
+

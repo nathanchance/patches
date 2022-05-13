@@ -1,0 +1,60 @@
+From 7a06033401b2bbd7721855fe9920db440cecd3b1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 11 May 2022 10:24:04 -0700
+Subject: [PATCH 07/11] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1592
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/huawei/hinic/hinic_devlink.c | 7 ++++---
+ drivers/net/wireguard/netlink.c                   | 2 +-
+ include/linux/bitmap.h                            | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
+index 60ae8bfc5f69..76f2ebf4bae0 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
+@@ -43,9 +43,10 @@ static bool check_image_valid(struct hinic_devlink_priv *priv, const u8 *buf,
+ 
+ 	for (i = 0; i < fw_image->fw_info.fw_section_cnt; i++) {
+ 		len += fw_image->fw_section_info[i].fw_section_len;
+-		memcpy(&host_image->image_section_info[i],
+-		       &fw_image->fw_section_info[i],
+-		       sizeof(struct fw_section_info_st));
++		unsafe_memcpy(&host_image->image_section_info[i],
++			      &fw_image->fw_section_info[i],
++			      sizeof(struct fw_section_info_st),
++			      "https://github.com/ClangBuiltLinux/linux/issues/1592");
+ 	}
+ 
+ 	if (len != fw_image->fw_len ||
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index d0f3b6d7f408..c80315b4d377 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -443,7 +443,7 @@ static int set_peer(struct wg_device *wg, struct nlattr **attrs)
+ 		     addr->sa_family == AF_INET6)) {
+ 			struct endpoint endpoint = { { { 0 } } };
+ 
+-			memcpy(&endpoint.addr, addr, len);
++			unsafe_memcpy(&endpoint.addr, addr, len, "clang -O3 warns");
+ 			wg_socket_set_peer_endpoint(peer, &endpoint);
+ 		}
+ 	}
+diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
+index 5b09998038c0..d262d2eca9b0 100644
+--- a/include/linux/bitmap.h
++++ b/include/linux/bitmap.h
+@@ -258,7 +258,7 @@ static inline void bitmap_copy(unsigned long *dst, const unsigned long *src,
+ 			unsigned int nbits)
+ {
+ 	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
+-	memcpy(dst, src, len);
++	unsafe_memcpy(dst, src, len, "https://lore.kernel.org/202204230819.d6pbriaa-lkp@intel.com/");
+ }
+ 
+ /*
+-- 
+2.36.1
+

@@ -1,7 +1,7 @@
-From e86c1af044996f2121e57197b040f8729c344788 Mon Sep 17 00:00:00 2001
+From 90bcd3e222397efc96ebc21108eb6cf810350c35 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 5 May 2022 08:27:38 -0700
-Subject: [PATCH 05/18] i2c: at91: Initialize dma_buf in at91_twi_xfer()
+Subject: [PATCH 05/11] i2c: at91: Initialize dma_buf in at91_twi_xfer()
 
 Clang warns:
 
