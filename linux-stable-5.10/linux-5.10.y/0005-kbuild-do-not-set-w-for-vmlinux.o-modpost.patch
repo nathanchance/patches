@@ -1,7 +1,7 @@
-From 6cc262415f84996b43afe9ad8345a0ed694398e1 Mon Sep 17 00:00:00 2001
+From 4dd053a3539b6b91d504c6070645cb4818730d59 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
-Subject: [PATCH 05/18] kbuild: do not set -w for vmlinux.o modpost
+Subject: [PATCH 05/15] kbuild: do not set -w for vmlinux.o modpost
 
 The -w option is meaningless for the first pass of modpost (vmlinux.o).
 

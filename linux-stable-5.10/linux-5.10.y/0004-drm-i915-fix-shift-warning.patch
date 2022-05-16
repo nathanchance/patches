@@ -1,7 +1,7 @@
-From 3eea0d98246eb7b1626cc1e96ae467fb19ea6d78 Mon Sep 17 00:00:00 2001
+From bdebcd0c43a31ce8df84c7b9cc38fd751650d602 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Sun, 3 Jan 2021 14:51:44 +0100
-Subject: [PATCH 04/18] drm/i915: fix shift warning
+Subject: [PATCH 04/15] drm/i915: fix shift warning
 
 Randconfig builds on 32-bit machines show lots of warnings for
 the i915 driver for passing a 32-bit value into __const_hweight64():
