@@ -1,7 +1,7 @@
-From c5cd9e6dd3eab650795008c3d8fb46204b5ecd2e Mon Sep 17 00:00:00 2001
+From 408da5b8123e143cef4663fbfce379afdf5488aa Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:46 +0100
-Subject: [PATCH 06/10] crypto: arm/xor - make vectorized C code Clang-friendly
+Subject: [PATCH 02/11] crypto: arm/xor - make vectorized C code Clang-friendly
 
 The ARM version of the accelerated XOR routines are simply the 8-way C
 routines passed through the auto-vectorizer with SIMD codegen enabled.
@@ -22,7 +22,9 @@ Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Link: https://github.com/ClangBuiltLinux/linux/issues/496
 Link: https://github.com/ClangBuiltLinux/linux/issues/503
-Link: https://lore.kernel.org/r/20220205152346.237392-3-ardb@kernel.org
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://git.kernel.org/linus/a69cb445f7d129abf7c50d48c8a8eca7c8d5df15
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/arm/lib/xor-neon.c | 12 +++---------
  1 file changed, 3 insertions(+), 9 deletions(-)
