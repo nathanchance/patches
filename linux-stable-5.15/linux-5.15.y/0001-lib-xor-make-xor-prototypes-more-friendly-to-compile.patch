@@ -1,7 +1,7 @@
-From 1022b036688ad808285dc747e2ad78b9e26d3e3b Mon Sep 17 00:00:00 2001
+From 22bf559876b0969c1ef31deac5b8f9f4e5599b5f Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
-Date: Sat, 29 Jan 2022 23:45:28 +0100
-Subject: [PATCH 05/10] lib/xor: make xor prototypes more friendely to compiler
+Date: Sat, 5 Feb 2022 16:23:45 +0100
+Subject: [PATCH 01/11] lib/xor: make xor prototypes more friendly to compiler
  vectorization
 
 Modern compilers are perfectly capable of extracting parallelism from
@@ -19,7 +19,10 @@ the input-only vectors pointer-to-const as well.
 Tested-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20220129224529.76887-2-ardb@kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/563
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://git.kernel.org/linus/297565aa22cfa80ab0f88c3569693aea0b6afb6d
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/alpha/include/asm/xor.h           | 53 ++++++++++------
  arch/arm/include/asm/xor.h             | 42 ++++++++-----
@@ -1203,6 +1206,8 @@ index 2a9fee8ddae3..51b811b62322 100644
  };
  
  #endif
+
+base-commit: 9f43e3ac7e662f352f829077723fa0b92ccaded1
 -- 
 2.36.1
 
