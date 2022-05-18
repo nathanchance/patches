@@ -1,4 +1,4 @@
-From 809b2c0fe89e286cdf28fefabb8e507dad8b8d1f Mon Sep 17 00:00:00 2001
+From 5b08e7a7fa1feb2d26de0e78f3df82935a5ea949 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
 Subject: [PATCH 01/27] kbuild: explicitly specify the build id style
@@ -31,7 +31,7 @@ index a4ee3a0e7d20..99d59a164660 100644
  	$(call if_changed,vdsold)
  
 
-base-commit: 90659487578cd8a46636b4c507609af44c60a132
+base-commit: 0187300e6aa6246e9cebb22e2afbbc0d395839ee
 -- 
 2.36.1
 
