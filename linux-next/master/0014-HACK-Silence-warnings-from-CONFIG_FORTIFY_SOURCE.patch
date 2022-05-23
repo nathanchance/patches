@@ -1,7 +1,7 @@
-From 7a06033401b2bbd7721855fe9920db440cecd3b1 Mon Sep 17 00:00:00 2001
+From d61a30b787c19f891661161263b8f095bf643b27 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 May 2022 10:24:04 -0700
-Subject: [PATCH 07/11] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
+Subject: [PATCH 14/18] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -43,7 +43,7 @@ index d0f3b6d7f408..c80315b4d377 100644
  		}
  	}
 diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
-index 5b09998038c0..d262d2eca9b0 100644
+index badfe63e3729..4afaf543ad4e 100644
 --- a/include/linux/bitmap.h
 +++ b/include/linux/bitmap.h
 @@ -258,7 +258,7 @@ static inline void bitmap_copy(unsigned long *dst, const unsigned long *src,

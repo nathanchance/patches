@@ -1,0 +1,30 @@
+From 77931b7ec3b87d1c6cb0902116a579defcad0bc1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 23 May 2022 15:33:33 -0700
+Subject: [PATCH 11/18] HACK: riscv: Define arch_kexec_apply_relocations_add
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/include/asm/kexec.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/riscv/include/asm/kexec.h b/arch/riscv/include/asm/kexec.h
+index 206217b23301..cb8aeb40574d 100644
+--- a/arch/riscv/include/asm/kexec.h
++++ b/arch/riscv/include/asm/kexec.h
+@@ -55,6 +55,12 @@ extern riscv_kexec_method riscv_kexec_norelocate;
+ 
+ #ifdef CONFIG_KEXEC_FILE
+ extern const struct kexec_file_ops elf_kexec_ops;
++struct purgatory_info;
++int arch_kexec_apply_relocations_add(struct purgatory_info *pi,
++				     Elf_Shdr *section,
++				     const Elf_Shdr *relsec,
++				     const Elf_Shdr *symtab);
++#define arch_kexec_apply_relocations_add arch_kexec_apply_relocations_add
+ #endif
+ 
+ #endif
+-- 
+2.36.1
+
