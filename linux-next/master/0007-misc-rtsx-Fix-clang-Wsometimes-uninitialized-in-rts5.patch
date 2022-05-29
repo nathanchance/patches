@@ -1,7 +1,7 @@
-From 6236b99d60c7c2a97cd65065156073124d1b68cd Mon Sep 17 00:00:00 2001
+From c7df662857d0c23f6678e29a8cebf920f168f094 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 23 May 2022 08:05:22 -0700
-Subject: [PATCH 08/18] misc: rtsx: Fix clang -Wsometimes-uninitialized in
+Subject: [PATCH 07/17] misc: rtsx: Fix clang -Wsometimes-uninitialized in
  rts5261_init_from_hw()
 
 Clang warns:

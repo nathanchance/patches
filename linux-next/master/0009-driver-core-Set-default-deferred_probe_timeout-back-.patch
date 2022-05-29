@@ -1,0 +1,45 @@
+From c3fd9616eaec98ecea80b11fe3007e1ae90c0cef Mon Sep 17 00:00:00 2001
+From: Saravana Kannan <saravanak@google.com>
+Date: Wed, 25 May 2022 20:46:09 -0700
+Subject: [PATCH 09/17] driver core: Set default deferred_probe_timeout back to
+ 0.
+
+Since we had to effectively reverted
+commit 35a672363ab3 ("driver core: Ensure wait_for_device_probe() waits
+until the deferred_probe_timeout fires") in an earlier patch, a non-zero
+deferred_probe_timeout will break NFS rootfs mounting [1] again. So, set
+the default back to zero until we can fix that.
+
+[1] - https://lore.kernel.org/lkml/TYAPR01MB45443DF63B9EF29054F7C41FD8C60@TYAPR01MB4544.jpnprd01.prod.outlook.com/
+
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 2b28a1a84a0e ("driver core: Extend deferred probe timeout on driver registration")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Link: https://lore.kernel.org/r/20220526034609.480766-3-saravanak@google.com
+---
+ drivers/base/dd.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index f963d9010d7f..11b0fb6414d3 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -256,12 +256,7 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+ }
+ DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+ 
+-#ifdef CONFIG_MODULES
+-int driver_deferred_probe_timeout = 10;
+-#else
+ int driver_deferred_probe_timeout;
+-#endif
+-
+ EXPORT_SYMBOL_GPL(driver_deferred_probe_timeout);
+ 
+ static int __init deferred_probe_timeout_setup(char *str)
+-- 
+2.36.1
+
