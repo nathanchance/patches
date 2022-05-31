@@ -1,21 +1,23 @@
-From a18f08fee70ef24578dce4241fe5350c641e2d86 Mon Sep 17 00:00:00 2001
+From 1acb7682fb6cf1ebfe2aa765347cead60bc9e926 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 25 May 2022 15:13:06 -0700
-Subject: [PATCH 12/17] NOT-CBL: Revert "workqueue: Wrap flush_workqueue()
- using an inline function"
+Date: Tue, 31 May 2022 16:38:27 -0700
+Subject: [PATCH 12/17] NOT-CBL: Revert flush_workqueue() changes
 
-This reverts commit e449c388913ccd36641f7cc0c335029a7cc161f4.
+This reverts:
+
+* 48d1646a0262 workqueue: Wrap flush_scheduled_work() using a macro
+* d2cb6656f83e workqueue: Wrap flush_workqueue() using an inline function
 
 The warnings should be cleaned up before this is added...
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/linux/workqueue.h | 61 ++++-----------------------------------
- kernel/workqueue.c        | 16 +++-------
- 2 files changed, 9 insertions(+), 68 deletions(-)
+ include/linux/workqueue.h | 59 ++++-----------------------------------
+ kernel/workqueue.c        | 16 +++--------
+ 2 files changed, 10 insertions(+), 65 deletions(-)
 
 diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 7cb62bcedb29..7fee9b6cfede 100644
+index de85b50233a9..7fee9b6cfede 100644
 --- a/include/linux/workqueue.h
 +++ b/include/linux/workqueue.h
 @@ -445,7 +445,7 @@ extern bool mod_delayed_work_on(int cpu, struct workqueue_struct *wq,
@@ -54,7 +56,7 @@ index 7cb62bcedb29..7fee9b6cfede 100644
   *
   *	One of the work items currently on the workqueue needs to acquire
   *	a lock held by your code or its caller.
-@@ -594,53 +586,10 @@ extern void __warn_flushing_systemwide_wq(void)
+@@ -594,49 +586,10 @@ extern void __warn_flushing_systemwide_wq(void)
   * need to know that a particular work item isn't queued and isn't running.
   * In such cases you should use cancel_delayed_work_sync() or
   * cancel_work_sync() instead.
@@ -62,19 +64,19 @@ index 7cb62bcedb29..7fee9b6cfede 100644
 - * Please stop calling this function! A conversion to stop flushing system-wide
 - * workqueues is in progress. This function will be removed after all in-tree
 - * users stopped calling this function.
-  */
- static inline void flush_scheduled_work(void)
- {
--#if !defined(CONFIG_WERROR) && defined(CONFIG_PROVE_LOCKING)
--	/*
--	 * Warn only if emitting warning message does not cause build failure
--	 * and the developer wants warning about possibility of deadlock, for
--	 * there are currently in-tree flush_scheduled_work() users.
--	 */
--	__warn_flushing_systemwide_wq();
--#endif
+- */
+-#ifdef GCC_VERSION
+-#define flush_scheduled_work()					\
+-{								\
+-	_Pragma("message \"Please avoid flushing system-wide workqueues.\"") \
+-	__flush_workqueue(system_wq);				\
+-}
+-#else
+-static inline void __deprecated flush_scheduled_work(void)
+-{
 -	__flush_workqueue(system_wq);
 -}
+-#endif
 -
 -/**
 - * flush_workqueue - ensure that any scheduled work has run to completion.
@@ -82,13 +84,10 @@ index 7cb62bcedb29..7fee9b6cfede 100644
 - *
 - * This function sleeps until all work items which were queued on entry
 - * have finished execution, but it is not livelocked by new incoming ones.
-- */
+  */
 -static __always_inline void flush_workqueue(struct workqueue_struct *wq)
--{
--	/*
--	 * Always warn, for there is no in-tree flush_workqueue(system_*_wq)
--	 * user.
--	 */
++static inline void flush_scheduled_work(void)
+ {
 -	if ((__builtin_constant_p(wq == system_wq) &&
 -	     wq == system_wq) ||
 -	    (__builtin_constant_p(wq == system_highpri_wq) &&
