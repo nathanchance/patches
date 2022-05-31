@@ -1,0 +1,101 @@
+From ab46a0369085affda68def39d3ee7d72bb715d94 Mon Sep 17 00:00:00 2001
+From: Andrew Morton <akpm@linux-foundation.org>
+Date: Wed, 27 Apr 2022 12:38:02 +1000
+Subject: [PATCH 01/12] mm/oom_kill.c: fix vm_oom_kill_table[] ifdeffery
+
+arm allnoconfig:
+
+mm/oom_kill.c:60:25: warning: 'vm_oom_kill_table' defined but not used [-Wunused-variable]
+   60 | static struct ctl_table vm_oom_kill_table[] = {
+      |                         ^~~~~~~~~~~~~~~~~
+
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Link: https://git.kernel.org/next/linux-next/c/0c16ac896fece3b776dbe29b00cd57c571651eda
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/oom_kill.c | 58 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
+
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index 8a70bca67c94..3c6cf9e3cd66 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -56,35 +56,6 @@ static int sysctl_panic_on_oom;
+ static int sysctl_oom_kill_allocating_task;
+ static int sysctl_oom_dump_tasks = 1;
+ 
+-#ifdef CONFIG_SYSCTL
+-static struct ctl_table vm_oom_kill_table[] = {
+-	{
+-		.procname	= "panic_on_oom",
+-		.data		= &sysctl_panic_on_oom,
+-		.maxlen		= sizeof(sysctl_panic_on_oom),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_TWO,
+-	},
+-	{
+-		.procname	= "oom_kill_allocating_task",
+-		.data		= &sysctl_oom_kill_allocating_task,
+-		.maxlen		= sizeof(sysctl_oom_kill_allocating_task),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
+-	},
+-	{
+-		.procname	= "oom_dump_tasks",
+-		.data		= &sysctl_oom_dump_tasks,
+-		.maxlen		= sizeof(sysctl_oom_dump_tasks),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
+-	},
+-	{}
+-};
+-#endif
+-
+ /*
+  * Serializes oom killer invocations (out_of_memory()) from all contexts to
+  * prevent from over eager oom killing (e.g. when the oom killer is invoked
+@@ -729,6 +700,35 @@ static void queue_oom_reaper(struct task_struct *tsk)
+ 	add_timer(&tsk->oom_reaper_timer);
+ }
+ 
++#ifdef CONFIG_SYSCTL
++static struct ctl_table vm_oom_kill_table[] = {
++	{
++		.procname	= "panic_on_oom",
++		.data		= &sysctl_panic_on_oom,
++		.maxlen		= sizeof(sysctl_panic_on_oom),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_TWO,
++	},
++	{
++		.procname	= "oom_kill_allocating_task",
++		.data		= &sysctl_oom_kill_allocating_task,
++		.maxlen		= sizeof(sysctl_oom_kill_allocating_task),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec,
++	},
++	{
++		.procname	= "oom_dump_tasks",
++		.data		= &sysctl_oom_dump_tasks,
++		.maxlen		= sizeof(sysctl_oom_dump_tasks),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec,
++	},
++	{}
++};
++#endif
++
+ static int __init oom_init(void)
+ {
+ 	oom_reaper_th = kthread_run(oom_reaper, NULL, "oom_reaper");
+
+base-commit: 2a5699b0de4ee623d77f183c8e8e62691bd60a70
+-- 
+2.36.1
+
