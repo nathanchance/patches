@@ -1,0 +1,35 @@
+From a779e2f438e76549d88e35dcd5d345f94cc370b8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 3 Jun 2022 11:33:05 -0700
+Subject: [PATCH 13/18] NOT-CBL: mm/memory-failure.c: Apply fix up for build
+ failure
+
+Link: https://lore.kernel.org/20220603021042.GA1205503@hori.linux.bs1.fc.nec.co.jp/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/memory-failure.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 36072c10658a..939073db1c52 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1502,6 +1502,7 @@ static int try_to_split_thp_page(struct page *page, const char *msg)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_HUGETLB_PAGE
+ /*
+  * Called from hugetlb code with hugetlb_lock held.
+  *
+@@ -1551,7 +1552,6 @@ int __get_huge_page_for_hwpoison(unsigned long pfn, int flags)
+ 	return ret;
+ }
+ 
+-#ifdef CONFIG_HUGETLB_PAGE
+ /*
+  * Taking refcount of hugetlb pages needs extra care about race conditions
+  * with basic operations like hugepage allocation/free/demotion.
+-- 
+2.36.1
+

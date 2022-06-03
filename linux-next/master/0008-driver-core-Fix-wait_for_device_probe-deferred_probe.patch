@@ -1,7 +1,7 @@
-From cf81316a401d05060db5a5ce22a112b23b5be4b5 Mon Sep 17 00:00:00 2001
+From b196f9580d0cf616c52543516267b2f12b66cb41 Mon Sep 17 00:00:00 2001
 From: Saravana Kannan <saravanak@google.com>
 Date: Wed, 25 May 2022 20:46:08 -0700
-Subject: [PATCH 08/17] driver core: Fix wait_for_device_probe() &
+Subject: [PATCH 08/18] driver core: Fix wait_for_device_probe() &
  deferred_probe_timeout interaction
 
 Mounting NFS rootfs was timing out when deferred_probe_timeout was

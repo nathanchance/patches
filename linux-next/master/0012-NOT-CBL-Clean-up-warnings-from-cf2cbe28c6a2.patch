@@ -1,0 +1,105 @@
+From da64687be7cf6000b811dfbe0e5b4cda3e76e6e4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 3 Jun 2022 08:47:51 -0700
+Subject: [PATCH 12/18] NOT-CBL: Clean up warnings from cf2cbe28c6a2
+
+Link: https://lore.kernel.org/20220602092809.04008a86@canb.auug.org.au/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clocksource/hyperv_timer.c | 1 -
+ drivers/net/phy/mdio_bus.c         | 2 +-
+ drivers/xen/xlate_mmu.c            | 1 -
+ include/linux/phy.h                | 2 +-
+ kernel/time/tick-sched.c           | 1 -
+ net/ipv4/xfrm4_protocol.c          | 2 +-
+ net/ipv6/seg6_hmac.c               | 2 +-
+ 7 files changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/clocksource/hyperv_timer.c b/drivers/clocksource/hyperv_timer.c
+index ff188ab68496..bb47610bbd1c 100644
+--- a/drivers/clocksource/hyperv_timer.c
++++ b/drivers/clocksource/hyperv_timer.c
+@@ -565,4 +565,3 @@ void __init hv_init_clocksource(void)
+ 	hv_sched_clock_offset = hv_read_reference_counter();
+ 	hv_setup_sched_clock(read_hv_sched_clock_msr);
+ }
+-EXPORT_SYMBOL_GPL(hv_init_clocksource);
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 58d602985877..544ca1b92e63 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -1033,7 +1033,7 @@ struct bus_type mdio_bus_type = {
+ };
+ EXPORT_SYMBOL(mdio_bus_type);
+ 
+-int __init mdio_bus_init(void)
++int mdio_bus_init(void)
+ {
+ 	int ret;
+ 
+diff --git a/drivers/xen/xlate_mmu.c b/drivers/xen/xlate_mmu.c
+index 34742c6e189e..f17c4c03db30 100644
+--- a/drivers/xen/xlate_mmu.c
++++ b/drivers/xen/xlate_mmu.c
+@@ -261,7 +261,6 @@ int __init xen_xlate_map_ballooned_pages(xen_pfn_t **gfns, void **virt,
+ 
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(xen_xlate_map_ballooned_pages);
+ 
+ struct remap_pfn {
+ 	struct mm_struct *mm;
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 508f1149665b..b937a5dda61b 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1715,7 +1715,7 @@ int devm_phy_package_join(struct device *dev, struct phy_device *phydev,
+ 			  int addr, size_t priv_size);
+ 
+ #if IS_ENABLED(CONFIG_PHYLIB)
+-int __init mdio_bus_init(void);
++int mdio_bus_init(void);
+ void mdio_bus_exit(void);
+ #endif
+ 
+diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
+index 58a11f859ac7..30049580cd62 100644
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -526,7 +526,6 @@ void __init tick_nohz_full_setup(cpumask_var_t cpumask)
+ 	cpumask_copy(tick_nohz_full_mask, cpumask);
+ 	tick_nohz_full_running = true;
+ }
+-EXPORT_SYMBOL_GPL(tick_nohz_full_setup);
+ 
+ static int tick_nohz_cpu_down(unsigned int cpu)
+ {
+diff --git a/net/ipv4/xfrm4_protocol.c b/net/ipv4/xfrm4_protocol.c
+index 2fe5860c21d6..436d46feb21c 100644
+--- a/net/ipv4/xfrm4_protocol.c
++++ b/net/ipv4/xfrm4_protocol.c
+@@ -300,7 +300,7 @@ int xfrm4_protocol_deregister(struct xfrm4_protocol *handler,
+ }
+ EXPORT_SYMBOL(xfrm4_protocol_deregister);
+ 
+-void __init xfrm4_protocol_init(void)
++void xfrm4_protocol_init(void)
+ {
+ 	xfrm_input_register_afinfo(&xfrm4_input_afinfo);
+ }
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index 29bc4e7c3046..c8253cae4c50 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -395,7 +395,7 @@ static int seg6_hmac_init_algo(void)
+ 	return 0;
+ }
+ 
+-int __init seg6_hmac_init(void)
++int seg6_hmac_init(void)
+ {
+ 	return seg6_hmac_init_algo();
+ }
+-- 
+2.36.1
+
