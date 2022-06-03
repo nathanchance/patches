@@ -1,7 +1,7 @@
-From ab46a0369085affda68def39d3ee7d72bb715d94 Mon Sep 17 00:00:00 2001
+From c98edc507a163974a464eb9e8ef75bde49fc57ac Mon Sep 17 00:00:00 2001
 From: Andrew Morton <akpm@linux-foundation.org>
 Date: Wed, 27 Apr 2022 12:38:02 +1000
-Subject: [PATCH 01/12] mm/oom_kill.c: fix vm_oom_kill_table[] ifdeffery
+Subject: [PATCH 01/11] mm/oom_kill.c: fix vm_oom_kill_table[] ifdeffery
 
 arm allnoconfig:
 
@@ -95,7 +95,7 @@ index 8a70bca67c94..3c6cf9e3cd66 100644
  {
  	oom_reaper_th = kthread_run(oom_reaper, NULL, "oom_reaper");
 
-base-commit: 2a5699b0de4ee623d77f183c8e8e62691bd60a70
+base-commit: 67850b7bdcd2803e10d019f0da5673a92139b43a
 -- 
 2.36.1
 
