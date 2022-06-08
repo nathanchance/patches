@@ -1,15 +1,14 @@
-From be0a2d6633886e2a47445cc75b0a54414636b24a Mon Sep 17 00:00:00 2001
+From 2f41e24a10fc24dd9546c90ba43294732fd3299f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 11 May 2022 10:24:04 -0700
-Subject: [PATCH 14/18] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
+Date: Mon, 6 Jun 2022 13:11:07 -0700
+Subject: [PATCH 10/14] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/net/ethernet/huawei/hinic/hinic_devlink.c | 7 ++++---
  drivers/net/wireguard/netlink.c                   | 2 +-
- include/linux/bitmap.h                            | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
 index 60ae8bfc5f69..76f2ebf4bae0 100644
@@ -42,19 +41,6 @@ index d0f3b6d7f408..c80315b4d377 100644
  			wg_socket_set_peer_endpoint(peer, &endpoint);
  		}
  	}
-diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
-index badfe63e3729..4afaf543ad4e 100644
---- a/include/linux/bitmap.h
-+++ b/include/linux/bitmap.h
-@@ -258,7 +258,7 @@ static inline void bitmap_copy(unsigned long *dst, const unsigned long *src,
- 			unsigned int nbits)
- {
- 	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
--	memcpy(dst, src, len);
-+	unsafe_memcpy(dst, src, len, "https://lore.kernel.org/202204230819.d6pbriaa-lkp@intel.com/");
- }
- 
- /*
 -- 
 2.36.1
 

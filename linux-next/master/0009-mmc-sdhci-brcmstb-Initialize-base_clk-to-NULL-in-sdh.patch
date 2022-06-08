@@ -1,0 +1,44 @@
+From 56c10ec300f0faf0aad05998756842e3b8080768 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 8 Jun 2022 08:27:57 -0700
+Subject: [PATCH 09/14] mmc: sdhci-brcmstb: Initialize base_clk to NULL in
+ sdhci_brcmstb_probe()
+
+Clang warns a few times along the lines of:
+
+  drivers/mmc/host/sdhci-brcmstb.c:302:6: warning: variable 'base_clk' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+          if (res)
+              ^~~
+  drivers/mmc/host/sdhci-brcmstb.c:376:24: note: uninitialized use occurs here
+          clk_disable_unprepare(base_clk);
+                                ^~~~~~~~
+
+base_clk is used in the error path before it is initialized. Initialize
+it to NULL, as clk_disable_unprepare() calls clk_disable() and
+clk_unprepare(), which both handle NULL pointers gracefully.
+
+Fixes: 2cecaac1b21c ("mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1650
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220608152757.82529-1-nathan@kernel.org
+---
+ drivers/mmc/host/sdhci-brcmstb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+index f8dff8537920..28e9cf995c41 100644
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -256,7 +256,7 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	struct sdhci_host *host;
+ 	struct resource *iomem;
+ 	struct clk *clk;
+-	struct clk *base_clk;
++	struct clk *base_clk = NULL;
+ 	int res;
+ 
+ 	match = of_match_node(sdhci_brcm_of_match, pdev->dev.of_node);
+-- 
+2.36.1
+

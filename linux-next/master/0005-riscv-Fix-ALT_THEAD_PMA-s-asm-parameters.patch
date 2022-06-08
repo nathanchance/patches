@@ -1,7 +1,7 @@
-From 37d1e883a0476a0ab26c6f22eecfa90c18188adf Mon Sep 17 00:00:00 2001
+From 3f1044ec980c19bd95a5b92c1498bb690ef51baa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 18 May 2022 11:45:29 -0700
-Subject: [PATCH 06/18] riscv: Fix ALT_THEAD_PMA's asm parameters
+Subject: [PATCH 05/14] riscv: Fix ALT_THEAD_PMA's asm parameters
 
 After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
 builds with LLVM's integrated assembler fail like:
