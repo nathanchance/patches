@@ -1,4 +1,4 @@
-From 418e20df87b7f25ccc9bbe7fc055dea7d6d765d8 Mon Sep 17 00:00:00 2001
+From 3f2b4f1020928bba0b1b45b29fd6a952d0fc5eb7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
 Subject: [PATCH 7/9] HACK: include: __always_inline some functions to avoid
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
-index 567c3ddba2c4..6c5d0d138ac3 100644
+index c6199dbe2591..2bd70e7c2d6f 100644
 --- a/include/linux/nodemask.h
 +++ b/include/linux/nodemask.h
 @@ -235,7 +235,7 @@ static inline int __nodes_full(const nodemask_t *srcp, unsigned int nbits)
