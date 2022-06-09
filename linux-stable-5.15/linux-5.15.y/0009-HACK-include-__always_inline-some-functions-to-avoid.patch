@@ -1,7 +1,7 @@
-From 67b032194db8f1465bd0b0053296779078c2f706 Mon Sep 17 00:00:00 2001
+From 755cec0c90659b63eebfd766cfc719ca47d93892 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
-Subject: [PATCH 10/11] HACK: include: __always_inline some functions to avoid
+Subject: [PATCH 09/10] HACK: include: __always_inline some functions to avoid
  section mismatch warnings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
@@ -25,7 +25,7 @@ index 37363d570b9b..aef7c766f335 100644
  	instrument_atomic_read(addr + BIT_WORD(nr), sizeof(long));
  	return arch_test_bit(nr, addr);
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
-index 567c3ddba2c4..6c5d0d138ac3 100644
+index c6199dbe2591..2bd70e7c2d6f 100644
 --- a/include/linux/nodemask.h
 +++ b/include/linux/nodemask.h
 @@ -235,7 +235,7 @@ static inline int __nodes_full(const nodemask_t *srcp, unsigned int nbits)
