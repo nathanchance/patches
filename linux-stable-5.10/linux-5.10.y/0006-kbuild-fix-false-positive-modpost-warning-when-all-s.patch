@@ -1,4 +1,4 @@
-From ff2375d844d1442d93c095e76aa01c206063c1bf Mon Sep 17 00:00:00 2001
+From dc20964db188ad0015542cd1fc4fc2b796630904 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 06/15] kbuild: fix false-positive modpost warning when all
@@ -81,7 +81,7 @@ index a928b040bdb7..88b705ba30b7 100644
  endif
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index e08f75aed429..34bbb5b9e05a 100644
+index 79aef50ede17..18791cac16ad 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -24,8 +24,6 @@
@@ -117,7 +117,7 @@ index e08f75aed429..34bbb5b9e05a 100644
  	return mod;
  }
  
-@@ -2183,7 +2185,7 @@ static int check_exports(struct module *mod)
+@@ -2184,7 +2186,7 @@ static int check_exports(struct module *mod)
  		const char *basename;
  		exp = find_symbol(s->name);
  		if (!exp || exp->module == mod) {
@@ -126,7 +126,7 @@ index e08f75aed429..34bbb5b9e05a 100644
  				modpost_log(warn_unresolved ? LOG_WARN : LOG_ERROR,
  					    "\"%s\" [%s.ko] undefined!\n",
  					    s->name, mod->name);
-@@ -2604,13 +2606,6 @@ int main(int argc, char **argv)
+@@ -2605,13 +2607,6 @@ int main(int argc, char **argv)
  	if (files_source)
  		read_symbols_from_files(files_source);
  
@@ -140,7 +140,7 @@ index e08f75aed429..34bbb5b9e05a 100644
  	err = 0;
  
  	for (mod = modules; mod; mod = mod->next) {
-@@ -2656,6 +2651,10 @@ int main(int argc, char **argv)
+@@ -2657,6 +2652,10 @@ int main(int argc, char **argv)
  		}
  	}
  

@@ -1,4 +1,4 @@
-From 56d7ba43a708b0c1a5e6a527eff2f22a3ed5c8e9 Mon Sep 17 00:00:00 2001
+From 52b234cba74b7b7c45b899afba66813f14081e69 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 19:39:23 +0100
 Subject: [PATCH 01/15] s390/atomic: remove small optimization to fix clang
@@ -64,7 +64,7 @@ index 11c5952e1afa..5860ae790f2d 100644
  }
  
 
-base-commit: e2e52b40ef1acfd4f2508c32fce1409013909581
+base-commit: 5754c570a569d3f31e874abbf08dae1218a7431c
 -- 
 2.36.1
 
