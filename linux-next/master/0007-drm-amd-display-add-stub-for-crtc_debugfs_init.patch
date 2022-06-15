@@ -1,0 +1,67 @@
+From b68ae146f08ab26042f4af5d9e1231408e1c980b Mon Sep 17 00:00:00 2001
+From: Randy Dunlap <rdunlap@infradead.org>
+Date: Tue, 14 Jun 2022 08:57:26 -0700
+Subject: [PATCH 07/14] drm/amd/display: add stub for crtc_debugfs_init()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix build error when CONFIG_DEBUG_FS is not enabled by adding a
+stub function for crtc_debugfs_init().
+
+Eliminates this build error:
+
+../drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c: In function ‘amdgpu_dm_crtc_late_register’:
+../drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:6599:2: error: implicit declaration of function ‘crtc_debugfs_init’; did you mean ‘amdgpu_debugfs_init’? [-Werror=implicit-function-declaration]
+  crtc_debugfs_init(crtc);
+  ^~~~~~~~~~~~~~~~~
+  amdgpu_debugfs_init
+
+Fixes: 86bc22191892 ("drm/amd/display: Support crc on specific region")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Link: https://lore.kernel.org/r/20220614155726.26211-1-rdunlap@infradead.org
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c         | 2 --
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h | 6 ++++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index c9004f7e700d..7372e01d5640 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -57,9 +57,7 @@
+ #include "amdgpu_dm_irq.h"
+ #include "dm_helpers.h"
+ #include "amdgpu_dm_mst_types.h"
+-#if defined(CONFIG_DEBUG_FS)
+ #include "amdgpu_dm_debugfs.h"
+-#endif
+ #include "amdgpu_dm_psr.h"
+ 
+ #include "ivsrcid/ivsrcid_vislands30.h"
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h
+index 071200473c27..cfec1cb93603 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h
+@@ -31,6 +31,12 @@
+ 
+ void connector_debugfs_init(struct amdgpu_dm_connector *connector);
+ void dtn_debugfs_init(struct amdgpu_device *adev);
++
++#ifdef CONFIG_DEBUG_FS
+ void crtc_debugfs_init(struct drm_crtc *crtc);
++#else
++static inline void crtc_debugfs_init(struct drm_crtc *crtc)
++{}
++#endif
+ 
+ #endif
+-- 
+2.36.1
+

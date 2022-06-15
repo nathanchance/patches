@@ -1,7 +1,7 @@
-From 09c5b2ae1abd733f1b22df7d15943ba78de5da8c Mon Sep 17 00:00:00 2001
+From 7c347665d103a8735a0d2481ec5412a4650dac3c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 8 Jun 2022 08:27:57 -0700
-Subject: [PATCH 06/11] mmc: sdhci-brcmstb: Initialize base_clk to NULL in
+Subject: [PATCH 06/14] mmc: sdhci-brcmstb: Initialize base_clk to NULL in
  sdhci_brcmstb_probe()
 
 Clang warns a few times along the lines of:
