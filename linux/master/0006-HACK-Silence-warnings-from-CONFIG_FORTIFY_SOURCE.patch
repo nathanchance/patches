@@ -1,4 +1,4 @@
-From 5c3ebe712fee850031f48089879b4ffcb8b6bd05 Mon Sep 17 00:00:00 2001
+From 2364443ec68a4472d9fef6c888bd327f85e04432 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 30 Mar 2022 11:20:53 -0700
 Subject: [PATCH 06/10] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
@@ -6,26 +6,9 @@ Subject: [PATCH 06/10] HACK: Silence warnings from CONFIG_FORTIFY_SOURCE
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_devlink.c | 2 ++
- drivers/net/wireguard/netlink.c                   | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireguard/netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
-index 60ae8bfc5f69..7791ddb7ea25 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_devlink.c
-@@ -43,9 +43,11 @@ static bool check_image_valid(struct hinic_devlink_priv *priv, const u8 *buf,
- 
- 	for (i = 0; i < fw_image->fw_info.fw_section_cnt; i++) {
- 		len += fw_image->fw_section_info[i].fw_section_len;
-+#if 0
- 		memcpy(&host_image->image_section_info[i],
- 		       &fw_image->fw_section_info[i],
- 		       sizeof(struct fw_section_info_st));
-+#endif
- 	}
- 
- 	if (len != fw_image->fw_len ||
 diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
 index d0f3b6d7f408..b6697b90278f 100644
 --- a/drivers/net/wireguard/netlink.c
