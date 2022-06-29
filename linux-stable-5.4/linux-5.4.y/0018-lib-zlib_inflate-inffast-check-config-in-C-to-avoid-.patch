@@ -1,4 +1,4 @@
-From b06971786fb799cf1f723e347cc5127679fc50be Mon Sep 17 00:00:00 2001
+From b97e18a9d0436921f54c3b04a134afd90886e43f Mon Sep 17 00:00:00 2001
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Date: Fri, 24 Sep 2021 15:43:44 -0700
 Subject: [PATCH 18/27] lib/zlib_inflate/inffast: check config in C to avoid
@@ -58,5 +58,5 @@ index ed1f3df27260..8f6b90deacca 100644
  			from = (unsigned char *)sfrom;
  		    } else { /* dist == 1 or dist == 2 */
 -- 
-2.36.1
+2.37.0
 
