@@ -1,4 +1,4 @@
-From ad21b6a3c51994216c5fc58859aa961757295065 Mon Sep 17 00:00:00 2001
+From 9952db20dc2fdc90cbdf778c8410661d7287213c Mon Sep 17 00:00:00 2001
 From: Steve French <stfrench@microsoft.com>
 Date: Sun, 22 May 2022 21:25:24 -0500
 Subject: [PATCH 01/10] cifs: fix minor compile warning
@@ -29,7 +29,7 @@ index 98e4a1aa898e..409cad848ae6 100644
  	if (!server->ops->is_path_accessible)
  		return -EOPNOTSUPP;
 
-base-commit: 7afbac05cb1c95e286ce97a40ee1c9f1791446c7
+base-commit: 2437f53721bcd154d50224acee23e7dbb8d8c62b
 -- 
-2.36.1
+2.37.0
 
