@@ -1,4 +1,4 @@
-From 3c6d469887d2575eea35f1e330ab5dc66fa90c58 Mon Sep 17 00:00:00 2001
+From fb5ddb78993d8e7893b32c1a96a520413886f125 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 29 Jan 2022 23:45:29 +0100
 Subject: [PATCH 10/15] crypto: arm/xor - make vectorized C code Clang-friendly
@@ -51,5 +51,5 @@ index b99dd8e1c93f..522510baed49 100644
  
  #pragma GCC diagnostic ignored "-Wunused-variable"
 -- 
-2.36.1
+2.37.0
 

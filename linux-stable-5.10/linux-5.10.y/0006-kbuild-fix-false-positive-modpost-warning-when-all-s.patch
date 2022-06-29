@@ -1,4 +1,4 @@
-From 35036b5e0157c51e27d482a39902cedb04147715 Mon Sep 17 00:00:00 2001
+From 671d5b4b42788693750be8e918e38b2e60d2ff1d Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 06/15] kbuild: fix false-positive modpost warning when all
@@ -81,7 +81,7 @@ index a928b040bdb7..88b705ba30b7 100644
  endif
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 79aef50ede17..18791cac16ad 100644
+index e48742760fec..51a7486887ce 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -24,8 +24,6 @@
@@ -152,5 +152,5 @@ index 79aef50ede17..18791cac16ad 100644
  
  	return err;
 -- 
-2.36.1
+2.37.0
 
