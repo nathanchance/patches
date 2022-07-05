@@ -1,7 +1,7 @@
-From 2b88ccf8e281bd8ebe40f2ed2073818631d1fe40 Mon Sep 17 00:00:00 2001
+From c23ea3115798103077ea23c0703595acad396bc1 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
-Subject: [PATCH 01/27] kbuild: explicitly specify the build id style
+Subject: [PATCH 02/30] kbuild: explicitly specify the build id style
 
 ld's --build-id defaults to "sha1" style, while lld defaults to "fast".
 The build IDs are very different between the two, which may confuse
@@ -30,8 +30,6 @@ index a4ee3a0e7d20..99d59a164660 100644
  $(obj)/vdso-dummy.o: $(src)/vdso.lds $(obj)/rt_sigreturn.o FORCE
  	$(call if_changed,vdsold)
  
-
-base-commit: 9ef3ad40a81ff6b8b65ed870588b230f38812f2a
 -- 
 2.37.0
 

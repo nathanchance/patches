@@ -1,0 +1,32 @@
+From 2ca6103c6f2fd3b770cb89967af1a357843e5950 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 30 Jun 2022 08:48:48 -0700
+Subject: [PATCH 01/30] irqchip/vic: Remove vic_init_cascaded() export
+
+  Section mismatch in reference from the variable __ksymtab_vic_init_cascaded to the function .init.text:vic_init_cascaded()
+
+This was "fixed" by commit adf4f9d49c74 ("irqchip/vic: Drop cascaded
+intialization call") but that is not suitable for stable.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/irqchip/irq-vic.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/irqchip/irq-vic.c b/drivers/irqchip/irq-vic.c
+index f3f20a3cff50..3188d5498791 100644
+--- a/drivers/irqchip/irq-vic.c
++++ b/drivers/irqchip/irq-vic.c
+@@ -500,7 +500,6 @@ int __init vic_init_cascaded(void __iomem *base, unsigned int parent_irq,
+ 	/* Return out acquired base */
+ 	return v->irq;
+ }
+-EXPORT_SYMBOL_GPL(vic_init_cascaded);
+ 
+ #ifdef CONFIG_OF
+ static int __init vic_of_init(struct device_node *node,
+
+base-commit: 871cbc208bf0aded1946cd1e3eebec75799d31e8
+-- 
+2.37.0
+
