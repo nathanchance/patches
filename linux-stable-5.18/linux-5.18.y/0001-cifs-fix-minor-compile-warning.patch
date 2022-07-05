@@ -1,7 +1,7 @@
-From 9952db20dc2fdc90cbdf778c8410661d7287213c Mon Sep 17 00:00:00 2001
+From aefb54dd17db99dc9e9215733378b9c2965c1543 Mon Sep 17 00:00:00 2001
 From: Steve French <stfrench@microsoft.com>
 Date: Sun, 22 May 2022 21:25:24 -0500
-Subject: [PATCH 01/10] cifs: fix minor compile warning
+Subject: [PATCH 01/11] cifs: fix minor compile warning
 
 Add ifdef around nodfs variable from patch:
   "cifs: don't call cifs_dfs_query_info_nonascii_quirk() if nodfs was set"
@@ -29,7 +29,7 @@ index 98e4a1aa898e..409cad848ae6 100644
  	if (!server->ops->is_path_accessible)
  		return -EOPNOTSUPP;
 
-base-commit: 2437f53721bcd154d50224acee23e7dbb8d8c62b
+base-commit: 64ef7e725db41552c219a155ab8c1f6caf2e7cb4
 -- 
 2.37.0
 
