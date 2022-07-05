@@ -1,0 +1,35 @@
+From 1da9450678fcde27e2c4b17d4444261a873ccc84 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 1 Jul 2022 09:14:38 -0700
+Subject: [PATCH 12/17] HACK: Silence "error: write on a pipe with no reader"
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.build | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index 8bd4e673383f..d6fce17729d4 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -167,7 +167,7 @@ ifdef CONFIG_MODVERSIONS
+ # o remove .tmp_<file>.o to <file>.o
+ 
+ cmd_modversions_c =								\
+-	if $(OBJDUMP) -h $@ | grep -q __ksymtab; then				\
++	if $(OBJDUMP) -h $@ 2>/dev/null | grep -q __ksymtab; then			\
+ 		$(call cmd_gensymtypes_c,$(KBUILD_SYMTYPES),$(@:.o=.symtypes))	\
+ 		    > $(@D)/.tmp_$(@F:.o=.ver);					\
+ 										\
+@@ -346,7 +346,7 @@ ifdef CONFIG_ASM_MODVERSIONS
+ # we parse asm-prototypes.h C header to get function definitions.
+ 
+ cmd_modversions_S =								\
+-	if $(OBJDUMP) -h $@ | grep -q __ksymtab; then				\
++	if $(OBJDUMP) -h $@ 2>/dev/null | grep -q __ksymtab; then			\
+ 		$(call cmd_gensymtypes_S,$(KBUILD_SYMTYPES),$(@:.o=.symtypes))	\
+ 		    > $(@D)/.tmp_$(@F:.o=.ver);					\
+ 										\
+-- 
+2.37.0
+
