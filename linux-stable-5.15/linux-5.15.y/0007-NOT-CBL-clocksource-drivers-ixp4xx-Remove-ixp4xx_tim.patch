@@ -1,0 +1,31 @@
+From 9e6b8b75eed4fd02d08b71ff7f42e354f9b52392 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 1 Jul 2022 09:14:02 -0700
+Subject: [PATCH 07/12] NOT-CBL: clocksource/drivers/ixp4xx: Remove
+ ixp4xx_timer_setup() export
+
+  WARNING: modpost: vmlinux.o(___ksymtab_gpl+ixp4xx_timer_setup+0x0): Section mismatch in reference from the variable __ksymtab_ixp4xx_timer_setup to the function .init.text:ixp4xx_timer_setup()
+  The symbol ixp4xx_timer_setup is exported and annotated __init
+  Fix this by removing the __init annotation of ixp4xx_timer_setup or drop the export.
+
+Link: https://lore.kernel.org/Yr8TSxroBaL3oRDV@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clocksource/timer-ixp4xx.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/clocksource/timer-ixp4xx.c b/drivers/clocksource/timer-ixp4xx.c
+index cbb184953510..b8e92991c471 100644
+--- a/drivers/clocksource/timer-ixp4xx.c
++++ b/drivers/clocksource/timer-ixp4xx.c
+@@ -282,7 +282,6 @@ void __init ixp4xx_timer_setup(resource_size_t timerbase,
+ 	}
+ 	ixp4xx_timer_register(base, timer_irq, timer_freq);
+ }
+-EXPORT_SYMBOL_GPL(ixp4xx_timer_setup);
+ 
+ #ifdef CONFIG_OF
+ static __init int ixp4xx_of_timer_init(struct device_node *np)
+-- 
+2.37.0
+
