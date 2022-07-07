@@ -1,7 +1,7 @@
-From 2ca6103c6f2fd3b770cb89967af1a357843e5950 Mon Sep 17 00:00:00 2001
+From a1d2836cd4d9e8fe08d66402260cd2df0b707b2c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 30 Jun 2022 08:48:48 -0700
-Subject: [PATCH 01/30] irqchip/vic: Remove vic_init_cascaded() export
+Subject: [PATCH 01/29] irqchip/vic: Remove vic_init_cascaded() export
 
   Section mismatch in reference from the variable __ksymtab_vic_init_cascaded to the function .init.text:vic_init_cascaded()
 
@@ -26,7 +26,7 @@ index f3f20a3cff50..3188d5498791 100644
  #ifdef CONFIG_OF
  static int __init vic_of_init(struct device_node *node,
 
-base-commit: 871cbc208bf0aded1946cd1e3eebec75799d31e8
+base-commit: 49286fbdad47ecca61a4818e77bd0aced7f59383
 -- 
 2.37.0
 
