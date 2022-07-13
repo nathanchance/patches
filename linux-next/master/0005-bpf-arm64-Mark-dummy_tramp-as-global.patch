@@ -1,0 +1,41 @@
+From 361db81c9741b3a7b618807bbce5de9c7faf8b21 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 13 Jul 2022 10:35:03 -0700
+Subject: [PATCH 05/15] bpf, arm64: Mark dummy_tramp as global
+
+When building with clang + CONFIG_CFI_CLANG=y, the following error
+occurs at link time:
+
+  ld.lld: error: undefined symbol: dummy_tramp
+
+dummy_tramp is declared globally in C but its definition in inline
+assembly does not use .global, which prevents clang from properly
+resolving the references to it when creating the CFI jump tables.
+
+Mark dummy_tramp as global so that the reference can be properly
+resolved.
+
+Fixes: b2ad54e1533e ("bpf, arm64: Implement bpf_arch_text_poke() for arm64")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1661
+Suggested-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220713173503.3889486-1-nathan@kernel.org
+---
+ arch/arm64/net/bpf_jit_comp.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index fd1cb0d2aaa6..dcc572b7d4da 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -604,6 +604,7 @@ void dummy_tramp(void);
+ 
+ asm (
+ "	.pushsection .text, \"ax\", @progbits\n"
++"	.global dummy_tramp\n"
+ "	.type dummy_tramp, %function\n"
+ "dummy_tramp:"
+ #if IS_ENABLED(CONFIG_ARM64_BTI_KERNEL)
+-- 
+2.37.1
+

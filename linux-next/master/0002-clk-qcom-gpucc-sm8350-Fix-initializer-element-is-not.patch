@@ -1,0 +1,56 @@
+From cb4335eb583262c2d7eeca155664c2a1606befa9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 11 Jul 2022 10:40:05 -0700
+Subject: [PATCH 02/15] clk: qcom: gpucc-sm8350: Fix "initializer element is
+ not constant" error
+
+When building with clang or GCC older than 8, errors along the following
+lines occur:
+
+  drivers/clk/qcom/gpucc-sm8350.c:111:2: error: initializer element is not a compile-time constant
+          gpu_cc_parent,
+          ^~~~~~~~~~~~~
+  drivers/clk/qcom/gpucc-sm8350.c:126:2: error: initializer element is not a compile-time constant
+          gpu_cc_parent,
+          ^~~~~~~~~~~~~
+  2 errors generated.
+
+The C standard allows an implementation to accept other forms of
+constant expressions, which GCC 8+ has chosen to do, but it is not
+required. Just inline the initializer to resolve the error.
+
+Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1660
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220711174004.3047516-1-nathan@kernel.org
+---
+ drivers/clk/qcom/gpucc-sm8350.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+index d13fa813d190..5367ce654ac9 100644
+--- a/drivers/clk/qcom/gpucc-sm8350.c
++++ b/drivers/clk/qcom/gpucc-sm8350.c
+@@ -108,7 +108,7 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+ };
+ 
+ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll0.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+@@ -123,7 +123,7 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
+ };
+ 
+ static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+-	gpu_cc_parent,
++	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+ 	{ .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+-- 
+2.37.1
+
