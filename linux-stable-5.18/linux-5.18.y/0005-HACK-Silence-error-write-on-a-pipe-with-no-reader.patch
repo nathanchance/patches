@@ -1,4 +1,4 @@
-From b1c7289c796e6e6766dc15f4a2c39b96bc981702 Mon Sep 17 00:00:00 2001
+From d0ea39ef33b71d3c2765c2299e0b74b71128466a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 1 Jul 2022 09:14:38 -0700
 Subject: [PATCH 05/10] HACK: Silence "error: write on a pipe with no reader"
@@ -22,5 +22,5 @@ index 33c1ed581522..18bc72c2d163 100644
  		    > $(@D)/.tmp_$(@F:.o=.ver);					\
  										\
 -- 
-2.37.0
+2.37.1
 

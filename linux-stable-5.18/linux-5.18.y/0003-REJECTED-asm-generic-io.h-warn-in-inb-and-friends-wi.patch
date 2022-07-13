@@ -1,8 +1,8 @@
-From 321f17857a11392d3f84366d9e24e2fec6d4b575 Mon Sep 17 00:00:00 2001
+From a41582e2a769b424bf3870db2f65f860e638eec2 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 03/10] asm-generic/io.h: warn in inb() and friends with
- undefined PCI_IOBASE
+Subject: [PATCH 03/10] REJECTED: asm-generic/io.h: warn in inb() and friends
+ with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
 in calls to the readX/writeX primitives. This triggers clang's
@@ -253,5 +253,5 @@ index ce39ce9f3526..2952fcaaf67e 100644
  }
  EXPORT_SYMBOL(pci_iounmap);
 -- 
-2.37.0
+2.37.1
 
