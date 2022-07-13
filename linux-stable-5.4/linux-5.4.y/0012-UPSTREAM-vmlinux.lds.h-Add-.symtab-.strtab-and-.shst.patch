@@ -1,8 +1,8 @@
-From e963665b064ecd33f3c49cf52324d48611017865 Mon Sep 17 00:00:00 2001
+From 9df95333887d14686345b0dcb5ae713de09b6c14 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
-Subject: [PATCH 13/29] vmlinux.lds.h: Add .symtab, .strtab, and .shstrtab to
- ELF_DETAILS
+Subject: [PATCH 12/29] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
+ .shstrtab to ELF_DETAILS
 
 When linking vmlinux with LLD, the synthetic sections .symtab, .strtab,
 and .shstrtab are listed as orphaned. Add them to the ELF_DETAILS section
@@ -44,5 +44,5 @@ index c48ff105a029..c4db6e6c2705 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.37.0
+2.37.1
 

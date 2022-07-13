@@ -1,8 +1,8 @@
-From fc8ca62c857ce83a7c31cb36a63d12b1fc66612a Mon Sep 17 00:00:00 2001
+From 0bade89c9c396618faa3f2c1d56f9ab5ca2f8942 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 11/29] powerpc: fix function annotations to avoid section
- mismatch warnings with gcc-10
+Subject: [PATCH 10/29] UPSTREAM: powerpc: fix function annotations to avoid
+ section mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10
 toolset:
@@ -92,5 +92,5 @@ index 3f15615712b5..5e3fb9955b93 100644
  	const u8 *vec5_xive;
  
 -- 
-2.37.0
+2.37.1
 
