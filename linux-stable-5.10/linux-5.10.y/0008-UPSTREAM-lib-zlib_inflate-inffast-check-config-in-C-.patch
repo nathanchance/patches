@@ -1,8 +1,8 @@
-From 2f1a7da5e07aa30b9ae9fc2a0a8d21f51f84b966 Mon Sep 17 00:00:00 2001
+From 5d919dd3f594ba4fb4c4b2de735ab6f2689ce8ee Mon Sep 17 00:00:00 2001
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Date: Fri, 24 Sep 2021 15:43:44 -0700
-Subject: [PATCH 08/16] lib/zlib_inflate/inffast: check config in C to avoid
- unused function warning
+Subject: [PATCH 08/16] UPSTREAM: lib/zlib_inflate/inffast: check config in C
+ to avoid unused function warning
 
 Building Linux for ppc64le with Ubuntu clang version
 12.0.0-3ubuntu1~21.04.1 shows the warning below.
@@ -58,5 +58,5 @@ index ed1f3df27260..8f6b90deacca 100644
  			from = (unsigned char *)sfrom;
  		    } else { /* dist == 1 or dist == 2 */
 -- 
-2.37.0
+2.37.1
 

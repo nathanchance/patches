@@ -1,8 +1,8 @@
-From ccf0cdf0902dcdbb1dd9b9d0f70dd49531b9f93e Mon Sep 17 00:00:00 2001
+From 0272be0225d9a0e7effff31641633e864280e680 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:03:07 -0700
-Subject: [PATCH 09/16] scripts/recordmcount.pl: Remove check_objcopy() and
- $can_use_local
+Subject: [PATCH 09/16] UPSTREAM: scripts/recordmcount.pl: Remove
+ check_objcopy() and $can_use_local
 
 When building ARCH=riscv allmodconfig with llvm-objcopy, the objcopy
 version warning from this script appears:
@@ -115,5 +115,5 @@ index dc1d3696af6b..4e21580178b9 100755
      }
  
 -- 
-2.37.0
+2.37.1
 
