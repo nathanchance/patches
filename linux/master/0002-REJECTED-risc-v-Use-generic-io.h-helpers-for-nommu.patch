@@ -1,7 +1,7 @@
-From 82d78459035b126c5197a2590295dbedbb37e47e Mon Sep 17 00:00:00 2001
+From c588e3bfa8d28a602efb6928bc27d6a3435e9113 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
 Date: Mon, 10 May 2021 16:52:33 +0200
-Subject: [PATCH 2/9] REJECTED: risc-v: Use generic io.h helpers for nommu
+Subject: [PATCH 02/10] REJECTED: risc-v: Use generic io.h helpers for nommu
 
 Without MMU support PCI_IOBASE is left undefined because PCI_IO_END is
 VMEMMAP_START. Nevertheless the in*()/out*() helper macros are left
