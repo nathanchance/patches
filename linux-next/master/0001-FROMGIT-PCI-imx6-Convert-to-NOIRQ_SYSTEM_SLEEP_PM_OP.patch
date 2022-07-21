@@ -1,0 +1,51 @@
+From d0aa836e66d4498fd7765763376bd19f7b6e756e Mon Sep 17 00:00:00 2001
+From: Bjorn Helgaas <bhelgaas@google.com>
+Date: Tue, 19 Jul 2022 15:50:18 -0500
+Subject: [PATCH 01/22] FROMGIT: PCI: imx6: Convert to
+ NOIRQ_SYSTEM_SLEEP_PM_OPS()
+
+Replace SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() with NOIRQ_SYSTEM_SLEEP_PM_OPS(),
+which has the advantage that the compiler always sees the PM callbacks as
+referenced, so they don't need to be wrapped with "#ifdef CONFIG_PM_SLEEP"
+or tagged with "__maybe_unused" to avoid "defined but not used" warnings.
+
+See 1a3c7bb08826 ("PM: core: Add new *_PM_OPS macros, deprecate old ones").
+
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://git.kernel.org/helgaas/pci/c/0e4daeaa52caecaf21d7e6f24116333cafa533cc
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pci/controller/dwc/pci-imx6.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index 55e109d1ab27..e746c3767d17 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -994,7 +994,6 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+ 	.start_link = imx6_pcie_start_link,
+ };
+ 
+-#ifdef CONFIG_PM_SLEEP
+ static void imx6_pcie_pm_turnoff(struct imx6_pcie *imx6_pcie)
+ {
+ 	struct device *dev = imx6_pcie->pci->dev;
+@@ -1066,11 +1065,10 @@ static int imx6_pcie_resume_noirq(struct device *dev)
+ 
+ 	return 0;
+ }
+-#endif
+ 
+ static const struct dev_pm_ops imx6_pcie_pm_ops = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(imx6_pcie_suspend_noirq,
+-				      imx6_pcie_resume_noirq)
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(imx6_pcie_suspend_noirq,
++				  imx6_pcie_resume_noirq)
+ };
+ 
+ static int imx6_pcie_probe(struct platform_device *pdev)
+
+base-commit: a3fd3ca134d9485a0f9a7bdcffd7f8bae27f79d3
+-- 
+2.37.1
+

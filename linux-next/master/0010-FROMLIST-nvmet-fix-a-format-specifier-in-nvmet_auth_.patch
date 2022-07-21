@@ -1,0 +1,34 @@
+From da68ef774a212cddc714767af4bd2aee63c06e17 Mon Sep 17 00:00:00 2001
+From: Christoph Hellwig <hch@lst.de>
+Date: Mon, 18 Jul 2022 07:03:56 +0200
+Subject: [PATCH 10/22] FROMLIST: nvmet: fix a format specifier in
+ nvmet_auth_ctrl_exponential
+
+dh_keysize is a size_t, use the proper format specifier for printing it.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@sues.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20220718050356.227647-1-hch@lst.de
+---
+ drivers/nvme/target/auth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index bf92435c783c..716a10ca91d1 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -488,7 +488,7 @@ int nvmet_auth_ctrl_exponential(struct nvmet_req *req,
+ 		return -ENOKEY;
+ 	}
+ 	if (buf_size != ctrl->dh_keysize) {
+-		pr_warn("ctrl %d DH public key size mismatch, need %lu is %d\n",
++		pr_warn("ctrl %d DH public key size mismatch, need %zu is %d\n",
+ 			ctrl->cntlid, ctrl->dh_keysize, buf_size);
+ 		ret = -EINVAL;
+ 	} else {
+-- 
+2.37.1
+

@@ -1,0 +1,65 @@
+From 9490fafc1d16b50fb9af0285429bf46f8abf162c Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Fri, 15 Jul 2022 17:16:07 -0700
+Subject: [PATCH 22/22] HACK: FROMLIST: arm: lib: implement aeabi_uldivmod via
+ div64_u64_rem
+
+Compilers frequently need to defer 64b division to a libcall with this
+symbol name. It essentially is div64_u64_rem, just with a different
+signature. Kernel developers know to call div64_u64_rem, but compilers
+don't.
+
+Link: https://lore.kernel.org/lkml/20220524004156.0000790e@garyguo.net/
+Suggested-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20220716001616.4052225-1-ndesaulniers@google.com
+---
+ arch/arm/lib/Makefile         |  1 +
+ arch/arm/lib/aeabi_uldivmod.c | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
+ create mode 100644 arch/arm/lib/aeabi_uldivmod.c
+
+diff --git a/arch/arm/lib/Makefile b/arch/arm/lib/Makefile
+index 6d2ba454f25b..3fa273219312 100644
+--- a/arch/arm/lib/Makefile
++++ b/arch/arm/lib/Makefile
+@@ -29,6 +29,7 @@ endif
+ obj-$(CONFIG_UACCESS_WITH_MEMCPY) += uaccess_with_memcpy.o
+ 
+ lib-$(CONFIG_MMU) += $(mmu-y)
++lib-$(CONFIG_AEABI) += aeabi_uldivmod.o
+ 
+ ifeq ($(CONFIG_CPU_32v3),y)
+   lib-y	+= io-readsw-armv3.o io-writesw-armv3.o
+diff --git a/arch/arm/lib/aeabi_uldivmod.c b/arch/arm/lib/aeabi_uldivmod.c
+new file mode 100644
+index 000000000000..310427893195
+--- /dev/null
++++ b/arch/arm/lib/aeabi_uldivmod.c
+@@ -0,0 +1,23 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Unsigned 64b division with remainder, as is typically provided by libgcc or
++ * compiler-rt.
++ *
++ * Copyright (C) 2023 Google, LLC.
++ *
++ * Author: Nick Desaulniers <ndesaulniers@google.com>
++ */
++
++#include <linux/math64.h>
++
++struct result {
++	u64 quot, rem;
++};
++
++struct result __aeabi_uldivmod(u64 numerator, u64 denominator)
++{
++	struct result res;
++
++	res.quot = div64_u64_rem(numerator, denominator, &res.rem);
++	return res;
++}
+-- 
+2.37.1
+

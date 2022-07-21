@@ -1,0 +1,37 @@
+From 8eed031318bd6087ef7cfa4eb7e1bd957b0e7ff2 Mon Sep 17 00:00:00 2001
+From: Justin Stitt <justinstitt@google.com>
+Date: Thu, 21 Jul 2022 14:03:31 -0700
+Subject: [PATCH 08/22] FROMLIST: drivers: iommu: fix clang -wformat warning
+
+When building with Clang we encounter the following warning:
+| drivers/iommu/msm_iommu.c:603:6: error: format specifies type 'unsigned
+| short' but the argument has type 'int' [-Werror,-Wformat] sid);
+
+`sid` is an int, use the proper format specifier `%x`.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/378
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220721210331.4012015-1-justinstitt@google.com
+---
+ drivers/iommu/msm_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 428919a474c1..6a24aa804ea3 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -599,7 +599,7 @@ static int insert_iommu_master(struct device *dev,
+ 
+ 	for (sid = 0; sid < master->num_mids; sid++)
+ 		if (master->mids[sid] == spec->args[0]) {
+-			dev_warn(dev, "Stream ID 0x%hx repeated; ignoring\n",
++			dev_warn(dev, "Stream ID 0x%x repeated; ignoring\n",
+ 				 sid);
+ 			return 0;
+ 		}
+-- 
+2.37.1
+
