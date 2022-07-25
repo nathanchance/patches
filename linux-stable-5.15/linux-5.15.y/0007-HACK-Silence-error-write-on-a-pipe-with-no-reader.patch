@@ -1,4 +1,4 @@
-From d8fc4ed247e6e8d0bf5058935208c8a34dc86b2b Mon Sep 17 00:00:00 2001
+From 24c424dce4eb95890836ff31cd4916c15a17c2e5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 1 Jul 2022 09:14:38 -0700
 Subject: [PATCH 07/11] HACK: Silence "error: write on a pipe with no reader"
@@ -9,7 +9,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index 2b988b6ccacb..6364873be6db 100644
+index 17aa8ef2d52a..0013063d093a 100644
 --- a/scripts/Makefile.build
 +++ b/scripts/Makefile.build
 @@ -182,7 +182,7 @@ cmd_modversions_c =								\
