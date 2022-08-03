@@ -1,4 +1,4 @@
-From 57b851aba3745c3b4f7582538d62ff45b6a7c71d Mon Sep 17 00:00:00 2001
+From 9df19da4b9b055adb34e1ed0b7fdaa9e488b4fa9 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:46 +0100
 Subject: [PATCH 02/11] UPSTREAM: crypto: arm/xor - make vectorized C code
@@ -27,14 +27,14 @@ Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Link: https://git.kernel.org/linus/a69cb445f7d129abf7c50d48c8a8eca7c8d5df15
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/arm/lib/xor-neon.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/arm/lib/xor-neon.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
-index b99dd8e1c93f..522510baed49 100644
+index 7ba6cf826162..522510baed49 100644
 --- a/arch/arm/lib/xor-neon.c
 +++ b/arch/arm/lib/xor-neon.c
-@@ -17,17 +17,11 @@ MODULE_LICENSE("GPL");
+@@ -17,18 +17,11 @@ MODULE_LICENSE("GPL");
  /*
   * Pull in the reference implementations while instructing GCC (through
   * -ftree-vectorize) to attempt to exploit implicit parallelism and emit
@@ -50,8 +50,9 @@ index b99dd8e1c93f..522510baed49 100644
 - * While older versions of GCC do not generate incorrect code, they fail to
 - * recognize the parallel nature of these functions, and emit plain ARM code,
 - * which is known to be slower than the optimized ARM code in asm-arm/xor.h.
+- *
+- * #warning This code requires at least version 4.6 of GCC
 - */
--#warning This code requires at least version 4.6 of GCC
  #endif
  
  #pragma GCC diagnostic ignored "-Wunused-variable"

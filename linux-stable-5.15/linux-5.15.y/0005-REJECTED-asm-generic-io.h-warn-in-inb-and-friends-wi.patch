@@ -1,4 +1,4 @@
-From 42916377c523fc6914327d818edc3f46de337082 Mon Sep 17 00:00:00 2001
+From b1f458f3943797657457821d8d50e4d0ce211771 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 05/11] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 7ce93aaf69f8..b96abf7c1d2c 100644
+index 98954dda5734..b9ba6ccb6994 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
