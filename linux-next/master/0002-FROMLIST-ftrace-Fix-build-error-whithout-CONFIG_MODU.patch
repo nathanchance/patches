@@ -1,7 +1,7 @@
-From 49673c05f0e5ba949f3dfe3dd5075ee07bbd8543 Mon Sep 17 00:00:00 2001
+From 7cb499cfc891c518c04b0b10c5c1ba25bb163da2 Mon Sep 17 00:00:00 2001
 From: Wang Jingjin <wangjingjin1@huawei.com>
 Date: Mon, 1 Aug 2022 16:47:45 +0800
-Subject: [PATCH 01/12] FROMLIST: ftrace: Fix build error whithout
+Subject: [PATCH 02/13] FROMLIST: ftrace: Fix build error whithout
  CONFIG_MODULES
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -128,8 +128,6 @@ index bc921a3f7ea8..aa5e29e40da8 100644
  			if (WARN_ON_ONCE(ops->flags & FTRACE_OPS_FL_DIRECT))
  				continue;
  			if (WARN_ON_ONCE(ops->flags & FTRACE_OPS_FL_IPMODIFY))
-
-base-commit: 6c8f479764ebe2848589de3249743ea552ed2495
 -- 
 2.37.1
 
