@@ -1,7 +1,7 @@
-From 9812de5e125d0dd9b8cdfe4bd99f2fdfc30e83ce Mon Sep 17 00:00:00 2001
+From 463ad9454a8003a44fe2be5d093933914b16cd66 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 25 Feb 2021 12:22:41 +0100
-Subject: [PATCH 16/22] REJECTED: x86: mark some mpspec inline functions as
+Subject: [PATCH 06/12] REJECTED: x86: mark some mpspec inline functions as
  __init
 
 clang-13 sometimes decides to not inline early_get_smp_config(),

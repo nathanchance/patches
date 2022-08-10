@@ -1,0 +1,32 @@
+From 7616e07069b30b0fad39b9f85f5d920d3feb7623 Mon Sep 17 00:00:00 2001
+From: Russell Currey <ruscur@russell.cc>
+Date: Tue, 9 Aug 2022 15:45:30 +1000
+Subject: [PATCH 02/12] FROMLIST: powerpc/kexec: Fix build failure from
+ uninitialised variable
+
+clang 14 won't build because ret is uninitialised and can be returned if
+both prop and fdtprop are NULL.
+
+Fixes: b1fc44eaa9ba ("pseries/iommu/ddw: Fix kdump to work in absence of ibm,dma-window")
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Link: https://lore.kernel.org/r/20220809054530.907974-1-ruscur@russell.cc
+---
+ arch/powerpc/kexec/file_load_64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index 683462e4556b..8fa2995e6fc7 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -1043,7 +1043,7 @@ static int copy_property(void *fdt, int node_offset, const struct device_node *d
+ 			 const char *propname)
+ {
+ 	const void *prop, *fdtprop;
+-	int len = 0, fdtlen = 0, ret;
++	int len = 0, fdtlen = 0, ret = -EINVAL;
+ 
+ 	prop = of_get_property(dn, propname, &len);
+ 	fdtprop = fdt_getprop(fdt, node_offset, propname, &fdtlen);
+-- 
+2.37.1
+
