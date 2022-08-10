@@ -1,7 +1,7 @@
-From d11f70a229585151aae025bca44b8f6f5bad67a3 Mon Sep 17 00:00:00 2001
+From c5fe9e65c2a393b4d436555e4e1509929f9adb5c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
-Subject: [PATCH 07/10] HACK: include: __always_inline some functions to avoid
+Subject: [PATCH 13/16] HACK: include: __always_inline some functions to avoid
  section mismatch warnings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
-index 0f233b76c9ce..7f3ba1b424ba 100644
+index 4b71a96190a8..6a86e13c17a7 100644
 --- a/include/linux/nodemask.h
 +++ b/include/linux/nodemask.h
-@@ -235,7 +235,7 @@ static inline bool __nodes_full(const nodemask_t *srcp, unsigned int nbits)
+@@ -236,7 +236,7 @@ static inline bool __nodes_full(const nodemask_t *srcp, unsigned int nbits)
  }
  
  #define nodes_weight(nodemask) __nodes_weight(&(nodemask), MAX_NUMNODES)
@@ -23,7 +23,7 @@ index 0f233b76c9ce..7f3ba1b424ba 100644
  {
  	return bitmap_weight(srcp->bits, nbits);
  }
-@@ -260,13 +260,13 @@ static inline void __nodes_shift_left(nodemask_t *dstp,
+@@ -261,13 +261,13 @@ static inline void __nodes_shift_left(nodemask_t *dstp,
            > MAX_NUMNODES, then the silly min_ts could be dropped. */
  
  #define first_node(src) __first_node(&(src))
