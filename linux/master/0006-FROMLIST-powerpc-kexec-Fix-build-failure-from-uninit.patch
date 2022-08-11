@@ -1,32 +1,48 @@
-From 046d0076174a706c2caa2ef40f3824a3dcc09604 Mon Sep 17 00:00:00 2001
+From dad94da2ef9e95b132a498a970eb8927f6afc114 Mon Sep 17 00:00:00 2001
 From: Russell Currey <ruscur@russell.cc>
-Date: Tue, 9 Aug 2022 15:45:30 +1000
+Date: Wed, 10 Aug 2022 15:43:31 +1000
 Subject: [PATCH 06/16] FROMLIST: powerpc/kexec: Fix build failure from
  uninitialised variable
 
 clang 14 won't build because ret is uninitialised and can be returned if
-both prop and fdtprop are NULL.
+both prop and fdtprop are NULL.  Drop the ret variable and return an
+error in that failure case.
 
 Fixes: b1fc44eaa9ba ("pseries/iommu/ddw: Fix kdump to work in absence of ibm,dma-window")
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Russell Currey <ruscur@russell.cc>
-Link: https://lore.kernel.org/r/20220809054530.907974-1-ruscur@russell.cc
+Link: https://lore.kernel.org/r/20220810054331.373761-1-ruscur@russell.cc
 ---
- arch/powerpc/kexec/file_load_64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kexec/file_load_64.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 683462e4556b..8fa2995e6fc7 100644
+index 683462e4556b..349a781cea0b 100644
 --- a/arch/powerpc/kexec/file_load_64.c
 +++ b/arch/powerpc/kexec/file_load_64.c
-@@ -1043,7 +1043,7 @@ static int copy_property(void *fdt, int node_offset, const struct device_node *d
+@@ -1043,17 +1043,17 @@ static int copy_property(void *fdt, int node_offset, const struct device_node *d
  			 const char *propname)
  {
  	const void *prop, *fdtprop;
 -	int len = 0, fdtlen = 0, ret;
-+	int len = 0, fdtlen = 0, ret = -EINVAL;
++	int len = 0, fdtlen = 0;
  
  	prop = of_get_property(dn, propname, &len);
  	fdtprop = fdt_getprop(fdt, node_offset, propname, &fdtlen);
+ 
+ 	if (fdtprop && !prop)
+-		ret = fdt_delprop(fdt, node_offset, propname);
++		return fdt_delprop(fdt, node_offset, propname);
+ 	else if (prop)
+-		ret = fdt_setprop(fdt, node_offset, propname, prop, len);
+-
+-	return ret;
++		return fdt_setprop(fdt, node_offset, propname, prop, len);
++	else
++		return -FDT_ERR_NOTFOUND;
+ }
+ 
+ static int update_pci_dma_nodes(void *fdt, const char *dmapropname)
 -- 
 2.37.1
 

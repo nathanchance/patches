@@ -1,4 +1,4 @@
-From ffce2ebf6db58082251ad677c3a4444f6f3b32e6 Mon Sep 17 00:00:00 2001
+From c3f3c30e3700fe232a1737579b0f2ea502184b7f Mon Sep 17 00:00:00 2001
 From: Nirmoy Das <nirmoy.das@intel.com>
 Date: Wed, 27 Jul 2022 19:33:06 +0200
 Subject: [PATCH 01/16] FROMGIT: drm/i915: disable pci resize on 32-bit machine
@@ -50,7 +50,7 @@ index 6e90032e12e9..aa6aed837194 100644
  static int
  region_lmem_release(struct intel_memory_region *mem)
 
-base-commit: 15205c2829ca2cbb5ece5ceaafe1171a8470e62b
+base-commit: ffcf9c5700e49c0aee42dcba9a12ba21338e8136
 -- 
 2.37.1
 
