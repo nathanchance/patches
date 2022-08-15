@@ -1,7 +1,7 @@
 From eeef450f71b5d22dc8c1e9f725b6ac35e12bf763 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Fri, 24 Jul 2020 15:49:01 -0700
-Subject: [PATCH 19/28] UPSTREAM: powerpc/64s: allow for clang's objdump
+Subject: [PATCH 19/31] UPSTREAM: powerpc/64s: allow for clang's objdump
  differences
 
 Clang's objdump emits slightly different output from GNU's objdump,
@@ -51,5 +51,5 @@ index 77114755dc6f..6e6a30aea3ed 100755
  )
  
 -- 
-2.37.1
+2.37.2
 
