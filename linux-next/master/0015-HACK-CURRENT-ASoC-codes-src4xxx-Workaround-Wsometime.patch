@@ -1,0 +1,28 @@
+From 5c871fa51cd1e1419712f956b474de92e1082a1d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 16 Aug 2022 11:05:40 -0700
+Subject: [PATCH 15/16] HACK: CURRENT: ASoC: codes: src4xxx: Workaround
+ -Wsometimes-uninitialized
+
+Link: https://lore.kernel.org/YvvbKry5FVFbNdcI@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/codecs/src4xxx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
+index a8f143057b41..cf45caa4bf7f 100644
+--- a/sound/soc/codecs/src4xxx.c
++++ b/sound/soc/codecs/src4xxx.c
+@@ -283,7 +283,7 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
+ 			 */
+ 			dev_info(component->dev,
+ 				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
+-			break;
++			return 0;
+ 		}
+ 		ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+ 		if (ret < 0)
+-- 
+2.37.2
+
