@@ -1,0 +1,31 @@
+From 2195c100af68d5d17a92c8ac3a9a7dfe301272c6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 15 Aug 2022 23:18:29 -0700
+Subject: [PATCH 16/16] WIP: Revert "Revert "Makefile.extrawarn: re-enable
+ -Wformat for clang""
+
+This reverts commit 21f9c8a13bb2a0c24d9c6b86bc0896542a28c197.
+
+Let's try to catch new instances of this warning so that it can be
+easily re-enabled in the future.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.extrawarn | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index f5f0d6f09053..9bbaf7112a9b 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -47,7 +47,6 @@ else
+ 
+ ifdef CONFIG_CC_IS_CLANG
+ KBUILD_CFLAGS += -Wno-initializer-overrides
+-KBUILD_CFLAGS += -Wno-format
+ KBUILD_CFLAGS += -Wno-sign-compare
+ KBUILD_CFLAGS += -Wno-format-zero-length
+ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
+-- 
+2.37.2
+
