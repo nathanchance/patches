@@ -1,7 +1,7 @@
 From 6d6e9df59eed36377f2cf38c7a074e7a4edb22a3 Mon Sep 17 00:00:00 2001
 From: Nirmoy Das <nirmoy.das@intel.com>
 Date: Wed, 27 Jul 2022 19:33:06 +0200
-Subject: [PATCH 01/16] FROMGIT: drm/i915: disable pci resize on 32-bit machine
+Subject: [PATCH 01/17] FROMGIT: drm/i915: disable pci resize on 32-bit machine
 
 PCI bar resize only works with 64 bit BAR so disable
 this on 32-bit machine and resolve below compilation error:

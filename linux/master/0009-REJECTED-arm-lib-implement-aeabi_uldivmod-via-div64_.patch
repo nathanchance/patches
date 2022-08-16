@@ -1,7 +1,7 @@
 From 02550a1507dcfece3b18b1c26e147385fee8ffeb Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Fri, 15 Jul 2022 17:16:07 -0700
-Subject: [PATCH 09/16] REJECTED: arm: lib: implement aeabi_uldivmod via
+Subject: [PATCH 09/17] REJECTED: arm: lib: implement aeabi_uldivmod via
  div64_u64_rem
 
 Compilers frequently need to defer 64b division to a libcall with this
