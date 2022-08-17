@@ -1,4 +1,4 @@
-From 0dac49608a2c22f7dcab5a0452fac74b50660b70 Mon Sep 17 00:00:00 2001
+From 41f0fed0566f44b55d081b2abe09768795bb2f7f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 9 Aug 2022 18:08:09 -0700
 Subject: [PATCH 01/11] SUBMITTED: ASoC: mchp-spdiftx: Fix clang
@@ -41,7 +41,7 @@ index d24380046435..98363da83731 100644
  
  static inline int mchp_spdiftx_is_running(struct mchp_spdiftx_dev *dev)
 
-base-commit: 8de34ce2fdfe56c4dac639011c836ddbb4e37779
+base-commit: 07e0b709cab7dc987b5071443789865e20481119
 -- 
 2.37.2
 
