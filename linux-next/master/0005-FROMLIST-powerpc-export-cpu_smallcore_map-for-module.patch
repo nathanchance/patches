@@ -1,0 +1,54 @@
+From d40f7314df22e618b0264d12b0aa3146af184042 Mon Sep 17 00:00:00 2001
+From: Randy Dunlap <rdunlap@infradead.org>
+Date: Fri, 19 Aug 2022 14:01:12 -0700
+Subject: [PATCH 05/19] FROMLIST: powerpc: export cpu_smallcore_map for modules
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix build error when CONFIG_DRM_AMDGPU=m:
+
+ERROR: modpost: "cpu_smallcore_map" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+
+by exporting 'cpu_smallcore_map' just as other per_cpu
+symbols are exported.
+
+drivers/gpu/drm/amd/amdkfd/kfd_device.c calls cpu_smt_mask().
+This is an inline function on powerpc which references
+cpu_smallcore_map.
+
+Fixes: 425752c63b6f ("powerpc: Detect the presence of big-cores via "ibm, thread-groups"")
+Fixes: 7bc913085765 ("drm/amdkfd: Try to schedule bottom half on same core")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Gautham R. Shenoy <ego@linux.vnet.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: amd-gfx@lists.freedesktop.org
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Link: https://lore.kernel.org/r/20220819210112.7924-1-rdunlap@infradead.org
+---
+ arch/powerpc/kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index 169703fead57..35c3246ff62d 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -86,6 +86,7 @@ DEFINE_PER_CPU(cpumask_var_t, cpu_core_map);
+ static DEFINE_PER_CPU(cpumask_var_t, cpu_coregroup_map);
+ 
+ EXPORT_PER_CPU_SYMBOL(cpu_sibling_map);
++EXPORT_PER_CPU_SYMBOL(cpu_smallcore_map);
+ EXPORT_PER_CPU_SYMBOL(cpu_l2_cache_map);
+ EXPORT_PER_CPU_SYMBOL(cpu_core_map);
+ EXPORT_SYMBOL_GPL(has_big_cores);
+-- 
+2.37.2
+

@@ -1,7 +1,7 @@
-From 3045574aa179ceb2f05c640e5e1cecd3b9de6a5d Mon Sep 17 00:00:00 2001
+From 813564e66c27b7b072e5d25900f119db00b1dada Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Mar 2021 08:03:40 -0700
-Subject: [PATCH 10/16] HACK: LONGTERM: include: __always_inline some functions
+Subject: [PATCH 14/19] HACK: LONGTERM: include: __always_inline some functions
  to avoid section mismatch warnings
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1302#issuecomment-807260475
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
-index 4b71a96190a8..6a86e13c17a7 100644
+index e66742db741c..d9389179ccb9 100644
 --- a/include/linux/nodemask.h
 +++ b/include/linux/nodemask.h
 @@ -236,7 +236,7 @@ static inline bool __nodes_full(const nodemask_t *srcp, unsigned int nbits)

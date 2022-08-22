@@ -1,7 +1,7 @@
-From 6fbafb09a2daf8c0d8fab57a24388a3d16a551a2 Mon Sep 17 00:00:00 2001
+From 3c8263e08d2c63d51d68ac5abf1120f9cdefb01e Mon Sep 17 00:00:00 2001
 From: Ping-Ke Shih <pkshih@realtek.com>
 Date: Mon, 15 Aug 2022 14:20:04 +0800
-Subject: [PATCH 02/16] FROMLIST: wifi: rtw88: fix uninitialized use of primary
+Subject: [PATCH 03/19] FROMLIST: wifi: rtw88: fix uninitialized use of primary
  channel index
 
 clang reports uninitialized use:

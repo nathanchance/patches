@@ -1,0 +1,71 @@
+From f1c7ba44af3a54de0bbc314973b594c6f33f62fb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 22 Aug 2022 11:31:01 -0700
+Subject: [PATCH 01/19] SUBMITTED: ASoC: codes: src4xxx: Avoid clang
+ -Wsometimes-uninitialized in src4xxx_hw_params()
+
+Clang warns:
+
+  sound/soc/codecs/src4xxx.c:280:3: error: variable 'd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+                  default:
+                  ^~~~~~~
+  sound/soc/codecs/src4xxx.c:298:59: note: uninitialized use occurs here
+                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_11, d);
+                                                                          ^
+  sound/soc/codecs/src4xxx.c:223:20: note: initialize the variable 'd' to silence this warning
+          int val, pj, jd, d;
+                            ^
+                            = 0
+  sound/soc/codecs/src4xxx.c:280:3: error: variable 'jd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+                  default:
+                  ^~~~~~~
+  sound/soc/codecs/src4xxx.c:293:59: note: uninitialized use occurs here
+                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_10, jd);
+                                                                          ^~
+  sound/soc/codecs/src4xxx.c:223:17: note: initialize the variable 'jd' to silence this warning
+          int val, pj, jd, d;
+                        ^
+                          = 0
+  sound/soc/codecs/src4xxx.c:280:3: error: variable 'pj' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+                  default:
+                  ^~~~~~~
+  sound/soc/codecs/src4xxx.c:288:59: note: uninitialized use occurs here
+                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+                                                                          ^~
+  sound/soc/codecs/src4xxx.c:223:13: note: initialize the variable 'pj' to silence this warning
+          int val, pj, jd, d;
+                    ^
+                      = 0
+  3 errors generated.
+
+According to the comment in the default case, other parts of the chip
+are still functional without these values so just return 0 in the
+default case to avoid using these variables uninitialized.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1691
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220822183101.1115095-1-nathan@kernel.org
+---
+ sound/soc/codecs/src4xxx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
+index a8f143057b41..cf45caa4bf7f 100644
+--- a/sound/soc/codecs/src4xxx.c
++++ b/sound/soc/codecs/src4xxx.c
+@@ -283,7 +283,7 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
+ 			 */
+ 			dev_info(component->dev,
+ 				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
+-			break;
++			return 0;
+ 		}
+ 		ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+ 		if (ret < 0)
+
+base-commit: cc2986f4dc67df7e6209e0cd74145fffbd30d693
+-- 
+2.37.2
+
