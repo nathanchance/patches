@@ -1,7 +1,7 @@
-From 8422e9e079c14d6e2768fa512695bbbe33ec863d Mon Sep 17 00:00:00 2001
+From 49184f5d6862a9fd0bd18c9ab6dbc16c8e22d354 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 9 Aug 2022 18:08:09 -0700
-Subject: [PATCH 03/17] SUBMITTED: ASoC: mchp-spdiftx: Fix clang
+Subject: [PATCH 01/15] SUBMITTED: ASoC: mchp-spdiftx: Fix clang
  -Wbitfield-constant-conversion
 
 A recent change in clang strengthened its -Wbitfield-constant-conversion
@@ -40,6 +40,8 @@ index 4850a177803d..ab2d7a791f39 100644
  };
  
  static inline int mchp_spdiftx_is_running(struct mchp_spdiftx_dev *dev)
+
+base-commit: 072e51356cd5a4a1c12c1020bc054c99b98333df
 -- 
 2.37.2
 

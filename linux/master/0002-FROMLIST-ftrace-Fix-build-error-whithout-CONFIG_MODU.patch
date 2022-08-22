@@ -1,7 +1,7 @@
-From 6d1122c20d900d22a8f6d87963c4079896e56126 Mon Sep 17 00:00:00 2001
+From 25c7ef1a73e9442c9ee28c4b267665c56b12f5dd Mon Sep 17 00:00:00 2001
 From: Wang Jingjin <wangjingjin1@huawei.com>
 Date: Mon, 1 Aug 2022 16:47:45 +0800
-Subject: [PATCH 04/17] FROMLIST: ftrace: Fix build error whithout
+Subject: [PATCH 02/15] FROMLIST: ftrace: Fix build error whithout
  CONFIG_MODULES
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -18,7 +18,7 @@ Link: https://lore.kernel.org/r/20220801084745.1187987-1-wangjingjin1@huawei.com
  1 file changed, 33 insertions(+), 46 deletions(-)
 
 diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index bc921a3f7ea8..aa5e29e40da8 100644
+index 126c769d36c3..439e2ab6905e 100644
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
 @@ -1861,8 +1861,6 @@ static void ftrace_hash_rec_enable_modify(struct ftrace_ops *ops,
@@ -30,7 +30,7 @@ index bc921a3f7ea8..aa5e29e40da8 100644
  /*
   * Try to update IPMODIFY flag on each ftrace_rec. Return 0 if it is OK
   * or no-needed to update, -EBUSY if it detects a conflict of the flag
-@@ -3108,49 +3106,6 @@ static inline int ops_traces_mod(struct ftrace_ops *ops)
+@@ -3118,49 +3116,6 @@ static inline int ops_traces_mod(struct ftrace_ops *ops)
  		ftrace_hash_empty(ops->func_hash->notrace_hash);
  }
  
@@ -80,7 +80,7 @@ index bc921a3f7ea8..aa5e29e40da8 100644
  static int ftrace_update_code(struct module *mod, struct ftrace_page *new_pgs)
  {
  	bool init_nop = ftrace_need_init_nop();
-@@ -6812,6 +6767,38 @@ static int ftrace_get_trampoline_kallsym(unsigned int symnum,
+@@ -6822,6 +6777,38 @@ static int ftrace_get_trampoline_kallsym(unsigned int symnum,
  	return -ERANGE;
  }
  
@@ -119,7 +119,7 @@ index bc921a3f7ea8..aa5e29e40da8 100644
  #ifdef CONFIG_MODULES
  
  #define next_to_ftrace_page(p) container_of(p, struct ftrace_page, next)
-@@ -6824,7 +6811,7 @@ static int referenced_filters(struct dyn_ftrace *rec)
+@@ -6834,7 +6821,7 @@ static int referenced_filters(struct dyn_ftrace *rec)
  	int cnt = 0;
  
  	for (ops = ftrace_ops_list; ops != &ftrace_list_end; ops = ops->next) {
