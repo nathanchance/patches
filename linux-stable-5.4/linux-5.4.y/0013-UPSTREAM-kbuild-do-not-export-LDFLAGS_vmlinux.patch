@@ -1,4 +1,4 @@
-From 121cfb62c851b74b1ee647eb98f2521be481ba18 Mon Sep 17 00:00:00 2001
+From a73291dc0de73c67fb537ef67acc0152cb88a6e0 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Thu, 2 Jul 2020 04:29:36 +0900
 Subject: [PATCH 13/31] UPSTREAM: kbuild: do not export LDFLAGS_vmlinux
@@ -105,10 +105,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 74abb7e389f3..096b7931f2c8 100644
+index e54b9a1659b4..68e964d7acfb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1062,7 +1062,6 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
+@@ -1065,7 +1065,6 @@ export KBUILD_VMLINUX_OBJS := $(head-y) $(init-y) $(core-y) $(libs-y2) \
  			      $(drivers-y) $(net-y) $(virt-y)
  export KBUILD_VMLINUX_LIBS := $(libs-y1)
  export KBUILD_LDS          := arch/$(SRCARCH)/kernel/vmlinux.lds
@@ -116,7 +116,7 @@ index 74abb7e389f3..096b7931f2c8 100644
  # used by scripts/Makefile.package
  export KBUILD_ALLDIRS := $(sort $(filter-out arch/%,$(vmlinux-alldirs)) LICENSES arch include scripts tools)
  
-@@ -1093,7 +1092,7 @@ ARCH_POSTLINK := $(wildcard $(srctree)/arch/$(SRCARCH)/Makefile.postlink)
+@@ -1096,7 +1095,7 @@ ARCH_POSTLINK := $(wildcard $(srctree)/arch/$(SRCARCH)/Makefile.postlink)
  
  # Final link of vmlinux with optional arch pass after final link
  cmd_link-vmlinux =                                                 \

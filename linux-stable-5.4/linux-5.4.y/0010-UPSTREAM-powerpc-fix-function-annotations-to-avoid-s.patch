@@ -1,4 +1,4 @@
-From 283aaec3c6dd9f63159cc2f57e1f6ce33572f786 Mon Sep 17 00:00:00 2001
+From 11fe38057647193233dd563b852c3bc09e39e3e5 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
 Subject: [PATCH 10/31] UPSTREAM: powerpc: fix function annotations to avoid
@@ -79,10 +79,10 @@ index bdcb07a98cd3..30f4c4bfd41f 100644
  {
  	unsigned long next;
 diff --git a/arch/powerpc/sysdev/xive/spapr.c b/arch/powerpc/sysdev/xive/spapr.c
-index 3f15615712b5..5e3fb9955b93 100644
+index b21d71badaec..0b4359a5af75 100644
 --- a/arch/powerpc/sysdev/xive/spapr.c
 +++ b/arch/powerpc/sysdev/xive/spapr.c
-@@ -744,7 +744,7 @@ static const u8 *get_vec5_feature(unsigned int index)
+@@ -745,7 +745,7 @@ static const u8 *get_vec5_feature(unsigned int index)
  	return vec5 + index;
  }
  
