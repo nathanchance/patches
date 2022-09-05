@@ -1,4 +1,4 @@
-From e52cfea3f950aba25a65c5cd6144bfea8e20304d Mon Sep 17 00:00:00 2001
+From e94ee4aee32f6e6a59dd521510bab848593e0194 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 06/17] UPSTREAM: kbuild: fix false-positive modpost warning
@@ -52,10 +52,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 17 insertions(+), 15 deletions(-)
 
 diff --git a/scripts/Makefile.modpost b/scripts/Makefile.modpost
-index a928b040bdb7..88b705ba30b7 100644
+index b7368312feea..c088269142cb 100644
 --- a/scripts/Makefile.modpost
 +++ b/scripts/Makefile.modpost
-@@ -95,9 +95,11 @@ output-symdump := $(KBUILD_EXTMOD)/Module.symvers
+@@ -94,9 +94,11 @@ output-symdump := $(KBUILD_EXTMOD)/Module.symvers
  
  endif
  
@@ -68,7 +68,7 @@ index a928b040bdb7..88b705ba30b7 100644
  	$(if $(KBUILD_NSDEPS),-d $(MODULES_NSDEPS)) \
  	$(if $(CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS)$(KBUILD_NSDEPS),-N)
  
-@@ -111,9 +113,10 @@ VPATH :=
+@@ -110,9 +112,10 @@ VPATH :=
  $(input-symdump):
  	@echo >&2 'WARNING: Symbol version dump "$@" is missing.'
  	@echo >&2 '         Modules may not have dependencies or modversions.'

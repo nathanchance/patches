@@ -1,4 +1,4 @@
-From e862a40316ca605fe638ac345c3fe8a3fb5c617c Mon Sep 17 00:00:00 2001
+From c01793a522a760d77773b8cc7af8b8724ad53d80 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
 Subject: [PATCH 05/17] UPSTREAM: kbuild: do not set -w for vmlinux.o modpost
@@ -21,7 +21,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/scripts/Makefile.modpost b/scripts/Makefile.modpost
-index 12a87be0fb44..a928b040bdb7 100644
+index 42154b6df652..b7368312feea 100644
 --- a/scripts/Makefile.modpost
 +++ b/scripts/Makefile.modpost
 @@ -32,8 +32,6 @@
@@ -41,7 +41,7 @@ index 12a87be0fb44..a928b040bdb7 100644
  	-o $@
  
  ifdef MODPOST_VMLINUX
-@@ -115,6 +112,11 @@ $(input-symdump):
+@@ -114,6 +111,11 @@ $(input-symdump):
  	@echo >&2 'WARNING: Symbol version dump "$@" is missing.'
  	@echo >&2 '         Modules may not have dependencies or modversions.'
  
