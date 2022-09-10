@@ -1,24 +1,30 @@
-From 39e16312a3fb32dc1c5c571e69cfb43619cf1782 Mon Sep 17 00:00:00 2001
+From 5755dd60344574070b20ca0d7d290c3e1dd702b5 Mon Sep 17 00:00:00 2001
 From: Melissa Wen <mwen@igalia.com>
-Date: Wed, 7 Sep 2022 15:14:31 -0100
-Subject: [PATCH 02/24] NOTCBL: FROMLIST: drm/vkms: fix 32 bits compilation
- error by replacing macros
+Date: Sat, 10 Sep 2022 18:03:03 -0100
+Subject: [PATCH 02/23] NOTCBL: FROMLIST: drm/vkms: fix 32bit compilation error
+ by replacing macros
 
 Replace vkms_formats macro for fixed-point operations with functions
-from drm/drm_fixed.h to do the same job and fix 32-bits compilation
+from drm/drm_fixed.h to do the same job and fix 32-bit compilation
 errors.
 
+v2:
+- don't cast results to s32 (Igor)
+- add missing drm_fixp2int conversion (Igor)
+
 Fixes: a19c2ac9858 ("drm: vkms: Add support to the RGB565 format")
+Tested-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com> (v1)
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com> (v1)
 Reported-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Melissa Wen <mwen@igalia.com>
-Link: https://lore.kernel.org/all/20220907192250.jfkpwaq54f2h7stf@mail.igalia.com/
+Link: https://lore.kernel.org/r/20220910190303.682897-1-mwen@igalia.com
 ---
  drivers/gpu/drm/vkms/vkms_formats.c | 53 +++++++++++------------------
  1 file changed, 19 insertions(+), 34 deletions(-)
 
 diff --git a/drivers/gpu/drm/vkms/vkms_formats.c b/drivers/gpu/drm/vkms/vkms_formats.c
-index 300abb4d1dfe..ddcd3cfeeaac 100644
+index 300abb4d1dfe..d4950688b3f1 100644
 --- a/drivers/gpu/drm/vkms/vkms_formats.c
 +++ b/drivers/gpu/drm/vkms/vkms_formats.c
 @@ -1,27 +1,12 @@
@@ -58,17 +64,17 @@ index 300abb4d1dfe..ddcd3cfeeaac 100644
  
 -	s32 fp_rb_ratio = INT_TO_FIXED_DIV(65535, 31);
 -	s32 fp_g_ratio = INT_TO_FIXED_DIV(65535, 63);
-+	s32 fp_rb_ratio = drm_fixp_div(drm_int2fixp(65535), 31);
-+	s32 fp_g_ratio = drm_fixp_div(drm_int2fixp(65535), 63);
++	s64 fp_rb_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(31));
++	s64 fp_g_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(63));
  
  	for (size_t x = 0; x < x_limit; x++, src_pixels++) {
  		u16 rgb_565 = le16_to_cpu(*src_pixels);
 -		s32 fp_r = INT_TO_FIXED((rgb_565 >> 11) & 0x1f);
 -		s32 fp_g = INT_TO_FIXED((rgb_565 >> 5) & 0x3f);
 -		s32 fp_b = INT_TO_FIXED(rgb_565 & 0x1f);
-+		s32 fp_r = drm_int2fixp((rgb_565 >> 11) & 0x1f);
-+		s32 fp_g = drm_int2fixp((rgb_565 >> 5) & 0x3f);
-+		s32 fp_b = drm_int2fixp(rgb_565 & 0x1f);
++		s64 fp_r = drm_int2fixp((rgb_565 >> 11) & 0x1f);
++		s64 fp_g = drm_int2fixp((rgb_565 >> 5) & 0x3f);
++		s64 fp_b = drm_int2fixp(rgb_565 & 0x1f);
  
  		out_pixels[x].a = (u16)0xffff;
 -		out_pixels[x].r = FIXED_TO_INT_ROUND(FIXED_MUL(fp_r, fp_rb_ratio));
@@ -86,16 +92,16 @@ index 300abb4d1dfe..ddcd3cfeeaac 100644
  
 -	s32 fp_rb_ratio = INT_TO_FIXED_DIV(65535, 31);
 -	s32 fp_g_ratio = INT_TO_FIXED_DIV(65535, 63);
-+	s32 fp_rb_ratio = drm_fixp_div(drm_int2fixp(65535), 31);
-+	s32 fp_g_ratio = drm_fixp_div(drm_int2fixp(65535), 63);
++	s64 fp_rb_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(31));
++	s64 fp_g_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(63));
  
  	for (size_t x = 0; x < x_limit; x++, dst_pixels++) {
 -		s32 fp_r = INT_TO_FIXED(in_pixels[x].r);
 -		s32 fp_g = INT_TO_FIXED(in_pixels[x].g);
 -		s32 fp_b = INT_TO_FIXED(in_pixels[x].b);
-+		s32 fp_r = drm_int2fixp(in_pixels[x].r);
-+		s32 fp_g = drm_int2fixp(in_pixels[x].g);
-+		s32 fp_b = drm_int2fixp(in_pixels[x].b);
++		s64 fp_r = drm_int2fixp(in_pixels[x].r);
++		s64 fp_g = drm_int2fixp(in_pixels[x].g);
++		s64 fp_b = drm_int2fixp(in_pixels[x].b);
  
 -		u16 r = FIXED_TO_INT_ROUND(FIXED_DIV(fp_r, fp_rb_ratio));
 -		u16 g = FIXED_TO_INT_ROUND(FIXED_DIV(fp_g, fp_g_ratio));

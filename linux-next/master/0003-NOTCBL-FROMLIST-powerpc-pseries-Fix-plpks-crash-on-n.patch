@@ -1,7 +1,7 @@
-From 831dc84ce2a0ee0ae191ced216593845384a9cb0 Mon Sep 17 00:00:00 2001
+From 59d3bdea55edad69c5f379f4c1b3557e7c3c2bbc Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Wed, 7 Sep 2022 16:50:38 +1000
-Subject: [PATCH 03/24] NOTCBL: FROMLIST: powerpc/pseries: Fix plpks crash on
+Subject: [PATCH 03/23] NOTCBL: FROMLIST: powerpc/pseries: Fix plpks crash on
  non-pseries
 
 As reported[1] by Nathan, the recently added plpks driver will crash if

@@ -1,7 +1,7 @@
-From 514780edf95a0aeaf3edbc64daa6fe8df63cdd69 Mon Sep 17 00:00:00 2001
+From 2708fdc6e2881e022ac8cb6902badcd8db838e1e Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Fri, 9 Sep 2022 09:38:40 +0200
-Subject: [PATCH 12/24] FROMLIST: objtool, kcsan: Add volatile read/write
+Subject: [PATCH 12/23] FROMLIST: objtool, kcsan: Add volatile read/write
  instrumentation to whitelist
 
 Adds KCSAN's volatile instrumentation to objtool's uaccess whitelist.
