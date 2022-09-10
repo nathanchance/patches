@@ -1,7 +1,7 @@
-From ff2dd15a5f1653a9f68ef5aa67c27b174917fa0e Mon Sep 17 00:00:00 2001
+From 6231e2db966ded4627717e82b3e63b2c9bbe3988 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Fri, 15 Jul 2022 17:16:07 -0700
-Subject: [PATCH 06/14] REJECTED: arm: lib: implement aeabi_uldivmod via
+Subject: [PATCH 10/16] REJECTED: arm: lib: implement aeabi_uldivmod via
  div64_u64_rem
 
 Compilers frequently need to defer 64b division to a libcall with this
@@ -66,5 +66,5 @@ index 000000000000..3210271e3dea
 +}
 +EXPORT_SYMBOL(__aeabi_uldivmod);
 -- 
-2.37.2
+2.37.3
 
