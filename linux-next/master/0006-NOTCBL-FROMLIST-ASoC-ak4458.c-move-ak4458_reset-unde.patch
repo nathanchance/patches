@@ -1,0 +1,45 @@
+From 605d0b9201556f6e981dd362fe298deb867021f5 Mon Sep 17 00:00:00 2001
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Date: Fri, 9 Sep 2022 02:54:34 +0000
+Subject: [PATCH 06/24] NOTCBL: FROMLIST: ASoC: ak4458.c: move ak4458_reset()
+ under CONFIG_PM
+
+This patch fixup this warning
+
+linux/sound/soc/codecs/ak4458.c:631:13: error: 'ak4458_reset' defined but\
+	not used [-Werror=unused-function]
+  631 | static void ak4458_reset(struct ak4458_priv *ak4458, bool active)
+      |             ^~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+Fixes: e9e7df88996d64 ("ASoC: ak4458: Remove component probe() and remove()")
+Cc: Shengjiu Wang <shengjiu.wang@nxp.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/871qslmf4m.wl-kuninori.morimoto.gx@renesas.com
+---
+ sound/soc/codecs/ak4458.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index 339cf7bb7b36..09b54289e313 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -628,6 +628,7 @@ static struct snd_soc_dai_driver ak4497_dai = {
+ 	.ops = &ak4458_dai_ops,
+ };
+ 
++#ifdef CONFIG_PM
+ static void ak4458_reset(struct ak4458_priv *ak4458, bool active)
+ {
+ 	if (ak4458->reset_gpiod) {
+@@ -636,7 +637,6 @@ static void ak4458_reset(struct ak4458_priv *ak4458, bool active)
+ 	}
+ }
+ 
+-#ifdef CONFIG_PM
+ static int __maybe_unused ak4458_runtime_suspend(struct device *dev)
+ {
+ 	struct ak4458_priv *ak4458 = dev_get_drvdata(dev);
+-- 
+2.37.3
+

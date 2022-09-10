@@ -1,7 +1,7 @@
-From b8678c1b82e3e96de064aa36541f0ee01cfb60e0 Mon Sep 17 00:00:00 2001
+From 0c53955a0c453fe0b9530be7130d088352a9df1f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 6 Jun 2022 13:11:07 -0700
-Subject: [PATCH 12/19] HACK: LONGTERM: Silence warnings from
+Subject: [PATCH 19/24] HACK: LONGTERM: Silence warnings from
  CONFIG_FORTIFY_SOURCE
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1592
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index d0f3b6d7f408..c80315b4d377 100644
+index 0c0644e762e5..08fd9579c92e 100644
 --- a/drivers/net/wireguard/netlink.c
 +++ b/drivers/net/wireguard/netlink.c
 @@ -443,7 +443,7 @@ static int set_peer(struct wg_device *wg, struct nlattr **attrs)
@@ -24,5 +24,5 @@ index d0f3b6d7f408..c80315b4d377 100644
  		}
  	}
 -- 
-2.37.2
+2.37.3
 

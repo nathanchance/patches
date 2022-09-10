@@ -1,0 +1,90 @@
+From cec3e9dd75be4f933bd5c5d071ce9ee9e7c7496d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 8 Sep 2022 08:32:08 -0700
+Subject: [PATCH 13/24] SUBMITTED: net/mlx5e: Ensure macsec_rule is always
+ initiailized in macsec_fs_{r,t}x_add_rule()
+
+Clang warns:
+
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:539:6: error: variable 'macsec_rule' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+          if (err)
+              ^~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:598:9: note: uninitialized use occurs here
+          return macsec_rule;
+                ^~~~~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:539:2: note: remove the 'if' if its condition is always false
+          if (err)
+          ^~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:523:38: note: initialize the variable 'macsec_rule' to silence this warning
+          union mlx5e_macsec_rule *macsec_rule;
+                                              ^
+                                              = NULL
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1131:6: error: variable 'macsec_rule' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+          if (err)
+              ^~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1215:9: note: uninitialized use occurs here
+          return macsec_rule;
+                ^~~~~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1131:2: note: remove the 'if' if its condition is always false
+          if (err)
+          ^~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1118:38: note: initialize the variable 'macsec_rule' to silence this warning
+          union mlx5e_macsec_rule *macsec_rule;
+                                              ^
+                                              = NULL
+  2 errors generated.
+
+If macsec_fs_{r,t}x_ft_get() fail, macsec_rule will be uninitialized.
+Use the existing initialization to NULL in the existing error path to
+ensure macsec_rule is always initialized.
+
+Fixes: e467b283ffd5 ("net/mlx5e: Add MACsec TX steering rules")
+Fixes: 3b20949cb21b ("net/mlx5e: Add MACsec RX steering rules")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1706
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20220908153207.4048871-1-nathan@kernel.org
+---
+ .../net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c    | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
+index 608fbbaa5a58..4467e88d7e7f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
+@@ -537,7 +537,7 @@ macsec_fs_tx_add_rule(struct mlx5e_macsec_fs *macsec_fs,
+ 
+ 	err = macsec_fs_tx_ft_get(macsec_fs);
+ 	if (err)
+-		goto out_spec;
++		goto out_spec_no_rule;
+ 
+ 	macsec_rule = kzalloc(sizeof(*macsec_rule), GFP_KERNEL);
+ 	if (!macsec_rule) {
+@@ -591,6 +591,7 @@ macsec_fs_tx_add_rule(struct mlx5e_macsec_fs *macsec_fs,
+ 
+ err:
+ 	macsec_fs_tx_del_rule(macsec_fs, tx_rule);
++out_spec_no_rule:
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
+@@ -1129,7 +1130,7 @@ macsec_fs_rx_add_rule(struct mlx5e_macsec_fs *macsec_fs,
+ 
+ 	err = macsec_fs_rx_ft_get(macsec_fs);
+ 	if (err)
+-		goto out_spec;
++		goto out_spec_no_rule;
+ 
+ 	macsec_rule = kzalloc(sizeof(*macsec_rule), GFP_KERNEL);
+ 	if (!macsec_rule) {
+@@ -1209,6 +1210,7 @@ macsec_fs_rx_add_rule(struct mlx5e_macsec_fs *macsec_fs,
+ 
+ err:
+ 	macsec_fs_rx_del_rule(macsec_fs, rx_rule);
++out_spec_no_rule:
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
+-- 
+2.37.3
+
