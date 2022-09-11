@@ -1,7 +1,7 @@
-From a0d3008f1c75ae1a6d2bf4aa63440d3cc204e881 Mon Sep 17 00:00:00 2001
+From 82d0e0fbb991c25e22b7c5208cb26670a2e3713b Mon Sep 17 00:00:00 2001
 From: Anup Patel <apatel@ventanamicro.com>
 Date: Tue, 6 Sep 2022 09:45:08 +0200
-Subject: [PATCH 04/16] FROMLIST: RISC-V: Move riscv_init_cbom_blocksize() to
+Subject: [PATCH 04/14] FROMLIST: RISC-V: Move riscv_init_cbom_blocksize() to
  cacheflush.c
 
 The riscv_cbom_block_size parsing from DT belongs to cacheflush.c which

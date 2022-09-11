@@ -1,7 +1,7 @@
-From e1335b411ea5eada79dadb65501ff24f3f6fd7bf Mon Sep 17 00:00:00 2001
+From 049704c378e59e49b05d1181b9c3fe97de0e209b Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Fri, 9 Sep 2022 09:38:39 +0200
-Subject: [PATCH 02/16] FROMLIST: kcsan: Instrument memcpy/memset/memmove with
+Subject: [PATCH 02/14] FROMLIST: kcsan: Instrument memcpy/memset/memmove with
  newer Clang
 
 With Clang version 16+, -fsanitize=thread will turn

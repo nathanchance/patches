@@ -1,7 +1,7 @@
-From 664c0a9c9b800354dbf8207183c06ffc321f2960 Mon Sep 17 00:00:00 2001
+From 32f33b347c4c12034b3f88946782c5fdff7e9165 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmer@rivosinc.com>
 Date: Tue, 6 Sep 2022 09:45:09 +0200
-Subject: [PATCH 05/16] FROMLIST: RISC-V: Clean up the Zicbom block size
+Subject: [PATCH 05/14] FROMLIST: RISC-V: Clean up the Zicbom block size
  probing
 
 This fixes two issues: I truncated the warning's hart ID when porting to
