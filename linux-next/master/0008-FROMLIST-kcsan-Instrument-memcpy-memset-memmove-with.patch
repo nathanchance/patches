@@ -1,7 +1,7 @@
-From 1a844553eebbeba3f97d04d78659f34af9b89e30 Mon Sep 17 00:00:00 2001
+From f8e2fcd4c160f46179c784e2974bd4df2420b36e Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
-Date: Fri, 9 Sep 2022 09:38:39 +0200
-Subject: [PATCH 09/21] FROMLIST: kcsan: Instrument memcpy/memset/memmove with
+Date: Mon, 12 Sep 2022 11:45:40 +0200
+Subject: [PATCH 08/21] FROMLIST: kcsan: Instrument memcpy/memset/memmove with
  newer Clang
 
 With Clang version 16+, -fsanitize=thread will turn
@@ -14,16 +14,21 @@ such newer compilers.
 
 Cc: stable@vger.kernel.org # v5.10+
 Signed-off-by: Marco Elver <elver@google.com>
-Link: https://lore.kernel.org/r/20220909073840.45349-2-elver@google.com
+Link: https://lore.kernel.org/r/20220912094541.929856-1-elver@google.com
 ---
- kernel/kcsan/core.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ kernel/kcsan/core.c | 50 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
-index fe12dfe254ec..4015f2a3e7f6 100644
+index fe12dfe254ec..54d077e1a2dc 100644
 --- a/kernel/kcsan/core.c
 +++ b/kernel/kcsan/core.c
-@@ -18,6 +18,7 @@
+@@ -14,10 +14,12 @@
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
++#include <linux/minmax.h>
+ #include <linux/moduleparam.h>
  #include <linux/percpu.h>
  #include <linux/preempt.h>
  #include <linux/sched.h>
@@ -31,7 +36,7 @@ index fe12dfe254ec..4015f2a3e7f6 100644
  #include <linux/uaccess.h>
  
  #include "encoding.h"
-@@ -1308,3 +1309,41 @@ noinline void __tsan_atomic_signal_fence(int memorder)
+@@ -1308,3 +1310,51 @@ noinline void __tsan_atomic_signal_fence(int memorder)
  	}
  }
  EXPORT_SYMBOL(__tsan_atomic_signal_fence);
@@ -40,8 +45,14 @@ index fe12dfe254ec..4015f2a3e7f6 100644
 +void *__tsan_memset(void *s, int c, size_t count);
 +noinline void *__tsan_memset(void *s, int c, size_t count)
 +{
-+	check_access(s, count, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	return __memset(s, c, count);
++	/*
++	 * Instead of not setting up watchpoints where accessed size is greater
++	 * than MAX_ENCODABLE_SIZE, truncate checked size to MAX_ENCODABLE_SIZE.
++	 */
++	size_t check_len = min_t(size_t, count, MAX_ENCODABLE_SIZE);
++
++	check_access(s, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
++	return memset(s, c, count);
 +}
 +#else
 +void *__tsan_memset(void *s, int c, size_t count) __alias(memset);
@@ -52,9 +63,11 @@ index fe12dfe254ec..4015f2a3e7f6 100644
 +void *__tsan_memmove(void *dst, const void *src, size_t len);
 +noinline void *__tsan_memmove(void *dst, const void *src, size_t len)
 +{
-+	check_access(dst, len, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	check_access(src, len, 0, _RET_IP_);
-+	return __memmove(dst, src, len);
++	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
++
++	check_access(dst, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
++	check_access(src, check_len, 0, _RET_IP_);
++	return memmove(dst, src, len);
 +}
 +#else
 +void *__tsan_memmove(void *dst, const void *src, size_t len) __alias(memmove);
@@ -65,9 +78,11 @@ index fe12dfe254ec..4015f2a3e7f6 100644
 +void *__tsan_memcpy(void *dst, const void *src, size_t len);
 +noinline void *__tsan_memcpy(void *dst, const void *src, size_t len)
 +{
-+	check_access(dst, len, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	check_access(src, len, 0, _RET_IP_);
-+	return __memcpy(dst, src, len);
++	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
++
++	check_access(dst, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
++	check_access(src, check_len, 0, _RET_IP_);
++	return memcpy(dst, src, len);
 +}
 +#else
 +void *__tsan_memcpy(void *dst, const void *src, size_t len) __alias(memcpy);

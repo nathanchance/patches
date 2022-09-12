@@ -1,7 +1,7 @@
-From acccf3d7fe4bb57dcbce93448fad91e5d1491f88 Mon Sep 17 00:00:00 2001
+From 2b7a908deb614083752c110662ee4bafd41fd652 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 11 Sep 2022 01:57:50 -0700
-Subject: [PATCH 11/21] SUBMITTED: net/mlx5e: Ensure macsec_rule is always
+Subject: [PATCH 10/21] SUBMITTED: net/mlx5e: Ensure macsec_rule is always
  initiailized in macsec_fs_{r,t}x_add_rule()
 
 Clang warns:

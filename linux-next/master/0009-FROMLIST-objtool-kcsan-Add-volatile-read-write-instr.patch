@@ -1,7 +1,7 @@
-From 5f209b5e826ab621f3ac25edd13f6570a36f5ac8 Mon Sep 17 00:00:00 2001
+From 2af54a8b95d68b94ff5619a0ed9755e04ce30042 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
-Date: Fri, 9 Sep 2022 09:38:40 +0200
-Subject: [PATCH 10/21] FROMLIST: objtool, kcsan: Add volatile read/write
+Date: Mon, 12 Sep 2022 11:45:41 +0200
+Subject: [PATCH 09/21] FROMLIST: objtool, kcsan: Add volatile read/write
  instrumentation to whitelist
 
 Adds KCSAN's volatile instrumentation to objtool's uaccess whitelist.
@@ -14,7 +14,7 @@ whitelist (since the first upstreamed version of KCSAN):
 Fixes: 75d75b7a4d54 ("kcsan: Support distinguishing volatile accesses")
 Signed-off-by: Marco Elver <elver@google.com>
 Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
-Link: https://lore.kernel.org/r/20220909073840.45349-3-elver@google.com
+Link: https://lore.kernel.org/r/20220912094541.929856-2-elver@google.com
 ---
  tools/objtool/check.c | 10 ++++++++++
  1 file changed, 10 insertions(+)
