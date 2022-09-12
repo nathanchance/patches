@@ -1,7 +1,7 @@
-From 82c84c251d8d22f0354f0bb3524964eaf633ba98 Mon Sep 17 00:00:00 2001
+From 2f7bf93a0edb4b96c215f84246f124de685ccf87 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Fri, 9 Sep 2022 09:38:38 +0200
-Subject: [PATCH 10/23] FROMLIST: s390: Always declare __mem functions
+Subject: [PATCH 08/21] FROMLIST: s390: Always declare __mem functions
 
 Like other architectures, always declare __mem*() functions if the
 architecture defines __HAVE_ARCH_MEM*.
