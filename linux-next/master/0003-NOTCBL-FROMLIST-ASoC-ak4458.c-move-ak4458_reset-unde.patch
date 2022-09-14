@@ -1,7 +1,7 @@
-From 78960b9180f93934cd8e8ae40daca18547c16f34 Mon Sep 17 00:00:00 2001
+From 7ebbae3f1fe05dadfc96aa2571a30c75a2c9de42 Mon Sep 17 00:00:00 2001
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 Date: Fri, 9 Sep 2022 02:54:34 +0000
-Subject: [PATCH 04/21] NOTCBL: FROMLIST: ASoC: ak4458.c: move ak4458_reset()
+Subject: [PATCH 03/17] NOTCBL: FROMLIST: ASoC: ak4458.c: move ak4458_reset()
  under CONFIG_PM
 
 This patch fixup this warning
@@ -21,7 +21,7 @@ Link: https://lore.kernel.org/r/871qslmf4m.wl-kuninori.morimoto.gx@renesas.com
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
-index 339cf7bb7b36..09b54289e313 100644
+index 1db73552c746..a5b2a0a1b87a 100644
 --- a/sound/soc/codecs/ak4458.c
 +++ b/sound/soc/codecs/ak4458.c
 @@ -628,6 +628,7 @@ static struct snd_soc_dai_driver ak4497_dai = {
