@@ -1,7 +1,7 @@
 From 8ad2dc3c2c17dff58cee7402e9fb83e85db597cd Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 25 Mar 2020 12:50:41 +0000
-Subject: [PATCH 23/31] UPSTREAM: usb: cdns3: make signed 1 bit bitfields
+Subject: [PATCH 23/30] UPSTREAM: usb: cdns3: make signed 1 bit bitfields
  unsigned
 
 The signed 1 bit bitfields should be unsigned, so make them unsigned.
