@@ -1,7 +1,7 @@
-From 32f33b347c4c12034b3f88946782c5fdff7e9165 Mon Sep 17 00:00:00 2001
+From 558f9dd6f789b64177800eba14d1bb5f77a7dd24 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmer@rivosinc.com>
-Date: Tue, 6 Sep 2022 09:45:09 +0200
-Subject: [PATCH 05/14] FROMLIST: RISC-V: Clean up the Zicbom block size
+Date: Mon, 12 Sep 2022 23:48:01 +0100
+Subject: [PATCH 03/10] FROMLIST: RISC-V: Clean up the Zicbom block size
  probing
 
 This fixes two issues: I truncated the warning's hart ID when porting to
@@ -15,25 +15,26 @@ just silently produce the wrong answer on some systems.  This also
 changes the probing order so the cache block size is known before
 enabling Zicbom support.
 
-[Rebased on Anup's move patch and applied Conor Dooley's and Heiko
- Stuebner's changes.]
-
+CC: stable@vger.kernel.org
+CC: Andrew Jones <ajones@ventanamicro.com>
+CC: Heiko Stuebner <heiko@sntech.de>
+CC: Atish Patra <atishp@rivosinc.com>
 Fixes: 3aefb2ee5bdd ("riscv: implement Zicbom-based CMO instructions + the t-head variant")
 Fixes: 1631ba1259d6 ("riscv: Add support for non-coherent devices using zicbom extension")
 Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Build-tested-by: Nathan Chancellor <nathan@kernel.org>
+[Conor: fixed the redefinition errors]
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Tested-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20220906074509.928865-3-ajones@ventanamicro.com
+Link: https://lore.kernel.org/r/20220912224800.998121-1-mail@conchuod.ie
 ---
- arch/riscv/errata/thead/errata.c |  1 +
- arch/riscv/kernel/setup.c        |  2 +-
- arch/riscv/mm/cacheflush.c       | 21 +++++++++++----------
- arch/riscv/mm/dma-noncoherent.c  |  2 ++
- 4 files changed, 15 insertions(+), 11 deletions(-)
+ arch/riscv/errata/thead/errata.c    |  1 +
+ arch/riscv/include/asm/cacheflush.h |  1 +
+ arch/riscv/kernel/setup.c           |  2 +-
+ arch/riscv/mm/dma-noncoherent.c     | 23 +++++++++++++----------
+ 4 files changed, 16 insertions(+), 11 deletions(-)
 
 diff --git a/arch/riscv/errata/thead/errata.c b/arch/riscv/errata/thead/errata.c
 index 202c83f677b2..96648c176f37 100644
@@ -47,6 +48,18 @@ index 202c83f677b2..96648c176f37 100644
  	riscv_noncoherent_supported();
  	return true;
  #else
+diff --git a/arch/riscv/include/asm/cacheflush.h b/arch/riscv/include/asm/cacheflush.h
+index a60acaecfeda..a89c005b4bbf 100644
+--- a/arch/riscv/include/asm/cacheflush.h
++++ b/arch/riscv/include/asm/cacheflush.h
+@@ -43,6 +43,7 @@ void flush_icache_mm(struct mm_struct *mm, bool local);
+ #endif /* CONFIG_SMP */
+ 
+ #ifdef CONFIG_RISCV_ISA_ZICBOM
++extern unsigned int riscv_cbom_block_size;
+ void riscv_init_cbom_blocksize(void);
+ #else
+ static inline void riscv_init_cbom_blocksize(void) { }
 diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
 index 95ef6e2bf45c..2dfc463b86bb 100644
 --- a/arch/riscv/kernel/setup.c
@@ -61,18 +74,20 @@ index 95ef6e2bf45c..2dfc463b86bb 100644
  	apply_boot_alternatives();
  }
  
-diff --git a/arch/riscv/mm/cacheflush.c b/arch/riscv/mm/cacheflush.c
-index 336c5deea870..e5b087be1577 100644
---- a/arch/riscv/mm/cacheflush.c
-+++ b/arch/riscv/mm/cacheflush.c
-@@ -89,39 +89,40 @@ void flush_icache_pte(pte_t pte)
- }
- #endif /* CONFIG_MMU */
+diff --git a/arch/riscv/mm/dma-noncoherent.c b/arch/riscv/mm/dma-noncoherent.c
+index cd2225304c82..e3f9bdf47c5f 100644
+--- a/arch/riscv/mm/dma-noncoherent.c
++++ b/arch/riscv/mm/dma-noncoherent.c
+@@ -12,7 +12,7 @@
+ #include <linux/of_device.h>
+ #include <asm/cacheflush.h>
  
--unsigned int riscv_cbom_block_size = L1_CACHE_BYTES;
+-static unsigned int riscv_cbom_block_size = L1_CACHE_BYTES;
 +unsigned int riscv_cbom_block_size;
+ static bool noncoherent_supported;
  
- #ifdef CONFIG_RISCV_ISA_ZICBOM
+ void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
+@@ -79,38 +79,41 @@ void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
  void riscv_init_cbom_blocksize(void)
  {
  	struct device_node *node;
@@ -116,11 +131,6 @@ index 336c5deea870..e5b087be1577 100644
 +		riscv_cbom_block_size = probed_block_size;
  }
  #endif
-diff --git a/arch/riscv/mm/dma-noncoherent.c b/arch/riscv/mm/dma-noncoherent.c
-index 3f502a1a68b1..d919efab6eba 100644
---- a/arch/riscv/mm/dma-noncoherent.c
-+++ b/arch/riscv/mm/dma-noncoherent.c
-@@ -74,5 +74,7 @@ void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
  
  void riscv_noncoherent_supported(void)
  {
