@@ -1,7 +1,7 @@
 From 2e0c6ce1afba3bb3c547d74a1d3f0dcabe21984a Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 25 Mar 2020 13:29:13 +0000
-Subject: [PATCH 24/30] UPSTREAM: ASoC: mchp-i2s-mcc: make signed 1 bit
+Subject: [PATCH 24/29] UPSTREAM: ASoC: mchp-i2s-mcc: make signed 1 bit
  bitfields unsigned
 
 The signed 1 bit bitfields should be unsigned, so make them unsigned.
