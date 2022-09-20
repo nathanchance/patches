@@ -1,0 +1,83 @@
+From 2db96ee7f1c2866b011ee4f988f7335aa1504b4d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 19 Sep 2022 09:09:28 -0700
+Subject: [PATCH 09/16] SUBMITTED: arm64/sysreg: Fix a few missed conversions
+
+After the conversion to automatically generating the ID_AA64DFR0_EL1
+definition names, the build fails in a few different places because some
+of the definitions were not changed to their new names along the way.
+Update the names to resolve the build errors.
+
+Fixes: c0357a73fa4a ("arm64/sysreg: Align field names in ID_AA64DFR0_EL1 with architecture")
+Link: https://lore.kernel.org/r/20220919160928.3905780-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ drivers/hwtracing/coresight/coresight-trbe.h       | 3 ++-
+ drivers/perf/arm_spe_pmu.c                         | 6 +++---
+ 3 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index d39660a3e50c..80fefaba58ee 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -966,7 +966,7 @@ static inline bool cpu_supports_sysreg_trace(void)
+ {
+ 	u64 dfr0 = read_sysreg_s(SYS_ID_AA64DFR0_EL1);
+ 
+-	return ((dfr0 >> ID_AA64DFR0_TRACEVER_SHIFT) & 0xfUL) > 0;
++	return ((dfr0 >> ID_AA64DFR0_EL1_TraceVer_SHIFT) & 0xfUL) > 0;
+ }
+ 
+ static bool etm4_init_sysreg_access(struct etmv4_drvdata *drvdata,
+@@ -1054,7 +1054,7 @@ static void cpu_detect_trace_filtering(struct etmv4_drvdata *drvdata)
+ 	u64 trfcr;
+ 
+ 	drvdata->trfcr = 0;
+-	if (!cpuid_feature_extract_unsigned_field(dfr0, ID_AA64DFR0_TRACE_FILT_SHIFT))
++	if (!cpuid_feature_extract_unsigned_field(dfr0, ID_AA64DFR0_EL1_TraceFilt_SHIFT))
+ 		return;
+ 
+ 	/*
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.h b/drivers/hwtracing/coresight/coresight-trbe.h
+index 30e4d7db4f8e..98ff1b17ad07 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.h
++++ b/drivers/hwtracing/coresight/coresight-trbe.h
+@@ -20,7 +20,8 @@
+ static inline bool is_trbe_available(void)
+ {
+ 	u64 aa64dfr0 = read_sysreg_s(SYS_ID_AA64DFR0_EL1);
+-	unsigned int trbe = cpuid_feature_extract_unsigned_field(aa64dfr0, ID_AA64DFR0_TRBE_SHIFT);
++	unsigned int trbe = cpuid_feature_extract_unsigned_field(aa64dfr0,
++								 ID_AA64DFR0_EL1_TraceBuffer_SHIFT);
+ 
+ 	return trbe >= 0b0001;
+ }
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index db8a0a841062..00e3a637f7b6 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -676,9 +676,9 @@ static irqreturn_t arm_spe_pmu_irq_handler(int irq, void *dev)
+ static u64 arm_spe_pmsevfr_res0(u16 pmsver)
+ {
+ 	switch (pmsver) {
+-	case ID_AA64DFR0_PMSVER_8_2:
++	case ID_AA64DFR0_EL1_PMSVer_IMP:
+ 		return SYS_PMSEVFR_EL1_RES0_8_2;
+-	case ID_AA64DFR0_PMSVER_8_3:
++	case ID_AA64DFR0_EL1_PMSVer_V1P1:
+ 	/* Return the highest version we support in default */
+ 	default:
+ 		return SYS_PMSEVFR_EL1_RES0_8_3;
+@@ -960,7 +960,7 @@ static void __arm_spe_pmu_dev_probe(void *info)
+ 	struct device *dev = &spe_pmu->pdev->dev;
+ 
+ 	fld = cpuid_feature_extract_unsigned_field(read_cpuid(ID_AA64DFR0_EL1),
+-						   ID_AA64DFR0_PMSVER_SHIFT);
++						   ID_AA64DFR0_EL1_PMSVer_SHIFT);
+ 	if (!fld) {
+ 		dev_err(dev,
+ 			"unsupported ID_AA64DFR0_EL1.PMSVer [%d] on CPU %d\n",
+-- 
+2.37.3
+

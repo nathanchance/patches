@@ -1,7 +1,7 @@
-From 35ee9eac8e784a590f8d5d16fbd2dd6a76004b06 Mon Sep 17 00:00:00 2001
+From 8e7f8ef5590eb11d418d0cbf952f4a3f4e1734f3 Mon Sep 17 00:00:00 2001
 From: Arun Easi <aeasi@marvell.com>
 Date: Wed, 7 Sep 2022 11:57:45 -0700
-Subject: [PATCH 01/13] NOTCBL: FROMLIST: tracing: Fix compile error in
+Subject: [PATCH 01/16] NOTCBL: FROMLIST: tracing: Fix compile error in
  trace_array calls when TRACING is disabled
 
 Fix this compilation error seen when CONFIG_TRACING is not enabled:
@@ -91,7 +91,7 @@ index bf169612ffe1..71389906a063 100644
  
  #endif	/* _LINUX_TRACE_H */
 
-base-commit: d5538ab91d3a9a237805be6f8c6c272af2987995
+base-commit: ef08d387bbbc20df740ced8caee0ffac835869ac
 -- 
 2.37.3
 

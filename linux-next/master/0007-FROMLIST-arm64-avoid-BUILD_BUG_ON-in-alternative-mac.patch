@@ -1,0 +1,80 @@
+From 9b62772eee1607bf222eb9351be859a6239bd44f Mon Sep 17 00:00:00 2001
+From: Mark Rutland <mark.rutland@arm.com>
+Date: Tue, 20 Sep 2022 15:00:44 +0100
+Subject: [PATCH 07/16] FROMLIST: arm64: avoid BUILD_BUG_ON() in
+ alternative-macros
+
+Nathan reports that the build fails when using clang and LTO:
+
+|  In file included from kernel/bounds.c:10:
+|  In file included from ./include/linux/page-flags.h:10:
+|  In file included from ./include/linux/bug.h:5:
+|  In file included from ./arch/arm64/include/asm/bug.h:26:
+|  In file included from ./include/asm-generic/bug.h:5:
+|  In file included from ./include/linux/compiler.h:248:
+|  In file included from ./arch/arm64/include/asm/rwonce.h:11:
+|  ./arch/arm64/include/asm/alternative-macros.h:224:2: error: call to undeclared function 'BUILD_BUG_ON'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+|          BUILD_BUG_ON(feature >= ARM64_NCAPS);
+|          ^
+|  ./arch/arm64/include/asm/alternative-macros.h:241:2: error: call to undeclared function 'BUILD_BUG_ON'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+|          BUILD_BUG_ON(feature >= ARM64_NCAPS);
+|          ^
+|  2 errors generated.
+
+... the problem being that when LTO is enabled, <asm/rwonce.h> includes
+<asm/alternative-macros.h>, and causes a circular include dependency
+through <linux/bug.h>. This manifests as BUILD_BUG_ON() not being
+defined when used within <asm/alternative-macros.h>.
+
+This patch avoids the problem and simplifies the include dependencies by
+using compiletime_assert() instead of BUILD_BUG_ON().
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: 21fb26bfb01ffe0d ("arm64: alternatives: add alternative_has_feature_*()")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: http://lore.kernel.org/r/YyigTrxhE3IRPzjs@dev-arch.thelio-3990X
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20220920140044.1709073-1-mark.rutland@arm.com
+---
+ arch/arm64/include/asm/alternative-macros.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/include/asm/alternative-macros.h b/arch/arm64/include/asm/alternative-macros.h
+index 4a2a98d6d222..966767debaa3 100644
+--- a/arch/arm64/include/asm/alternative-macros.h
++++ b/arch/arm64/include/asm/alternative-macros.h
+@@ -215,13 +215,13 @@ alternative_endif
+ 
+ #ifndef __ASSEMBLY__
+ 
+-#include <linux/bug.h>
+ #include <linux/types.h>
+ 
+ static __always_inline bool
+ alternative_has_feature_likely(unsigned long feature)
+ {
+-	BUILD_BUG_ON(feature >= ARM64_NCAPS);
++	compiletime_assert(feature < ARM64_NCAPS,
++			   "feature must be < ARM64_NCAPS");
+ 
+ 	asm_volatile_goto(
+ 	ALTERNATIVE_CB("b	%l[l_no]", %[feature], alt_cb_patch_nops)
+@@ -238,7 +238,8 @@ alternative_has_feature_likely(unsigned long feature)
+ static __always_inline bool
+ alternative_has_feature_unlikely(unsigned long feature)
+ {
+-	BUILD_BUG_ON(feature >= ARM64_NCAPS);
++	compiletime_assert(feature < ARM64_NCAPS,
++			   "feature must be < ARM64_NCAPS");
+ 
+ 	asm_volatile_goto(
+ 	ALTERNATIVE("nop", "b	%l[l_yes]", %[feature])
+-- 
+2.37.3
+
