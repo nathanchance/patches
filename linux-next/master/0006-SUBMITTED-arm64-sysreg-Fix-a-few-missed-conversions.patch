@@ -1,7 +1,7 @@
-From 2db96ee7f1c2866b011ee4f988f7335aa1504b4d Mon Sep 17 00:00:00 2001
+From b91c92cd0c4018f2635673f2fab61bde2f255943 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 19 Sep 2022 09:09:28 -0700
-Subject: [PATCH 09/16] SUBMITTED: arm64/sysreg: Fix a few missed conversions
+Subject: [PATCH 06/13] SUBMITTED: arm64/sysreg: Fix a few missed conversions
 
 After the conversion to automatically generating the ID_AA64DFR0_EL1
 definition names, the build fails in a few different places because some

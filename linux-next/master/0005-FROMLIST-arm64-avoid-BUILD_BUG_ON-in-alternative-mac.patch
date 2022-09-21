@@ -1,7 +1,7 @@
-From 9b62772eee1607bf222eb9351be859a6239bd44f Mon Sep 17 00:00:00 2001
+From 4ed4c6dec7a7476b43e710b64f6315c249e6ec69 Mon Sep 17 00:00:00 2001
 From: Mark Rutland <mark.rutland@arm.com>
 Date: Tue, 20 Sep 2022 15:00:44 +0100
-Subject: [PATCH 07/16] FROMLIST: arm64: avoid BUILD_BUG_ON() in
+Subject: [PATCH 05/13] FROMLIST: arm64: avoid BUILD_BUG_ON() in
  alternative-macros
 
 Nathan reports that the build fails when using clang and LTO:
