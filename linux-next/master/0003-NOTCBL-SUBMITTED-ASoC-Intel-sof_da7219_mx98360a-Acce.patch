@@ -1,0 +1,40 @@
+From bbc9b61d9c8c29f7b6cf407d2c3a32f636ebd2ae Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Sep 2022 08:37:52 -0700
+Subject: [PATCH 03/10] NOTCBL: SUBMITTED: ASoC: Intel: sof_da7219_mx98360a:
+ Access num_codecs through dai_link
+
+After commit 3989ade2d1e7 ("ASoC: soc.h: remove num_cpus/codecs"), the
+following build error occurs:
+
+  sound/soc/intel/boards/sof_da7219_max98373.c:198:27: error: no member named 'num_codecs' in 'struct snd_soc_pcm_runtime'
+          for (j = 0; j < runtime->num_codecs; j++) {
+                          ~~~~~~~  ^
+  1 error generated.
+
+This conversion was missed by the aforementioned change. Do it now to
+fix the build error.
+
+Fixes: 3989ade2d1e7 ("ASoC: soc.h: remove num_cpus/codecs")
+Link: https://lore.kernel.org/r/20220922153752.336193-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/intel/boards/sof_da7219_max98373.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/intel/boards/sof_da7219_max98373.c b/sound/soc/intel/boards/sof_da7219_max98373.c
+index 34cf849a8344..e048e789e633 100644
+--- a/sound/soc/intel/boards/sof_da7219_max98373.c
++++ b/sound/soc/intel/boards/sof_da7219_max98373.c
+@@ -195,7 +195,7 @@ static int ssp1_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_soc_pcm_runtime *runtime = asoc_substream_to_rtd(substream);
+ 	int ret, j;
+ 
+-	for (j = 0; j < runtime->num_codecs; j++) {
++	for (j = 0; j < runtime->dai_link->num_codecs; j++) {
+ 		struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(runtime, j);
+ 
+ 		if (!strcmp(codec_dai->component->name, MAXIM_DEV0_NAME)) {
+-- 
+2.37.3
+
