@@ -1,7 +1,7 @@
-From 983865d846ea931784a70f237006000489168e6a Mon Sep 17 00:00:00 2001
+From a78685464dcda6de9fca0f8c94a4579a0c679af5 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
-Subject: [PATCH 06/15] UPSTREAM: kbuild: fix false-positive modpost warning
+Subject: [PATCH 06/18] UPSTREAM: kbuild: fix false-positive modpost warning
  when all symbols are trimmed
 
 Nathan reports that the mips defconfig emits the following warning:
