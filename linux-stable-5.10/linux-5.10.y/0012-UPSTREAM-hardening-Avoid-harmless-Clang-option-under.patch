@@ -1,7 +1,7 @@
 From 40e898846542aea82affbe5448bf7d6d51a91521 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 14 Sep 2021 12:49:03 -0700
-Subject: [PATCH 12/18] UPSTREAM: hardening: Avoid harmless Clang option under
+Subject: [PATCH 12/19] UPSTREAM: hardening: Avoid harmless Clang option under
  CONFIG_INIT_STACK_ALL_ZERO
 
 Currently under Clang, CC_HAS_AUTO_VAR_INIT_ZERO requires an extra
@@ -76,5 +76,5 @@ index 45c688488172..81368ce57d67 100644
  	help
  	  This option enables initialization of stack variables at
 -- 
-2.37.3
+2.38.0
 
