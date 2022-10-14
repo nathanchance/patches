@@ -1,7 +1,7 @@
 From 0d2d8d0b3b815844531d75c1f57d911df96a0b7f Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 10/29] UPSTREAM: powerpc: fix function annotations to avoid
+Subject: [PATCH 10/30] UPSTREAM: powerpc: fix function annotations to avoid
  section mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10
@@ -92,5 +92,5 @@ index b21d71badaec..0b4359a5af75 100644
  	const u8 *vec5_xive;
  
 -- 
-2.37.3
+2.38.0
 

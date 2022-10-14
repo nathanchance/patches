@@ -1,7 +1,7 @@
 From 43ec2f1f3aedcc31a32f1f460c515d4309383f50 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
-Subject: [PATCH 09/29] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
+Subject: [PATCH 09/30] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
  .gnu.hash
 
 Relocatable kernel builds produce a warning about .gnu.hash being an
@@ -42,5 +42,5 @@ index 3ea360cad337..515abfa4ac55 100644
  	.rela.dyn : AT(ADDR(.rela.dyn) - LOAD_OFFSET)
  	{
 -- 
-2.37.3
+2.38.0
 
