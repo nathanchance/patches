@@ -1,7 +1,7 @@
-From 27e5dd6852150298ff4e6a687e186b6aabc264c3 Mon Sep 17 00:00:00 2001
+From 71fc2da4c89844bfe2b630854d0085eec261429c Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
-Date: Thu, 29 Sep 2022 23:06:24 -0700
-Subject: [PATCH 04/11] FROMLIST: hardening: Remove Clang's enable flag for
+Date: Thu, 29 Sep 2022 22:57:43 -0700
+Subject: [PATCH 04/12] UPSTREAM: hardening: Remove Clang's enable flag for
  -ftrivial-auto-var-init=zero
 
 Now that Clang's -enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang
@@ -18,7 +18,8 @@ Cc: llvm@lists.linux.dev
 Cc: stable@vger.kernel.org
 Fixes: f02003c860d9 ("hardening: Avoid harmless Clang option under CONFIG_INIT_STACK_ALL_ZERO")
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20220930060624.2411883-1-keescook@chromium.org
+Link: https://git.kernel.org/linus/607e57c6c62c00965ae276902c166834ce73014a
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  Makefile                   |  4 ++--
  security/Kconfig.hardening | 14 ++++++++++----
@@ -66,5 +67,5 @@ index ded17b8abce2..942ed8de36d3 100644
  choice
  	prompt "Initialize kernel stack variables at function entry"
 -- 
-2.37.3
+2.38.0
 
