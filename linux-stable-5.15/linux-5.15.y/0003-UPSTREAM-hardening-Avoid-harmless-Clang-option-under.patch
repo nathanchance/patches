@@ -1,4 +1,4 @@
-From 53000afb2cc8667ae855cddc98699c9d3d1cdfbc Mon Sep 17 00:00:00 2001
+From 0ac6481c0c0f4b92f068aeb5c692a2d122d4a9ed Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 14 Sep 2021 12:49:03 -0700
 Subject: [PATCH 03/12] UPSTREAM: hardening: Avoid harmless Clang option under
@@ -34,7 +34,7 @@ Link: https://git.kernel.org/linus/f02003c860d921171be4a27e2893766eb3bc6871
  2 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index fc47032dabb8..0a4d703b7c9c 100644
+index 86b6ca862e39..83ed146a73ce 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -844,12 +844,12 @@ endif
