@@ -1,4 +1,4 @@
-From dc1b51eb51729dcf0eddec25298d9acc398a1105 Mon Sep 17 00:00:00 2001
+From 7ef9cc3dcbbc6b20c89ea559b41bdb5340ebdc38 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Thu, 29 Sep 2022 22:57:43 -0700
 Subject: [PATCH 13/19] UPSTREAM: hardening: Remove Clang's enable flag for
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6d45e8afb16d..93dc8bc19d29 100644
+index 2987743c3683..9af033418e9a 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -816,8 +816,8 @@ endif
