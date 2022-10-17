@@ -1,7 +1,7 @@
-From c6c3f5430690a22be09c39529a71150a8c3b62f3 Mon Sep 17 00:00:00 2001
+From 9ed7955fa1f8cf4141490c1afb405cd8e6694e4e Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
-Subject: [PATCH 05/19] UPSTREAM: kbuild: do not set -w for vmlinux.o modpost
+Subject: [PATCH 05/24] UPSTREAM: kbuild: do not set -w for vmlinux.o modpost
 
 The -w option is meaningless for the first pass of modpost (vmlinux.o).
 

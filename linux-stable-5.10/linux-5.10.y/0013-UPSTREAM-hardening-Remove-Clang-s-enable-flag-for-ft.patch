@@ -1,7 +1,7 @@
-From 7ef9cc3dcbbc6b20c89ea559b41bdb5340ebdc38 Mon Sep 17 00:00:00 2001
+From 01e531caf6fe0c1c6facae9e7059aaed627ada2a Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Thu, 29 Sep 2022 22:57:43 -0700
-Subject: [PATCH 13/19] UPSTREAM: hardening: Remove Clang's enable flag for
+Subject: [PATCH 13/24] UPSTREAM: hardening: Remove Clang's enable flag for
  -ftrivial-auto-var-init=zero
 
 Now that Clang's -enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 2987743c3683..9af033418e9a 100644
+index af9b36042dc0..eb742831a1a9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -816,8 +816,8 @@ endif

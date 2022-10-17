@@ -1,7 +1,7 @@
-From cb03da3ce5a492ef4b2b808d264d63acf0f8f8a0 Mon Sep 17 00:00:00 2001
+From f8a8b0cb2e7589722e8d964e285f230ff5876dab Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 10 Oct 2022 15:53:42 -0700
-Subject: [PATCH 14/19] FROMLIST: ARM: NWFPE: avoid compiler-generated
+Subject: [PATCH 14/24] FROMLIST: ARM: NWFPE: avoid compiler-generated
  __aeabi_uldivmod
 
 clang-15's ability to elide loops completely became more aggressive when

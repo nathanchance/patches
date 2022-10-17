@@ -1,7 +1,7 @@
-From 6943e9fdb4ddf0c75067ae31549078b0fad08a17 Mon Sep 17 00:00:00 2001
+From 2cdaba167b43ea497446274e93639d8a4c49d8cd Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 14 Sep 2021 12:49:03 -0700
-Subject: [PATCH 12/19] UPSTREAM: hardening: Avoid harmless Clang option under
+Subject: [PATCH 12/24] UPSTREAM: hardening: Avoid harmless Clang option under
  CONFIG_INIT_STACK_ALL_ZERO
 
 Currently under Clang, CC_HAS_AUTO_VAR_INIT_ZERO requires an extra
@@ -34,7 +34,7 @@ Link: https://git.kernel.org/linus/f02003c860d921171be4a27e2893766eb3bc6871
  2 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index df70743d99cb..2987743c3683 100644
+index e9c3f35cd1c0..af9b36042dc0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -815,12 +815,12 @@ endif
