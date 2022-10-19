@@ -1,0 +1,25 @@
+From f25caab305bed48a973f8b7815efc4f800e7280d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 18 Oct 2022 11:28:20 -0700
+Subject: [PATCH 03/16] NOTCBL: WIP: pinctrl: freescale: Include seq_file.h
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pinctrl/freescale/pinctrl-imx1-core.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pinctrl/freescale/pinctrl-imx1-core.c b/drivers/pinctrl/freescale/pinctrl-imx1-core.c
+index 70186448d2f4..1fac1a761d25 100644
+--- a/drivers/pinctrl/freescale/pinctrl-imx1-core.c
++++ b/drivers/pinctrl/freescale/pinctrl-imx1-core.c
+@@ -20,6 +20,7 @@
+ #include <linux/pinctrl/pinconf.h>
+ #include <linux/pinctrl/pinctrl.h>
+ #include <linux/pinctrl/pinmux.h>
++#include <linux/seq_file.h>
+ #include <linux/slab.h>
+ 
+ #include "../core.h"
+-- 
+2.38.0
+

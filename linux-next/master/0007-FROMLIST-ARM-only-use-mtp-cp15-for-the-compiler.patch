@@ -1,0 +1,38 @@
+From ca21b706e427b07921221a1b25c6ceda5120d464 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 16 May 2022 14:09:53 -0700
+Subject: [PATCH 07/16] FROMLIST: ARM: only use -mtp=cp15 for the compiler
+
+Avoids an error from the assembler for CONFIG_THUMB2 kernels:
+
+clang-15: error: hardware TLS register is not supported for the thumbv4t
+sub-architecture
+
+This flag only makes sense to pass to the compiler, not the assembler.
+
+Perhaps CFLAGS_ABI can be renamed to CPPFLAGS_ABI to reflect that they
+will be passed to both the compiler and assembler for sources that
+require pre-processing.
+
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20220516210954.1660716-4-ndesaulniers@google.com
+---
+ arch/arm/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+index 8dd943b50b7d..ee888070b2ff 100644
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -111,7 +111,7 @@ CFLAGS_ABI	+= -meabi gnu
+ endif
+ 
+ ifeq ($(CONFIG_CURRENT_POINTER_IN_TPIDRURO),y)
+-CFLAGS_ABI	+= -mtp=cp15
++KBUILD_CFLAGS	+= -mtp=cp15
+ endif
+ 
+ # Accept old syntax despite ".syntax unified"
+-- 
+2.38.0
+

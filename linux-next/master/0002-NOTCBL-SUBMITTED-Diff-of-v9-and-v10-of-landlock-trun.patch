@@ -1,0 +1,38 @@
+From 34a8d2f16b01a6b1eb03e3100131ff9b389f549f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 18 Oct 2022 11:31:03 -0700
+Subject: [PATCH 02/16] NOTCBL: SUBMITTED: Diff of v9 and v10 of 'landlock:
+ truncate support'
+
+Link: https://lore.kernel.org/Y0g+TEgGGhZDm7MX@dev-arch.thelio-3990X/
+Link: https://lore.kernel.org/20221018182216.301684-1-gnoack3000@gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ security/security.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/security/security.c b/security/security.c
+index ac4d5782307d..b90cceca5730 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -185,11 +185,12 @@ static void __init lsm_set_blob_size(int *need, int *lbs)
+ {
+ 	int offset;
+ 
+-	if (*need > 0) {
+-		offset = *lbs;
+-		*lbs += *need;
+-		*need = offset;
+-	}
++	if (*need <= 0)
++		return;
++
++	offset = ALIGN(*lbs, sizeof(void *));
++	*lbs = offset + *need;
++	*need = offset;
+ }
+ 
+ static void __init lsm_set_blob_sizes(struct lsm_blob_sizes *needed)
+-- 
+2.38.0
+
