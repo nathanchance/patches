@@ -1,7 +1,7 @@
-From 2859c54af2fe2c26dea6c7abc4a17998af3b58c5 Mon Sep 17 00:00:00 2001
+From 8217812484cf6c4b3dd759265e26e01963e3ef16 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:52 -0700
-Subject: [PATCH 06/16] FROMLIST: ARM: use .arch directives instead of
+Subject: [PATCH 04/16] FROMLIST: ARM: use .arch directives instead of
  assembler command line flags
 
 Similar to commit a6c30873ee4a ("ARM: 8989/1: use .fpu assembler
@@ -663,5 +663,5 @@ index 5f0c4a8ae9df..0d693795de27 100644
  	.align	3
  
 -- 
-2.38.0
+2.38.1
 

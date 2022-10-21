@@ -1,7 +1,7 @@
-From 64e897e9de48ccd7056d279d34a4fa4afcd10a00 Mon Sep 17 00:00:00 2001
+From aec9cc6aaab4068086ca8d20d5afd32a9b370181 Mon Sep 17 00:00:00 2001
 From: Andrew Jones <ajones@ventanamicro.com>
-Date: Thu, 13 Oct 2022 15:42:17 +0200
-Subject: [PATCH 01/16] NOTCBL: FROMLIST: RISC-V: KVM: Fix compilation without
+Date: Thu, 20 Oct 2022 13:28:43 +0530
+Subject: [PATCH 01/16] NOTCBL: FROMLIST: RISC-V: Fix compilation without
  RISCV_ISA_ZICBOM
 
 riscv_cbom_block_size and riscv_init_cbom_blocksize() should always
@@ -17,9 +17,11 @@ when compiling without RISCV_ISA_ZICBOM.
 Fixes: 8f7e001e0325 ("RISC-V: Clean up the Zicbom block size probing")
 Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
 Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20221013134217.1850349-1-ajones@ventanamicro.com
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20221020075846.305576-2-apatel@ventanamicro.com
 ---
  arch/riscv/include/asm/cacheflush.h |  8 ------
  arch/riscv/mm/cacheflush.c          | 38 ++++++++++++++++++++++++++
@@ -48,7 +50,7 @@ index 8a5c246b0a21..f6fbe7042f1c 100644
  #ifdef CONFIG_RISCV_DMA_NONCOHERENT
  void riscv_noncoherent_supported(void);
 diff --git a/arch/riscv/mm/cacheflush.c b/arch/riscv/mm/cacheflush.c
-index 6cb7d96ad9c7..8525f4a2d598 100644
+index 6cb7d96ad9c7..57b40a350420 100644
 --- a/arch/riscv/mm/cacheflush.c
 +++ b/arch/riscv/mm/cacheflush.c
 @@ -3,6 +3,7 @@
@@ -65,7 +67,7 @@ index 6cb7d96ad9c7..8525f4a2d598 100644
  #endif /* CONFIG_MMU */
 +
 +unsigned int riscv_cbom_block_size;
-+EXPORT_SYMBOL(riscv_cbom_block_size);
++EXPORT_SYMBOL_GPL(riscv_cbom_block_size);
 +
 +void riscv_init_cbom_blocksize(void)
 +{
@@ -162,7 +164,7 @@ index b0add983530a..d919efab6eba 100644
  {
  	WARN(!riscv_cbom_block_size,
 
-base-commit: a72b55bc981b62f7186600d06d1824f1d0612b27
+base-commit: 4d48f589d294ddc5e01d3b0dc7cecc55324c05ca
 -- 
-2.38.0
+2.38.1
 

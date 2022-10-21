@@ -1,7 +1,7 @@
-From 674cebcee6deacfef5fbb443e75be819d23ced8e Mon Sep 17 00:00:00 2001
+From fc21bf40e6359c20640212965d2b280cf5409114 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:51 -0700
-Subject: [PATCH 05/16] FROMLIST: ARM: remove lazy evaluation in Makefile
+Subject: [PATCH 03/16] FROMLIST: ARM: remove lazy evaluation in Makefile
 
 arch-y and tune-y used lazy evaluation since they used to contain
 cc-option checks. They don't any longer, so just eagerly evaluate these
@@ -90,5 +90,5 @@ index c846119c448f..8dd943b50b7d 100644
  ifeq ($(CONFIG_AEABI),y)
  CFLAGS_ABI	:=-mabi=aapcs-linux -mfpu=vfp
 -- 
-2.38.0
+2.38.1
 

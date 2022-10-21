@@ -1,7 +1,7 @@
-From 6156ad83e5767569c3674e5c7d5ab62ffcd9024c Mon Sep 17 00:00:00 2001
+From 17c45d4922b5038fe6e483538a2c34b9bb6a7c3f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 4 Oct 2022 07:41:45 -0700
-Subject: [PATCH 09/16] SUBMITTED: fs/ntfs3: Don't use uni1 uninitialized in
+Subject: [PATCH 08/16] SUBMITTED: fs/ntfs3: Don't use uni1 uninitialized in
  ntfs_d_compare()
 
 Clang warns:
@@ -82,5 +82,5 @@ index 315763eb05ff..5d3a6ce3f05f 100644
  
  	/*
 -- 
-2.38.0
+2.38.1
 
