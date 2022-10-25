@@ -1,7 +1,7 @@
-From 5892a5102f89f2ca268b215abd7dc0daaac0789d Mon Sep 17 00:00:00 2001
+From 71b324ec50301b3f5a12b572b55a7353fbe590e6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
-Subject: [PATCH 10/10] HACK: CURRENT: Revert "powerpc/44x: Fix build failure
+Subject: [PATCH 10/10] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
  with GCC 12 (unrecognized opcode: `wrteei')"
 
 This reverts commit 0d913358a816b35fa5b75385e80f63b9abcf1b27.
@@ -18,7 +18,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 7 insertions(+), 35 deletions(-)
 
 diff --git a/arch/powerpc/include/asm/barrier.h b/arch/powerpc/include/asm/barrier.h
-index ef2d8b15eaab..f0e687236484 100644
+index e80b2c0e9315..ae6b732ef99b 100644
 --- a/arch/powerpc/include/asm/barrier.h
 +++ b/arch/powerpc/include/asm/barrier.h
 @@ -42,8 +42,6 @@
@@ -31,10 +31,10 @@ index ef2d8b15eaab..f0e687236484 100644
  #    define SMPWMB      eieio
  #endif
 diff --git a/arch/powerpc/include/asm/nohash/pgtable.h b/arch/powerpc/include/asm/nohash/pgtable.h
-index b499da6c1a99..ac75f4ab0dba 100644
+index d9067dfc531c..da0de16e7562 100644
 --- a/arch/powerpc/include/asm/nohash/pgtable.h
 +++ b/arch/powerpc/include/asm/nohash/pgtable.h
-@@ -193,7 +193,7 @@ static inline void __set_pte_at(struct mm_struct *mm, unsigned long addr,
+@@ -173,7 +173,7 @@ static inline void __set_pte_at(struct mm_struct *mm, unsigned long addr,
  	if (IS_ENABLED(CONFIG_PPC32) && IS_ENABLED(CONFIG_PTE_64BIT) && !percpu) {
  		__asm__ __volatile__("\
  			stw%X0 %2,%0\n\
@@ -44,7 +44,7 @@ index b499da6c1a99..ac75f4ab0dba 100644
  		: "=m" (*ptep), "=m" (*((unsigned char *)ptep+4))
  		: "r" (pte) : "memory");
 diff --git a/arch/powerpc/include/asm/synch.h b/arch/powerpc/include/asm/synch.h
-index 7130176d8cb8..1d67bc8d7bc6 100644
+index b0b4c64870d7..de740dff4f65 100644
 --- a/arch/powerpc/include/asm/synch.h
 +++ b/arch/powerpc/include/asm/synch.h
 @@ -14,10 +14,7 @@ extern void do_lwsync_fixups(unsigned long value, void *fixup_start,
@@ -60,7 +60,7 @@ index 7130176d8cb8..1d67bc8d7bc6 100644
  
  static inline void isync(void)
 diff --git a/arch/powerpc/mm/nohash/tlb_low.S b/arch/powerpc/mm/nohash/tlb_low.S
-index d62b613a0d5d..dd39074de9af 100644
+index e1199608ff4d..4a0ea62aa2d5 100644
 --- a/arch/powerpc/mm/nohash/tlb_low.S
 +++ b/arch/powerpc/mm/nohash/tlb_low.S
 @@ -186,7 +186,7 @@ _GLOBAL(_tlbivax_bcast)
@@ -82,10 +82,10 @@ index d62b613a0d5d..dd39074de9af 100644
  	sync
  	wrtee	r10
 diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
-index 5185d942b455..33cd5c08312b 100644
+index 0c4eed9aea80..948dc158a3e9 100644
 --- a/arch/powerpc/platforms/Kconfig.cputype
 +++ b/arch/powerpc/platforms/Kconfig.cputype
-@@ -137,7 +137,7 @@ config GENERIC_CPU
+@@ -138,7 +138,7 @@ config GENERIC_CPU
  
  config POWERPC_CPU
  	bool "Generic 32 bits powerpc"
@@ -94,7 +94,7 @@ index 5185d942b455..33cd5c08312b 100644
  
  config CELL_CPU
  	bool "Cell Broadband Engine"
-@@ -183,18 +183,6 @@ config 405_CPU
+@@ -189,18 +189,6 @@ config 405_CPU
  	bool "40x family"
  	depends on 40x
  
@@ -113,9 +113,9 @@ index 5185d942b455..33cd5c08312b 100644
  config 860_CPU
  	bool "8xx family"
  	depends on PPC_8xx
-@@ -240,9 +228,6 @@ config TARGET_CPU
- 	default "power8" if POWER8_CPU
+@@ -247,9 +235,6 @@ config TARGET_CPU
  	default "power9" if POWER9_CPU
+ 	default "power10" if POWER10_CPU
  	default "405" if 405_CPU
 -	default "440" if 440_CPU
 -	default "464" if 464_CPU
@@ -124,7 +124,7 @@ index 5185d942b455..33cd5c08312b 100644
  	default "e300c2" if E300C2_CPU
  	default "e300c3" if E300C3_CPU
 diff --git a/arch/powerpc/sysdev/fsl_rio.c b/arch/powerpc/sysdev/fsl_rio.c
-index 4647c6074f3b..1bfc9afa8a1a 100644
+index c8f044d62fe2..272762b937ac 100644
 --- a/arch/powerpc/sysdev/fsl_rio.c
 +++ b/arch/powerpc/sysdev/fsl_rio.c
 @@ -69,10 +69,10 @@
@@ -156,5 +156,5 @@ index 4647c6074f3b..1bfc9afa8a1a 100644
  void __iomem *rmu_regs_win;
  resource_size_t rio_law_start;
 -- 
-2.37.3
+2.38.1
 

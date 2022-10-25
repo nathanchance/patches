@@ -1,4 +1,4 @@
-From 51083f9766318aa00c4c1edadde0d97b12733db2 Mon Sep 17 00:00:00 2001
+From 7d0a1ec75c3e0d82b0a064a2fb6b1d258ae7fa7c Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 06/10] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -253,5 +253,5 @@ index ce39ce9f3526..2952fcaaf67e 100644
  }
  EXPORT_SYMBOL(pci_iounmap);
 -- 
-2.37.3
+2.38.1
 

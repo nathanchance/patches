@@ -1,7 +1,7 @@
-From d71512741130dab85a559e20e32575331511c16c Mon Sep 17 00:00:00 2001
+From a3a2795cd915d1fc34397351ba175937a08dea94 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:40 +0200
-Subject: [PATCH 01/10] FROMLIST: kcsan: Instrument memcpy/memset/memmove with
+Subject: [PATCH 01/10] FROMGIT: kcsan: Instrument memcpy/memset/memmove with
  newer Clang
 
 With Clang version 16+, -fsanitize=thread will turn
@@ -14,7 +14,9 @@ such newer compilers.
 
 Cc: stable@vger.kernel.org # v5.10+
 Signed-off-by: Marco Elver <elver@google.com>
-Link: https://lore.kernel.org/r/20220912094541.929856-1-elver@google.com
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+(cherry picked from commit 0623793705947106ebd76a7ec1f93c6c33e80fdb)
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  kernel/kcsan/core.c | 50 +++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 50 insertions(+)
@@ -89,7 +91,7 @@ index fe12dfe254ec..54d077e1a2dc 100644
 +#endif
 +EXPORT_SYMBOL(__tsan_memcpy);
 
-base-commit: 3245cb65fd91cd514801bf91f5a3066d562f0ac4
+base-commit: 4dc12f37a8e98e1dca5521c14625c869537b50b6
 -- 
-2.37.3
+2.38.1
 
