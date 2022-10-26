@@ -1,7 +1,7 @@
-From 6678b1440c3f07a15352fbf15059eaeeacf7a761 Mon Sep 17 00:00:00 2001
+From 073422e6a42c6a9f4725661c8799bc852cfcb5d0 Mon Sep 17 00:00:00 2001
 From: Jiri Olsa <jolsa@redhat.com>
 Date: Sun, 4 Sep 2022 15:19:00 +0200
-Subject: [PATCH 23/24] kbuild: Unify options for BTF generation for vmlinux
+Subject: [PATCH 20/21] kbuild: Unify options for BTF generation for vmlinux
  and modules
 
 commit 9741e07ece7c247dd65e1aa01e16b683f01c05a8 upstream.
@@ -28,7 +28,7 @@ Link: https://lore.kernel.org/bpf/20211029125729.70002-1-jolsa@kernel.org
  create mode 100755 scripts/pahole-flags.sh
 
 diff --git a/Makefile b/Makefile
-index eb742831a1a9..8408060087d3 100644
+index dd205a248189..87f6c382b71e 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -465,6 +465,8 @@ LZ4		= lz4c
@@ -99,5 +99,5 @@ index 000000000000..27445cb72974
 +
 +echo ${extra_paholeopt}
 -- 
-2.38.0
+2.38.1
 

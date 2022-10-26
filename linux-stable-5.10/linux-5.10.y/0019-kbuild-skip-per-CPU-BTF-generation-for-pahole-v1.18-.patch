@@ -1,7 +1,7 @@
-From ae3f2f4c0715627b19f5fb314119f172bc9d354f Mon Sep 17 00:00:00 2001
+From 9f1901e48d9ad798a92880faeccdc961aad48048 Mon Sep 17 00:00:00 2001
 From: Andrii Nakryiko <andrii@kernel.org>
 Date: Mon, 28 Jun 2021 19:41:34 -0700
-Subject: [PATCH 22/24] kbuild: skip per-CPU BTF generation for pahole
+Subject: [PATCH 19/21] kbuild: skip per-CPU BTF generation for pahole
  v1.18-v1.21
 
 commit a0b8200d06ad6450c179407baa5f0f52f8cfcc97 upstream.
@@ -50,5 +50,5 @@ index 72bf14df6903..bbb22be4c8f1 100755
  	LLVM_OBJCOPY="${OBJCOPY}" ${PAHOLE} -J ${extra_paholeopt} ${1}
  
 -- 
-2.38.0
+2.38.1
 

@@ -1,7 +1,7 @@
-From 24d0be352ff3ff335b3f1df2f5d434101f6d7a51 Mon Sep 17 00:00:00 2001
+From f1c0c7a3c4f04ab6c31cd0558b2ba9536b27618d Mon Sep 17 00:00:00 2001
 From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Date: Sun, 4 Sep 2022 15:19:01 +0200
-Subject: [PATCH 24/24] kbuild: Add skip_encoding_btf_enum64 option to pahole
+Subject: [PATCH 21/21] kbuild: Add skip_encoding_btf_enum64 option to pahole
 
 New pahole (version 1.24) generates by default new BTF_KIND_ENUM64 BTF tag,
 which is not supported by stable kernel.
@@ -40,5 +40,5 @@ index 27445cb72974..8c82173e42e5 100755
 +
  echo ${extra_paholeopt}
 -- 
-2.38.0
+2.38.1
 
