@@ -1,7 +1,7 @@
-From 4dbc64d769667b0430064202c89137f3b4e9df6f Mon Sep 17 00:00:00 2001
+From d9206fff24d727cd17dc1f4fc2c562d9c98e92a4 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
 Date: Mon, 10 May 2021 16:52:33 +0200
-Subject: [PATCH 3/8] REJECTED: risc-v: Use generic io.h helpers for nommu
+Subject: [PATCH 3/7] REJECTED: risc-v: Use generic io.h helpers for nommu
 
 Without MMU support PCI_IOBASE is left undefined because PCI_IO_END is
 VMEMMAP_START. Nevertheless the in*()/out*() helper macros are left
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/arch/riscv/include/asm/io.h b/arch/riscv/include/asm/io.h
-index 69605a474270..94203bd69219 100644
+index 92080a227937..78ee12942f58 100644
 --- a/arch/riscv/include/asm/io.h
 +++ b/arch/riscv/include/asm/io.h
 @@ -23,12 +23,12 @@
@@ -46,12 +46,12 @@ index 69605a474270..94203bd69219 100644
   * Emulation routines for the port-mapped IO space used by some PCI drivers.
 @@ -132,6 +132,7 @@ __io_writes_outs(writes, u64, q, __io_bw(), __io_aw())
  __io_writes_outs(outs, u64, q, __io_pbr(), __io_paw())
- #define outsq(addr, buffer, count) __outsq((void __iomem *)addr, buffer, count)
+ #define outsq(addr, buffer, count) __outsq(PCI_IOBASE + (addr), buffer, count)
  #endif
 +#endif /* CONFIG_MMU */
  
  #include <asm-generic/io.h>
  
 -- 
-2.38.0
+2.38.1
 

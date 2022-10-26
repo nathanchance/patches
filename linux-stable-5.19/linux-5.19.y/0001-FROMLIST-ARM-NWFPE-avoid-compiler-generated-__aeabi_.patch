@@ -1,7 +1,7 @@
-From 61918753119b81bab2430083cf261007e35f5707 Mon Sep 17 00:00:00 2001
+From e1bd6cfb6efcb5ed8b96453724e1f08850f11909 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 10 Oct 2022 15:53:42 -0700
-Subject: [PATCH 1/8] FROMLIST: ARM: NWFPE: avoid compiler-generated
+Subject: [PATCH 1/7] FROMLIST: ARM: NWFPE: avoid compiler-generated
  __aeabi_uldivmod
 
 clang-15's ability to elide loops completely became more aggressive when
@@ -55,7 +55,7 @@ index 303400fa2cdf..2aec85ab1e8b 100644
 +CFLAGS_softfloat.o	+= -mllvm -replexitval=never
 +endif
 
-base-commit: d235c2b1f470f012bda26844aabf26321b1c446a
+base-commit: 2b525314c7b57eac29fe8b77a6589428e4a4f6dd
 -- 
-2.38.0
+2.38.1
 
