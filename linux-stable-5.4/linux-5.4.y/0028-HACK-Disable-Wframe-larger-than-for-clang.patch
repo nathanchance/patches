@@ -1,4 +1,4 @@
-From ef654c4c08a80a5e8f6bb99fdd937ac571a5c295 Mon Sep 17 00:00:00 2001
+From f47622f5cb55b15c6b536f3e10b9350e74b40a12 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:41:55 -0700
 Subject: [PATCH 28/30] HACK: Disable -Wframe-larger-than= for clang
@@ -28,5 +28,5 @@ index dd7044aa1a12..5872c7db1b90 100644
  	default 1280 if (!64BIT && PARISC)
  	default 1024 if (!64BIT && !PARISC)
 -- 
-2.38.0
+2.38.1
 

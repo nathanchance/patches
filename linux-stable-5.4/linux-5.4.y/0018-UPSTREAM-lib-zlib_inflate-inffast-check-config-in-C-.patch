@@ -1,4 +1,4 @@
-From 42b81f7351089af9bd0e93e940aa7e14815159af Mon Sep 17 00:00:00 2001
+From 6bbd6235ed94786fd55a72986c0d152745e10585 Mon Sep 17 00:00:00 2001
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Date: Fri, 24 Sep 2021 15:43:44 -0700
 Subject: [PATCH 18/30] UPSTREAM: lib/zlib_inflate/inffast: check config in C
@@ -58,5 +58,5 @@ index ed1f3df27260..8f6b90deacca 100644
  			from = (unsigned char *)sfrom;
  		    } else { /* dist == 1 or dist == 2 */
 -- 
-2.38.0
+2.38.1
 

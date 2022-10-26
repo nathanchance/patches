@@ -1,4 +1,4 @@
-From c26b76bbb7969d65bbbf2f5710b67438b8dc1f97 Mon Sep 17 00:00:00 2001
+From 0510ce40ca0e7ec787d9f2f2a47dcc66ddce715f Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Wed, 25 Mar 2020 13:29:13 +0000
 Subject: [PATCH 24/30] UPSTREAM: ASoC: mchp-i2s-mcc: make signed 1 bit
@@ -36,5 +36,5 @@ index befc2a3a05b0..3cb63886195f 100644
  
  static irqreturn_t mchp_i2s_mcc_interrupt(int irq, void *dev_id)
 -- 
-2.38.0
+2.38.1
 

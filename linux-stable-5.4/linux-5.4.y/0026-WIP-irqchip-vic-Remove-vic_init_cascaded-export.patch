@@ -1,4 +1,4 @@
-From 93d1bbe3963fd339146829991851611d6e74bd19 Mon Sep 17 00:00:00 2001
+From f4c4ffc9f8af9c3f095d355abb3029af3a27373c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 30 Jun 2022 08:48:48 -0700
 Subject: [PATCH 26/30] WIP: irqchip/vic: Remove vic_init_cascaded() export
@@ -26,5 +26,5 @@ index f3f20a3cff50..3188d5498791 100644
  #ifdef CONFIG_OF
  static int __init vic_of_init(struct device_node *node,
 -- 
-2.38.0
+2.38.1
 

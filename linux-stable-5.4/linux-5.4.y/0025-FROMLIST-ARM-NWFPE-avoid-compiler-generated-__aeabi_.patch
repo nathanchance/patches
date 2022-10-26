@@ -1,4 +1,4 @@
-From a2dbde9e00df25dd20d209ef64266fe126345cd5 Mon Sep 17 00:00:00 2001
+From 49eb622b7b19e6da72dcde8b9e9b198f739c9f46 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 10 Oct 2022 15:53:42 -0700
 Subject: [PATCH 25/30] FROMLIST: ARM: NWFPE: avoid compiler-generated
@@ -55,5 +55,5 @@ index 303400fa2cdf..2aec85ab1e8b 100644
 +CFLAGS_softfloat.o	+= -mllvm -replexitval=never
 +endif
 -- 
-2.38.0
+2.38.1
 
