@@ -1,7 +1,7 @@
-From 42ddd7daa543c68fadd2b918df69eaf3f01cc883 Mon Sep 17 00:00:00 2001
+From 1ef1bdee9aeb6102e5b3e5c7cd70c47dadfa1aad Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
-Subject: [PATCH 12/12] HACK: fs/namei.c: -Wbitwise-instead-of-logical
+Subject: [PATCH 10/10] HACK: fs/namei.c: -Wbitwise-instead-of-logical
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
@@ -22,5 +22,5 @@ index 1fd854d4cd2c..9f3fc7b55818 100644
  	adata = prep_zero_mask(a, adata, &constants);
  	bdata = prep_zero_mask(b, bdata, &constants);
 -- 
-2.38.0
+2.38.1
 
