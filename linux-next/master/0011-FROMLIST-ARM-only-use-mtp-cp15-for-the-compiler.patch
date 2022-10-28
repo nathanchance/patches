@@ -1,7 +1,7 @@
-From 001746f1ae8c245768fe7e82e30a724b4ee9daae Mon Sep 17 00:00:00 2001
+From d29c61b035bf44dda063400b17f5038f509b2f64 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:53 -0700
-Subject: [PATCH 05/16] FROMLIST: ARM: only use -mtp=cp15 for the compiler
+Subject: [PATCH 11/22] FROMLIST: ARM: only use -mtp=cp15 for the compiler
 
 Avoids an error from the assembler for CONFIG_THUMB2 kernels:
 

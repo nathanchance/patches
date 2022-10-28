@@ -1,7 +1,7 @@
-From fc21bf40e6359c20640212965d2b280cf5409114 Mon Sep 17 00:00:00 2001
+From 7f781fd715b2ae1db4a708d724585bd7534854e6 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:51 -0700
-Subject: [PATCH 03/16] FROMLIST: ARM: remove lazy evaluation in Makefile
+Subject: [PATCH 09/22] FROMLIST: ARM: remove lazy evaluation in Makefile
 
 arch-y and tune-y used lazy evaluation since they used to contain
 cc-option checks. They don't any longer, so just eagerly evaluate these

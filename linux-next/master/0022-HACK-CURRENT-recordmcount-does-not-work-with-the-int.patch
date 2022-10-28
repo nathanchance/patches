@@ -1,0 +1,27 @@
+From ebd47e04fc3388c30ea4b55b9e8d75e7f2fc2c0e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 26 Oct 2022 11:52:38 -0700
+Subject: [PATCH 22/22] HACK: CURRENT: recordmcount does not work with the
+ integrated assembler
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/981
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/trace/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/trace/Kconfig b/kernel/trace/Kconfig
+index e9e95c790b8e..2128f08e566b 100644
+--- a/kernel/trace/Kconfig
++++ b/kernel/trace/Kconfig
+@@ -740,6 +740,7 @@ config FTRACE_MCOUNT_USE_OBJTOOL
+ 
+ config FTRACE_MCOUNT_USE_RECORDMCOUNT
+ 	def_bool y
++	depends on !AS_IS_LLVM
+ 	depends on !FTRACE_MCOUNT_USE_PATCHABLE_FUNCTION_ENTRY
+ 	depends on !FTRACE_MCOUNT_USE_CC
+ 	depends on !FTRACE_MCOUNT_USE_OBJTOOL
+-- 
+2.38.1
+

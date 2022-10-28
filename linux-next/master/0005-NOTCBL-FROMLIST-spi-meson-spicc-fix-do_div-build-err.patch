@@ -1,0 +1,34 @@
+From 3049e1bcd4cec11dee14a9541ac98f6f5c3116d5 Mon Sep 17 00:00:00 2001
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Thu, 27 Oct 2022 14:11:43 +0200
+Subject: [PATCH 05/22] NOTCBL: FROMLIST: spi: meson-spicc: fix do_div build
+ error on non-arm64
+
+This fixes :
+error: passing argument 1 of '__div64_32' from incompatible pointer type
+
+By passing an uint64_t as first variable to do_div().
+
+Fixes: 04694e50020b ("spi: meson-spicc: move wait completion in driver to take bursts delay in account")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20221027-b4-spicc-burst-delay-fix-v1-0-5a6e9a88e54c@linaro.org
+---
+ drivers/spi/spi-meson-spicc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
+index b1dad25b6bef..d47f2623a60f 100644
+--- a/drivers/spi/spi-meson-spicc.c
++++ b/drivers/spi/spi-meson-spicc.c
+@@ -405,7 +405,7 @@ static int meson_spicc_transfer_one(struct spi_master *master,
+ 				    struct spi_transfer *xfer)
+ {
+ 	struct meson_spicc_device *spicc = spi_master_get_devdata(master);
+-	unsigned long timeout;
++	uint64_t timeout;
+ 
+ 	/* Store current transfer */
+ 	spicc->xfer = xfer;
+-- 
+2.38.1
+

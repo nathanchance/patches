@@ -1,0 +1,34 @@
+From 68ff3cc519b3e1e84a49251c8e8763f6c1c3e416 Mon Sep 17 00:00:00 2001
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Date: Fri, 28 Oct 2022 09:48:00 -0700
+Subject: [PATCH 06/22] NOTCBL: FROMLIST: ARM: s3c64xx: include header defining
+ input event codes
+
+The board file for Wolfson Cragganmore 6410 uses various KEY_* defines,
+but does not include the relevant header directly and instead relies on
+other headers to include it indirectly. With the upcoming cleanup of
+matrix_keypad.h this indirection is now broken and we should include the
+relevant header directly.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/Y1wHwEm15/K87tdq@google.com
+---
+ arch/arm/mach-s3c/mach-crag6410.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/mach-s3c/mach-crag6410.c b/arch/arm/mach-s3c/mach-crag6410.c
+index 9a45474d1bf7..2ecb85856e24 100644
+--- a/arch/arm/mach-s3c/mach-crag6410.c
++++ b/arch/arm/mach-s3c/mach-crag6410.c
+@@ -14,6 +14,7 @@
+ #include <linux/fb.h>
+ #include <linux/io.h>
+ #include <linux/init.h>
++#include <linux/input-event-codes.h>
+ #include <linux/gpio.h>
+ #include <linux/gpio/machine.h>
+ #include <linux/leds.h>
+-- 
+2.38.1
+
