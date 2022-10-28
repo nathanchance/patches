@@ -1,0 +1,31 @@
+From 1adf8e4a0f2e9febe859e6e967bd1c4b903b7d23 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 28 Oct 2022 13:18:53 -0700
+Subject: [PATCH 01/23] NOTCBL: FROMGIT: Updated version of 'RDMA/core: Fix
+ null-ptr-deref in ib_core_cleanup()'
+
+Link: https://git.kernel.org/rdma/rdma/c/07c0d131cc0fe1f3981a42958fc52d573d303d89
+Link: https://lore.kernel.org/20221028071943.30659de2@canb.auug.org.au/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/infiniband/core/nldev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index b92358f606d0..12dc97067ed2 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -2537,7 +2537,7 @@ void __init nldev_init(void)
+ 	rdma_nl_register(RDMA_NL_NLDEV, nldev_cb_table);
+ }
+ 
+-void __exit nldev_exit(void)
++void nldev_exit(void)
+ {
+ 	rdma_nl_unregister(RDMA_NL_NLDEV);
+ }
+
+base-commit: fd8dab197cca2746e1fcd399a218eec5164726d4
+-- 
+2.38.1
+

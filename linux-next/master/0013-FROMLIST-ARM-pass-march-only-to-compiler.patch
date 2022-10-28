@@ -1,7 +1,7 @@
-From 137523a03fbe484a3aff44be4c9008f17715e867 Mon Sep 17 00:00:00 2001
+From 4ca8854f248b83d1bba0202c0b25e897858c666e Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:54 -0700
-Subject: [PATCH 12/22] FROMLIST: ARM: pass -march= only to compiler
+Subject: [PATCH 13/23] FROMLIST: ARM: pass -march= only to compiler
 
 When both -march= and -Wa,-march= are specified for assembler or
 assembler-with-cpp sources, GCC and Clang will prefer the -Wa,-march=
