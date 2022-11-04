@@ -1,7 +1,7 @@
-From 15426dcacb9bec66551d283c24d358b51d0513cd Mon Sep 17 00:00:00 2001
+From be868c09af897309012fd009622668fc9b2bbfa0 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:52 -0700
-Subject: [PATCH 11/23] FROMLIST: ARM: use .arch directives instead of
+Subject: [PATCH 07/18] FROMLIST: ARM: use .arch directives instead of
  assembler command line flags
 
 Similar to commit a6c30873ee4a ("ARM: 8989/1: use .fpu assembler
@@ -83,7 +83,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  41 files changed, 54 insertions(+), 40 deletions(-)
 
 diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
-index 41bcbb460fac..e5c80ff42a4f 100644
+index 53cadc3aaff1..e20a48948555 100644
 --- a/arch/arm/boot/compressed/Makefile
 +++ b/arch/arm/boot/compressed/Makefile
 @@ -163,4 +163,3 @@ $(obj)/piggy_data: $(obj)/../Image FORCE
@@ -219,7 +219,7 @@ index 0dcc37180588..794bd12ab0a8 100644
  CFLAGS_pm.o += -DDEBUG
  endif
 diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index ffed4d949042..78d65809155f 100644
+index e4904faf1753..e5869cca5e79 100644
 --- a/arch/arm/mach-at91/pm_suspend.S
 +++ b/arch/arm/mach-at91/pm_suspend.S
 @@ -12,6 +12,10 @@
