@@ -1,7 +1,7 @@
-From be868c09af897309012fd009622668fc9b2bbfa0 Mon Sep 17 00:00:00 2001
+From 8393bf9ad8a37ac2015233e1e5b80837f8d78be7 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Mon, 16 May 2022 14:09:52 -0700
-Subject: [PATCH 07/18] FROMLIST: ARM: use .arch directives instead of
+Subject: [PATCH 04/16] FROMLIST: ARM: use .arch directives instead of
  assembler command line flags
 
 Similar to commit a6c30873ee4a ("ARM: 8989/1: use .fpu assembler
@@ -83,10 +83,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  41 files changed, 54 insertions(+), 40 deletions(-)
 
 diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
-index 53cadc3aaff1..e20a48948555 100644
+index 23c4eadf5c26..2ef651a78fa2 100644
 --- a/arch/arm/boot/compressed/Makefile
 +++ b/arch/arm/boot/compressed/Makefile
-@@ -163,4 +163,3 @@ $(obj)/piggy_data: $(obj)/../Image FORCE
+@@ -164,4 +164,3 @@ $(obj)/piggy_data: $(obj)/../Image FORCE
  $(obj)/piggy.o: $(obj)/piggy_data
  
  CFLAGS_font.o := -Dstatic=

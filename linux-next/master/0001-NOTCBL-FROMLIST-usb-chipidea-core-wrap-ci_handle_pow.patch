@@ -1,7 +1,7 @@
-From c95d60a8df23aa4422d9c6db6e4d8ea91335d33d Mon Sep 17 00:00:00 2001
+From e840407d73a5bfb1e0fd0210598705c57ca84485 Mon Sep 17 00:00:00 2001
 From: Xu Yang <xu.yang_2@nxp.com>
 Date: Wed, 26 Oct 2022 20:11:57 +0800
-Subject: [PATCH 01/18] NOTCBL: FROMLIST: usb: chipidea: core: wrap
+Subject: [PATCH 01/16] NOTCBL: FROMLIST: usb: chipidea: core: wrap
  ci_handle_power_lost() with CONFIG_PM_SLEEP
 
 If CONFIG_PM_SLEEP is not set, the following error will be shown up
@@ -77,7 +77,7 @@ index 2b170b434d01..484b1cd23431 100644
  {
  	struct ci_hdrc *ci = dev_get_drvdata(dev);
 
-base-commit: 0cdb3579f1ee4c1e55acf8dfb0697b660067b1f8
+base-commit: b6fc3fddade7a194bd141a49f2689e50f796ef46
 -- 
 2.38.1
 
