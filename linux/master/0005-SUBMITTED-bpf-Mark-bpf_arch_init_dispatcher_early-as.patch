@@ -1,7 +1,7 @@
-From 8091412e3bbb6c7ec443b1ee8b466c7a2f8adf12 Mon Sep 17 00:00:00 2001
+From 04a709e7c352c0c928b5874e3d83c35e4cbcfcb2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 31 Oct 2022 10:38:19 -0700
-Subject: [PATCH 05/12] SUBMITTED: bpf: Mark bpf_arch_init_dispatcher_early()
+Subject: [PATCH 05/14] SUBMITTED: bpf: Mark bpf_arch_init_dispatcher_early()
  as __init_or_module
 
 After commit dbe69b299884 ("bpf: Fix dispatcher patchable function entry
