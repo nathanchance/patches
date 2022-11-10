@@ -1,4 +1,4 @@
-From a0fd762d7ef963a71b1cbd6ee12a65a00164b6cb Mon Sep 17 00:00:00 2001
+From 71bb5c6112bc768557e8a2ea976feac15afdb088 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:40 +0200
 Subject: [PATCH 01/11] FROMGIT: kcsan: Instrument memcpy/memset/memmove with
@@ -91,7 +91,7 @@ index fe12dfe254ec..54d077e1a2dc 100644
 +#endif
 +EXPORT_SYMBOL(__tsan_memcpy);
 
-base-commit: 3a2fa3c01fc7c2183eb3278bd912e5bcec20eb2a
+base-commit: e60276b8c11ab4a8be23807bc67b048cfb937dfa
 -- 
 2.38.1
 
