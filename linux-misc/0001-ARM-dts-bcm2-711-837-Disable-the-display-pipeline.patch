@@ -1,4 +1,4 @@
-From 8a42d721d2a13fca8350d322ca0eb27250651bc0 Mon Sep 17 00:00:00 2001
+From 92349c4fe3be59ce862e3da90682b5590bd8d52a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 28 Jul 2021 12:14:27 -0700
 Subject: [PATCH] ARM: dts: bcm2{711,837}: Disable the display pipeline
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm/boot/dts/bcm2711-rpi-4-b.dts b/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
-index 4432412044de..edd9ebc76b22 100644
+index d5f8823230db..a70c18a2a472 100644
 --- a/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
 +++ b/arch/arm/boot/dts/bcm2711-rpi-4-b.dts
-@@ -57,11 +57,11 @@ &bt {
+@@ -45,11 +45,11 @@ &bt {
  };
  
  &ddc0 {
@@ -28,7 +28,7 @@ index 4432412044de..edd9ebc76b22 100644
  };
  
  &expgpio {
-@@ -149,27 +149,27 @@ &gpio {
+@@ -137,11 +137,11 @@ &gpio {
  };
  
  &hdmi0 {
@@ -39,6 +39,10 @@ index 4432412044de..edd9ebc76b22 100644
  &hdmi1 {
 -	status = "okay";
 +	status = "disabled";
+ };
+ 
+ &led_act {
+@@ -158,19 +158,19 @@ led_pwr: led-pwr {
  };
  
  &pixelvalve0 {
@@ -63,10 +67,10 @@ index 4432412044de..edd9ebc76b22 100644
  
  &pwm1 {
 diff --git a/arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts b/arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts
-index ec721d323ac5..abddc9ce6b2d 100644
+index 2f1800cbc522..3e509ff5ef70 100644
 --- a/arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts
 +++ b/arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts
-@@ -127,7 +127,7 @@ &gpio {
+@@ -115,7 +115,7 @@ &gpio {
  &hdmi {
  	hpd-gpios = <&gpio 28 GPIO_ACTIVE_LOW>;
  	power-domains = <&power RPI_POWER_DOMAIN_HDMI>;
@@ -74,12 +78,12 @@ index ec721d323ac5..abddc9ce6b2d 100644
 +	status = "disabled";
  };
  
- &pwm {
+ &led_act {
 diff --git a/arch/arm/boot/dts/bcm2837-rpi-3-b.dts b/arch/arm/boot/dts/bcm2837-rpi-3-b.dts
-index fb6a417d73e7..7a39563c71b6 100644
+index 61270340075c..d19e36b2a975 100644
 --- a/arch/arm/boot/dts/bcm2837-rpi-3-b.dts
 +++ b/arch/arm/boot/dts/bcm2837-rpi-3-b.dts
-@@ -126,7 +126,7 @@ &pwm {
+@@ -121,7 +121,7 @@ &pwm {
  &hdmi {
  	hpd-gpios = <&expgpio 4 GPIO_ACTIVE_LOW>;
  	power-domains = <&power RPI_POWER_DOMAIN_HDMI>;
@@ -87,7 +91,9 @@ index fb6a417d73e7..7a39563c71b6 100644
 +	status = "disabled";
  };
  
- /* uart0 communicates with the BT module */
+ &led_act {
+
+base-commit: f8f60f322f0640c8edda2942ca5f84b7a27c417a
 -- 
-2.38.0
+2.38.1
 
