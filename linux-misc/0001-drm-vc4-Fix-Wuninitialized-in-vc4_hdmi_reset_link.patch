@@ -1,0 +1,44 @@
+From ab40829fecc389e263dfb50203e33b8f18e1d51f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 17 Nov 2022 10:40:25 -0700
+Subject: [PATCH] drm/vc4: Fix -Wuninitialized in vc4_hdmi_reset_link()
+
+Clang warns:
+
+  drivers/gpu/drm/vc4/vc4_hdmi.c:351:14: error: variable 'vc4_hdmi' is uninitialized when used here [-Werror,-Wuninitialized]
+          mutex_lock(&vc4_hdmi->mutex);
+                      ^~~~~~~~
+  ./include/linux/mutex.h:187:44: note: expanded from macro 'mutex_lock'
+  #define mutex_lock(lock) mutex_lock_nested(lock, 0)
+                                             ^~~~
+  drivers/gpu/drm/vc4/vc4_hdmi.c:322:27: note: initialize the variable 'vc4_hdmi' to silence this warning
+          struct vc4_hdmi *vc4_hdmi;
+                                   ^
+                                    = NULL
+  1 error generated.
+
+Fixes: 23b727d76bda ("Merge branch 'for-linux-next' of git://anongit.freedesktop.org/drm/drm-misc")
+Link: https://lore.kernel.org/Y3ZvffZiR+SgtY6h@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 9ca245a688ba..5796dc60a018 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -348,9 +348,8 @@ static int vc4_hdmi_reset_link(struct drm_connector *connector,
+ 	if (!crtc_state->active)
+ 		return 0;
+ 
+-	mutex_lock(&vc4_hdmi->mutex);
+-
+ 	vc4_hdmi = connector_to_vc4_hdmi(connector);
++	mutex_lock(&vc4_hdmi->mutex);
+ 	if (!vc4_hdmi_supports_scrambling(vc4_hdmi)) {
+ 		mutex_unlock(&vc4_hdmi->mutex);
+ 		return 0;
+-- 
+2.38.1
+
