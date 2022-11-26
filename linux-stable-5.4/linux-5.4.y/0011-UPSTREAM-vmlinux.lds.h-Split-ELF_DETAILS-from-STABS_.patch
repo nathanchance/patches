@@ -1,4 +1,4 @@
-From 7b93240b433a7adb3fffde80d19cdc38a0bb944f Mon Sep 17 00:00:00 2001
+From cd5a5d7455d1771520cf1f50c11207f1a22b6c7e Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 11/29] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
@@ -323,7 +323,7 @@ index 1afe211d7a7c..fbccf793aa78 100644
  	DISCARDS
  	/DISCARD/ : {
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 77d428181557..c48ff105a029 100644
+index c3bcac22c389..102464be6407 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
 @@ -35,6 +35,7 @@
@@ -334,7 +334,7 @@ index 77d428181557..c48ff105a029 100644
   *
   *	DISCARDS		// must be the last
   * }
-@@ -765,14 +766,17 @@
+@@ -766,14 +767,17 @@
  		.debug_rnglists	0 : { *(.debug_rnglists) }		\
  		.debug_str_offsets	0 : { *(.debug_str_offsets) }
  
