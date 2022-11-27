@@ -1,0 +1,22 @@
+diff --git a/archinstall/lib/disk/user_guides.py b/archinstall/lib/disk/user_guides.py
+index 5809c07..8fc3192 100644
+--- a/archinstall/lib/disk/user_guides.py
++++ b/archinstall/lib/disk/user_guides.py
+@@ -71,7 +71,7 @@ def suggest_single_disk_layout(block_device :BlockDevice,
+ 	# like we do in MBR layouts where the boot loader is installed traditionally.
+ 	if has_uefi():
+ 		layout[block_device.path]['partitions'][-1]['start'] = '1MiB'
+-		layout[block_device.path]['partitions'][-1]['size'] = '512MiB'
++		layout[block_device.path]['partitions'][-1]['size'] = '1025MiB'
+ 
+ 	layout[block_device.path]['partitions'].append({
+ 		# Root
+@@ -87,7 +87,7 @@ def suggest_single_disk_layout(block_device :BlockDevice,
+ 	})
+ 
+ 	if has_uefi():
+-		layout[block_device.path]['partitions'][-1]['start'] = '513MiB'
++		layout[block_device.path]['partitions'][-1]['start'] = '1026MiB'
+ 
+ 	if not using_subvolumes and block_device.size >= MIN_SIZE_TO_ALLOW_HOME_PART:
+ 		prompt = str(_('Would you like to create a separate partition for /home?'))
