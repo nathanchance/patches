@@ -1,7 +1,7 @@
-From 14d817885de644066a7e4e1c16c9ece4b27720b6 Mon Sep 17 00:00:00 2001
+From 6cc97efbe2a7c05d2b451e5af9bdbc6c0f019b42 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 07/11] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 06/10] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
