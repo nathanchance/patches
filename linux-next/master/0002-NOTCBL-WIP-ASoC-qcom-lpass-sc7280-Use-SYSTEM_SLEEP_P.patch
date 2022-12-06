@@ -1,0 +1,27 @@
+From 4c542d28c3d6b8b7169e2ff9e4410dd3072041c5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 30 Nov 2022 08:43:14 -0700
+Subject: [PATCH 02/13] NOTCBL: WIP: ASoC: qcom: lpass-sc7280: Use
+ SYSTEM_SLEEP_PM_OPS()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/qcom/lpass-sc7280.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/qcom/lpass-sc7280.c b/sound/soc/qcom/lpass-sc7280.c
+index d43f480cbae3..30d4e271f0b6 100644
+--- a/sound/soc/qcom/lpass-sc7280.c
++++ b/sound/soc/qcom/lpass-sc7280.c
+@@ -251,7 +251,7 @@ static int __maybe_unused sc7280_lpass_dev_suspend(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops sc7280_lpass_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(sc7280_lpass_dev_suspend, sc7280_lpass_dev_resume)
++	SYSTEM_SLEEP_PM_OPS(sc7280_lpass_dev_suspend, sc7280_lpass_dev_resume)
+ };
+ 
+ static struct lpass_variant sc7280_data = {
+-- 
+2.38.1
+

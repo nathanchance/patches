@@ -1,7 +1,7 @@
-From f0431373fc16bb1154b707da04c33e3325baebd2 Mon Sep 17 00:00:00 2001
+From a9f6d04fd5458b9276fc97de5cb1bffe29dd08e0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Nov 2022 14:01:41 -0700
-Subject: [PATCH 03/16] NOTCBL: WIP: ARM: s3c: Remove unused 'dma-s3c24xx.h'
+Subject: [PATCH 01/13] NOTCBL: WIP: ARM: s3c: Remove unused 'dma-s3c24xx.h'
  includes
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -34,6 +34,8 @@ index 819a95364af9..fe23b7b9ff45 100644
  #include <linux/dmaengine.h>
  #include <linux/clk/samsung.h>
  
+
+base-commit: 5d562c48a21eeb029a8fd3f18e1b31fd83660474
 -- 
 2.38.1
 

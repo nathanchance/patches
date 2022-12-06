@@ -1,7 +1,7 @@
-From cfecacbfab520c8ee939ac63b739bb6f803e6384 Mon Sep 17 00:00:00 2001
+From 2fd8f644fe1967aeb43db2a19250163b2f3b31f5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 8 Nov 2022 17:03:07 -0700
-Subject: [PATCH 09/16] SUBMITTED: x86/vdso: Conditionally export
+Subject: [PATCH 04/13] SUBMITTED: x86/vdso: Conditionally export
  __vdso_sgx_enter_enclave
 
 Recently, ld.lld moved from '--undefined-version' to

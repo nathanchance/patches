@@ -1,7 +1,7 @@
-From 0b2f13830f2834781c31e8cc16baa27a5212eca9 Mon Sep 17 00:00:00 2001
+From 65d6b7063a7fc9786ab86f572ad99f0d421393b3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
-Subject: [PATCH 16/16] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
+Subject: [PATCH 13/13] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
  with GCC 12 (unrecognized opcode: `wrteei')"
 
 This reverts commit 0d913358a816b35fa5b75385e80f63b9abcf1b27.
@@ -31,7 +31,7 @@ index e80b2c0e9315..ae6b732ef99b 100644
  #    define SMPWMB      eieio
  #endif
 diff --git a/arch/powerpc/include/asm/nohash/pgtable.h b/arch/powerpc/include/asm/nohash/pgtable.h
-index d9067dfc531c..da0de16e7562 100644
+index 69c3a050a3d8..e2678498d539 100644
 --- a/arch/powerpc/include/asm/nohash/pgtable.h
 +++ b/arch/powerpc/include/asm/nohash/pgtable.h
 @@ -173,7 +173,7 @@ static inline void __set_pte_at(struct mm_struct *mm, unsigned long addr,
@@ -82,10 +82,10 @@ index e1199608ff4d..4a0ea62aa2d5 100644
  	sync
  	wrtee	r10
 diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
-index 0c4eed9aea80..948dc158a3e9 100644
+index 9563336e3348..598f23a9790c 100644
 --- a/arch/powerpc/platforms/Kconfig.cputype
 +++ b/arch/powerpc/platforms/Kconfig.cputype
-@@ -138,7 +138,7 @@ config GENERIC_CPU
+@@ -139,7 +139,7 @@ config GENERIC_CPU
  
  config POWERPC_CPU
  	bool "Generic 32 bits powerpc"
@@ -94,7 +94,7 @@ index 0c4eed9aea80..948dc158a3e9 100644
  
  config CELL_CPU
  	bool "Cell Broadband Engine"
-@@ -189,18 +189,6 @@ config 405_CPU
+@@ -194,18 +194,6 @@ config 405_CPU
  	bool "40x family"
  	depends on 40x
  
@@ -113,7 +113,7 @@ index 0c4eed9aea80..948dc158a3e9 100644
  config 860_CPU
  	bool "8xx family"
  	depends on PPC_8xx
-@@ -247,9 +235,6 @@ config TARGET_CPU
+@@ -252,9 +240,6 @@ config TARGET_CPU
  	default "power9" if POWER9_CPU
  	default "power10" if POWER10_CPU
  	default "405" if 405_CPU
