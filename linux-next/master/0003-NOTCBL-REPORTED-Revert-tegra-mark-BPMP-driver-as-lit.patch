@@ -1,0 +1,37 @@
+From 73d448565020fd3ef9e2173a3c95c2ab12c60001 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 6 Dec 2022 11:25:23 -0700
+Subject: [PATCH 03/14] NOTCBL: REPORTED: Revert "tegra: mark BPMP driver as
+ little-endian only"
+
+This reverts commit 4ddb1bf1a83783cebdb174b0efaf62f63ad64e0b.
+
+Causes the following Kconfig warning, which I reported to Arnd on IRC:
+
+  WARNING: unmet direct dependencies detected for TEGRA_BPMP
+    Depends on [n]: ARCH_TEGRA [=y] && TEGRA_HSP_MBOX [=y] && TEGRA_IVC [=y] && !CPU_BIG_ENDIAN [=y]
+    Selected by [y]:
+    - ARCH_TEGRA_186_SOC [=y] && ARCH_TEGRA [=y] && ARM64 [=y]
+    - ARCH_TEGRA_194_SOC [=y] && ARCH_TEGRA [=y] && ARM64 [=y]
+    - ARCH_TEGRA_234_SOC [=y] && ARCH_TEGRA [=y] && ARM64 [=y]
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/firmware/tegra/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
+index cde1ab8bd9d1..1c8ba1f47c7c 100644
+--- a/drivers/firmware/tegra/Kconfig
++++ b/drivers/firmware/tegra/Kconfig
+@@ -14,7 +14,6 @@ config TEGRA_IVC
+ config TEGRA_BPMP
+ 	bool "Tegra BPMP driver"
+ 	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
+-	depends on !CPU_BIG_ENDIAN
+ 	help
+ 	  BPMP (Boot and Power Management Processor) is designed to off-loading
+ 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
+-- 
+2.38.1
+
