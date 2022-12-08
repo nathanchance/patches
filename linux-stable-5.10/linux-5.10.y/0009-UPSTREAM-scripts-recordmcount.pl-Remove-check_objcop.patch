@@ -1,4 +1,4 @@
-From 2b9b69272e47ed8a2497bf1970639bb6bd797d93 Mon Sep 17 00:00:00 2001
+From a4835c89f8e98b72e46eb120a317b4970ff7de22 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Aug 2021 14:03:07 -0700
 Subject: [PATCH 09/16] UPSTREAM: scripts/recordmcount.pl: Remove
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 41 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index bf22df29c4d8..33ed77fd6c29 100644
+index f3d1f07b6a6f..e78cf9ea3be3 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -537,7 +537,6 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn \
