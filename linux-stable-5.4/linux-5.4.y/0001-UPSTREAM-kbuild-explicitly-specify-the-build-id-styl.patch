@@ -1,4 +1,4 @@
-From c40c9dcf0ecfa87c4e622f22ec946794aad9b144 Mon Sep 17 00:00:00 2001
+From d22b66c1733082834946fde12e39bbeec49f9377 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
 Subject: [PATCH 01/29] UPSTREAM: kbuild: explicitly specify the build id style
@@ -18,10 +18,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index a4ee3a0e7d20..99d59a164660 100644
+index c533ac869aa2..d79c00bd07a8 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -37,7 +37,7 @@ $(obj)/vdso.so.dbg: $(src)/vdso.lds $(obj-vdso) FORCE
+@@ -40,7 +40,7 @@ $(obj)/vdso.so.dbg: $(src)/vdso.lds $(obj-vdso) FORCE
  # refer to these symbols in the kernel code rather than hand-coded addresses.
  
  SYSCFLAGS_vdso.so.dbg = -shared -s -Wl,-soname=linux-vdso.so.1 \
@@ -31,7 +31,7 @@ index a4ee3a0e7d20..99d59a164660 100644
  	$(call if_changed,vdsold)
  
 
-base-commit: 4d2a309b5c28a2edc0900542d22fec3a5a22243b
+base-commit: 316cdfc48d4db2c425370ef8575dd7d81283515d
 -- 
 2.38.1
 

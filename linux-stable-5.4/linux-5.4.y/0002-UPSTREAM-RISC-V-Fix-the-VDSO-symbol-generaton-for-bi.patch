@@ -1,4 +1,4 @@
-From 2a67a64886a4755949dd2351c17d97ed3d8b178e Mon Sep 17 00:00:00 2001
+From 8cd6ed867c02b08c3d08ee5f99ffbb827d884316 Mon Sep 17 00:00:00 2001
 From: Palmer Dabbelt <palmerdabbelt@google.com>
 Date: Fri, 23 Oct 2020 21:50:47 -0700
 Subject: [PATCH 02/29] UPSTREAM: RISC-V: Fix the VDSO symbol generaton for
@@ -40,10 +40,10 @@ index 97c2d69d0289..7ddeac829f54 100644
  *.tmp
 +vdso-syms.S
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 99d59a164660..2b6dd6bb372b 100644
+index d79c00bd07a8..67d2d10ed612 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -31,19 +31,14 @@ $(obj)/vdso.o: $(obj)/vdso.so
+@@ -34,19 +34,14 @@ $(obj)/vdso.o: $(obj)/vdso.so
  SYSCFLAGS_vdso.so.dbg = $(c_flags)
  $(obj)/vdso.so.dbg: $(src)/vdso.lds $(obj-vdso) FORCE
  	$(call if_changed,vdsold)
@@ -67,7 +67,7 @@ index 99d59a164660..2b6dd6bb372b 100644
  
  # strip rule for the .so file
  $(obj)/%.so: OBJCOPYFLAGS := -S
-@@ -61,6 +56,11 @@ quiet_cmd_vdsold = VDSOLD  $@
+@@ -64,6 +59,11 @@ quiet_cmd_vdsold = VDSOLD  $@
                             $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
                     rm $@.tmp
  

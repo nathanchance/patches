@@ -1,4 +1,4 @@
-From 72ce7aaa9fc1cbb99130e45114222e031e96efae Mon Sep 17 00:00:00 2001
+From fece5ba3abb35d2deedd6044c7a06e048c65d100 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Nov 2020 13:37:37 -0700
 Subject: [PATCH 03/29] UPSTREAM: riscv: Explicitly specify the build id style
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 2b6dd6bb372b..b4b9b8f9fc36 100644
+index 67d2d10ed612..4ad82570ad26 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -32,7 +32,7 @@ SYSCFLAGS_vdso.so.dbg = $(c_flags)
+@@ -35,7 +35,7 @@ SYSCFLAGS_vdso.so.dbg = $(c_flags)
  $(obj)/vdso.so.dbg: $(src)/vdso.lds $(obj-vdso) FORCE
  	$(call if_changed,vdsold)
  SYSCFLAGS_vdso.so.dbg = -shared -s -Wl,-soname=linux-vdso.so.1 \

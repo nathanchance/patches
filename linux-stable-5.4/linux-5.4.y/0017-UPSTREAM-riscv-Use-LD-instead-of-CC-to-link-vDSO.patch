@@ -1,4 +1,4 @@
-From ba4a8902a9a5d7da7f84569924419764c366394f Mon Sep 17 00:00:00 2001
+From abc7e56447dfd192c2e3e1967a91de05c11f6f79 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
 Subject: [PATCH 17/29] UPSTREAM: riscv: Use $(LD) instead of $(CC) to link
@@ -55,10 +55,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index b4b9b8f9fc36..1c088958e182 100644
+index 4ad82570ad26..cd44d08f770c 100644
 --- a/arch/riscv/kernel/vdso/Makefile
 +++ b/arch/riscv/kernel/vdso/Makefile
-@@ -28,11 +28,10 @@ GCOV_PROFILE := n
+@@ -31,11 +31,10 @@ GCOV_PROFILE := n
  $(obj)/vdso.o: $(obj)/vdso.so
  
  # link rule for the .so file, .lds has to be first
@@ -72,7 +72,7 @@ index b4b9b8f9fc36..1c088958e182 100644
  
  # We also create a special relocatable object that should mirror the symbol
  # table and layout of the linked DSO. With ld --just-symbols we can then
-@@ -47,13 +46,10 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
+@@ -50,13 +49,10 @@ $(obj)/%.so: $(obj)/%.so.dbg FORCE
  
  # actual build commands
  # The DSO images are built using a special linker script
