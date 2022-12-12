@@ -1,8 +1,8 @@
-From d6e534e5703a18b0005171e57a35d81f98984ae0 Mon Sep 17 00:00:00 2001
+From 6e4193e69854a574347655730480bd4ae4dd845c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 8 Nov 2022 17:03:07 -0700
-Subject: [PATCH 07/14] SUBMITTED: x86/vdso: Conditionally export
- __vdso_sgx_enter_enclave
+Subject: [PATCH 2/9] FROMGIT: x86/vdso: Conditionally export
+ __vdso_sgx_enter_enclave()
 
 Recently, ld.lld moved from '--undefined-version' to
 '--no-undefined-version' as the default, which breaks building the vDSO
@@ -14,9 +14,13 @@ __vdso_sgx_enter_enclave is only included in the vDSO when
 CONFIG_X86_SGX is set. Only export it if it will be present in the final
 object, which clears up the error.
 
+Fixes: 8466436952017 ("x86/vdso: Implement a vDSO for Intel SGX enclave call")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Link: https://github.com/ClangBuiltLinux/linux/issues/1756
 Link: https://lore.kernel.org/r/20221109000306.1407357-1-nathan@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://git.kernel.org/tip/45be2ad007a9c6bea70249c4cf3e4905afe4caeb
 ---
  arch/x86/entry/vdso/vdso.lds.S | 2 ++
  1 file changed, 2 insertions(+)
@@ -36,5 +40,5 @@ index 4bf48462fca7..e8c60ae7a7c8 100644
  	};
  }
 -- 
-2.38.1
+2.39.0
 
