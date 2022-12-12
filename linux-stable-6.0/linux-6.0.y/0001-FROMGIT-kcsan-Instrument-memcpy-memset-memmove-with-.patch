@@ -1,7 +1,7 @@
 From 5a2d2ea6ccfb30fe236ab4fd9ab3caf9690a054d Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:40 +0200
-Subject: [PATCH 01/10] FROMGIT: kcsan: Instrument memcpy/memset/memmove with
+Subject: [PATCH 01/11] FROMGIT: kcsan: Instrument memcpy/memset/memmove with
  newer Clang
 
 With Clang version 16+, -fsanitize=thread will turn
@@ -93,5 +93,5 @@ index fe12dfe254ec..54d077e1a2dc 100644
 
 base-commit: 650093916eb3140339a3132ef7d5a02d8712d058
 -- 
-2.38.1
+2.39.0
 

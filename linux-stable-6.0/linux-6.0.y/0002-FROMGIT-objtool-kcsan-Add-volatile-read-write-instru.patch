@@ -1,7 +1,7 @@
 From 17b873f5f2883cf4ddf806d64cf30bb1a66ac68a Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:41 +0200
-Subject: [PATCH 02/10] FROMGIT: objtool, kcsan: Add volatile read/write
+Subject: [PATCH 02/11] FROMGIT: objtool, kcsan: Add volatile read/write
  instrumentation to whitelist
 
 Adds KCSAN's volatile instrumentation to objtool's uaccess whitelist.
@@ -43,5 +43,5 @@ index e55fdf952a3a..67afdce3421f 100644
  	"__tsan_atomic16_load",
  	"__tsan_atomic32_load",
 -- 
-2.38.1
+2.39.0
 

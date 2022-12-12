@@ -1,7 +1,7 @@
-From 2ce3d0a8b50c9529e76b1f531031e75a9c51ae65 Mon Sep 17 00:00:00 2001
+From 4677c5303518763f166c0680c899f10bd1831ab8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
-Subject: [PATCH 10/10] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
+Subject: [PATCH 11/11] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
  with GCC 12 (unrecognized opcode: `wrteei')"
 
 This reverts commit 0d913358a816b35fa5b75385e80f63b9abcf1b27.
@@ -156,5 +156,5 @@ index 4647c6074f3b..1bfc9afa8a1a 100644
  void __iomem *rmu_regs_win;
  resource_size_t rio_law_start;
 -- 
-2.38.1
+2.39.0
 
