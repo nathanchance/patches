@@ -1,4 +1,4 @@
-From c4bd2439fbd9b1ac0a5668791ea4c56f231470fd Mon Sep 17 00:00:00 2001
+From 6d86eba6b509ce5ae4643939e47cc39b99a370cb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 23 Jun 2020 20:59:20 -0700
 Subject: [PATCH 07/29] UPSTREAM: powerpc/boot: Use address-of operator on
@@ -69,5 +69,5 @@ index c52552a681c5..6e4efbdb6b7c 100644
  		setprop_val(chosen, "linux,initrd-end", (u32)(_initrd_end));
  	}
 -- 
-2.38.1
+2.39.0
 

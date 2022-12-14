@@ -1,4 +1,4 @@
-From fece5ba3abb35d2deedd6044c7a06e048c65d100 Mon Sep 17 00:00:00 2001
+From 4d5ed7f850441e684e8e2364b4c9c8746824a7a3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Nov 2020 13:37:37 -0700
 Subject: [PATCH 03/29] UPSTREAM: riscv: Explicitly specify the build id style
@@ -37,5 +37,5 @@ index 67d2d10ed612..4ad82570ad26 100644
  # We also create a special relocatable object that should mirror the symbol
  # table and layout of the linked DSO. With ld --just-symbols we can then
 -- 
-2.38.1
+2.39.0
 
