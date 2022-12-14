@@ -1,7 +1,7 @@
-From 7e3b59f6f00db20f644874023fa140f100bb04f0 Mon Sep 17 00:00:00 2001
+From d06412702e50ea8e1c6e2979d9186acc6eb3c1f6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 8 Nov 2022 17:03:07 -0700
-Subject: [PATCH 03/11] FROMGIT: x86/vdso: Conditionally export
+Subject: [PATCH 03/11] UPSTREAM: x86/vdso: Conditionally export
  __vdso_sgx_enter_enclave()
 
 Recently, ld.lld moved from '--undefined-version' to
@@ -20,7 +20,7 @@ Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Link: https://github.com/ClangBuiltLinux/linux/issues/1756
 Link: https://lore.kernel.org/r/20221109000306.1407357-1-nathan@kernel.org
-Link: https://git.kernel.org/tip/45be2ad007a9c6bea70249c4cf3e4905afe4caeb
+Link: https://git.kernel.org/linus/45be2ad007a9c6bea70249c4cf3e4905afe4caeb
 ---
  arch/x86/entry/vdso/vdso.lds.S | 2 ++
  1 file changed, 2 insertions(+)
