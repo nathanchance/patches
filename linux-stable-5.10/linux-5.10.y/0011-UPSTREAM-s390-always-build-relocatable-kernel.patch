@@ -1,7 +1,7 @@
-From edc638bb52dc371e1e57fd4b35e5b237dc6c6b0a Mon Sep 17 00:00:00 2001
+From 75987b615d075bb4104580c7a70673b98a2a467d Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
-Subject: [PATCH 12/16] FROMLIST: s390: always build relocatable kernel
+Subject: [PATCH 11/16] UPSTREAM: s390: always build relocatable kernel
 
 Nathan Chancellor reported several link errors on s390 with
 CONFIG_RELOCATABLE disabled, after binutils commit 906f69cf65da ("IBM
@@ -21,8 +21,11 @@ controversial.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1747
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
 Tested-by: Nathan Chancellor <nathan@kernel.org>
 Link: https://lore.kernel.org/r/20221030182202.2062705-1-hca@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://git.kernel.org/linus/80ddf5ce1c9291cb175d52ed1227134ad48c47ee
 ---
  arch/s390/Kconfig        | 6 +++---
  arch/s390/Makefile       | 2 --
@@ -103,5 +106,5 @@ index cc96b04cc0ba..eb0fbcd09589 100644
  	if (__kaslr_offset) {
  		/*
 -- 
-2.38.1
+2.39.0
 
