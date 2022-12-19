@@ -1,7 +1,7 @@
-From ab2fe2968aeecd87b1796c55c6bd556536e22343 Mon Sep 17 00:00:00 2001
+From b219f82cb676f4be54ee9a40634dfaaf1eece761 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
-Subject: [PATCH 21/29] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
+Subject: [PATCH 21/30] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
  managed
 
 Before this patch, the rgrp code had a serious problem related to

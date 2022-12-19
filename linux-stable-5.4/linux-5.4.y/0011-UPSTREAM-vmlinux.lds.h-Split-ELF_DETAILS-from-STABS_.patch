@@ -1,7 +1,7 @@
-From d95e7cac4970c13451ed1cb02111a387f3708f03 Mon Sep 17 00:00:00 2001
+From 580304617e7ee32d24036fbbb420ad524528a2d9 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
-Subject: [PATCH 11/29] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
+Subject: [PATCH 11/30] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
  STABS_DEBUG
 
 The .comment section doesn't belong in STABS_DEBUG. Split it out into a
