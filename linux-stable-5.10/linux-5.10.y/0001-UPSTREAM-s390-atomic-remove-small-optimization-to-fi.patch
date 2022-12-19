@@ -1,7 +1,7 @@
-From 88387dd3b8833e684b2977e9b90309dbb8c07dfd Mon Sep 17 00:00:00 2001
+From d8ccfa54e05d97b36d27125fedc4e77d24ad76a6 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 19:39:23 +0100
-Subject: [PATCH 01/16] UPSTREAM: s390/atomic: remove small optimization to fix
+Subject: [PATCH 01/17] UPSTREAM: s390/atomic: remove small optimization to fix
  clang build
 
 With commit f0cbd3b83ed4 ("s390/atomic: circumvent gcc 10 build
@@ -64,7 +64,7 @@ index 11c5952e1afa..5860ae790f2d 100644
  }
  
 
-base-commit: 931578be69875087a62524da69964d575426d287
+base-commit: a2428a8dcb4f3eb80e7d38dba0bf71e4ff20cecd
 -- 
 2.39.0
 
