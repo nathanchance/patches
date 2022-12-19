@@ -1,7 +1,7 @@
-From 7209becd49e60da156387c405769aea53738a0dd Mon Sep 17 00:00:00 2001
+From 1e292128c7275f85787e9c7382db3c4a97eddc8c Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Tue, 11 Oct 2022 20:00:12 +0100
-Subject: [PATCH 05/11] FROMGIT: ARM: 9256/1: NWFPE: avoid compiler-generated
+Subject: [PATCH 04/10] UPSTREAM: ARM: 9256/1: NWFPE: avoid compiler-generated
  __aeabi_uldivmod
 
 clang-15's ability to elide loops completely became more aggressive when
@@ -38,7 +38,7 @@ Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Tested-by: Nathan Chancellor <nathan@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: http://git.armlinux.org.uk/cgit/linux-arm.git/commit/?id=3220022038b9a3845eea762af85f1c5694b9f861
+Link: https://git.kernel.org/linus/3220022038b9a3845eea762af85f1c5694b9f861
 ---
  arch/arm/nwfpe/Makefile | 6 ++++++
  1 file changed, 6 insertions(+)
