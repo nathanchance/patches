@@ -1,7 +1,7 @@
-From bf31fc934fc725dfbf9084768816da8eae203691 Mon Sep 17 00:00:00 2001
+From 4bf75f1bb53b26855ce3b5fc39769780e344d1f8 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:40 +0200
-Subject: [PATCH 01/11] UPSTREAM: kcsan: Instrument memcpy/memset/memmove with
+Subject: [PATCH 01/10] UPSTREAM: kcsan: Instrument memcpy/memset/memmove with
  newer Clang
 
 With Clang version 16+, -fsanitize=thread will turn
@@ -90,7 +90,7 @@ index fe12dfe254ec..54d077e1a2dc 100644
 +#endif
 +EXPORT_SYMBOL(__tsan_memcpy);
 
-base-commit: 843cf4765c1b76102b7e24388adb478b2ec0c3fd
+base-commit: 42f2129e08b822f0ccb9e66410f3a0d3986e105c
 -- 
 2.39.0
 
