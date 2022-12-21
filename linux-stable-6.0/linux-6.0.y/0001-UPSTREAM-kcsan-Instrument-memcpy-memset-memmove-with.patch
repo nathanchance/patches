@@ -1,4 +1,4 @@
-From 4bf75f1bb53b26855ce3b5fc39769780e344d1f8 Mon Sep 17 00:00:00 2001
+From 85c032dce2507ebbcb52eac695144b2de8937b05 Mon Sep 17 00:00:00 2001
 From: Marco Elver <elver@google.com>
 Date: Mon, 12 Sep 2022 11:45:40 +0200
 Subject: [PATCH 01/10] UPSTREAM: kcsan: Instrument memcpy/memset/memmove with
@@ -90,7 +90,7 @@ index fe12dfe254ec..54d077e1a2dc 100644
 +#endif
 +EXPORT_SYMBOL(__tsan_memcpy);
 
-base-commit: 42f2129e08b822f0ccb9e66410f3a0d3986e105c
+base-commit: 0106d88e2d2781a962e99c11d1ab336b0d7e893f
 -- 
 2.39.0
 
