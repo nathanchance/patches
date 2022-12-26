@@ -1,0 +1,22 @@
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index 7aa1fbc4aafe..7834a41fd10a 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -23,10 +23,13 @@ try-run = $(shell set -e;		\
+ 	TMP=$(TMPOUT)/tmp;		\
+ 	trap "rm -rf $(TMPOUT)" EXIT;	\
+ 	mkdir -p $(TMPOUT);		\
+-	if ($(1)) >/dev/null 2>&1;	\
+-	then echo "$(2)";		\
+-	else echo "$(3)";		\
+-	fi)
++	LOG=/tmp/try-run.log;	\
++	echo "Testing $(1):" >>$$LOG;	\
++	echo >>$$LOG;	\
++	if ($(1)) >>$$LOG 2>&1;	\
++	then echo "$(2)"; echo "$(2) was supported!" >>$$LOG;		\
++	else echo "$(3)"; echo "$(2) was not supported, picking '$(3)' instead..." >>$$LOG;		\
++	fi; echo >>$$LOG;)
+ 
+ # as-option
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
