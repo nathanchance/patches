@@ -1,4 +1,4 @@
-From 93380883a95f66b1a6fea99ddf4a27108f396d7a Mon Sep 17 00:00:00 2001
+From 37699af70113309bc64b5e7982bf5fe9a222607c Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:10 +0900
 Subject: [PATCH 05/16] UPSTREAM: kbuild: do not set -w for vmlinux.o modpost
@@ -54,5 +54,5 @@ index 42154b6df652..b7368312feea 100644
  # Otherwise, allmodconfig would fail with "Argument list too long".
  quiet_cmd_modpost = MODPOST $@
 -- 
-2.39.0
+2.39.1
 
