@@ -1,7 +1,7 @@
-From cc8d32756abadda065a29871d4c1be33089b1c47 Mon Sep 17 00:00:00 2001
+From ba1a1d6f0d5fb261599f9a86449c65411a90e048 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Tue, 16 Feb 2021 20:14:46 +0100
-Subject: [PATCH 25/30] UPSTREAM: ARM: 9061/1: kprobes: fix UNPREDICTABLE
+Subject: [PATCH 25/29] UPSTREAM: ARM: 9061/1: kprobes: fix UNPREDICTABLE
  warnings
 
 GNU as warns twice for this file:
@@ -51,5 +51,5 @@ index 977369f1aa48..2543106a203e 100644
  
  	/* Data-processing with SP as target */
 -- 
-2.39.0
+2.39.1
 

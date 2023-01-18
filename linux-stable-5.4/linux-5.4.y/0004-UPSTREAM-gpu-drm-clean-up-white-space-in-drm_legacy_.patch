@@ -1,7 +1,7 @@
-From 22032ec50764ab2e27161745a0e9979707b41589 Mon Sep 17 00:00:00 2001
+From 9f560066d54f2e85a95f81585a553947a9272f67 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Wed, 8 Jan 2020 08:43:12 +0300
-Subject: [PATCH 04/30] UPSTREAM: gpu/drm: clean up white space in
+Subject: [PATCH 04/29] UPSTREAM: gpu/drm: clean up white space in
  drm_legacy_lock_master_cleanup()
 
 We moved this code to a different file and accidentally deleted a
@@ -31,5 +31,5 @@ index 2e8ce99d0baa..2c79e8199e3c 100644
  		if (dev->sigdata.lock == master->lock.hw_lock)
  			dev->sigdata.lock = NULL;
 -- 
-2.39.0
+2.39.1
 

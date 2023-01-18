@@ -1,7 +1,7 @@
-From 76331890a86b8a35e0f5f8fb4ff6a009090d2b43 Mon Sep 17 00:00:00 2001
+From 35824f2f6495283732b8edc659a280e313ac862f Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 10/30] UPSTREAM: powerpc: fix function annotations to avoid
+Subject: [PATCH 10/29] UPSTREAM: powerpc: fix function annotations to avoid
  section mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10
@@ -79,10 +79,10 @@ index bdcb07a98cd3..30f4c4bfd41f 100644
  {
  	unsigned long next;
 diff --git a/arch/powerpc/sysdev/xive/spapr.c b/arch/powerpc/sysdev/xive/spapr.c
-index b21d71badaec..0b4359a5af75 100644
+index e6788bc06584..95d2e96bb9e4 100644
 --- a/arch/powerpc/sysdev/xive/spapr.c
 +++ b/arch/powerpc/sysdev/xive/spapr.c
-@@ -745,7 +745,7 @@ static const u8 *get_vec5_feature(unsigned int index)
+@@ -746,7 +746,7 @@ static const u8 *get_vec5_feature(unsigned int index)
  	return vec5 + index;
  }
  
@@ -92,5 +92,5 @@ index b21d71badaec..0b4359a5af75 100644
  	const u8 *vec5_xive;
  
 -- 
-2.39.0
+2.39.1
 
