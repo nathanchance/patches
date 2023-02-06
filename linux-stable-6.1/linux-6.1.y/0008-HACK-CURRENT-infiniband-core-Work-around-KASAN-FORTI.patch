@@ -1,0 +1,30 @@
+From 8d61d57e9bb1f5fa884d7d97a4fb8aa742559f00 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 5 Feb 2023 12:08:57 -0700
+Subject: [PATCH 8/8] HACK: CURRENT: infiniband: core: Work around KASAN +
+ FORTIFY_SOURCE issue
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1687
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/infiniband/core/cma.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 26d1772179b8..731945c66e6f 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -5150,8 +5150,10 @@ static int cma_netevent_callback(struct notifier_block *self,
+ 
+ 		neigh_sock_4.sin_family = AF_INET;
+ 		neigh_sock_4.sin_addr.s_addr = *(__be32 *)(neigh->primary_key);
++#ifndef CONFIG_COMPILE_TEST
+ 		ips_node = node_from_ndev_ip(&id_table, neigh->dev->ifindex,
+ 					     (struct sockaddr *)&neigh_sock_4);
++#endif
+ 	} else
+ 		goto out;
+ 
+-- 
+2.39.1
+
