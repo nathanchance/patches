@@ -1,4 +1,4 @@
-From 9fbdc0d3c49eb03b0b2d4a79e20800aa3e08970e Mon Sep 17 00:00:00 2001
+From 0e3cad055f53c1639d8929f8a2078dd1f09630fe Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 19:39:23 +0100
 Subject: [PATCH 01/16] UPSTREAM: s390/atomic: remove small optimization to fix
@@ -64,7 +64,7 @@ index 11c5952e1afa..5860ae790f2d 100644
  }
  
 
-base-commit: 8d823aaa220eebec88c9f307225d3e163252ea95
+base-commit: a5acb54d4066f27e9707af9d93f047f542d5ad88
 -- 
 2.39.1
 
