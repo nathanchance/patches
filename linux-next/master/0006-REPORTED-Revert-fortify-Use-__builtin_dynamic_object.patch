@@ -1,0 +1,70 @@
+From 006074083fa0dce7a88a08767146c15960c6086f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 5 Jan 2023 15:57:50 -0700
+Subject: [PATCH 06/13] REPORTED: Revert "fortify: Use
+ __builtin_dynamic_object_size() when available"
+
+This reverts commit f7cd05c76c709ba9777f7dd5b2900607565edf32.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1780
+Link: https://github.com/ClangBuiltLinux/linux/issues/1781
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/misc/lkdtm/heap.c           | 1 -
+ include/linux/compiler_attributes.h | 5 -----
+ include/linux/fortify-string.h      | 7 -------
+ 3 files changed, 13 deletions(-)
+
+diff --git a/drivers/misc/lkdtm/heap.c b/drivers/misc/lkdtm/heap.c
+index 0ce4cbf6abda..62516078a619 100644
+--- a/drivers/misc/lkdtm/heap.c
++++ b/drivers/misc/lkdtm/heap.c
+@@ -31,7 +31,6 @@ static void lkdtm_VMALLOC_LINEAR_OVERFLOW(void)
+ 	char *one, *two;
+ 
+ 	one = vzalloc(PAGE_SIZE);
+-	OPTIMIZER_HIDE_VAR(one);
+ 	two = vzalloc(PAGE_SIZE);
+ 
+ 	pr_info("Attempting vmalloc linear overflow ...\n");
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index dddbe9741be6..566d8df9ebb7 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -321,11 +321,6 @@
+  *
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#pass-object-size-pass-dynamic-object-size
+  */
+-#if __has_attribute(__pass_dynamic_object_size__)
+-# define __pass_dynamic_object_size(type)	__attribute__((__pass_dynamic_object_size__(type)))
+-#else
+-# define __pass_dynamic_object_size(type)
+-#endif
+ #if __has_attribute(__pass_object_size__)
+ # define __pass_object_size(type)	__attribute__((__pass_object_size__(type)))
+ #else
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index c9de1f59ee80..7cad8bb031e9 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -90,17 +90,10 @@ extern char *__underlying_strncpy(char *p, const char *q, __kernel_size_t size)
+  * size, rather than struct size), but there remain some stragglers using
+  * type 0 that will be converted in the future.
+  */
+-#if __has_builtin(__builtin_dynamic_object_size)
+-#define POS			__pass_dynamic_object_size(1)
+-#define POS0			__pass_dynamic_object_size(0)
+-#define __struct_size(p)	__builtin_dynamic_object_size(p, 0)
+-#define __member_size(p)	__builtin_dynamic_object_size(p, 1)
+-#else
+ #define POS			__pass_object_size(1)
+ #define POS0			__pass_object_size(0)
+ #define __struct_size(p)	__builtin_object_size(p, 0)
+ #define __member_size(p)	__builtin_object_size(p, 1)
+-#endif
+ 
+ #define __compiletime_lessthan(bounds, length)	(	\
+ 	__builtin_constant_p((bounds) < (length)) &&	\
+-- 
+2.39.1
+

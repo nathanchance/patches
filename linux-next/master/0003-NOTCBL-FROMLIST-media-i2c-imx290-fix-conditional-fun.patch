@@ -1,0 +1,63 @@
+From 2ca93e935c779f82af7fd35f3e9152b275392514 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 7 Feb 2023 17:13:12 +0100
+Subject: [PATCH 03/13] NOTCBL: FROMLIST: media: i2c: imx290: fix conditional
+ function defintions
+
+The runtime suspend/resume functions are only referenced from the
+dev_pm_ops, but they use the old SET_RUNTIME_PM_OPS() helper
+that requires a __maybe_unused annotation to avoid a warning:
+
+drivers/media/i2c/imx290.c:1082:12: error: unused function 'imx290_runtime_resume' [-Werror,-Wunused-function]
+static int imx290_runtime_resume(struct device *dev)
+           ^
+drivers/media/i2c/imx290.c:1090:12: error: unused function 'imx290_runtime_suspend' [-Werror,-Wunused-function]
+static int imx290_runtime_suspend(struct device *dev)
+           ^
+
+Convert this to the new RUNTIME_PM_OPS() helper that so this
+is not required. To improve this further, also use the pm_ptr()
+helper that lets the dev_pm_ops get dropped entirely when
+CONFIG_PM is disabled.
+
+A related mistake happened in the of_match_ptr() macro here, which
+like SET_RUNTIME_PM_OPS() requires the match table to be marked
+as __maybe_unused, though I could not reproduce building this without
+CONFIG_OF. Remove the of_match_ptr() here as there is no point in
+dropping the match table in configurations without CONFIG_OF.
+
+Fixes: 02852c01f654 ("media: i2c: imx290: Initialize runtime PM before subdev")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20230207161316.293923-1-arnd@kernel.org
+---
+ drivers/media/i2c/imx290.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/media/i2c/imx290.c b/drivers/media/i2c/imx290.c
+index 49d6c8bdec41..48ae2e0adf9e 100644
+--- a/drivers/media/i2c/imx290.c
++++ b/drivers/media/i2c/imx290.c
+@@ -1098,7 +1098,7 @@ static int imx290_runtime_suspend(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops imx290_pm_ops = {
+-	SET_RUNTIME_PM_OPS(imx290_runtime_suspend, imx290_runtime_resume, NULL)
++	RUNTIME_PM_OPS(imx290_runtime_suspend, imx290_runtime_resume, NULL)
+ };
+ 
+ /* ----------------------------------------------------------------------------
+@@ -1362,8 +1362,8 @@ static struct i2c_driver imx290_i2c_driver = {
+ 	.remove = imx290_remove,
+ 	.driver = {
+ 		.name  = "imx290",
+-		.pm = &imx290_pm_ops,
+-		.of_match_table = of_match_ptr(imx290_of_match),
++		.pm = pm_ptr(&imx290_pm_ops),
++		.of_match_table = imx290_of_match,
+ 	},
+ };
+ 
+-- 
+2.39.1
+

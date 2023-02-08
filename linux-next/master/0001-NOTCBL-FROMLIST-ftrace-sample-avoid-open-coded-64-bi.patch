@@ -1,0 +1,41 @@
+From bb4a81aae83dc618dd66cb90cc390d07e9f430d3 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Mon, 30 Jan 2023 14:02:37 +0100
+Subject: [PATCH 01/13] NOTCBL: FROMLIST: ftrace: sample: avoid open-coded
+ 64-bit division
+
+Calculating the average period requires a 64-bit division that leads
+to a link failure on 32-bit architectures:
+
+x86_64-linux-ld: samples/ftrace/ftrace-ops.o: in function `ftrace_ops_sample_init':
+ftrace-ops.c:(.init.text+0x23b): undefined reference to `__udivdi3'
+
+Use the div_u64() helper to do this instead. Since this is an init function that
+is not called frequently, the runtime overhead is going to be acceptable.
+
+Fixes: b56c68f705ca ("ftrace: Add sample with custom ops")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20230130130246.247537-1-arnd@kernel.org
+---
+ samples/ftrace/ftrace-ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/samples/ftrace/ftrace-ops.c b/samples/ftrace/ftrace-ops.c
+index 24deb51c7261..0c8da87ff5c3 100644
+--- a/samples/ftrace/ftrace-ops.c
++++ b/samples/ftrace/ftrace-ops.c
+@@ -223,7 +223,7 @@ static int __init ftrace_ops_sample_init(void)
+ 
+ 	pr_info("Attempted %u calls to %ps in %lluns (%lluns / call)\n",
+ 		nr_function_calls, tracee_relevant,
+-		period, period / nr_function_calls);
++		period, div_u64(period, nr_function_calls));
+ 
+ 	if (persist)
+ 		return 0;
+
+base-commit: 38d2b86a665b5e86371a1a30228bce259aa6c101
+-- 
+2.39.1
+
