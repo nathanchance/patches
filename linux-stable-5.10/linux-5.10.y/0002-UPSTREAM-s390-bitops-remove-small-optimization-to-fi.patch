@@ -1,4 +1,4 @@
-From e4b12c48fab274e71cd745d59212e5cfdae0703a Mon Sep 17 00:00:00 2001
+From 667ea009b762c4f77fdebe86aafdb287212d2825 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 20:01:36 +0100
 Subject: [PATCH 02/16] UPSTREAM: s390/bitops: remove small optimization to fix
@@ -89,5 +89,5 @@ index 431e208a5ea4..31121d32f81d 100644
  	__atomic64_xor(mask, (long *)addr);
  }
 -- 
-2.39.1
+2.39.2
 
