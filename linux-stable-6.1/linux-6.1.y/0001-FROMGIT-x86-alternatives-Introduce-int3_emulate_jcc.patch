@@ -1,4 +1,4 @@
-From 815eac1ab39b4c0305bf4dddd48eb741d6fdbc66 Mon Sep 17 00:00:00 2001
+From 774131e8237c6e8803d96e31dcbc0ef650140a76 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 23 Jan 2023 21:59:16 +0100
 Subject: [PATCH 01/11] FROMGIT: x86/alternatives: Introduce int3_emulate_jcc()
@@ -131,7 +131,7 @@ index 5be7f23099e1..ea155f0cf545 100644
  NOKPROBE_SYMBOL(kprobe_emulate_loop);
  
 
-base-commit: 129c15b606278f9254a16013f7e5a94a128d9bcd
+base-commit: 1ac8758e027247774464c808447a9c2f1f97b637
 -- 
 2.39.2
 
