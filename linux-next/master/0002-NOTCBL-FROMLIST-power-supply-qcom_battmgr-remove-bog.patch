@@ -1,0 +1,43 @@
+From 3b0838130782936a9b95800676ba6e572c05a55a Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 14 Feb 2023 14:20:42 +0100
+Subject: [PATCH 02/12] NOTCBL: FROMLIST: power: supply: qcom_battmgr: remove
+ bogus do_div()
+
+The argument to do_div() is a 32-bit integer, and it was read from a
+32-bit register so there is no point in doing a 64-bit division on it.
+
+On 32-bit arm, do_div() causes a compile-time warning here:
+
+include/asm-generic/div64.h:238:22: error: passing argument 1 of '__div64_32' from incompatible pointer type [-Werror=incompatible-pointer-types]
+  238 |   __rem = __div64_32(&(n), __base); \
+      |                      ^~~~
+      |                      |
+      |                      unsigned int *
+drivers/power/supply/qcom_battmgr.c:1130:4: note: in expansion of macro 'do_div'
+ 1130 |    do_div(battmgr->status.percent, 100);
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230214132052.1556699-1-arnd@kernel.org
+---
+ drivers/power/supply/qcom_battmgr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index ec31f887184f..de77df97b3a4 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -1126,8 +1126,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
+ 			battmgr->info.charge_type = le32_to_cpu(resp->intval.value);
+ 			break;
+ 		case BATT_CAPACITY:
+-			battmgr->status.percent = le32_to_cpu(resp->intval.value);
+-			do_div(battmgr->status.percent, 100);
++			battmgr->status.percent = le32_to_cpu(resp->intval.value) / 100;
+ 			break;
+ 		case BATT_VOLT_OCV:
+ 			battmgr->status.voltage_ocv = le32_to_cpu(resp->intval.value);
+-- 
+2.39.2
+

@@ -1,7 +1,7 @@
-From fc43741a96c8f55067c29cccb5472d3949339109 Mon Sep 17 00:00:00 2001
+From 407e179730574cb801b4ccf6e0f98dc146380d44 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
-Subject: [PATCH 13/13] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
+Subject: [PATCH 11/12] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
  with GCC 12 (unrecognized opcode: `wrteei')"
 
 This reverts commit 0d913358a816b35fa5b75385e80f63b9abcf1b27.
@@ -13,12 +13,12 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  arch/powerpc/include/asm/nohash/pgtable.h |  2 +-
  arch/powerpc/include/asm/synch.h          |  5 +----
  arch/powerpc/mm/nohash/tlb_low.S          |  4 ++--
- arch/powerpc/platforms/Kconfig.cputype    | 17 +----------------
+ arch/powerpc/platforms/Kconfig.cputype    | 19 +------------------
  arch/powerpc/sysdev/fsl_rio.c             | 12 ++----------
- 6 files changed, 7 insertions(+), 35 deletions(-)
+ 6 files changed, 7 insertions(+), 37 deletions(-)
 
 diff --git a/arch/powerpc/include/asm/barrier.h b/arch/powerpc/include/asm/barrier.h
-index e80b2c0e9315..ae6b732ef99b 100644
+index b95b666f0374..2e0a443578c7 100644
 --- a/arch/powerpc/include/asm/barrier.h
 +++ b/arch/powerpc/include/asm/barrier.h
 @@ -42,8 +42,6 @@
@@ -82,7 +82,7 @@ index e1199608ff4d..4a0ea62aa2d5 100644
  	sync
  	wrtee	r10
 diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
-index 31cea2eeb59e..c46d690a81e2 100644
+index 046b571496b1..ba7c58a3f107 100644
 --- a/arch/powerpc/platforms/Kconfig.cputype
 +++ b/arch/powerpc/platforms/Kconfig.cputype
 @@ -138,7 +138,7 @@ config POWERPC64_CPU
@@ -94,9 +94,9 @@ index 31cea2eeb59e..c46d690a81e2 100644
  
  config CELL_CPU
  	bool "Cell Broadband Engine"
-@@ -193,18 +193,6 @@ config 405_CPU
- 	bool "40x family"
+@@ -196,20 +196,6 @@ config 405_CPU
  	depends on 40x
+ 	depends on !CC_IS_CLANG
  
 -config 440_CPU
 -	bool "440 (44x family)"
@@ -105,15 +105,17 @@ index 31cea2eeb59e..c46d690a81e2 100644
 -config 464_CPU
 -	bool "464 (44x family)"
 -	depends on 44x
+-	depends on !CC_IS_CLANG
 -
 -config 476_CPU
 -	bool "476 (47x family)"
 -	depends on PPC_47x
+-	depends on !CC_IS_CLANG
 -
  config 860_CPU
  	bool "8xx family"
  	depends on PPC_8xx
-@@ -254,9 +242,6 @@ config TARGET_CPU
+@@ -262,9 +248,6 @@ config TARGET_CPU
  	default "power4" if POWERPC64_CPU && !CPU_LITTLE_ENDIAN
  	default "power8" if POWERPC64_CPU && CPU_LITTLE_ENDIAN
  	default "405" if 405_CPU
@@ -156,5 +158,5 @@ index c8f044d62fe2..272762b937ac 100644
  void __iomem *rmu_regs_win;
  resource_size_t rio_law_start;
 -- 
-2.39.1
+2.39.2
 
