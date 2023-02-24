@@ -1,7 +1,7 @@
 From 0b99be107f6c366b663b2389764a2fd65679c2f9 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 7 Feb 2023 17:13:12 +0100
-Subject: [PATCH 01/12] NOTCBL: FROMLIST: media: i2c: imx290: fix conditional
+Subject: [PATCH 01/13] NOTCBL: FROMLIST: media: i2c: imx290: fix conditional
  function defintions
 
 The runtime suspend/resume functions are only referenced from the
