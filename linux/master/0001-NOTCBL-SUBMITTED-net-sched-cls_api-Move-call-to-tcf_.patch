@@ -1,0 +1,53 @@
+From 902e1d4b596733faee52c33ef958f8aad9c93ae0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 24 Feb 2023 11:18:49 -0700
+Subject: [PATCH 01/10] NOTCBL: SUBMITTED: net/sched: cls_api: Move call to
+ tcf_exts_miss_cookie_base_destroy()
+
+When CONFIG_NET_CLS_ACT is disabled:
+
+  ../net/sched/cls_api.c:141:13: warning: 'tcf_exts_miss_cookie_base_destroy' defined but not used [-Wunused-function]
+    141 | static void tcf_exts_miss_cookie_base_destroy(struct tcf_exts *exts)
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Due to the way the code is structured, it is possible for a definition
+of tcf_exts_miss_cookie_base_destroy() to be present without actually
+being used. Its single callsite is in an '#ifdef CONFIG_NET_CLS_ACT'
+block but a definition will always be present in the file. The version
+of tcf_exts_miss_cookie_base_destroy() that actually does something
+depends on CONFIG_NET_TC_SKB_EXT, so the stub function is used in both
+CONFIG_NET_CLS_ACT=n and CONFIG_NET_CLS_ACT=y + CONFIG_NET_TC_SKB_EXT=n
+configurations.
+
+Move the call to tcf_exts_miss_cookie_base_destroy() in
+tcf_exts_destroy() out of the '#ifdef CONFIG_NET_CLS_ACT', so that it
+always appears used to the compiler, while not changing any behavior
+with any of the various configuration combinations.
+
+Fixes: 80cd22c35c90 ("net/sched: cls_api: Support hardware miss to tc action")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230224-cls_api-wunused-function-v1-1-12c77986dc2d@kernel.org
+---
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 3569e2c3660c..2a6b6be0811b 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3241,9 +3241,9 @@ EXPORT_SYMBOL(tcf_exts_init_ex);
+ 
+ void tcf_exts_destroy(struct tcf_exts *exts)
+ {
+-#ifdef CONFIG_NET_CLS_ACT
+ 	tcf_exts_miss_cookie_base_destroy(exts);
+ 
++#ifdef CONFIG_NET_CLS_ACT
+ 	if (exts->actions) {
+ 		tcf_action_destroy(exts->actions, TCA_ACT_UNBIND);
+ 		kfree(exts->actions);
+
+base-commit: d2980d8d826554fa6981d621e569a453787472f8
+-- 
+2.39.2
+
