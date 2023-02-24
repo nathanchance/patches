@@ -1,0 +1,29 @@
+From c25e52c37e408f2635796fdae8473207ec1c0ba8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 23 Feb 2023 12:17:27 -0700
+Subject: [PATCH 9/9] HACK: CURRENT: mlxsw: spectrum_acl_bloom_filter:
+ Workaround -Wattribute-warning
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1781
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ .../net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c    | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
+index e2aced7ab454..23bfe565e3ca 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
+@@ -243,6 +243,9 @@ __mlxsw_sp_acl_bf_key_encode(struct mlxsw_sp_acl_atcam_region *aregion,
+ 	chunk_count = 1 + ((block_count - 1) >> 2);
+ 	erp_region_id = cpu_to_be16(aentry->ht_key.erp_id |
+ 				   (aregion->region->id << 4));
++#ifdef CONFIG_CC_IS_CLANG
++#pragma clang loop unroll(disable)
++#endif
+ 	for (chunk_index = max_chunks - chunk_count; chunk_index < max_chunks;
+ 	     chunk_index++) {
+ 		memset(chunk, 0, pad_bytes);
+-- 
+2.39.2
+
