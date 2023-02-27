@@ -1,7 +1,7 @@
-From 4054aa17ef3a3b4b9ac9f583a56a783b8a0b88b1 Mon Sep 17 00:00:00 2001
+From 30c25a904aed725d4ce25dd49cd4df581b48f5ab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 24 Feb 2023 10:25:12 -0700
-Subject: [PATCH 06/14] SUBMITTED: drm: omapdrm: Do not use helper
+Subject: [PATCH 05/13] SUBMITTED: drm: omapdrm: Do not use helper
  unininitialized in omap_fbdev_init()
 
 Clang warns (or errors with CONFIG_WERROR):

@@ -1,7 +1,7 @@
-From 30cdd5d0d591f8544dfe2ef53d5597f00125e1ea Mon Sep 17 00:00:00 2001
+From bd6bdff495dd1eb97217c8aefe9d0573d63c7e9c Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 Date: Sat, 25 Feb 2023 13:15:23 +0100
-Subject: [PATCH 04/14] NOTCBL: FROMLIST: zram: Use atomic_long_read() to read
+Subject: [PATCH 04/13] NOTCBL: FROMLIST: zram: Use atomic_long_read() to read
  atomic_long_t
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
