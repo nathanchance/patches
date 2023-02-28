@@ -1,7 +1,7 @@
-From 8273b48bffa73e54ad123c4244e0264bf32a87b2 Mon Sep 17 00:00:00 2001
+From dc256bda68f40b334647f02fc0f7517ddc2561bc Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 14 Feb 2023 14:20:42 +0100
-Subject: [PATCH 02/13] NOTCBL: FROMLIST: power: supply: qcom_battmgr: remove
+Subject: [PATCH 02/12] NOTCBL: FROMLIST: power: supply: qcom_battmgr: remove
  bogus do_div()
 
 The argument to do_div() is a 32-bit integer, and it was read from a
