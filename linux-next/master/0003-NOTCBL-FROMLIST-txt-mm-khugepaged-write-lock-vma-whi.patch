@@ -1,0 +1,33 @@
+From 7f0f15801315d6650a1113eb3d05f2ba3b7039b1 Mon Sep 17 00:00:00 2001
+From: Suren Baghdasaryan <surenb@google.com>
+Date: Sat, 4 Mar 2023 15:24:15 -0800
+Subject: [PATCH 03/11] NOTCBL: FROMLIST:
+ txt-mm-khugepaged-write-lock-vma-while-collapsing-a-huge-page-fix-fix
+
+I missed vma_try_start_write() definition for CONFIG_PER_VMA_LOCK=n
+configuration.
+
+Link: https://lkml.kernel.org/r/CAJuCfpFjWhtzRE1X=J+_JjgJzNKhq-=JT8yTBSTHthwp0pqWZw@mail.gmail.com
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20230305191335.fee8e6aa285b0ca771cab9dd@linux-foundation.org/
+---
+ include/linux/mm.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 5f16263d176d..ce1590933995 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -740,6 +740,8 @@ static inline bool vma_start_read(struct vm_area_struct *vma)
+ 		{ return false; }
+ static inline void vma_end_read(struct vm_area_struct *vma) {}
+ static inline void vma_start_write(struct vm_area_struct *vma) {}
++static inline bool vma_try_start_write(struct vm_area_struct *vma)
++		{ return true; }
+ static inline void vma_assert_write_locked(struct vm_area_struct *vma) {}
+ static inline void vma_mark_detached(struct vm_area_struct *vma,
+ 				     bool detached) {}
+-- 
+2.39.2
+
