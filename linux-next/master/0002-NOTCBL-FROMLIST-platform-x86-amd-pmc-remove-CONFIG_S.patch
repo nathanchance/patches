@@ -1,7 +1,7 @@
 From 2fc4e033d26287527ea7e35309e8ed29f706f85b Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 14 Feb 2023 16:25:07 +0100
-Subject: [PATCH 02/11] NOTCBL: FROMLIST: platform/x86/amd: pmc: remove
+Subject: [PATCH 02/12] NOTCBL: FROMLIST: platform/x86/amd: pmc: remove
  CONFIG_SUSPEND checks
 
 The amd_pmc_write_stb() function was previously hidden in an
