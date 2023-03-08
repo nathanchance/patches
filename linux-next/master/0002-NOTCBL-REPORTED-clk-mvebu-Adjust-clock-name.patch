@@ -1,0 +1,25 @@
+From f788fcf8db9361d82a7d8f2bce8b309e68ecd7c1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 8 Mar 2023 09:45:22 -0700
+Subject: [PATCH 02/11] NOTCBL: REPORTED: clk: mvebu: Adjust clock name
+
+Link: https://lore.kernel.org/20230308160140.GA2347814@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clk/mvebu/kirkwood.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/mvebu/kirkwood.c b/drivers/clk/mvebu/kirkwood.c
+index 8bc893df4736..5d0a7e3bfde5 100644
+--- a/drivers/clk/mvebu/kirkwood.c
++++ b/drivers/clk/mvebu/kirkwood.c
+@@ -355,5 +355,5 @@ CLK_OF_DECLARE(kirkwood_clk, "marvell,kirkwood-core-clock",
+ 	       kirkwood_clk_init);
+ CLK_OF_DECLARE(mv88f6180_clk, "marvell,mv88f6180-core-clock",
+ 	       kirkwood_clk_init);
+-CLK_OF_DECLARE(98dx1135_clk, "marvell,mv98dx1135-core-clock",
++CLK_OF_DECLARE(mv98dx1135_clk, "marvell,mv98dx1135-core-clock",
+ 	       kirkwood_clk_init);
+-- 
+2.39.2
+
