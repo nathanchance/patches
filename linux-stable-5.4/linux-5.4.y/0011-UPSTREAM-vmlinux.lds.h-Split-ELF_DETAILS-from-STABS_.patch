@@ -1,4 +1,4 @@
-From 4e8bd8b4eb09f59c9f2735e9caa51ffa9110aba9 Mon Sep 17 00:00:00 2001
+From 441e7a02b8e11344154c22516c26b9c17471034d Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 11/29] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
@@ -236,7 +236,7 @@ index 23cd1a9e52a1..015fd90dc7ff 100644
  	DISCARDS
  }
 diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index 4df41695caec..2bb12b31cb0f 100644
+index 99053c80388e..03edb53389f9 100644
 --- a/arch/s390/kernel/vmlinux.lds.S
 +++ b/arch/s390/kernel/vmlinux.lds.S
 @@ -184,6 +184,7 @@ SECTIONS
