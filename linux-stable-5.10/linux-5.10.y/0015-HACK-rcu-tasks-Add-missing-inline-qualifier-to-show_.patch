@@ -1,4 +1,4 @@
-From 0781ea32cfd301abd6f75a0b4b8a551e876b3c6c Mon Sep 17 00:00:00 2001
+From b08114ef28bcc3e1d96fe858fdb02ed9b429d98f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jan 2021 10:09:11 -0700
 Subject: [PATCH 15/16] HACK: rcu-tasks: Add missing inline qualifier to
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 8b51e6a5b386..53ddb4e1a2cb 100644
+index c66d47685b28..652f1354686b 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
-@@ -707,7 +707,7 @@ static void show_rcu_tasks_rude_gp_kthread(void)
+@@ -733,7 +733,7 @@ static void show_rcu_tasks_rude_gp_kthread(void)
  #endif /* #ifndef CONFIG_TINY_RCU */
  
  #else /* #ifdef CONFIG_TASKS_RUDE_RCU */
