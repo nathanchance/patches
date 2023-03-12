@@ -1,4 +1,4 @@
-From 2b342fe82903b0966f62c8b13b6c542f34fc6059 Mon Sep 17 00:00:00 2001
+From 39988bd284d2cfa24dc6597aeb09995b3b3ecf36 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
 Subject: [PATCH 09/10] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
@@ -13,12 +13,12 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  arch/powerpc/include/asm/nohash/pgtable.h |  2 +-
  arch/powerpc/include/asm/synch.h          |  5 +----
  arch/powerpc/mm/nohash/tlb_low.S          |  4 ++--
- arch/powerpc/platforms/Kconfig.cputype    | 17 +----------------
+ arch/powerpc/platforms/Kconfig.cputype    | 19 +------------------
  arch/powerpc/sysdev/fsl_rio.c             | 12 ++----------
- 6 files changed, 7 insertions(+), 35 deletions(-)
+ 6 files changed, 7 insertions(+), 37 deletions(-)
 
 diff --git a/arch/powerpc/include/asm/barrier.h b/arch/powerpc/include/asm/barrier.h
-index e80b2c0e9315..ae6b732ef99b 100644
+index b95b666f0374..2e0a443578c7 100644
 --- a/arch/powerpc/include/asm/barrier.h
 +++ b/arch/powerpc/include/asm/barrier.h
 @@ -42,8 +42,6 @@
@@ -82,10 +82,10 @@ index e1199608ff4d..4a0ea62aa2d5 100644
  	sync
  	wrtee	r10
 diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
-index 9563336e3348..598f23a9790c 100644
+index 046b571496b1..ba7c58a3f107 100644
 --- a/arch/powerpc/platforms/Kconfig.cputype
 +++ b/arch/powerpc/platforms/Kconfig.cputype
-@@ -139,7 +139,7 @@ config GENERIC_CPU
+@@ -138,7 +138,7 @@ config POWERPC64_CPU
  
  config POWERPC_CPU
  	bool "Generic 32 bits powerpc"
@@ -94,9 +94,9 @@ index 9563336e3348..598f23a9790c 100644
  
  config CELL_CPU
  	bool "Cell Broadband Engine"
-@@ -194,18 +194,6 @@ config 405_CPU
- 	bool "40x family"
+@@ -196,20 +196,6 @@ config 405_CPU
  	depends on 40x
+ 	depends on !CC_IS_CLANG
  
 -config 440_CPU
 -	bool "440 (44x family)"
@@ -105,17 +105,19 @@ index 9563336e3348..598f23a9790c 100644
 -config 464_CPU
 -	bool "464 (44x family)"
 -	depends on 44x
+-	depends on !CC_IS_CLANG
 -
 -config 476_CPU
 -	bool "476 (47x family)"
 -	depends on PPC_47x
+-	depends on !CC_IS_CLANG
 -
  config 860_CPU
  	bool "8xx family"
  	depends on PPC_8xx
-@@ -252,9 +240,6 @@ config TARGET_CPU
- 	default "power9" if POWER9_CPU
- 	default "power10" if POWER10_CPU
+@@ -262,9 +248,6 @@ config TARGET_CPU
+ 	default "power4" if POWERPC64_CPU && !CPU_LITTLE_ENDIAN
+ 	default "power8" if POWERPC64_CPU && CPU_LITTLE_ENDIAN
  	default "405" if 405_CPU
 -	default "440" if 440_CPU
 -	default "464" if 464_CPU
