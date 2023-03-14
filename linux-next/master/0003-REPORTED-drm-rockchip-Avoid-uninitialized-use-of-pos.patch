@@ -1,0 +1,44 @@
+From 3140716495946840a03cf3e7674bde26ea3cf3a3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 14 Mar 2023 10:46:08 -0700
+Subject: [PATCH 03/11] REPORTED: drm/rockchip: Avoid uninitialized use of
+ possible_crtcs in vop2_create_crtcs()
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1812
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 03ca32cd2050..fce992c3506f 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2301,7 +2301,7 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+ 	nvp = 0;
+ 	for (i = 0; i < vop2->registered_num_wins; i++) {
+ 		struct vop2_win *win = &vop2->win[i];
+-		u32 possible_crtcs;
++		u32 possible_crtcs = 0;
+ 
+ 		if (vop2->data->soc_id == 3566) {
+ 			/*
+@@ -2327,12 +2327,11 @@ static int vop2_create_crtcs(struct vop2 *vop2)
+ 				/* change the unused primary window to overlay window */
+ 				win->type = DRM_PLANE_TYPE_OVERLAY;
+ 			}
+-		} else if (win->type == DRM_PLANE_TYPE_OVERLAY) {
+-			possible_crtcs = (1 << nvps) - 1;
+-		} else {
+-			possible_crtcs = 0;
+ 		}
+ 
++		if (win->type == DRM_PLANE_TYPE_OVERLAY)
++			possible_crtcs = (1 << nvps) - 1;
++
+ 		ret = vop2_plane_init(vop2, win, possible_crtcs);
+ 		if (ret) {
+ 			drm_err(vop2->drm, "failed to init plane %s: %d\n",
+-- 
+2.40.0
+
