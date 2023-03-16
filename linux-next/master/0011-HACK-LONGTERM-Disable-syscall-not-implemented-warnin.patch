@@ -1,7 +1,7 @@
-From 725d63ec27ae7a46ea73e322b5b79cdb00018b22 Mon Sep 17 00:00:00 2001
+From 09ec19322dff0f9f21b41757de74853a1ec03fd0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 20 May 2022 16:30:18 -0700
-Subject: [PATCH 10/12] HACK: LONGTERM: Disable syscall not implemented warning
+Subject: [PATCH 11/13] HACK: LONGTERM: Disable syscall not implemented warning
 
 This used to impact -Werror and it is noisy at times so just ignore it
 for the sake of this project.
