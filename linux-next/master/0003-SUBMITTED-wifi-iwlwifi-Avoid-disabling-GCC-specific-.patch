@@ -1,0 +1,42 @@
+From 8feabb33fc087b5e9119154504e3d296460d8cd4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 15 Mar 2023 20:28:29 -0700
+Subject: [PATCH 03/12] SUBMITTED: wifi: iwlwifi: Avoid disabling GCC specific
+ flag with clang
+
+Clang errors:
+
+  drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c:15:32: error: unknown warning group '-Wsuggest-attribute=format', ignored [-Werror,-Wunknown-warning-option]
+  #pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
+                                 ^
+  1 error generated.
+
+The warning being disabled by this pragma is GCC specific. Guard its use
+with CONFIG_CC_IS_GCC so that it is not used with clang to clear up the
+error.
+
+Fixes: 4eca8cbf7ba8 ("wifi: iwlwifi: suppress printf warnings in tracing")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1818
+Link: https://lore.kernel.org/r/20230315-iwlwifi-fix-pragma-v1-1-ad23f92c4739@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
+index c190ec5effa1..e46639b097f4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace.c
+@@ -12,7 +12,9 @@
+ #include "iwl-trans.h"
+ 
+ #define CREATE_TRACE_POINTS
++#ifdef CONFIG_CC_IS_GCC
+ #pragma GCC diagnostic ignored "-Wsuggest-attribute=format"
++#endif
+ #include "iwl-devtrace.h"
+ 
+ EXPORT_TRACEPOINT_SYMBOL(iwlwifi_dev_ucode_event);
+-- 
+2.40.0
+
