@@ -1,4 +1,4 @@
-From adfd75605daabede9e728289ad2a475a17c07065 Mon Sep 17 00:00:00 2001
+From 6fdd04480793e49df7045c71774dc9b1733fc096 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
 Subject: [PATCH 17/29] UPSTREAM: riscv: Use $(LD) instead of $(CC) to link
@@ -89,5 +89,5 @@ index 4ad82570ad26..cd44d08f770c 100644
  
  # Extracts symbol offsets from the VDSO, converting them into an assembly file
 -- 
-2.39.2
+2.40.0
 

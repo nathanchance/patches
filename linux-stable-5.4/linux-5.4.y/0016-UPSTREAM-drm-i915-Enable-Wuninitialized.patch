@@ -1,4 +1,4 @@
-From 41a2969c47d3c9217f3d9e89bd1a685e26783956 Mon Sep 17 00:00:00 2001
+From 29bcc36c0acb7e28cd5080d6f8071960686c2926 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 16 Feb 2021 14:29:54 -0700
 Subject: [PATCH 16/29] UPSTREAM: drm/i915: Enable -Wuninitialized
@@ -45,5 +45,5 @@ index a4e385f68713..de8719971225 100644
  subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
  
 -- 
-2.39.2
+2.40.0
 

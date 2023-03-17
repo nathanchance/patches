@@ -1,4 +1,4 @@
-From 39aef7f72837d6a5f3bbc95167def64092473d06 Mon Sep 17 00:00:00 2001
+From 16e86f9dd12276f517ba796dfdd22dba20ff4c07 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 11/29] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
@@ -210,10 +210,10 @@ index 99cd24f2ea01..a4d4aac52bfa 100644
  
  	/* Sections to be discarded */
 diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
-index 515abfa4ac55..994626a49f4e 100644
+index 8b9f51f77cde..de9a6ea76b21 100644
 --- a/arch/powerpc/kernel/vmlinux.lds.S
 +++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -389,8 +389,8 @@ SECTIONS
+@@ -390,8 +390,8 @@ SECTIONS
  	PROVIDE32 (end = .);
  
  	STABS_DEBUG
@@ -236,10 +236,10 @@ index 23cd1a9e52a1..015fd90dc7ff 100644
  	DISCARDS
  }
 diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index 99053c80388e..03edb53389f9 100644
+index f8cc4e8524bf..58cdbdfed168 100644
 --- a/arch/s390/kernel/vmlinux.lds.S
 +++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -184,6 +184,7 @@ SECTIONS
+@@ -186,6 +186,7 @@ SECTIONS
  	/* Debugging sections.	*/
  	STABS_DEBUG
  	DWARF_DEBUG
@@ -248,10 +248,10 @@ index 99053c80388e..03edb53389f9 100644
  	/* Sections to be discarded */
  	DISCARDS
 diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.S
-index 77a59d8c6b4d..1d8506bdebdf 100644
+index ec3bae172b20..b69e01f93857 100644
 --- a/arch/sh/kernel/vmlinux.lds.S
 +++ b/arch/sh/kernel/vmlinux.lds.S
-@@ -85,6 +85,7 @@ SECTIONS
+@@ -86,6 +86,7 @@ SECTIONS
  
  	STABS_DEBUG
  	DWARF_DEBUG
@@ -311,10 +311,10 @@ index 508cfa6828c5..b26911e378bf 100644
 +	ELF_DETAILS
  }
 diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
-index 1afe211d7a7c..fbccf793aa78 100644
+index 7e0e21082c93..24461c5e5a60 100644
 --- a/arch/x86/kernel/vmlinux.lds.S
 +++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -415,6 +415,7 @@ SECTIONS
+@@ -417,6 +417,7 @@ SECTIONS
  
  	STABS_DEBUG
  	DWARF_DEBUG
@@ -323,7 +323,7 @@ index 1afe211d7a7c..fbccf793aa78 100644
  	DISCARDS
  	/DISCARD/ : {
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index c3bcac22c389..102464be6407 100644
+index a68535f36d13..dbdfd0aad3e9 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
 @@ -35,6 +35,7 @@
@@ -355,5 +355,5 @@ index c3bcac22c389..102464be6407 100644
  
  #ifdef CONFIG_GENERIC_BUG
 -- 
-2.39.2
+2.40.0
 

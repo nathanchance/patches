@@ -1,4 +1,4 @@
-From d60e076e0369c9bf2ad99dfc9612c9916f6c4e59 Mon Sep 17 00:00:00 2001
+From 74ff20229ca744cbb1c1148ab4bbb076f3835015 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
 Subject: [PATCH 12/29] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 102464be6407..ad89e5320b2c 100644
+index dbdfd0aad3e9..1d01c9c085ae 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
 @@ -778,7 +778,10 @@
@@ -44,5 +44,5 @@ index 102464be6407..ad89e5320b2c 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.39.2
+2.40.0
 

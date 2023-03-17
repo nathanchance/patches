@@ -1,4 +1,4 @@
-From 72b2b91f9e7a574e0b0c9d79e3bcaa93d2fbea5b Mon Sep 17 00:00:00 2001
+From 89bb6156e21e6fefcd86c8ef6774e0a000c747fb Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
 Subject: [PATCH 09/29] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
@@ -30,10 +30,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
-index 3ea360cad337..515abfa4ac55 100644
+index 46dfb3701c6e..8b9f51f77cde 100644
 --- a/arch/powerpc/kernel/vmlinux.lds.S
 +++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -285,6 +285,7 @@ SECTIONS
+@@ -286,6 +286,7 @@ SECTIONS
  		*(.dynamic)
  	}
  	.hash : AT(ADDR(.hash) - LOAD_OFFSET) { *(.hash) }
@@ -42,5 +42,5 @@ index 3ea360cad337..515abfa4ac55 100644
  	.rela.dyn : AT(ADDR(.rela.dyn) - LOAD_OFFSET)
  	{
 -- 
-2.39.2
+2.40.0
 
