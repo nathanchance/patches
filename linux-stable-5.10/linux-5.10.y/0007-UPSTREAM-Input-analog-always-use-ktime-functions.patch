@@ -1,4 +1,4 @@
-From 7c9a635fc060f8f0835542242600b8a3484e094d Mon Sep 17 00:00:00 2001
+From d0d3de13dae39d26a62ab63c2a2c0c738ca8f067 Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Tue, 7 Sep 2021 18:37:08 -0700
 Subject: [PATCH 07/16] UPSTREAM: Input: analog - always use ktime functions
@@ -219,5 +219,5 @@ index 2b625ebef914..c06ee88d8ded 100644
  		for (i = 0; i < ANALOG_INIT_RETRIES; i++) {
  			if (!analog_cooked_read(port))
 -- 
-2.39.2
+2.40.0
 
