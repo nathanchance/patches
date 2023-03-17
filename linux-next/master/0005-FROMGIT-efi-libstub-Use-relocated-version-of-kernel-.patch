@@ -1,7 +1,7 @@
 From a3d1b28748dffe83c1f64d3a870703aa4cce9652 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sun, 12 Mar 2023 23:48:20 +0100
-Subject: [PATCH 05/13] FROMGIT: efi: libstub: Use relocated version of
+Subject: [PATCH 05/14] FROMGIT: efi: libstub: Use relocated version of
  kernel's struct screen_info
 
 In some cases, we expose the kernel's struct screen_info to the EFI stub
