@@ -1,4 +1,4 @@
-From ff3c461ff8030b4f04583efed5af88f04bb5a9fb Mon Sep 17 00:00:00 2001
+From 9da3adceef6a500a504be6d8a9165410f62154b4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 5 Feb 2023 12:08:57 -0700
 Subject: [PATCH 8/8] HACK: CURRENT: infiniband: core: Work around KASAN +
@@ -26,5 +26,5 @@ index 8730674ceb2e..ca407df5ea7f 100644
  		goto out;
  
 -- 
-2.39.2
+2.40.0
 
