@@ -1,4 +1,4 @@
-From a63c3b167bb0b4a1fdd20985a1463db8d48bab19 Mon Sep 17 00:00:00 2001
+From 52814fc91340f3603ccbb1fe1e109615b5b6694a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jul 2022 17:51:00 -0700
 Subject: [PATCH 7/7] HACK: LONGTERM: Revert "powerpc/44x: Fix build failure
@@ -156,5 +156,5 @@ index c8f044d62fe2..272762b937ac 100644
  void __iomem *rmu_regs_win;
  resource_size_t rio_law_start;
 -- 
-2.39.2
+2.40.0
 

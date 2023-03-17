@@ -1,4 +1,4 @@
-From 67c620a95e3456cd6739781a0075319d9e3fb1c0 Mon Sep 17 00:00:00 2001
+From 228bd2931f79bd8275c36cc8df759a252378515c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
 Subject: [PATCH 4/7] HACK: LONGTERM: fs/namei.c: -Wbitwise-instead-of-logical
@@ -22,5 +22,5 @@ index 309ae6fc8c99..41459685ebbb 100644
  	adata = prep_zero_mask(a, adata, &constants);
  	bdata = prep_zero_mask(b, bdata, &constants);
 -- 
-2.39.2
+2.40.0
 
