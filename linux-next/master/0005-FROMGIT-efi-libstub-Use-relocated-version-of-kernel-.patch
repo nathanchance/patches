@@ -1,4 +1,4 @@
-From e5ee32c6c4a43b564a3c0a841df0f8affc83e033 Mon Sep 17 00:00:00 2001
+From a3d1b28748dffe83c1f64d3a870703aa4cce9652 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sun, 12 Mar 2023 23:48:20 +0100
 Subject: [PATCH 05/13] FROMGIT: efi: libstub: Use relocated version of
@@ -19,8 +19,8 @@ and the latter now takes place after copying the image to its new
 location, which means we copy the old, uninitialized state.
 
 So let's ensure that alloc_screen_info() produces the correct
-screen_info pointer, by keeping its relocated address in a global
-variable.
+screen_info pointer, by taking the displacement of the loaded image into
+account.
 
 Cc: loongarch@lists.linux.dev
 Cc: Xuefeng Li <lixuefeng@loongson.cn>
@@ -30,88 +30,54 @@ Reported-by: Huacai Chen <chenhuacai@loongson.cn>
 Link: https://lore.kernel.org/linux-efi/20230310021749.921041-1-chenhuacai@loongson.cn/
 Fixes: 42c8ea3dca094ab8 ("efi: libstub: Factor out EFI stub entrypoint into separate file")
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://git.kernel.org/efi/efi/c/ef3efc2af044f6da5bb8c55e99f2398081d99c09
+Link: https://git.kernel.org/efi/efi/c/5a223eba53edf2a46c1ab1e790a142241af691aa
 ---
- drivers/firmware/efi/libstub/efi-stub-entry.c | 18 ++++++++++++++++++
- drivers/firmware/efi/libstub/efi-stub.c       |  9 ---------
- drivers/firmware/efi/libstub/screen_info.c    |  7 -------
- 3 files changed, 18 insertions(+), 16 deletions(-)
+ drivers/firmware/efi/libstub/arm64-stub.c | 4 +++-
+ drivers/firmware/efi/libstub/efi-stub.c   | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index 5245c4f031c0..629840696ea0 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -5,6 +5,19 @@
- 
- #include "efistub.h"
- 
-+#ifndef CONFIG_ARM
-+static struct screen_info *si;
-+
-+struct screen_info *alloc_screen_info(void)
-+{
-+	return si;
-+}
-+
-+void free_screen_info(struct screen_info *si)
-+{
-+}
-+#endif
-+
- /*
-  * EFI entry point for the generic EFI stub used by ARM, arm64, RISC-V and
-  * LoongArch. This is the entrypoint that is described in the PE/COFF header
-@@ -56,6 +69,11 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 		return status;
+diff --git a/drivers/firmware/efi/libstub/arm64-stub.c b/drivers/firmware/efi/libstub/arm64-stub.c
+index b996553cdb4c..770b8ecb7398 100644
+--- a/drivers/firmware/efi/libstub/arm64-stub.c
++++ b/drivers/firmware/efi/libstub/arm64-stub.c
+@@ -85,8 +85,10 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 		}
  	}
  
-+#ifndef CONFIG_ARM
-+	/* point si to the relocated copy of struct screen_info */
-+	si = (void *)&screen_info + image_addr - (unsigned long)image->image_base;
-+#endif
-+
- 	status = efi_stub_common(handle, image, image_addr, cmdline_ptr);
+-	if (image->image_base != _text)
++	if (image->image_base != _text) {
+ 		efi_err("FIRMWARE BUG: efi_loaded_image_t::image_base has bogus value\n");
++		image->image_base = _text;
++	}
  
- 	efi_free(image_size, image_addr);
+ 	if (!IS_ALIGNED((u64)_text, SEGMENT_ALIGN))
+ 		efi_err("FIRMWARE BUG: kernel image not aligned on %dk boundary\n",
 diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index 2955c1ac6a36..c4b9eccad0f1 100644
+index 2955c1ac6a36..ddb31d3eb4a6 100644
 --- a/drivers/firmware/efi/libstub/efi-stub.c
 +++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -47,15 +47,6 @@
+@@ -47,9 +47,11 @@
  static u64 virtmap_base = EFI_RT_VIRTUAL_BASE;
  static bool flat_va_mapping = (EFI_RT_VIRTUAL_OFFSET != 0);
  
--struct screen_info * __weak alloc_screen_info(void)
--{
--	return &screen_info;
--}
--
--void __weak free_screen_info(struct screen_info *si)
--{
--}
--
- static struct screen_info *setup_graphics(void)
++static unsigned long screen_info_offset;
++
+ struct screen_info * __weak alloc_screen_info(void)
  {
- 	efi_guid_t gop_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
-diff --git a/drivers/firmware/efi/libstub/screen_info.c b/drivers/firmware/efi/libstub/screen_info.c
-index 8e76a8b384ba..b2637420fe53 100644
---- a/drivers/firmware/efi/libstub/screen_info.c
-+++ b/drivers/firmware/efi/libstub/screen_info.c
-@@ -15,14 +15,7 @@
-  * early, but it only works if the EFI stub is part of the core kernel image
-  * itself. The zboot decompressor can only use the configuration table
-  * approach.
-- *
-- * In order to support both methods from the same build of the EFI stub
-- * library, provide this dummy global definition of struct screen_info. If it
-- * is required to satisfy a link dependency, it means we need to override the
-- * __weak alloc and free methods with the ones below, and those will be pulled
-- * in as well.
-  */
--struct screen_info screen_info;
+-	return &screen_info;
++	return (void *)&screen_info + screen_info_offset;
+ }
  
- static efi_guid_t screen_info_guid = LINUX_EFI_SCREEN_INFO_TABLE_GUID;
+ void __weak free_screen_info(struct screen_info *si)
+@@ -166,6 +168,8 @@ efi_status_t efi_stub_common(efi_handle_t handle,
+ 	struct screen_info *si;
+ 	efi_status_t status;
  
++	screen_info_offset = image_addr - (unsigned long)image->image_base;
++
+ 	status = check_platform_features();
+ 	if (status != EFI_SUCCESS)
+ 		return status;
 -- 
 2.40.0
 
