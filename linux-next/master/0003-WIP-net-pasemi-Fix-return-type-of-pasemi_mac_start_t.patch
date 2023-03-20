@@ -1,7 +1,7 @@
-From e35ea60134e2806918b6a82d1600ef039b050c96 Mon Sep 17 00:00:00 2001
+From 7f12a660c4e81c11b4a3d24823793f70373b4ace Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 17 Mar 2023 13:37:24 -0700
-Subject: [PATCH 06/14] WIP: net: pasemi: Fix return type of
+Subject: [PATCH 03/11] WIP: net: pasemi: Fix return type of
  pasemi_mac_start_tx()
 
 With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),

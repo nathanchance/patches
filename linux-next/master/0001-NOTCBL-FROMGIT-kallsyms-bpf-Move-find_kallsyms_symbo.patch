@@ -1,7 +1,7 @@
-From 909a91cf3b3ca92e300b0e8a556f6e0fd3c86b81 Mon Sep 17 00:00:00 2001
+From c7538930b338d837120ead719440f65617524585 Mon Sep 17 00:00:00 2001
 From: Viktor Malik <vmalik@redhat.com>
 Date: Fri, 17 Mar 2023 10:56:01 +0100
-Subject: [PATCH 01/14] NOTCBL: FROMGIT: kallsyms, bpf: Move
+Subject: [PATCH 01/11] NOTCBL: FROMGIT: kallsyms, bpf: Move
  find_kallsyms_symbol_value out of internal header
 
 Moving find_kallsyms_symbol_value from kernel/module/internal.h to
@@ -39,7 +39,7 @@ Link: https://git.kernel.org/bpf/bpf-next/c/bd5314f8dd2d41330eecb60f0490c3fcfe1f
  3 files changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/include/linux/module.h b/include/linux/module.h
-index 89d5ca127ba0..248289452db3 100644
+index 54ce4f5aa5c1..daf43efd7feb 100644
 --- a/include/linux/module.h
 +++ b/include/linux/module.h
 @@ -657,6 +657,8 @@ int module_get_kallsym(unsigned int symnum, unsigned long *value, char *type,
@@ -102,7 +102,7 @@ index 4bbbe16329a7..bf2b4f119eb8 100644
  
  #ifdef CONFIG_SYSFS
 
-base-commit: 6f08c1de13a9403341c18b66638a05588b2663ce
+base-commit: 73f2c2a7e1d2b31fdd5faa6dfa151c437a6c0a5a
 -- 
 2.40.0
 
