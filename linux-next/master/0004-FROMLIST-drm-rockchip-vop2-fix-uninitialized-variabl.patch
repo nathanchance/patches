@@ -1,7 +1,7 @@
-From be6bc419757baf56b8264de280f1e0b729537b08 Mon Sep 17 00:00:00 2001
+From 0e87a6076f6e73146bf02e5fc3de3ea82c4e335f Mon Sep 17 00:00:00 2001
 From: Tom Rix <trix@redhat.com>
 Date: Thu, 16 Mar 2023 09:23:02 -0400
-Subject: [PATCH 02/11] FROMLIST: drm/rockchip: vop2: fix uninitialized
+Subject: [PATCH 04/12] FROMLIST: drm/rockchip: vop2: fix uninitialized
  variable possible_crtcs
 
 clang reportes this error

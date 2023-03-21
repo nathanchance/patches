@@ -1,0 +1,27 @@
+From f7fd915f661ca76f7a1244ddd64ba26415f0de3f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 21 Mar 2023 09:01:29 -0700
+Subject: [PATCH 02/12] NOTCBL: REPORTED: mm: memory-failure: Fix missing
+ sentinel
+
+Link: https://lore.kernel.org/20230321155626.GA3765079@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/memory-failure.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 6367714af61d..b2377f12f062 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -143,6 +143,7 @@ static struct ctl_table memory_failure_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
++	{ }
+ };
+ 
+ static int __init memory_failure_sysctl_init(void)
+-- 
+2.40.0
+

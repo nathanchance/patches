@@ -1,7 +1,7 @@
-From 0e83165f8d804bd8d483709f03bd66d00fcc3a0e Mon Sep 17 00:00:00 2001
+From 6e9b2595c4ccc2b727672466f5a1f4dbb5f55b29 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 17 Mar 2023 13:37:24 -0700
-Subject: [PATCH 03/11] WIP: net: pasemi: Fix return type of
+Date: Sun, 19 Mar 2023 16:41:08 -0700
+Subject: [PATCH 03/12] FROMGIT: net: pasemi: Fix return type of
  pasemi_mac_start_tx()
 
 With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
@@ -20,10 +20,15 @@ warning in clang aims to catch these at compile time, which reveals:
 'netdev_tx_t', not 'int'. Adjust the return type of
 pasemi_mac_start_tx() to match the prototype's to resolve the warning.
 While PowerPC does not currently implement support for kCFI, it could in
-the future, which means this warning becomes a fatal CFI failure.
+the future, which means this warning becomes a fatal CFI failure at run
+time.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://lore.kernel.org/r/20230319-pasemi-incompatible-pointer-types-strict-v1-1-1b9459d8aef0@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://git.kernel.org/netdev/net-next/c/c8384d4a51e7cb0e6587f3143f29099f202c5de1
 ---
  drivers/net/ethernet/pasemi/pasemi_mac.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
