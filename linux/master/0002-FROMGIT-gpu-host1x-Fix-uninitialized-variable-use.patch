@@ -1,4 +1,4 @@
-From 10fb971370f6c8f67c8db49c93a1d5faa21f626e Mon Sep 17 00:00:00 2001
+From 718f163c1b630ba55f523f8fae7d5d435a7effe2 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 27 Jan 2023 23:14:00 +0100
 Subject: [PATCH 02/10] FROMGIT: gpu: host1x: Fix uninitialized variable use
@@ -48,5 +48,5 @@ index 4872d183d860..aae2efeef503 100644
  	mutex_init(&host->devices_lock);
  	INIT_LIST_HEAD(&host->devices);
 -- 
-2.39.2
+2.40.0
 
