@@ -1,0 +1,36 @@
+From 7a21a91b28bc1b3b6abd0483cf80e32a50e45cc5 Mon Sep 17 00:00:00 2001
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Fri, 24 Mar 2023 10:37:54 +0100
+Subject: [PATCH 01/11] NOTCBL: FROMLIST: arm64: defconfig: remove duplicate
+ TYPEC_UCSI & QCOM_PMIC_GLINK
+
+Both configs were already applied by 2 separate changes,
+fix this to avoid:
+arch/arm64/configs/defconfig:989:warning: override: reassigning to symbol TYPEC_UCSI
+arch/arm64/configs/defconfig:1232:warning: override: reassigning to symbol QCOM_PMIC_GLINK
+
+Fixes: 4ffd0b001956 ("arm64: defconfig: add PMIC GLINK modules")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230324-topic-sm8450-upstream-defconfig-fixup-v1-1-2d75cc9b3c3d@linaro.org
+---
+ arch/arm64/configs/defconfig | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index d206a9120ee4..af5637f95e88 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -274,8 +274,6 @@ CONFIG_BLK_DEV_NVME=m
+ CONFIG_QCOM_COINCELL=m
+ CONFIG_QCOM_FASTRPC=m
+ CONFIG_BATTERY_QCOM_BATTMGR=m
+-CONFIG_QCOM_PMIC_GLINK=m
+-CONFIG_TYPEC_UCSI=m
+ CONFIG_UCSI_PMIC_GLINK=m
+ CONFIG_SRAM=y
+ CONFIG_PCI_ENDPOINT_TEST=m
+
+base-commit: a6faf7ea9fcb7267d06116d4188947f26e00e57e
+-- 
+2.40.0
+
