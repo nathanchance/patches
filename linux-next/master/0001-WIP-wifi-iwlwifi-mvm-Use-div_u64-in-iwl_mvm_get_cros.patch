@@ -1,4 +1,4 @@
-From 4ac8167c2034a3ae5de8e284a78c86df44a7a661 Mon Sep 17 00:00:00 2001
+From 85101f87e76c349b758f16eb72e7d71e8503414a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 27 Mar 2023 06:58:42 -0700
 Subject: [PATCH 1/9] WIP: wifi: iwlwifi: mvm: Use div_u64() in
@@ -23,7 +23,7 @@ index 5c2bfc8ed88d..e89259de6f4c 100644
  	*sys_time = (u64)le32_to_cpu(resp->platform_timestamp_hi) << 32 |
  		le32_to_cpu(resp->platform_timestamp_lo);
 
-base-commit: 011eb7443621f49ca1e8cdf9c74c215f25019118
+base-commit: a6faf7ea9fcb7267d06116d4188947f26e00e57e
 -- 
 2.40.0
 
