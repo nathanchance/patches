@@ -1,0 +1,42 @@
+From ad51b507fe91bcdb3a09c8a04be04c4df29dd7af Mon Sep 17 00:00:00 2001
+From: Saeed Mahameed <saeedm@nvidia.com>
+Date: Tue, 28 Mar 2023 13:07:23 -0700
+Subject: [PATCH 01/14] NOTCBL: FROMGIT: net/mlx5e: Fix build break on 32bit
+
+The cited commit caused the following build break in mlx5 due to a change
+in size of MAX_SKB_FRAGS.
+
+error: format '%lu' expects argument of type 'long unsigned int',
+       but argument 7 has type 'unsigned int' [-Werror=format=]
+
+Fix this by explicit casting.
+
+Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20230328200723.125122-1-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://git.kernel.org/netdev/net-next/c/163c2c7059178898ad7512294ca3a768df2c1515
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 90eac1aa5f6b..6db1aff8778d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5725,8 +5725,8 @@ int mlx5e_attach_netdev(struct mlx5e_priv *priv)
+ 
+ 	/* Validate the max_wqe_size_sq capability. */
+ 	if (WARN_ON_ONCE(mlx5e_get_max_sq_wqebbs(priv->mdev) < MLX5E_MAX_TX_WQEBBS)) {
+-		mlx5_core_warn(priv->mdev, "MLX5E: Max SQ WQEBBs firmware capability: %u, needed %lu\n",
+-			       mlx5e_get_max_sq_wqebbs(priv->mdev), MLX5E_MAX_TX_WQEBBS);
++		mlx5_core_warn(priv->mdev, "MLX5E: Max SQ WQEBBs firmware capability: %u, needed %u\n",
++			       mlx5e_get_max_sq_wqebbs(priv->mdev), (unsigned int)MLX5E_MAX_TX_WQEBBS);
+ 		return -EIO;
+ 	}
+ 
+
+base-commit: 198925fae644b0099b66fac1d972721e6e563b17
+-- 
+2.40.0
+

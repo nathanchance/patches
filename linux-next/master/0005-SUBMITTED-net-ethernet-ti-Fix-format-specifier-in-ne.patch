@@ -1,0 +1,55 @@
+From fa56b84f215fb44c05d2f576cd6749ed027f18b0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 29 Mar 2023 08:08:01 -0700
+Subject: [PATCH 05/14] SUBMITTED: net: ethernet: ti: Fix format specifier in
+ netcp_create_interface()
+
+After commit 3948b05950fd ("net: introduce a config option to tweak
+MAX_SKB_FRAGS"), clang warns:
+
+  drivers/net/ethernet/ti/netcp_core.c:2085:4: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+                          MAX_SKB_FRAGS);
+                          ^~~~~~~~~~~~~
+  include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+          dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+                                                                 ~~~     ^~~~~~~~~~~
+  include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+                  _p_func(dev, fmt, ##__VA_ARGS__);                       \
+                               ~~~    ^~~~~~~~~~~
+  include/linux/skbuff.h:352:23: note: expanded from macro 'MAX_SKB_FRAGS'
+  #define MAX_SKB_FRAGS CONFIG_MAX_SKB_FRAGS
+                        ^~~~~~~~~~~~~~~~~~~~
+  ./include/generated/autoconf.h:11789:30: note: expanded from macro 'CONFIG_MAX_SKB_FRAGS'
+  #define CONFIG_MAX_SKB_FRAGS 17
+                               ^~
+  1 warning generated.
+
+Follow the pattern of the rest of the tree by changing the specifier to
+'%u' and casting MAX_SKB_FRAGS explicitly to 'unsigned int', which
+eliminates the warning.
+
+Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230329-net-ethernet-ti-wformat-v1-1-83d0f799b553@kernel.org
+---
+ drivers/net/ethernet/ti/netcp_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
+index 1bb596a9d8a2..d829113c16ee 100644
+--- a/drivers/net/ethernet/ti/netcp_core.c
++++ b/drivers/net/ethernet/ti/netcp_core.c
+@@ -2081,8 +2081,8 @@ static int netcp_create_interface(struct netcp_device *netcp_device,
+ 	netcp->tx_pool_region_id = temp[1];
+ 
+ 	if (netcp->tx_pool_size < MAX_SKB_FRAGS) {
+-		dev_err(dev, "tx-pool size too small, must be at least %ld\n",
+-			MAX_SKB_FRAGS);
++		dev_err(dev, "tx-pool size too small, must be at least %u\n",
++			(unsigned int)MAX_SKB_FRAGS);
+ 		ret = -ENODEV;
+ 		goto quit;
+ 	}
+-- 
+2.40.0
+

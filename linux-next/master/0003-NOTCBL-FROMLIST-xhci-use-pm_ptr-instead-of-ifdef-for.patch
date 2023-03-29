@@ -1,7 +1,7 @@
-From 2edea85e3ca35fb173228b91d73a8e83d53c04b4 Mon Sep 17 00:00:00 2001
+From b5f6a4e371851b1469fc0055f5aa5559d9cd25b5 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 28 Mar 2023 15:10:43 +0200
-Subject: [PATCH 02/11] NOTCBL: FROMLIST: xhci: use pm_ptr() instead of #ifdef
+Subject: [PATCH 03/14] NOTCBL: FROMLIST: xhci: use pm_ptr() instead of #ifdef
  for CONFIG_PM conditionals
 
 A recent patch caused an unused-function warning in builds with
