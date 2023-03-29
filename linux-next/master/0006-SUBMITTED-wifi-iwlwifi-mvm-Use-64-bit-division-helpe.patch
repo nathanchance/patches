@@ -1,0 +1,47 @@
+From 04ec7801e3b3c622abf8298d7d6ee17ec962d6d8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 29 Mar 2023 10:32:46 -0700
+Subject: [PATCH 06/14] SUBMITTED: wifi: iwlwifi: mvm: Use 64-bit division
+ helper in iwl_mvm_get_crosstimestamp_fw()
+
+There is a 64-bit division in iwl_mvm_get_crosstimestamp_fw(), which
+results in a link failure when building 32-bit architectures with clang:
+
+  ld.lld: error: undefined symbol: __udivdi3
+  >>> referenced by ptp.c
+  >>>               drivers/net/wireless/intel/iwlwifi/mvm/ptp.o:(iwl_mvm_phc_get_crosstimestamp) in archive vmlinux.a
+
+GCC has optimizations for division by a constant that clang does not
+implement, so this issue is not visible when building with GCC.
+
+Use the 64-bit division helper div_u64(), which takes a u64 dividend and
+u32 divisor, which matches this situation and prevents the emission of a
+libcall for the division.
+
+Fixes: 21fb8da6ebe4 ("wifi: iwlwifi: mvm: read synced time from firmware if supported")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1826
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Link: https://lore.kernel.org/6423173a.620a0220.3d5cc.6358@mx.google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230329-iwlwifi-ptp-avoid-64-bit-div-v2-1-22b988eb009b@kernel.org
+---
+ drivers/net/wireless/intel/iwlwifi/mvm/ptp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
+index 5c2bfc8ed88d..e89259de6f4c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
+@@ -116,7 +116,7 @@ iwl_mvm_get_crosstimestamp_fw(struct iwl_mvm *mvm, u32 *gp2, u64 *sys_time)
+ 
+ 	gp2_10ns = (u64)le32_to_cpu(resp->gp2_timestamp_hi) << 32 |
+ 		le32_to_cpu(resp->gp2_timestamp_lo);
+-	*gp2 = gp2_10ns / 100;
++	*gp2 = div_u64(gp2_10ns, 100);
+ 
+ 	*sys_time = (u64)le32_to_cpu(resp->platform_timestamp_hi) << 32 |
+ 		le32_to_cpu(resp->platform_timestamp_lo);
+-- 
+2.40.0
+
