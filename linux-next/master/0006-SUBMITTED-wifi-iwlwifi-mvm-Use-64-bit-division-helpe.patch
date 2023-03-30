@@ -1,7 +1,7 @@
-From edb7c9122b656a6be29e1b4ea421781fbae0df39 Mon Sep 17 00:00:00 2001
+From e2edd2e0d4d6fe7f7c30779da8d999d0a7303341 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 29 Mar 2023 10:32:46 -0700
-Subject: [PATCH 05/13] SUBMITTED: wifi: iwlwifi: mvm: Use 64-bit division
+Subject: [PATCH 06/14] SUBMITTED: wifi: iwlwifi: mvm: Use 64-bit division
  helper in iwl_mvm_get_crosstimestamp_fw()
 
 There is a 64-bit division in iwl_mvm_get_crosstimestamp_fw(), which
