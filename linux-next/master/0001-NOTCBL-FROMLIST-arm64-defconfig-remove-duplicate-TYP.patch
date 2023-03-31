@@ -1,7 +1,7 @@
-From 83c60ef7792a8bdf9f971b2b9c44fdd5cfdeaa5f Mon Sep 17 00:00:00 2001
+From 932f7ae0e6c42ea65c13be96ce1b55cfd9fd298a Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Mar 2023 10:37:54 +0100
-Subject: [PATCH 01/14] NOTCBL: FROMLIST: arm64: defconfig: remove duplicate
+Subject: [PATCH 01/11] NOTCBL: FROMLIST: arm64: defconfig: remove duplicate
  TYPEC_UCSI & QCOM_PMIC_GLINK
 
 Both configs were already applied by 2 separate changes,
@@ -17,7 +17,7 @@ Link: https://lore.kernel.org/r/20230324-topic-sm8450-upstream-defconfig-fixup-v
  1 file changed, 2 deletions(-)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index d206a9120ee4..af5637f95e88 100644
+index 29c79a6a85eb..65022f879649 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
 @@ -274,8 +274,6 @@ CONFIG_BLK_DEV_NVME=m
@@ -30,7 +30,7 @@ index d206a9120ee4..af5637f95e88 100644
  CONFIG_SRAM=y
  CONFIG_PCI_ENDPOINT_TEST=m
 
-base-commit: a6d9e3034536ba4b68ac34490c02267e6eec9c05
+base-commit: 4b0f4525dc4fe8af17b3daefe585f0c2eb0fe0a5
 -- 
 2.40.0
 
