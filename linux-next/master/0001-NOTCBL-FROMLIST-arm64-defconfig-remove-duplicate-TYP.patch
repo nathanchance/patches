@@ -1,7 +1,7 @@
-From 932f7ae0e6c42ea65c13be96ce1b55cfd9fd298a Mon Sep 17 00:00:00 2001
+From 5dc588d7698f7f25f7274d1747d45eff67b8c1f5 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Mar 2023 10:37:54 +0100
-Subject: [PATCH 01/11] NOTCBL: FROMLIST: arm64: defconfig: remove duplicate
+Subject: [PATCH 01/10] NOTCBL: FROMLIST: arm64: defconfig: remove duplicate
  TYPEC_UCSI & QCOM_PMIC_GLINK
 
 Both configs were already applied by 2 separate changes,
@@ -30,7 +30,7 @@ index 29c79a6a85eb..65022f879649 100644
  CONFIG_SRAM=y
  CONFIG_PCI_ENDPOINT_TEST=m
 
-base-commit: 4b0f4525dc4fe8af17b3daefe585f0c2eb0fe0a5
+base-commit: 31bd35b66249699343d2416658f57e97314a433a
 -- 
 2.40.0
 
