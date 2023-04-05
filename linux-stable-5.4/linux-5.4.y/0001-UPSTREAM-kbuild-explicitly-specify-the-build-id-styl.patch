@@ -1,4 +1,4 @@
-From 3e7a5d95e2c450fc142013bafdef4fefb5db1a2c Mon Sep 17 00:00:00 2001
+From 634bcb1dc29e42de96242d69ba69f27abfee2efc Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
 Subject: [PATCH 01/29] UPSTREAM: kbuild: explicitly specify the build id style
@@ -31,7 +31,7 @@ index c533ac869aa2..d79c00bd07a8 100644
  	$(call if_changed,vdsold)
  
 
-base-commit: 09b1a76e7879184fb35d71a221cae9451b895fff
+base-commit: 32bea3bac5ca484c6f7e302c8c96fc686f62e7b4
 -- 
 2.40.0
 
