@@ -1,4 +1,4 @@
-From 73b6e2c6ce6cb5770cf74dbf244d9151a4ae1392 Mon Sep 17 00:00:00 2001
+From 8e2f1526f677774828fbdad74e482b6b71d6c891 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 10 Apr 2023 12:16:42 -0700
 Subject: [PATCH 01/10] FROMLIST: Inflight MIPS series
@@ -1703,7 +1703,7 @@ index d7238687d790..9a0c29946c2d 100644
  	"dsll\t%0, 31\n\t"
  	"lui\t%1, 0x9000\n\t"
 
-base-commit: e134c93f788fb93fd6a3ec3af9af850a2048c7e6
+base-commit: 7d8214bba44c1aa6a75921a09a691945d26a8d43
 -- 
 2.40.0
 
