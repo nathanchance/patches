@@ -1,7 +1,7 @@
-From 591c7c6022196c7e60e858d2d8920ae6e97273ed Mon Sep 17 00:00:00 2001
+From b6aa94169b8c29cf40195b4ca2126596235b72e7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
-Subject: [PATCH 1/9] WIP: kbuild: Enable
+Subject: [PATCH 02/10] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -23,7 +23,7 @@ index 5aeea3d98fc0..635e2fe96fac 100644
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
 diff --git a/drivers/counter/Makefile b/drivers/counter/Makefile
-index b9a369e0d4fc..c08115763c80 100644
+index 933fdd50b3e4..d7347bad9a3c 100644
 --- a/drivers/counter/Makefile
 +++ b/drivers/counter/Makefile
 @@ -3,6 +3,8 @@
@@ -35,8 +35,6 @@ index b9a369e0d4fc..c08115763c80 100644
  obj-$(CONFIG_COUNTER) += counter.o
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
-
-base-commit: e3342532ecd39bbd9c2ab5b9001cec1589bc37e9
 -- 
 2.40.0
 
