@@ -1,7 +1,7 @@
-From 38f2388ae0eccd8ccaa41abebb055f90e82c3d54 Mon Sep 17 00:00:00 2001
+From 831987927e4665551b18d44486e81eb568e014f0 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Tue, 13 Apr 2021 11:23:30 +0200
-Subject: [PATCH 08/18] UPSTREAM: s390/cmpxchg: use unsigned long values
+Subject: [PATCH 09/19] UPSTREAM: s390/cmpxchg: use unsigned long values
  instead of void pointers
 
 gcc and clang warn about incompatible pointer types due to the recent
