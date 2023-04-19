@@ -1,0 +1,51 @@
+From 7d0cac62e83c943713025c8166aa7d44c35925fe Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 19 Apr 2023 11:42:54 -0700
+Subject: [PATCH 04/13] SUBMITTED: MIPS: Mark check_bugs{,_early}() as __init
+
+After commit ac7c3e4ff401 ("compiler: enable CONFIG_OPTIMIZE_INLINING
+forcibly"), a compiler may choose not to inline a function marked with
+just 'inline'. If check_bugs() is not inlined into start_kernel(), which
+occurs when building with clang after commit 9ea7e6b62c2b ("init: Mark
+[arch_call_]rest_init() __noreturn"), modpost complains with:
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: check_bugs (section: .text) -> check_bugs32 (section: .init.text)
+
+check_bugs() is only called from start_kernel(), which itself is marked
+__init, so mark check_bugs() as __init as well to clear up the warning
+and make everything work properly.
+
+While there is currently no warning about check_bugs_early(), it could
+have the same problem, as it is called from arch_setup() and calls
+check_bugs64_early(), both marked __init. Mark it as __init for the same
+reason as above.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230419-mips-check_bugs-init-attribute-v1-1-91e6eed55b89@kernel.org
+---
+ arch/mips/include/asm/bugs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/mips/include/asm/bugs.h b/arch/mips/include/asm/bugs.h
+index d72dc6e1cf3c..9b9bf9bc7d24 100644
+--- a/arch/mips/include/asm/bugs.h
++++ b/arch/mips/include/asm/bugs.h
+@@ -24,13 +24,13 @@ extern void check_bugs64_early(void);
+ extern void check_bugs32(void);
+ extern void check_bugs64(void);
+ 
+-static inline void check_bugs_early(void)
++static inline void __init check_bugs_early(void)
+ {
+ 	if (IS_ENABLED(CONFIG_CPU_R4X00_BUGS64))
+ 		check_bugs64_early();
+ }
+ 
+-static inline void check_bugs(void)
++static inline void __init check_bugs(void)
+ {
+ 	unsigned int cpu = smp_processor_id();
+ 
+-- 
+2.40.0
+
