@@ -1,7 +1,7 @@
-From 7d0cac62e83c943713025c8166aa7d44c35925fe Mon Sep 17 00:00:00 2001
+From 2c8afba13bfb4f7569cd5ca60c4c9a94d6fb98e2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 19 Apr 2023 11:42:54 -0700
-Subject: [PATCH 04/13] SUBMITTED: MIPS: Mark check_bugs{,_early}() as __init
+Subject: [PATCH 07/16] SUBMITTED: MIPS: Mark check_bugs{,_early}() as __init
 
 After commit ac7c3e4ff401 ("compiler: enable CONFIG_OPTIMIZE_INLINING
 forcibly"), a compiler may choose not to inline a function marked with
