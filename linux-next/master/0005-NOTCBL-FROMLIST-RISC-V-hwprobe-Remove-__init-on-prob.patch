@@ -1,0 +1,75 @@
+From 7e2580248987737834b725c72f33c791a6f5389b Mon Sep 17 00:00:00 2001
+From: Evan Green <evan@rivosinc.com>
+Date: Thu, 20 Apr 2023 12:49:34 -0700
+Subject: [PATCH 05/17] NOTCBL: FROMLIST: RISC-V: hwprobe: Remove __init on
+ probe_vendor_features()
+
+probe_vendor_features() is now called from smp_callin(), which is not
+__init code and runs during cpu hotplug events. Remove the
+__init_or_module decoration from it and the functions it calls to avoid
+walking into outer space.
+
+Fixes: 62a31d6e38bd ("RISC-V: hwprobe: Support probing of misaligned access performance")
+Signed-off-by: Evan Green <evan@rivosinc.com>
+Link: https://lore.kernel.org/r/20230420194934.1871356-1-evan@rivosinc.com
+---
+ arch/riscv/errata/thead/errata.c     | 6 +++---
+ arch/riscv/include/asm/alternative.h | 2 +-
+ arch/riscv/kernel/alternative.c      | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/riscv/errata/thead/errata.c b/arch/riscv/errata/thead/errata.c
+index 1036b8f933ec..a86c4facc2a6 100644
+--- a/arch/riscv/errata/thead/errata.c
++++ b/arch/riscv/errata/thead/errata.c
+@@ -118,9 +118,9 @@ void __init_or_module thead_errata_patch_func(struct alt_entry *begin, struct al
+ 		local_flush_icache_all();
+ }
+ 
+-void __init_or_module thead_feature_probe_func(unsigned int cpu,
+-					       unsigned long archid,
+-					       unsigned long impid)
++void thead_feature_probe_func(unsigned int cpu,
++			      unsigned long archid,
++			      unsigned long impid)
+ {
+ 	if ((archid == 0) && (impid == 0))
+ 		per_cpu(misaligned_access_speed, cpu) = RISCV_HWPROBE_MISALIGNED_FAST;
+diff --git a/arch/riscv/include/asm/alternative.h b/arch/riscv/include/asm/alternative.h
+index a8f5cf6694a1..6a41537826a7 100644
+--- a/arch/riscv/include/asm/alternative.h
++++ b/arch/riscv/include/asm/alternative.h
+@@ -30,7 +30,7 @@
+ #define ALT_OLD_PTR(a)			__ALT_PTR(a, old_offset)
+ #define ALT_ALT_PTR(a)			__ALT_PTR(a, alt_offset)
+ 
+-void __init probe_vendor_features(unsigned int cpu);
++void probe_vendor_features(unsigned int cpu);
+ void __init apply_boot_alternatives(void);
+ void __init apply_early_boot_alternatives(void);
+ void apply_module_alternatives(void *start, size_t length);
+diff --git a/arch/riscv/kernel/alternative.c b/arch/riscv/kernel/alternative.c
+index fc65c9293ac5..6b75788c18e6 100644
+--- a/arch/riscv/kernel/alternative.c
++++ b/arch/riscv/kernel/alternative.c
+@@ -31,7 +31,7 @@ struct cpu_manufacturer_info_t {
+ 				   unsigned long impid);
+ };
+ 
+-static void __init_or_module riscv_fill_cpu_mfr_info(struct cpu_manufacturer_info_t *cpu_mfr_info)
++static void riscv_fill_cpu_mfr_info(struct cpu_manufacturer_info_t *cpu_mfr_info)
+ {
+ #ifdef CONFIG_RISCV_M_MODE
+ 	cpu_mfr_info->vendor_id = csr_read(CSR_MVENDORID);
+@@ -144,7 +144,7 @@ void riscv_alternative_fix_offsets(void *alt_ptr, unsigned int len,
+ }
+ 
+ /* Called on each CPU as it starts */
+-void __init_or_module probe_vendor_features(unsigned int cpu)
++void probe_vendor_features(unsigned int cpu)
+ {
+ 	struct cpu_manufacturer_info_t cpu_mfr_info;
+ 
+-- 
+2.40.0
+

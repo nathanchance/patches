@@ -1,0 +1,38 @@
+From f511ea20b724feb731d587c996327e042c521661 Mon Sep 17 00:00:00 2001
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 20 Apr 2023 19:37:23 +0200
+Subject: [PATCH 04/17] NOTCBL: FROMLIST: net/handshake: Fix section mismatch
+ in handshake_exit
+
+If CONFIG_NET_NS=n (e.g. m68k/defconfig):
+
+    WARNING: modpost: vmlinux.o: section mismatch in reference: handshake_exit (section: .exit.text) -> handshake_genl_net_ops (section: .init.data)
+    ERROR: modpost: Section mismatches detected.
+
+Fix this by dropping the __net_initdata tag from handshake_genl_net_ops.
+
+Fixes: 3b3009ea8abb713b ("net/handshake: Create a NETLINK service for handling handshake requests")
+Reported-by: noreply@ellerman.id.au
+Closes: http://kisskb.ellerman.id.au/kisskb/buildresult/14912987
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230420173723.3773434-1-geert@linux-m68k.org
+---
+ net/handshake/netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 8ea0ff993f9f..35c9c445e0b8 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -249,7 +249,7 @@ static void __net_exit handshake_net_exit(struct net *net)
+ 	}
+ }
+ 
+-static struct pernet_operations __net_initdata handshake_genl_net_ops = {
++static struct pernet_operations handshake_genl_net_ops = {
+ 	.init		= handshake_net_init,
+ 	.exit		= handshake_net_exit,
+ 	.id		= &handshake_net_id,
+-- 
+2.40.0
+

@@ -1,7 +1,7 @@
-From 9cb3b3fe1f4c94faefe9903f18fdc487f47c6d2a Mon Sep 17 00:00:00 2001
+From 31690b804e8917b767841b8720ec9e6626da31fe Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 18 Apr 2023 08:11:43 +0200
-Subject: [PATCH 01/16] NOTCBL: FROMLIST: media: nxp: imx8-isi: fix buiding on
+Subject: [PATCH 01/17] NOTCBL: FROMLIST: media: nxp: imx8-isi: fix buiding on
  32-bit
 
 The #if check is wrong, leading to a build failure:
@@ -101,7 +101,7 @@ index db538f3d88ec..19e80b95ffea 100644
  	}
  
 
-base-commit: 44bf136283e567b2b62653be7630e7511da41da2
+base-commit: d3e1ee0e67e7603d36f4fa2fec6b881c01aabe89
 -- 
 2.40.0
 
