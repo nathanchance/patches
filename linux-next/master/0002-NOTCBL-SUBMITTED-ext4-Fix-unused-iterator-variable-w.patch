@@ -1,7 +1,7 @@
-From df04345181e3243e98636520f28bfc7afaf79732 Mon Sep 17 00:00:00 2001
+From 47892d549f18eedcfd390a8cc0d2e9bef14073f1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 20 Apr 2023 09:51:24 -0700
-Subject: [PATCH 06/17] NOTCBL: SUBMITTED: ext4: Fix unused iterator variable
+Subject: [PATCH 02/12] NOTCBL: SUBMITTED: ext4: Fix unused iterator variable
  warnings
 
 When CONFIG_QUOTA is disabled, there are warnings around unused iterator

@@ -1,7 +1,7 @@
-From 7e2580248987737834b725c72f33c791a6f5389b Mon Sep 17 00:00:00 2001
+From ae5f998c243ce3389740c7e0952f159c58ceb55d Mon Sep 17 00:00:00 2001
 From: Evan Green <evan@rivosinc.com>
 Date: Thu, 20 Apr 2023 12:49:34 -0700
-Subject: [PATCH 05/17] NOTCBL: FROMLIST: RISC-V: hwprobe: Remove __init on
+Subject: [PATCH 01/12] NOTCBL: FROMLIST: RISC-V: hwprobe: Remove __init on
  probe_vendor_features()
 
 probe_vendor_features() is now called from smp_callin(), which is not
@@ -70,6 +70,8 @@ index fc65c9293ac5..6b75788c18e6 100644
  {
  	struct cpu_manufacturer_info_t cpu_mfr_info;
  
+
+base-commit: 3b85b9b39960c08f29fa91b8d984d055dde6017e
 -- 
 2.40.0
 
