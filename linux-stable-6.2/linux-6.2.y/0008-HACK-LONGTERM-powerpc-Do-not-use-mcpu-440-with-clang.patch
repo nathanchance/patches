@@ -1,4 +1,4 @@
-From 62bd28eef671fc8fb043b33d865e93874494ca8c Mon Sep 17 00:00:00 2001
+From 74dc053e279898961ef151130e388edfbc55097e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 21 Mar 2023 11:13:46 -0700
 Subject: [PATCH 8/8] HACK: LONGTERM: powerpc: Do not use '-mcpu=440' with
@@ -23,5 +23,5 @@ index 046b571496b1..016909c77ea2 100644
  config 464_CPU
  	bool "464 (44x family)"
 -- 
-2.40.0
+2.40.1
 
