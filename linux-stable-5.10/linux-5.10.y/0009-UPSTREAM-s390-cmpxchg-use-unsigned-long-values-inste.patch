@@ -1,4 +1,4 @@
-From 4e38651f0be135480d0699aef43099998dae0119 Mon Sep 17 00:00:00 2001
+From da879b02f2152f1d613fed5b88490ed24f09b843 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Tue, 13 Apr 2021 11:23:30 +0200
 Subject: [PATCH 09/19] UPSTREAM: s390/cmpxchg: use unsigned long values
@@ -185,5 +185,5 @@ index 263d3f87edc8..d48045c055b1 100644
  	__ret;								\
  })
 -- 
-2.40.0
+2.40.1
 
