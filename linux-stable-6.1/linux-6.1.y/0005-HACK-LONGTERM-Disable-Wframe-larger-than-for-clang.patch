@@ -1,4 +1,4 @@
-From 0a3ac18358218ad664b12d54ecee1b40644d69a7 Mon Sep 17 00:00:00 2001
+From 7e9cc66b4d3db77cbe06680a22a84c2d8cf561d0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:41:55 -0700
 Subject: [PATCH 5/7] HACK: LONGTERM: Disable -Wframe-larger-than= for clang
@@ -28,5 +28,5 @@ index 12dfe6691dd5..cccb6cab8781 100644
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
  	default 2048 if PARISC
 -- 
-2.40.0
+2.40.1
 
