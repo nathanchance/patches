@@ -1,7 +1,7 @@
-From 7f23a797d4c63a39d6cbf3da23393a79205fafd5 Mon Sep 17 00:00:00 2001
+From 73544bdef898f975f7b1e6fb09557d39064ecfe9 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
-Subject: [PATCH 12/30] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
+Subject: [PATCH 12/31] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
  .shstrtab to ELF_DETAILS
 
 When linking vmlinux with LLD, the synthetic sections .symtab, .strtab,
@@ -44,5 +44,5 @@ index dbdfd0aad3e9..1d01c9c085ae 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.40.0
+2.40.1
 

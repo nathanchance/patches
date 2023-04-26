@@ -1,7 +1,7 @@
-From e5e326257686b212ccd0ecb4f7c0c37ab807313b Mon Sep 17 00:00:00 2001
+From 1fedad89e10939c0d76362e36e66602a56d05f2e Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Fri, 20 Sep 2019 18:39:51 +0300
-Subject: [PATCH 26/30] UPSTREAM: powerpc/pmac/smp: Avoid unused-variable
+Subject: [PATCH 27/31] UPSTREAM: powerpc/pmac/smp: Avoid unused-variable
  warnings
 
 When building with ppc64_defconfig, the compiler reports
@@ -45,5 +45,5 @@ index f95fbdee6efe..4a2a1b2529b3 100644
  		return;
  
 -- 
-2.40.0
+2.40.1
 

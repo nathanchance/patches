@@ -1,7 +1,7 @@
-From ea25fcce937e89baf954767943d06e56aea6e37c Mon Sep 17 00:00:00 2001
+From cbf810b64e15547afbcad679dff222870e7dc805 Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Sun, 26 Apr 2020 14:42:15 -0700
-Subject: [PATCH 15/30] UPSTREAM: drm/i915: re-disable -Wframe-address
+Subject: [PATCH 15/31] UPSTREAM: drm/i915: re-disable -Wframe-address
 
 The top level Makefile disables this warning. When building an
 i386_defconfig with Clang, this warning is triggered a whole bunch via
@@ -31,5 +31,5 @@ index 2587ea834f06..a4e385f68713 100644
  
  # Fine grained warnings disable
 -- 
-2.40.0
+2.40.1
 

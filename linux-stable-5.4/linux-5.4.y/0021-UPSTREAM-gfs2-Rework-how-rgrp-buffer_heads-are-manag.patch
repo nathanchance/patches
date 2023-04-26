@@ -1,7 +1,7 @@
-From cac14a1be11d9ac332765e30a7e5eb708283afdf Mon Sep 17 00:00:00 2001
+From b8fa97de109d6d447048e14f924a26e5aa1aa4c9 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
-Subject: [PATCH 21/30] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
+Subject: [PATCH 21/31] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
  managed
 
 Before this patch, the rgrp code had a serious problem related to
@@ -205,5 +205,5 @@ index c14a673ae36f..a584f3096418 100644
  extern struct gfs2_alloc *gfs2_alloc_get(struct gfs2_inode *ip);
  
 -- 
-2.40.0
+2.40.1
 

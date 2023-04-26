@@ -1,7 +1,7 @@
-From 8e6ec04606343cc0326aab205076a37105455cd0 Mon Sep 17 00:00:00 2001
+From c2be4b1316c5ec6fe4a164d61775e9fc8c7531d5 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Tue, 22 Sep 2020 16:21:40 -0700
-Subject: [PATCH 01/30] UPSTREAM: kbuild: explicitly specify the build id style
+Subject: [PATCH 01/31] UPSTREAM: kbuild: explicitly specify the build id style
 
 ld's --build-id defaults to "sha1" style, while lld defaults to "fast".
 The build IDs are very different between the two, which may confuse
@@ -31,7 +31,7 @@ index c533ac869aa2..d79c00bd07a8 100644
  	$(call if_changed,vdsold)
  
 
-base-commit: 58f42ed1cd31238745bddd943c4f5849dc83a2ac
+base-commit: ea7862c507eca54ea6caad9dcfc8bba5e749fbde
 -- 
-2.40.0
+2.40.1
 

@@ -1,7 +1,7 @@
-From 4390c7d2b326387b036ec2e4f600164246d4db9b Mon Sep 17 00:00:00 2001
+From f90541a89ca27a8bc30817c93fb9ac8527058e44 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Tue, 23 Jun 2020 20:59:20 -0700
-Subject: [PATCH 07/30] UPSTREAM: powerpc/boot: Use address-of operator on
+Subject: [PATCH 07/31] UPSTREAM: powerpc/boot: Use address-of operator on
  section symbols
 
 Clang warns:
@@ -69,5 +69,5 @@ index c52552a681c5..6e4efbdb6b7c 100644
  		setprop_val(chosen, "linux,initrd-end", (u32)(_initrd_end));
  	}
 -- 
-2.40.0
+2.40.1
 

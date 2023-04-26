@@ -1,7 +1,7 @@
-From 91f9e3afb78cf70ad3fff6ec2ca70feeabe22182 Mon Sep 17 00:00:00 2001
+From 525d83ad8002f439d64f4db86a67f603aec5276a Mon Sep 17 00:00:00 2001
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 Date: Sun, 17 Nov 2019 20:24:35 +0000
-Subject: [PATCH 14/30] UPSTREAM: {tty: serial, nand: onenand}: samsung: rename
+Subject: [PATCH 14/31] UPSTREAM: {tty: serial, nand: onenand}: samsung: rename
  to fix build warning
 
 Any arm config which has 'CONFIG_MTD_ONENAND_SAMSUNG=m' and
@@ -64,5 +64,5 @@ similarity index 100%
 rename from drivers/tty/serial/samsung.c
 rename to drivers/tty/serial/samsung_tty.c
 -- 
-2.40.0
+2.40.1
 

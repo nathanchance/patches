@@ -1,7 +1,7 @@
-From fe5f7819ce6bc1f5050e626377b4a426f25d7b6e Mon Sep 17 00:00:00 2001
+From a80f6eb97cd601e7da204e342d061f9b7d6227c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sun, 8 Nov 2020 13:37:37 -0700
-Subject: [PATCH 03/30] UPSTREAM: riscv: Explicitly specify the build id style
+Subject: [PATCH 03/31] UPSTREAM: riscv: Explicitly specify the build id style
  in vDSO Makefile again
 
 Commit a96843372331 ("kbuild: explicitly specify the build id style")
@@ -37,5 +37,5 @@ index 67d2d10ed612..4ad82570ad26 100644
  # We also create a special relocatable object that should mirror the symbol
  # table and layout of the linked DSO. With ld --just-symbols we can then
 -- 
-2.40.0
+2.40.1
 
