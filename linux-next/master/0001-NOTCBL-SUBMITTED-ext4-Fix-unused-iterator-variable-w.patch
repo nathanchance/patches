@@ -1,7 +1,7 @@
-From 47892d549f18eedcfd390a8cc0d2e9bef14073f1 Mon Sep 17 00:00:00 2001
+From 7b1b7815c2bced9ce214be24ab2dd34ae44bc462 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 20 Apr 2023 09:51:24 -0700
-Subject: [PATCH 02/12] NOTCBL: SUBMITTED: ext4: Fix unused iterator variable
+Subject: [PATCH 01/12] NOTCBL: SUBMITTED: ext4: Fix unused iterator variable
  warnings
 
 When CONFIG_QUOTA is disabled, there are warnings around unused iterator
@@ -66,6 +66,8 @@ index d03bf0ecf505..e3ee978f66ca 100644
  		kfree(get_qf_name(sb, sbi, i));
  #endif
  	fscrypt_free_dummy_policy(&sbi->s_dummy_enc_policy);
+
+base-commit: 84e2893b4573da3bc0c9f24e2005442e420e3831
 -- 
-2.40.0
+2.40.1
 

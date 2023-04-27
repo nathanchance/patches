@@ -1,7 +1,7 @@
-From 1dc3ebb2fad1e98c54d0f3c1c19fbc88bef68b54 Mon Sep 17 00:00:00 2001
+From 8d3ee67ed1e58517a6c7853e09797a0d9c426d92 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
-Subject: [PATCH 04/12] WIP: kbuild: Enable
+Subject: [PATCH 03/12] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -36,5 +36,5 @@ index 933fdd50b3e4..d7347bad9a3c 100644
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
 -- 
-2.40.0
+2.40.1
 

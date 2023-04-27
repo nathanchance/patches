@@ -1,7 +1,7 @@
-From 006c71970694db7ac16398b06f6f186b5d00b549 Mon Sep 17 00:00:00 2001
+From 1b79457d507eb3c2c718a9c4b87dea8d4e0cd06f Mon Sep 17 00:00:00 2001
 From: Guillaume Ranquet <granquet@baylibre.com>
 Date: Fri, 14 Apr 2023 18:07:46 +0200
-Subject: [PATCH 03/12] FROMLIST: phy: mediatek: hdmi: mt8195: fix
+Subject: [PATCH 02/12] FROMLIST: phy: mediatek: hdmi: mt8195: fix
  uninitialized variable usage in pll_calc
 
 The ret variable in mtk_hdmi_pll_calc() was used unitialized as reported
@@ -47,5 +47,5 @@ index abfc077fb0a8..054b73cb31ee 100644
  
  static int mtk_hdmi_pll_drv_setting(struct clk_hw *hw)
 -- 
-2.40.0
+2.40.1
 
