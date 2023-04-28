@@ -1,0 +1,29 @@
+From 33c8cf13725c5fd67aca7acb637044abaabbc48d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 20 May 2022 16:30:18 -0700
+Subject: [PATCH 08/10] HACK: LONGTERM: Disable syscall not implemented warning
+
+This used to impact -Werror and it is noisy at times so just ignore it
+for the sake of this project.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/checksyscalls.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
+index 1e5d2eeb726d..b936691ca445 100755
+--- a/scripts/checksyscalls.sh
++++ b/scripts/checksyscalls.sh
+@@ -263,7 +263,7 @@ EOF
+ syscall_list() {
+     grep '^[0-9]' "$1" | sort -n |
+ 	while read nr abi name entry ; do
+-		echo "#if !defined(__NR_${name}) && !defined(__IGNORE_${name})"
++		echo "#if 0"
+ 		echo "#warning syscall ${name} not implemented"
+ 		echo "#endif"
+ 	done
+-- 
+2.40.1
+
