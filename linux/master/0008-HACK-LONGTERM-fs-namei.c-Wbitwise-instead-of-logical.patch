@@ -1,7 +1,7 @@
-From fcd5c49ed603835b8737336dde66060c81c8271d Mon Sep 17 00:00:00 2001
+From ca9f67d82b211b35e7448ebe51a0bc24f7d8ed0b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
-Subject: [PATCH 09/13] HACK: LONGTERM: fs/namei.c:
+Subject: [PATCH 08/12] HACK: LONGTERM: fs/namei.c:
  -Wbitwise-instead-of-logical
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/namei.c b/fs/namei.c
-index f04f7be58933..12e5bf52548e 100644
+index e4fe0879ae55..c1eb60e3a500 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
-@@ -2170,7 +2170,7 @@ static inline u64 hash_name(const void *salt, const char *name)
+@@ -2174,7 +2174,7 @@ static inline u64 hash_name(const void *salt, const char *name)
  inside:
  		a = load_unaligned_zeropad(name+len);
  		b = a ^ REPEAT_BYTE('/');
