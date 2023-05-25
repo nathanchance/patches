@@ -1,0 +1,81 @@
+From fa9c2a160e5d924f7ded71875aee507fd7d6868e Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Wed, 17 May 2023 22:20:07 +0200
+Subject: [PATCH 04/17] NOTCBL: FROMLIST: serial: 8250: omap: convert to modern
+ PM ops
+
+The new uart_write() function is only called from suspend/resume code, causing
+a build warning when those are left out:
+
+drivers/tty/serial/8250/8250_omap.c:169:13: error: 'uart_write' defined but not used [-Werror=unused-function]
+
+Remove the #ifdefs and use the modern pm_ops/pm_sleep_ops and their wrappers
+to let the compiler see where it's used but still drop the dead code.
+
+Fixes: 398cecc24846 ("serial: 8250: omap: Fix imprecise external abort for omap_8250_pm()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20230517202012.634386-1-arnd@kernel.org
+---
+ drivers/tty/serial/8250/8250_omap.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 5c093dfcee1d..00b2c35042ee 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1571,7 +1571,6 @@ static int omap8250_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM_SLEEP
+ static int omap8250_prepare(struct device *dev)
+ {
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
+@@ -1616,12 +1615,7 @@ static int omap8250_resume(struct device *dev)
+ 	serial8250_resume_port(priv->line);
+ 	return 0;
+ }
+-#else
+-#define omap8250_prepare NULL
+-#define omap8250_complete NULL
+-#endif
+ 
+-#ifdef CONFIG_PM
+ static int omap8250_lost_context(struct uart_8250_port *up)
+ {
+ 	u32 val;
+@@ -1738,7 +1732,6 @@ static int omap8250_runtime_resume(struct device *dev)
+ 	schedule_work(&priv->qos_work);
+ 	return 0;
+ }
+-#endif
+ 
+ #ifdef CONFIG_SERIAL_8250_OMAP_TTYO_FIXUP
+ static int __init omap8250_console_fixup(void)
+@@ -1781,17 +1774,17 @@ console_initcall(omap8250_console_fixup);
+ #endif
+ 
+ static const struct dev_pm_ops omap8250_dev_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(omap8250_suspend, omap8250_resume)
+-	SET_RUNTIME_PM_OPS(omap8250_runtime_suspend,
++	SYSTEM_SLEEP_PM_OPS(omap8250_suspend, omap8250_resume)
++	RUNTIME_PM_OPS(omap8250_runtime_suspend,
+ 			   omap8250_runtime_resume, NULL)
+-	.prepare        = omap8250_prepare,
+-	.complete       = omap8250_complete,
++	.prepare        = pm_sleep_ptr(omap8250_prepare),
++	.complete       = pm_sleep_ptr(omap8250_complete),
+ };
+ 
+ static struct platform_driver omap8250_platform_driver = {
+ 	.driver = {
+ 		.name		= "omap8250",
+-		.pm		= &omap8250_dev_pm_ops,
++		.pm		= pm_ptr(&omap8250_dev_pm_ops),
+ 		.of_match_table = omap8250_dt_ids,
+ 	},
+ 	.probe			= omap8250_probe,
+-- 
+2.40.1
+
