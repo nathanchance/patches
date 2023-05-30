@@ -1,4 +1,4 @@
-From d44845b76390905e1d129d7dc601f1f18764a1d8 Mon Sep 17 00:00:00 2001
+From 3fce50f50af51c5f5c4e67f560cc9eff5d1437e2 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
 Subject: [PATCH 21/31] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
@@ -110,7 +110,7 @@ index 01c41087f067..d06886ec4709 100644
  		    !test_bit(GLF_PENDING_DEMOTE, &gl->gl_flags) &&
  		    !test_bit(GLF_DEMOTE, &gl->gl_flags))
 diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 69106a1545fa..52d5ff33d7b8 100644
+index 092223a8b120..f95de7402e91 100644
 --- a/fs/gfs2/glops.c
 +++ b/fs/gfs2/glops.c
 @@ -171,15 +171,9 @@ static void rgrp_go_sync(struct gfs2_glock *gl)
@@ -130,7 +130,7 @@ index 69106a1545fa..52d5ff33d7b8 100644
  	if (!test_and_clear_bit(GLF_DIRTY, &gl->gl_flags))
  		return;
  	GLOCK_BUG_ON(gl, gl->gl_state != LM_ST_EXCLUSIVE);
-@@ -630,7 +624,6 @@ const struct gfs2_glock_operations gfs2_rgrp_glops = {
+@@ -631,7 +625,6 @@ const struct gfs2_glock_operations gfs2_rgrp_glops = {
  	.go_sync = rgrp_go_sync,
  	.go_inval = rgrp_go_inval,
  	.go_lock = gfs2_rgrp_go_lock,

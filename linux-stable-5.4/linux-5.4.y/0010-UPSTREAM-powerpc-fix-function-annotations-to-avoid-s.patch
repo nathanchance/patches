@@ -1,4 +1,4 @@
-From fa94b4d5ae11411851ecd8f676ce18c1ef637835 Mon Sep 17 00:00:00 2001
+From 47c542d5a6c47152816f53ca4d56dbc1f6ed10a6 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
 Subject: [PATCH 10/31] UPSTREAM: powerpc: fix function annotations to avoid
@@ -57,7 +57,7 @@ index 7f4e2c031a9a..f6c7c9241826 100644
  }
  #endif /* CONFIG_PPC_SVM */
 diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index bdcb07a98cd3..30f4c4bfd41f 100644
+index dc8f3fb02ac2..e1c184149176 100644
 --- a/arch/powerpc/mm/book3s64/radix_pgtable.c
 +++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
 @@ -772,7 +772,7 @@ static void __meminit split_kernel_mapping(unsigned long addr, unsigned long end
