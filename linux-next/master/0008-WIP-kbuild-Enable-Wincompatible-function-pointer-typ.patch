@@ -1,7 +1,7 @@
-From aab3a21c8782054b1052e8ccfeb5a8c9bd34a74a Mon Sep 17 00:00:00 2001
+From 6996d5ec8d08cf0a547613267fd3751dfae2d2a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
-Subject: [PATCH 09/17] WIP: kbuild: Enable
+Subject: [PATCH 08/16] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 3 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index abd36e374e42..4700542bae2a 100644
+index 9da2e30a2361..42700c83c87b 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1076,6 +1076,7 @@ KBUILD_CFLAGS   += -Werror=date-time

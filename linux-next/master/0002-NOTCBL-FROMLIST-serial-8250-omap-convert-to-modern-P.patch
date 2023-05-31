@@ -1,7 +1,7 @@
-From fa9c2a160e5d924f7ded71875aee507fd7d6868e Mon Sep 17 00:00:00 2001
+From 66c29f37362a44ce5679622091141fbe204fcfee Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Wed, 17 May 2023 22:20:07 +0200
-Subject: [PATCH 04/17] NOTCBL: FROMLIST: serial: 8250: omap: convert to modern
+Subject: [PATCH 02/16] NOTCBL: FROMLIST: serial: 8250: omap: convert to modern
  PM ops
 
 The new uart_write() function is only called from suspend/resume code, causing

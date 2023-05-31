@@ -1,7 +1,7 @@
-From c6663f626cd18071f4537c307151ce348050d47f Mon Sep 17 00:00:00 2001
+From 6a928bc01fa3e5809b145b92c168082fce60a11b Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 22 Feb 2022 01:31:07 -0600
-Subject: [PATCH 01/17] NOTCBL: FROMLIST: scsi: aacraid: Replace one-element
+Subject: [PATCH 01/16] NOTCBL: FROMLIST: scsi: aacraid: Replace one-element
  array with flexible-array member in struct aac_aifcmd
 
 Replace one-element array with flexible-array member in struct
@@ -32,7 +32,7 @@ index 5e115e8b2ba4..7d5a155073c6 100644
  
  /**
 
-base-commit: 6a3d37b4d885129561e1cef361216f00472f7d2e
+base-commit: d4cee89031c80066ec461bb77b5e13a4f37d5fd2
 -- 
 2.40.1
 
