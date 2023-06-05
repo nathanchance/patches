@@ -1,7 +1,7 @@
-From 07b5825ca5730a17a84a5ffa10c5b399fcbba1ce Mon Sep 17 00:00:00 2001
+From 39125caba6b1d6391305818dc4ceea85cd4358b5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 27 Apr 2023 17:06:37 -0700
-Subject: [PATCH 1/9] WIP: arm64: Mark __create_pgd_mapping,{_locked}() as
+Subject: [PATCH 05/13] WIP: arm64: Mark __create_pgd_mapping,{_locked}() as
  __always_inline
 
 Link: http://github.com/ClangBuiltLinux/linux/issues/1838
@@ -46,8 +46,6 @@ index af6bc8403ee4..1e0b3c9084db 100644
  {
  	mutex_lock(&fixmap_lock);
  	__create_pgd_mapping_locked(pgdir, phys, virt, size, prot,
-
-base-commit: 9db898594c541444e19b2d20fb8a06262cf8fcd9
 -- 
-2.40.1
+2.41.0
 
