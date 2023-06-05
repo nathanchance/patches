@@ -1,7 +1,7 @@
 From 913e49c13fff05fbf4ec33d60e0ff7f837aa4efe Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 4 Apr 2023 14:18:41 -0700
-Subject: [PATCH 01/10] FROMGIT: MIPS: Drop unused positional parameter in
+Subject: [PATCH 01/11] FROMGIT: MIPS: Drop unused positional parameter in
  local_irq_{dis,en}able
 
 When building with clang's integrated assembler, it points out that the
