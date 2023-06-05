@@ -1,4 +1,4 @@
-From 338e8d8327c7621cf98c7e65cf53b42510780f14 Mon Sep 17 00:00:00 2001
+From e758358db37c4b25ae2a2697823680f097417481 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:46 +0100
 Subject: [PATCH 2/9] UPSTREAM: crypto: arm/xor - make vectorized C code
@@ -57,5 +57,5 @@ index 7ba6cf826162..522510baed49 100644
  
  #pragma GCC diagnostic ignored "-Wunused-variable"
 -- 
-2.40.1
+2.41.0
 
