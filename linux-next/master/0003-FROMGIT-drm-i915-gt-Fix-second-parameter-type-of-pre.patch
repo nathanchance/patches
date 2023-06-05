@@ -1,7 +1,7 @@
-From e07dd750b7c700d01d1b958e27447925e6f6d9e9 Mon Sep 17 00:00:00 2001
+From 7684b9ce23db8ac23a6655f6fae91a13154ce51b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 May 2023 11:24:38 -0700
-Subject: [PATCH 05/16] SUBMITTED: drm/i915/gt: Fix second parameter type of
+Subject: [PATCH 03/20] FROMGIT: drm/i915/gt: Fix second parameter type of
  pre-gen8 pte_encode callbacks
 
 When booting a kernel compiled with CONFIG_CFI_CLANG (kCFI), there is a
@@ -49,7 +49,11 @@ functions and files, to clear up the kCFI failures at run time.
 
 Fixes: 9275277d5324 ("drm/i915: use pat_index instead of cache_level")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-1-54501d598229@kernel.org
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-1-54501d598229@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-intel/commit/?id=4722e2ebe6f2168309b285977c5c96baf910c57b
 ---
  drivers/gpu/drm/i915/gt/intel_ggtt.c | 26 +++++++++++++-------------
  1 file changed, 13 insertions(+), 13 deletions(-)
@@ -156,5 +160,5 @@ index 2a7942fac798..122197737ef2 100644
  		break;
  	case I915_CACHE_WT:
 -- 
-2.40.1
+2.41.0
 

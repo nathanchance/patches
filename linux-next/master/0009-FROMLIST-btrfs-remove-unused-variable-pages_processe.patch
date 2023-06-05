@@ -1,7 +1,7 @@
-From bdd7cd8190dddb27efa0c74c3361363e30e17b6a Mon Sep 17 00:00:00 2001
+From c8b6c3927754c7af39908b2dab68c421accc6de4 Mon Sep 17 00:00:00 2001
 From: Tom Rix <trix@redhat.com>
 Date: Tue, 30 May 2023 10:21:54 -0400
-Subject: [PATCH 04/16] FROMLIST: btrfs: remove unused variable pages_processed
+Subject: [PATCH 09/20] FROMLIST: btrfs: remove unused variable pages_processed
 
 clang with W=1 reports
 fs/btrfs/extent_io.c:230:16: error: variable
@@ -17,7 +17,7 @@ Link: https://lore.kernel.org/r/20230530142154.3341677-1-trix@redhat.com
  1 file changed, 2 deletions(-)
 
 diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 5ed83ef4cb72..af60476c0ecf 100644
+index ffcc0e9bd730..5573cb6fd762 100644
 --- a/fs/btrfs/extent_io.c
 +++ b/fs/btrfs/extent_io.c
 @@ -227,7 +227,6 @@ static void __process_pages_contig(struct address_space *mapping,
@@ -37,5 +37,5 @@ index 5ed83ef4cb72..af60476c0ecf 100644
  		folio_batch_release(&fbatch);
  		cond_resched();
 -- 
-2.40.1
+2.41.0
 

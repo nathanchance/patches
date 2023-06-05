@@ -1,8 +1,8 @@
-From 88e70488cd049fa4dd16c41c16d896ac1458218e Mon Sep 17 00:00:00 2001
+From c637ee524c5f1841f080735e3279e9430bba13d9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 May 2023 11:24:39 -0700
-Subject: [PATCH 06/16] SUBMITTED: drm/i915/gt: Fix parameter in
- gmch_ggtt_insert_{entries,page}()
+Subject: [PATCH 04/20] FROMGIT: drm/i915/gt: Fix parameter in
+ gmch_ggtt_insert_{entries, page}()
 
 When building with clang's -Wincompatible-function-pointer-types-strict,
 the following warnings occur:
@@ -26,7 +26,11 @@ cache_level and pat_index on certain generations.
 
 Fixes: 9275277d5324 ("drm/i915: use pat_index instead of cache_level")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-2-54501d598229@kernel.org
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-2-54501d598229@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-intel/commit/?id=1baeef6cd2229e01091c69cef042f6b688e194be
 ---
  drivers/gpu/drm/i915/gt/intel_ggtt_gmch.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
@@ -62,5 +66,5 @@ index d6a74ae2527b..866c416afb73 100644
  
  	intel_gmch_gtt_insert_sg_entries(vma_res->bi.pages, vma_res->start >> PAGE_SHIFT,
 -- 
-2.40.1
+2.41.0
 
