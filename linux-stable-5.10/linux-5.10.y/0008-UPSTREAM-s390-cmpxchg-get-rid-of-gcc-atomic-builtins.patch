@@ -1,4 +1,4 @@
-From 76aaa7415863ef7dfbfe6a66f7f73ca2c523fc48 Mon Sep 17 00:00:00 2001
+From ae382aebc8fda84d5b129db41834b907c8e12f50 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Tue, 6 Apr 2021 14:51:48 +0200
 Subject: [PATCH 08/19] UPSTREAM: s390/cmpxchg: get rid of gcc atomic builtins
@@ -212,5 +212,5 @@ index af99c1f66f12..263d3f87edc8 100644
 -
  #endif /* __ASM_CMPXCHG_H */
 -- 
-2.40.1
+2.41.0
 
