@@ -1,4 +1,4 @@
-From 4fda03b3279cb457e7285ad7532238af79e879ca Mon Sep 17 00:00:00 2001
+From bfc18858bc886f86fb8000ee29ed6aba4d508938 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
 Subject: [PATCH 12/31] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
@@ -44,5 +44,5 @@ index dbdfd0aad3e9..1d01c9c085ae 100644
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
 -- 
-2.40.1
+2.41.0
 
