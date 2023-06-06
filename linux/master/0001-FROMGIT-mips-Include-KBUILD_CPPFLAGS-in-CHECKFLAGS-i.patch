@@ -1,7 +1,7 @@
-From 49319393d08e00ecfbb46f61771d2ecf928c624e Mon Sep 17 00:00:00 2001
+From 1f02d3b4969fb3f59ef896dd78936e7017d6db4f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:38:24 -0700
-Subject: [PATCH 01/13] FROMGIT: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
+Subject: [PATCH 01/14] FROMGIT: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
  invocation
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
@@ -35,7 +35,7 @@ index a7a4ee66a9d3..ef7b05ae92ce 100644
  	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
  endif
 
-base-commit: f8dba31b0a826e691949cd4fdfa5c30defaac8c5
+base-commit: a4d7d701121981e3c3fe69ade376fe9f26324161
 -- 
 2.41.0
 
