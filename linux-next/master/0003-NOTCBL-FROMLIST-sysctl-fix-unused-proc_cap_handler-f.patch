@@ -1,0 +1,43 @@
+From c82054e0937c093f324a7e2f8b6dca3e6f118d9b Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Wed, 7 Jun 2023 14:08:54 +0200
+Subject: [PATCH 03/17] NOTCBL: FROMLIST: sysctl: fix unused proc_cap_handler()
+ function warning
+
+Since usermodehelper_table() is marked static now, we get a
+warning about it being unused when SYSCTL is disabled:
+
+kernel/umh.c:497:12: error: 'proc_cap_handler' defined but not used [-Werror=unused-function]
+
+Just move it inside of the same #ifdef.
+
+Fixes: e6944e3b75df7 ("sysctl: move umh sysctl registration to its own file")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230607120857.3621364-1-arnd@kernel.org
+---
+ kernel/umh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/umh.c b/kernel/umh.c
+index d5dc3cc92d5c..2f9249c2bf6c 100644
+--- a/kernel/umh.c
++++ b/kernel/umh.c
+@@ -494,6 +494,7 @@ int call_usermodehelper(const char *path, char **argv, char **envp, int wait)
+ }
+ EXPORT_SYMBOL(call_usermodehelper);
+ 
++#if defined(CONFIG_SYSCTL)
+ static int proc_cap_handler(struct ctl_table *table, int write,
+ 			 void *buffer, size_t *lenp, loff_t *ppos)
+ {
+@@ -544,7 +545,6 @@ static int proc_cap_handler(struct ctl_table *table, int write,
+ 	return 0;
+ }
+ 
+-#if defined(CONFIG_SYSCTL)
+ static struct ctl_table usermodehelper_table[] = {
+ 	{
+ 		.procname	= "bset",
+-- 
+2.41.0
+

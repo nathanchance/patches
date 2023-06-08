@@ -1,7 +1,7 @@
-From c637ee524c5f1841f080735e3279e9430bba13d9 Mon Sep 17 00:00:00 2001
+From e2dc4bd99eb4e9b6dbee4c61553c0e6de231e05e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 May 2023 11:24:39 -0700
-Subject: [PATCH 04/20] FROMGIT: drm/i915/gt: Fix parameter in
+Subject: [PATCH 05/17] FROMGIT: drm/i915/gt: Fix parameter in
  gmch_ggtt_insert_{entries, page}()
 
 When building with clang's -Wincompatible-function-pointer-types-strict,

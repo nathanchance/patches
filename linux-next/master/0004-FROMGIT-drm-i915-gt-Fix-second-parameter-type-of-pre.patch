@@ -1,7 +1,7 @@
-From 7684b9ce23db8ac23a6655f6fae91a13154ce51b Mon Sep 17 00:00:00 2001
+From 7611152dc3631b1cbd52d0e99d9f35da520cf975 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 May 2023 11:24:38 -0700
-Subject: [PATCH 03/20] FROMGIT: drm/i915/gt: Fix second parameter type of
+Subject: [PATCH 04/17] FROMGIT: drm/i915/gt: Fix second parameter type of
  pre-gen8 pte_encode callbacks
 
 When booting a kernel compiled with CONFIG_CFI_CLANG (kCFI), there is a
