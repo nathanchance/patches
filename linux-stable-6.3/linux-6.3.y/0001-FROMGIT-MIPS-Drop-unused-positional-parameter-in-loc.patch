@@ -1,7 +1,7 @@
-From 913e49c13fff05fbf4ec33d60e0ff7f837aa4efe Mon Sep 17 00:00:00 2001
+From 35758b19a15707b01a0d6c5caedc94ae27285276 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 4 Apr 2023 14:18:41 -0700
-Subject: [PATCH 01/11] FROMGIT: MIPS: Drop unused positional parameter in
+Subject: [PATCH 01/10] FROMGIT: MIPS: Drop unused positional parameter in
  local_irq_{dis,en}able
 
 When building with clang's integrated assembler, it points out that the
@@ -48,7 +48,7 @@ index 1c4438f3f2ab..067a635d3bc8 100644
  	irq_disable_hazard
  	.endm
 
-base-commit: abfd9cf1c3d4d143a889b76af835078897e46c55
+base-commit: e282393f9d0cd66cee8c68a80f4936f46c449b2d
 -- 
 2.41.0
 
