@@ -1,7 +1,7 @@
-From 8e21f8fbec594e6c232f9990e033e9a5f0d394d7 Mon Sep 17 00:00:00 2001
+From b2b867b2f67db2182020a9a2067d455364467ffb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 4 Apr 2023 14:18:41 -0700
-Subject: [PATCH 01/10] FROMGIT: MIPS: Drop unused positional parameter in
+Subject: [PATCH 01/15] UPSTREAM: MIPS: Drop unused positional parameter in
  local_irq_{dis,en}able
 
 When building with clang's integrated assembler, it points out that the
@@ -23,7 +23,7 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/1415
 Link: https://github.com/llvm/llvm-project/commit/81c944cadb7f9e55b3517b7423a820e2577b9279
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Link: https://git.kernel.org/mips/c/275aca650e76e203e3efc71835d7195e18d2e718
+Link: https://git.kernel.org/linus/275aca650e76e203e3efc71835d7195e18d2e718
 ---
  arch/mips/include/asm/asmmacro.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
