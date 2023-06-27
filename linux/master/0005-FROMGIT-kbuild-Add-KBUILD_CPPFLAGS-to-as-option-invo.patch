@@ -1,7 +1,7 @@
-From bd7cefd220d9741a1d5f2010ab64285398bc5cd2 Mon Sep 17 00:00:00 2001
+From 64e5c60f621353325c1539ae2e63f12adb191c11 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 Jun 2023 15:40:35 -0700
-Subject: [PATCH 05/14] SUBMITTED: kbuild: Add KBUILD_CPPFLAGS to as-option
+Subject: [PATCH 05/15] FROMGIT: kbuild: Add KBUILD_CPPFLAGS to as-option
  invocation
 
 After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
@@ -34,7 +34,9 @@ Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://git.kernel.org/masahiroy/linux-kbuild/c/43fc0a99906e04792786edf8534d8d58d1e9de0c
 ---
  scripts/Makefile.compiler | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

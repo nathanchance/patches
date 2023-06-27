@@ -1,7 +1,7 @@
-From d3086635f0d16a44ff3fdc4378a7e575ca6c9d4e Mon Sep 17 00:00:00 2001
+From a0a91967b6b4c0e7fd5c58817df9770981d11552 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 12:50:39 -0700
-Subject: [PATCH 03/14] FROMGIT: kbuild: Add CLANG_FLAGS to as-instr
+Subject: [PATCH 03/15] FROMGIT: kbuild: Add CLANG_FLAGS to as-instr
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
 KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
