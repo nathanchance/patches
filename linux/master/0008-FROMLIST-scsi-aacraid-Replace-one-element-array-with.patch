@@ -1,0 +1,36 @@
+From bd03c254beb112aa22fc9a11909971ca152cb909 Mon Sep 17 00:00:00 2001
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Date: Tue, 22 Feb 2022 01:31:07 -0600
+Subject: [PATCH 08/17] FROMLIST: scsi: aacraid: Replace one-element array with
+ flexible-array member in struct aac_aifcmd
+
+Replace one-element array with flexible-array member in struct
+aac_aifcmd.
+
+This issue was found with the help of Coccinelle and audited and fixed,
+manually.
+
+Link: https://www.kernel.org/doc/html/v5.16/process/deprecated.html#zero-length-and-one-element-arrays
+Link: https://github.com/KSPP/linux/issues/79
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/7d0571ef5dc87904008c325a942cfed24dbbf42e.1645513670.git.gustavoars@kernel.org
+---
+ drivers/scsi/aacraid/aacraid.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/aacraid/aacraid.h b/drivers/scsi/aacraid/aacraid.h
+index 7c6efde75da6..73b6ac0c01f5 100644
+--- a/drivers/scsi/aacraid/aacraid.h
++++ b/drivers/scsi/aacraid/aacraid.h
+@@ -2618,7 +2618,7 @@ struct aac_hba_info {
+ struct aac_aifcmd {
+ 	__le32 command;		/* Tell host what type of notify this is */
+ 	__le32 seqnum;		/* To allow ordering of reports (if necessary) */
+-	u8 data[1];		/* Undefined length (from kernel viewpoint) */
++	u8 data[];		/* Undefined length (from kernel viewpoint) */
+ };
+ 
+ /**
+-- 
+2.41.0
+
