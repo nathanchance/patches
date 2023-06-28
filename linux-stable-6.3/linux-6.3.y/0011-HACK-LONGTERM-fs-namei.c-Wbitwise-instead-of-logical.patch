@@ -1,4 +1,4 @@
-From d78e853f84f32476ef1ffbf45d3c80d6705c1b75 Mon Sep 17 00:00:00 2001
+From 414b02593a8902cf9e7fa947a5661adc686fb916 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
 Subject: [PATCH 11/15] HACK: LONGTERM: fs/namei.c:
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/namei.c b/fs/namei.c
-index edfedfbccaef..6aca00a9de14 100644
+index c1d59ae5af83..d7b390c9d628 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
-@@ -2170,7 +2170,7 @@ static inline u64 hash_name(const void *salt, const char *name)
+@@ -2174,7 +2174,7 @@ static inline u64 hash_name(const void *salt, const char *name)
  inside:
  		a = load_unaligned_zeropad(name+len);
  		b = a ^ REPEAT_BYTE('/');
