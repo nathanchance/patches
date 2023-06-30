@@ -1,7 +1,7 @@
-From f4155639ef54b6f5653c6acdfdbec73dc6c368e5 Mon Sep 17 00:00:00 2001
+From 083e2ea5b25dfbc53c8d9fc4471983a8a4e32bac Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:46:33 -0700
-Subject: [PATCH 02/17] FROMGIT: powerpc/vdso: Include CLANG_FLAGS explicitly
+Subject: [PATCH 03/21] FROMGIT: powerpc/vdso: Include CLANG_FLAGS explicitly
  in ldflags-y
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to

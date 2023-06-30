@@ -1,0 +1,42 @@
+From 88efeb5c4c47a1eba453a672f57f08a1c14b1368 Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Mon, 19 Jun 2023 10:20:50 +0200
+Subject: [PATCH 01/21] NOTCBL: FROMLIST: pinctrl: mlxbf3: remove broken
+ Kconfig 'select'
+
+The new pinctrl driver selects GPIO_MLXBF3, but that can not be enabled yet because
+the MELLANOX_PLATFORM symbol does not exist in the tree:
+
+WARNING: unmet direct dependencies detected for GPIO_MLXBF3
+  Depends on [n]: GPIOLIB [=y] && PCI [=n] && (MELLANOX_PLATFORM [=n] && ARM64 [=y] || COMPILE_TEST [=y])
+  Selected by [y]:
+  - PINCTRL_MLXBF3 [=y] && PINCTRL [=y] && (MELLANOX_PLATFORM [=n] && ARM64 [=y] || COMPILE_TEST [=y])
+
+As it turns out, the pinctlr driver still builds fine without this, so just
+remove the select statement.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230619082104.699331-1-arnd@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://git.kernel.org/linusw/linux-pinctrl/c/40ed50cc3d1f27522bc84724decbf117e9563f8e
+---
+ drivers/pinctrl/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
+index 77ff9a641aeb..57d57af1f624 100644
+--- a/drivers/pinctrl/Kconfig
++++ b/drivers/pinctrl/Kconfig
+@@ -510,7 +510,6 @@ config PINCTRL_MLXBF3
+ 	select PINMUX
+ 	select GPIOLIB
+ 	select GPIOLIB_IRQCHIP
+-	select GPIO_MLXBF3
+ 	help
+ 	  Say Y to select the pinctrl driver for BlueField-3 SoCs.
+ 	  This pin controller allows selecting the mux function for
+
+base-commit: e55e5df193d247a38a5e1ac65a5316a0adcc22fa
+-- 
+2.41.0
+
