@@ -1,4 +1,4 @@
-From 8c627f38247a807c913ed436f088a5778e6ab216 Mon Sep 17 00:00:00 2001
+From 1b92f49ed79d2214163dd760bc2ec5e329c6e857 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 Jun 2023 15:40:35 -0700
 Subject: [PATCH 06/21] FROMGIT: kbuild: Add KBUILD_CPPFLAGS to as-option
@@ -42,7 +42,7 @@ Link: https://git.kernel.org/masahiroy/linux-kbuild/c/43fc0a99906e04792786edf853
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-index 437013f8def3..e31f18625fcf 100644
+index 83ddc5aeb032..8fcb427405a6 100644
 --- a/scripts/Makefile.compiler
 +++ b/scripts/Makefile.compiler
 @@ -32,7 +32,7 @@ try-run = $(shell set -e;		\

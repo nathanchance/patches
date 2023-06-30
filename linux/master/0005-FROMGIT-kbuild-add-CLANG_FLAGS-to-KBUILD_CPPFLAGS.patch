@@ -1,4 +1,4 @@
-From efd00d9eb1ea806df5ef07073dc0078b4114b1a0 Mon Sep 17 00:00:00 2001
+From 4ea1f676ca4a62e25e32586ef7e073600d19a9d9 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Sun, 9 Apr 2023 23:53:57 +0900
 Subject: [PATCH 05/21] FROMGIT: kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
@@ -35,10 +35,10 @@ Link: https://git.kernel.org/masahiroy/linux-kbuild/c/feb843a469fb0ab00d2d23cfb9
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/scripts/Makefile.clang b/scripts/Makefile.clang
-index 9076cc939e87..058a4c0f864e 100644
+index 9a0aebf2ae60..6c23c6af797f 100644
 --- a/scripts/Makefile.clang
 +++ b/scripts/Makefile.clang
-@@ -34,6 +34,5 @@ CLANG_FLAGS	+= -Werror=unknown-warning-option
+@@ -35,6 +35,5 @@ CLANG_FLAGS	+= -Werror=unknown-warning-option
  CLANG_FLAGS	+= -Werror=ignored-optimization-argument
  CLANG_FLAGS	+= -Werror=option-ignored
  CLANG_FLAGS	+= -Werror=unused-command-line-argument

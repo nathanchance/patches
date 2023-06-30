@@ -1,4 +1,4 @@
-From 4c181e7d0ab97aeaace479f192f23faa1b8ec890 Mon Sep 17 00:00:00 2001
+From c7357bc5db9e1ef4ee94f7de5f004f92195f5431 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 12:50:39 -0700
 Subject: [PATCH 04/21] FROMGIT: kbuild: Add CLANG_FLAGS to as-instr
@@ -26,7 +26,7 @@ Link: https://git.kernel.org/masahiroy/linux-kbuild/c/cff6e7f50bd315e5b39c4e46c7
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-index 7aa1fbc4aafe..437013f8def3 100644
+index 1279c5fd6e76..83ddc5aeb032 100644
 --- a/scripts/Makefile.compiler
 +++ b/scripts/Makefile.compiler
 @@ -38,7 +38,7 @@ as-option = $(call try-run,\
