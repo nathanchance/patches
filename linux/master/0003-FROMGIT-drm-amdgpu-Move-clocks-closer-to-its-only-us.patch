@@ -1,7 +1,7 @@
-From 9c774c07e3c9824ad9c01ec570a0155e9f0110e5 Mon Sep 17 00:00:00 2001
+From 5a3d82f365191287804c44d32260ea4f416e2a2b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 15 Jun 2023 10:06:09 -0700
-Subject: [PATCH 11/21] FROMGIT: drm/amdgpu: Move clocks closer to its only
+Subject: [PATCH 03/13] FROMGIT: drm/amdgpu: Move clocks closer to its only
  usage in amdgpu_parse_cg_state()
 
 After commit 8020f0f9316b ("drm/amd/amdgpu: enable W=1 for amdgpu"),

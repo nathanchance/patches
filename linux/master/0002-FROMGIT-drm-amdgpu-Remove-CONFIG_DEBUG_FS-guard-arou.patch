@@ -1,7 +1,7 @@
-From fc90563badc0aa1b4222f62a539fcec8d5521fb2 Mon Sep 17 00:00:00 2001
+From 16209a770f97bc3ee1a8ae26f7bd83bf085ef262 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 15 Jun 2023 10:06:08 -0700
-Subject: [PATCH 10/21] FROMGIT: drm/amdgpu: Remove CONFIG_DEBUG_FS guard
+Subject: [PATCH 02/13] FROMGIT: drm/amdgpu: Remove CONFIG_DEBUG_FS guard
  around body of amdgpu_rap_debugfs_init()
 
 After commit 8020f0f9316b ("drm/amd/amdgpu: enable W=1 for amdgpu"),

@@ -1,7 +1,7 @@
-From d4c06e5d7513b39ef93bcd71ddc868b17e953c53 Mon Sep 17 00:00:00 2001
+From b86b600829c8ba49659ce16d314b0c80eda4050e Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Tue, 22 Feb 2022 01:31:07 -0600
-Subject: [PATCH 12/21] FROMLIST: scsi: aacraid: Replace one-element array with
+Subject: [PATCH 04/13] FROMLIST: scsi: aacraid: Replace one-element array with
  flexible-array member in struct aac_aifcmd
 
 Replace one-element array with flexible-array member in struct

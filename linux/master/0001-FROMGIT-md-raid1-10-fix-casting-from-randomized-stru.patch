@@ -1,7 +1,7 @@
-From e78ead52f31ef41deb2573085b71266b55d487a9 Mon Sep 17 00:00:00 2001
+From 2b5d30ac85e6dbde886ed8bdbd15cdb75a21332b Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 16 Jun 2023 09:21:36 +0800
-Subject: [PATCH 07/21] FROMGIT: md/raid1-10: fix casting from randomized
+Subject: [PATCH 01/13] FROMGIT: md/raid1-10: fix casting from randomized
  structure in raid1_submit_write()
 
 Following build error triggered while build with clang version 17.0.0
@@ -38,6 +38,8 @@ index 169ebe296f2d..3f22edec70e7 100644
  
  	bio->bi_next = NULL;
  	bio_set_dev(bio, rdev->bdev);
+
+base-commit: 56cbceab928d7ac3702de172ff8dcc1da2a6aaeb
 -- 
 2.41.0
 
