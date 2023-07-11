@@ -1,4 +1,4 @@
-From 872145c73319f8d72a8624585e8a3607aa6956bd Mon Sep 17 00:00:00 2001
+From e9f6cd461d556b3e32ee933f97a6ab5d6e0b12dc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:38:24 -0700
 Subject: [PATCH 01/14] FROMGIT: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
@@ -35,7 +35,7 @@ index a7a4ee66a9d3..ef7b05ae92ce 100644
  	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
  endif
 
-base-commit: d7defc5b8d422ba19ab762a96cf1b1eb158aa5a8
+base-commit: 160f4124ea8b4cd6c86867e111fa55e266345a16
 -- 
 2.41.0
 
