@@ -1,7 +1,7 @@
-From 975c13ab4dcf7ddf31975bcf6ff1c41632783872 Mon Sep 17 00:00:00 2001
+From 2207c14ea6ae83e8200d21abe1d969ea817a9626 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
-Subject: [PATCH 06/16] SUBMITTED: drm/v3d: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 01/11] SUBMITTED: drm/v3d: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 
 A proposed update to clang's -Wconstant-logical-operand to warn when the
@@ -44,6 +44,8 @@ index b74b1351bfc8..7f664a4b2a75 100644
  	    div_u64(n, NSEC_PER_SEC) >= MAX_JIFFY_OFFSET / HZ)
  		return MAX_JIFFY_OFFSET;
  
+
+base-commit: 62813c2d2a3617a289397582b2db3db9f97111ee
 -- 
 2.41.0
 
