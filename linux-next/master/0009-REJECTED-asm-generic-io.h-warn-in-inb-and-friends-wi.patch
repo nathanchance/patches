@@ -1,7 +1,7 @@
-From ae8b0874466cb15b7be864c582c107d3bbb49de8 Mon Sep 17 00:00:00 2001
+From 1506e28d747f938d8246d32e600676de2b1736a4 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 12/17] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 09/14] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 587e7e9b9a37..c60c2077c544 100644
+index bac63e874c7b..57c39b2954d9 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -217,7 +217,7 @@ index 587e7e9b9a37..c60c2077c544 100644
  }
  #endif
  
-@@ -1130,8 +1181,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+@@ -1111,8 +1162,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {

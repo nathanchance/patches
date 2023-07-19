@@ -1,7 +1,7 @@
-From 52518521bd0122d9711a1385cf71788a2a850296 Mon Sep 17 00:00:00 2001
+From c599f984a986995b7c23b1066f4a1a7d35265a72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
-Subject: [PATCH 09/17] WIP: kbuild: Enable
+Subject: [PATCH 06/14] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 3 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 8bc877072e47..5823ae49d3c7 100644
+index bbe87cb7d2d6..8d448d97036e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1076,6 +1076,7 @@ KBUILD_CFLAGS   += -Werror=date-time
+@@ -1086,6 +1086,7 @@ KBUILD_CFLAGS   += -Werror=date-time
  
  # enforce correct pointer usage
  KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
@@ -23,7 +23,7 @@ index 8bc877072e47..5823ae49d3c7 100644
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
 diff --git a/drivers/counter/Makefile b/drivers/counter/Makefile
-index 933fdd50b3e4..d7347bad9a3c 100644
+index fa3c1d08f706..80e335e836e4 100644
 --- a/drivers/counter/Makefile
 +++ b/drivers/counter/Makefile
 @@ -3,6 +3,8 @@

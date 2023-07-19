@@ -1,7 +1,7 @@
-From 7f6846df47b6705ccb928b5afaf94cbaffe7f2b2 Mon Sep 17 00:00:00 2001
+From 4b697531c6e457b39fd1ca695b6dfd3c345f4c97 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 20 Oct 2021 15:21:16 -0700
-Subject: [PATCH 13/17] HACK: LONGTERM: fs/namei.c:
+Subject: [PATCH 10/14] HACK: LONGTERM: fs/namei.c:
  -Wbitwise-instead-of-logical
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/namei.c b/fs/namei.c
-index 6a5e26a529e1..714ad9ff0ded 100644
+index 2bae29ea52ff..cad769ea9d65 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
 @@ -2174,7 +2174,7 @@ static inline u64 hash_name(const void *salt, const char *name)
