@@ -1,7 +1,7 @@
-From 5c5f709a1de101269f63cf713bbaecf374c8473a Mon Sep 17 00:00:00 2001
+From b0574d0c5c2285baa1835b6099cf9885fe7bf15f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 12:50:39 -0700
-Subject: [PATCH 03/14] FROMGIT: kbuild: Add CLANG_FLAGS to as-instr
+Subject: [PATCH 03/16] UPSTREAM: kbuild: Add CLANG_FLAGS to as-instr
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
 KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
@@ -20,7 +20,7 @@ invocation to ensure the target information is always present.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/masahiroy/linux-kbuild/c/cff6e7f50bd315e5b39c4e46c704ac587ceb965f
+Link: https://git.kernel.org/linus/cff6e7f50bd315e5b39c4e46c704ac587ceb965f
 ---
  scripts/Makefile.compiler | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

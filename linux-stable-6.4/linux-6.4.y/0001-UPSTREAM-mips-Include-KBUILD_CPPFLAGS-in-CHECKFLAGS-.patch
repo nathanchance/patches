@@ -1,7 +1,7 @@
-From e9f6cd461d556b3e32ee933f97a6ab5d6e0b12dc Mon Sep 17 00:00:00 2001
+From f4ecb406c836c10aedae28ebcae1ff6f26d031d7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:38:24 -0700
-Subject: [PATCH 01/14] FROMGIT: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
+Subject: [PATCH 01/16] UPSTREAM: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
  invocation
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
@@ -16,7 +16,7 @@ working after the move.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/masahiroy/linux-kbuild/c/08f6554ff90ef189e6b8f0303e57005bddfdd6a7
+Link: https://git.kernel.org/linus/08f6554ff90ef189e6b8f0303e57005bddfdd6a7
 ---
  arch/mips/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

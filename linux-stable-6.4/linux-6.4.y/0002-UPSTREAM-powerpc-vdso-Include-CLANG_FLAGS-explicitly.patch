@@ -1,7 +1,7 @@
-From ae481be41b9053100b27aa395bb6dad85c6732ee Mon Sep 17 00:00:00 2001
+From 32928219d7df71dce985b400979303eceeed0bcc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:46:33 -0700
-Subject: [PATCH 02/14] FROMGIT: powerpc/vdso: Include CLANG_FLAGS explicitly
+Subject: [PATCH 02/16] UPSTREAM: powerpc/vdso: Include CLANG_FLAGS explicitly
  in ldflags-y
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
@@ -17,7 +17,7 @@ be present.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/masahiroy/linux-kbuild/c/a7e5eb53bf9b800d086e2ebcfebd9a3bb16bd1b0
+Link: https://git.kernel.org/linus/a7e5eb53bf9b800d086e2ebcfebd9a3bb16bd1b0
 ---
  arch/powerpc/kernel/vdso/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
