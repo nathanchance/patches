@@ -1,4 +1,4 @@
-From 4850cb06dc97f88d5f7859d2a864a3854e923234 Mon Sep 17 00:00:00 2001
+From b21758b58b9956496bacec3dc7545af8baa5b106 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
 Subject: [PATCH 3/9] UPSTREAM: s390: always build relocatable kernel
@@ -62,7 +62,7 @@ index e402fa964f23..f1521cede653 100644
  	help
  	  In support of Kernel Address Space Layout Randomization (KASLR),
 diff --git a/arch/s390/Makefile b/arch/s390/Makefile
-index c7b7a60f6405..cd0cb801d54d 100644
+index dc840ba0b016..b86d4b91bd75 100644
 --- a/arch/s390/Makefile
 +++ b/arch/s390/Makefile
 @@ -16,10 +16,8 @@ KBUILD_AFLAGS_MODULE += -fPIC
