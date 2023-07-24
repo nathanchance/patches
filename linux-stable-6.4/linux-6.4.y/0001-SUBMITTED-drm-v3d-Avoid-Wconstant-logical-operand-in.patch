@@ -1,4 +1,4 @@
-From d48bd9cccf1a2fdbc55a4fdc19e37cc9dc7a8041 Mon Sep 17 00:00:00 2001
+From ad37acc67a6f1de417d1c251d93f534d92addb84 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
 Subject: [PATCH 01/11] SUBMITTED: drm/v3d: Avoid -Wconstant-logical-operand in
@@ -45,7 +45,7 @@ index b74b1351bfc8..7f664a4b2a75 100644
  		return MAX_JIFFY_OFFSET;
  
 
-base-commit: bcecfeef53d4a78b282d67713ff8d6b35da723f0
+base-commit: 79562f63d621517795c125092620cf4e5778ad44
 -- 
 2.41.0
 
