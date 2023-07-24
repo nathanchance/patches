@@ -1,7 +1,7 @@
 From c6ac51c11f4628bacb622a4f11d55b2895d2f95a Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 13 Mar 2020 17:19:37 +0000
-Subject: [PATCH 22/31] UPSTREAM: leds: lm3532: make bitfield 'enabled'
+Subject: [PATCH 22/35] UPSTREAM: leds: lm3532: make bitfield 'enabled'
  unsigned
 
 The bitfield 'enabled' should bit unsigned, so make it unsigned.
