@@ -1,4 +1,4 @@
-From 13dc0814df764b35e4e086f9c33e01290711e8e4 Mon Sep 17 00:00:00 2001
+From 41a9b2a873db64f3209c276c0b4decd79d49620f Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Fri, 26 Mar 2021 03:54:11 +0900
 Subject: [PATCH 07/23] UPSTREAM: kbuild: fix false-positive modpost warning
@@ -81,7 +81,7 @@ index b7368312feea..c088269142cb 100644
  endif
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index e48742760fec..51a7486887ce 100644
+index 78ac98cfa02d..ba404b190e55 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -24,8 +24,6 @@
@@ -117,7 +117,7 @@ index e48742760fec..51a7486887ce 100644
  	return mod;
  }
  
-@@ -2184,7 +2186,7 @@ static int check_exports(struct module *mod)
+@@ -2202,7 +2204,7 @@ static int check_exports(struct module *mod)
  		const char *basename;
  		exp = find_symbol(s->name);
  		if (!exp || exp->module == mod) {
@@ -126,7 +126,7 @@ index e48742760fec..51a7486887ce 100644
  				modpost_log(warn_unresolved ? LOG_WARN : LOG_ERROR,
  					    "\"%s\" [%s.ko] undefined!\n",
  					    s->name, mod->name);
-@@ -2605,13 +2607,6 @@ int main(int argc, char **argv)
+@@ -2623,13 +2625,6 @@ int main(int argc, char **argv)
  	if (files_source)
  		read_symbols_from_files(files_source);
  
@@ -140,7 +140,7 @@ index e48742760fec..51a7486887ce 100644
  	err = 0;
  
  	for (mod = modules; mod; mod = mod->next) {
-@@ -2657,6 +2652,10 @@ int main(int argc, char **argv)
+@@ -2675,6 +2670,10 @@ int main(int argc, char **argv)
  		}
  	}
  
