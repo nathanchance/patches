@@ -1,4 +1,4 @@
-From c599f984a986995b7c23b1066f4a1a7d35265a72 Mon Sep 17 00:00:00 2001
+From 252ed6fac8eb0a59be5e3795ab6f62cdfde187dc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
 Subject: [PATCH 06/14] WIP: kbuild: Enable
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 3 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index bbe87cb7d2d6..8d448d97036e 100644
+index d36e5361810f..3684cef0af0f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1086,6 +1086,7 @@ KBUILD_CFLAGS   += -Werror=date-time

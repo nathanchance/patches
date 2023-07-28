@@ -1,4 +1,4 @@
-From 92a8419ce43ff062d2e22498514adf94e85cd57f Mon Sep 17 00:00:00 2001
+From 1b7cbdd346befdf4172147929a5b0d196485d4bf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 09:00:11 -0700
 Subject: [PATCH 04/14] WIP: regulator: max77857: Use define for ramp delay
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/max77857-regulator.c b/drivers/regulator/max77857-regulator.c
-index c5482ffd606e..4aedbbabd1dc 100644
+index 58f825d8d2b0..80cf41420ee2 100644
 --- a/drivers/regulator/max77857-regulator.c
 +++ b/drivers/regulator/max77857-regulator.c
 @@ -44,6 +44,8 @@

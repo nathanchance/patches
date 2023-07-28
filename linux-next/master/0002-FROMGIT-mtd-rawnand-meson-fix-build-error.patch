@@ -1,0 +1,61 @@
+From 022cc821f3263a43ea4aa75bce48c93d3b92cdb7 Mon Sep 17 00:00:00 2001
+From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Date: Fri, 28 Jul 2023 12:38:10 +0300
+Subject: [PATCH 02/14] FROMGIT: mtd: rawnand: meson: fix build error
+
+Fixes the following build error:
+
+drivers/mtd/nand/raw/meson_nand.c:244:59: error: initializer element is not a compile-time constant
+static const struct nand_ecc_step_info axg_stepinfo[] = { axg_stepinfo_1024, axg_stepinfo_512 };
+                                                          ^~~~~~~~~~~~~~~~~
+
+Fixes: 0e1db39336d8 ("mtd: rawnand: meson: support for 512B ECC step size")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307281007.MMuVjmJ9-lkp@intel.com/
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230728093810.2985324-1-AVKrasnov@sberdevices.ru
+Link: https://git.kernel.org/mtd/c/4622daf4b5c89cd6a689910c523b8185b8a20338
+---
+ drivers/mtd/nand/raw/meson_nand.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
+index 90348b7e1fe6..25e3c1cb605e 100644
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -228,20 +228,20 @@ NAND_ECC_CAPS_SINGLE(meson_gxl_ecc_caps,
+ 		     meson_nand_calc_ecc_bytes, 1024, 8, 24, 30, 40, 50, 60);
+ 
+ static const int axg_stepinfo_strengths[] = { 8 };
+-static const struct nand_ecc_step_info axg_stepinfo_1024 = {
+-	.stepsize = 1024,
+-	.strengths = axg_stepinfo_strengths,
+-	.nstrengths = ARRAY_SIZE(axg_stepinfo_strengths)
+-};
+ 
+-static const struct nand_ecc_step_info axg_stepinfo_512 = {
+-	.stepsize = 512,
+-	.strengths = axg_stepinfo_strengths,
+-	.nstrengths = ARRAY_SIZE(axg_stepinfo_strengths)
++static const struct nand_ecc_step_info axg_stepinfo[] = {
++	{
++		.stepsize = 1024,
++		.strengths = axg_stepinfo_strengths,
++		.nstrengths = ARRAY_SIZE(axg_stepinfo_strengths)
++	},
++	{
++		.stepsize = 512,
++		.strengths = axg_stepinfo_strengths,
++		.nstrengths = ARRAY_SIZE(axg_stepinfo_strengths)
++	},
+ };
+ 
+-static const struct nand_ecc_step_info axg_stepinfo[] = { axg_stepinfo_1024, axg_stepinfo_512 };
+-
+ static const struct nand_ecc_caps meson_axg_ecc_caps = {
+ 	.stepinfos = axg_stepinfo,
+ 	.nstepinfos = ARRAY_SIZE(axg_stepinfo),
+-- 
+2.41.0
+
