@@ -1,7 +1,7 @@
-From a5ea4a6a671fd623958d765bea479b7cffea3ecf Mon Sep 17 00:00:00 2001
+From f9b981a73cd60dac12bfdc32bb6ad0ff249b7b97 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Thu, 27 Jul 2023 15:50:58 -0700
-Subject: [PATCH 03/14] FROMLIST: drm: fix indirect goto into statement
+Subject: [PATCH 04/15] FROMLIST: drm: fix indirect goto into statement
  expression UB
 
 A new diagnostic in clang-17 now produces the following build error:

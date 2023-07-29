@@ -1,7 +1,7 @@
-From dcb3365c1efd79eba5c0439eea7b33ebac4cb0d3 Mon Sep 17 00:00:00 2001
+From 9b76bcbe4755f320c6ff36570adaa1d897256f89 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Mon, 24 Jul 2023 14:19:15 +0200
-Subject: [PATCH 01/14] NOTCBL: FROMLIST: btrfs: remove unused pages_processed
+Subject: [PATCH 02/15] NOTCBL: FROMLIST: btrfs: remove unused pages_processed
  variable
 
 The only user of pages_processed was removed, so it's now a local write-only
@@ -39,8 +39,6 @@ index 0aeec0518f3c..d5b9f446dd06 100644
  		}
  		folio_batch_release(&fbatch);
  		cond_resched();
-
-base-commit: d7b3af5a77e8d8da28f435f313e069aea5bcf172
 -- 
 2.41.0
 
