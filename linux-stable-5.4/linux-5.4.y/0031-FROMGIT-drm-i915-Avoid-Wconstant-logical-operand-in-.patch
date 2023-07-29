@@ -1,8 +1,11 @@
-From fd725991f898fa3b73ac49f5180b91a04dd4ebfa Mon Sep 17 00:00:00 2001
+From 893c5d7c11731fc97a14e0212c27a9f6e1911a16 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:20 -0700
-Subject: [PATCH 31/35] SUBMITTED: drm/i915: Avoid -Wconstant-logical-operand
- in nsecs_to_jiffies_timeout()
+Subject: [PATCH 31/35] FROMGIT: drm/i915: Avoid -Wconstant-logical-operand in
+ nsecs_to_jiffies_timeout()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 A proposed update to clang's -Wconstant-logical-operand to warn when the
 left hand side is a constant shows the following instance in
@@ -25,7 +28,10 @@ not a bitwise one.
 
 Link: https://reviews.llvm.org/D142609
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org
+Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org
+Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=aeedd3a82678d89627bdd020a28e0af35ff45552
 ---
  drivers/gpu/drm/i915/gem/i915_gem_wait.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
