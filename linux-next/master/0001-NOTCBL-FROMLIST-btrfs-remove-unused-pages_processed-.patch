@@ -1,7 +1,7 @@
-From 9b76bcbe4755f320c6ff36570adaa1d897256f89 Mon Sep 17 00:00:00 2001
+From 9c3569309360ceed4b0c69e21835e2098920df96 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Mon, 24 Jul 2023 14:19:15 +0200
-Subject: [PATCH 02/15] NOTCBL: FROMLIST: btrfs: remove unused pages_processed
+Subject: [PATCH 01/17] NOTCBL: FROMLIST: btrfs: remove unused pages_processed
  variable
 
 The only user of pages_processed was removed, so it's now a local write-only
@@ -20,7 +20,7 @@ Link: https://lore.kernel.org/r/20230724121934.1406807-1-arnd@kernel.org
  1 file changed, 2 deletions(-)
 
 diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 0aeec0518f3c..d5b9f446dd06 100644
+index 6b40189a1a3e..7d2867d42079 100644
 --- a/fs/btrfs/extent_io.c
 +++ b/fs/btrfs/extent_io.c
 @@ -229,7 +229,6 @@ static void __process_pages_contig(struct address_space *mapping,
@@ -39,6 +39,8 @@ index 0aeec0518f3c..d5b9f446dd06 100644
  		}
  		folio_batch_release(&fbatch);
  		cond_resched();
+
+base-commit: a734662572708cf062e974f659ae50c24fc1ad17
 -- 
 2.41.0
 

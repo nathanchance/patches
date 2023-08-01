@@ -1,0 +1,39 @@
+From 3c14cc34f6ace79d599be29d0387599ba958270b Mon Sep 17 00:00:00 2001
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 1 Aug 2023 12:58:15 +0200
+Subject: [PATCH 03/17] NOTCBL: FROMLIST: virtio: Remove PM #ifdef guards to
+ fix i2c driver
+
+A cleanup in the virtio i2c caused a build failure:
+
+drivers/i2c/busses/i2c-virtio.c:270:10: error: 'struct virtio_driver' has no member named 'freeze'
+drivers/i2c/busses/i2c-virtio.c:271:10: error: 'struct virtio_driver' has no member named 'restore'
+
+Change the structure definition to allow this cleanup to
+be applied everywhere.
+
+Fixes: 73d546c76235b ("i2c: virtio: Remove #ifdef guards for PM related functions")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230801105846.3708252-1-arnd@kernel.org
+---
+ include/linux/virtio.h | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/include/linux/virtio.h b/include/linux/virtio.h
+index 0f3b9017dff4..9b94e2c9bbb8 100644
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -218,10 +218,8 @@ struct virtio_driver {
+ 	void (*scan)(struct virtio_device *dev);
+ 	void (*remove)(struct virtio_device *dev);
+ 	void (*config_changed)(struct virtio_device *dev);
+-#ifdef CONFIG_PM
+ 	int (*freeze)(struct virtio_device *dev);
+ 	int (*restore)(struct virtio_device *dev);
+-#endif
+ };
+ 
+ static inline struct virtio_driver *drv_to_virtio(struct device_driver *drv)
+-- 
+2.41.0
+
