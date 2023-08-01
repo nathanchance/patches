@@ -1,7 +1,7 @@
-From a6ecb91a5686406929b70e40d0fb803dccf2aa73 Mon Sep 17 00:00:00 2001
+From ccd8e7c7f85902ccc2e8c13ce9e87662cf196d6a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:44:34 -0700
-Subject: [PATCH 21/23] HACK: Disable syscall not implemented warning
+Subject: [PATCH 22/23] HACK: Disable syscall not implemented warning
 
 This used to impact -Werror and it is noisy at times so just ignore it
 for the sake of this project.
