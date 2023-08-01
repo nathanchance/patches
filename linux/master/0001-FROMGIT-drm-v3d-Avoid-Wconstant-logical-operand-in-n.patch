@@ -1,7 +1,7 @@
-From f43eecf7caa36283e9ab2586aa96493965f7b04a Mon Sep 17 00:00:00 2001
+From b076691427acaccdbd5fbe0c03cac3fabe7bbb6c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
-Subject: [PATCH 01/11] FROMGIT: drm/v3d: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 01/12] FROMGIT: drm/v3d: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -52,7 +52,7 @@ index b74b1351bfc8..7f664a4b2a75 100644
  		return MAX_JIFFY_OFFSET;
  
 
-base-commit: 122e7943b252fcf48b4d085dec084e24fc8bec45
+base-commit: 5d0c230f1de8c7515b6567d9afba1f196fb4e2f4
 -- 
 2.41.0
 
