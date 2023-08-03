@@ -1,4 +1,4 @@
-From 598e080dffc2cab62486e15fcb77a8395bbc0846 Mon Sep 17 00:00:00 2001
+From c5ef87811ffc5dc4c557a1f4d823c2f254050cc0 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Tue, 1 Aug 2023 15:22:17 -0700
 Subject: [PATCH 1/9] UPSTREAM: word-at-a-time: use the same return type for
@@ -66,7 +66,7 @@ index 20c93f08c993..95a1d214108a 100644
  	unsigned long rhs = val | c->low_bits;
  	*data = rhs;
 
-base-commit: d2a6dc4eaf6d50ba32a9b39b4c6ec713a92072ab
+base-commit: 52a953d0934b17a88f403b4135eb3cdf83d19f91
 -- 
 2.41.0
 
