@@ -1,7 +1,7 @@
 From b61f514e2c0668465cdeae20b99876f92c1736a3 Mon Sep 17 00:00:00 2001
 From: "ndesaulniers@google.com" <ndesaulniers@google.com>
 Date: Tue, 1 Aug 2023 15:22:17 -0700
-Subject: [PATCH 06/13] UPSTREAM: word-at-a-time: use the same return type for
+Subject: [PATCH 06/14] UPSTREAM: word-at-a-time: use the same return type for
  has_zero regardless of endianness
 
 Compiling big-endian targets with Clang produces the diagnostic:
