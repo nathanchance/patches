@@ -1,4 +1,4 @@
-From f89fb7f8087902c015159a807a51add9fab3c82d Mon Sep 17 00:00:00 2001
+From 6d22fedaa6fb58ad81c19381880ba30a94c31539 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 29 Jul 2023 11:16:59 -0700
 Subject: [PATCH 12/12] HACK: LONGTERM: lib: Disable fortify source tests for
@@ -11,10 +11,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/lib/Makefile b/lib/Makefile
-index 42d307ade225..d984f7230eb8 100644
+index 1ffae65bb7ee..56625653f59e 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
-@@ -430,5 +430,7 @@ $(obj)/$(TEST_FORTIFY_LOG): $(addprefix $(obj)/, $(TEST_FORTIFY_LOGS)) FORCE
+@@ -436,5 +436,7 @@ $(obj)/$(TEST_FORTIFY_LOG): $(addprefix $(obj)/, $(TEST_FORTIFY_LOGS)) FORCE
  
  # Fake dependency to trigger the fortify tests.
  ifeq ($(CONFIG_FORTIFY_SOURCE),y)
