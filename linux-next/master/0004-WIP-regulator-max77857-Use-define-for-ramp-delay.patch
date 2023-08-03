@@ -1,7 +1,7 @@
-From e0b0783eaaee9643b001ad502d7a9ae90439997e Mon Sep 17 00:00:00 2001
+From 47612af746a2e0131dbe142913792c74dd23a725 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 09:00:11 -0700
-Subject: [PATCH 06/17] WIP: regulator: max77857: Use define for ramp delay
+Subject: [PATCH 04/15] WIP: regulator: max77857: Use define for ramp delay
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1889
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/max77857-regulator.c b/drivers/regulator/max77857-regulator.c
-index 58f825d8d2b0..80cf41420ee2 100644
+index f2141b5be780..3652fde653b6 100644
 --- a/drivers/regulator/max77857-regulator.c
 +++ b/drivers/regulator/max77857-regulator.c
 @@ -44,6 +44,8 @@

@@ -1,7 +1,7 @@
-From e6818105495a58599a3922130c64e97c1e09678b Mon Sep 17 00:00:00 2001
+From ac1ed12391a265298ada0b8393f78add570be463 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 27 Apr 2023 17:06:37 -0700
-Subject: [PATCH 07/17] WIP: arm64: Mark __create_pgd_mapping,{_locked}() as
+Subject: [PATCH 05/15] WIP: arm64: Mark __create_pgd_mapping,{_locked}() as
  __always_inline
 
 Link: http://github.com/ClangBuiltLinux/linux/issues/1838
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 95d360805f8a..767c3efa9a01 100644
+index 47781bec6171..229886595bcf 100644
 --- a/arch/arm64/mm/mmu.c
 +++ b/arch/arm64/mm/mmu.c
 @@ -366,11 +366,10 @@ static void alloc_init_pud(pgd_t *pgdp, unsigned long addr, unsigned long end,
