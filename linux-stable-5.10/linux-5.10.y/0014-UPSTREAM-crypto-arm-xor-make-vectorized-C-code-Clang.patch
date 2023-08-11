@@ -1,7 +1,7 @@
-From 7c627c53aac82ba029465f4d4d706a4ec196e360 Mon Sep 17 00:00:00 2001
+From 750347854b1d059b3c6ec680baf38938d6eeb8d1 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 29 Jan 2022 23:45:29 +0100
-Subject: [PATCH 14/23] UPSTREAM: crypto: arm/xor - make vectorized C code
+Subject: [PATCH 14/22] UPSTREAM: crypto: arm/xor - make vectorized C code
  Clang-friendly
 
 The ARM version of the accelerated XOR routines are simply the 8-way C
