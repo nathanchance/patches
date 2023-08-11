@@ -1,0 +1,28 @@
+From 181eb997a90876a3b695b2ec21f0afb7091bc042 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 9 Aug 2023 11:18:09 -0700
+Subject: [PATCH 07/19] FROMLIST: compiler_types: Restrict '__preserve_most__'
+ to known good architectures
+
+Link: https://lore.kernel.org/ZNN1WdZ5J%2Fe5OPAt@elver.google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/compiler_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index c88488715a39..c523c6683789 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -128,7 +128,7 @@ static inline void __chk_io_ptr(const volatile void __iomem *ptr) { }
+  *
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#preserve-most
+  */
+-#if __has_attribute(__preserve_most__)
++#if __has_attribute(__preserve_most__) && (defined(CONFIG_X86_64) || defined(CONFIG_ARM64))
+ # define __preserve_most notrace __attribute__((__preserve_most__))
+ #else
+ # define __preserve_most
+-- 
+2.41.0
+

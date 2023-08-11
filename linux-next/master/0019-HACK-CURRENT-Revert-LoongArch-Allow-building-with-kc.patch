@@ -1,7 +1,7 @@
-From d8e624c4724995b94ed828a68a2aaab7b14481fb Mon Sep 17 00:00:00 2001
+From 749959c05cf708e2d5bc262440f19e07ec2dcac8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 28 Jul 2023 19:31:35 -0700
-Subject: [PATCH 15/15] HACK: CURRENT: Revert "LoongArch: Allow building with
+Subject: [PATCH 19/19] HACK: CURRENT: Revert "LoongArch: Allow building with
  kcov coverage"
 
 This reverts commit 54b9a87ddcc9102826437d3c26ed6c4ab2ad3677.
@@ -28,7 +28,7 @@ index de84cefbcdd3..ffcc9f2b1d74 100644
      |  microblaze: | TODO |
      |        mips: |  ok  |
 diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
-index 70223e108fdf..29ae6952f993 100644
+index 2b27b18a63af..81fe63dc6ebb 100644
 --- a/arch/loongarch/Kconfig
 +++ b/arch/loongarch/Kconfig
 @@ -14,7 +14,6 @@ config LOONGARCH
