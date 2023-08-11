@@ -1,7 +1,7 @@
-From d57d928cf39f999d18d90b3feb1f0f09c7e0477b Mon Sep 17 00:00:00 2001
+From a686bb504665527b2d33940e2f4fb1d66e65e04d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 3 Aug 2023 11:14:42 -0700
-Subject: [PATCH 04/10] SUBMITTED: lib: test_scanf: Add explicit type cast to
+Subject: [PATCH 3/9] SUBMITTED: lib: test_scanf: Add explicit type cast to
  result initialization in test_number_prefix()
 
 A recent change in clang allows it to consider more expressions as
