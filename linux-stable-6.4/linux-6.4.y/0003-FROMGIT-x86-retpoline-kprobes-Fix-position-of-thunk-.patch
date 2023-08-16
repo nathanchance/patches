@@ -1,7 +1,7 @@
-From 85107fb92a1dfc2f3d28a5cffd6565c877439e6f Mon Sep 17 00:00:00 2001
+From 1ef9f8d163a99739bc996235c500f10d4bef02a0 Mon Sep 17 00:00:00 2001
 From: Petr Pavlu <petr.pavlu@suse.com>
 Date: Tue, 11 Jul 2023 11:19:51 +0200
-Subject: [PATCH 04/13] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
+Subject: [PATCH 03/13] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
  sections with CONFIG_LTO_CLANG
 
 Linker script arch/x86/kernel/vmlinux.lds.S matches the thunk sections
@@ -37,6 +37,7 @@ Link: https://lore.kernel.org/r/20230711091952.27944-2-petr.pavlu@suse.com
 [nathan: Fix conflicts with SRSO and fold in fix issue brought up by Andrew
          Cooper in post-review:
          https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com/]
+Link: https://git.kernel.org/tip/973ab2d61f33dc85212c486e624af348c4eeb5c9
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/kernel/vmlinux.lds.S | 8 ++++----
