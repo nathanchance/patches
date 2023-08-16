@@ -1,0 +1,49 @@
+From 13fe3120693f76151e021d69f1ab44a4a2d5a948 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Aug 2023 12:06:50 -0700
+Subject: [PATCH 11/21] SUBMITTED: watchdog: xilinx_wwdt: Use div_u64() in
+ xilinx_wwdt_start()
+
+After commit f1a43aadb5a6 ("watchdog: Enable COMPILE_TEST for more
+drivers"), it is possible to enable this driver on 32-bit architectures.
+When building for those architectures with clang, there is an error due
+to a 64-bit division in xilinx_wwdt_start():
+
+  ERROR: modpost: "__aeabi_uldivmod" [drivers/watchdog/xilinx_wwdt.ko] undefined!
+
+Use div_u64() to fix this, which takes a 64-bit dividend and 32-bit
+divisor. GCC likely avoids the same error due to optimizations it
+employs to transform division by a constant into other equivalent
+operations, which may be different than what is implemented in clang.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1915
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org
+---
+ drivers/watchdog/xilinx_wwdt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/watchdog/xilinx_wwdt.c b/drivers/watchdog/xilinx_wwdt.c
+index 1d998db41533..d271e2e8d6e2 100644
+--- a/drivers/watchdog/xilinx_wwdt.c
++++ b/drivers/watchdog/xilinx_wwdt.c
+@@ -9,6 +9,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/ioport.h>
++#include <linux/math64.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -71,7 +72,7 @@ static int xilinx_wwdt_start(struct watchdog_device *wdd)
+ 
+ 	/* Calculate timeout count */
+ 	time_out = xdev->freq * wdd->timeout;
+-	closed_timeout = (time_out * xdev->close_percent) / 100;
++	closed_timeout = div_u64(time_out * xdev->close_percent, 100);
+ 	open_timeout = time_out - closed_timeout;
+ 	wdd->min_hw_heartbeat_ms = xdev->close_percent * 10 * wdd->timeout;
+ 
+-- 
+2.41.0
+

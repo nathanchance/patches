@@ -1,7 +1,7 @@
-From 9bd2fb0e938ea26c13db8a766be6a75e9b88998b Mon Sep 17 00:00:00 2001
+From 8e4a9af934ed3cdefb74c195d0a5dcd925f9dafd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Aug 2023 08:36:28 -0700
-Subject: [PATCH 08/19] SUBMITTED: lib: test_scanf: Add explicit type cast to
+Subject: [PATCH 09/21] FROMGIT: lib: test_scanf: Add explicit type cast to
  result initialization in test_number_prefix()
 
 A recent change in clang allows it to consider more expressions as
@@ -25,11 +25,14 @@ functional change, as all the tests still pass with GCC 13.1.0 and clang
 18.0.0.
 
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
+Link: https://github.com/ClangBuiltLinux/linuxq/issues/1899
 Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Link: https://lore.kernel.org/r/20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org
+Link: https://git.kernel.org/printk/c/92382d744176f230101d54f5c017bccd62770f01
 ---
  lib/test_scanf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

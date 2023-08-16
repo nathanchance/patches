@@ -1,0 +1,55 @@
+From 76698c83aed63c6a2b462f8ee7f1f679e123ea98 Mon Sep 17 00:00:00 2001
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Date: Wed, 16 Aug 2023 10:53:22 +0200
+Subject: [PATCH 02/21] NOTCBL: FROMLIST: tty: gdm724x: use min_t() for size_t
+ varable and a constant
+
+My thinking was that ulong is the same as size_t everywhere. No, size_t
+is uint on 32bit. So the below commit introduced a build warning on
+32bit:
+.../gdm724x/gdm_tty.c:165:24: warning: comparison of distinct pointer types ('typeof (2048UL) *' (aka 'unsigned long *') and 'typeof (remain) *' (aka 'unsigned int *'))
+
+To fix this, partially revert the commit (remove constants' suffixes)
+and switch to min_t() in this case instead.
+
+/me would hope for Z (or alike) suffix for constants.
+
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Fixes: c3e5c706aefc (tty: gdm724x: convert counts to size_t)
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202308151953.rNNnAR2N-lkp@intel.com/
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230816085322.22065-1-jirislaby@kernel.org
+---
+ drivers/staging/gdm724x/gdm_tty.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/staging/gdm724x/gdm_tty.c b/drivers/staging/gdm724x/gdm_tty.c
+index 67d9bf41e836..32b2e817ff04 100644
+--- a/drivers/staging/gdm724x/gdm_tty.c
++++ b/drivers/staging/gdm724x/gdm_tty.c
+@@ -17,9 +17,9 @@
+ #define GDM_TTY_MAJOR 0
+ #define GDM_TTY_MINOR 32
+ 
+-#define WRITE_SIZE 2048UL
++#define WRITE_SIZE 2048
+ 
+-#define MUX_TX_MAX_SIZE 2048UL
++#define MUX_TX_MAX_SIZE 2048
+ 
+ static inline bool gdm_tty_ready(struct gdm *gdm)
+ {
+@@ -159,7 +159,7 @@ static ssize_t gdm_tty_write(struct tty_struct *tty, const u8 *buf, size_t len)
+ 		return -ENODEV;
+ 
+ 	while (remain) {
+-		size_t sending_len = min(MUX_TX_MAX_SIZE, remain);
++		size_t sending_len = min_t(size_t, MUX_TX_MAX_SIZE, remain);
+ 		gdm->tty_dev->send_func(gdm->tty_dev->priv_dev,
+ 					(void *)(buf + sent_len),
+ 					sending_len,
+-- 
+2.41.0
+

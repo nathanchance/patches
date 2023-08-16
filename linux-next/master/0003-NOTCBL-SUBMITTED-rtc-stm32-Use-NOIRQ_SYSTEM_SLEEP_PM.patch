@@ -1,0 +1,48 @@
+From 5455b6163d781f964b950a36b0cd98e5d13baefc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Aug 2023 15:16:41 -0700
+Subject: [PATCH 03/21] NOTCBL: SUBMITTED: rtc: stm32: Use
+ NOIRQ_SYSTEM_SLEEP_PM_OPS()
+
+After the switch to SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() and a subsequent
+fix, stm32_rtc_{suspend,resume}() are unused when CONFIG_PM_SLEEP is not
+set because SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is a no-op in that
+configuration:
+
+  drivers/rtc/rtc-stm32.c:904:12: error: 'stm32_rtc_resume' defined but not used [-Werror=unused-function]
+    904 | static int stm32_rtc_resume(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~
+  drivers/rtc/rtc-stm32.c:894:12: error: 'stm32_rtc_suspend' defined but not used [-Werror=unused-function]
+    894 | static int stm32_rtc_suspend(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
+
+The non-"SET_" version of this macro, NOIRQ_SYSTEM_SLEEP_PM_OPS(), is
+designed to handle this situation by only assigning the callbacks when
+CONFIG_PM_SLEEP is set while allowing the functions to appear used to
+the compiler. Switch to that macro to resolve the warnings. There is no
+functional change with this, as SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is
+defined using NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is set.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230815-rtc-stm32-unused-pm-funcs-v1-1-82eb8e02d903@kernel.org
+---
+ drivers/rtc/rtc-stm32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/rtc/rtc-stm32.c b/drivers/rtc/rtc-stm32.c
+index 3ce4b3d08155..76753c71d92e 100644
+--- a/drivers/rtc/rtc-stm32.c
++++ b/drivers/rtc/rtc-stm32.c
+@@ -923,7 +923,7 @@ static int stm32_rtc_resume(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops stm32_rtc_pm_ops = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
+ };
+ 
+ static struct platform_driver stm32_rtc_driver = {
+-- 
+2.41.0
+
