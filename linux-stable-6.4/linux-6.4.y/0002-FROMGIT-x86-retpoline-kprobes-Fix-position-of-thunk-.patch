@@ -1,21 +1,21 @@
-From 1ef9f8d163a99739bc996235c500f10d4bef02a0 Mon Sep 17 00:00:00 2001
+From dbc9d34ab8da5d32a6806fd58934ebdb95ed5746 Mon Sep 17 00:00:00 2001
 From: Petr Pavlu <petr.pavlu@suse.com>
 Date: Tue, 11 Jul 2023 11:19:51 +0200
-Subject: [PATCH 03/13] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
+Subject: [PATCH 02/18] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
  sections with CONFIG_LTO_CLANG
 
-Linker script arch/x86/kernel/vmlinux.lds.S matches the thunk sections
-".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
+The linker script arch/x86/kernel/vmlinux.lds.S matches the thunk
+sections ".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
 
-.text {
-  [...]
-  TEXT_TEXT
-  [...]
-  __indirect_thunk_start = .;
-  *(.text.__x86.*)
-  __indirect_thunk_end = .;
-  [...]
-}
+  .text {
+    [...]
+    TEXT_TEXT
+    [...]
+    __indirect_thunk_start = .;
+    *(.text.__x86.*)
+    __indirect_thunk_end = .;
+    [...]
+  }
 
 Macro TEXT_TEXT references TEXT_MAIN which normally expands to only
 ".text". However, with CONFIG_LTO_CLANG, TEXT_MAIN becomes
@@ -30,14 +30,17 @@ explicit section names which start with one of the standard prefixes,
 such as ".text" or ".data", and that need to be individually selected in
 the linker script.
 
+  [ nathan: Fix conflicts with SRSO and fold in fix issue brought up by
+    Andrew Cooper in post-review:
+    https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com ]
+
 Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Link: https://lore.kernel.org/r/20230711091952.27944-2-petr.pavlu@suse.com
-[nathan: Fix conflicts with SRSO and fold in fix issue brought up by Andrew
-         Cooper in post-review:
-         https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com/]
-Link: https://git.kernel.org/tip/973ab2d61f33dc85212c486e624af348c4eeb5c9
+Link: https://git.kernel.org/tip/79cd2a11224eab86d6673fe8a11d2046ae9d2757
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/kernel/vmlinux.lds.S | 8 ++++----
@@ -78,7 +81,7 @@ index bac2e2949f01..26673f88d31b 100644
  		ALIGN_ENTRY_TEXT_END
  		*(.gnu.warning)
 diff --git a/arch/x86/lib/retpoline.S b/arch/x86/lib/retpoline.S
-index 2cff585f22f2..5c43684ec982 100644
+index 132cedbf9e57..8db74d811ce2 100644
 --- a/arch/x86/lib/retpoline.S
 +++ b/arch/x86/lib/retpoline.S
 @@ -13,7 +13,7 @@
