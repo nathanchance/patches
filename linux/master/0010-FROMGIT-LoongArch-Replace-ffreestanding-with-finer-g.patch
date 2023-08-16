@@ -1,0 +1,47 @@
+From b794160d4bd2864402e8c4571e871a29206b91f1 Mon Sep 17 00:00:00 2001
+From: WANG Xuerui <git@xen0n.name>
+Date: Sun, 6 Aug 2023 18:36:20 +0800
+Subject: [PATCH 10/19] FROMGIT: LoongArch: Replace -ffreestanding with
+ finer-grained -fno-builtin's
+
+As explained by Nick in the original issue: the kernel usually does a
+good job of providing library helpers that have similar semantics as
+their ordinary userspace libc equivalents, but -ffreestanding disables
+such libcall optimization and other related features in the compiler,
+which can lead to unexpected things such as CONFIG_FORTIFY_SOURCE not
+working (!).
+
+However, due to the desire for better control over unaligned accesses
+with respect to CONFIG_ARCH_STRICT_ALIGN, and also for avoiding the
+GCC bug https://gcc.gnu.org/PR109465, we do want to still disable
+optimizations for the memory libcalls (memcpy, memmove and memset for
+now). Use finer-grained -fno-builtin-* toggles to achieve this without
+losing source fortification and other libcall optimizations.
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1897
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: WANG Xuerui <git@xen0n.name>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://git.kernel.org/chenhuacai/linux-loongson/c/e2843c7596e77f4f9b006a1417546231395d0986
+---
+ arch/loongarch/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
+index b1e5db51b61c..ef87bab46754 100644
+--- a/arch/loongarch/Makefile
++++ b/arch/loongarch/Makefile
+@@ -83,8 +83,8 @@ KBUILD_CFLAGS_KERNEL		+= -fPIE
+ LDFLAGS_vmlinux			+= -static -pie --no-dynamic-linker -z notext
+ endif
+ 
+-cflags-y += -ffreestanding
+ cflags-y += $(call cc-option, -mno-check-zero-division)
++cflags-y += -fno-builtin-memcpy -fno-builtin-memmove -fno-builtin-memset
+ 
+ load-y		= 0x9000000000200000
+ bootvars-y	= VMLINUX_LOAD_ADDRESS=$(load-y)
+-- 
+2.41.0
+
