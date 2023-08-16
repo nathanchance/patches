@@ -1,21 +1,21 @@
-From 178e2c829e52e276b7b767ac86c7706107f79f3c Mon Sep 17 00:00:00 2001
+From e9a14f9974b6f8cf05a65eca1115946ad875600e Mon Sep 17 00:00:00 2001
 From: Petr Pavlu <petr.pavlu@suse.com>
 Date: Tue, 11 Jul 2023 11:19:51 +0200
-Subject: [PATCH 08/15] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
+Subject: [PATCH 08/21] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
  sections with CONFIG_LTO_CLANG
 
-Linker script arch/x86/kernel/vmlinux.lds.S matches the thunk sections
-".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
+The linker script arch/x86/kernel/vmlinux.lds.S matches the thunk
+sections ".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
 
-.text {
-  [...]
-  TEXT_TEXT
-  [...]
-  __indirect_thunk_start = .;
-  *(.text.__x86.*)
-  __indirect_thunk_end = .;
-  [...]
-}
+  .text {
+    [...]
+    TEXT_TEXT
+    [...]
+    __indirect_thunk_start = .;
+    *(.text.__x86.*)
+    __indirect_thunk_end = .;
+    [...]
+  }
 
 Macro TEXT_TEXT references TEXT_MAIN which normally expands to only
 ".text". However, with CONFIG_LTO_CLANG, TEXT_MAIN becomes
@@ -30,14 +30,18 @@ explicit section names which start with one of the standard prefixes,
 such as ".text" or ".data", and that need to be individually selected in
 the linker script.
 
+  [ nathan: Fix conflicts with SRSO and fold in fix issue brought up by
+    Andrew Cooper in post-review:
+    https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com ]
+
 Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Link: https://lore.kernel.org/r/20230711091952.27944-2-petr.pavlu@suse.com
-[nathan: Fix conflicts with SRSO and fold in fix issue brought up by Andrew
-         Cooper in post-review:
-         https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com/]
-Link: https://git.kernel.org/tip/973ab2d61f33dc85212c486e624af348c4eeb5c9
+[nathan: Backport to 5.15, fix conflicts]
+Link: https://git.kernel.org/tip/79cd2a11224eab86d6673fe8a11d2046ae9d2757
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/x86/kernel/vmlinux.lds.S | 8 ++++----
@@ -79,7 +83,7 @@ index 7f3fa72a236a..b6974a17def3 100644
  #endif
  	} :text =0xcccc
 diff --git a/arch/x86/lib/retpoline.S b/arch/x86/lib/retpoline.S
-index 5f7eed97487e..4305cacbacd5 100644
+index cdbb85c4bc1a..0b5f05cdbe38 100644
 --- a/arch/x86/lib/retpoline.S
 +++ b/arch/x86/lib/retpoline.S
 @@ -11,7 +11,7 @@

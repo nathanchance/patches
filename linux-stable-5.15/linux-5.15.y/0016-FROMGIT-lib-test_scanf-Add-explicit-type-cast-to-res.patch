@@ -1,7 +1,7 @@
-From 5bb91c97f8b70c1850811c0696f17f0154d418a3 Mon Sep 17 00:00:00 2001
+From e7ade9ab16cfbc374dfe5d5eeba814c73ecadbe1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 3 Aug 2023 11:14:42 -0700
-Subject: [PATCH 09/15] SUBMITTED: lib: test_scanf: Add explicit type cast to
+Date: Mon, 7 Aug 2023 08:36:28 -0700
+Subject: [PATCH 16/21] FROMGIT: lib: test_scanf: Add explicit type cast to
  result initialization in test_number_prefix()
 
 A recent change in clang allows it to consider more expressions as
@@ -24,17 +24,21 @@ type in test_number_prefix() to silence the warning. There is no
 functional change, as all the tests still pass with GCC 13.1.0 and clang
 18.0.0.
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linuxq/issues/1899
 Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230803-test_scanf-wconstant-conversion-v1-1-74da994dedbc@kernel.org
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org
+Link: https://git.kernel.org/printk/c/92382d744176f230101d54f5c017bccd62770f01
 ---
  lib/test_scanf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/test_scanf.c b/lib/test_scanf.c
-index b620cf7de503..10d557b3738f 100644
+index b620cf7de503..a2707af2951a 100644
 --- a/lib/test_scanf.c
 +++ b/lib/test_scanf.c
 @@ -606,7 +606,7 @@ static void __init numbers_slice(void)
@@ -42,7 +46,7 @@ index b620cf7de503..10d557b3738f 100644
  do {										\
  	const T expect[2] = { expect0, expect1 };				\
 -	T result[2] = {~expect[0], ~expect[1]};					\
-+	T result[2] = {(T)~expect[0], (T)~expect[1]};				\
++	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
  										\
  	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
  } while (0)
