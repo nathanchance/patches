@@ -1,7 +1,7 @@
-From 13fe3120693f76151e021d69f1ab44a4a2d5a948 Mon Sep 17 00:00:00 2001
+From 3c6cfb5cae3d9a34a71d8ab35d59ad7ba218724c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Aug 2023 12:06:50 -0700
-Subject: [PATCH 11/21] SUBMITTED: watchdog: xilinx_wwdt: Use div_u64() in
+Subject: [PATCH 04/14] SUBMITTED: watchdog: xilinx_wwdt: Use div_u64() in
  xilinx_wwdt_start()
 
 After commit f1a43aadb5a6 ("watchdog: Enable COMPILE_TEST for more

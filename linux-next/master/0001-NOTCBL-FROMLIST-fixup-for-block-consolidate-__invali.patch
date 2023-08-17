@@ -1,7 +1,7 @@
-From de2d8b75fdfd00540b3e1fa6068c8ccb1b096ed8 Mon Sep 17 00:00:00 2001
+From da8e950b84576b7f1e2dbbbcea8d2f85d94a1e0e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Aug 2023 12:18:27 -0700
-Subject: [PATCH 01/21] NOTCBL: FROMLIST: fixup for 'block: consolidate
+Subject: [PATCH 01/14] NOTCBL: FROMLIST: fixup for 'block: consolidate
  __invalidate_device and fsync_bdev'
 
 Link: https://lore.kernel.org/20230812105133.GA11904@lst.de/
@@ -24,7 +24,7 @@ index c5dac9f18459..f3b13aa1b7d4 100644
   * Drivers should not use this directly, but the DASD driver has historically
   * had a shutdown to offline mode that doesn't actually remove the gendisk
 
-base-commit: ef66bf8aeb91fd331cf8f5dca8f9d7bca9ab2849
+base-commit: 47762f08697484cf0c2f2904b8c52375ed26c8cb
 -- 
 2.41.0
 
