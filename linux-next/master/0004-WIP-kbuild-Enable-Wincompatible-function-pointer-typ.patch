@@ -1,0 +1,40 @@
+From 61b3fa226eb81c94006e8c38b05c0e6820331a1b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 6 Apr 2023 09:04:45 -0700
+Subject: [PATCH 04/12] WIP: kbuild: Enable
+ -Wincompatible-function-pointer-types-strict
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/counter/Makefile   | 2 ++
+ scripts/Makefile.extrawarn | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/drivers/counter/Makefile b/drivers/counter/Makefile
+index fa3c1d08f706..80e335e836e4 100644
+--- a/drivers/counter/Makefile
++++ b/drivers/counter/Makefile
+@@ -3,6 +3,8 @@
+ # Makefile for Counter devices
+ #
+ 
++ccflags-remove-y := -Werror=incompatible-function-pointer-types-strict
++
+ obj-$(CONFIG_COUNTER) += counter.o
+ counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
+ 
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 2fe6f2828d37..f6f3058de80d 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -73,6 +73,7 @@ KBUILD_CFLAGS += -Werror=date-time
+ 
+ # enforce correct pointer usage
+ KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-pointer-types)
++KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-function-pointer-types-strict)
+ 
+ # Require designated initializers for all marked structures
+ KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
+-- 
+2.41.0
+

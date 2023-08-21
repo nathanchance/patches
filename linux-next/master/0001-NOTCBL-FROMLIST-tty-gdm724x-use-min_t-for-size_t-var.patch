@@ -1,7 +1,7 @@
-From b550ef390c088d309cea12007f92908ccb4d25fa Mon Sep 17 00:00:00 2001
+From 5d1ce9ac642f30636a9e69bfc76e248e07f170a6 Mon Sep 17 00:00:00 2001
 From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
 Date: Wed, 16 Aug 2023 10:53:22 +0200
-Subject: [PATCH 02/14] NOTCBL: FROMLIST: tty: gdm724x: use min_t() for size_t
+Subject: [PATCH 01/12] NOTCBL: FROMLIST: tty: gdm724x: use min_t() for size_t
  varable and a constant
 
 My thinking was that ulong is the same as size_t everywhere. No, size_t
@@ -50,6 +50,8 @@ index 67d9bf41e836..32b2e817ff04 100644
  		gdm->tty_dev->send_func(gdm->tty_dev->priv_dev,
  					(void *)(buf + sent_len),
  					sending_len,
+
+base-commit: 47d9bb711707d15b19fad18c8e2b4b027a264a3a
 -- 
 2.41.0
 
