@@ -1,4 +1,4 @@
-From 144909f30554c8a97637c8399975ef3ea14e5946 Mon Sep 17 00:00:00 2001
+From 7f1deebd893cefced4d96521b654c615654e5583 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 15 Sep 2022 13:11:25 +0200
 Subject: [PATCH 01/17] UPSTREAM: x86/returnthunk: Allow different return
@@ -117,7 +117,7 @@ index db6053a22e86..166c6717788e 100644
  		EMIT1(0xC3);		/* ret */
  		if (IS_ENABLED(CONFIG_SLS))
 
-base-commit: 6c44e13dc284f7f4db17706ca48fd016d6b3d49a
+base-commit: 802aacbbffe2512dce9f8f33ad99d01cfec435de
 -- 
-2.41.0
+2.42.0
 

@@ -1,4 +1,4 @@
-From 0badb0f100d972c59cb85ae51a3c3a765c700862 Mon Sep 17 00:00:00 2001
+From ff76644f3ba87536ad022e6510525e1cfa2ebfe0 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 14 Aug 2023 13:44:30 +0200
 Subject: [PATCH 07/17] FROMGIT: x86/alternative: Make custom return thunk
@@ -78,5 +78,5 @@ index d98f33ea57e4..666f5bed2d97 100644
  static void update_spec_ctrl(u64 val)
  {
 -- 
-2.41.0
+2.42.0
 

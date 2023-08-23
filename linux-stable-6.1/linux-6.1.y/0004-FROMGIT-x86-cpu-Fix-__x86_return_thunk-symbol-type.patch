@@ -1,4 +1,4 @@
-From 214dc2888e084a7dd8e37abd1cb95eb6b5068f92 Mon Sep 17 00:00:00 2001
+From 0ed315cca48725e43d1759e6c70af09de41fd6ef Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 14 Aug 2023 13:44:27 +0200
 Subject: [PATCH 04/17] FROMGIT: x86/cpu: Fix __x86_return_thunk symbol type
@@ -39,5 +39,5 @@ index 83df3bd4bd22..4fbf0906b041 100644
  			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
  	int3
 -- 
-2.41.0
+2.42.0
 

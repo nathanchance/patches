@@ -1,4 +1,4 @@
-From 2f1da2f6ceb2e8cfe39a0b9bb73ec3eb9ef0adfc Mon Sep 17 00:00:00 2001
+From 8756f504b2477b21bc8c4e9bcdb1042ba1253279 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Aug 2023 08:36:28 -0700
 Subject: [PATCH 11/17] FROMGIT: lib: test_scanf: Add explicit type cast to
@@ -51,5 +51,5 @@ index b620cf7de503..a2707af2951a 100644
  	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
  } while (0)
 -- 
-2.41.0
+2.42.0
 

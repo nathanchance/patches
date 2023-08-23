@@ -1,4 +1,4 @@
-From abfca5c756e36ce3a7c8222138a525b6843aa12d Mon Sep 17 00:00:00 2001
+From f1471c5ae73d8e00203ccd8ca72fa80503df7d45 Mon Sep 17 00:00:00 2001
 From: Petr Pavlu <petr.pavlu@suse.com>
 Date: Tue, 11 Jul 2023 11:19:51 +0200
 Subject: [PATCH 03/17] FROMGIT: x86/retpoline,kprobes: Fix position of thunk
@@ -136,5 +136,5 @@ index c2c350933a23..3bdcc75454bb 100644
  
  		for (offset = 0; offset < sec->sh.sh_size; offset += insn->len) {
 -- 
-2.41.0
+2.42.0
 

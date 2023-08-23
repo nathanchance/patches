@@ -1,4 +1,4 @@
-From 9eff4a2935c702ca19201b771fac0714fc63e60d Mon Sep 17 00:00:00 2001
+From bf7244118e7535648833f0f76c1c28e3cba3dfdd Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 14 Aug 2023 13:44:31 +0200
 Subject: [PATCH 08/17] FROMGIT: x86/cpu: Clean up SRSO return thunk mess
@@ -327,5 +327,5 @@ index 4cf730e3ac1d..50b4ef4f28e6 100644
  	       !strcmp(sym->name, "srso_safe_ret");
  }
 -- 
-2.41.0
+2.42.0
 
