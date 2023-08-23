@@ -1,7 +1,7 @@
-From 27759a46bace43ffa8adcaf604015a76d0ea57ea Mon Sep 17 00:00:00 2001
+From fc40956be4946a2b25f3302c9f48659f70a3a2cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 23 Feb 2023 12:17:27 -0700
-Subject: [PATCH 18/18] HACK: LONGTERM: mlxsw: spectrum_acl_bloom_filter:
+Subject: [PATCH 11/11] HACK: LONGTERM: mlxsw: spectrum_acl_bloom_filter:
  Workaround -Wattribute-warning
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1781
@@ -25,5 +25,5 @@ index e2aced7ab454..23bfe565e3ca 100644
  	     chunk_index++) {
  		memset(chunk, 0, pad_bytes);
 -- 
-2.41.0
+2.42.0
 
