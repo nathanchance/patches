@@ -1,7 +1,7 @@
 From c3149d8cb0bda4ac3444930b741859ba8a3d9c0b Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Mon, 24 Jul 2023 14:05:40 -0700
-Subject: [PATCH 17/23] UPSTREAM: cpumask: change return types to bool where
+Subject: [PATCH 17/29] UPSTREAM: cpumask: change return types to bool where
  appropriate
 
 Some cpumask functions have integer return types where return values
@@ -94,5 +94,5 @@ index 6911f5727c49..c39e5a1d1d5c 100644
  {
  	return bitmap_subset(cpumask_bits(src1p), cpumask_bits(src2p),
 -- 
-2.41.0
+2.42.0
 
