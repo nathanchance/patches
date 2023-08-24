@@ -1,4 +1,4 @@
-From cd519474cd33b6964d515f2f08ce20407ff72640 Mon Sep 17 00:00:00 2001
+From 46c262f31136c13603b29986e2bfc3e5240c695c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 28 Jul 2023 19:31:35 -0700
 Subject: [PATCH 12/12] HACK: CURRENT: Revert "LoongArch: Allow building with
@@ -60,5 +60,5 @@ index 5c97d1463328..617bc59ee8df 100644
  # Include the generic Makefile to check the built vdso.
  include $(srctree)/lib/vdso/Makefile
 -- 
-2.41.0
+2.42.0
 

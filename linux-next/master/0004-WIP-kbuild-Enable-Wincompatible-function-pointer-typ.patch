@@ -1,4 +1,4 @@
-From 61b3fa226eb81c94006e8c38b05c0e6820331a1b Mon Sep 17 00:00:00 2001
+From 18bd535a2ed15347c531dbe7a0cc7a0df8e0643f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 6 Apr 2023 09:04:45 -0700
 Subject: [PATCH 04/12] WIP: kbuild: Enable
@@ -36,5 +36,5 @@ index 2fe6f2828d37..f6f3058de80d 100644
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
 -- 
-2.41.0
+2.42.0
 
