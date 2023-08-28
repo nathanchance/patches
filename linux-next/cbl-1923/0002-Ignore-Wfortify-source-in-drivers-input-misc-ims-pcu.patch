@@ -1,0 +1,46 @@
+From 21eaed24722ca843da2ca802c20959ad11301188 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 28 Aug 2023 08:54:14 -0700
+Subject: [PATCH 02/14] Ignore -Wfortify-source in drivers/input/misc/ims-pcu.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/input/misc/ims-pcu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index b2f1292e27ef..2bd3a60f8e7b 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1799,10 +1799,13 @@ static int ims_pcu_get_device_info(struct ims_pcu *pcu)
+ 		return error;
+ 	}
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	snprintf(pcu->fw_version, sizeof(pcu->fw_version),
+ 		 "%02d%02d%02d%02d.%c%c",
+ 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
+ 		 pcu->cmd_buf[6], pcu->cmd_buf[7]);
++	__diag_pop();
+ 
+ 	error = ims_pcu_execute_query(pcu, GET_BL_VERSION);
+ 	if (error) {
+@@ -1811,10 +1814,13 @@ static int ims_pcu_get_device_info(struct ims_pcu *pcu)
+ 		return error;
+ 	}
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	snprintf(pcu->bl_version, sizeof(pcu->bl_version),
+ 		 "%02d%02d%02d%02d.%c%c",
+ 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
+ 		 pcu->cmd_buf[6], pcu->cmd_buf[7]);
++	__diag_pop();
+ 
+ 	error = ims_pcu_execute_query(pcu, RESET_REASON);
+ 	if (error) {
+-- 
+2.42.0
+

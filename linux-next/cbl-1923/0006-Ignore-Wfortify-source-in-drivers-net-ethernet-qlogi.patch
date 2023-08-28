@@ -1,0 +1,32 @@
+From 6b7fd66d46a92b024c959584b8ff6f767ec167bb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 28 Aug 2023 09:57:34 -0700
+Subject: [PATCH 06/14] Ignore -Wfortify-source in
+ drivers/net/ethernet/qlogic/qed/qed_main.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/qlogic/qed/qed_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_main.c b/drivers/net/ethernet/qlogic/qed/qed_main.c
+index c278f8893042..c09edb24b92e 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_main.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_main.c
+@@ -1215,9 +1215,12 @@ static int qed_slowpath_wq_start(struct qed_dev *cdev)
+ 	for_each_hwfn(cdev, i) {
+ 		hwfn = &cdev->hwfns[i];
+ 
++		__diag_push();
++		__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 		snprintf(name, NAME_SIZE, "slowpath-%02x:%02x.%02x",
+ 			 cdev->pdev->bus->number,
+ 			 PCI_SLOT(cdev->pdev->devfn), hwfn->abs_pf_id);
++		__diag_pop();
+ 
+ 		hwfn->slowpath_wq = alloc_workqueue(name, 0, 0);
+ 		if (!hwfn->slowpath_wq) {
+-- 
+2.42.0
+

@@ -1,0 +1,32 @@
+From 12f7f8a61c0ea6f7cc04e5c11e6b413e25561452 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 28 Aug 2023 09:53:04 -0700
+Subject: [PATCH 05/14] Ignore -Wfortify-source in
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index e36294b7ade2..78e863a71243 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1850,9 +1850,12 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 			esw_warn(br_offloads->esw->dev,
+ 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 				 addr, vid, vport_num);
++			__diag_push();
++			__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 			NL_SET_ERR_MSG_FMT_MOD(extack,
+ 					       "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 					       addr, vid, vport_num);
++			__diag_pop();
+ 			return -EINVAL;
+ 		}
+ 	}
+-- 
+2.42.0
+

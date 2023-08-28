@@ -1,0 +1,30 @@
+From 485761f43f00010280e369469477ab2b2eb0a91d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 28 Aug 2023 10:16:05 -0700
+Subject: [PATCH 10/14] Ignore -Wfortify-source in drivers/scsi/myrb.c
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/myrb.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
+index ca2e932dd9b7..826b2270970f 100644
+--- a/drivers/scsi/myrb.c
++++ b/drivers/scsi/myrb.c
+@@ -1902,8 +1902,11 @@ static ssize_t rebuild_show(struct device *dev,
+ 	struct myrb_rbld_progress rbld_buf;
+ 	unsigned char status;
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	if (sdev->channel < myrb_logical_channel(sdev->host))
+ 		return snprintf(buf, 32, "physical device - not rebuilding\n");
++	__diag_pop();
+ 
+ 	status = myrb_get_rbld_progress(cb, &rbld_buf);
+ 
+-- 
+2.42.0
+
