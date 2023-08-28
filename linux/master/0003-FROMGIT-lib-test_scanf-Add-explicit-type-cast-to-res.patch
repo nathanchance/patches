@@ -1,7 +1,7 @@
-From 4373c8fc7c35ab3df004e01e5e8788b181c52e77 Mon Sep 17 00:00:00 2001
+From 99c1fe8e2653fef016b2499169fedfe7dc6c51f0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Aug 2023 08:36:28 -0700
-Subject: [PATCH 11/19] FROMGIT: lib: test_scanf: Add explicit type cast to
+Subject: [PATCH 03/11] FROMGIT: lib: test_scanf: Add explicit type cast to
  result initialization in test_number_prefix()
 
 A recent change in clang allows it to consider more expressions as
@@ -51,5 +51,5 @@ index b620cf7de503..a2707af2951a 100644
  	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
  } while (0)
 -- 
-2.41.0
+2.42.0
 
