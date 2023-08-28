@@ -1,7 +1,9 @@
-From a504192c3ed8aeaf56a71e6a1e19975a77c0aa9f Mon Sep 17 00:00:00 2001
+From c9a9f3c62c71285fc98160778b3a6809d67df7a9 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 14 Aug 2023 13:44:29 +0200
-Subject: [PATCH 11/21] FROMGIT: objtool/x86: Fix SRSO mess
+Subject: [PATCH 01/14] NOTCBL: UPSTREAM: objtool/x86: Fix SRSO mess
+
+commit 4ae68b26c3ab5a82aa271e6e9fc9b1a06e1d6b40 upstream.
 
 Objtool --rethunk does two things:
 
@@ -33,21 +35,21 @@ Clear things up by adding a second category for the embedded instruction
 thing.
 
 Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Signed-off-by: "Borislav Petkov (AMD)" <bp@alien8.de>
 Link: https://lore.kernel.org/r/20230814121148.704502245@infradead.org
-[nathan: Backport to 5.15, adjust context]
-Link: https://git.kernel.org/tip/4ae68b26c3ab5a82aa271e6e9fc9b1a06e1d6b40
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230828101150.227032778@linuxfoundation.org
 ---
  tools/objtool/arch/x86/decode.c      | 11 +++++++----
- tools/objtool/check.c                | 24 ++++++++++++++++++++++--
+ tools/objtool/check.c                | 22 +++++++++++++++++++++-
  tools/objtool/include/objtool/arch.h |  1 +
  tools/objtool/include/objtool/elf.h  |  1 +
- 4 files changed, 31 insertions(+), 6 deletions(-)
+ 4 files changed, 30 insertions(+), 5 deletions(-)
 
 diff --git a/tools/objtool/arch/x86/decode.c b/tools/objtool/arch/x86/decode.c
-index cf8ea3594125..43c8ded72eb7 100644
+index a9c5d54f1688..76acd39478ee 100644
 --- a/tools/objtool/arch/x86/decode.c
 +++ b/tools/objtool/arch/x86/decode.c
 @@ -725,8 +725,11 @@ bool arch_is_retpoline(struct symbol *sym)
@@ -57,28 +59,19 @@ index cf8ea3594125..43c8ded72eb7 100644
 -	return !strcmp(sym->name, "__x86_return_thunk") ||
 -	       !strcmp(sym->name, "srso_untrain_ret") ||
 -	       !strcmp(sym->name, "srso_safe_ret") ||
--	       !strcmp(sym->name, "__ret");
+-	       !strcmp(sym->name, "retbleed_return_thunk");
 +	return !strcmp(sym->name, "__x86_return_thunk");
 +}
 +
 +bool arch_is_embedded_insn(struct symbol *sym)
 +{
-+	return !strcmp(sym->name, "__ret") ||
++	return !strcmp(sym->name, "retbleed_return_thunk") ||
 +	       !strcmp(sym->name, "srso_safe_ret");
  }
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index cd1684460c7b..dfd67fb9bd8f 100644
+index f9ff878d6ba1..36ad0b6b94a9 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
-@@ -400,7 +400,7 @@ static int decode_instructions(struct objtool_file *file)
- 		}
- 
- 		list_for_each_entry(func, &sec->symbol_list, list) {
--			if (func->type != STT_FUNC || func->alias != func)
-+			if (func->type != STT_FUNC || func->alias != func || func->embedded_insn)
- 				continue;
- 
- 			if (!find_insn(file, sec, func->offset)) {
 @@ -990,16 +990,33 @@ static int add_ignore_alternatives(struct objtool_file *file)
  	return 0;
  }
@@ -156,6 +149,8 @@ index 6cdfa401b000..f06398ea5751 100644
  };
  
  struct reloc {
+
+base-commit: 5ddfe5cc87167343bd4c17f776de7b7aa1475b0c
 -- 
 2.42.0
 
