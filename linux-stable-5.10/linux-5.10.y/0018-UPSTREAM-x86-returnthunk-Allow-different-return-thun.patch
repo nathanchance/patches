@@ -1,7 +1,7 @@
-From c98f9ac58061a79a23131b60f37fddc6b3daf9ff Mon Sep 17 00:00:00 2001
+From 1762173da7769b2eadc2405452dbbf96baca228d Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 15 Sep 2022 13:11:25 +0200
-Subject: [PATCH 18/29] UPSTREAM: x86/returnthunk: Allow different return
+Subject: [PATCH 18/23] UPSTREAM: x86/returnthunk: Allow different return
  thunks
 
 In preparation for call depth tracking on Intel SKL CPUs, make it possible
@@ -24,11 +24,11 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  5 files changed, 22 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/include/asm/nospec-branch.h b/arch/x86/include/asm/nospec-branch.h
-index 99fbce2c1c7c..b28270396b4d 100644
+index 7b4782249a92..142444a4f94d 100644
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
-@@ -201,6 +201,12 @@ extern void srso_untrain_ret(void);
- extern void srso_untrain_ret_alias(void);
+@@ -207,6 +207,12 @@ extern void srso_alias_untrain_ret(void);
+ extern void entry_untrain_ret(void);
  extern void entry_ibpb(void);
  
 +#ifdef CONFIG_CALL_THUNKS
@@ -93,7 +93,7 @@ index 6d546f4426ac..c7be972ba9e7 100644
  		memcpy(ip, retq, sizeof(retq));
  
 diff --git a/arch/x86/kernel/static_call.c b/arch/x86/kernel/static_call.c
-index 2973b3fb0ec1..24a1aab92bc0 100644
+index 759b986b7f03..273e9b77b730 100644
 --- a/arch/x86/kernel/static_call.c
 +++ b/arch/x86/kernel/static_call.c
 @@ -41,7 +41,7 @@ static void __ref __static_call_transform(void *insn, enum insn_type type,
