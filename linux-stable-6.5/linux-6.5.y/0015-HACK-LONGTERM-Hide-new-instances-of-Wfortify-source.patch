@@ -1,0 +1,272 @@
+From a169db763c391fb3a0b1001d43146c0310a37907 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 29 Aug 2023 07:52:33 -0700
+Subject: [PATCH 15/15] HACK: LONGTERM: Hide new instances of -Wfortify-source
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1923
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/input/misc/ims-pcu.c                         | 6 ++++++
+ drivers/media/pci/cx18/cx18-mailbox.c                | 3 +++
+ drivers/net/ethernet/freescale/enetc/enetc.c         | 3 +++
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c | 3 +++
+ drivers/net/ethernet/qlogic/qed/qed_main.c           | 3 +++
+ drivers/net/ethernet/sfc/tc.c                        | 6 ++++++
+ drivers/platform/surface/surface3_power.c            | 3 +++
+ drivers/scsi/myrb.c                                  | 3 +++
+ drivers/scsi/myrs.c                                  | 3 +++
+ drivers/video/fbdev/neofb.c                          | 3 +++
+ drivers/video/fbdev/sh_mobile_lcdcfb.c               | 3 +++
+ include/linux/compiler-clang.h                       | 6 ++++++
+ sound/aoa/soundbus/i2sbus/core.c                     | 3 +++
+ 13 files changed, 48 insertions(+)
+
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index b2f1292e27ef..2bd3a60f8e7b 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1799,10 +1799,13 @@ static int ims_pcu_get_device_info(struct ims_pcu *pcu)
+ 		return error;
+ 	}
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	snprintf(pcu->fw_version, sizeof(pcu->fw_version),
+ 		 "%02d%02d%02d%02d.%c%c",
+ 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
+ 		 pcu->cmd_buf[6], pcu->cmd_buf[7]);
++	__diag_pop();
+ 
+ 	error = ims_pcu_execute_query(pcu, GET_BL_VERSION);
+ 	if (error) {
+@@ -1811,10 +1814,13 @@ static int ims_pcu_get_device_info(struct ims_pcu *pcu)
+ 		return error;
+ 	}
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	snprintf(pcu->bl_version, sizeof(pcu->bl_version),
+ 		 "%02d%02d%02d%02d.%c%c",
+ 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
+ 		 pcu->cmd_buf[6], pcu->cmd_buf[7]);
++	__diag_pop();
+ 
+ 	error = ims_pcu_execute_query(pcu, RESET_REASON);
+ 	if (error) {
+diff --git a/drivers/media/pci/cx18/cx18-mailbox.c b/drivers/media/pci/cx18/cx18-mailbox.c
+index 3b283f3c6726..0e8d2ea57365 100644
+--- a/drivers/media/pci/cx18/cx18-mailbox.c
++++ b/drivers/media/pci/cx18/cx18-mailbox.c
+@@ -95,8 +95,11 @@ static char *u32arr2hex(u32 data[], int n, char *buf)
+ 	int i;
+ 
+ 	for (i = 0, p = buf; i < n; i++, p += 11) {
++		__diag_push();
++		__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 		/* kernel snprintf() appends '\0' always */
+ 		snprintf(p, 12, " %#010x", data[i]);
++		__diag_pop();
+ 	}
+ 	*p = '\0';
+ 	return buf;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 35461165de0d..66df8830760a 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -2768,11 +2768,14 @@ static int enetc_setup_xdp_prog(struct net_device *ndev, struct bpf_prog *prog,
+ 
+ 	if (priv->min_num_stack_tx_queues + num_xdp_tx_queues >
+ 	    priv->num_tx_rings) {
++		__diag_push();
++		__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+ 				       "Reserving %d XDP TXQs does not leave a minimum of %d TXQs for network stack (total %d available)",
+ 				       num_xdp_tx_queues,
+ 				       priv->min_num_stack_tx_queues,
+ 				       priv->num_tx_rings);
++		__diag_pop();
+ 		return -EBUSY;
+ 	}
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index f4fe1daa4afd..833c0a701e81 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1850,9 +1850,12 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 			esw_warn(br_offloads->esw->dev,
+ 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 				 addr, vid, vport_num);
++			__diag_push();
++			__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 			NL_SET_ERR_MSG_FMT_MOD(extack,
+ 					       "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 					       addr, vid, vport_num);
++			__diag_pop();
+ 			return -EINVAL;
+ 		}
+ 	}
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_main.c b/drivers/net/ethernet/qlogic/qed/qed_main.c
+index c278f8893042..c09edb24b92e 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_main.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_main.c
+@@ -1215,9 +1215,12 @@ static int qed_slowpath_wq_start(struct qed_dev *cdev)
+ 	for_each_hwfn(cdev, i) {
+ 		hwfn = &cdev->hwfns[i];
+ 
++		__diag_push();
++		__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 		snprintf(name, NAME_SIZE, "slowpath-%02x:%02x.%02x",
+ 			 cdev->pdev->bus->number,
+ 			 PCI_SLOT(cdev->pdev->devfn), hwfn->abs_pf_id);
++		__diag_pop();
+ 
+ 		hwfn->slowpath_wq = alloc_workqueue(name, 0, 0);
+ 		if (!hwfn->slowpath_wq) {
+diff --git a/drivers/net/ethernet/sfc/tc.c b/drivers/net/ethernet/sfc/tc.c
+index fe268b6c1cac..c19778ff6d54 100644
+--- a/drivers/net/ethernet/sfc/tc.c
++++ b/drivers/net/ethernet/sfc/tc.c
+@@ -518,17 +518,23 @@ static int efx_tc_flower_record_encap_match(struct efx_nic *efx,
+ 				return -EEXIST;
+ 			}
+ 			if (child_ip_tos_mask != old->child_ip_tos_mask) {
++				__diag_push();
++				__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 				NL_SET_ERR_MSG_FMT_MOD(extack,
+ 						       "Pseudo encap match for TOS mask %#04x conflicts with existing pseudo(MASK) entry for TOS mask %#04x",
+ 						       child_ip_tos_mask,
+ 						       old->child_ip_tos_mask);
++				__diag_pop();
+ 				return -EEXIST;
+ 			}
+ 			if (child_udp_sport_mask != old->child_udp_sport_mask) {
++				__diag_push();
++				__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 				NL_SET_ERR_MSG_FMT_MOD(extack,
+ 						       "Pseudo encap match for UDP src port mask %#x conflicts with existing pseudo(MASK) entry for mask %#x",
+ 						       child_udp_sport_mask,
+ 						       old->child_udp_sport_mask);
++				__diag_pop();
+ 				return -EEXIST;
+ 			}
+ 			break;
+diff --git a/drivers/platform/surface/surface3_power.c b/drivers/platform/surface/surface3_power.c
+index 4c0f92562a79..ed370fc230d7 100644
+--- a/drivers/platform/surface/surface3_power.c
++++ b/drivers/platform/surface/surface3_power.c
+@@ -245,7 +245,10 @@ static int mshw0011_bix(struct mshw0011_data *cdata, struct bix *bix)
+ 		dev_err(&client->dev, "Error reading serial no: %d\n", ret);
+ 		return ret;
+ 	} else {
++		__diag_push();
++		__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 		snprintf(bix->serial, ARRAY_SIZE(bix->serial), "%3pE%6pE", buf + 7, buf);
++		__diag_pop();
+ 	}
+ 
+ 	/* get cycle count */
+diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
+index ca2e932dd9b7..826b2270970f 100644
+--- a/drivers/scsi/myrb.c
++++ b/drivers/scsi/myrb.c
+@@ -1902,8 +1902,11 @@ static ssize_t rebuild_show(struct device *dev,
+ 	struct myrb_rbld_progress rbld_buf;
+ 	unsigned char status;
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	if (sdev->channel < myrb_logical_channel(sdev->host))
+ 		return snprintf(buf, 32, "physical device - not rebuilding\n");
++	__diag_pop();
+ 
+ 	status = myrb_get_rbld_progress(cb, &rbld_buf);
+ 
+diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
+index a1eec65a9713..90c5dcfe6f3d 100644
+--- a/drivers/scsi/myrs.c
++++ b/drivers/scsi/myrs.c
+@@ -1085,8 +1085,11 @@ static ssize_t rebuild_show(struct device *dev,
+ 	unsigned short ldev_num;
+ 	unsigned char status;
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	if (sdev->channel < cs->ctlr_info->physchan_present)
+ 		return snprintf(buf, 32, "physical device - not rebuilding\n");
++	__diag_pop();
+ 
+ 	ldev_info = sdev->hostdata;
+ 	ldev_num = ldev_info->ldev_num;
+diff --git a/drivers/video/fbdev/neofb.c b/drivers/video/fbdev/neofb.c
+index 39d8cdef5c97..f2edb8449e93 100644
+--- a/drivers/video/fbdev/neofb.c
++++ b/drivers/video/fbdev/neofb.c
+@@ -1946,6 +1946,8 @@ static struct fb_info *neo_alloc_fb_info(struct pci_dev *dev,
+ 	par->external_display = external;
+ 	info->flags = FBINFO_DEFAULT | FBINFO_HWACCEL_YPAN;
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	switch (info->fix.accel) {
+ 	case FB_ACCEL_NEOMAGIC_NM2070:
+ 		snprintf(info->fix.id, sizeof(info->fix.id),
+@@ -1996,6 +1998,7 @@ static struct fb_info *neo_alloc_fb_info(struct pci_dev *dev,
+                 	       FBINFO_HWACCEL_FILLRECT;
+ 		break;
+ 	}
++	__diag_pop();
+ 
+ 	info->fix.type = FB_TYPE_PACKED_PIXELS;
+ 	info->fix.type_aux = 0;
+diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+index 0adb2ba965e7..eac2d847543c 100644
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -1575,8 +1575,11 @@ sh_mobile_lcdc_overlay_fb_init(struct sh_mobile_lcdc_overlay *ovl)
+ 	 * for NV12 and NV21.
+ 	 */
+ 	info->fix = sh_mobile_lcdc_overlay_fix;
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	snprintf(info->fix.id, sizeof(info->fix.id),
+ 		 "SH Mobile LCDC Overlay %u", ovl->index);
++	__diag_pop();
+ 	info->fix.smem_start = ovl->dma_handle;
+ 	info->fix.smem_len = ovl->fb_size;
+ 	info->fix.line_length = ovl->pitch;
+diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
+index 9b673fefcef8..93adf2ac5201 100644
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -119,6 +119,12 @@
+ #define __diag_str(s)		__diag_str1(s)
+ #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
+ 
++#if CONFIG_CLANG_VERSION >= 180000
++#define __diag_clang_18(s)	__diag(s)
++#else
++#define __diag_clang_18(s)
++#endif
++
+ #if CONFIG_CLANG_VERSION >= 110000
+ #define __diag_clang_11(s)	__diag(s)
+ #else
+diff --git a/sound/aoa/soundbus/i2sbus/core.c b/sound/aoa/soundbus/i2sbus/core.c
+index 51ed2f34b276..12001718e6cb 100644
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -167,8 +167,11 @@ static int i2sbus_add_dev(struct macio_dev *macio,
+ 		i2sbus_rx_intr
+ 	};
+ 
++	__diag_push();
++	__diag_ignore(clang, 18, "-Wfortify-source", "https://github.com/ClangBuiltLinux/linux/issues/1923");
+ 	if (snprintf(node_name, sizeof(node_name), "%pOFn", np) != 5)
+ 		return 0;
++	__diag_pop();
+ 	if (strncmp(node_name, "i2s-", 4))
+ 		return 0;
+ 
+-- 
+2.42.0
+
