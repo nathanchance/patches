@@ -1,7 +1,7 @@
-From ac855591b72210b3e83730cbc80cf68c0bad8e66 Mon Sep 17 00:00:00 2001
+From 60d007c750ea9cf7293fb26f0c4401c609de2bde Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
-Subject: [PATCH 09/34] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
+Subject: [PATCH 09/33] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
  .gnu.hash
 
 Relocatable kernel builds produce a warning about .gnu.hash being an
