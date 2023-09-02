@@ -1,7 +1,7 @@
-From 495c1adcb8d4e6f82f024b4d8314ba5fcf653c86 Mon Sep 17 00:00:00 2001
+From 422b842c4e8eec9ae65dd826fbc72b4bb546c684 Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Tue, 7 Sep 2021 18:37:08 -0700
-Subject: [PATCH 10/23] UPSTREAM: Input: analog - always use ktime functions
+Subject: [PATCH 10/22] UPSTREAM: Input: analog - always use ktime functions
 
 m68k, mips, s390, and sparc allmodconfig images fail to build with the
 following error.
