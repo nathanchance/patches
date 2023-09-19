@@ -1,7 +1,7 @@
-From d42eda161df7d381eab53b69a569ee4526c36b26 Mon Sep 17 00:00:00 2001
+From cd0cd74e023bec81bc7c7435af127356f946f1e7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
-Subject: [PATCH 1/9] FROMGIT: drm/v3d: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 1/8] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -33,7 +33,7 @@ Reviewed-by: Maíra Canal <mcanal@igalia.com>
 Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Maíra Canal <mairacanal@riseup.net>
 Link: https://patchwork.freedesktop.org/patch/msgid/20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-1-36ed8fc8faea@kernel.org
-Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=b27211db61aed86f095e76aa61eaef3bf3e0b7c2
+Link: https://git.kernel.org/linus/b27211db61aed86f095e76aa61eaef3bf3e0b7c2
 ---
  drivers/gpu/drm/v3d/v3d_drv.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -52,7 +52,7 @@ index b74b1351bfc8..7f664a4b2a75 100644
  		return MAX_JIFFY_OFFSET;
  
 
-base-commit: 09045dae0d902f9f78901a26c7ff1714976a38f9
+base-commit: a356197db198ad9825ce225f19f2c7448ef9eea0
 -- 
 2.42.0
 

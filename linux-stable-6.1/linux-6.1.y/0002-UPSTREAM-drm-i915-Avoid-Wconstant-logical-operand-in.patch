@@ -1,7 +1,7 @@
-From f69acfc0a8be65e158d07cd71089550845a599b0 Mon Sep 17 00:00:00 2001
+From 76ac56a55603728002e3b45807a3280b77cfe339 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:20 -0700
-Subject: [PATCH 2/9] FROMGIT: drm/i915: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 2/8] UPSTREAM: drm/i915: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -31,7 +31,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Maíra Canal <mairacanal@riseup.net>
 Link: https://patchwork.freedesktop.org/patch/msgid/20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org
-Link: https://cgit.freedesktop.org/drm/drm-misc/commit/?id=aeedd3a82678d89627bdd020a28e0af35ff45552
+Link: https://git.kernel.org/linus/aeedd3a82678d89627bdd020a28e0af35ff45552
 ---
  drivers/gpu/drm/i915/gem/i915_gem_wait.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
