@@ -1,6 +1,6 @@
-From 3f61b71808b489ea4067ab6a61d04b7083437af4 Mon Sep 17 00:00:00 2001
+From 81deeb1056df627a6a24853a47dbca27293a45d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 1 Nov 2023 12:43:29 -0700
+Date: Thu, 2 Nov 2023 08:43:02 -0700
 Subject: [PATCH 03/11] SUBMITTED: LoongArch: Mark __percpu functions as always
  inline
 
@@ -37,26 +37,29 @@ manifests as a BUILD_BUG() failure:
         | ^
   1 error generated.
 
-If these functions are not inlined, the BUILD_BUG() in the default case
-cannot be eliminated since the compiler cannot prove it is never used,
-resulting in a build failure due to the error attribute.
+If these functions are not inlined (which the compiler is free to do
+even with functions marked with the standard 'inline' keyword), the
+BUILD_BUG() in the default case cannot be eliminated since the compiler
+cannot prove it is never used, resulting in a build failure due to the
+error attribute.
 
-Mark these functions as __always_inline so that the BUILD_BUG() only
-triggers when the default case genuinely cannot be eliminated due to an
-unexpected size.
+Mark these functions as __always_inline to guarantee inlining so that
+the BUILD_BUG() only triggers when the default case genuinely cannot be
+eliminated due to an unexpected size.
 
 Cc:  <stable@vger.kernel.org>
 Closes: https://github.com/ClangBuiltLinux/linux/issues/1955
 Fixes: 46859ac8af52 ("LoongArch: Add multi-processor (SMP) support")
 Link: https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
-Link: https://lore.kernel.org/r/20231101-loongarch-always-inline-percpu-ops-v1-1-b8f2e9a71729@kernel.org
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20231102-loongarch-always-inline-percpu-ops-v2-1-31c51959a5c0@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/loongarch/include/asm/percpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/percpu.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/arch/loongarch/include/asm/percpu.h b/arch/loongarch/include/asm/percpu.h
-index b9f567e66016..8fb857ae962b 100644
+index b9f567e66016..313852fba845 100644
 --- a/arch/loongarch/include/asm/percpu.h
 +++ b/arch/loongarch/include/asm/percpu.h
 @@ -32,7 +32,7 @@ static inline void set_my_cpu_offset(unsigned long off)
@@ -64,7 +67,7 @@ index b9f567e66016..8fb857ae962b 100644
  
  #define PERCPU_OP(op, asm_op, c_op)					\
 -static inline unsigned long __percpu_##op(void *ptr,			\
-+static __always_inline unsigned long __percpu_##op(void *ptr,			\
++static __always_inline unsigned long __percpu_##op(void *ptr,		\
  			unsigned long val, int size)			\
  {									\
  	unsigned long ret;						\
@@ -77,6 +80,27 @@ index b9f567e66016..8fb857ae962b 100644
  {
  	unsigned long ret;
  
+@@ -100,7 +100,8 @@ static inline unsigned long __percpu_read(void *ptr, int size)
+ 	return ret;
+ }
+ 
+-static inline void __percpu_write(void *ptr, unsigned long val, int size)
++static __always_inline void __percpu_write(void *ptr, unsigned long val,
++					   int size)
+ {
+ 	switch (size) {
+ 	case 1:
+@@ -132,8 +133,8 @@ static inline void __percpu_write(void *ptr, unsigned long val, int size)
+ 	}
+ }
+ 
+-static inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
+-						int size)
++static __always_inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
++						   int size)
+ {
+ 	switch (size) {
+ 	case 1:
 -- 
-2.42.0
+2.42.1
 
