@@ -1,4 +1,4 @@
-From cb436f71909d636ca20511f145a8cb10cc4a00d4 Mon Sep 17 00:00:00 2001
+From 44ccf0e1a3f4a23eae80351ef927955a12be82cc Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:57 +0100
 Subject: [PATCH 27/33] UPSTREAM: cpumask: Always inline helpers which use bit
@@ -84,5 +84,5 @@ index 78a73eba64dd..9e2914a38e52 100644
  	return test_and_clear_bit(cpumask_check(cpu), cpumask_bits(cpumask));
  }
 -- 
-2.42.0
+2.42.1
 

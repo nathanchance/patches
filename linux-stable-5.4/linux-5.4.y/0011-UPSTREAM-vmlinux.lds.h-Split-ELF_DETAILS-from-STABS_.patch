@@ -1,4 +1,4 @@
-From f2256018240ba9861f31332f5e4a18174f05ded4 Mon Sep 17 00:00:00 2001
+From a2178ac2577de083929797a5651405e196e6d8b2 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:45 -0700
 Subject: [PATCH 11/33] UPSTREAM: vmlinux.lds.h: Split ELF_DETAILS from
@@ -311,7 +311,7 @@ index 508cfa6828c5..b26911e378bf 100644
 +	ELF_DETAILS
  }
 diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
-index 7e0e21082c93..24461c5e5a60 100644
+index 09506e492f1d..3d9c721a5357 100644
 --- a/arch/x86/kernel/vmlinux.lds.S
 +++ b/arch/x86/kernel/vmlinux.lds.S
 @@ -417,6 +417,7 @@ SECTIONS
@@ -355,5 +355,5 @@ index a68535f36d13..dbdfd0aad3e9 100644
  
  #ifdef CONFIG_GENERIC_BUG
 -- 
-2.42.0
+2.42.1
 

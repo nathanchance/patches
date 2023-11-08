@@ -1,4 +1,4 @@
-From 7454881bd2cd2eb55b5f8ee80e11824a75b31ae4 Mon Sep 17 00:00:00 2001
+From 2e56a3ac6b79f86a8b90cd235dc2eb392f95e036 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Thu, 27 Feb 2020 15:59:32 +1100
 Subject: [PATCH 09/33] UPSTREAM: powerpc/vmlinux.lds: Explicitly retain
@@ -42,5 +42,5 @@ index 46dfb3701c6e..8b9f51f77cde 100644
  	.rela.dyn : AT(ADDR(.rela.dyn) - LOAD_OFFSET)
  	{
 -- 
-2.42.0
+2.42.1
 
