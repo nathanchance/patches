@@ -1,0 +1,33 @@
+From 5afa22b976d2a77c156dd7a19a698960364f32d2 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 12 Dec 2023 17:07:19 -0700
+Subject: [PATCH 20/23] WIP: x86/kvm: Use absolute relocations in
+ __kvm_handle_fault_on_reboot()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/include/asm/kvm_host.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 3e9f1c820edb..627188d399d9 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1650,12 +1650,12 @@ asmlinkage void kvm_spurious_fault(void);
+ 	"667: \n\t"							\
+ 	"1: \n\t"							\
+ 	".pushsection .discard.instr_begin \n\t"			\
+-	".long 1b - . \n\t"						\
++	".long 1b\n\t"							\
+ 	".popsection \n\t"						\
+ 	"call	kvm_spurious_fault \n\t"				\
+ 	"1: \n\t"							\
+ 	".pushsection .discard.instr_end \n\t"				\
+-	".long 1b - . \n\t"						\
++	".long 1b\n\t"							\
+ 	".popsection \n\t"						\
+ 	"668: \n\t"							\
+ 	_ASM_EXTABLE(666b, 667b)
+-- 
+2.43.0
+
