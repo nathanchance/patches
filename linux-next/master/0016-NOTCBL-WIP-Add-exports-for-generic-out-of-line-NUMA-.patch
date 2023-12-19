@@ -1,0 +1,33 @@
+From cce20159e877039e6cc1e8e12d1b05952c251a22 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 19 Dec 2023 09:40:05 -0700
+Subject: [PATCH 16/16] NOTCBL: WIP: Add exports for generic out of line NUMA
+ logging functions
+
+Link: https://lore.kernel.org/20231219163644.GA345795@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/numa.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernel/numa.c b/kernel/numa.c
+index c24c72f45989..67ca6b8585c0 100644
+--- a/kernel/numa.c
++++ b/kernel/numa.c
+@@ -12,6 +12,7 @@ int memory_add_physaddr_to_nid(u64 start)
+ 			start);
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(memory_add_physaddr_to_nid);
+ #endif
+ 
+ #ifndef phys_to_target_node
+@@ -21,4 +22,5 @@ int phys_to_target_node(u64 start)
+ 			start);
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(phys_to_target_node);
+ #endif
+-- 
+2.43.0
+

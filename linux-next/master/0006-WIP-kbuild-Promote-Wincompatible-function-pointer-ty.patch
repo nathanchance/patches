@@ -1,14 +1,18 @@
-From 18bd535a2ed15347c531dbe7a0cc7a0df8e0643f Mon Sep 17 00:00:00 2001
+From 8de94ea62f5a623603133d329193009d49fa95d1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 6 Apr 2023 09:04:45 -0700
-Subject: [PATCH 04/12] WIP: kbuild: Enable
- -Wincompatible-function-pointer-types-strict
+Date: Wed, 4 Oct 2023 11:43:39 -0700
+Subject: [PATCH 06/16] WIP: kbuild: Promote
+ -Wincompatible-function-pointer-types-strict from W=1
+
+Now that all instances of this have been fixed, move this out of W=1 and
+turn it into a hard error, so that potential kCFI failures are caught at
+build time, rather than run time.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/counter/Makefile   | 2 ++
- scripts/Makefile.extrawarn | 1 +
- 2 files changed, 3 insertions(+)
+ scripts/Makefile.extrawarn | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/counter/Makefile b/drivers/counter/Makefile
 index fa3c1d08f706..80e335e836e4 100644
@@ -24,10 +28,10 @@ index fa3c1d08f706..80e335e836e4 100644
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 2fe6f2828d37..f6f3058de80d 100644
+index 174cf7a61df6..fc44dff7864a 100644
 --- a/scripts/Makefile.extrawarn
 +++ b/scripts/Makefile.extrawarn
-@@ -73,6 +73,7 @@ KBUILD_CFLAGS += -Werror=date-time
+@@ -75,6 +75,7 @@ KBUILD_CFLAGS += -Werror=date-time
  
  # enforce correct pointer usage
  KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-pointer-types)
@@ -35,6 +39,14 @@ index 2fe6f2828d37..f6f3058de80d 100644
  
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
+@@ -98,7 +99,6 @@ KBUILD_CFLAGS += $(call cc-option, -Wpacked-not-aligned)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-truncation)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-truncation)
+-KBUILD_CFLAGS += $(call cc-option, -Wincompatible-function-pointer-types-strict)
+ 
+ KBUILD_CPPFLAGS += -Wundef
+ KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.42.0
+2.43.0
 

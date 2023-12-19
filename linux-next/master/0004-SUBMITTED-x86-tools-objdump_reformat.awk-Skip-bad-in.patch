@@ -1,0 +1,48 @@
+From 40f3ae8648622404d05b01ad3360a46c7f55caa3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 5 Dec 2023 12:53:08 -0700
+Subject: [PATCH 04/16] SUBMITTED: x86/tools: objdump_reformat.awk: Skip bad
+ instructions from llvm-objdump
+
+When running the instruction decoder selftest with LLVM=1 +
+CONFIG_PVH=y, there is a series of warnings:
+
+  arch/x86/tools/insn_decoder_test: warning: Found an x86 instruction decoder bug, please report this.
+  arch/x86/tools/insn_decoder_test: warning: ffffffff81000050     ea                      <unknown>
+  arch/x86/tools/insn_decoder_test: warning: objdump says 1 bytes, but insn_get_length() says 7
+  arch/x86/tools/insn_decoder_test: warning: Decoded and checked 7214721 instructions with 1 failures
+
+GNU objdump outputs "(bad)" instead of "<unknown>", which is already
+handled in the bad_expr regex, so there is no warning.
+
+  $ objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
+  50:   ea                      (bad)
+
+  $ llvm-objdump -d arch/x86/platform/pvh/head.o | grep -E '50:\s+ea'
+        50: ea                            <unknown>
+
+Add "<unknown>" to the bad_expr regex to clear up the warning, allowing
+the instruction decoder selftest to fully pass with llvm-objdump.
+
+Link: https://lore.kernel.org/r/20231205-objdump_reformat-awk-handle-llvm-objdump-bad_expr-v1-1-b4a74f39396f@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/tools/objdump_reformat.awk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/tools/objdump_reformat.awk b/arch/x86/tools/objdump_reformat.awk
+index a4120d907277..20b08a6c4d33 100644
+--- a/arch/x86/tools/objdump_reformat.awk
++++ b/arch/x86/tools/objdump_reformat.awk
+@@ -11,7 +11,7 @@ BEGIN {
+ 	prev_addr = ""
+ 	prev_hex = ""
+ 	prev_mnemonic = ""
+-	bad_expr = "(\\(bad\\)|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
++	bad_expr = "(\\(bad\\)|<unknown>|^rex|^.byte|^rep(z|nz)$|^lock$|^es$|^cs$|^ss$|^ds$|^fs$|^gs$|^data(16|32)$|^addr(16|32|64))"
+ 	fwait_expr = "^9b[ \t]*fwait"
+ 	fwait_str="9b\tfwait"
+ }
+-- 
+2.43.0
+

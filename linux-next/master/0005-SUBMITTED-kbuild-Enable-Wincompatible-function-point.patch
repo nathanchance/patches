@@ -1,0 +1,49 @@
+From b5b0bdbad939d352a0d2f8b68515b3fd146173f3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 2 Oct 2023 15:19:46 -0700
+Subject: [PATCH 05/16] SUBMITTED: kbuild: Enable
+ -Wincompatible-function-pointer-types-strict in W=1
+
+-Wincompatible-function-pointer-types-strict aims to catch clang kernel
+Control Flow Integrity (kCFI) violations at build time (rather than run
+time) by validating function pointer assignments against the expected
+prototype, similar to the existing -Wincompatible-function-pointer-types
+that is considered a hard error in the kernel. The -strict variant
+requires the types to match exactly, as opposed to just matching in
+terms of ABI compatibility. This is primarily visible with int/unsigned
+int in lieu of enum types or vice versa.
+
+The tree is not completely clean, so this warning cannot currently be
+enabled unconditionally. However, there are only warnings in one
+subsystem ('drivers/counter'), so it is really close. In order to
+benefit from CI infrastructure that tests with W=1, enable this warning
+at that level, so that new instances have a chance of being caught and
+fixed during development.
+
+This should eventually be a hard error in a similar manner as
+Wincompatible-function-pointer-types but some subsystems test
+with W=1 + CONFIG_WERROR=n, so it would be rude to break their builds
+when they do not care about warnings outside of their subsystem.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Link: https://lore.kernel.org/r/20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.extrawarn | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index a9e552a1e910..174cf7a61df6 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -98,6 +98,7 @@ KBUILD_CFLAGS += $(call cc-option, -Wpacked-not-aligned)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-overflow)
+ KBUILD_CFLAGS += $(call cc-option, -Wformat-truncation)
+ KBUILD_CFLAGS += $(call cc-option, -Wstringop-truncation)
++KBUILD_CFLAGS += $(call cc-option, -Wincompatible-function-pointer-types-strict)
+ 
+ KBUILD_CPPFLAGS += -Wundef
+ KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
+-- 
+2.43.0
+
