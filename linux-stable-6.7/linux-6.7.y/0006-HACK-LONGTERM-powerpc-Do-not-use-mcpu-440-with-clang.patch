@@ -1,0 +1,27 @@
+From 4ac7e7b0b10f7fe248942330edcc3a30363b2ab3 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 21 Mar 2023 11:13:46 -0700
+Subject: [PATCH 6/9] HACK: LONGTERM: powerpc: Do not use '-mcpu=440' with
+ clang
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1814
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/platforms/Kconfig.cputype | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
+index b2d8c0da2ad9..266a13c15b9e 100644
+--- a/arch/powerpc/platforms/Kconfig.cputype
++++ b/arch/powerpc/platforms/Kconfig.cputype
+@@ -202,6 +202,7 @@ config 405_CPU
+ config 440_CPU
+ 	bool "440 (44x family)"
+ 	depends on 44x
++	depends on !CC_IS_CLANG
+ 
+ config 464_CPU
+ 	bool "464 (44x family)"
+-- 
+2.43.0
+
