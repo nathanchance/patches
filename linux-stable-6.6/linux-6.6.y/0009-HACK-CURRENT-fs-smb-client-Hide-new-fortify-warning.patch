@@ -1,0 +1,29 @@
+From b686c49963b31ab330cf650771c7cf859dc3fc1a Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Jan 2024 12:03:58 -0700
+Subject: [PATCH 9/9] HACK: CURRENT: fs/smb: client: Hide new fortify warning
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1966
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/smb/client/cifsencrypt.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
+index ef4c2e3c9fa6..bfc8dfa8f5e0 100644
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -571,8 +571,10 @@ static int calc_ntlmv2_hash(struct cifs_ses *ses, char *ntlmv2_hash,
+ 	if (len) {
+ 		len = cifs_strtoUTF16(user, ses->user_name, len, nls_cp);
+ 		UniStrupr(user);
++#if !defined(CONFIG_FORTIFY_SOURCE) || CONFIG_CLANG_VERSION < 180000
+ 	} else {
+ 		memset(user, '\0', 2);
++#endif
+ 	}
+ 
+ 	rc = crypto_shash_update(ses->server->secmech.hmacmd5,
+-- 
+2.43.0
+
