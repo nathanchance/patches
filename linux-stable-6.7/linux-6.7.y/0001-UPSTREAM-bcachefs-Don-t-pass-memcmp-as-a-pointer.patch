@@ -1,25 +1,24 @@
-From 58ee33b228573b96af65fbd3fe0c6fb31aa222f5 Mon Sep 17 00:00:00 2001
+From e1a019779d6fe38a5250d7760811274c57e0a36b Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@linux.dev>
 Date: Mon, 15 Jan 2024 14:12:43 -0500
-Subject: [PATCH 01/10] FROMGIT: bcachefs: Don't pass memcmp() as a pointer
+Subject: [PATCH 01/10] UPSTREAM: bcachefs: Don't pass memcmp() as a pointer
 
 Some (buggy!) compilers have issues with this.
 
 Fixes: https://github.com/koverstreet/bcachefs/issues/625
 Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
-[nathan: Fix bch2_cpu_replicas_sort() too]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://git.kernel.org/linus/0124f42da70c513dc371b73688663c54e5a9666f
 ---
  fs/bcachefs/replicas.c | 10 ++++++++--
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/fs/bcachefs/replicas.c b/fs/bcachefs/replicas.c
-index 2008fe8bf706..1aa06f176f04 100644
+index 2008fe8bf706..1c4a8f5c92c6 100644
 --- a/fs/bcachefs/replicas.c
 +++ b/fs/bcachefs/replicas.c
-@@ -6,6 +6,12 @@
- #include "replicas.h"
- #include "super-io.h"
+@@ -9,6 +9,12 @@
+ static int bch2_cpu_replicas_to_sb_replicas(struct bch_fs *,
+ 					    struct bch_replicas_cpu *);
  
 +/* Some (buggy!) compilers don't allow memcmp to be passed as a pointer */
 +static int bch2_memcmp(const void *l, const void *r, size_t size)
@@ -27,9 +26,9 @@ index 2008fe8bf706..1aa06f176f04 100644
 +	return memcmp(l, r, size);
 +}
 +
- static int bch2_cpu_replicas_to_sb_replicas(struct bch_fs *,
- 					    struct bch_replicas_cpu *);
+ /* Replicas tracking - in memory: */
  
+ static void verify_replicas_entry(struct bch_replicas_entry *e)
 @@ -33,7 +39,7 @@ void bch2_replicas_entry_sort(struct bch_replicas_entry *e)
  
  static void bch2_cpu_replicas_sort(struct bch_replicas_cpu *r)
