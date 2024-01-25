@@ -1,4 +1,4 @@
-From 8fb29b1bf58a62b266e1605a83b2f6075c777580 Mon Sep 17 00:00:00 2001
+From 8732eb7c70577d809620ed26cdd4e1ebded149f5 Mon Sep 17 00:00:00 2001
 From: Huacai Chen <chenhuacai@loongson.cn>
 Date: Wed, 15 Nov 2023 17:07:35 +0800
 Subject: [PATCH 01/11] NOTCBL: FROMLIST: LoongArch: KVM: Fix build due to API
@@ -43,7 +43,7 @@ index 915f17527893..50a6acd7ffe4 100644
  		 * This can happen when mappings are changed asynchronously, but
  		 * also synchronously if a COW is triggered by
 
-base-commit: 615d300648869c774bd1fe54b4627bb0c20faed4
+base-commit: cf10015a24f36a82370151a88cb8610c8779e927
 -- 
 2.43.0
 
