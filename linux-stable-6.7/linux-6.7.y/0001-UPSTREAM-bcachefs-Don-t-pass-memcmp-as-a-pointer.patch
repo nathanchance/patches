@@ -1,7 +1,7 @@
-From e1a019779d6fe38a5250d7760811274c57e0a36b Mon Sep 17 00:00:00 2001
+From 2a09842d878af61ed814a691eb5b51ca6c511d1b Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@linux.dev>
 Date: Mon, 15 Jan 2024 14:12:43 -0500
-Subject: [PATCH 01/10] UPSTREAM: bcachefs: Don't pass memcmp() as a pointer
+Subject: [PATCH 01/11] UPSTREAM: bcachefs: Don't pass memcmp() as a pointer
 
 Some (buggy!) compilers have issues with this.
 
@@ -48,7 +48,7 @@ index 2008fe8bf706..1c4a8f5c92c6 100644
  	for (i = 0; i < cpu_r->nr; i++) {
  		struct bch_replicas_entry *e =
 
-base-commit: a91fdae50a6d65ee57378d31284ddec7e9a7ba1b
+base-commit: 7bbf3b67cb49d0f8a20e64b7473923041b758211
 -- 
 2.43.0
 

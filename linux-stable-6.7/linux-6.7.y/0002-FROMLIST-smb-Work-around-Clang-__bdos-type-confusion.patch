@@ -1,7 +1,7 @@
-From 049364574126b88c9b5fa860c6be4f54072d6970 Mon Sep 17 00:00:00 2001
+From 63482292a7d8120bc85fa25bdd5b7830d11fb2e9 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 23 Jan 2024 15:47:34 -0800
-Subject: [PATCH 02/10] FROMLIST: smb: Work around Clang __bdos() type
+Subject: [PATCH 02/11] FROMLIST: smb: Work around Clang __bdos() type
  confusion
 
 Recent versions of Clang gets confused about the possible size of the
