@@ -1,4 +1,4 @@
-From 687d34e267ed722ccc55724a5bc329c1f83da986 Mon Sep 17 00:00:00 2001
+From e2396160be9cd64193f51417de7366ee4bc07023 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 23 Jan 2024 15:47:34 -0800
 Subject: [PATCH 1/9] FROMLIST: smb: Work around Clang __bdos() type confusion
@@ -60,7 +60,7 @@ index ef4c2e3c9fa6..6322f0f68a17 100644
  
  	rc = crypto_shash_update(ses->server->secmech.hmacmd5,
 
-base-commit: 62b19b564504d027296502e0e30baf5fe0ef080a
+base-commit: 98817289bcec2331c6893139c52105738090afc0
 -- 
 2.43.0
 
