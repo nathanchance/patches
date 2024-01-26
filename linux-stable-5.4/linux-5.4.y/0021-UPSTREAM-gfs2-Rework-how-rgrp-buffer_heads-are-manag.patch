@@ -1,4 +1,4 @@
-From af2b4f21187d3ecb4bb1e81cc27dbe3c64f15576 Mon Sep 17 00:00:00 2001
+From 9fbc8841130588173c6eba484e8db7097791f926 Mon Sep 17 00:00:00 2001
 From: Bob Peterson <rpeterso@redhat.com>
 Date: Wed, 13 Nov 2019 11:50:30 -0600
 Subject: [PATCH 21/33] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
@@ -151,7 +151,7 @@ index 33a6b074209d..8d64a755ca2f 100644
  			const char *fs_id_buf);
  	void (*go_callback)(struct gfs2_glock *gl, bool remote);
 diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
-index 8153a3eac540..ac82a3a48368 100644
+index f0a135a48cc3..01cc2fdc1fa0 100644
 --- a/fs/gfs2/rgrp.c
 +++ b/fs/gfs2/rgrp.c
 @@ -730,8 +730,12 @@ void gfs2_clear_rgrpd(struct gfs2_sbd *sdp)
