@@ -1,7 +1,7 @@
-From 9a15a7f2a246072e559d989cba014faaac95ef7a Mon Sep 17 00:00:00 2001
+From a665fcb1ced0de4eba209a8e048498fb56d62f39 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 19 Dec 2023 14:24:48 -0700
-Subject: [PATCH 02/11] NOTCBL: WIP: MIPS: Add prototypes for
+Subject: [PATCH 01/11] NOTCBL: WIP: MIPS: Add prototypes for
  plat_post_relocation() and relocate_kernel()
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -31,6 +31,8 @@ index 4dce41138bad..d8077136372c 100644
 +#endif
 +
  #endif /* __SETUP_H */
+
+base-commit: 8a696a29c6905594e4abf78eaafcb62165ac61f1
 -- 
 2.43.0
 
