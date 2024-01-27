@@ -1,7 +1,7 @@
 From 2a09842d878af61ed814a691eb5b51ca6c511d1b Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@linux.dev>
 Date: Mon, 15 Jan 2024 14:12:43 -0500
-Subject: [PATCH 01/11] UPSTREAM: bcachefs: Don't pass memcmp() as a pointer
+Subject: [PATCH 01/12] UPSTREAM: bcachefs: Don't pass memcmp() as a pointer
 
 Some (buggy!) compilers have issues with this.
 
