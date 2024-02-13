@@ -1,7 +1,7 @@
-From 28e9686737615aaffe3227197f67609d35e35625 Mon Sep 17 00:00:00 2001
+From dc731895fe214f29b91b9cdb32a106eb7085903b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 27 Jan 2024 11:07:43 -0700
-Subject: [PATCH 02/11] SUBMITTED: powerpc: xor_vmx: Add '-mhard-float' to
+Subject: [PATCH 02/12] SUBMITTED: powerpc: xor_vmx: Add '-mhard-float' to
  CFLAGS
 
 arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
@@ -39,5 +39,5 @@ index 6eac63e79a89..0ab65eeb93ee 100644
  CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
  
 -- 
-2.43.0
+2.43.1
 

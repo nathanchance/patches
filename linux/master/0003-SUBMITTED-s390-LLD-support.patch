@@ -1,0 +1,288 @@
+From 4dce628e848859ec116745c52976f60ccb596146 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 12 Feb 2024 18:01:21 -0700
+Subject: [PATCH 03/12] SUBMITTED: s390 LLD support
+
+This is a combination of a few different series that I have sent.
+
+Link: https://lore.kernel.org/20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org/
+Link: https://lore.kernel.org/20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org/
+Link: https://lore.kernel.org/20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/s390/Kconfig                    |  1 +
+ arch/s390/Makefile                   |  2 +-
+ arch/s390/boot/Makefile              |  5 ++--
+ arch/s390/boot/vmlinux.lds.S         | 28 +++++++++++++++++++++
+ arch/s390/include/asm/bug.h          |  4 +--
+ arch/s390/kernel/vdso32/Makefile     |  2 +-
+ arch/s390/kernel/vdso32/vdso32.lds.S |  1 -
+ arch/s390/kernel/vdso64/Makefile     |  2 +-
+ arch/s390/kernel/vdso64/vdso64.lds.S |  1 -
+ arch/s390/kernel/vmlinux.lds.S       | 37 ++++++++++++++++++++++++++++
+ scripts/link-vmlinux.sh              |  9 +++++--
+ 11 files changed, 81 insertions(+), 11 deletions(-)
+
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index fe565f3a3a91..771235aee6bf 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -127,6 +127,7 @@ config S390
+ 	select ARCH_WANT_DEFAULT_BPF_JIT
+ 	select ARCH_WANT_IPC_PARSE_VERSION
+ 	select ARCH_WANT_KERNEL_PMD_MKWRITE
++	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
+ 	select BUILDTIME_TABLE_SORT
+ 	select CLONE_BACKWARDS2
+diff --git a/arch/s390/Makefile b/arch/s390/Makefile
+index 73873e451686..994f9b3d575f 100644
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -15,7 +15,7 @@ KBUILD_CFLAGS_MODULE += -fPIC
+ KBUILD_AFLAGS	+= -m64
+ KBUILD_CFLAGS	+= -m64
+ KBUILD_CFLAGS	+= -fPIE
+-LDFLAGS_vmlinux	:= -pie
++LDFLAGS_vmlinux	:= -pie -z notext
+ aflags_dwarf	:= -Wa,-gdwarf-2
+ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
+ ifndef CONFIG_AS_IS_LLVM
+diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
+index c7c81e5f9218..ace0bda1ad24 100644
+--- a/arch/s390/boot/Makefile
++++ b/arch/s390/boot/Makefile
+@@ -73,11 +73,12 @@ $(obj)/bzImage: $(obj)/vmlinux $(obj)/section_cmp.boot.data $(obj)/section_cmp.b
+ $(obj)/section_cmp%: vmlinux $(obj)/vmlinux FORCE
+ 	$(call if_changed,section_cmp)
+ 
+-LDFLAGS_vmlinux := --oformat $(LD_BFD) -e startup $(if $(CONFIG_VMLINUX_MAP),-Map=$(obj)/vmlinux.map) --build-id=sha1 -T
++LDFLAGS_vmlinux-$(CONFIG_LD_ORPHAN_WARN) := --orphan-handling=$(CONFIG_LD_ORPHAN_WARN_LEVEL)
++LDFLAGS_vmlinux := $(LDFLAGS_vmlinux-y) --oformat $(LD_BFD) -e startup $(if $(CONFIG_VMLINUX_MAP),-Map=$(obj)/vmlinux.map) --build-id=sha1 -T
+ $(obj)/vmlinux: $(obj)/vmlinux.lds $(OBJECTS_ALL) FORCE
+ 	$(call if_changed,ld)
+ 
+-LDFLAGS_vmlinux.syms := --oformat $(LD_BFD) -e startup -T
++LDFLAGS_vmlinux.syms := $(LDFLAGS_vmlinux-y) --oformat $(LD_BFD) -e startup -T
+ $(obj)/vmlinux.syms: $(obj)/vmlinux.lds $(OBJECTS) FORCE
+ 	$(call if_changed,ld)
+ 
+diff --git a/arch/s390/boot/vmlinux.lds.S b/arch/s390/boot/vmlinux.lds.S
+index 389df0e0d9e5..806bca35e3f1 100644
+--- a/arch/s390/boot/vmlinux.lds.S
++++ b/arch/s390/boot/vmlinux.lds.S
+@@ -31,6 +31,7 @@ SECTIONS
+ 		_text = .;	/* Text */
+ 		*(.text)
+ 		*(.text.*)
++		INIT_TEXT
+ 		_etext = . ;
+ 	}
+ 	.rodata : {
+@@ -39,6 +40,9 @@ SECTIONS
+ 		*(.rodata.*)
+ 		_erodata = . ;
+ 	}
++	.got : {
++		*(.got)
++	}
+ 	NOTES
+ 	.data :	{
+ 		_data = . ;
+@@ -118,8 +122,32 @@ SECTIONS
+ 	}
+ 	_end = .;
+ 
++	DWARF_DEBUG
++	ELF_DETAILS
++
++	/*
++	 * Sections that should stay zero sized, which is safer to
++	 * explicitly check instead of blindly discarding.
++	 */
++	.got.plt : {
++		*(.got.plt)
++	}
++	ASSERT(SIZEOF(.got.plt) == 0, "Unexpected GOT/PLT entries detected!")
++	.plt : {
++		*(.plt)
++		*(.plt.*)
++		*(.iplt)
++		*(.igot .igot.plt)
++	}
++	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
++	.rela.dyn : {
++		*(.rela.*) *(.rela_*)
++	}
++	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
++
+ 	/* Sections to be discarded */
+ 	/DISCARD/ : {
++		COMMON_DISCARDS
+ 		*(.eh_frame)
+ 		*(__ex_table)
+ 		*(*__ksymtab*)
+diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
+index aebe1e22c7be..c500d45fb465 100644
+--- a/arch/s390/include/asm/bug.h
++++ b/arch/s390/include/asm/bug.h
+@@ -14,7 +14,7 @@
+ 		".section .rodata.str,\"aMS\",@progbits,1\n"	\
+ 		"1:	.asciz	\""__FILE__"\"\n"		\
+ 		".previous\n"					\
+-		".section __bug_table,\"awM\",@progbits,%2\n"	\
++		".section __bug_table,\"aw\"\n"			\
+ 		"2:	.long	0b-.\n"				\
+ 		"	.long	1b-.\n"				\
+ 		"	.short	%0,%1\n"			\
+@@ -30,7 +30,7 @@
+ #define __EMIT_BUG(x) do {					\
+ 	asm_inline volatile(					\
+ 		"0:	mc	0,0\n"				\
+-		".section __bug_table,\"awM\",@progbits,%1\n"	\
++		".section __bug_table,\"aw\"\n"			\
+ 		"1:	.long	0b-.\n"				\
+ 		"	.short	%0\n"				\
+ 		"	.org	1b+%1\n"			\
+diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/Makefile
+index caec7db6f966..b12a274cbb47 100644
+--- a/arch/s390/kernel/vdso32/Makefile
++++ b/arch/s390/kernel/vdso32/Makefile
+@@ -22,7 +22,7 @@ KBUILD_CFLAGS_32 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_32 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_32))
+ KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin
+ 
+-LDFLAGS_vdso32.so.dbg += -fPIC -shared -soname=linux-vdso32.so.1 \
++LDFLAGS_vdso32.so.dbg += -shared -soname=linux-vdso32.so.1 \
+ 	--hash-style=both --build-id=sha1 -melf_s390 -T
+ 
+ $(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_32)
+diff --git a/arch/s390/kernel/vdso32/vdso32.lds.S b/arch/s390/kernel/vdso32/vdso32.lds.S
+index edf5ff1debe1..65b9513a5a0e 100644
+--- a/arch/s390/kernel/vdso32/vdso32.lds.S
++++ b/arch/s390/kernel/vdso32/vdso32.lds.S
+@@ -9,7 +9,6 @@
+ 
+ OUTPUT_FORMAT("elf32-s390", "elf32-s390", "elf32-s390")
+ OUTPUT_ARCH(s390:31-bit)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
+diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
+index e3c9085f8fa7..caa4ebff8a19 100644
+--- a/arch/s390/kernel/vdso64/Makefile
++++ b/arch/s390/kernel/vdso64/Makefile
+@@ -26,7 +26,7 @@ KBUILD_AFLAGS_64 += -m64
+ KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
+-ldflags-y := -fPIC -shared -soname=linux-vdso64.so.1 \
++ldflags-y := -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
+ 
+ $(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_64)
+diff --git a/arch/s390/kernel/vdso64/vdso64.lds.S b/arch/s390/kernel/vdso64/vdso64.lds.S
+index 4461ea151e49..37e2a505e81d 100644
+--- a/arch/s390/kernel/vdso64/vdso64.lds.S
++++ b/arch/s390/kernel/vdso64/vdso64.lds.S
+@@ -9,7 +9,6 @@
+ 
+ OUTPUT_FORMAT("elf64-s390", "elf64-s390", "elf64-s390")
+ OUTPUT_ARCH(s390:64-bit)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index e32ef446f451..ae14dfb98266 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -59,6 +59,12 @@ SECTIONS
+ 	} :text = 0x0700
+ 
+ 	RO_DATA(PAGE_SIZE)
++	.data.rel.ro : {
++		*(.data.rel.ro .data.rel.ro.*)
++	}
++	.got : {
++		*(.got)
++	}
+ 
+ 	. = ALIGN(PAGE_SIZE);
+ 	_sdata = .;		/* Start of data section */
+@@ -73,6 +79,9 @@ SECTIONS
+ 	__end_ro_after_init = .;
+ 
+ 	RW_DATA(0x100, PAGE_SIZE, THREAD_SIZE)
++	.data.rel : {
++		*(.data.rel*)
++	}
+ 	BOOT_DATA_PRESERVED
+ 
+ 	. = ALIGN(8);
+@@ -191,6 +200,18 @@ SECTIONS
+ 		*(.rela*)
+ 		__rela_dyn_end = .;
+ 	}
++	.dynamic ALIGN(8) : {
++		*(.dynamic)
++	}
++	.dynstr ALIGN(8) : {
++		*(.dynstr)
++	}
++	.hash ALIGN(8) : {
++		*(.hash)
++	}
++	.gnu.hash ALIGN(8) : {
++		*(.gnu.hash)
++	}
+ 
+ 	. = ALIGN(PAGE_SIZE);
+ 	__init_end = .;		/* freed after init ends here */
+@@ -235,6 +256,22 @@ SECTIONS
+ 	DWARF_DEBUG
+ 	ELF_DETAILS
+ 
++	/*
++	 * Sections that should stay zero sized, which is safer to
++	 * explicitly check instead of blindly discarding.
++	 */
++	.got.plt : {
++		*(.got.plt)
++	}
++	ASSERT(SIZEOF(.got.plt) == 0, "Unexpected GOT/PLT entries detected!")
++	.plt : {
++		*(.plt)
++		*(.plt.*)
++		*(.iplt)
++		*(.igot .igot.plt)
++	}
++	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
++
+ 	/* Sections to be discarded */
+ 	DISCARDS
+ 	/DISCARD/ : {
+diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+index a432b171be82..7862a8101747 100755
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -135,8 +135,13 @@ gen_btf()
+ 	${OBJCOPY} --only-section=.BTF --set-section-flags .BTF=alloc,readonly \
+ 		--strip-all ${1} ${2} 2>/dev/null
+ 	# Change e_type to ET_REL so that it can be used to link final vmlinux.
+-	# Unlike GNU ld, lld does not allow an ET_EXEC input.
+-	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
++	# GNU ld 2.35+ and lld do not allow an ET_EXEC input.
++	if is_enabled CONFIG_CPU_BIG_ENDIAN; then
++		et_rel='\0\1'
++	else
++		et_rel='\1\0'
++	fi
++	printf "${et_rel}" | dd of=${2} conv=notrunc bs=1 seek=16 status=none
+ }
+ 
+ # Create ${2} .S file with all symbols from the ${1} object file
+-- 
+2.43.1
+
