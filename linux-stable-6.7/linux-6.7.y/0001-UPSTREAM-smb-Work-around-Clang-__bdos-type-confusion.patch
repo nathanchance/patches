@@ -1,7 +1,7 @@
-From 55aee395931d4c4466188d6ac93cf63e2efefa23 Mon Sep 17 00:00:00 2001
+From b9d08ea80f791116c6b3fa09b98815520cce117a Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 23 Jan 2024 15:47:34 -0800
-Subject: [PATCH 02/12] UPSTREAM: smb: Work around Clang __bdos() type
+Subject: [PATCH 01/11] UPSTREAM: smb: Work around Clang __bdos() type
  confusion
 
 Recent versions of Clang gets confused about the possible size of the
@@ -61,6 +61,8 @@ index ef4c2e3c9fa6..6322f0f68a17 100644
  	}
  
  	rc = crypto_shash_update(ses->server->secmech.hmacmd5,
+
+base-commit: 004dcea13dc10acaf1486d9939be4c793834c13c
 -- 
-2.43.1
+2.43.2
 
