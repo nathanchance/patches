@@ -1,4 +1,4 @@
-From 8bb36f35038f2a86fafb1e1290f4580655ec02b5 Mon Sep 17 00:00:00 2001
+From fdc0e0844bae3a66200ca2866e9aeadc7aa6e0d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 27 Jan 2024 11:07:43 -0700
 Subject: [PATCH 3/9] SUBMITTED: powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
@@ -38,5 +38,5 @@ index 9b394bab17eb..374b82cf13d9 100644
  CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
  
 -- 
-2.43.1
+2.43.2
 
