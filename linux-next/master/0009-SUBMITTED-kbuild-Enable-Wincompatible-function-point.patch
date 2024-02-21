@@ -1,7 +1,7 @@
-From 7c628ce5673945a2c8f4b85fd4e804b8f338e2a1 Mon Sep 17 00:00:00 2001
+From de0a3a70d5055b2637e393d51378663f851d37e1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Oct 2023 15:19:46 -0700
-Subject: [PATCH 06/16] SUBMITTED: kbuild: Enable
+Subject: [PATCH 09/18] SUBMITTED: kbuild: Enable
  -Wincompatible-function-pointer-types-strict in W=1
 
 -Wincompatible-function-pointer-types-strict aims to catch clang kernel
@@ -45,5 +45,5 @@ index a9e552a1e910..174cf7a61df6 100644
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.43.0
+2.43.2
 

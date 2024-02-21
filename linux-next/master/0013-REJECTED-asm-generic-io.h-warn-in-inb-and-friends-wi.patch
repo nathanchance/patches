@@ -1,7 +1,7 @@
-From c3def163591b1d845605deaaaac4bc0b9eb44944 Mon Sep 17 00:00:00 2001
+From 02fe8d7ab5a8b8f6aa9b7c12a5d926605ab9553a Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 11/16] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 13/18] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -19,10 +19,30 @@ Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Link: https://git.kernel.org/arnd/asm-generic/c/5ae6eadfdaf431f47adbdf1754f3b5a5fd638de2
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
+ drivers/pci/iomap.c      |  4 +++
  include/asm-generic/io.h | 64 +++++++++++++++++++++++++++++++++++++---
- lib/pci_iomap.c          |  4 +++
  2 files changed, 64 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/pci/iomap.c b/drivers/pci/iomap.c
+index c9725428e387..eec905766fde 100644
+--- a/drivers/pci/iomap.c
++++ b/drivers/pci/iomap.c
+@@ -164,11 +164,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
+ void pci_iounmap(struct pci_dev *dev, void __iomem *p)
+ {
+ #ifdef ARCH_HAS_GENERIC_IOPORT_MAP
++#ifdef PCI_IOBASE
+ 	uintptr_t start = (uintptr_t) PCI_IOBASE;
+ 	uintptr_t addr = (uintptr_t) p;
+ 
+ 	if (addr >= start && addr < start + IO_SPACE_LIMIT)
+ 		return;
++#else
++	WARN_ONCE(1, "No I/O port support\n");
++#endif
+ #endif
+ 	iounmap(p);
+ }
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
 index bac63e874c7b..57c39b2954d9 100644
 --- a/include/asm-generic/io.h
@@ -231,27 +251,6 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
-diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
-index ce39ce9f3526..2952fcaaf67e 100644
---- a/lib/pci_iomap.c
-+++ b/lib/pci_iomap.c
-@@ -165,12 +165,16 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
- void pci_iounmap(struct pci_dev *dev, void __iomem *p)
- {
- #ifdef ARCH_HAS_GENERIC_IOPORT_MAP
-+#ifdef PCI_IOBASE
- 	uintptr_t start = (uintptr_t) PCI_IOBASE;
- 	uintptr_t addr = (uintptr_t) p;
- 
- 	if (addr >= start && addr < start + IO_SPACE_LIMIT)
- 		return;
- 	iounmap(p);
-+#else
-+	WARN_ONCE(1, "No I/O port support\n");
-+#endif
- #endif
- }
- EXPORT_SYMBOL(pci_iounmap);
 -- 
-2.43.0
+2.43.2
 
