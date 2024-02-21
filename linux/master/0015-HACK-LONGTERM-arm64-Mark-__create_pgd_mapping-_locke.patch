@@ -1,7 +1,7 @@
-From 30a96e866cd0a6761b018bda394d9691510592dc Mon Sep 17 00:00:00 2001
+From df6f56757a993d67cfbc8d8fdda04d4ceab2ee4c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 27 Apr 2023 17:06:37 -0700
-Subject: [PATCH 12/12] HACK: LONGTERM: arm64: Mark
+Subject: [PATCH 15/15] HACK: LONGTERM: arm64: Mark
  __create_pgd_mapping,{_locked}() as __always_inline
 
 Link: http://github.com/ClangBuiltLinux/linux/issues/1838
@@ -47,5 +47,5 @@ index 1ac7467d34c9..83a3691de618 100644
  	mutex_lock(&fixmap_lock);
  	__create_pgd_mapping_locked(pgdir, phys, virt, size, prot,
 -- 
-2.43.1
+2.43.2
 

@@ -1,27 +1,43 @@
-From 4dce628e848859ec116745c52976f60ccb596146 Mon Sep 17 00:00:00 2001
+From 1ea08cbcf387d68d55e7d558c0b166406fcd2ea5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 12 Feb 2024 18:01:21 -0700
-Subject: [PATCH 03/12] SUBMITTED: s390 LLD support
+Date: Tue, 20 Feb 2024 17:21:43 -0700
+Subject: [PATCH 03/15] FROMGIT: s390 LLD support
 
-This is a combination of a few different series that I have sent.
+This is a squash of the following changes from the s390 features branch:
 
-Link: https://lore.kernel.org/20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org/
-Link: https://lore.kernel.org/20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org/
-Link: https://lore.kernel.org/20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org/
+  616c4ea9bce4 ("s390/vdso: remove unused ENTRY in linker scripts")
+  3938490e78f4 ("s390/bug: remove entry size from __bug_table section")
+  55cce52f1cec ("s390: link vmlinux with '-z notext'")
+  acb7c202baa7 ("s390: select CONFIG_ARCH_WANT_LD_ORPHAN_WARN")
+  c0f98ea0e7ea ("s390/boot: vmlinux.lds.S: handle commonly discarded sections")
+  6a4d37c886c1 ("s390/boot: vmlinux.lds.S: handle ELF required sections")
+  ba6c26af1ee7 ("s390/boot: vmlinux.lds.S: handle DWARF debug sections")
+  64d590a24f7a ("s390/boot: vmlinux.lds.S: handle '.rela' sections")
+  b23ab303dd95 ("s390/boot: vmlinux.lds.S: handle '.init.text'")
+  a691c8a6efe0 ("s390: vmlinux.lds.S: explicitly keep various sections")
+  30226853d6ec ("s390: vmlinux.lds.S: explicitly handle '.got' and '.plt' sections")
+  bdf2cd27a329 ("s390: vmlinux.lds.S: handle '.data.rel' sections explicitly")
+  2151fd9a6d4f ("s390/boot: add support for CONFIG_LD_ORPHAN_WARN")
+  0628c0393418 ("s390/vdso: drop '-fPIC' from LDFLAGS")
+
+Link: https://git.kernel.org/s390/l/features
+Link: https://github.com/ClangBuiltLinux/linux/issues/1991
+Link: https://github.com/ClangBuiltLinux/linux/issues/1992
+Link: https://github.com/ClangBuiltLinux/linux/issues/1993
+Link: https://github.com/ClangBuiltLinux/linux/issues/1994
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/s390/Kconfig                    |  1 +
  arch/s390/Makefile                   |  2 +-
  arch/s390/boot/Makefile              |  5 ++--
- arch/s390/boot/vmlinux.lds.S         | 28 +++++++++++++++++++++
- arch/s390/include/asm/bug.h          |  4 +--
+ arch/s390/boot/vmlinux.lds.S         | 25 ++++++++++++++++++++
+ arch/s390/include/asm/bug.h          |  4 ++--
  arch/s390/kernel/vdso32/Makefile     |  2 +-
  arch/s390/kernel/vdso32/vdso32.lds.S |  1 -
  arch/s390/kernel/vdso64/Makefile     |  2 +-
  arch/s390/kernel/vdso64/vdso64.lds.S |  1 -
- arch/s390/kernel/vmlinux.lds.S       | 37 ++++++++++++++++++++++++++++
- scripts/link-vmlinux.sh              |  9 +++++--
- 11 files changed, 81 insertions(+), 11 deletions(-)
+ arch/s390/kernel/vmlinux.lds.S       | 34 ++++++++++++++++++++++++++++
+ 10 files changed, 68 insertions(+), 9 deletions(-)
 
 diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
 index fe565f3a3a91..771235aee6bf 100644
@@ -68,7 +84,7 @@ index c7c81e5f9218..ace0bda1ad24 100644
  	$(call if_changed,ld)
  
 diff --git a/arch/s390/boot/vmlinux.lds.S b/arch/s390/boot/vmlinux.lds.S
-index 389df0e0d9e5..806bca35e3f1 100644
+index 389df0e0d9e5..4e3fb2b7abb6 100644
 --- a/arch/s390/boot/vmlinux.lds.S
 +++ b/arch/s390/boot/vmlinux.lds.S
 @@ -31,6 +31,7 @@ SECTIONS
@@ -89,7 +105,7 @@ index 389df0e0d9e5..806bca35e3f1 100644
  	NOTES
  	.data :	{
  		_data = . ;
-@@ -118,8 +122,32 @@ SECTIONS
+@@ -118,8 +122,29 @@ SECTIONS
  	}
  	_end = .;
  
@@ -105,10 +121,7 @@ index 389df0e0d9e5..806bca35e3f1 100644
 +	}
 +	ASSERT(SIZEOF(.got.plt) == 0, "Unexpected GOT/PLT entries detected!")
 +	.plt : {
-+		*(.plt)
-+		*(.plt.*)
-+		*(.iplt)
-+		*(.igot .igot.plt)
++		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
 +	}
 +	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
 +	.rela.dyn : {
@@ -195,7 +208,7 @@ index 4461ea151e49..37e2a505e81d 100644
  SECTIONS
  {
 diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index e32ef446f451..ae14dfb98266 100644
+index e32ef446f451..63cb403b3344 100644
 --- a/arch/s390/kernel/vmlinux.lds.S
 +++ b/arch/s390/kernel/vmlinux.lds.S
 @@ -59,6 +59,12 @@ SECTIONS
@@ -240,7 +253,7 @@ index e32ef446f451..ae14dfb98266 100644
  
  	. = ALIGN(PAGE_SIZE);
  	__init_end = .;		/* freed after init ends here */
-@@ -235,6 +256,22 @@ SECTIONS
+@@ -235,6 +256,19 @@ SECTIONS
  	DWARF_DEBUG
  	ELF_DETAILS
  
@@ -253,36 +266,13 @@ index e32ef446f451..ae14dfb98266 100644
 +	}
 +	ASSERT(SIZEOF(.got.plt) == 0, "Unexpected GOT/PLT entries detected!")
 +	.plt : {
-+		*(.plt)
-+		*(.plt.*)
-+		*(.iplt)
-+		*(.igot .igot.plt)
++		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
 +	}
 +	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
 +
  	/* Sections to be discarded */
  	DISCARDS
  	/DISCARD/ : {
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index a432b171be82..7862a8101747 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -135,8 +135,13 @@ gen_btf()
- 	${OBJCOPY} --only-section=.BTF --set-section-flags .BTF=alloc,readonly \
- 		--strip-all ${1} ${2} 2>/dev/null
- 	# Change e_type to ET_REL so that it can be used to link final vmlinux.
--	# Unlike GNU ld, lld does not allow an ET_EXEC input.
--	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
-+	# GNU ld 2.35+ and lld do not allow an ET_EXEC input.
-+	if is_enabled CONFIG_CPU_BIG_ENDIAN; then
-+		et_rel='\0\1'
-+	else
-+		et_rel='\1\0'
-+	fi
-+	printf "${et_rel}" | dd of=${2} conv=notrunc bs=1 seek=16 status=none
- }
- 
- # Create ${2} .S file with all symbols from the ${1} object file
 -- 
-2.43.1
+2.43.2
 
