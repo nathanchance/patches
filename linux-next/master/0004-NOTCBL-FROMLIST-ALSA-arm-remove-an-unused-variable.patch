@@ -1,7 +1,7 @@
-From 122c018d085e4f773cd81f226623202a3059e370 Mon Sep 17 00:00:00 2001
+From 9680ec8631329340529d0c04741e0a3348e6c5e7 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Tue, 13 Feb 2024 10:53:18 +0100
-Subject: [PATCH 03/18] NOTCBL: FROMLIST: ALSA: arm: remove an unused variable
+Subject: [PATCH 04/19] NOTCBL: FROMLIST: ALSA: arm: remove an unused variable
 
 The only user of a variable got removed a while ago, but I only now
 ran into this on randconfig builds with clang:

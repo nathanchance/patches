@@ -1,7 +1,7 @@
-From deb6a666e5696cb4a25835e4e7c002de41a35a13 Mon Sep 17 00:00:00 2001
+From cd26d18281fe354768d40e7f1801c194fcb79c95 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:41:55 -0700
-Subject: [PATCH 14/18] HACK: LONGTERM: Disable -Wframe-larger-than= for clang
+Subject: [PATCH 15/19] HACK: LONGTERM: Disable -Wframe-larger-than= for clang
 
 There are a lot of these warnings right now so disable the warning for
 now until they can be triaged and fixed.
@@ -13,7 +13,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index dab8d984b72b..95402e34c446 100644
+index 47b740a79b0b..8e0bbbb60223 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -436,8 +436,9 @@ config GDB_SCRIPTS

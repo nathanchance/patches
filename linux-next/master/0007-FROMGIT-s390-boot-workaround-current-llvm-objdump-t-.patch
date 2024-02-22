@@ -1,8 +1,8 @@
-From 92829971ddb5339bb2be07b460e9c1664da6329d Mon Sep 17 00:00:00 2001
+From bf44c28b9c968d05d9c720520c064d844551bdb1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 20 Feb 2024 13:44:48 -0700
-Subject: [PATCH 06/18] SUBMITTED: s390/boot: Workaround current 'llvm-objdump
- -t -j ...' behavior
+Subject: [PATCH 07/19] FROMGIT: s390/boot: workaround current 'llvm-objdump -t
+ -j ...' behavior
 
 When building with OBJDUMP=llvm-objdump, there are a series of warnings
 from the section comparisons that arch/s390/boot/Makefile performs
@@ -52,8 +52,10 @@ support for s390 in ld.lld and llvm-objcopy.
 Reported-by: Heiko Carstens <hca@linux.ibm.com>
 Closes: https://lore.kernel.org/20240219113248.16287-C-hca@linux.ibm.com/
 Link: https://github.com/ClangBuiltLinux/linux/issues/859
-Link: https://lore.kernel.org/r/20240220-s390-work-around-llvm-objdump-t-j-v1-1-47bb0366a831@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20240220-s390-work-around-llvm-objdump-t-j-v1-1-47bb0366a831@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://git.kernel.org/s390/c/7f115ff4fc20698452ff4a1cbb9c790be10b0066
 ---
  arch/s390/boot/Makefile | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

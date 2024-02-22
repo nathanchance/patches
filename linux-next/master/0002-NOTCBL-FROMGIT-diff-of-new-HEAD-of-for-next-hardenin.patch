@@ -1,0 +1,40 @@
+From 979f229cbd0758ae6774d7f5e16eb8acce324c7d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Feb 2024 12:15:02 -0700
+Subject: [PATCH 02/19] NOTCBL: FROMGIT: diff of new HEAD of for-next/hardening
+
+Link: https://lore.kernel.org/19930c5a-f1ed-4b04-b69a-d7259966f020@app.fastmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm/boot/compressed/misc.h | 2 +-
+ lib/Makefile                    | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/compressed/misc.h b/arch/arm/boot/compressed/misc.h
+index 6da00a26ac08..8c73940b5fe4 100644
+--- a/arch/arm/boot/compressed/misc.h
++++ b/arch/arm/boot/compressed/misc.h
+@@ -10,7 +10,7 @@ void __div0(void);
+ void
+ decompress_kernel(unsigned long output_start, unsigned long free_mem_ptr_p,
+ 		  unsigned long free_mem_ptr_end_p, int arch_id);
+-void fortify_panic(const char *name);
++void __fortify_panic(const u8 reason, size_t avail, size_t size);
+ int atags_to_fdt(void *atag_list, void *fdt, int total_space);
+ uint32_t fdt_check_mem_start(uint32_t mem_start, const void *fdt);
+ int do_decompress(u8 *input, int len, u8 *output, void (*error)(char *x));
+diff --git a/lib/Makefile b/lib/Makefile
+index 2d894e3e1102..2b0c9d83998a 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -403,6 +403,7 @@ CFLAGS_stackinit_kunit.o += $(call cc-disable-warning, switch-unreachable)
+ obj-$(CONFIG_STACKINIT_KUNIT_TEST) += stackinit_kunit.o
+ CFLAGS_fortify_kunit.o += $(call cc-disable-warning, unsequenced)
+ CFLAGS_fortify_kunit.o += $(call cc-disable-warning, stringop-overread)
++CFLAGS_fortify_kunit.o += $(call cc-disable-warning, stringop-truncation)
+ CFLAGS_fortify_kunit.o += $(DISABLE_STRUCTLEAK_PLUGIN)
+ obj-$(CONFIG_FORTIFY_KUNIT_TEST) += fortify_kunit.o
+ obj-$(CONFIG_STRCAT_KUNIT_TEST) += strcat_kunit.o
+-- 
+2.43.2
+

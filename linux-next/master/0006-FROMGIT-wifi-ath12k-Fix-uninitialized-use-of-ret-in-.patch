@@ -1,7 +1,7 @@
-From 70b5677b1cdffa517583db1e2c0b4bc06fd0aff6 Mon Sep 17 00:00:00 2001
+From 444143f12d7bcb15e49904f04c1a939d242ddbf9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 5 Feb 2024 12:49:53 -0700
-Subject: [PATCH 05/18] FROMGIT: wifi: ath12k: Fix uninitialized use of ret in
+Subject: [PATCH 06/19] FROMGIT: wifi: ath12k: Fix uninitialized use of ret in
  ath12k_mac_allocate()
 
 Clang warns (or errors with CONFIG_WERROR=y):
