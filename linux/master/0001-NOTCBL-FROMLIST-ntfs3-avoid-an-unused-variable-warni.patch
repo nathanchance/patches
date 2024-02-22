@@ -1,4 +1,4 @@
-From 1485115d8a23f1dbe62c05b577fd7feb0abb4bf9 Mon Sep 17 00:00:00 2001
+From 2e9bda15cd49e21894c599492fe60f5b5552d02e Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Fri, 2 Feb 2024 13:50:56 +0100
 Subject: [PATCH 01/15] NOTCBL: FROMLIST: ntfs3: avoid an unused variable
@@ -40,7 +40,7 @@ index 3b42938a9d3b..7f27382e0ce2 100644
  		u64 frame64 = frame_vbo >> frame_bits;
  		u64 frames, vbo_data;
 
-base-commit: 39133352cbed6626956d38ed72012f49b0421e7b
+base-commit: 1c892cdd8fe004ed6cef4501a7141594a1616368
 -- 
 2.43.2
 
