@@ -1,4 +1,4 @@
-From b9d08ea80f791116c6b3fa09b98815520cce117a Mon Sep 17 00:00:00 2001
+From 98cd4c06673bb4ba6447d87d701029c29564bb45 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 23 Jan 2024 15:47:34 -0800
 Subject: [PATCH 01/11] UPSTREAM: smb: Work around Clang __bdos() type
@@ -62,7 +62,7 @@ index ef4c2e3c9fa6..6322f0f68a17 100644
  
  	rc = crypto_shash_update(ses->server->secmech.hmacmd5,
 
-base-commit: 004dcea13dc10acaf1486d9939be4c793834c13c
+base-commit: b631f5b445dc3379f67ff63a2e4c58f22d4975dc
 -- 
 2.43.2
 
