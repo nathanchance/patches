@@ -1,7 +1,7 @@
 From b17417c6df5acdd2e405f705664553a35a19f30d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:20 -0700
-Subject: [PATCH 2/9] UPSTREAM: drm/i915: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 02/10] UPSTREAM: drm/i915: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -50,5 +50,5 @@ index e6e01c2a74a6..da11970b2861 100644
  		return MAX_JIFFY_OFFSET;
  
 -- 
-2.43.2
+2.44.0
 
