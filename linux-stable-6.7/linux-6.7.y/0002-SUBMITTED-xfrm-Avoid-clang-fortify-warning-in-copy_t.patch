@@ -1,7 +1,7 @@
-From 6886d49ff8bed9319a80dbb6c24f5da1727aedee Mon Sep 17 00:00:00 2001
+From 795044bdfb96676b1fc224b071f1c015b99f744d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
-Subject: [PATCH 03/11] SUBMITTED: xfrm: Avoid clang fortify warning in
+Subject: [PATCH 02/10] SUBMITTED: xfrm: Avoid clang fortify warning in
  copy_to_user_tmpl()
 
 After a couple recent changes in LLVM, there is a warning (or error with
