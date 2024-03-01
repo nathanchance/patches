@@ -1,7 +1,7 @@
-From b9c8fb15ed778a9ffd692dfcfb23501b93fbc566 Mon Sep 17 00:00:00 2001
+From 39d1f4ee113a0148d7917beb6f5a4506fe4c6674 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 20 Feb 2024 13:44:48 -0700
-Subject: [PATCH 05/15] FROMGIT: s390/boot: workaround current 'llvm-objdump -t
+Subject: [PATCH 04/14] FROMGIT: s390/boot: workaround current 'llvm-objdump -t
  -j ...' behavior
 
 When building with OBJDUMP=llvm-objdump, there are a series of warnings
@@ -77,5 +77,5 @@ index d40135efdec4..be3655825b4c 100644
  	if [ "$$s1" != "$$s2" ]; then \
  		echo "error: section $* differs between $< and $(word 2,$^)" >&2; \
 -- 
-2.43.2
+2.44.0
 

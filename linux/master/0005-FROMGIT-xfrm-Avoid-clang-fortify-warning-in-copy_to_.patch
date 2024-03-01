@@ -1,7 +1,7 @@
-From c9028f911bc40162fa66e617caffd684f3893057 Mon Sep 17 00:00:00 2001
+From 135378e5aeb16d6d7d988782b3216445c3f0d734 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
-Subject: [PATCH 07/15] SUBMITTED: xfrm: Avoid clang fortify warning in
+Subject: [PATCH 05/14] FROMGIT: xfrm: Avoid clang fortify warning in
  copy_to_user_tmpl()
 
 After a couple recent changes in LLVM, there is a warning (or error with
@@ -31,8 +31,10 @@ warning.
 
 Cc: stable@vger.kernel.org
 Link: https://github.com/ClangBuiltLinux/linux/issues/1985
-Link: https://lore.kernel.org/r/20240221-xfrm-avoid-clang-fortify-warning-copy_to_user_tmpl-v1-1-254a788ab8ba@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Link: https://git.kernel.org/klassert/ipsec/c/1a807e46aa93ebad1dfbed4f82dc3bf779423a6e
 ---
  net/xfrm/xfrm_user.c | 3 +++
  1 file changed, 3 insertions(+)
@@ -52,5 +54,5 @@ index f037be190bae..912c1189ba41 100644
  		struct xfrm_user_tmpl *up = &vec[i];
  		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
 -- 
-2.43.2
+2.44.0
 

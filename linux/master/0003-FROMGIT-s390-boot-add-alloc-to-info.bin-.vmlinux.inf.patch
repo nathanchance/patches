@@ -1,7 +1,7 @@
-From 92d03caa37fde6f86b394ceb2a82031bff179f2d Mon Sep 17 00:00:00 2001
+From c3bb9e333f570d42b5249972fbdefe421ea2367d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 16 Feb 2024 12:55:53 -0700
-Subject: [PATCH 04/15] FROMGIT: s390/boot: add 'alloc' to info.bin
+Subject: [PATCH 03/14] FROMGIT: s390/boot: add 'alloc' to info.bin
  .vmlinux.info section flags
 
 When attempting to boot a kernel compiled with OBJCOPY=llvm-objcopy,
@@ -77,5 +77,5 @@ index ace0bda1ad24..d40135efdec4 100644
  	$(call if_changed,objcopy)
  
 -- 
-2.43.2
+2.44.0
 
