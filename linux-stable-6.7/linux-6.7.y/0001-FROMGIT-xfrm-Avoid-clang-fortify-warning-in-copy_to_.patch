@@ -1,7 +1,7 @@
-From cbe6c716e0a3a306bcabb80a7b5141ff758dcff8 Mon Sep 17 00:00:00 2001
+From 8b4eece1dc9ab189ebc7085815930715b5ec7b85 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
-Subject: [PATCH 02/11] FROMGIT: xfrm: Avoid clang fortify warning in
+Subject: [PATCH 01/10] FROMGIT: xfrm: Avoid clang fortify warning in
  copy_to_user_tmpl()
 
 After a couple recent changes in LLVM, there is a warning (or error with
@@ -53,6 +53,8 @@ index ad01997c3aa9..444e58bc3f44 100644
  	for (i = 0; i < xp->xfrm_nr; i++) {
  		struct xfrm_user_tmpl *up = &vec[i];
  		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
+
+base-commit: d6d6c49dbf4512f1421f5e42896e2d70dc121f9a
 -- 
 2.44.0
 
