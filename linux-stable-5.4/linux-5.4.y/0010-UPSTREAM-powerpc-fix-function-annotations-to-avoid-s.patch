@@ -1,7 +1,7 @@
 From f508d475feadf96f9c968b683e31f1a3e98e6d39 Mon Sep 17 00:00:00 2001
 From: Vladis Dronov <vdronov@redhat.com>
 Date: Wed, 29 Jul 2020 15:37:41 +0200
-Subject: [PATCH 10/34] UPSTREAM: powerpc: fix function annotations to avoid
+Subject: [PATCH 10/35] UPSTREAM: powerpc: fix function annotations to avoid
  section mismatch warnings with gcc-10
 
 Certain warnings are emitted for powerpc code when building with a gcc-10

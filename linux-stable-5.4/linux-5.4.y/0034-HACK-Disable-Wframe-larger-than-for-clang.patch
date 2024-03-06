@@ -1,7 +1,7 @@
-From ed31c59ce30754e18d87f3675d5c199400fabfc6 Mon Sep 17 00:00:00 2001
+From d95efc8dfb9c6b3edeea12f25cc3645d74a807f6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:41:55 -0700
-Subject: [PATCH 33/34] HACK: Disable -Wframe-larger-than= for clang
+Subject: [PATCH 34/35] HACK: Disable -Wframe-larger-than= for clang
 
 There are a lot of these warnings right now so disable the warning for
 now until they can be triaged and fixed.
