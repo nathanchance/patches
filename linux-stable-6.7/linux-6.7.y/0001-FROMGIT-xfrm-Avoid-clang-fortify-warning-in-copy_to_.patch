@@ -1,4 +1,4 @@
-From 8b4eece1dc9ab189ebc7085815930715b5ec7b85 Mon Sep 17 00:00:00 2001
+From 6655ca5ad15ac22f29bce013d58c1e828df706c6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
 Subject: [PATCH 01/11] FROMGIT: xfrm: Avoid clang fortify warning in
@@ -54,7 +54,7 @@ index ad01997c3aa9..444e58bc3f44 100644
  		struct xfrm_user_tmpl *up = &vec[i];
  		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
 
-base-commit: d6d6c49dbf4512f1421f5e42896e2d70dc121f9a
+base-commit: 2e7cdd29fc42c410eab52fffe5710bf656619222
 -- 
 2.44.0
 
