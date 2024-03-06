@@ -1,7 +1,7 @@
-From 55e456b9ace9a51861dd8ab37c079280f9915e03 Mon Sep 17 00:00:00 2001
+From 7ff14f84860ec58d09292e9644e98fc5747e05ca Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 15 Jan 2021 20:01:36 +0100
-Subject: [PATCH 03/24] UPSTREAM: s390/bitops: remove small optimization to fix
+Subject: [PATCH 04/26] UPSTREAM: s390/bitops: remove small optimization to fix
  clang build
 
 clang does not know about the 'b1' construct used in bitops inline

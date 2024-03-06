@@ -1,0 +1,29 @@
+From 8e59703a550271e63b25d89696e8d22a7a6e95ed Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 4 Mar 2024 16:40:12 -0700
+Subject: [PATCH 01/26] NOTCBL: REPORTED: Include 'asm/text-patching.h' in
+ arch/x86/kernel/paravirt.c
+
+Link: https://lore.kernel.org/ZeYXvd1-rVkPGvvW@telecaster/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/kernel/paravirt.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/x86/kernel/paravirt.c b/arch/x86/kernel/paravirt.c
+index 5bea8d93883a..f0e4ad8595ca 100644
+--- a/arch/x86/kernel/paravirt.c
++++ b/arch/x86/kernel/paravirt.c
+@@ -31,6 +31,7 @@
+ #include <asm/special_insns.h>
+ #include <asm/tlb.h>
+ #include <asm/io_bitmap.h>
++#include <asm/text-patching.h>
+ 
+ /*
+  * nop stub, which must not clobber anything *including the stack* to
+
+base-commit: 9985c44f239fa0db0f3b4a1aee80794f113c135c
+-- 
+2.44.0
+

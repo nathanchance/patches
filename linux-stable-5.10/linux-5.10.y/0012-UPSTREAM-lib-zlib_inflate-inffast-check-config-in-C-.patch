@@ -1,7 +1,7 @@
-From 9ee49f2f0192af0dfa51d4ff6e08297523c85ef3 Mon Sep 17 00:00:00 2001
+From 9ef74db800f6f7a725fed0c8c0db36c4985c490f Mon Sep 17 00:00:00 2001
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Date: Fri, 24 Sep 2021 15:43:44 -0700
-Subject: [PATCH 11/24] UPSTREAM: lib/zlib_inflate/inffast: check config in C
+Subject: [PATCH 12/26] UPSTREAM: lib/zlib_inflate/inffast: check config in C
  to avoid unused function warning
 
 Building Linux for ppc64le with Ubuntu clang version

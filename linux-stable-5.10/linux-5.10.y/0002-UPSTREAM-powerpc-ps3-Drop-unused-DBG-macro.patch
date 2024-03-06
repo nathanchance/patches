@@ -1,7 +1,7 @@
-From dba215fa49a7dba775701081f7ba440fc6adcb8d Mon Sep 17 00:00:00 2001
+From c3a30bf65c54de5c3cfff620c92d99cadd85b475 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Fri, 23 Oct 2020 14:13:05 +1100
-Subject: [PATCH 01/24] UPSTREAM: powerpc/ps3: Drop unused DBG macro
+Subject: [PATCH 02/26] UPSTREAM: powerpc/ps3: Drop unused DBG macro
 
 This DBG macro is unused, and has been unused since the file was
 originally merged into mainline. Just drop it.
@@ -31,8 +31,6 @@ index 6e4efbdb6b7c..f157717ae814 100644
  BSS_STACK(4096);
  
  /* A buffer that may be edited by tools operating on a zImage binary so as to
-
-base-commit: 9985c44f239fa0db0f3b4a1aee80794f113c135c
 -- 
 2.44.0
 
