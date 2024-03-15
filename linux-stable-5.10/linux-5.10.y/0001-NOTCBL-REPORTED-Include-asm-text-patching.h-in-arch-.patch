@@ -1,4 +1,4 @@
-From bc62c24b8e8d91d4c7aa0017f4c33544c9753933 Mon Sep 17 00:00:00 2001
+From ab31043d97209a01f32d0d2226c758e0cf9b5bfa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 4 Mar 2024 16:40:12 -0700
 Subject: [PATCH 01/25] NOTCBL: REPORTED: Include 'asm/text-patching.h' in
@@ -23,7 +23,7 @@ index 5bea8d93883a..f0e4ad8595ca 100644
  /*
   * nop stub, which must not clobber anything *including the stack* to
 
-base-commit: 7cfcd0ed929b28ff6942c2bee15816d08d6f7266
+base-commit: d35f38551c217d32daa0b7f5008adf1d21226042
 -- 
 2.44.0
 
