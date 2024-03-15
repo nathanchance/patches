@@ -1,8 +1,7 @@
-From bc597d213d2d6e45edb9447937ccea277b04a430 Mon Sep 17 00:00:00 2001
+From 6dde6467094e20f9e1781ef1a2561df693bd67ab Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 27 Jan 2024 11:07:43 -0700
-Subject: [PATCH 31/35] SUBMITTED: powerpc: xor_vmx: Add '-mhard-float' to
- CFLAGS
+Subject: [PATCH 31/34] FROMGIT: powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
 
 arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
 powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
@@ -19,8 +18,10 @@ as AMDGPU.
 Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
 Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-Link: https://lore.kernel.org/r/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
+Link: https://git.kernel.org/powerpc/c/35f20786c481d5ced9283ff42de5c69b65e5ed13
 ---
  arch/powerpc/lib/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
