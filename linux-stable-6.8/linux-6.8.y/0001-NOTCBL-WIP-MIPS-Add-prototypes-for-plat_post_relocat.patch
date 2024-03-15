@@ -1,0 +1,38 @@
+From 5741984f676fb53e7996c806e499141db41889a6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 19 Dec 2023 14:24:48 -0700
+Subject: [PATCH 01/11] NOTCBL: WIP: MIPS: Add prototypes for
+ plat_post_relocation() and relocate_kernel()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/mips/include/asm/setup.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/mips/include/asm/setup.h b/arch/mips/include/asm/setup.h
+index 4dce41138bad..d8077136372c 100644
+--- a/arch/mips/include/asm/setup.h
++++ b/arch/mips/include/asm/setup.h
+@@ -2,6 +2,7 @@
+ #ifndef _MIPS_SETUP_H
+ #define _MIPS_SETUP_H
+ 
++#include <linux/init.h>
+ #include <linux/types.h>
+ #include <uapi/asm/setup.h>
+ 
+@@ -29,4 +30,9 @@ extern void per_cpu_trap_init(bool);
+ extern void cpu_cache_init(void);
+ extern void tlb_init(void);
+ 
++#ifdef CONFIG_RELOCATABLE
++extern void * __init relocate_kernel(void);
++extern int plat_post_relocation(long);
++#endif
++
+ #endif /* __SETUP_H */
+
+base-commit: 8a8b2a057ed9684704792b5d4b333616769002c2
+-- 
+2.44.0
+
