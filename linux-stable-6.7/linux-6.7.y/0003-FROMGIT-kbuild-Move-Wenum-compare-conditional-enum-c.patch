@@ -1,7 +1,7 @@
-From f6aeb08e11afe35e01ad11f80918ab5b01cb8691 Mon Sep 17 00:00:00 2001
+From 92fea8aee167510c610aa1c3fefaab40aeac13aa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 5 Mar 2024 15:12:47 -0700
-Subject: [PATCH 03/11] SUBMITTED: kbuild: Move
+Subject: [PATCH 03/11] FROMGIT: kbuild: Move
  -Wenum-{compare-conditional,enum-conversion} into W=1
 
 Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
@@ -43,8 +43,10 @@ Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
 Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
 Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://git.kernel.org/masahiroy/linux-kbuild/c/75b5ab134bb5f657ef7979a59106dce0657e8d87
 ---
  scripts/Makefile.extrawarn | 2 ++
  1 file changed, 2 insertions(+)
