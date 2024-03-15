@@ -1,7 +1,7 @@
-From 07a2c5688f1f0bc27abbec1c3cbb5dfca7304441 Mon Sep 17 00:00:00 2001
+From 3f2df944e4589394fb119ac0afd3fbc9c7c27575 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
-Subject: [PATCH 01/11] FROMGIT: xfrm: Avoid clang fortify warning in
+Subject: [PATCH 01/11] UPSTREAM: xfrm: Avoid clang fortify warning in
  copy_to_user_tmpl()
 
 After a couple recent changes in LLVM, there is a warning (or error with
@@ -34,7 +34,8 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/1985
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Link: https://git.kernel.org/klassert/ipsec/c/1a807e46aa93ebad1dfbed4f82dc3bf779423a6e
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://git.kernel.org/linus/1a807e46aa93ebad1dfbed4f82dc3bf779423a6e
 ---
  net/xfrm/xfrm_user.c | 3 +++
  1 file changed, 3 insertions(+)
