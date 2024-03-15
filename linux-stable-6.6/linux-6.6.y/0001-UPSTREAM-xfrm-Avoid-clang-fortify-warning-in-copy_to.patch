@@ -1,4 +1,4 @@
-From 3f2df944e4589394fb119ac0afd3fbc9c7c27575 Mon Sep 17 00:00:00 2001
+From c68a9375e8aefbb0f91d18c8d1bed0bd62fa6654 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 21 Feb 2024 14:46:21 -0700
 Subject: [PATCH 01/11] UPSTREAM: xfrm: Avoid clang fortify warning in
@@ -55,7 +55,7 @@ index ad01997c3aa9..444e58bc3f44 100644
  		struct xfrm_user_tmpl *up = &vec[i];
  		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
 
-base-commit: 62e5ae5007ef14cf9b12da6520d50fe90079d8d4
+base-commit: 6a646d9fe8a2bf8d25817ceddf96dfc5eb5446db
 -- 
 2.44.0
 
