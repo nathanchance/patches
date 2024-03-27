@@ -1,7 +1,7 @@
-From 21ffe0158bf89c1e541ea028bebbace83ae6bfeb Mon Sep 17 00:00:00 2001
+From 29327b559e76e2fd7b62ee4c3b921c4ddf15050c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 27 Jan 2021 10:09:11 -0700
-Subject: [PATCH 25/25] HACK: rcu-tasks: Add missing inline qualifier to
+Subject: [PATCH 24/24] HACK: rcu-tasks: Add missing inline qualifier to
  show_rcu_tasks_rude_gp_kthread
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index c5624ab0580c..0b501c38ad99 100644
+index 105fdc2bb004..9923f5c1d2bf 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
 @@ -733,7 +733,7 @@ static void show_rcu_tasks_rude_gp_kthread(void)

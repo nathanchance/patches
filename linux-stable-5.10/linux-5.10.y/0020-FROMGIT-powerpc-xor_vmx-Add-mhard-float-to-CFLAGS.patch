@@ -1,7 +1,7 @@
-From 0b93ace8e67de338fcf747368f6d81cc456137e9 Mon Sep 17 00:00:00 2001
+From eabc778273095728f17a6da837edf2ae9e196c1a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 27 Jan 2024 11:07:43 -0700
-Subject: [PATCH 21/25] FROMGIT: powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
+Subject: [PATCH 20/24] FROMGIT: powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
 
 arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
 powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
