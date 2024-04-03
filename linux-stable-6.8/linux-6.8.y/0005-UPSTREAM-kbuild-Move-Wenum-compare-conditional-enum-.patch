@@ -1,7 +1,7 @@
-From 1228f3e788540e1ca7ac4cd0ace8b6112e849b14 Mon Sep 17 00:00:00 2001
+From 7255c6703cf4f0235a890bfbd680ded483b0fcae Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 5 Mar 2024 15:12:47 -0700
-Subject: [PATCH 05/14] FROMGIT: kbuild: Move
+Subject: [PATCH 05/15] UPSTREAM: kbuild: Move
  -Wenum-{compare-conditional,enum-conversion} into W=1
 
 Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
@@ -46,7 +46,7 @@ Acked-by: Yonghong Song <yonghong.song@linux.dev>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Acked-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/masahiroy/linux-kbuild/c/75b5ab134bb5f657ef7979a59106dce0657e8d87
+Link: https://git.kernel.org/linus/75b5ab134bb5f657ef7979a59106dce0657e8d87
 ---
  scripts/Makefile.extrawarn | 2 ++
  1 file changed, 2 insertions(+)
