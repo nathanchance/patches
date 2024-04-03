@@ -1,0 +1,27 @@
+From 834bfbd45944797e0a5222d2578c3ce37b5b54f7 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 3 Apr 2024 08:50:11 -0700
+Subject: [PATCH 11/21] REPORTED: fixup! smb3: retrying on failed server close
+
+Link: https://lore.kernel.org/202404031346.wpIhNpyF-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/smb/client/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index ccc562b717ff..f146dd5d2d2a 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -725,7 +725,7 @@ void _cifsFileInfo_put(struct cifsFileInfo *cifs_file,
+ 		xid = get_xid();
+ 		if (server->ops->close_getattr)
+ 			rc = server->ops->close_getattr(xid, tcon, cifs_file);
+-		else if (server->ops->close)
++		else
+ 			rc = server->ops->close(xid, tcon, &cifs_file->fid);
+ 		_free_xid(xid);
+ 
+-- 
+2.44.0
+

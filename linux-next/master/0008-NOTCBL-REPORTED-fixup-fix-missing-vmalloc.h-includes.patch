@@ -1,0 +1,26 @@
+From 60dd176cb13f62f9879cf20bbd8027c0cc0732e4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 3 Apr 2024 14:15:51 -0700
+Subject: [PATCH 08/21] NOTCBL: REPORTED: fixup! fix missing vmalloc.h includes
+
+Link: https://lore.kernel.org/20240403211240.GA307137@dev-arch.thelio-3990X/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/loongarch/include/asm/addrspace.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/loongarch/include/asm/addrspace.h b/arch/loongarch/include/asm/addrspace.h
+index b24437e28c6e..7bd47d65bf7a 100644
+--- a/arch/loongarch/include/asm/addrspace.h
++++ b/arch/loongarch/include/asm/addrspace.h
+@@ -11,6 +11,7 @@
+ #define _ASM_ADDRSPACE_H
+ 
+ #include <linux/const.h>
++#include <linux/sizes.h>
+ 
+ #include <asm/loongarch.h>
+ 
+-- 
+2.44.0
+

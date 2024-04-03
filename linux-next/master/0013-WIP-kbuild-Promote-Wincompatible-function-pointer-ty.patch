@@ -1,7 +1,7 @@
-From af84f4dcae7328e15cf231262d3d6ce6eeef92ee Mon Sep 17 00:00:00 2001
+From 80f81cd52424bec92807f031833d33a6320e354b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 4 Oct 2023 11:43:39 -0700
-Subject: [PATCH 11/19] WIP: kbuild: Promote
+Subject: [PATCH 13/21] WIP: kbuild: Promote
  -Wincompatible-function-pointer-types-strict from W=1
 
 Now that all instances of this have been fixed, move this out of W=1 and
@@ -28,7 +28,7 @@ index fa3c1d08f706..80e335e836e4 100644
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
 diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 174cf7a61df6..fc44dff7864a 100644
+index bfa7ccc5bfd6..bda7fa3e4d16 100644
 --- a/scripts/Makefile.extrawarn
 +++ b/scripts/Makefile.extrawarn
 @@ -75,6 +75,7 @@ KBUILD_CFLAGS += -Werror=date-time
@@ -48,5 +48,5 @@ index 174cf7a61df6..fc44dff7864a 100644
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.43.2
+2.44.0
 

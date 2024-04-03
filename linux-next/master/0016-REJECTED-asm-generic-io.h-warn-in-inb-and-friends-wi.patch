@@ -1,7 +1,7 @@
-From 770fd7aec43f0f2db3fbede1cdf926694bbd375f Mon Sep 17 00:00:00 2001
+From 3d9448b11571f8842a4e738eb015397388a711d3 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 14/19] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 16/21] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -44,7 +44,7 @@ index c9725428e387..eec905766fde 100644
  	iounmap(p);
  }
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index bac63e874c7b..57c39b2954d9 100644
+index c27313414a82..61ac92dd62fb 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -237,7 +237,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -1111,8 +1162,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+@@ -1110,8 +1161,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {
@@ -252,5 +252,5 @@ index bac63e874c7b..57c39b2954d9 100644
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
 -- 
-2.43.2
+2.44.0
 

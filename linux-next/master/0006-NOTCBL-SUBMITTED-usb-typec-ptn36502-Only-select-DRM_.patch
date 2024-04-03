@@ -1,0 +1,45 @@
+From 3728ab1b654eb833319fd50058faa04b07c77ef4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 28 Mar 2024 09:03:20 -0700
+Subject: [PATCH 06/21] NOTCBL: SUBMITTED: usb: typec: ptn36502: Only select
+ DRM_AUX_BRIDGE with OF
+
+CONFIG_DRM_AUX_BRIDGE depends on CONFIG_OF but that dependency is not
+included when CONFIG_TYPEC_MUX_PTN36502 selects it, resulting in a
+Kconfig warning when CONFIG_OF is disabled:
+
+  WARNING: unmet direct dependencies detected for DRM_AUX_BRIDGE
+    Depends on [n]: HAS_IOMEM [=y] && DRM_BRIDGE [=y] && OF [=n]
+    Selected by [m]:
+    - TYPEC_MUX_PTN36502 [=m] && USB_SUPPORT [=y] && TYPEC [=m] && I2C [=y] && (DRM [=y] || DRM [=y]=n) && DRM_BRIDGE [=y]
+
+Only select CONFIG_DRM_AUX_BRIDGE when CONFIG_DRM_BRIDGE and CONFIG_OF
+are enabled to clear up the warning. This results in no functional
+change because prior to the refactoring that introduces this warning,
+ptn36502_register_bridge() returned 0 when CONFIG_OF was disabled, which
+continues to occur with drm_aux_bridge_register() when
+CONFIG_DRM_AUX_BRIDGE is not enabled.
+
+Fixes: 9dc28ea21eb4 ("usb: typec: ptn36502: switch to DRM_AUX_BRIDGE")
+Link: https://lore.kernel.org/r/20240328-fix-ptn36502-drm_aux_bridge-select-v1-1-85552117e26e@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/usb/typec/mux/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/typec/mux/Kconfig b/drivers/usb/typec/mux/Kconfig
+index 4827e86fed6d..ce7db6ad3057 100644
+--- a/drivers/usb/typec/mux/Kconfig
++++ b/drivers/usb/typec/mux/Kconfig
+@@ -60,7 +60,7 @@ config TYPEC_MUX_PTN36502
+ 	tristate "NXP PTN36502 Type-C redriver driver"
+ 	depends on I2C
+ 	depends on DRM || DRM=n
+-	select DRM_AUX_BRIDGE if DRM_BRIDGE
++	select DRM_AUX_BRIDGE if DRM_BRIDGE && OF
+ 	select REGMAP_I2C
+ 	help
+ 	  Say Y or M if your system has a NXP PTN36502 Type-C redriver chip
+-- 
+2.44.0
+
