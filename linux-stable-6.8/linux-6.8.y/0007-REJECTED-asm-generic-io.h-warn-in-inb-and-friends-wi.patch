@@ -1,7 +1,7 @@
-From 12dd55c8a2cd9fca7904b9d1100cd98eb4f2af35 Mon Sep 17 00:00:00 2001
+From 4a13f8f4dd398adfe16f30c4a4074f5c779e82af Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 10/15] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 07/12] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -232,10 +232,10 @@ index bac63e874c7b..57c39b2954d9 100644
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
 diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
-index ce39ce9f3526..2952fcaaf67e 100644
+index 2829ddb0e316..c60151b2f437 100644
 --- a/lib/pci_iomap.c
 +++ b/lib/pci_iomap.c
-@@ -165,12 +165,16 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
+@@ -165,11 +165,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
  void pci_iounmap(struct pci_dev *dev, void __iomem *p)
  {
  #ifdef ARCH_HAS_GENERIC_IOPORT_MAP
@@ -245,13 +245,12 @@ index ce39ce9f3526..2952fcaaf67e 100644
  
  	if (addr >= start && addr < start + IO_SPACE_LIMIT)
  		return;
- 	iounmap(p);
 +#else
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  #endif
+ 	iounmap(p);
  }
- EXPORT_SYMBOL(pci_iounmap);
 -- 
 2.44.0
 

@@ -1,7 +1,7 @@
-From afc0d51155d9b0a97463011ce914012372986f2f Mon Sep 17 00:00:00 2001
+From 842621a12ff0c2079aa093f65e7b8118544431d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 18 Mar 2024 08:18:10 -0700
-Subject: [PATCH 01/15] NOTCBL: SUBMITTED: clk: qcom: Fix SC_CAMCC_8280XP
+Subject: [PATCH 01/12] NOTCBL: SUBMITTED: clk: qcom: Fix SC_CAMCC_8280XP
  dependencies
 
 CONFIG_SC_GCC_8280XP depends on ARM64 but it is selected by
@@ -36,7 +36,7 @@ index 2a9da0939377..67f1151a3d2b 100644
  	help
  	  Support for the camera clock controller on Qualcomm Technologies, Inc
 
-base-commit: 03a22b591c5443ba269e8570c6fef411251fe1b8
+base-commit: ecd507c8a34c9816ff0bbce289e54f18526d238b
 -- 
 2.44.0
 
