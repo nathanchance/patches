@@ -1,0 +1,61 @@
+From fe1a7b5f14175770b09d8338f5d0049c66c3f929 Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 25 Sep 2019 11:09:06 -0700
+Subject: [PATCH 07/35] UPSTREAM: x86/realmode: Explicitly set entry point via
+ ENTRY in linker script
+
+Linking with ld.lld via
+
+$ make LD=ld.lld
+
+produces the warning:
+
+  ld.lld: warning: cannot find entry symbol _start; defaulting to 0x1000
+
+Linking with ld.bfd shows the default entry is 0x1000:
+
+$ readelf -h arch/x86/realmode/rm/realmode.elf | grep Entry
+  Entry point address:               0x1000
+
+While ld.lld is being pedantic, just set the entry point explicitly,
+instead of depending on the implicit default. The symbol pa_text_start
+refers to the start of the .text section, which may not be at 0x1000 if
+the preceding sections listed in arch/x86/realmode/rm/realmode.lds.S
+were large enough. This matches behavior in arch/x86/boot/setup.ld.
+
+Reported-by: Sedat Dilek <sedat.dilek@gmail.com>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Suggested-by: Peter Smith <Peter.Smith@arm.com>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: clang-built-linux@googlegroups.com
+Cc: grimar@accesssoftek.com
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: maskray@google.com
+Cc: ruiu@google.com
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: x86-ml <x86@kernel.org>
+Link: https://lkml.kernel.org/r/20190925180908.54260-1-ndesaulniers@google.com
+Link: https://github.com/ClangBuiltLinux/linux/issues/216
+Link: https://git.kernel.org/linus/6a181e333954a26f46596b36f82abd14743570fd
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/realmode/rm/realmode.lds.S | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/x86/realmode/rm/realmode.lds.S b/arch/x86/realmode/rm/realmode.lds.S
+index 3bb980800c58..64d135d1ee63 100644
+--- a/arch/x86/realmode/rm/realmode.lds.S
++++ b/arch/x86/realmode/rm/realmode.lds.S
+@@ -11,6 +11,7 @@
+ 
+ OUTPUT_FORMAT("elf32-i386")
+ OUTPUT_ARCH(i386)
++ENTRY(pa_text_start)
+ 
+ SECTIONS
+ {
+-- 
+2.44.0
+

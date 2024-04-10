@@ -1,0 +1,175 @@
+From df8958fa326e7f896c4cba8ef6446786bbf21b95 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 3 Jan 2022 12:47:58 -0700
+Subject: [PATCH 22/35] UPSTREAM: powerpc: unrel_branch_check.sh: make it suck
+ less
+
+6b1992bcdee8 powerpc: unrel_branch_check.sh: enable the use of llvm-objdump v9, 10 or 11
+b71dca9891b3 powerpc: unrel_branch_check.sh: use nm to find symbol value
+af13a2244d59 powerpc: unrel_branch_check.sh: exit silently for early errors
+3745ae63b405 powerpc: unrel_branch_check.sh: fix up the file header
+b84eaab6ede6 powerpc: unrel_branch_check.sh: simplify and tidy up the final loop
+3d97abbc9f6f powerpc: unrel_branch_check.sh: convert grep | sed | awk to just sed
+4e71106c343c powerpc: unrel_branch_check.sh: simplify objdump's asm output
+20ff8ec18216 powerpc: unrel_branch_check.sh: simplify and combine some executions
+d9de6b0da85c powerpc: unrel_branch_check.sh: fix shellcheck complaints
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/Makefile.postlink           |   2 +-
+ arch/powerpc/tools/unrel_branch_check.sh | 125 +++++++++++++----------
+ 2 files changed, 73 insertions(+), 54 deletions(-)
+
+diff --git a/arch/powerpc/Makefile.postlink b/arch/powerpc/Makefile.postlink
+index 2268396ff4bb..a6c77f4d32b2 100644
+--- a/arch/powerpc/Makefile.postlink
++++ b/arch/powerpc/Makefile.postlink
+@@ -18,7 +18,7 @@ quiet_cmd_relocs_check = CHKREL  $@
+ ifdef CONFIG_PPC_BOOK3S_64
+       cmd_relocs_check =						\
+ 	$(CONFIG_SHELL) $(srctree)/arch/powerpc/tools/relocs_check.sh "$(OBJDUMP)" "$(NM)" "$@" ; \
+-	$(BASH) $(srctree)/arch/powerpc/tools/unrel_branch_check.sh "$(OBJDUMP)" "$@"
++	$(BASH) $(srctree)/arch/powerpc/tools/unrel_branch_check.sh "$(OBJDUMP)" "$(NM)" "$@"
+ else
+       cmd_relocs_check =						\
+ 	$(CONFIG_SHELL) $(srctree)/arch/powerpc/tools/relocs_check.sh "$(OBJDUMP)" "$(NM)" "$@"
+diff --git a/arch/powerpc/tools/unrel_branch_check.sh b/arch/powerpc/tools/unrel_branch_check.sh
+index 6e6a30aea3ed..8301efee1e6c 100755
+--- a/arch/powerpc/tools/unrel_branch_check.sh
++++ b/arch/powerpc/tools/unrel_branch_check.sh
+@@ -1,60 +1,79 @@
+-# Copyright © 2016 IBM Corporation
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0+
++# Copyright © 2016,2020 IBM Corporation
+ #
+-# This program is free software; you can redistribute it and/or
+-# modify it under the terms of the GNU General Public License
+-# as published by the Free Software Foundation; either version
+-# 2 of the License, or (at your option) any later version.
+-#
+-# This script checks the relocations of a vmlinux for "suspicious"
+-# branches from unrelocated code (head_64.S code).
+-
+-# Turn this on if you want more debug output:
+-# set -x
++# This script checks the unrelocated code of a vmlinux for "suspicious"
++# branches to relocated code (head_64.S code).
+ 
+-# Have Kbuild supply the path to objdump so we handle cross compilation.
++# Have Kbuild supply the path to objdump and nm so we handle cross compilation.
+ objdump="$1"
+-vmlinux="$2"
+-
+-#__end_interrupts should be located within the first 64K
+-
+-end_intr=0x$(
+-$objdump -R "$vmlinux" -d --start-address=0xc000000000000000           \
+-		 --stop-address=0xc000000000010000 |
+-grep '\<__end_interrupts>:' |
+-awk '{print $1}'
+-)
+-
+-BRANCHES=$(
+-$objdump -R "$vmlinux" -D --start-address=0xc000000000000000           \
+-		--stop-address=${end_intr} |
+-grep -e "^c[0-9a-f]*:[[:space:]]*\([0-9a-f][0-9a-f][[:space:]]\)\{4\}[[:space:]]*b" |
+-grep -v '\<__start_initialization_multiplatform>' |
+-grep -v -e 'b.\?.\?ctr' |
+-grep -v -e 'b.\?.\?lr' |
+-sed -e 's/\bbt.\?[[:space:]]*[[:digit:]][[:digit:]]*,/beq/' \
+-	-e 's/\bbf.\?[[:space:]]*[[:digit:]][[:digit:]]*,/bne/' \
+-	-e 's/[[:space:]]0x/ /' \
+-	-e 's/://' |
+-awk '{ print $1 ":" $6 ":0x" $7 ":" $8 " "}'
+-)
+-
+-for tuple in $BRANCHES
+-do
+-	from=`echo $tuple | cut -d':' -f1`
+-	branch=`echo $tuple | cut -d':' -f2`
+-	to=`echo $tuple | cut -d':' -f3 | sed 's/cr[0-7],//'`
+-	sym=`echo $tuple | cut -d':' -f4`
+-
+-	if (( $to > $end_intr ))
+-	then
+-		if [ -z "$bad_branches" ]; then
+-			echo "WARNING: Unrelocated relative branches"
+-			bad_branches="yes"
++nm="$2"
++vmlinux="$3"
++
++kstart=0xc000000000000000
++
++end_intr=0x$($nm -p "$vmlinux" |
++	sed -E -n '/\s+[[:alpha:]]\s+__end_interrupts\s*$/{s///p;q}')
++if [ "$end_intr" = "0x" ]; then
++	exit 0
++fi
++
++# we know that there is a correct branch to
++# __start_initialization_multiplatform, so find its address
++# so we can exclude it.
++sim=0x$($nm -p "$vmlinux" |
++	sed -E -n '/\s+[[:alpha:]]\s+__start_initialization_multiplatform\s*$/{s///p;q}')
++
++$objdump -D --no-show-raw-insn --start-address="$kstart" --stop-address="$end_intr" "$vmlinux" |
++sed -E -n '
++# match lines that start with a kernel address
++/^c[0-9a-f]*:\s*b/ {
++	# drop branches via ctr or lr
++	/\<b.?.?(ct|l)r/d
++	# cope with some differences between Clang and GNU objdumps
++	s/\<bt.?\s*[[:digit:]]+,/beq/
++	s/\<bf.?\s*[[:digit:]]+,/bne/
++	# tidy up
++	s/\s0x/ /
++	s/://
++	# format for the loop below
++	s/^(\S+)\s+(\S+)\s+(\S+)\s*(\S*).*$/\1:\2:\3:\4/
++	# strip out condition registers
++	s/:cr[0-7],/:/
++	p
++}' | {
++
++all_good=true
++while IFS=: read -r from branch to sym; do
++	case "$to" in
++	c*)	to="0x$to"
++		;;
++	.+*)
++		to=${to#.+}
++		if [ "$branch" = 'b' ]; then
++			if (( to >= 0x2000000 )); then
++				to=$(( to - 0x4000000 ))
++			fi
++		elif (( to >= 0x8000 )); then
++			to=$(( to - 0x10000 ))
++		fi
++		printf -v to '0x%x' $(( "0x$from" + to ))
++		;;
++	*)	printf 'Unkown branch format\n'
++		;;
++	esac
++	if [ "$to" = "$sim" ]; then
++		continue
++	fi
++	if (( to > end_intr )); then
++		if $all_good; then
++			printf '%s\n' 'WARNING: Unrelocated relative branches'
++			all_good=false
+ 		fi
+-		echo "$from $branch-> $to $sym"
++		printf '%s %s-> %s %s\n' "$from" "$branch" "$to" "$sym"
+ 	fi
+ done
+ 
+-if [ -z "$bad_branches" ]; then
+-	exit 0
+-fi
++$all_good
++
++}
+-- 
+2.44.0
+

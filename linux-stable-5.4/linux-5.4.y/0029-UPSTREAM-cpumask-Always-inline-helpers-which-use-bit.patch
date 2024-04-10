@@ -1,0 +1,88 @@
+From 98296fea19b1f1ec535f29792a677fab4953e9a0 Mon Sep 17 00:00:00 2001
+From: Borislav Petkov <bp@suse.de>
+Date: Thu, 13 Jan 2022 16:53:57 +0100
+Subject: [PATCH 29/35] UPSTREAM: cpumask: Always inline helpers which use bit
+ manipulation functions
+
+Former are always inlined so do that for the latter too, for
+consistency.
+
+Size impact is a whopping 5 bytes increase! :-)
+
+   text    data     bss     dec     hex filename
+22350551        8213184 1917164 32480899        1ef9e83 vmlinux.x86-64.defconfig.before
+22350556        8213152 1917164 32480872        1ef9e68 vmlinux.x86-64.defconfig.after
+
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/20220113155357.4706-3-bp@alien8.de
+Link: https://git.kernel.org/linus/1dc01abad6544cb9d884071b626b706e37aa9601
+---
+ include/linux/cpumask.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
+index 78a73eba64dd..9e2914a38e52 100644
+--- a/include/linux/cpumask.h
++++ b/include/linux/cpumask.h
+@@ -322,12 +322,12 @@ extern int cpumask_next_wrap(int n, const struct cpumask *mask, int start, bool
+  * @cpu: cpu number (< nr_cpu_ids)
+  * @dstp: the cpumask pointer
+  */
+-static inline void cpumask_set_cpu(unsigned int cpu, struct cpumask *dstp)
++static __always_inline void cpumask_set_cpu(unsigned int cpu, struct cpumask *dstp)
+ {
+ 	set_bit(cpumask_check(cpu), cpumask_bits(dstp));
+ }
+ 
+-static inline void __cpumask_set_cpu(unsigned int cpu, struct cpumask *dstp)
++static __always_inline void __cpumask_set_cpu(unsigned int cpu, struct cpumask *dstp)
+ {
+ 	__set_bit(cpumask_check(cpu), cpumask_bits(dstp));
+ }
+@@ -338,12 +338,12 @@ static inline void __cpumask_set_cpu(unsigned int cpu, struct cpumask *dstp)
+  * @cpu: cpu number (< nr_cpu_ids)
+  * @dstp: the cpumask pointer
+  */
+-static inline void cpumask_clear_cpu(int cpu, struct cpumask *dstp)
++static __always_inline void cpumask_clear_cpu(int cpu, struct cpumask *dstp)
+ {
+ 	clear_bit(cpumask_check(cpu), cpumask_bits(dstp));
+ }
+ 
+-static inline void __cpumask_clear_cpu(int cpu, struct cpumask *dstp)
++static __always_inline void __cpumask_clear_cpu(int cpu, struct cpumask *dstp)
+ {
+ 	__clear_bit(cpumask_check(cpu), cpumask_bits(dstp));
+ }
+@@ -355,7 +355,7 @@ static inline void __cpumask_clear_cpu(int cpu, struct cpumask *dstp)
+  *
+  * Returns 1 if @cpu is set in @cpumask, else returns 0
+  */
+-static inline int cpumask_test_cpu(int cpu, const struct cpumask *cpumask)
++static __always_inline int cpumask_test_cpu(int cpu, const struct cpumask *cpumask)
+ {
+ 	return test_bit(cpumask_check(cpu), cpumask_bits((cpumask)));
+ }
+@@ -369,7 +369,7 @@ static inline int cpumask_test_cpu(int cpu, const struct cpumask *cpumask)
+  *
+  * test_and_set_bit wrapper for cpumasks.
+  */
+-static inline int cpumask_test_and_set_cpu(int cpu, struct cpumask *cpumask)
++static __always_inline int cpumask_test_and_set_cpu(int cpu, struct cpumask *cpumask)
+ {
+ 	return test_and_set_bit(cpumask_check(cpu), cpumask_bits(cpumask));
+ }
+@@ -383,7 +383,7 @@ static inline int cpumask_test_and_set_cpu(int cpu, struct cpumask *cpumask)
+  *
+  * test_and_clear_bit wrapper for cpumasks.
+  */
+-static inline int cpumask_test_and_clear_cpu(int cpu, struct cpumask *cpumask)
++static __always_inline int cpumask_test_and_clear_cpu(int cpu, struct cpumask *cpumask)
+ {
+ 	return test_and_clear_bit(cpumask_check(cpu), cpumask_bits(cpumask));
+ }
+-- 
+2.44.0
+

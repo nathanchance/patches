@@ -1,0 +1,73 @@
+From 9e75cea5924cd8bcd8b3924cc13a3c105f7ad850 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Tue, 23 Jun 2020 20:59:20 -0700
+Subject: [PATCH 09/35] UPSTREAM: powerpc/boot: Use address-of operator on
+ section symbols
+
+Clang warns:
+
+arch/powerpc/boot/main.c:107:18: warning: array comparison always
+evaluates to a constant [-Wtautological-compare]
+        if (_initrd_end > _initrd_start) {
+                        ^
+arch/powerpc/boot/main.c:155:20: warning: array comparison always
+evaluates to a constant [-Wtautological-compare]
+        if (_esm_blob_end <= _esm_blob_start)
+                          ^
+2 warnings generated.
+
+These are not true arrays, they are linker defined symbols, which are
+just addresses.  Using the address of operator silences the warning
+and does not change the resulting assembly with either clang/ld.lld
+or gcc/ld (tested with diff + objdump -Dr).
+
+Reported-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Tested-by: Geoff Levand <geoff@infradead.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20200624035920.835571-1-natechancellor@gmail.com
+Link: https://git.kernel.org/linus/df4232d96e724d09e54a623362f9f610727f059f
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/boot/main.c | 4 ++--
+ arch/powerpc/boot/ps3.c  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/powerpc/boot/main.c b/arch/powerpc/boot/main.c
+index a9d209135975..cae31a6e8f02 100644
+--- a/arch/powerpc/boot/main.c
++++ b/arch/powerpc/boot/main.c
+@@ -104,7 +104,7 @@ static struct addr_range prep_initrd(struct addr_range vmlinux, void *chosen,
+ {
+ 	/* If we have an image attached to us, it overrides anything
+ 	 * supplied by the loader. */
+-	if (_initrd_end > _initrd_start) {
++	if (&_initrd_end > &_initrd_start) {
+ 		printf("Attached initrd image at 0x%p-0x%p\n\r",
+ 		       _initrd_start, _initrd_end);
+ 		initrd_addr = (unsigned long)_initrd_start;
+@@ -152,7 +152,7 @@ static void prep_esm_blob(struct addr_range vmlinux, void *chosen)
+ 	unsigned long esm_blob_addr, esm_blob_size;
+ 
+ 	/* Do we have an ESM (Enter Secure Mode) blob? */
+-	if (_esm_blob_end <= _esm_blob_start)
++	if (&_esm_blob_end <= &_esm_blob_start)
+ 		return;
+ 
+ 	printf("Attached ESM blob at 0x%p-0x%p\n\r",
+diff --git a/arch/powerpc/boot/ps3.c b/arch/powerpc/boot/ps3.c
+index c52552a681c5..6e4efbdb6b7c 100644
+--- a/arch/powerpc/boot/ps3.c
++++ b/arch/powerpc/boot/ps3.c
+@@ -127,7 +127,7 @@ void platform_init(void)
+ 	ps3_repository_read_rm_size(&rm_size);
+ 	dt_fixup_memory(0, rm_size);
+ 
+-	if (_initrd_end > _initrd_start) {
++	if (&_initrd_end > &_initrd_start) {
+ 		setprop_val(chosen, "linux,initrd-start", (u32)(_initrd_start));
+ 		setprop_val(chosen, "linux,initrd-end", (u32)(_initrd_end));
+ 	}
+-- 
+2.44.0
+

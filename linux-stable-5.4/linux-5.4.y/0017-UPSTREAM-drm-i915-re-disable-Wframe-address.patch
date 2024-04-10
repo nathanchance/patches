@@ -1,0 +1,35 @@
+From 8720b8cab48bd976a8ee82c1389633dd42ac9dde Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Sun, 26 Apr 2020 14:42:15 -0700
+Subject: [PATCH 17/35] UPSTREAM: drm/i915: re-disable -Wframe-address
+
+The top level Makefile disables this warning. When building an
+i386_defconfig with Clang, this warning is triggered a whole bunch via
+includes of headers from perf.
+
+Link: https://github.com/ClangBuiltLinux/continuous-integration/pull/182
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200426214215.139435-1-ndesaulniers@google.com
+Link: https://git.kernel.org/linus/9f4069b055d1508c833115df7493b6e0001e5c9b
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/i915/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/i915/Makefile b/drivers/gpu/drm/i915/Makefile
+index 2587ea834f06..a4e385f68713 100644
+--- a/drivers/gpu/drm/i915/Makefile
++++ b/drivers/gpu/drm/i915/Makefile
+@@ -22,6 +22,7 @@ subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
+ subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
+ subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
+ subdir-ccflags-y += $(call cc-disable-warning, uninitialized)
++subdir-ccflags-y += $(call cc-disable-warning, frame-address)
+ subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
+ 
+ # Fine grained warnings disable
+-- 
+2.44.0
+

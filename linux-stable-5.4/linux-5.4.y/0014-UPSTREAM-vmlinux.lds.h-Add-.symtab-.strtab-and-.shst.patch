@@ -1,0 +1,48 @@
+From c698c241e82871012d930135625c44e72e23efcd Mon Sep 17 00:00:00 2001
+From: Kees Cook <keescook@chromium.org>
+Date: Fri, 21 Aug 2020 12:42:46 -0700
+Subject: [PATCH 14/35] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
+ .shstrtab to ELF_DETAILS
+
+When linking vmlinux with LLD, the synthetic sections .symtab, .strtab,
+and .shstrtab are listed as orphaned. Add them to the ELF_DETAILS section
+so there will be no warnings when --orphan-handling=warn is used more
+widely. (They are added above comment as it is the more common
+order[1].)
+
+ld.lld: warning: <internal>:(.symtab) is being placed in '.symtab'
+ld.lld: warning: <internal>:(.shstrtab) is being placed in '.shstrtab'
+ld.lld: warning: <internal>:(.strtab) is being placed in '.strtab'
+
+[1] https://lore.kernel.org/lkml/20200622224928.o2a7jkq33guxfci4@google.com/
+
+Reported-by: Fangrui Song <maskray@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-arch@vger.kernel.org
+Link: https://lore.kernel.org/r/20200821194310.3089815-6-keescook@chromium.org
+Link: https://git.kernel.org/linus/a840c4de569f610bc5ee043b613c35b779d23186
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/asm-generic/vmlinux.lds.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index dbdfd0aad3e9..1d01c9c085ae 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -778,7 +778,10 @@
+ 
+ /* Required sections not related to debugging. */
+ #define ELF_DETAILS							\
+-		.comment 0 : { *(.comment) }
++		.comment 0 : { *(.comment) }				\
++		.symtab 0 : { *(.symtab) }				\
++		.strtab 0 : { *(.strtab) }				\
++		.shstrtab 0 : { *(.shstrtab) }
+ 
+ #ifdef CONFIG_GENERIC_BUG
+ #define BUG_TABLE							\
+-- 
+2.44.0
+

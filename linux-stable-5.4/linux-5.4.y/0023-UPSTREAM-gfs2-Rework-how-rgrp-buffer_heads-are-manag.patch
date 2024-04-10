@@ -1,0 +1,209 @@
+From 6a867d78dc08cfeca0ccfc05fd29cd14fe8459c5 Mon Sep 17 00:00:00 2001
+From: Bob Peterson <rpeterso@redhat.com>
+Date: Wed, 13 Nov 2019 11:50:30 -0600
+Subject: [PATCH 23/35] UPSTREAM: gfs2: Rework how rgrp buffer_heads are
+ managed
+
+Before this patch, the rgrp code had a serious problem related to
+how it managed buffer_heads for resource groups. The problem caused
+file system corruption, especially in cases of journal replay.
+
+When an rgrp glock was demoted to transfer ownership to a
+different cluster node, do_xmote() first calls rgrp_go_sync and then
+rgrp_go_inval, as expected. When it calls rgrp_go_sync, that called
+gfs2_rgrp_brelse() that dropped the buffer_head reference count.
+In most cases, the reference count went to zero, which is right.
+However, there were other places where the buffers are handled
+differently.
+
+After rgrp_go_sync, do_xmote called rgrp_go_inval which called
+gfs2_rgrp_brelse a second time, then rgrp_go_inval's call to
+truncate_inode_pages_range would get rid of the pages in memory,
+but only if the reference count drops to 0.
+
+Unfortunately, gfs2_rgrp_brelse was setting bi->bi_bh = NULL.
+So when rgrp_go_sync called gfs2_rgrp_brelse, it lost the pointer
+to the buffer_heads in cases where the reference count was still 1.
+Therefore, when rgrp_go_inval called gfs2_rgrp_brelse a second time,
+it failed the check for "if (bi->bi_bh)" and thus failed to call
+brelse a second time. Because of that, the reference count on those
+buffers sometimes failed to drop from 1 to 0. And that caused
+function truncate_inode_pages_range to keep the pages in page cache
+rather than freeing them.
+
+The next time the rgrp glock was acquired, the metadata read of
+the rgrp buffers re-used the pages in memory, which were now
+wrong because they were likely modified by the other node who
+acquired the glock in EX (which is why we demoted the glock).
+This re-use of the page cache caused corruption because changes
+made by the other nodes were never seen, so the bitmaps were
+inaccurate.
+
+For some reason, the problem became most apparent when journal
+replay forced the replay of rgrps in memory, which caused newer
+rgrp data to be overwritten by the older in-core pages.
+
+A big part of the problem was that the rgrp buffer were released
+in multiple places: The go_unlock function would release them when
+the glock was released rather than when the glock is demoted,
+which is clearly wrong because our intent was to cache them until
+the glock is demoted from SH or EX.
+
+This patch attempts to clean up the mess and make one consistent
+and centralized mechanism for managing the rgrp buffer_heads by
+implementing several changes:
+
+1. It eliminates the call to gfs2_rgrp_brelse() from rgrp_go_sync.
+   We don't want to release the buffers or zero the pointers when
+   syncing for the reasons stated above. It only makes sense to
+   release them when the glock is actually invalidated (go_inval).
+   And when we do, then we set the bh pointers to NULL.
+2. The go_unlock function (which was only used for rgrps) is
+   eliminated, as we've talked about doing many times before.
+   The go_unlock function was called too early in the glock dq
+   process, and should not happen until the glock is invalidated.
+3. It also eliminates the call to rgrp_brelse in gfs2_clear_rgrpd.
+   That will now happen automatically when the rgrp glocks are
+   demoted, and shouldn't happen any sooner or later than that.
+   Instead, function gfs2_clear_rgrpd has been modified to demote
+   the rgrp glocks, and therefore, free those pages, before the
+   remaining glocks are culled by gfs2_gl_hash_clear. This
+   prevents the gl_object from hanging around when the glocks are
+   culled.
+
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Reviewed-by: Andreas Gruenbacher <agruenba@redhat.com>
+Link: https://git.kernel.org/linus/b3422cacdd7e623e473b4c3977f3ee65e1fed62f
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/gfs2/glock.c  |  8 --------
+ fs/gfs2/glops.c  |  9 +--------
+ fs/gfs2/incore.h |  1 -
+ fs/gfs2/rgrp.c   | 23 +++++------------------
+ fs/gfs2/rgrp.h   |  1 -
+ 5 files changed, 6 insertions(+), 36 deletions(-)
+
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 01c41087f067..d06886ec4709 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1236,7 +1236,6 @@ int gfs2_glock_poll(struct gfs2_holder *gh)
+ void gfs2_glock_dq(struct gfs2_holder *gh)
+ {
+ 	struct gfs2_glock *gl = gh->gh_gl;
+-	const struct gfs2_glock_operations *glops = gl->gl_ops;
+ 	unsigned delay = 0;
+ 	int fast_path = 0;
+ 
+@@ -1247,13 +1246,6 @@ void gfs2_glock_dq(struct gfs2_holder *gh)
+ 	list_del_init(&gh->gh_list);
+ 	clear_bit(HIF_HOLDER, &gh->gh_iflags);
+ 	if (find_first_holder(gl) == NULL) {
+-		if (glops->go_unlock) {
+-			GLOCK_BUG_ON(gl, test_and_set_bit(GLF_LOCK, &gl->gl_flags));
+-			spin_unlock(&gl->gl_lockref.lock);
+-			glops->go_unlock(gh);
+-			spin_lock(&gl->gl_lockref.lock);
+-			clear_bit(GLF_LOCK, &gl->gl_flags);
+-		}
+ 		if (list_empty(&gl->gl_holders) &&
+ 		    !test_bit(GLF_PENDING_DEMOTE, &gl->gl_flags) &&
+ 		    !test_bit(GLF_DEMOTE, &gl->gl_flags))
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 092223a8b120..f95de7402e91 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -171,15 +171,9 @@ static void rgrp_go_sync(struct gfs2_glock *gl)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+ 	struct address_space *mapping = &sdp->sd_aspace;
+-	struct gfs2_rgrpd *rgd;
++	struct gfs2_rgrpd *rgd = gfs2_glock2rgrp(gl);
+ 	int error;
+ 
+-	spin_lock(&gl->gl_lockref.lock);
+-	rgd = gl->gl_object;
+-	if (rgd)
+-		gfs2_rgrp_brelse(rgd);
+-	spin_unlock(&gl->gl_lockref.lock);
+-
+ 	if (!test_and_clear_bit(GLF_DIRTY, &gl->gl_flags))
+ 		return;
+ 	GLOCK_BUG_ON(gl, gl->gl_state != LM_ST_EXCLUSIVE);
+@@ -631,7 +625,6 @@ const struct gfs2_glock_operations gfs2_rgrp_glops = {
+ 	.go_sync = rgrp_go_sync,
+ 	.go_inval = rgrp_go_inval,
+ 	.go_lock = gfs2_rgrp_go_lock,
+-	.go_unlock = gfs2_rgrp_go_unlock,
+ 	.go_dump = gfs2_rgrp_dump,
+ 	.go_type = LM_TYPE_RGRP,
+ 	.go_flags = GLOF_LVB,
+diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
+index 33a6b074209d..8d64a755ca2f 100644
+--- a/fs/gfs2/incore.h
++++ b/fs/gfs2/incore.h
+@@ -239,7 +239,6 @@ struct gfs2_glock_operations {
+ 	void (*go_inval) (struct gfs2_glock *gl, int flags);
+ 	int (*go_demote_ok) (const struct gfs2_glock *gl);
+ 	int (*go_lock) (struct gfs2_holder *gh);
+-	void (*go_unlock) (struct gfs2_holder *gh);
+ 	void (*go_dump)(struct seq_file *seq, struct gfs2_glock *gl,
+ 			const char *fs_id_buf);
+ 	void (*go_callback)(struct gfs2_glock *gl, bool remote);
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index f0a135a48cc3..01cc2fdc1fa0 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -730,8 +730,12 @@ void gfs2_clear_rgrpd(struct gfs2_sbd *sdp)
+ 		rb_erase(n, &sdp->sd_rindex_tree);
+ 
+ 		if (gl) {
+-			glock_clear_object(gl, rgd);
++			if (gl->gl_state != LM_ST_UNLOCKED) {
++				gfs2_glock_cb(gl, LM_ST_UNLOCKED);
++				flush_delayed_work(&gl->gl_work);
++			}
+ 			gfs2_rgrp_brelse(rgd);
++			glock_clear_object(gl, rgd);
+ 			gfs2_glock_put(gl);
+ 		}
+ 
+@@ -1301,23 +1305,6 @@ void gfs2_rgrp_brelse(struct gfs2_rgrpd *rgd)
+ 			bi->bi_bh = NULL;
+ 		}
+ 	}
+-
+-}
+-
+-/**
+- * gfs2_rgrp_go_unlock - Unlock a rgrp glock
+- * @gh: The glock holder for the resource group
+- *
+- */
+-
+-void gfs2_rgrp_go_unlock(struct gfs2_holder *gh)
+-{
+-	struct gfs2_rgrpd *rgd = gh->gh_gl->gl_object;
+-	int demote_requested = test_bit(GLF_DEMOTE, &gh->gh_gl->gl_flags) |
+-		test_bit(GLF_PENDING_DEMOTE, &gh->gh_gl->gl_flags);
+-
+-	if (rgd && demote_requested)
+-		gfs2_rgrp_brelse(rgd);
+ }
+ 
+ int gfs2_rgrp_send_discards(struct gfs2_sbd *sdp, u64 offset,
+diff --git a/fs/gfs2/rgrp.h b/fs/gfs2/rgrp.h
+index c14a673ae36f..a584f3096418 100644
+--- a/fs/gfs2/rgrp.h
++++ b/fs/gfs2/rgrp.h
+@@ -33,7 +33,6 @@ extern int gfs2_rindex_update(struct gfs2_sbd *sdp);
+ extern void gfs2_free_clones(struct gfs2_rgrpd *rgd);
+ extern int gfs2_rgrp_go_lock(struct gfs2_holder *gh);
+ extern void gfs2_rgrp_brelse(struct gfs2_rgrpd *rgd);
+-extern void gfs2_rgrp_go_unlock(struct gfs2_holder *gh);
+ 
+ extern struct gfs2_alloc *gfs2_alloc_get(struct gfs2_inode *ip);
+ 
+-- 
+2.44.0
+

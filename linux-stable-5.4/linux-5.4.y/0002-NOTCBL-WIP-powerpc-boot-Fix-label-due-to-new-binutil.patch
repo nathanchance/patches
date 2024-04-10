@@ -1,0 +1,38 @@
+From 69281577ef5f73f679192008487b264a0439c7a4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 9 Apr 2024 09:35:25 -0700
+Subject: [PATCH 02/35] NOTCBL: WIP: powerpc/boot: Fix label due to new
+ binutils behavior
+
+This code was eliminated by commit 8b14e1dff067 ("powerpc: Remove
+support for PowerPC 601") in 5.10 so this change is only for linux-5.4.y
+and earlier.
+
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=226749d5a6ff0d5c607d6428d6c81e1e7e7a994b
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/boot/util.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/powerpc/boot/util.S b/arch/powerpc/boot/util.S
+index f11f0589a669..5ab2bc864e66 100644
+--- a/arch/powerpc/boot/util.S
++++ b/arch/powerpc/boot/util.S
+@@ -41,12 +41,12 @@ udelay:
+ 	srwi	r4,r4,16
+ 	cmpwi	0,r4,1		/* 601 ? */
+ 	bne	.Ludelay_not_601
+-00:	li	r0,86	/* Instructions / microsecond? */
++0:	li	r0,86	/* Instructions / microsecond? */
+ 	mtctr	r0
+ 10:	addi	r0,r0,0 /* NOP */
+ 	bdnz	10b
+ 	subic.	r3,r3,1
+-	bne	00b
++	bne	0b
+ 	blr
+ 
+ .Ludelay_not_601:
+-- 
+2.44.0
+
