@@ -1,4 +1,4 @@
-From 0a225ff0bf903b9fe1eb6ea32088d61a96d8fa4f Mon Sep 17 00:00:00 2001
+From f3056b48539732056b0899a8c63e72a00097964e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 1 Apr 2024 11:24:17 -0700
 Subject: [PATCH 1/9] FROMGIT: Bluetooth: Fix type of len in
@@ -128,7 +128,7 @@ index c736186aba26..42eab41ea2ed 100644
  			err = -EFAULT;
  
 
-base-commit: e475741af1ebe2c92ee4a3f49e55749a84770a12
+base-commit: 0ccfb8e07e797d57830f3008028de56e22de6e0b
 -- 
 2.44.0
 
