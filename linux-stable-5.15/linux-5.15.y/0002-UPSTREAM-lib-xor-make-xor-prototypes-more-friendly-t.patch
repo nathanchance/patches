@@ -1,7 +1,7 @@
-From e7f686c7f5882ceb38038f554a4dc63443633328 Mon Sep 17 00:00:00 2001
+From e892e41a2f3c684ab554e66539af43a5c4621553 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:45 +0100
-Subject: [PATCH 01/13] UPSTREAM: lib/xor: make xor prototypes more friendly to
+Subject: [PATCH 02/15] UPSTREAM: lib/xor: make xor prototypes more friendly to
  compiler vectorization
 
 Modern compilers are perfectly capable of extracting parallelism from
@@ -1206,8 +1206,6 @@ index 2a9fee8ddae3..51b811b62322 100644
  };
  
  #endif
-
-base-commit: 9465fef4ae351749f7068da8c78af4ca27e61928
 -- 
 2.44.0
 

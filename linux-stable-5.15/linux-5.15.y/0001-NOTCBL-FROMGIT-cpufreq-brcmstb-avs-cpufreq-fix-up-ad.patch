@@ -1,0 +1,61 @@
+From 85cf045c454dfee8bc29a80b52ae93d805b34c6b Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Wed, 27 Mar 2024 15:21:45 +0100
+Subject: [PATCH 01/15] NOTCBL: FROMGIT: cpufreq: brcmstb-avs-cpufreq: fix up
+ "add check for cpufreq_cpu_get's return value"
+
+In commit d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for
+cpufreq_cpu_get's return value"), build warnings occur because a
+variable is created after some logic, resulting in:
+
+drivers/cpufreq/brcmstb-avs-cpufreq.c: In function 'brcm_avs_cpufreq_get':
+drivers/cpufreq/brcmstb-avs-cpufreq.c:486:9: error: ISO C90 forbids mixed
+declarations and code [-Werror=declaration-after-statement]
+  486 |         struct private_data *priv = policy->driver_data;
+      |         ^~~~~~
+cc1: all warnings being treated as errors
+make[2]: *** [scripts/Makefile.build:289:
+drivers/cpufreq/brcmstb-avs-cpufreq.o] Error 1
+make[1]: *** [scripts/Makefile.build:552: drivers/cpufreq] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1907: drivers] Error 2
+
+Fix this up.
+
+Link: https://lore.kernel.org/r/e114d9e5-26af-42be-9baa-72c3a6ec8fe5@oracle.com
+Link: https://lore.kernel.org/stable/20240327015023.GC7502@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net/T/#m15bff0fe96986ef780e848b4fff362bf8ea03f08
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Fixes: d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
+Cc: Anastasia Belova <abelova@astralinux.ru>
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://git.kernel.org/stable/stable-queue/c/cec7c1a211ae733b6358131fe13419f67ff75e05
+---
+ drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/cpufreq/brcmstb-avs-cpufreq.c b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+index 38ec0fedb247..552db816ed22 100644
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -481,10 +481,11 @@ static bool brcm_avs_is_firmware_loaded(struct private_data *priv)
+ static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct private_data *priv;
++
+ 	if (!policy)
+ 		return 0;
+-	struct private_data *priv = policy->driver_data;
+-
++	priv = policy->driver_data;
+ 	cpufreq_cpu_put(policy);
+ 
+ 	return brcm_avs_get_frequency(priv->base);
+
+base-commit: 9465fef4ae351749f7068da8c78af4ca27e61928
+-- 
+2.44.0
+
