@@ -1,7 +1,7 @@
-From 8d13e00c7d4e98ecf7d735a09ea219de675906ed Mon Sep 17 00:00:00 2001
+From 10545e774e7aff963aa2b01bb470cd53ecc2c695 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
-Subject: [PATCH 15/25] UPSTREAM: s390: always build relocatable kernel
+Subject: [PATCH 15/23] UPSTREAM: s390: always build relocatable kernel
 
 Nathan Chancellor reported several link errors on s390 with
 CONFIG_RELOCATABLE disabled, after binutils commit 906f69cf65da ("IBM

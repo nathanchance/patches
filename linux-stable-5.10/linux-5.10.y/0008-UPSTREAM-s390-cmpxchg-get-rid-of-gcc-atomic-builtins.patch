@@ -1,7 +1,7 @@
-From 062d3e40a5dbbc3d1cdd888bb408e29d5ad418b8 Mon Sep 17 00:00:00 2001
+From fc993b1af7eb1c9abbcbb519a59ef608d5adc33b Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Tue, 6 Apr 2021 14:51:48 +0200
-Subject: [PATCH 08/25] UPSTREAM: s390/cmpxchg: get rid of gcc atomic builtins
+Subject: [PATCH 08/23] UPSTREAM: s390/cmpxchg: get rid of gcc atomic builtins
 
 s390 is the only architecture in the kernel which makes use of gcc's
 atomic builtin functions. Even though I don't see any technical
