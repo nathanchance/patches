@@ -1,7 +1,7 @@
-From c698c241e82871012d930135625c44e72e23efcd Mon Sep 17 00:00:00 2001
+From 2f05ad08e7842c6486acfe9f55be6c3a193d245c Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Fri, 21 Aug 2020 12:42:46 -0700
-Subject: [PATCH 14/35] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
+Subject: [PATCH 14/34] UPSTREAM: vmlinux.lds.h: Add .symtab, .strtab, and
  .shstrtab to ELF_DETAILS
 
 When linking vmlinux with LLD, the synthetic sections .symtab, .strtab,

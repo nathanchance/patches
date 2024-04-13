@@ -1,7 +1,7 @@
-From f812e5cfada63f42cfab3231fb07ff385b60614b Mon Sep 17 00:00:00 2001
+From fb2a1f9acdba368c1324a9bfd8570d065ebf8d8e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Mar 2021 14:51:56 -0700
-Subject: [PATCH 19/35] UPSTREAM: riscv: Use $(LD) instead of $(CC) to link
+Subject: [PATCH 19/34] UPSTREAM: riscv: Use $(LD) instead of $(CC) to link
  vDSO
 
 Currently, the VDSO is being linked through $(CC). This does not match
