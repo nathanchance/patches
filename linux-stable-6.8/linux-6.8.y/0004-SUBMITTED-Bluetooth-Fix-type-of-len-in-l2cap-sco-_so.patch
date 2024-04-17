@@ -1,4 +1,4 @@
-From 25f046034d3bfb318aaea5ae9b1939592f6ff3b9 Mon Sep 17 00:00:00 2001
+From 0fec34fdf16f88f5e516fa442f25833756ac9968 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 1 Apr 2024 11:24:17 -0700
 Subject: [PATCH 04/12] SUBMITTED: Bluetooth: Fix type of len in
@@ -61,7 +61,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index ee7a41d6994f..c24f9ba3149d 100644
+index 1eeea5d1306c..5ebc19ab421f 100644
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
 @@ -438,7 +438,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
@@ -93,10 +93,10 @@ index ee7a41d6994f..c24f9ba3149d 100644
  			err = -EFAULT;
  
 diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index c736186aba26..42eab41ea2ed 100644
+index 8e4f39b8601c..3cc9fab8e838 100644
 --- a/net/bluetooth/sco.c
 +++ b/net/bluetooth/sco.c
-@@ -966,7 +966,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -963,7 +963,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  	struct sock *sk = sock->sk;
  	struct sco_options opts;
  	struct sco_conninfo cinfo;
@@ -106,7 +106,7 @@ index c736186aba26..42eab41ea2ed 100644
  
  	BT_DBG("sk %p", sk);
  
-@@ -988,7 +989,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -985,7 +986,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  
  		BT_DBG("mtu %u", opts.mtu);
  
@@ -115,7 +115,7 @@ index c736186aba26..42eab41ea2ed 100644
  		if (copy_to_user(optval, (char *)&opts, len))
  			err = -EFAULT;
  
-@@ -1006,7 +1007,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -1003,7 +1004,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
  		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
  
