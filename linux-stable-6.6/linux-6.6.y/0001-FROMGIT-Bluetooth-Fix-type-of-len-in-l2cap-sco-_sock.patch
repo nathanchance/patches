@@ -1,4 +1,4 @@
-From addac29c165222b3a9e4f244bf0e91ce9ac2eec8 Mon Sep 17 00:00:00 2001
+From f213e181f8c477fc735a7149dbc05d7310bd7f9b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 1 Apr 2024 11:24:17 -0700
 Subject: [PATCH 1/9] FROMGIT: Bluetooth: Fix type of len in
@@ -96,10 +96,10 @@ index aac00f103f91..d647bd15d500 100644
  			err = -EFAULT;
  
 diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index c736186aba26..42eab41ea2ed 100644
+index 8e4f39b8601c..3cc9fab8e838 100644
 --- a/net/bluetooth/sco.c
 +++ b/net/bluetooth/sco.c
-@@ -966,7 +966,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -963,7 +963,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  	struct sock *sk = sock->sk;
  	struct sco_options opts;
  	struct sco_conninfo cinfo;
@@ -109,7 +109,7 @@ index c736186aba26..42eab41ea2ed 100644
  
  	BT_DBG("sk %p", sk);
  
-@@ -988,7 +989,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -985,7 +986,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  
  		BT_DBG("mtu %u", opts.mtu);
  
@@ -118,7 +118,7 @@ index c736186aba26..42eab41ea2ed 100644
  		if (copy_to_user(optval, (char *)&opts, len))
  			err = -EFAULT;
  
-@@ -1006,7 +1007,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -1003,7 +1004,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
  		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
  
@@ -128,7 +128,7 @@ index c736186aba26..42eab41ea2ed 100644
  			err = -EFAULT;
  
 
-base-commit: 5e828009c8b380739e13da92be847f10461c38b1
+base-commit: ba151416051a45ffca565f708584b9cd5c971481
 -- 
 2.44.0
 
