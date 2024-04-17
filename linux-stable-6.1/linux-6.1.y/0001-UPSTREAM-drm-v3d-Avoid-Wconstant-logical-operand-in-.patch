@@ -1,4 +1,4 @@
-From 3f1235cb510a4f565a5d86328456001fc2db64b9 Mon Sep 17 00:00:00 2001
+From 8ea9ff2018e9b2ade2e4ca3894ca735ac6af55b6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
 Subject: [PATCH 01/10] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
@@ -52,7 +52,7 @@ index b74b1351bfc8..7f664a4b2a75 100644
  		return MAX_JIFFY_OFFSET;
  
 
-base-commit: cd5d98c0556cd790f78a3ba26afc9d2f896163e4
+base-commit: 6741e066ec7633450d3186946035c1f80c4226b8
 -- 
 2.44.0
 

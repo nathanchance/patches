@@ -1,4 +1,4 @@
-From 513219a12de6083b4181085d4f8bf1c2fcc53282 Mon Sep 17 00:00:00 2001
+From 72aa9c240bd7235b0c4e7b76f57faf2a19ef5825 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 1 Apr 2024 11:24:17 -0700
 Subject: [PATCH 04/10] FROMGIT: Bluetooth: Fix type of len in
@@ -64,7 +64,7 @@ Link: https://git.kernel.org/bluetooth/bluetooth-next/c/7d80e7ebf9e333dc5463a48a
  2 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 947ca580bb9a..5392a2e5bfec 100644
+index 4198ca66fbe1..e3c7029ec8a6 100644
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
 @@ -457,7 +457,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
@@ -96,10 +96,10 @@ index 947ca580bb9a..5392a2e5bfec 100644
  			err = -EFAULT;
  
 diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 6d4168cfeb56..57fb8079b265 100644
+index 2e9137c539a4..4a6bf60f3e7a 100644
 --- a/net/bluetooth/sco.c
 +++ b/net/bluetooth/sco.c
-@@ -974,7 +974,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -971,7 +971,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  	struct sock *sk = sock->sk;
  	struct sco_options opts;
  	struct sco_conninfo cinfo;
@@ -109,7 +109,7 @@ index 6d4168cfeb56..57fb8079b265 100644
  
  	BT_DBG("sk %p", sk);
  
-@@ -996,7 +997,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -993,7 +994,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  
  		BT_DBG("mtu %u", opts.mtu);
  
@@ -118,7 +118,7 @@ index 6d4168cfeb56..57fb8079b265 100644
  		if (copy_to_user(optval, (char *)&opts, len))
  			err = -EFAULT;
  
-@@ -1014,7 +1015,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+@@ -1011,7 +1012,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
  		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
  		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
  
