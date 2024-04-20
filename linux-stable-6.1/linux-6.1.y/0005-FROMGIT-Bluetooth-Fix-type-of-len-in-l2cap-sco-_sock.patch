@@ -1,7 +1,7 @@
-From 72aa9c240bd7235b0c4e7b76f57faf2a19ef5825 Mon Sep 17 00:00:00 2001
+From 35d26e84bb57efb8ad0410c356342fa35b364046 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 1 Apr 2024 11:24:17 -0700
-Subject: [PATCH 04/10] FROMGIT: Bluetooth: Fix type of len in
+Subject: [PATCH 05/11] FROMGIT: Bluetooth: Fix type of len in
  {l2cap,sco}_sock_getsockopt_old()
 
 After an innocuous optimization change in LLVM main (19.0.0), x86_64

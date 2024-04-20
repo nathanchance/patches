@@ -1,0 +1,139 @@
+From eac52c7f2166609b84f2c014e76bad83117466e9 Mon Sep 17 00:00:00 2001
+From: Catalin Marinas <catalin.marinas@arm.com>
+Date: Thu, 3 Nov 2022 18:10:34 -0700
+Subject: [PATCH 04/11] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
+ architectures
+
+Commit 4beba9486abd ("mm: Add PG_arch_2 page flag") introduced a new
+page flag for all 64-bit architectures. However, even if an architecture
+is 64-bit, it may still have limited spare bits in the 'flags' member of
+'struct page'. This may happen if an architecture enables SPARSEMEM
+without SPARSEMEM_VMEMMAP as is the case with the newly added loongarch.
+This architecture port needs 19 more bits for the sparsemem section
+information and, while it is currently fine with PG_arch_2, adding any
+more PG_arch_* flags will trigger build-time warnings.
+
+Add a new CONFIG_ARCH_USES_PG_ARCH_X option which can be selected by
+architectures that need more PG_arch_* flags beyond PG_arch_1. Select it
+on arm64.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[pcc@google.com: fix build with CONFIG_ARM64_MTE disabled]
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Steven Price <steven.price@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221104011041.290951-2-pcc@google.com
+Link: https://git.kernel.org/linus/b0284cd29a957e62d60c2886fd663be93c56f9c0
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm64/Kconfig             | 1 +
+ fs/proc/page.c                 | 2 +-
+ include/linux/page-flags.h     | 2 +-
+ include/trace/events/mmflags.h | 8 ++++----
+ mm/Kconfig                     | 8 ++++++++
+ mm/huge_memory.c               | 2 +-
+ 6 files changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index c15f71501c6c..a5c75f56e7aa 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -2003,6 +2003,7 @@ config ARM64_MTE
+ 	depends on ARM64_PAN
+ 	select ARCH_HAS_SUBPAGE_FAULTS
+ 	select ARCH_USES_HIGH_VMA_FLAGS
++	select ARCH_USES_PG_ARCH_X
+ 	help
+ 	  Memory Tagging (part of the ARMv8.5 Extensions) provides
+ 	  architectural support for run-time, always-on detection of
+diff --git a/fs/proc/page.c b/fs/proc/page.c
+index f2273b164535..882525c8e94c 100644
+--- a/fs/proc/page.c
++++ b/fs/proc/page.c
+@@ -219,7 +219,7 @@ u64 stable_page_flags(struct page *page)
+ 	u |= kpf_copy_bit(k, KPF_PRIVATE_2,	PG_private_2);
+ 	u |= kpf_copy_bit(k, KPF_OWNER_PRIVATE,	PG_owner_priv_1);
+ 	u |= kpf_copy_bit(k, KPF_ARCH,		PG_arch_1);
+-#ifdef CONFIG_64BIT
++#ifdef CONFIG_ARCH_USES_PG_ARCH_X
+ 	u |= kpf_copy_bit(k, KPF_ARCH_2,	PG_arch_2);
+ #endif
+ 
+diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+index 59314d228ec3..188cd954ac23 100644
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -132,7 +132,7 @@ enum pageflags {
+ 	PG_young,
+ 	PG_idle,
+ #endif
+-#ifdef CONFIG_64BIT
++#ifdef CONFIG_ARCH_USES_PG_ARCH_X
+ 	PG_arch_2,
+ #endif
+ #ifdef CONFIG_KASAN_HW_TAGS
+diff --git a/include/trace/events/mmflags.h b/include/trace/events/mmflags.h
+index e87cb2b80ed3..d9f6d35fb150 100644
+--- a/include/trace/events/mmflags.h
++++ b/include/trace/events/mmflags.h
+@@ -91,10 +91,10 @@
+ #define IF_HAVE_PG_IDLE(flag,string)
+ #endif
+ 
+-#ifdef CONFIG_64BIT
+-#define IF_HAVE_PG_ARCH_2(flag,string) ,{1UL << flag, string}
++#ifdef CONFIG_ARCH_USES_PG_ARCH_X
++#define IF_HAVE_PG_ARCH_X(flag,string) ,{1UL << flag, string}
+ #else
+-#define IF_HAVE_PG_ARCH_2(flag,string)
++#define IF_HAVE_PG_ARCH_X(flag,string)
+ #endif
+ 
+ #ifdef CONFIG_KASAN_HW_TAGS
+@@ -130,7 +130,7 @@ IF_HAVE_PG_UNCACHED(PG_uncached,	"uncached"	)		\
+ IF_HAVE_PG_HWPOISON(PG_hwpoison,	"hwpoison"	)		\
+ IF_HAVE_PG_IDLE(PG_young,		"young"		)		\
+ IF_HAVE_PG_IDLE(PG_idle,		"idle"		)		\
+-IF_HAVE_PG_ARCH_2(PG_arch_2,		"arch_2"	)		\
++IF_HAVE_PG_ARCH_X(PG_arch_2,		"arch_2"	)		\
+ IF_HAVE_PG_SKIP_KASAN_POISON(PG_skip_kasan_poison, "skip_kasan_poison")
+ 
+ #define show_page_flags(flags)						\
+diff --git a/mm/Kconfig b/mm/Kconfig
+index 35109a4a2f7c..5ebbe0108f60 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -1005,6 +1005,14 @@ config ARCH_USES_HIGH_VMA_FLAGS
+ config ARCH_HAS_PKEYS
+ 	bool
+ 
++config ARCH_USES_PG_ARCH_X
++	bool
++	help
++	  Enable the definition of PG_arch_x page flags with x > 1. Only
++	  suitable for 64-bit architectures with CONFIG_FLATMEM or
++	  CONFIG_SPARSEMEM_VMEMMAP enabled, otherwise there may not be
++	  enough room for additional bits in page->flags.
++
+ config VM_EVENT_COUNTERS
+ 	default y
+ 	bool "Enable VM event counters for /proc/vmstat" if EXPERT
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 9736e762184b..c5e62dea540a 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2461,7 +2461,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
+ 			 (1L << PG_workingset) |
+ 			 (1L << PG_locked) |
+ 			 (1L << PG_unevictable) |
+-#ifdef CONFIG_64BIT
++#ifdef CONFIG_ARCH_USES_PG_ARCH_X
+ 			 (1L << PG_arch_2) |
+ #endif
+ 			 (1L << PG_dirty) |
+-- 
+2.44.0
+
