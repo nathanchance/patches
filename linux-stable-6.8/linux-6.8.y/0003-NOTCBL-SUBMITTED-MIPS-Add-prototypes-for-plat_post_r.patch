@@ -1,7 +1,7 @@
-From f996a657dd3bd4cbf44e348f94dc6de32a249e37 Mon Sep 17 00:00:00 2001
+From 60f710bab626e0fbb333218bc5ae76715422b7f4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 3 Apr 2024 14:26:33 -0700
-Subject: [PATCH 03/12] NOTCBL: SUBMITTED: MIPS: Add prototypes for
+Subject: [PATCH 03/11] NOTCBL: SUBMITTED: MIPS: Add prototypes for
  plat_post_relocation() and relocate_kernel()
 
 When building malta_defconfig with CONFIG_RELOCATABLE=y, there are two
