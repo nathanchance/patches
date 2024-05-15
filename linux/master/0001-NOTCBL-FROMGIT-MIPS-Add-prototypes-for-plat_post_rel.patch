@@ -1,0 +1,55 @@
+From d6728e51dc0f8a50f865e580fc9d9a832071686f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 3 Apr 2024 14:26:33 -0700
+Subject: [PATCH 01/12] NOTCBL: FROMGIT: MIPS: Add prototypes for
+ plat_post_relocation() and relocate_kernel()
+
+When building malta_defconfig with CONFIG_RELOCATABLE=y, there are two
+warnings due to missing prototypes for functions only used when that
+configuration is enabled:
+
+  arch/mips/kernel/relocate.c:42:12: warning: no previous prototype for 'plat_post_relocation' [-Wmissing-prototypes]
+     42 | int __weak plat_post_relocation(long offset)
+        |            ^~~~~~~~~~~~~~~~~~~~
+  arch/mips/kernel/relocate.c:324:14: warning: no previous prototype for 'relocate_kernel' [-Wmissing-prototypes]
+    324 | void *__init relocate_kernel(void)
+        |              ^~~~~~~~~~~~~~~
+
+While relocate_kernel() is only called from assembly, it makes sense to
+keep the prototypes together in C to fix the warnings. Add them to
+silence the warnings.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://git.kernel.org/mips/c/f3cac4f8a93bf7f97ba1d4c2eee916fcd1e8885b
+---
+ arch/mips/include/asm/setup.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/mips/include/asm/setup.h b/arch/mips/include/asm/setup.h
+index 4dce41138bad..d8077136372c 100644
+--- a/arch/mips/include/asm/setup.h
++++ b/arch/mips/include/asm/setup.h
+@@ -2,6 +2,7 @@
+ #ifndef _MIPS_SETUP_H
+ #define _MIPS_SETUP_H
+ 
++#include <linux/init.h>
+ #include <linux/types.h>
+ #include <uapi/asm/setup.h>
+ 
+@@ -29,4 +30,9 @@ extern void per_cpu_trap_init(bool);
+ extern void cpu_cache_init(void);
+ extern void tlb_init(void);
+ 
++#ifdef CONFIG_RELOCATABLE
++extern void * __init relocate_kernel(void);
++extern int plat_post_relocation(long);
++#endif
++
+ #endif /* __SETUP_H */
+
+base-commit: 33e02dc69afbd8f1b85a51d74d72f139ba4ca623
+-- 
+2.45.1
+

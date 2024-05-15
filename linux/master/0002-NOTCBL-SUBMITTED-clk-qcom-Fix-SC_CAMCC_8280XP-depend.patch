@@ -1,0 +1,40 @@
+From 33a2ae60e656ad7457565752b7d822d257f995a0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 18 Mar 2024 08:18:10 -0700
+Subject: [PATCH 02/12] NOTCBL: SUBMITTED: clk: qcom: Fix SC_CAMCC_8280XP
+ dependencies
+
+CONFIG_SC_GCC_8280XP depends on ARM64 but it is selected by
+CONFIG_SC_CAMCC_8280XP, which can be selected on ARM, resulting in a
+Kconfig warning.
+
+WARNING: unmet direct dependencies detected for SC_GCC_8280XP
+  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
+  Selected by [y]:
+  - SC_CAMCC_8280XP [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+
+Add the same dependencies to CONFIG_SC_CAMCC_8280XP to resolve the
+warning.
+
+Fixes: ff93872a9c61 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
+Link: https://lore.kernel.org/r/20240318-fix-some-qcom-kconfig-deps-v1-1-ea0773e3df5a@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 8ab08e7b5b6c..b9ff32cab329 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -474,6 +474,7 @@ config SC_CAMCC_7280
+ 
+ config SC_CAMCC_8280XP
+ 	tristate "SC8280XP Camera Clock Controller"
++	depends on ARM64 || COMPILE_TEST
+ 	select SC_GCC_8280XP
+ 	help
+ 	  Support for the camera clock controller on Qualcomm Technologies, Inc
+-- 
+2.45.1
+
