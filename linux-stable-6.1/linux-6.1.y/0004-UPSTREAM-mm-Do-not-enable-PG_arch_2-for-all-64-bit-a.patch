@@ -1,4 +1,4 @@
-From f6e75287799ed39278d6ebc10237b4f995630f69 Mon Sep 17 00:00:00 2001
+From ba1cb4795ba5c6ebcd701f40c803b59de261e970 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 04/10] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -122,10 +122,10 @@ index 35109a4a2f7c..5ebbe0108f60 100644
  	default y
  	bool "Enable VM event counters for /proc/vmstat" if EXPERT
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 9736e762184b..c5e62dea540a 100644
+index 1b7f5950d603..2e51f5d87ddc 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2461,7 +2461,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
+@@ -2464,7 +2464,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
  			 (1L << PG_workingset) |
  			 (1L << PG_locked) |
  			 (1L << PG_unevictable) |
