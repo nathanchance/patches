@@ -1,4 +1,4 @@
-From 397cc3d982ba51a3732718bd7a97196f8cde537f Mon Sep 17 00:00:00 2001
+From b975e4e9a1a51b6a7d36c7205b1b4160b34b1e90 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 30 Jun 2022 08:48:48 -0700
 Subject: [PATCH 01/34] NOTCBL: WIP: irqchip/vic: Remove vic_init_cascaded()
@@ -27,7 +27,7 @@ index f3f20a3cff50..3188d5498791 100644
  #ifdef CONFIG_OF
  static int __init vic_of_init(struct device_node *node,
 
-base-commit: 4a548b29cd58334ec5215b045360bd44b7b5e828
+base-commit: 189ee9735a4b2e8095b1a6c088ebc8e133872471
 -- 
 2.45.2
 
