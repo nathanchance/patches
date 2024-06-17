@@ -1,4 +1,4 @@
-From fe2160e320b96975da68067b3423e5f2cdeeabc4 Mon Sep 17 00:00:00 2001
+From 53e7d3b1d86e4e3e69acd97ff802c860f56b509a Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
 Subject: [PATCH 03/12] UPSTREAM: s390: always build relocatable kernel
@@ -92,10 +92,10 @@ index 0ba646899131..e04a8a361caa 100644
  targets	:= bzImage startup.a section_cmp.boot.data section_cmp.boot.preserved.data $(obj-y)
  subdir-	:= compressed
 diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 1aa11a8f57dd..3c6c36b81af8 100644
+index 05fed61c5e3b..4e6eb31b1469 100644
 --- a/arch/s390/boot/startup.c
 +++ b/arch/s390/boot/startup.c
-@@ -283,8 +283,7 @@ void startup_kernel(void)
+@@ -282,8 +282,7 @@ void startup_kernel(void)
  
  	clear_bss_section();
  	copy_bootdata();
