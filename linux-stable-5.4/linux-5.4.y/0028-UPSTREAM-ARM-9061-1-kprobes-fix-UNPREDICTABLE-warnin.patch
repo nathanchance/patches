@@ -1,0 +1,55 @@
+From cc8338a13571f803f8b766277a921766b78aef6e Mon Sep 17 00:00:00 2001
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Tue, 16 Feb 2021 20:14:46 +0100
+Subject: [PATCH 28/36] UPSTREAM: ARM: 9061/1: kprobes: fix UNPREDICTABLE
+ warnings
+
+GNU as warns twice for this file:
+Warning: using r15 results in unpredictable behaviour
+
+via the Arm ARM:
+K1.1.1 Overview of the constraints on Armv7 UNPREDICTABLE behaviors
+
+  The term UNPREDICTABLE describes a number of cases where the
+  architecture has a feature that software must not use.
+
+Ard notes:
+  These are selftests that aim to ensure that kprobe never attempts to
+  replace the opcodes in question with a probe, but they are not
+  actually executed, or expected to occur in real code.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1271
+Link: https://reviews.llvm.org/D95586
+
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Suggested-by: Peter Smith <peter.smith@arm.com>
+Suggested-by: Renato Golin <rengolin@systemcall.eu>
+Suggested-by: David Spickett <david.spickett@linaro.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://git.kernel.org/linus/e9d54be9ad5ee2eed3056d8901ac4b3b115d95a5
+---
+ arch/arm/probes/kprobes/test-arm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/probes/kprobes/test-arm.c b/arch/arm/probes/kprobes/test-arm.c
+index 977369f1aa48..2543106a203e 100644
+--- a/arch/arm/probes/kprobes/test-arm.c
++++ b/arch/arm/probes/kprobes/test-arm.c
+@@ -166,10 +166,10 @@ void kprobe_arm_test_cases(void)
+ 
+ 	/* Data-processing with PC as a target and status registers updated */
+ 	TEST_UNSUPPORTED("movs	pc, r1")
+-	TEST_UNSUPPORTED("movs	pc, r1, lsl r2")
++	TEST_UNSUPPORTED(__inst_arm(0xe1b0f211) "	@movs	pc, r1, lsl r2")
+ 	TEST_UNSUPPORTED("movs	pc, #0x10000")
+ 	TEST_UNSUPPORTED("adds	pc, lr, r1")
+-	TEST_UNSUPPORTED("adds	pc, lr, r1, lsl r2")
++	TEST_UNSUPPORTED(__inst_arm(0xe09ef211) "	@adds	pc, lr, r1, lsl r2")
+ 	TEST_UNSUPPORTED("adds	pc, lr, #4")
+ 
+ 	/* Data-processing with SP as target */
+-- 
+2.45.2
+
