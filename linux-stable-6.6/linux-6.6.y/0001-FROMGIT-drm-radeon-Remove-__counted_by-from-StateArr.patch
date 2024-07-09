@@ -1,7 +1,7 @@
-From 37ede9829fe633d36eca6db8b63655a1e939ff80 Mon Sep 17 00:00:00 2001
+From 3fa58190fe059763ae04ef35b9e591e1ad7e5b65 Mon Sep 17 00:00:00 2001
 From: Bill Wendling <morbo@google.com>
 Date: Wed, 29 May 2024 14:54:44 -0700
-Subject: [PATCH 02/10] FROMGIT: drm/radeon: Remove __counted_by from
+Subject: [PATCH 1/9] FROMGIT: drm/radeon: Remove __counted_by from
  StateArray.states[]
 
 Work for __counted_by on generic pointers in structures (not just
@@ -64,6 +64,8 @@ index 844f0490bf31..ce8832916704 100644
  }StateArray;
  
  
+
+base-commit: 2928631d5304b8fec48bad4c7254ebf230b6cc51
 -- 
 2.45.2
 
