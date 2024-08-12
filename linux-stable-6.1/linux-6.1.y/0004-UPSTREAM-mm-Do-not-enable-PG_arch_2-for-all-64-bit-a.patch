@@ -1,4 +1,4 @@
-From 40746718c3c608a8f1984cc948ab8c28389819bd Mon Sep 17 00:00:00 2001
+From 13d566de37b0cdd1dcf7c824862198a01b0610a0 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 04/10] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -103,10 +103,10 @@ index e87cb2b80ed3..d9f6d35fb150 100644
  
  #define show_page_flags(flags)						\
 diff --git a/mm/Kconfig b/mm/Kconfig
-index 35109a4a2f7c..5ebbe0108f60 100644
+index a65145fe89f2..3c4e12eeb341 100644
 --- a/mm/Kconfig
 +++ b/mm/Kconfig
-@@ -1005,6 +1005,14 @@ config ARCH_USES_HIGH_VMA_FLAGS
+@@ -1016,6 +1016,14 @@ config ARCH_USES_HIGH_VMA_FLAGS
  config ARCH_HAS_PKEYS
  	bool
  
