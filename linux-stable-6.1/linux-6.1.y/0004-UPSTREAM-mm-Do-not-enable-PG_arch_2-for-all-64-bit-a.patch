@@ -1,4 +1,4 @@
-From 13d566de37b0cdd1dcf7c824862198a01b0610a0 Mon Sep 17 00:00:00 2001
+From b627dc9cce3990aefc03fb0605cc6cd1180965b2 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 04/10] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -38,10 +38,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 044b98a62f7b..c550a4471879 100644
+index 2ef939075039..bbe69adab0b6 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -2002,6 +2002,7 @@ config ARM64_MTE
+@@ -2040,6 +2040,7 @@ config ARM64_MTE
  	depends on ARM64_PAN
  	select ARCH_HAS_SUBPAGE_FAULTS
  	select ARCH_USES_HIGH_VMA_FLAGS
@@ -122,7 +122,7 @@ index a65145fe89f2..3c4e12eeb341 100644
  	default y
  	bool "Enable VM event counters for /proc/vmstat" if EXPERT
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 1b7f5950d603..2e51f5d87ddc 100644
+index f97b221fb656..467217cc4083 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
 @@ -2464,7 +2464,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
