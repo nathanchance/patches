@@ -1,0 +1,43 @@
+From de7bad11d921c546d69cdbe72a8344f005a18eb5 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Aug 2024 17:18:08 -0700
+Subject: [PATCH 05/13] FROMGIT: x86/cpu_entry_area: Annotate
+ percpu_setup_exception_stacks() as __init
+
+After a recent LLVM change that deduces __cold on functions that only call
+cold code (such as __init functions), there is a section mismatch warning
+from percpu_setup_exception_stacks(), which got moved to .text.unlikely. as
+a result of that optimization:
+
+  WARNING: modpost: vmlinux: section mismatch in reference:
+  percpu_setup_exception_stacks+0x3a (section: .text.unlikely.) ->
+  cea_map_percpu_pages (section: .init.text)
+
+Drop the inline keyword, which does not guarantee inlining, and replace it
+with __init, as percpu_setup_exception_stacks() is only called from __init
+code, which clears up the warning.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240822-x86-percpu_setup_exception_stacks-init-v1-1-57c5921b8209@kernel.org
+Link: https://git.kernel.org/tip/decb9ac4a9739c16e228f7b2918bfdca34cc89a9
+---
+ arch/x86/mm/cpu_entry_area.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/mm/cpu_entry_area.c b/arch/x86/mm/cpu_entry_area.c
+index 6c2f1b76a0b6..fe4f43f01e1e 100644
+--- a/arch/x86/mm/cpu_entry_area.c
++++ b/arch/x86/mm/cpu_entry_area.c
+@@ -119,7 +119,7 @@ static void __init percpu_setup_exception_stacks(unsigned int cpu)
+ 	}
+ }
+ #else
+-static inline void percpu_setup_exception_stacks(unsigned int cpu)
++static void __init percpu_setup_exception_stacks(unsigned int cpu)
+ {
+ 	struct cpu_entry_area *cea = get_cpu_entry_area(cpu);
+ 
+-- 
+2.46.0
+

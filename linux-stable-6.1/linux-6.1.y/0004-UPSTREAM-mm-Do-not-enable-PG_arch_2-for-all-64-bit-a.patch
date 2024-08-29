@@ -1,7 +1,7 @@
-From a3f6249fedda11086848d3227a2650481a6a5b82 Mon Sep 17 00:00:00 2001
+From 1a31fd030a809d133c94678876e497c8cb5eb673 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
-Subject: [PATCH 04/10] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
+Subject: [PATCH 04/13] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
  architectures
 
 Commit 4beba9486abd ("mm: Add PG_arch_2 page flag") introduced a new
@@ -122,10 +122,10 @@ index a65145fe89f2..3c4e12eeb341 100644
  	default y
  	bool "Enable VM event counters for /proc/vmstat" if EXPERT
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index f97b221fb656..467217cc4083 100644
+index 98a1a05f2db2..b93c12ba9445 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2464,7 +2464,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
+@@ -2460,7 +2460,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
  			 (1L << PG_workingset) |
  			 (1L << PG_locked) |
  			 (1L << PG_unevictable) |
