@@ -1,0 +1,39 @@
+From ff47128346ffe255cdd63fa8fbe6625c0f1018cb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Aug 2024 17:12:13 -0700
+Subject: [PATCH 03/11] SUBMITTED: x86/resctrl: Annotate
+ __get_mem_config_intel() as __init
+
+After a recent LLVM change [1] that deduces __cold on functions that
+only call cold code (such as __init functions), there is a section
+mismatch warning from __get_mem_config_intel(), which got moved to
+.text.unlikely. as a result of that optimization:
+
+  WARNING: modpost: vmlinux: section mismatch in reference: __get_mem_config_intel+0x77 (section: .text.unlikely.) -> thread_throttle_mode_init (section: .init.text)
+
+Mark __get_mem_config_intel() as __init as well since it is only called
+from __init code, which clears up the warning.
+
+Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
+Link: https://lore.kernel.org/r/20240822-x86-restctrl-get_mem_config_intel-init-v1-1-8b0a68a8731a@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/kernel/cpu/resctrl/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 8073fd304293..d4e2e6027284 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -193,7 +193,7 @@ static inline bool rdt_get_mb_table(struct rdt_resource *r)
+ 	return false;
+ }
+ 
+-static bool __get_mem_config_intel(struct rdt_resource *r)
++static bool __init __get_mem_config_intel(struct rdt_resource *r)
+ {
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	union cpuid_0x10_3_eax eax;
+-- 
+2.46.0
+
