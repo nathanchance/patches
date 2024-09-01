@@ -1,7 +1,7 @@
-From ed0d67a4accf1c116bcf2bd24ed1c9f5d45afc59 Mon Sep 17 00:00:00 2001
+From 6a1d737e1d808aab88643d227f1e7463fd5ff8d6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:12:13 -0700
-Subject: [PATCH 07/13] SUBMITTED: x86/resctrl: Annotate
+Subject: [PATCH 08/14] SUBMITTED: x86/resctrl: Annotate
  __get_mem_config_intel() as __init
 
 After a recent LLVM change [1] that deduces __cold on functions that
