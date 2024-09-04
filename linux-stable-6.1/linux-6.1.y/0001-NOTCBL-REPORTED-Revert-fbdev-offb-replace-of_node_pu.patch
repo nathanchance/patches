@@ -1,4 +1,4 @@
-From da118d48a4169d37c13243a6bd4126b3a1d24c72 Mon Sep 17 00:00:00 2001
+From 4a31782d2742ec6619c56204331a4d10353e6f86 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 Aug 2024 19:38:00 -0700
 Subject: [PATCH 01/14] NOTCBL: REPORTED: Revert "fbdev: offb: replace
@@ -13,10 +13,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
-index 6f0a9851b092..91001990e351 100644
+index ea232395e226..4c83a854a45b 100644
 --- a/drivers/video/fbdev/offb.c
 +++ b/drivers/video/fbdev/offb.c
-@@ -355,7 +355,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+@@ -356,7 +356,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
  			par->cmap_type = cmap_gxt2000;
  	} else if (of_node_name_prefix(dp, "vga,Display-")) {
  		/* Look for AVIVO initialized by SLOF */
@@ -25,7 +25,7 @@ index 6f0a9851b092..91001990e351 100644
  		const u32 *vid, *did;
  		vid = of_get_property(pciparent, "vendor-id", NULL);
  		did = of_get_property(pciparent, "device-id", NULL);
-@@ -367,6 +367,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+@@ -368,6 +368,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
  			if (par->cmap_adr)
  				par->cmap_type = cmap_avivo;
  		}
@@ -34,7 +34,7 @@ index 6f0a9851b092..91001990e351 100644
  #ifdef __BIG_ENDIAN
  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 
-base-commit: 311d8503ef9fa25932825c5342de7213738aad8e
+base-commit: 69950617349402d1c952a54a5edc9a323a7c36b4
 -- 
 2.46.0
 
