@@ -1,4 +1,4 @@
-From e561486c768458619d27f97b5157f4cf4337ccd5 Mon Sep 17 00:00:00 2001
+From adc40eeeb138b999ae4bf8b2bd354e234268bc74 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:57 +0100
 Subject: [PATCH 04/12] UPSTREAM: cpumask: Always inline helpers which use bit
@@ -23,7 +23,7 @@ Link: https://git.kernel.org/linus/1dc01abad6544cb9d884071b626b706e37aa9601
  1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
-index b3c230dea071..253136773288 100644
+index 4555a4cb4632..9798305762c7 100644
 --- a/include/linux/cpumask.h
 +++ b/include/linux/cpumask.h
 @@ -306,12 +306,12 @@ extern int cpumask_next_wrap(int n, const struct cpumask *mask, int start, bool
