@@ -1,4 +1,4 @@
-From 0272eac5828799676352415e9ee6bbf8071f379c Mon Sep 17 00:00:00 2001
+From 00eda06adaf10bcfba8f3ea928512a2029e70eba Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Mon, 24 Jul 2023 14:05:40 -0700
 Subject: [PATCH 31/36] UPSTREAM: cpumask: change return types to bool where
@@ -14,7 +14,7 @@ Link: https://git.kernel.org/linus/cb32c285cc10e428589194e30233d673e7c23c72
  1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
-index 9e2914a38e52..7bf2e5a9c1a3 100644
+index 7c9caab16e13..d5020c0b5fc2 100644
 --- a/include/linux/cpumask.h
 +++ b/include/linux/cpumask.h
 @@ -353,9 +353,9 @@ static __always_inline void __cpumask_clear_cpu(int cpu, struct cpumask *dstp)
