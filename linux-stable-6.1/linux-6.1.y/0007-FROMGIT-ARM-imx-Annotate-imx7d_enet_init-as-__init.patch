@@ -1,4 +1,4 @@
-From 3564a902ef6ab51f0649faf2d2a110303f4918ae Mon Sep 17 00:00:00 2001
+From 5ccf679626f30bc34e72c4ae821fef97313bf4c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
 Subject: [PATCH 07/14] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
@@ -37,5 +37,5 @@ index 6fdd06bcf988..43cc292f078d 100644
  	imx7d_enet_phy_init();
  	imx7d_enet_clk_sel();
 -- 
-2.46.1
+2.46.2
 
