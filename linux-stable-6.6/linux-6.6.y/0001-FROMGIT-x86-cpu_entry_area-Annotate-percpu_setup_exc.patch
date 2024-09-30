@@ -1,4 +1,4 @@
-From 4300b05a7973aba44dbe5e8ceb31f2d14dc30aa9 Mon Sep 17 00:00:00 2001
+From 46491010fffe1607214a45fd930a4be69c779f49 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:18:08 -0700
 Subject: [PATCH 01/11] FROMGIT: x86/cpu_entry_area: Annotate
@@ -39,7 +39,7 @@ index e91500a80963..575f863f3c75 100644
  	struct cpu_entry_area *cea = get_cpu_entry_area(cpu);
  
 
-base-commit: 561bbd55f91a8e94576ca3fbf35a0c99ff70d4b2
+base-commit: 4ad9fa5c30edc19acf05b2960dd686c29cbe75a2
 -- 
-2.46.1
+2.46.2
 

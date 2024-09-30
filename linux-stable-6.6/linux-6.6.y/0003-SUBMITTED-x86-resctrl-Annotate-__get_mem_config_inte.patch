@@ -1,4 +1,4 @@
-From 37a6dbfb49807ce69819ef101a7f9b4aa4dd7396 Mon Sep 17 00:00:00 2001
+From bf74fa64d411c658b1be3bb7a50262bb5fee0126 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:12:13 -0700
 Subject: [PATCH 03/11] SUBMITTED: x86/resctrl: Annotate
@@ -35,5 +35,5 @@ index 8073fd304293..d4e2e6027284 100644
  	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
  	union cpuid_0x10_3_eax eax;
 -- 
-2.46.1
+2.46.2
 
