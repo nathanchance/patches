@@ -1,4 +1,4 @@
-From 43e4950da385585a9e4994c3a788e7daa1aeb419 Mon Sep 17 00:00:00 2001
+From dc0c05dc4dd39f734638e5d6c6777ed0f4d04769 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 13 Dec 2022 11:35:28 -0700
 Subject: [PATCH 04/14] UPSTREAM: padata: Mark padata_work_init() as __ref
@@ -33,7 +33,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/padata.c b/kernel/padata.c
-index 11270ffca54e..7feae946ff8f 100644
+index 3e7bf1bbc6c2..332e28b262d9 100644
 --- a/kernel/padata.c
 +++ b/kernel/padata.c
 @@ -83,8 +83,16 @@ static struct padata_work *padata_work_alloc(void)
