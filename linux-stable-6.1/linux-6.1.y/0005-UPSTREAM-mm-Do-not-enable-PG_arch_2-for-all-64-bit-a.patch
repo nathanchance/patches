@@ -1,4 +1,4 @@
-From e3d8db3bb0f941726cbbe6d31831dc8039324525 Mon Sep 17 00:00:00 2001
+From 50abd2b283f7e2d2e7387bf9e64e2a368bfbd4d1 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 05/13] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 1a62ef142a98..f6260e7117ee 100644
+index 57b437ed0974..4858ec83ba76 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
 @@ -2042,6 +2042,7 @@ config ARM64_MTE
