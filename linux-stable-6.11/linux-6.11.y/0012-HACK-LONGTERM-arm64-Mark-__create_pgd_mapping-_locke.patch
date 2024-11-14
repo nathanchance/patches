@@ -1,0 +1,51 @@
+From 04b16e69ed04cec1c02facba782cf357059336d0 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 27 Apr 2023 17:06:37 -0700
+Subject: [PATCH 12/12] HACK: LONGTERM: arm64: Mark
+ __create_pgd_mapping,{_locked}() as __always_inline
+
+Link: http://github.com/ClangBuiltLinux/linux/issues/1838
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm64/mm/mmu.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 353ea5dc32b8..ca17b70c3120 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -423,11 +423,10 @@ static void alloc_init_p4d(pgd_t *pgdp, unsigned long addr, unsigned long end,
+ 	p4d_clear_fixmap();
+ }
+ 
+-static void __create_pgd_mapping_locked(pgd_t *pgdir, phys_addr_t phys,
+-					unsigned long virt, phys_addr_t size,
+-					pgprot_t prot,
+-					phys_addr_t (*pgtable_alloc)(int),
+-					int flags)
++static __always_inline void
++__create_pgd_mapping_locked(pgd_t *pgdir, phys_addr_t phys, unsigned long virt,
++			    phys_addr_t size, pgprot_t prot,
++			    phys_addr_t (*pgtable_alloc)(int), int flags)
+ {
+ 	unsigned long addr, end, next;
+ 	pgd_t *pgdp = pgd_offset_pgd(pgdir, virt);
+@@ -451,11 +450,10 @@ static void __create_pgd_mapping_locked(pgd_t *pgdir, phys_addr_t phys,
+ 	} while (pgdp++, addr = next, addr != end);
+ }
+ 
+-static void __create_pgd_mapping(pgd_t *pgdir, phys_addr_t phys,
+-				 unsigned long virt, phys_addr_t size,
+-				 pgprot_t prot,
+-				 phys_addr_t (*pgtable_alloc)(int),
+-				 int flags)
++static __always_inline void
++__create_pgd_mapping(pgd_t *pgdir, phys_addr_t phys, unsigned long virt,
++		     phys_addr_t size, pgprot_t prot,
++		     phys_addr_t (*pgtable_alloc)(int), int flags)
+ {
+ 	mutex_lock(&fixmap_lock);
+ 	__create_pgd_mapping_locked(pgdir, phys, virt, size, prot,
+-- 
+2.47.0
+

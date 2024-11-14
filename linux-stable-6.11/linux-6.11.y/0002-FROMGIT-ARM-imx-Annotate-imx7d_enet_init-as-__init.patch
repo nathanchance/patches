@@ -1,0 +1,41 @@
+From a6eca9c317584ed7c645b2e6199f71e51f03aa72 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Aug 2024 17:05:17 -0700
+Subject: [PATCH 02/12] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
+
+After a recent LLVM change [1] that deduces __cold on functions that
+only call cold code (such as __init functions), there is a section
+mismatch warning from imx7d_enet_init(), which got moved to
+.text.unlikely. as a result of that optimization:
+
+  WARNING: modpost: vmlinux: section mismatch in reference: imx7d_enet_init+0x20 (section: .text.unlikely.) -> imx7d_enet_clk_sel (section: .init.text)
+
+Drop the inline keyword (which does not guarantee inlining) and replace
+it with __init, as imx7d_enet_init() is only called from __init code,
+which clears up the warning.
+
+Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Link: https://git.kernel.org/shawnguo/c/1ec2362084a013df4d78cbfd3228e8c254a67cac
+---
+ arch/arm/mach-imx/mach-imx7d.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-imx/mach-imx7d.c b/arch/arm/mach-imx/mach-imx7d.c
+index 9587885fb1ac..87632ae0201c 100644
+--- a/arch/arm/mach-imx/mach-imx7d.c
++++ b/arch/arm/mach-imx/mach-imx7d.c
+@@ -48,7 +48,7 @@ static void __init imx7d_enet_clk_sel(void)
+ 	}
+ }
+ 
+-static inline void imx7d_enet_init(void)
++static void __init imx7d_enet_init(void)
+ {
+ 	imx7d_enet_phy_init();
+ 	imx7d_enet_clk_sel();
+-- 
+2.47.0
+
