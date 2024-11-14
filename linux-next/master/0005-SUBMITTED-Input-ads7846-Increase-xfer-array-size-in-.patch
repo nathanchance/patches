@@ -1,0 +1,46 @@
+From 033aed60851d50bbe1b1ad731c02031b97ef60f8 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 11 Nov 2024 08:09:55 -0700
+Subject: [PATCH 05/16] SUBMITTED: Input: ads7846 - Increase xfer array size in
+ 'struct ser_req'
+
+Clang warns (or errors with CONFIG_WERROR=y, trimmed for brevity):
+
+  drivers/input/touchscreen/ads7846.c:412:2: error: array index 6 is past the end of the array (that has type 'struct spi_transfer[6]') [-Werror,-Warray-bounds]
+    412 |         req->xfer[6].tx_buf = &req->scratch;
+        |         ^         ~
+  ...
+  drivers/input/touchscreen/ads7846.c:416:2: error: array index 7 is past the end of the array (that has type 'struct spi_transfer[6]') [-Werror,-Warray-bounds]
+    416 |         req->xfer[7].rx_buf = &req->scratch;
+        |         ^         ~
+  drivers/input/touchscreen/ads7846.c:334:2: note: array 'xfer' declared here
+    334 |         struct spi_transfer     xfer[6];
+        |         ^
+
+Increase the size of xfer in 'struct ser_req' to ensure that there is
+enough space for all necessary members and there are no out of bounds
+accesses, clearing up the warning.
+
+Fixes: 781a07da9bb9 ("Input: ads7846 - add dummy command register clearing cycle")
+Link: https://lore.kernel.org/r/20241111-input-ads7846-increase-xfer-array-size-v1-1-06cd92e9f20f@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/input/touchscreen/ads7846.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index 75e5b2e4368d..066dc04003fa 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -331,7 +331,7 @@ struct ser_req {
+ 	u8			ref_off;
+ 	u16			scratch;
+ 	struct spi_message	msg;
+-	struct spi_transfer	xfer[6];
++	struct spi_transfer	xfer[8];
+ 	/*
+ 	 * DMA (thus cache coherency maintenance) requires the
+ 	 * transfer buffers to live in their own cache lines.
+-- 
+2.47.0
+
