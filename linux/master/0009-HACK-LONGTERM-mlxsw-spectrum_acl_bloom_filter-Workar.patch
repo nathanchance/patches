@@ -1,7 +1,7 @@
-From 21944de888b360697dd1804db4a0d24231cf11db Mon Sep 17 00:00:00 2001
+From f0779d64bc335887aa9f0ea4e5d91aff62e1a55e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 23 Feb 2023 12:17:27 -0700
-Subject: [PATCH 11/12] HACK: LONGTERM: mlxsw: spectrum_acl_bloom_filter:
+Subject: [PATCH 09/10] HACK: LONGTERM: mlxsw: spectrum_acl_bloom_filter:
  Workaround -Wattribute-warning
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1781
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-index 95f63fcf4ba1..9ef4331d333b 100644
+index a54eedb69a3f..1e2f2efe95df 100644
 --- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
 +++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
 @@ -243,6 +243,9 @@ __mlxsw_sp_acl_bf_key_encode(struct mlxsw_sp_acl_atcam_region *aregion,
@@ -25,5 +25,5 @@ index 95f63fcf4ba1..9ef4331d333b 100644
  	     chunk_index++) {
  		memset(chunk, 0, pad_bytes);
 -- 
-2.45.1
+2.47.0
 

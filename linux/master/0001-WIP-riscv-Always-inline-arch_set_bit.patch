@@ -1,0 +1,28 @@
+From b936bf003c8eef10e48606ab002d3f26e5abfff1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 25 Jul 2024 15:44:57 -0700
+Subject: [PATCH 01/10] WIP: riscv: Always inline arch_set_bit()
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/include/asm/bitops.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/include/asm/bitops.h b/arch/riscv/include/asm/bitops.h
+index fae152ea0508..7ec7ade4debb 100644
+--- a/arch/riscv/include/asm/bitops.h
++++ b/arch/riscv/include/asm/bitops.h
+@@ -270,7 +270,7 @@ static inline int arch_test_and_change_bit(int nr, volatile unsigned long *addr)
+  * Note that @nr may be almost arbitrarily large; this function is not
+  * restricted to acting on a single-word quantity.
+  */
+-static inline void arch_set_bit(int nr, volatile unsigned long *addr)
++static __always_inline void arch_set_bit(int nr, volatile unsigned long *addr)
+ {
+ 	__op_bit(or, __NOP, nr, addr);
+ }
+
+base-commit: 0a9b9d17f3a781dea03baca01c835deaa07f7cc3
+-- 
+2.47.0
+
