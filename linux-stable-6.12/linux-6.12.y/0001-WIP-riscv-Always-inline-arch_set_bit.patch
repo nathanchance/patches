@@ -1,4 +1,4 @@
-From 4d52b25e6b892e3c878a9ea85b455e44de4c0b81 Mon Sep 17 00:00:00 2001
+From 5e22c1d2b63050f6a90efd7dc4f2b5b03ce78682 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 25 Jul 2024 15:44:57 -0700
 Subject: [PATCH 01/10] WIP: riscv: Always inline arch_set_bit()
@@ -22,7 +22,7 @@ index fae152ea0508..7ec7ade4debb 100644
  	__op_bit(or, __NOP, nr, addr);
  }
 
-base-commit: adc218676eef25575469234709c2d87185ca223a
+base-commit: d390303b28dabbb91b2d32016a4f72da478733b9
 -- 
 2.47.0
 
