@@ -1,7 +1,8 @@
-From be22e27a93a6cc954e29c4c1ac5497723e36e975 Mon Sep 17 00:00:00 2001
+From 1e6eae1c15ab5a4a90420bfcff721271979ea8e8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
-Subject: [PATCH 02/10] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
+Subject: [PATCH 02/10] UPSTREAM: ARM: imx: Annotate imx7d_enet_init() as
+ __init
 
 After a recent LLVM change [1] that deduces __cold on functions that
 only call cold code (such as __init functions), there is a section
@@ -18,7 +19,8 @@ Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Link: https://git.kernel.org/shawnguo/c/1ec2362084a013df4d78cbfd3228e8c254a67cac
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://git.kernel.org/linus/1ec2362084a013df4d78cbfd3228e8c254a67cac
 ---
  arch/arm/mach-imx/mach-imx7d.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

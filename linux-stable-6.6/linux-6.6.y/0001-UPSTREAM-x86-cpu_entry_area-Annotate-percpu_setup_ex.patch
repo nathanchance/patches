@@ -1,7 +1,7 @@
-From 963e23faa0940d3a8b76816c4bdb97aea62436bc Mon Sep 17 00:00:00 2001
+From c301055ce1d5a8499de3d2241e99fd2b5d4e88d2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:18:08 -0700
-Subject: [PATCH 01/10] FROMGIT: x86/cpu_entry_area: Annotate
+Subject: [PATCH 01/10] UPSTREAM: x86/cpu_entry_area: Annotate
  percpu_setup_exception_stacks() as __init
 
 After a recent LLVM change that deduces __cold on functions that only call
@@ -20,7 +20,7 @@ code, which clears up the warning.
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Link: https://lore.kernel.org/all/20240822-x86-percpu_setup_exception_stacks-init-v1-1-57c5921b8209@kernel.org
-Link: https://git.kernel.org/tip/decb9ac4a9739c16e228f7b2918bfdca34cc89a9
+Link: https://git.kernel.org/linus/decb9ac4a9739c16e228f7b2918bfdca34cc89a9
 ---
  arch/x86/mm/cpu_entry_area.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
