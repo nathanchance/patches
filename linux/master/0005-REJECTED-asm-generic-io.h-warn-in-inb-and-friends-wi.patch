@@ -1,7 +1,7 @@
-From d8dfc6bf3d0b7349d3b562aae34148214f9499ae Mon Sep 17 00:00:00 2001
+From 21e2e05a729f2bcef75a6bb6efee46c0f56c0d19 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 04/10] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 05/11] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -44,7 +44,7 @@ index 9fb7cacc15cd..bfd9f0533313 100644
  	iounmap(p);
  }
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 80de699bf6af..67e035682949 100644
+index a5cbbf3e26ec..06a021337300 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -66,8 +66,8 @@ index 80de699bf6af..67e035682949 100644
  #ifndef IO_SPACE_LIMIT
  #define IO_SPACE_LIMIT 0xffff
  #endif
-@@ -542,12 +539,17 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
- #define _inb _inb
+@@ -543,12 +540,17 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
+ #ifdef CONFIG_HAS_IOPORT
  static inline u8 _inb(unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -82,10 +82,10 @@ index 80de699bf6af..67e035682949 100644
 +	return ~0;
 +#endif
  }
- #endif
- 
-@@ -555,12 +557,17 @@ static inline u8 _inb(unsigned long addr)
- #define _inw _inw
+ #else
+ u8 _inb(unsigned long addr)
+@@ -561,12 +563,17 @@ u8 _inb(unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline u16 _inw(unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -100,10 +100,10 @@ index 80de699bf6af..67e035682949 100644
 +	return ~0;
 +#endif
  }
- #endif
- 
-@@ -568,12 +575,17 @@ static inline u16 _inw(unsigned long addr)
- #define _inl _inl
+ #else
+ u16 _inw(unsigned long addr)
+@@ -579,12 +586,17 @@ u16 _inw(unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline u32 _inl(unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -118,10 +118,10 @@ index 80de699bf6af..67e035682949 100644
 +	return ~0;
 +#endif
  }
- #endif
- 
-@@ -581,9 +593,13 @@ static inline u32 _inl(unsigned long addr)
- #define _outb _outb
+ #else
+ u32 _inl(unsigned long addr)
+@@ -597,9 +609,13 @@ u32 _inl(unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void _outb(u8 value, unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -132,10 +132,10 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -591,9 +607,13 @@ static inline void _outb(u8 value, unsigned long addr)
- #define _outw _outw
+ #else
+ void _outb(u8 value, unsigned long addr)
+@@ -612,9 +628,13 @@ void _outb(u8 value, unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void _outw(u16 value, unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -146,10 +146,10 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -601,9 +621,13 @@ static inline void _outw(u16 value, unsigned long addr)
- #define _outl _outl
+ #else
+ void _outw(u16 value, unsigned long addr)
+@@ -627,9 +647,13 @@ void _outw(u16 value, unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void _outl(u32 value, unsigned long addr)
  {
 +#ifdef PCI_IOBASE
@@ -160,10 +160,10 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -690,7 +714,12 @@ static inline void outl_p(u32 value, unsigned long addr)
- #define insb insb
+ #else
+ void _outl(u32 value, unsigned long addr)
+@@ -721,7 +745,12 @@ static inline void outl_p(u32 value, unsigned long addr)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void insb(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
@@ -173,10 +173,10 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -698,7 +727,12 @@ static inline void insb(unsigned long addr, void *buffer, unsigned int count)
- #define insw insw
+ #else
+ void insb(unsigned long addr, void *buffer, unsigned int count)
+@@ -734,7 +763,12 @@ void insb(unsigned long addr, void *buffer, unsigned int count)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void insw(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
@@ -186,10 +186,10 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -706,7 +740,12 @@ static inline void insw(unsigned long addr, void *buffer, unsigned int count)
- #define insl insl
+ #else
+ void insw(unsigned long addr, void *buffer, unsigned int count)
+@@ -747,7 +781,12 @@ void insw(unsigned long addr, void *buffer, unsigned int count)
+ #ifdef CONFIG_HAS_IOPORT
  static inline void insl(unsigned long addr, void *buffer, unsigned int count)
  {
 +#ifdef PCI_IOBASE
@@ -199,9 +199,9 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -715,7 +754,11 @@ static inline void insl(unsigned long addr, void *buffer, unsigned int count)
+ #else
+ void insl(unsigned long addr, void *buffer, unsigned int count)
+@@ -761,7 +800,11 @@ void insl(unsigned long addr, void *buffer, unsigned int count)
  static inline void outsb(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -211,9 +211,9 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -724,7 +767,11 @@ static inline void outsb(unsigned long addr, const void *buffer,
+ #else
+ void outsb(unsigned long addr, const void *buffer, unsigned int count)
+@@ -775,7 +818,11 @@ void outsb(unsigned long addr, const void *buffer, unsigned int count)
  static inline void outsw(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -223,9 +223,9 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -733,7 +780,11 @@ static inline void outsw(unsigned long addr, const void *buffer,
+ #else
+ void outsw(unsigned long addr, const void *buffer, unsigned int count)
+@@ -789,7 +836,11 @@ void outsw(unsigned long addr, const void *buffer, unsigned int count)
  static inline void outsl(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -235,9 +235,9 @@ index 80de699bf6af..67e035682949 100644
 +	WARN_ONCE(1, "No I/O port support\n");
 +#endif
  }
- #endif
- 
-@@ -1111,8 +1162,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+ #else
+ void outsl(unsigned long addr, const void *buffer, unsigned int count)
+@@ -1171,8 +1222,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {
