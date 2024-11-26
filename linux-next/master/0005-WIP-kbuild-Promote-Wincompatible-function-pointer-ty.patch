@@ -1,7 +1,7 @@
-From 5be40ea8badfd3c22f4652dd528db60d16083e40 Mon Sep 17 00:00:00 2001
+From 0e64ff8293320db81a53b1cd995b3c1291c34ae6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 4 Oct 2023 11:43:39 -0700
-Subject: [PATCH 10/16] WIP: kbuild: Promote
+Subject: [PATCH 05/11] WIP: kbuild: Promote
  -Wincompatible-function-pointer-types-strict from W=1
 
 Now that all instances of this have been fixed, move this out of W=1 and
@@ -48,5 +48,5 @@ index 6c49aadbe513..3a4e05aeb2fb 100644
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.47.0
+2.47.1
 
