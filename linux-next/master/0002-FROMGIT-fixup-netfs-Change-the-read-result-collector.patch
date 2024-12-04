@@ -1,10 +1,14 @@
-From 77e7f92cf7ff5962360f767e92069fc25bbcdcac Mon Sep 17 00:00:00 2001
+From c43aa1cda85ad7db06c449b2df24f7adf27cc56b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 25 Nov 2024 12:45:34 -0700
-Subject: [PATCH 03/11] REPORTED: fixup! netfs: Change the read result
- collector to only use one work item
+Date: Wed, 4 Dec 2024 09:22:00 -0700
+Subject: [PATCH 02/10] FROMGIT: fixup! netfs: Change the read result collector
+ to only use one work item
 
-Link: https://lore.kernel.org/948808.1731950408@warthog.procyon.org.uk/
+This is basically:
+
+  $ git diff vfs/vfs.git#vfs-6.14.netfs..dhowells/linux-fs#netfs-writeback
+
+Link: https://lore.kernel.org/589335.1733244955@warthog.procyon.org.uk/
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  fs/netfs/read_retry.c | 4 +---

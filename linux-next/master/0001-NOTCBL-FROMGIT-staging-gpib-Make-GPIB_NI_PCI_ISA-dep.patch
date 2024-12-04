@@ -1,7 +1,7 @@
-From aabb52653e0bf57ff9a4c5f74b948ee7a77ff5e9 Mon Sep 17 00:00:00 2001
+From ead89df702779154a875d06067679ff66c5780da Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 13:03:25 -0700
-Subject: [PATCH 01/11] NOTCBL: SUBMITTED: staging: gpib: Make GPIB_NI_PCI_ISA
+Subject: [PATCH 01/10] NOTCBL: FROMGIT: staging: gpib: Make GPIB_NI_PCI_ISA
  depend on HAS_IOPORT
 
 After commit 78ecb0375685 ("staging: gpib: make port I/O code
@@ -19,8 +19,11 @@ Only allow tnt4882.ko to be built when CONFIG_HAS_IOPORT is set to avoid
 this build failure, as this driver unconditionally needs it.
 
 Fixes: 78ecb0375685 ("staging: gpib: make port I/O code conditional")
-Link: https://lore.kernel.org/r/20241123-gpib-tnt4882-depends-on-has_ioport-v1-1-033c58b64751@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20241123-gpib-tnt4882-depends-on-has_ioport-v1-1-033c58b64751@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://git.kernel.org/gregkh/staging/c/f580786ea900c74ed8046e617e5030d4c37a578b
 ---
  drivers/staging/gpib/Kconfig | 1 +
  1 file changed, 1 insertion(+)
@@ -38,7 +41,7 @@ index 95308d15a555..9ee432316465 100644
  	select GPIB_NEC7210
  	help
 
-base-commit: ed9a4ad6e5bd3a443e81446476718abebee47e82
+base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
 -- 
 2.47.1
 
