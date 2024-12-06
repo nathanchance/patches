@@ -1,7 +1,7 @@
-From 6761a1c10889554fc7f544d0066a731b086641a6 Mon Sep 17 00:00:00 2001
+From 39a38cf5a8c0c2f2fe69f441bbda626a93685958 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 19:30:19 -0700
-Subject: [PATCH 2/8] FROMGIT: riscv: Always inline bitops
+Subject: [PATCH 3/9] FROMGIT: riscv: Always inline bitops
 
 When building allmodconfig + ThinLTO with certain versions of clang,
 arch_set_bit() may not be inlined, resulting in a modpost warning:

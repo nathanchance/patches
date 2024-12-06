@@ -1,7 +1,7 @@
-From 55d7b5633aba373eb8c69f80e1a72d357d8261d2 Mon Sep 17 00:00:00 2001
+From 0aa5c43f60be026ceb4bc99ddd6d41b3dbdf7df4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 13:03:25 -0700
-Subject: [PATCH 1/8] NOTCBL: FROMGIT: staging: gpib: Make GPIB_NI_PCI_ISA
+Subject: [PATCH 2/9] NOTCBL: FROMGIT: staging: gpib: Make GPIB_NI_PCI_ISA
  depend on HAS_IOPORT
 
 After commit 78ecb0375685 ("staging: gpib: make port I/O code
@@ -40,8 +40,6 @@ index 95308d15a555..9ee432316465 100644
  	select GPIB_COMMON
  	select GPIB_NEC7210
  	help
-
-base-commit: 896d8946da97332d4dc80fa1937d8dd6b1c35ad4
 -- 
 2.47.1
 
