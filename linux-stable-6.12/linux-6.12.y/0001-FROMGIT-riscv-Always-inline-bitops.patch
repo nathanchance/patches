@@ -1,7 +1,7 @@
-From 723cd7e6b774877a2adc191910c916250d8f7d1e Mon Sep 17 00:00:00 2001
+From 28e1be5ad799df3a1673aba0e0175dd910252ef1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 19:30:19 -0700
-Subject: [PATCH 01/10] SUBMITTED: riscv: Always inline bitops
+Subject: [PATCH 01/10] FROMGIT: riscv: Always inline bitops
 
 When building allmodconfig + ThinLTO with certain versions of clang,
 arch_set_bit() may not be inlined, resulting in a modpost warning:
@@ -19,8 +19,9 @@ marked as __always_inline, so that they work consistently for init and
 non-init code, which the comment in include/linux/nodemask.h alludes to.
 This matches s390 and x86's implementations.
 
-Link: https://lore.kernel.org/r/20241123-riscv-always-inline-bitops-v1-1-00e8262ab1cf@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Link: https://github.com/norov/linux/commit/af206905fa22cea13685dd7f166ba21ab0ccb0d7
 ---
  arch/riscv/include/asm/bitops.h | 20 ++++++++++----------
  1 file changed, 10 insertions(+), 10 deletions(-)
@@ -118,7 +119,7 @@ index fae152ea0508..c6bd3d8354a9 100644
  {
  	unsigned long res;
 
-base-commit: d390303b28dabbb91b2d32016a4f72da478733b9
+base-commit: 7143efb58e33b6b1ebb32556e1fcdee03c7ed6a7
 -- 
 2.47.1
 
