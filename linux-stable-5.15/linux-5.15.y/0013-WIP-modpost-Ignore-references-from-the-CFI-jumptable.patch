@@ -1,0 +1,37 @@
+From 46ec1400477d282e30e9cd6aa6d3f2db9084ce0c Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 16 Dec 2024 17:41:11 -0700
+Subject: [PATCH 13/13] WIP: modpost: Ignore references from the CFI jumptable
+ section
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/mod/modpost.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index a663a0ea4066..e32e07efd87d 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -981,6 +981,7 @@ static const char *const data_sections[] = { DATA_SECTIONS, NULL };
+ 	"*_console"
+ 
+ static const char *const head_sections[] = { ".head.text*", NULL };
++static const char *const cfi_jt_sections[] = { ".text..L.cfi.jumptable*", NULL };
+ static const char *const linker_symbols[] =
+ 	{ "__init_begin", "_sinittext", "_einittext", NULL };
+ static const char *const optim_symbols[] = { "*.constprop.*", NULL };
+@@ -1255,6 +1256,10 @@ static int secref_whitelist(const struct sectioncheck *mismatch,
+ 	if (strstarts(fromsym, ".L"))
+ 		return 0;
+ 
++	if (match(fromsec, cfi_jt_sections) &&
++	    match(tosec, init_exit_sections))
++		return 0;
++
+ 	return 1;
+ }
+ 
+-- 
+2.47.1
+
