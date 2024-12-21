@@ -1,7 +1,7 @@
-From 7849bfaae45ecd4d371d5d2007858312ed3d12f1 Mon Sep 17 00:00:00 2001
+From 3ba3711e36d9c5ef0fe435bc6672d2d64f9a9e97 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 4 Oct 2023 11:43:39 -0700
-Subject: [PATCH 05/11] WIP: kbuild: Promote
+Subject: [PATCH 08/14] WIP: kbuild: Promote
  -Wincompatible-function-pointer-types-strict from W=1
 
 Now that all instances of this have been fixed, move this out of W=1 and

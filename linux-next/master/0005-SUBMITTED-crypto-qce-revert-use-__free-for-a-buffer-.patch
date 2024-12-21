@@ -1,0 +1,77 @@
+From 6c2a007e871e97ed5b9d7d973d70afd86f7fa0ca Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 18 Dec 2024 13:11:17 -0700
+Subject: [PATCH 05/14] SUBMITTED: crypto: qce - revert "use __free() for a
+ buffer that's always freed"
+
+Commit ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's
+always freed") introduced a buggy use of __free(), which clang
+rightfully points out:
+
+  drivers/crypto/qce/sha.c:365:3: error: cannot jump from this goto statement to its label
+    365 |                 goto err_free_ahash;
+        |                 ^
+  drivers/crypto/qce/sha.c:373:6: note: jump bypasses initialization of variable with __attribute__((cleanup))
+    373 |         u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
+        |             ^
+
+Jumping over a variable declared with the cleanup attribute does not
+prevent the cleanup function from running; instead, the cleanup function
+is called with an uninitialized value.
+
+Moving the declaration back to the top function with __free() and a NULL
+initialization would resolve the bug but that is really not much
+different from the original code. Since the function is so simple and
+there is no functional reason to use __free() here, just revert the
+original change to resolve the issue.
+
+Fixes: ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's always freed")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYtpAwXa5mUQ5O7vDLK2xN4t-kJoxgUe1ZFRT=AGqmLSRA@mail.gmail.com/
+Link: https://lore.kernel.org/r/20241218-crypto-qce-sha-fix-clang-cleanup-error-v1-1-7e6c6dcca345@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/crypto/qce/sha.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/crypto/qce/sha.c b/drivers/crypto/qce/sha.c
+index c4ddc3b265ee..71b748183cfa 100644
+--- a/drivers/crypto/qce/sha.c
++++ b/drivers/crypto/qce/sha.c
+@@ -3,7 +3,6 @@
+  * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+  */
+ 
+-#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/interrupt.h>
+@@ -337,6 +336,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+ 	struct scatterlist sg;
+ 	unsigned int blocksize;
+ 	struct crypto_ahash *ahash_tfm;
++	u8 *buf;
+ 	int ret;
+ 	const char *alg_name;
+ 
+@@ -370,8 +370,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+ 				   crypto_req_done, &wait);
+ 	crypto_ahash_clear_flags(ahash_tfm, ~0);
+ 
+-	u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
+-					GFP_KERNEL);
++	buf = kzalloc(keylen + QCE_MAX_ALIGN_SIZE, GFP_KERNEL);
+ 	if (!buf) {
+ 		ret = -ENOMEM;
+ 		goto err_free_req;
+@@ -383,6 +382,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+ 
+ 	ret = crypto_wait_req(crypto_ahash_digest(req), &wait);
+ 
++	kfree(buf);
+ err_free_req:
+ 	ahash_request_free(req);
+ err_free_ahash:
+-- 
+2.47.1
+
