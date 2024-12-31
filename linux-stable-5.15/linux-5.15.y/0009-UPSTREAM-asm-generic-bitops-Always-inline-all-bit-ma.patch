@@ -1,0 +1,160 @@
+From c17a9145e969e8ae69d025fee9af7c8117070dee Mon Sep 17 00:00:00 2001
+From: Borislav Petkov <bp@suse.de>
+Date: Thu, 13 Jan 2022 16:53:56 +0100
+Subject: [PATCH 09/17] UPSTREAM: asm-generic/bitops: Always inline all bit
+ manipulation helpers
+
+Make it consistent with the atomic/atomic-instrumented.h helpers.
+
+And defconfig size is actually going down!
+
+     text    data     bss     dec     hex filename
+  22352096        8213152 1917164 32482412        1efa46c vmlinux.x86-64.defconfig.before
+  22350551        8213184 1917164 32480899        1ef9e83 vmlinux.x86-64.defconfig.after
+
+Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/20220113155357.4706-2-bp@alien8.de
+Link: https://git.kernel.org/linus/acb13ea0baf8db8d05a3910c06e997c90825faad
+---
+ include/asm-generic/bitops/instrumented-atomic.h | 12 ++++++------
+ .../asm-generic/bitops/instrumented-non-atomic.h | 16 ++++++++--------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/include/asm-generic/bitops/instrumented-atomic.h b/include/asm-generic/bitops/instrumented-atomic.h
+index 81915dcd4b4e..3cf9edf4113f 100644
+--- a/include/asm-generic/bitops/instrumented-atomic.h
++++ b/include/asm-generic/bitops/instrumented-atomic.h
+@@ -23,7 +23,7 @@
+  * Note that @nr may be almost arbitrarily large; this function is not
+  * restricted to acting on a single-word quantity.
+  */
+-static inline void set_bit(long nr, volatile unsigned long *addr)
++static __always_inline void set_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch_set_bit(nr, addr);
+@@ -36,7 +36,7 @@ static inline void set_bit(long nr, volatile unsigned long *addr)
+  *
+  * This is a relaxed atomic operation (no implied memory barriers).
+  */
+-static inline void clear_bit(long nr, volatile unsigned long *addr)
++static __always_inline void clear_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch_clear_bit(nr, addr);
+@@ -52,7 +52,7 @@ static inline void clear_bit(long nr, volatile unsigned long *addr)
+  * Note that @nr may be almost arbitrarily large; this function is not
+  * restricted to acting on a single-word quantity.
+  */
+-static inline void change_bit(long nr, volatile unsigned long *addr)
++static __always_inline void change_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch_change_bit(nr, addr);
+@@ -65,7 +65,7 @@ static inline void change_bit(long nr, volatile unsigned long *addr)
+  *
+  * This is an atomic fully-ordered operation (implied full memory barrier).
+  */
+-static inline bool test_and_set_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool test_and_set_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_read_write(addr + BIT_WORD(nr), sizeof(long));
+ 	return arch_test_and_set_bit(nr, addr);
+@@ -78,7 +78,7 @@ static inline bool test_and_set_bit(long nr, volatile unsigned long *addr)
+  *
+  * This is an atomic fully-ordered operation (implied full memory barrier).
+  */
+-static inline bool test_and_clear_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool test_and_clear_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_read_write(addr + BIT_WORD(nr), sizeof(long));
+ 	return arch_test_and_clear_bit(nr, addr);
+@@ -91,7 +91,7 @@ static inline bool test_and_clear_bit(long nr, volatile unsigned long *addr)
+  *
+  * This is an atomic fully-ordered operation (implied full memory barrier).
+  */
+-static inline bool test_and_change_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool test_and_change_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_atomic_read_write(addr + BIT_WORD(nr), sizeof(long));
+ 	return arch_test_and_change_bit(nr, addr);
+diff --git a/include/asm-generic/bitops/instrumented-non-atomic.h b/include/asm-generic/bitops/instrumented-non-atomic.h
+index 37363d570b9b..7ab1ecc37782 100644
+--- a/include/asm-generic/bitops/instrumented-non-atomic.h
++++ b/include/asm-generic/bitops/instrumented-non-atomic.h
+@@ -22,7 +22,7 @@
+  * region of memory concurrently, the effect may be that only one operation
+  * succeeds.
+  */
+-static inline void __set_bit(long nr, volatile unsigned long *addr)
++static __always_inline void __set_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch___set_bit(nr, addr);
+@@ -37,7 +37,7 @@ static inline void __set_bit(long nr, volatile unsigned long *addr)
+  * region of memory concurrently, the effect may be that only one operation
+  * succeeds.
+  */
+-static inline void __clear_bit(long nr, volatile unsigned long *addr)
++static __always_inline void __clear_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch___clear_bit(nr, addr);
+@@ -52,13 +52,13 @@ static inline void __clear_bit(long nr, volatile unsigned long *addr)
+  * region of memory concurrently, the effect may be that only one operation
+  * succeeds.
+  */
+-static inline void __change_bit(long nr, volatile unsigned long *addr)
++static __always_inline void __change_bit(long nr, volatile unsigned long *addr)
+ {
+ 	instrument_write(addr + BIT_WORD(nr), sizeof(long));
+ 	arch___change_bit(nr, addr);
+ }
+ 
+-static inline void __instrument_read_write_bitop(long nr, volatile unsigned long *addr)
++static __always_inline void __instrument_read_write_bitop(long nr, volatile unsigned long *addr)
+ {
+ 	if (IS_ENABLED(CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC)) {
+ 		/*
+@@ -90,7 +90,7 @@ static inline void __instrument_read_write_bitop(long nr, volatile unsigned long
+  * This operation is non-atomic. If two instances of this operation race, one
+  * can appear to succeed but actually fail.
+  */
+-static inline bool __test_and_set_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool __test_and_set_bit(long nr, volatile unsigned long *addr)
+ {
+ 	__instrument_read_write_bitop(nr, addr);
+ 	return arch___test_and_set_bit(nr, addr);
+@@ -104,7 +104,7 @@ static inline bool __test_and_set_bit(long nr, volatile unsigned long *addr)
+  * This operation is non-atomic. If two instances of this operation race, one
+  * can appear to succeed but actually fail.
+  */
+-static inline bool __test_and_clear_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool __test_and_clear_bit(long nr, volatile unsigned long *addr)
+ {
+ 	__instrument_read_write_bitop(nr, addr);
+ 	return arch___test_and_clear_bit(nr, addr);
+@@ -118,7 +118,7 @@ static inline bool __test_and_clear_bit(long nr, volatile unsigned long *addr)
+  * This operation is non-atomic. If two instances of this operation race, one
+  * can appear to succeed but actually fail.
+  */
+-static inline bool __test_and_change_bit(long nr, volatile unsigned long *addr)
++static __always_inline bool __test_and_change_bit(long nr, volatile unsigned long *addr)
+ {
+ 	__instrument_read_write_bitop(nr, addr);
+ 	return arch___test_and_change_bit(nr, addr);
+@@ -129,7 +129,7 @@ static inline bool __test_and_change_bit(long nr, volatile unsigned long *addr)
+  * @nr: bit number to test
+  * @addr: Address to start counting from
+  */
+-static inline bool test_bit(long nr, const volatile unsigned long *addr)
++static __always_inline bool test_bit(long nr, const volatile unsigned long *addr)
+ {
+ 	instrument_atomic_read(addr + BIT_WORD(nr), sizeof(long));
+ 	return arch_test_bit(nr, addr);
+-- 
+2.47.1
+
