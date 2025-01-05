@@ -1,0 +1,21 @@
+diff --git a/mkosi/distributions/debian.py b/mkosi/distributions/debian.py
+index 90ebe5bb..1bf9f1fc 100644
+--- a/mkosi/distributions/debian.py
++++ b/mkosi/distributions/debian.py
+@@ -84,11 +84,15 @@ class Installer(DistributionInstaller):
+             signedby=signedby,
+         )
+ 
++        if context.config.release == 'buster':
++            security_suite = f"{context.config.release}/updates"
++        else:
++            security_suite = f"{context.config.release}-security"
+         yield AptRepository(
+             types=types,
+             # Security updates repos are never mirrored.
+             url="http://security.debian.org/debian-security",
+-            suite=f"{context.config.release}-security",
++            suite=security_suite,
+             components=components,
+             signedby=signedby,
+         )
