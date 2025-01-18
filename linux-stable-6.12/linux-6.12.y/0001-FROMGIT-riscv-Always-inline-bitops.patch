@@ -1,4 +1,4 @@
-From 8dae3e8e2bf805bcc8a03d0aac9abf56073b6641 Mon Sep 17 00:00:00 2001
+From 8b8619636d3ea9de9b5154a4ac7eccf24639c160 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 19:30:19 -0700
 Subject: [PATCH 01/10] FROMGIT: riscv: Always inline bitops
@@ -119,7 +119,7 @@ index fae152ea0508..c6bd3d8354a9 100644
  {
  	unsigned long res;
 
-base-commit: 5996393469d99560b7845d22c9eff00661de0724
+base-commit: a6ad5510dbb5f55cd2d1b44b11a18120bf79a5a3
 -- 
-2.48.0
+2.48.1
 
