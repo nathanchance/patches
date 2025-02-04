@@ -1,6 +1,6 @@
-From b9523aba91cb7f65e4ef6a83e595776890bed677 Mon Sep 17 00:00:00 2001
+From 7513ee37519bea55d5ac5eac3f7b508cdc6ab06d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 24 Jan 2025 06:31:57 -0700
+Date: Tue, 4 Feb 2025 10:48:55 -0700
 Subject: [PATCH 08/14] SUBMITTED: arm64: Handle .ARM.attributes section in
  linker scripts
 
@@ -16,12 +16,14 @@ because it is not handled in the arm64 linker scripts.
   ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
   ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
 
-Add this new section to the necessary linker scripts to resolve the warnings.
+Discard the new sections in the necessary linker scripts to resolve the
+warnings, as the kernel and vDSO do not need to retain it, similar to
+the .note.gnu.property section.
 
 Cc: stable@vger.kernel.org
 Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
 Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
-Link: https://lore.kernel.org/r/20250124-arm64-handle-arm-attributes-in-linker-script-v1-1-74135b6cf349@kernel.org
+Link: https://lore.kernel.org/r/20250204-arm64-handle-arm-attributes-in-linker-script-v2-1-d684097f5554@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/arm64/kernel/vdso/vdso.lds.S | 1 +
@@ -29,29 +31,29 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 2 insertions(+)
 
 diff --git a/arch/arm64/kernel/vdso/vdso.lds.S b/arch/arm64/kernel/vdso/vdso.lds.S
-index 6028f1fe2d1c..7bbd5dd949cb 100644
+index 6028f1fe2d1c..4aa0c6fa2cb4 100644
 --- a/arch/arm64/kernel/vdso/vdso.lds.S
 +++ b/arch/arm64/kernel/vdso/vdso.lds.S
-@@ -74,6 +74,7 @@ SECTIONS
- 
- 	DWARF_DEBUG
- 	ELF_DETAILS
-+	.ARM.attributes 0 : { *(.ARM.attributes) }
- 
- 	/DISCARD/	: {
+@@ -79,6 +79,7 @@ SECTIONS
  		*(.data .data.* .gnu.linkonce.d.* .sdata*)
+ 		*(.bss .sbss .dynbss .dynsbss)
+ 		*(.eh_frame .eh_frame_hdr)
++		*(.ARM.attributes)
+ 	}
+ }
+ 
 diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index b0226eac7bda..5868ed8fb661 100644
+index b0226eac7bda..a2fb4241f5fb 100644
 --- a/arch/arm64/kernel/vmlinux.lds.S
 +++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -315,6 +315,7 @@ SECTIONS
- 	STABS_DEBUG
- 	DWARF_DEBUG
- 	ELF_DETAILS
-+	.ARM.attributes 0 : { *(.ARM.attributes) }
+@@ -149,6 +149,7 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.interp .dynamic)
+ 		*(.dynsym .dynstr .hash .gnu.hash)
++		*(.ARM.attributes)
+ 	}
  
- 	HEAD_SYMBOLS
- 
+ 	. = KIMAGE_VADDR;
 -- 
 2.48.1
 
