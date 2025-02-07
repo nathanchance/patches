@@ -1,8 +1,7 @@
-From 7513ee37519bea55d5ac5eac3f7b508cdc6ab06d Mon Sep 17 00:00:00 2001
+From cb8298c9115202d0427477a93543b52de4921f65 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 4 Feb 2025 10:48:55 -0700
-Subject: [PATCH 08/14] SUBMITTED: arm64: Handle .ARM.attributes section in
- linker scripts
+Date: Thu, 6 Feb 2025 10:21:38 -0700
+Subject: [PATCH 08/14] arm64: Handle .ARM.attributes section in linker scripts
 
 A recent LLVM commit [1] started generating an .ARM.attributes section
 similar to the one that exists for 32-bit, which results in orphan
@@ -23,24 +22,25 @@ the .note.gnu.property section.
 Cc: stable@vger.kernel.org
 Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
 Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
-Link: https://lore.kernel.org/r/20250204-arm64-handle-arm-attributes-in-linker-script-v2-1-d684097f5554@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 ---
  arch/arm64/kernel/vdso/vdso.lds.S | 1 +
  arch/arm64/kernel/vmlinux.lds.S   | 1 +
  2 files changed, 2 insertions(+)
 
 diff --git a/arch/arm64/kernel/vdso/vdso.lds.S b/arch/arm64/kernel/vdso/vdso.lds.S
-index 6028f1fe2d1c..4aa0c6fa2cb4 100644
+index 6028f1fe2d1c..cc8b36acb996 100644
 --- a/arch/arm64/kernel/vdso/vdso.lds.S
 +++ b/arch/arm64/kernel/vdso/vdso.lds.S
-@@ -79,6 +79,7 @@ SECTIONS
- 		*(.data .data.* .gnu.linkonce.d.* .sdata*)
- 		*(.bss .sbss .dynbss .dynsbss)
- 		*(.eh_frame .eh_frame_hdr)
+@@ -38,6 +38,7 @@ SECTIONS
+ 	 */
+ 	/DISCARD/	: {
+ 		*(.note.GNU-stack .note.gnu.property)
 +		*(.ARM.attributes)
  	}
- }
+ 	.note		: { *(.note.*) }		:text	:note
  
 diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
 index b0226eac7bda..a2fb4241f5fb 100644
