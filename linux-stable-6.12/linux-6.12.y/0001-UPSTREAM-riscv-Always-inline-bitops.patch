@@ -1,4 +1,4 @@
-From fb13118db248a8f0649c45c74aa6ea36a7ef2a9f Mon Sep 17 00:00:00 2001
+From 5c6882ed7efa01803164c5877c5c3d65053479c7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 19:30:19 -0700
 Subject: [PATCH 01/10] UPSTREAM: riscv: Always inline bitops
@@ -119,7 +119,7 @@ index fae152ea0508..c6bd3d8354a9 100644
  {
  	unsigned long res;
 
-base-commit: 19b4657de424f48a588eb379fe3214d317f46cd7
+base-commit: 41b222412985dc8410b88fb7a0fda87e6640d4df
 -- 
 2.48.1
 
