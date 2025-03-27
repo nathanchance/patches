@@ -44,7 +44,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  17 files changed, 366 insertions(+), 200 deletions(-)
 
 diff --git a/arch/alpha/include/asm/xor.h b/arch/alpha/include/asm/xor.h
-index 5aeb4fb3cb7c..e0de0c233ab9 100644
+index 5aeb4fb3cb7cb..e0de0c233ab92 100644
 --- a/arch/alpha/include/asm/xor.h
 +++ b/arch/alpha/include/asm/xor.h
 @@ -5,24 +5,43 @@
@@ -109,7 +109,7 @@ index 5aeb4fb3cb7c..e0de0c233ab9 100644
  asm("								\n\
  	.text							\n\
 diff --git a/arch/arm/include/asm/xor.h b/arch/arm/include/asm/xor.h
-index aefddec79286..669cad5194d3 100644
+index aefddec79286a..669cad5194d3d 100644
 --- a/arch/arm/include/asm/xor.h
 +++ b/arch/arm/include/asm/xor.h
 @@ -44,7 +44,8 @@
@@ -211,7 +211,7 @@ index aefddec79286..669cad5194d3 100644
  	if (in_interrupt()) {
  		xor_arm4regs_5(bytes, p1, p2, p3, p4, p5);
 diff --git a/arch/arm64/include/asm/xor.h b/arch/arm64/include/asm/xor.h
-index 947f6a4f1aa0..befcd8a7abc9 100644
+index 947f6a4f1aa0a..befcd8a7abc98 100644
 --- a/arch/arm64/include/asm/xor.h
 +++ b/arch/arm64/include/asm/xor.h
 @@ -16,7 +16,8 @@
@@ -264,7 +264,7 @@ index 947f6a4f1aa0..befcd8a7abc9 100644
  	kernel_neon_begin();
  	xor_block_inner_neon.do_5(bytes, p1, p2, p3, p4, p5);
 diff --git a/arch/arm64/lib/xor-neon.c b/arch/arm64/lib/xor-neon.c
-index 11bf4f8aca68..98ec5ab21c73 100644
+index 11bf4f8aca686..98ec5ab21c73f 100644
 --- a/arch/arm64/lib/xor-neon.c
 +++ b/arch/arm64/lib/xor-neon.c
 @@ -10,8 +10,8 @@
@@ -319,7 +319,7 @@ index 11bf4f8aca68..98ec5ab21c73 100644
  	uint64_t *dp1 = (uint64_t *)p1;
  	uint64_t *dp2 = (uint64_t *)p2;
 diff --git a/arch/ia64/include/asm/xor.h b/arch/ia64/include/asm/xor.h
-index 673051bf9d7d..6785f70d3208 100644
+index 673051bf9d7da..6785f70d3208b 100644
 --- a/arch/ia64/include/asm/xor.h
 +++ b/arch/ia64/include/asm/xor.h
 @@ -4,13 +4,20 @@
@@ -351,7 +351,7 @@ index 673051bf9d7d..6785f70d3208 100644
  static struct xor_block_template xor_block_ia64 = {
  	.name =	"ia64",
 diff --git a/arch/powerpc/include/asm/xor_altivec.h b/arch/powerpc/include/asm/xor_altivec.h
-index 6ca923510b59..294620a25f80 100644
+index 6ca923510b597..294620a25f802 100644
 --- a/arch/powerpc/include/asm/xor_altivec.h
 +++ b/arch/powerpc/include/asm/xor_altivec.h
 @@ -3,17 +3,20 @@
@@ -387,7 +387,7 @@ index 6ca923510b59..294620a25f80 100644
  #endif
  #endif /* _ASM_POWERPC_XOR_ALTIVEC_H */
 diff --git a/arch/powerpc/lib/xor_vmx.c b/arch/powerpc/lib/xor_vmx.c
-index 54e61979e80e..aab49d056d18 100644
+index 54e61979e80e5..aab49d056d188 100644
 --- a/arch/powerpc/lib/xor_vmx.c
 +++ b/arch/powerpc/lib/xor_vmx.c
 @@ -49,8 +49,9 @@ typedef vector signed char unative_t;
@@ -447,7 +447,7 @@ index 54e61979e80e..aab49d056d18 100644
  	DEFINE(v1);
  	DEFINE(v2);
 diff --git a/arch/powerpc/lib/xor_vmx.h b/arch/powerpc/lib/xor_vmx.h
-index 5c2b0839b179..573c41d90dac 100644
+index 5c2b0839b1794..573c41d90dac5 100644
 --- a/arch/powerpc/lib/xor_vmx.h
 +++ b/arch/powerpc/lib/xor_vmx.h
 @@ -6,16 +6,17 @@
@@ -482,7 +482,7 @@ index 5c2b0839b179..573c41d90dac 100644
 +		     const unsigned long * __restrict p4,
 +		     const unsigned long * __restrict p5);
 diff --git a/arch/powerpc/lib/xor_vmx_glue.c b/arch/powerpc/lib/xor_vmx_glue.c
-index 80dba916c367..35d917ece4d1 100644
+index 80dba916c3674..35d917ece4d1e 100644
 --- a/arch/powerpc/lib/xor_vmx_glue.c
 +++ b/arch/powerpc/lib/xor_vmx_glue.c
 @@ -12,47 +12,51 @@
@@ -552,7 +552,7 @@ index 80dba916c367..35d917ece4d1 100644
  	preempt_enable();
  }
 diff --git a/arch/s390/lib/xor.c b/arch/s390/lib/xor.c
-index a963c3d8ad0d..fb924a8041dc 100644
+index a963c3d8ad0d9..fb924a8041dc7 100644
 --- a/arch/s390/lib/xor.c
 +++ b/arch/s390/lib/xor.c
 @@ -11,7 +11,8 @@
@@ -605,7 +605,7 @@ index a963c3d8ad0d..fb924a8041dc 100644
  	asm volatile(
  		"	larl	1,2f\n"
 diff --git a/arch/sparc/include/asm/xor_32.h b/arch/sparc/include/asm/xor_32.h
-index 3e5af37e4b9c..0351813cf3af 100644
+index 3e5af37e4b9cd..0351813cf3af5 100644
 --- a/arch/sparc/include/asm/xor_32.h
 +++ b/arch/sparc/include/asm/xor_32.h
 @@ -13,7 +13,8 @@
@@ -658,7 +658,7 @@ index 3e5af37e4b9c..0351813cf3af 100644
  	int lines = bytes / (sizeof (long)) / 8;
  
 diff --git a/arch/sparc/include/asm/xor_64.h b/arch/sparc/include/asm/xor_64.h
-index 16169f3edcd5..caaddea8ad79 100644
+index 16169f3edcd5b..caaddea8ad79d 100644
 --- a/arch/sparc/include/asm/xor_64.h
 +++ b/arch/sparc/include/asm/xor_64.h
 @@ -12,13 +12,20 @@
@@ -718,7 +718,7 @@ index 16169f3edcd5..caaddea8ad79 100644
  static struct xor_block_template xor_block_niagara = {
          .name	= "Niagara",
 diff --git a/arch/x86/include/asm/xor.h b/arch/x86/include/asm/xor.h
-index 2ee95a7769e6..7b0307acc410 100644
+index 2ee95a7769e60..7b0307acc4103 100644
 --- a/arch/x86/include/asm/xor.h
 +++ b/arch/x86/include/asm/xor.h
 @@ -57,7 +57,8 @@
@@ -820,7 +820,7 @@ index 2ee95a7769e6..7b0307acc410 100644
  	unsigned long lines = bytes >> 8;
  
 diff --git a/arch/x86/include/asm/xor_32.h b/arch/x86/include/asm/xor_32.h
-index 67ceb790e639..7a6b9474591e 100644
+index 67ceb790e6397..7a6b9474591e7 100644
 --- a/arch/x86/include/asm/xor_32.h
 +++ b/arch/x86/include/asm/xor_32.h
 @@ -21,7 +21,8 @@
@@ -922,7 +922,7 @@ index 67ceb790e639..7a6b9474591e 100644
  	unsigned long lines = bytes >> 6;
  
 diff --git a/arch/x86/include/asm/xor_avx.h b/arch/x86/include/asm/xor_avx.h
-index 0c4e5b5e3852..7f81dd5897f4 100644
+index 0c4e5b5e3852b..7f81dd5897f41 100644
 --- a/arch/x86/include/asm/xor_avx.h
 +++ b/arch/x86/include/asm/xor_avx.h
 @@ -26,7 +26,8 @@
@@ -975,7 +975,7 @@ index 0c4e5b5e3852..7f81dd5897f4 100644
  	unsigned long lines = bytes >> 9;
  
 diff --git a/include/asm-generic/xor.h b/include/asm-generic/xor.h
-index b62a2a56a4d4..44509d48fca2 100644
+index b62a2a56a4d49..44509d48fca21 100644
 --- a/include/asm-generic/xor.h
 +++ b/include/asm-generic/xor.h
 @@ -8,7 +8,8 @@
@@ -1175,7 +1175,7 @@ index b62a2a56a4d4..44509d48fca2 100644
  	long lines = bytes / (sizeof (long)) / 8 - 1;
  
 diff --git a/include/linux/raid/xor.h b/include/linux/raid/xor.h
-index 2a9fee8ddae3..51b811b62322 100644
+index 2a9fee8ddae3f..51b811b623224 100644
 --- a/include/linux/raid/xor.h
 +++ b/include/linux/raid/xor.h
 @@ -11,13 +11,20 @@ struct xor_block_template {

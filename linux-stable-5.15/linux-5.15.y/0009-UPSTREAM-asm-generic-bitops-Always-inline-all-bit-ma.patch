@@ -24,7 +24,7 @@ Link: https://git.kernel.org/linus/acb13ea0baf8db8d05a3910c06e997c90825faad
  2 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/include/asm-generic/bitops/instrumented-atomic.h b/include/asm-generic/bitops/instrumented-atomic.h
-index 81915dcd4b4e..3cf9edf4113f 100644
+index 81915dcd4b4e8..3cf9edf4113f6 100644
 --- a/include/asm-generic/bitops/instrumented-atomic.h
 +++ b/include/asm-generic/bitops/instrumented-atomic.h
 @@ -23,7 +23,7 @@
@@ -82,7 +82,7 @@ index 81915dcd4b4e..3cf9edf4113f 100644
  	instrument_atomic_read_write(addr + BIT_WORD(nr), sizeof(long));
  	return arch_test_and_change_bit(nr, addr);
 diff --git a/include/asm-generic/bitops/instrumented-non-atomic.h b/include/asm-generic/bitops/instrumented-non-atomic.h
-index 37363d570b9b..7ab1ecc37782 100644
+index 37363d570b9b2..7ab1ecc377824 100644
 --- a/include/asm-generic/bitops/instrumented-non-atomic.h
 +++ b/include/asm-generic/bitops/instrumented-non-atomic.h
 @@ -22,7 +22,7 @@
