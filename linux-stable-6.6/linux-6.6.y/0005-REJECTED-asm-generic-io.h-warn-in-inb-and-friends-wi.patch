@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index bac63e874c7b..57c39b2954d9 100644
+index bac63e874c7bf..57c39b2954d92 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -232,7 +232,7 @@ index bac63e874c7b..57c39b2954d9 100644
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
 diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
-index 2829ddb0e316..c60151b2f437 100644
+index 2829ddb0e316b..c60151b2f4377 100644
 --- a/lib/pci_iomap.c
 +++ b/lib/pci_iomap.c
 @@ -165,11 +165,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);

@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 38f3fe2e6bf6..421e0efd96bc 100644
+index 38f3fe2e6bf6b..421e0efd96bc2 100644
 --- a/arch/arm64/mm/mmu.c
 +++ b/arch/arm64/mm/mmu.c
 @@ -366,11 +366,10 @@ static void alloc_init_pud(pgd_t *pgdp, unsigned long addr, unsigned long end,
