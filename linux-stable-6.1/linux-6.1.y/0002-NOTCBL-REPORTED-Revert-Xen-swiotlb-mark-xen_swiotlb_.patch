@@ -1,0 +1,30 @@
+From 71ea006a477a9df372f688e90d5962fb527572d4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 7 Apr 2025 11:12:51 -0700
+Subject: [PATCH 02/15] NOTCBL: REPORTED: Revert "Xen/swiotlb: mark
+ xen_swiotlb_fixup() __init"
+
+This reverts commit 1a95cff6e15945e8bc7a4e4cec9f9b85f0fb08e7.
+
+Link: https://lore.kernel.org/20250407181218.GA737271@ax162/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/xen/swiotlb-xen.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
+index fe52c8cbf1364..0893c1012de62 100644
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -112,7 +112,7 @@ static int is_xen_swiotlb_buffer(struct device *dev, dma_addr_t dma_addr)
+ }
+ 
+ #ifdef CONFIG_X86
+-int __init xen_swiotlb_fixup(void *buf, unsigned long nslabs)
++int xen_swiotlb_fixup(void *buf, unsigned long nslabs)
+ {
+ 	int rc;
+ 	unsigned int order = get_order(IO_TLB_SEGSIZE << IO_TLB_SHIFT);
+-- 
+2.49.0
+
