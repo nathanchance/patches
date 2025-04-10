@@ -1,4 +1,4 @@
-From f6ab28c600087f7aae63b4be86c53b9deae3890c Mon Sep 17 00:00:00 2001
+From ba64b4a3e822d46577a63ba46ea8ddf349c5f469 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Apr 2025 16:22:12 -0700
 Subject: [PATCH 09/15] SUBMITTED: kbuild: Add '-fno-builtin-wcslen'
@@ -27,7 +27,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 89742f1246cfb..593149161053d 100644
+index 50f1a283b67df..eae097d3db6c2 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1075,6 +1075,9 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
