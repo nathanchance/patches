@@ -1,4 +1,4 @@
-From 6be1edb2c9cf98b6672e96dcd52eba2b746e537e Mon Sep 17 00:00:00 2001
+From e6f9ae114664c3809ad1c093d90eb2b18bb26f52 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 7 Apr 2025 16:22:12 -0700
 Subject: [PATCH 02/10] SUBMITTED: kbuild: Add '-fno-builtin-wcslen'
@@ -27,7 +27,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index f380005d1600a..bbabaf524a963 100644
+index 6a2a60eb67a3e..1e0ec6317c17f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1013,6 +1013,9 @@ ifdef CONFIG_CC_IS_GCC
