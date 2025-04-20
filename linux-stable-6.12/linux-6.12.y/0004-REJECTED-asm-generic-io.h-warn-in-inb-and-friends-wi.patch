@@ -1,7 +1,7 @@
-From 70af82a28b416474cd9107e020d48b23c99664bc Mon Sep 17 00:00:00 2001
+From 2740e0dc8bf2d1dde557fb2e290eaf49904882b5 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
-Subject: [PATCH 05/10] REJECTED: asm-generic/io.h: warn in inb() and friends
+Subject: [PATCH 4/9] REJECTED: asm-generic/io.h: warn in inb() and friends
  with undefined PCI_IOBASE
 
 When PCI_IOBASE is not defined, it is set to 0 such that it is ignored
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/iomap.c b/drivers/pci/iomap.c
-index 9fb7cacc15cde..bfd9f05333137 100644
+index fe706ed946dfd..d63ade0fe93d1 100644
 --- a/drivers/pci/iomap.c
 +++ b/drivers/pci/iomap.c
-@@ -180,11 +180,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
+@@ -193,11 +193,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
  void pci_iounmap(struct pci_dev *dev, void __iomem *p)
  {
  #ifdef ARCH_HAS_GENERIC_IOPORT_MAP
