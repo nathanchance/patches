@@ -1,7 +1,7 @@
-From 5034ab3d99036396a0f9109d491d9c7991d231f8 Mon Sep 17 00:00:00 2001
+From ca44fd640f6c9e7cf8a713e71c991f58482ed422 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 27 Apr 2023 17:06:37 -0700
-Subject: [PATCH 7/7] HACK: LONGTERM: arm64: Mark
+Subject: [PATCH 6/6] HACK: LONGTERM: arm64: Mark
  __create_pgd_mapping,{_locked}() as __always_inline
 
 Link: http://github.com/ClangBuiltLinux/linux/issues/1838
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index d1a4646f13a90..31114fa1d7032 100644
+index 88d0fb276c968..998d878200075 100644
 --- a/arch/arm64/mm/mmu.c
 +++ b/arch/arm64/mm/mmu.c
 @@ -424,11 +424,10 @@ static void alloc_init_p4d(pgd_t *pgdp, unsigned long addr, unsigned long end,
