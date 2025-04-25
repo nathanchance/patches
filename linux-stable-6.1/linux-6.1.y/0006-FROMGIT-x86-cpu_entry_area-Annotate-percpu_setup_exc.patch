@@ -1,7 +1,7 @@
-From 5c78fe4b22c36caa3270b22fa0952b3d6e467317 Mon Sep 17 00:00:00 2001
+From f04208be671e6b38794ff53d8c3cd2f886e049f6 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:18:08 -0700
-Subject: [PATCH 07/15] FROMGIT: x86/cpu_entry_area: Annotate
+Subject: [PATCH 06/13] FROMGIT: x86/cpu_entry_area: Annotate
  percpu_setup_exception_stacks() as __init
 
 After a recent LLVM change that deduces __cold on functions that only call
