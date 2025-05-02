@@ -1,4 +1,4 @@
-From c5f5968637716af8104c1b553fa35c36ad25a3e6 Mon Sep 17 00:00:00 2001
+From b28c3c5757b2fac48cf3d3a304c002337f1c1e76 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 5/9] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index bac63e874c7bf..57c39b2954d92 100644
+index bac63e874c7b..57c39b2954d9 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -232,7 +232,7 @@ index bac63e874c7bf..57c39b2954d92 100644
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
 diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
-index 2829ddb0e316b..c60151b2f4377 100644
+index 2829ddb0e316..c60151b2f437 100644
 --- a/lib/pci_iomap.c
 +++ b/lib/pci_iomap.c
 @@ -165,11 +165,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);

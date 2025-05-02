@@ -1,4 +1,4 @@
-From e31e6769b9fdb9b9bc5b48bdff6441c0184a0bd6 Mon Sep 17 00:00:00 2001
+From f2a2585e68bccf719e01c233911ee044d0cede6a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 27 Apr 2023 17:06:37 -0700
 Subject: [PATCH 9/9] HACK: LONGTERM: arm64: Mark
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index bc97916a035a6..745b0790a8b53 100644
+index bc97916a035a..745b0790a8b5 100644
 --- a/arch/arm64/mm/mmu.c
 +++ b/arch/arm64/mm/mmu.c
 @@ -366,11 +366,10 @@ static void alloc_init_pud(pgd_t *pgdp, unsigned long addr, unsigned long end,
