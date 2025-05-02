@@ -1,4 +1,4 @@
-From b4b381fc62a78ca1a968c0d7d54839525a361aae Mon Sep 17 00:00:00 2001
+From f97b14bed7a735b4c9963c288d12a9516b15b1de Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
 Subject: [PATCH 07/13] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
@@ -24,7 +24,7 @@ Link: https://git.kernel.org/shawnguo/c/1ec2362084a013df4d78cbfd3228e8c254a67cac
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/mach-imx/mach-imx7d.c b/arch/arm/mach-imx/mach-imx7d.c
-index 6fdd06bcf9884..43cc292f078d5 100644
+index 6fdd06bcf988..43cc292f078d 100644
 --- a/arch/arm/mach-imx/mach-imx7d.c
 +++ b/arch/arm/mach-imx/mach-imx7d.c
 @@ -48,7 +48,7 @@ static void __init imx7d_enet_clk_sel(void)

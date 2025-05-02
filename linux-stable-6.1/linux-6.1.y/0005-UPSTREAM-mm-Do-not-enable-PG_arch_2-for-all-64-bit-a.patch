@@ -1,4 +1,4 @@
-From 6d8325799a30d970aab0ac8e50ef37aa40e86f87 Mon Sep 17 00:00:00 2001
+From 53bd8cedee569975b24a3117e1b757da2eea740f Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 05/13] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -38,7 +38,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 57b437ed09747..4858ec83ba766 100644
+index 57b437ed0974..4858ec83ba76 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
 @@ -2042,6 +2042,7 @@ config ARM64_MTE
@@ -50,7 +50,7 @@ index 57b437ed09747..4858ec83ba766 100644
  	  Memory Tagging (part of the ARMv8.5 Extensions) provides
  	  architectural support for run-time, always-on detection of
 diff --git a/fs/proc/page.c b/fs/proc/page.c
-index f2273b164535b..882525c8e94c5 100644
+index f2273b164535..882525c8e94c 100644
 --- a/fs/proc/page.c
 +++ b/fs/proc/page.c
 @@ -219,7 +219,7 @@ u64 stable_page_flags(struct page *page)
@@ -63,7 +63,7 @@ index f2273b164535b..882525c8e94c5 100644
  #endif
  
 diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-index 59314d228ec38..188cd954ac23c 100644
+index 59314d228ec3..188cd954ac23 100644
 --- a/include/linux/page-flags.h
 +++ b/include/linux/page-flags.h
 @@ -132,7 +132,7 @@ enum pageflags {
@@ -76,7 +76,7 @@ index 59314d228ec38..188cd954ac23c 100644
  #endif
  #ifdef CONFIG_KASAN_HW_TAGS
 diff --git a/include/trace/events/mmflags.h b/include/trace/events/mmflags.h
-index e87cb2b80ed3c..d9f6d35fb1509 100644
+index e87cb2b80ed3..d9f6d35fb150 100644
 --- a/include/trace/events/mmflags.h
 +++ b/include/trace/events/mmflags.h
 @@ -91,10 +91,10 @@
@@ -103,7 +103,7 @@ index e87cb2b80ed3c..d9f6d35fb1509 100644
  
  #define show_page_flags(flags)						\
 diff --git a/mm/Kconfig b/mm/Kconfig
-index cf782e0474910..c12535d78678e 100644
+index cf782e047491..c12535d78678 100644
 --- a/mm/Kconfig
 +++ b/mm/Kconfig
 @@ -1029,6 +1029,14 @@ config ARCH_USES_HIGH_VMA_FLAGS
@@ -122,7 +122,7 @@ index cf782e0474910..c12535d78678e 100644
  	default y
  	bool "Enable VM event counters for /proc/vmstat" if EXPERT
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index f53bc54dacb37..56228ad14b532 100644
+index f53bc54dacb3..56228ad14b53 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
 @@ -2460,7 +2460,7 @@ static void __split_huge_page_tail(struct page *head, int tail,

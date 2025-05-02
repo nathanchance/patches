@@ -1,4 +1,4 @@
-From f4140ca77c8e12b2e360060dc4031dfd7bc2e3fe Mon Sep 17 00:00:00 2001
+From 45f5a905500e0c30aa1b8d19ba008e3ef44bc4f7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 Aug 2024 19:38:00 -0700
 Subject: [PATCH 01/13] NOTCBL: REPORTED: Revert "fbdev: offb: replace
@@ -13,7 +13,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
-index ea232395e226f..4c83a854a45bc 100644
+index ea232395e226..4c83a854a45b 100644
 --- a/drivers/video/fbdev/offb.c
 +++ b/drivers/video/fbdev/offb.c
 @@ -356,7 +356,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
@@ -34,7 +34,7 @@ index ea232395e226f..4c83a854a45bc 100644
  #ifdef __BIG_ENDIAN
  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 
-base-commit: 535ec20c50273d81b2cc7985fed2108dee0e65d7
+base-commit: b6736e03756f42186840724eb38cb412dfb547be
 -- 
 2.49.0
 

@@ -1,4 +1,4 @@
-From 1d02dc7e99df780f840247d00a73f49d0b2677df Mon Sep 17 00:00:00 2001
+From ef66cd75054a677d531cc0d9e301bf863b291564 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:32 +0200
 Subject: [PATCH 08/13] REJECTED: sparc: explicitly set PCI_IOBASE to 0
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/sparc/include/asm/io.h b/arch/sparc/include/asm/io.h
-index 2dad9be9ec752..4428aa9ef41d9 100644
+index 2dad9be9ec75..4428aa9ef41d 100644
 --- a/arch/sparc/include/asm/io.h
 +++ b/arch/sparc/include/asm/io.h
 @@ -1,6 +1,14 @@

@@ -1,4 +1,4 @@
-From 9b62de346bde239719283fad371ebe35293ea4a7 Mon Sep 17 00:00:00 2001
+From dc0a8b080cfe71b9db01fb268335b679ddce03c3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:44:34 -0700
 Subject: [PATCH 12/13] HACK: LONGTERM: Disable syscall not implemented warning
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index f33e61aca93d3..f5234c02207cc 100755
+index f33e61aca93d..f5234c02207c 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
 @@ -261,7 +261,7 @@ EOF
