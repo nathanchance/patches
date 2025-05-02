@@ -1,4 +1,4 @@
-From 23bb0904165e3138cbb1aac79c0b757b3cbce237 Mon Sep 17 00:00:00 2001
+From cad2291df79e793e8cd80620f388cd0f9a102965 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 21 Mar 2023 11:13:46 -0700
 Subject: [PATCH 8/9] HACK: LONGTERM: powerpc: Do not use '-mcpu=440' with
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/powerpc/platforms/Kconfig.cputype b/arch/powerpc/platforms/Kconfig.cputype
-index 1453ccc900c43..ef5e24af19fe5 100644
+index 1453ccc900c4..ef5e24af19fe 100644
 --- a/arch/powerpc/platforms/Kconfig.cputype
 +++ b/arch/powerpc/platforms/Kconfig.cputype
 @@ -193,6 +193,7 @@ config E6500_CPU

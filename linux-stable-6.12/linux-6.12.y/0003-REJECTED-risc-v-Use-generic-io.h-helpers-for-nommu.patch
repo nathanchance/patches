@@ -1,4 +1,4 @@
-From 8374f83c2dd8e6de67e73a4c95057b78676f7996 Mon Sep 17 00:00:00 2001
+From aac09b87d9e5c8b7270d348ef9a84cd185abca4e Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <niklas@komani.de>
 Date: Mon, 10 May 2021 16:52:33 +0200
 Subject: [PATCH 3/9] REJECTED: risc-v: Use generic io.h helpers for nommu
@@ -26,7 +26,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/arch/riscv/include/asm/io.h b/arch/riscv/include/asm/io.h
-index 1c5c641075d2f..023ea6067963a 100644
+index 1c5c641075d2..023ea6067963 100644
 --- a/arch/riscv/include/asm/io.h
 +++ b/arch/riscv/include/asm/io.h
 @@ -23,12 +23,12 @@

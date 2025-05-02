@@ -1,4 +1,4 @@
-From 71dabba159c2c74e38dec05968badd98a9a9e458 Mon Sep 17 00:00:00 2001
+From 0d579f711a4eacd2cfae2e6239c50ec305cb3fae Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 4/9] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/iomap.c b/drivers/pci/iomap.c
-index fe706ed946dfd..d63ade0fe93d1 100644
+index fe706ed946df..d63ade0fe93d 100644
 --- a/drivers/pci/iomap.c
 +++ b/drivers/pci/iomap.c
 @@ -193,11 +193,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
@@ -44,7 +44,7 @@ index fe706ed946dfd..d63ade0fe93d1 100644
  	iounmap(p);
  }
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 80de699bf6af4..67e035682949a 100644
+index 80de699bf6af..67e035682949 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
