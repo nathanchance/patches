@@ -1,7 +1,7 @@
-From 8b7c0c51ba656999043ed9048a3b69bf15b31413 Mon Sep 17 00:00:00 2001
+From fb750e96bd5273029b2c40106e540935c56a9631 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:56 +0100
-Subject: [PATCH 09/18] UPSTREAM: asm-generic/bitops: Always inline all bit
+Subject: [PATCH 09/17] UPSTREAM: asm-generic/bitops: Always inline all bit
  manipulation helpers
 
 Make it consistent with the atomic/atomic-instrumented.h helpers.
@@ -24,7 +24,7 @@ Link: https://git.kernel.org/linus/acb13ea0baf8db8d05a3910c06e997c90825faad
  2 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/include/asm-generic/bitops/instrumented-atomic.h b/include/asm-generic/bitops/instrumented-atomic.h
-index 81915dcd4b4e8..3cf9edf4113f6 100644
+index 81915dcd4b4e..3cf9edf4113f 100644
 --- a/include/asm-generic/bitops/instrumented-atomic.h
 +++ b/include/asm-generic/bitops/instrumented-atomic.h
 @@ -23,7 +23,7 @@
@@ -82,7 +82,7 @@ index 81915dcd4b4e8..3cf9edf4113f6 100644
  	instrument_atomic_read_write(addr + BIT_WORD(nr), sizeof(long));
  	return arch_test_and_change_bit(nr, addr);
 diff --git a/include/asm-generic/bitops/instrumented-non-atomic.h b/include/asm-generic/bitops/instrumented-non-atomic.h
-index 37363d570b9b2..7ab1ecc377824 100644
+index 37363d570b9b..7ab1ecc37782 100644
 --- a/include/asm-generic/bitops/instrumented-non-atomic.h
 +++ b/include/asm-generic/bitops/instrumented-non-atomic.h
 @@ -22,7 +22,7 @@

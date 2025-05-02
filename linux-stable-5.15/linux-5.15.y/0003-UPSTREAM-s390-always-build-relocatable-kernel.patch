@@ -1,7 +1,7 @@
-From a15ed6826cd42a1df8a0f0c71912dfeef7d282d6 Mon Sep 17 00:00:00 2001
+From 7808ac631651df884656a566c3f9367b9273ce9e Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
-Subject: [PATCH 03/18] UPSTREAM: s390: always build relocatable kernel
+Subject: [PATCH 03/17] UPSTREAM: s390: always build relocatable kernel
 
 Nathan Chancellor reported several link errors on s390 with
 CONFIG_RELOCATABLE disabled, after binutils commit 906f69cf65da ("IBM
@@ -34,7 +34,7 @@ Link: https://git.kernel.org/linus/80ddf5ce1c9291cb175d52ed1227134ad48c47ee
  4 files changed, 5 insertions(+), 9 deletions(-)
 
 diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index e402fa964f235..f1521cede653f 100644
+index e402fa964f23..f1521cede653 100644
 --- a/arch/s390/Kconfig
 +++ b/arch/s390/Kconfig
 @@ -600,9 +600,8 @@ config EXPOLINE_FULL
@@ -62,7 +62,7 @@ index e402fa964f235..f1521cede653f 100644
  	help
  	  In support of Kernel Address Space Layout Randomization (KASLR),
 diff --git a/arch/s390/Makefile b/arch/s390/Makefile
-index dc840ba0b016a..b86d4b91bd751 100644
+index dc840ba0b016..b86d4b91bd75 100644
 --- a/arch/s390/Makefile
 +++ b/arch/s390/Makefile
 @@ -16,10 +16,8 @@ KBUILD_AFLAGS_MODULE += -fPIC
@@ -77,7 +77,7 @@ index dc840ba0b016a..b86d4b91bd751 100644
  KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
  KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
 diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
-index 0ba6468991316..e04a8a361caa7 100644
+index 0ba646899131..e04a8a361caa 100644
 --- a/arch/s390/boot/Makefile
 +++ b/arch/s390/boot/Makefile
 @@ -37,9 +37,8 @@ CFLAGS_sclp_early_core.o += -I$(srctree)/drivers/s390/char
@@ -92,7 +92,7 @@ index 0ba6468991316..e04a8a361caa7 100644
  targets	:= bzImage startup.a section_cmp.boot.data section_cmp.boot.preserved.data $(obj-y)
  subdir-	:= compressed
 diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 05fed61c5e3b7..4e6eb31b1469f 100644
+index 05fed61c5e3b..4e6eb31b1469 100644
 --- a/arch/s390/boot/startup.c
 +++ b/arch/s390/boot/startup.c
 @@ -282,8 +282,7 @@ void startup_kernel(void)

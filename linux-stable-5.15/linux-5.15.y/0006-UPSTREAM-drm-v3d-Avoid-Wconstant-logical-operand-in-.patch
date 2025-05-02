@@ -1,7 +1,7 @@
-From 89174d6057a438fcb09bb7061a99730b0ba0d8b1 Mon Sep 17 00:00:00 2001
+From 06a4e69c720f420f56c0f4ecfdf3120914ef6ecb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
-Subject: [PATCH 06/18] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 06/17] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -39,7 +39,7 @@ Link: https://git.kernel.org/linus/b27211db61aed86f095e76aa61eaef3bf3e0b7c2
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
-index 2701347790730..11154eeabd9bc 100644
+index 270134779073..11154eeabd9b 100644
 --- a/drivers/gpu/drm/v3d/v3d_drv.h
 +++ b/drivers/gpu/drm/v3d/v3d_drv.h
 @@ -339,7 +339,7 @@ struct v3d_csd_job {

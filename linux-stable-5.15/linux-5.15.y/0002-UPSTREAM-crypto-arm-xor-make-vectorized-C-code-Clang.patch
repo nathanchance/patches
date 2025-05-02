@@ -1,7 +1,7 @@
-From c189f4f3c86b62533f2a8e9be8bf5f25fa8c045f Mon Sep 17 00:00:00 2001
+From 55787afa377b5f82e6e1f716bdd0708e3cd90cbc Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:46 +0100
-Subject: [PATCH 02/18] UPSTREAM: crypto: arm/xor - make vectorized C code
+Subject: [PATCH 02/17] UPSTREAM: crypto: arm/xor - make vectorized C code
  Clang-friendly
 
 The ARM version of the accelerated XOR routines are simply the 8-way C
@@ -31,7 +31,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm/lib/xor-neon.c b/arch/arm/lib/xor-neon.c
-index 7ba6cf8261626..522510baed490 100644
+index 7ba6cf826162..522510baed49 100644
 --- a/arch/arm/lib/xor-neon.c
 +++ b/arch/arm/lib/xor-neon.c
 @@ -17,18 +17,11 @@ MODULE_LICENSE("GPL");

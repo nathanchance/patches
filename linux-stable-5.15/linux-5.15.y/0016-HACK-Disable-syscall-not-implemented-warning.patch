@@ -1,7 +1,7 @@
-From aa342b8bec7904a1e648a0650946a0236ed0878c Mon Sep 17 00:00:00 2001
+From bf5d479637c7c8fb108b108bf03272891ddcecc4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 7 Sep 2021 16:44:34 -0700
-Subject: [PATCH 17/18] HACK: Disable syscall not implemented warning
+Subject: [PATCH 16/17] HACK: Disable syscall not implemented warning
 
 This used to impact -Werror and it is noisy at times so just ignore it
 for the sake of this project.
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checksyscalls.sh b/scripts/checksyscalls.sh
-index 9dbab13329fa9..204b6c4aca076 100755
+index 9dbab13329fa..204b6c4aca07 100755
 --- a/scripts/checksyscalls.sh
 +++ b/scripts/checksyscalls.sh
 @@ -261,7 +261,7 @@ EOF

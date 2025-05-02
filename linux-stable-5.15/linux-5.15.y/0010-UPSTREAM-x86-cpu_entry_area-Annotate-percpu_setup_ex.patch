@@ -1,7 +1,7 @@
-From 5ef717e193e734f4fb2a0b5fb4d0aad033f3e8e7 Mon Sep 17 00:00:00 2001
+From b965d1ef22c026a858eaf4971d862679b6b48d8c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:18:08 -0700
-Subject: [PATCH 10/18] UPSTREAM: x86/cpu_entry_area: Annotate
+Subject: [PATCH 10/17] UPSTREAM: x86/cpu_entry_area: Annotate
  percpu_setup_exception_stacks() as __init
 
 After a recent LLVM change that deduces __cold on functions that only call
@@ -26,7 +26,7 @@ Link: https://git.kernel.org/linus/decb9ac4a9739c16e228f7b2918bfdca34cc89a9
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/mm/cpu_entry_area.c b/arch/x86/mm/cpu_entry_area.c
-index 6c2f1b76a0b61..fe4f43f01e1e9 100644
+index 6c2f1b76a0b6..fe4f43f01e1e 100644
 --- a/arch/x86/mm/cpu_entry_area.c
 +++ b/arch/x86/mm/cpu_entry_area.c
 @@ -119,7 +119,7 @@ static void __init percpu_setup_exception_stacks(unsigned int cpu)
