@@ -1,7 +1,7 @@
 From f6686daa0ef9dde55b4efb2e9be5aa61b26e0c79 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 May 2025 14:02:01 -0700
-Subject: [PATCH 02/10] SUBMITTED: kbuild: Disable -Wdefault-const-init-unsafe
+Subject: [PATCH 02/12] SUBMITTED: kbuild: Disable -Wdefault-const-init-unsafe
 
 A new on by default warning in clang [1] aims to flags instances where
 const variables without static or thread local storage or const members
