@@ -1,4 +1,4 @@
-From 5a64d215c6e3baeeb7d7a7a65f6fcb269863fb16 Mon Sep 17 00:00:00 2001
+From 8041c8587dfca4fe5635322196aaf21f5451e2ae Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 May 2025 14:02:01 -0700
 Subject: [PATCH 12/18] SUBMITTED: kbuild: Disable -Wdefault-const-init-unsafe
@@ -82,7 +82,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 11 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 26099a3b2964..d832ed94b67e 100644
+index 2288ad8ae88a..64407d6ff5d9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -814,6 +814,17 @@ KBUILD_CFLAGS += -Wno-gnu
