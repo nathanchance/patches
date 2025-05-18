@@ -1,4 +1,4 @@
-From c3747222b5a280a26f1e148e834ed9c748834e8e Mon Sep 17 00:00:00 2001
+From ee8d65797a1a615f4a247e34e29d1bc1350f4a1c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 Aug 2024 19:38:00 -0700
 Subject: [PATCH 01/14] NOTCBL: REPORTED: Revert "fbdev: offb: replace
@@ -34,7 +34,7 @@ index ea232395e226..4c83a854a45b 100644
  #ifdef __BIG_ENDIAN
  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 
-base-commit: 02b72ccb5f9df707a763d9f7163d7918d3aff0b7
+base-commit: 325285d9fc869c02400a697e6729a2994a81a1aa
 -- 
 2.49.0
 
