@@ -1,7 +1,7 @@
-From 672fca454b65df05058907c9eacc5774e480f9ad Mon Sep 17 00:00:00 2001
+From f2445b5b9e597ee01b14d53a0a554039d01c630c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 May 2025 14:02:01 -0700
-Subject: [PATCH 08/14] SUBMITTED: kbuild: Disable -Wdefault-const-init-unsafe
+Subject: [PATCH 08/15] UPSTREAM: kbuild: Disable -Wdefault-const-init-unsafe
 
 A new on by default warning in clang [1] aims to flags instances where
 const variables without static or thread local storage or const members
@@ -75,14 +75,15 @@ Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Closes: https://lore.kernel.org/CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-PVuoSwzv6VWbY=w@mail.gmail.com/
 Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2088
-Link: https://lore.kernel.org/r/20250506-default-const-init-clang-v2-1-fcfb69703264@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://git.kernel.org/linus/d0afcfeb9e3810ec89d1ffde1a0e36621bb75dca
 ---
  Makefile | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 80748b7c3540..6afb342615da 100644
+index f86e26fa0b31..9a7bc4372e35 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -875,6 +875,18 @@ ifdef CONFIG_CC_IS_CLANG
