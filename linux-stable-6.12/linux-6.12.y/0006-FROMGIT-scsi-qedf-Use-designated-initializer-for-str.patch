@@ -1,7 +1,7 @@
-From 3842205c80b10b2a84a7ae2b5746938138334b0a Mon Sep 17 00:00:00 2001
+From ee12dcb3cd4be2c6f47480884bc0b82244abe71d Mon Sep 17 00:00:00 2001
 From: Kees Cook <kees@kernel.org>
 Date: Fri, 2 May 2025 15:41:57 -0700
-Subject: [PATCH 03/12] FROMGIT: scsi: qedf: Use designated initializer for
+Subject: [PATCH 06/13] FROMGIT: scsi: qedf: Use designated initializer for
  struct qed_fcoe_cb_ops
 
 Recent fixes to the randstruct GCC plugin allowed it to notice that this
