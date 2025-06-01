@@ -1,0 +1,43 @@
+From e8381d08b60159b9b06f84e4113909ffba8decd7 Mon Sep 17 00:00:00 2001
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Date: Thu, 29 May 2025 23:01:54 -0700
+Subject: [PATCH 01/26] NOTCBL: FROMLIST: x86/its: Fix undefined reference to
+ cpu_wants_rethunk_at()
+
+Below error was reported in a 32-bit kernel build:
+
+  static_call.c:(.ref.text+0x46): undefined reference to `cpu_wants_rethunk_at'
+  make[1]: [Makefile:1234: vmlinux] Error
+
+This is because the definition of cpu_wants_rethunk_at() depends on
+CONFIG_STACK_VALIDATION which is only enabled in 64-bit mode.
+
+Define the empty function for CONFIG_STACK_VALIDATION=n, rethunk mitigation
+is anyways not supported without it.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5d19a0574b75 ("x86/its: Add support for ITS-safe return thunk")
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Link: https://lore.kernel.org/stable/0f597436-5da6-4319-b918-9f57bde5634a@roeck-us.net/
+---
+ arch/x86/include/asm/alternative.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/include/asm/alternative.h b/arch/x86/include/asm/alternative.h
+index 1797f80c10de..a5f704dbb4a1 100644
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -98,7 +98,7 @@ static inline u8 *its_static_thunk(int reg)
+ }
+ #endif
+ 
+-#ifdef CONFIG_RETHUNK
++#if defined(CONFIG_RETHUNK) && defined(CONFIG_STACK_VALIDATION)
+ extern bool cpu_wants_rethunk(void);
+ extern bool cpu_wants_rethunk_at(void *addr);
+ #else
+
+base-commit: 98f47d0e9b8c557d3063d3ea661cbea1489af330
+-- 
+2.49.0
+

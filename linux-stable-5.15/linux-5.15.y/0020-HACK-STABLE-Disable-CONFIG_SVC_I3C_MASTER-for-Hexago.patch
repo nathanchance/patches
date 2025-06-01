@@ -1,0 +1,28 @@
+From df8af1b6359143d0f57dee996715edc9d050a040 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 31 May 2025 19:49:53 -0700
+Subject: [PATCH 20/26] HACK: STABLE: Disable CONFIG_SVC_I3C_MASTER for Hexagon
+
+This driver now uses readsb(), which Hexagon does not have.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/i3c/master/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/i3c/master/Kconfig b/drivers/i3c/master/Kconfig
+index 3b8f95916f46..f5265fb91868 100644
+--- a/drivers/i3c/master/Kconfig
++++ b/drivers/i3c/master/Kconfig
+@@ -26,7 +26,7 @@ config SVC_I3C_MASTER
+ 	tristate "Silvaco I3C Dual-Role Master driver"
+ 	depends on I3C
+ 	depends on HAS_IOMEM
+-	depends on !(ALPHA || PARISC)
++	depends on !(ALPHA || HEXAGON || PARISC)
+ 	help
+ 	  Support for Silvaco I3C Dual-Role Master Controller.
+ 
+-- 
+2.49.0
+
