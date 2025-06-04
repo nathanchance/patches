@@ -1,7 +1,7 @@
-From 93c86b88e28fe1d15266f46770a68df71d76ecf5 Mon Sep 17 00:00:00 2001
+From da69067830af302eb50bd0671aaead3378b62e04 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
-Subject: [PATCH 07/20] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
+Subject: [PATCH 07/19] FROMGIT: ARM: imx: Annotate imx7d_enet_init() as __init
 
 After a recent LLVM change [1] that deduces __cold on functions that
 only call cold code (such as __init functions), there is a section

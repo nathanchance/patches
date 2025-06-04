@@ -1,7 +1,7 @@
-From 4e16c79427a0146b6ea8f09f28fe76c643337ffb Mon Sep 17 00:00:00 2001
+From 097fc0bbb8617eea9264b914575b11fc54cb0822 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 11:38:24 -0700
-Subject: [PATCH 17/20] UPSTREAM: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
+Subject: [PATCH 16/19] UPSTREAM: mips: Include KBUILD_CPPFLAGS in CHECKFLAGS
  invocation
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to

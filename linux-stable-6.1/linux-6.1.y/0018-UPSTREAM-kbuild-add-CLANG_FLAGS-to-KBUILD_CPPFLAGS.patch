@@ -1,7 +1,7 @@
-From 59766af420296d0a94f0c0b149275d7b389302b4 Mon Sep 17 00:00:00 2001
+From d60e3346923e0ecd0500432779365af4ea784f15 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Sun, 9 Apr 2023 23:53:57 +0900
-Subject: [PATCH 19/20] UPSTREAM: kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
+Subject: [PATCH 18/19] UPSTREAM: kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
 
 When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
 not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
