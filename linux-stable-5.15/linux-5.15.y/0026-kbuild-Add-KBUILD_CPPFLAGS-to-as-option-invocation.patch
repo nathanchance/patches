@@ -1,8 +1,9 @@
-From 976ad9a8a03256238fef9d0dc0fb76a937609578 Mon Sep 17 00:00:00 2001
+From ec9dc0bbd494d702a9f8aac7e079e3a1368be8c2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 6 Jun 2023 15:40:35 -0700
-Subject: [PATCH 26/26] UPSTREAM: kbuild: Add KBUILD_CPPFLAGS to as-option
- invocation
+Subject: [PATCH 26/27] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+
+commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
 
 After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
 KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
@@ -36,7 +37,6 @@ Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5M
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/linus/43fc0a99906e04792786edf8534d8d58d1e9de0c
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/Makefile.compiler | 2 +-

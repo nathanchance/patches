@@ -1,7 +1,9 @@
-From 949b54812e2d0973114b1cb6e802709c65836b50 Mon Sep 17 00:00:00 2001
+From 0f1a0c88bbf93517110ebf7a52df282ddfb0c604 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 1 Jun 2023 12:50:39 -0700
-Subject: [PATCH 24/26] UPSTREAM: kbuild: Add CLANG_FLAGS to as-instr
+Subject: [PATCH 24/27] kbuild: Add CLANG_FLAGS to as-instr
+
+commit cff6e7f50bd315e5b39c4e46c704ac587ceb965f upstream.
 
 A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
 KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
@@ -20,7 +22,6 @@ invocation to ensure the target information is always present.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/linus/cff6e7f50bd315e5b39c4e46c704ac587ceb965f
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/Makefile.compiler | 2 +-

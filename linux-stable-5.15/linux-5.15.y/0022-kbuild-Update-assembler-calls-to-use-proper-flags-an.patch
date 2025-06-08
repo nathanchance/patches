@@ -1,7 +1,7 @@
-From 04287e6e5f44f0e6cfb1d8d37fcdae75641edaaa Mon Sep 17 00:00:00 2001
+From 6d1e7230e016a2c1749a41188d735e8e71038c8b Mon Sep 17 00:00:00 2001
 From: Nick Desaulniers <ndesaulniers@google.com>
 Date: Wed, 14 Jun 2023 11:04:38 -0700
-Subject: [PATCH 21/26] kbuild: Update assembler calls to use proper flags and
+Subject: [PATCH 22/27] kbuild: Update assembler calls to use proper flags and
  language target
 
 commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
@@ -35,8 +35,6 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Tested-by: Anders Roxell <anders.roxell@linaro.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/Kconfig.include   | 2 +-

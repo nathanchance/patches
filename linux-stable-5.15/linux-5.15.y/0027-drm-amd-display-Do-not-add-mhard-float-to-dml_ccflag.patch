@@ -1,8 +1,10 @@
-From ec6cf6cc2b1b682beea14e87c13ecd0497088db8 Mon Sep 17 00:00:00 2001
+From a9e9f4ba146004d25d3ad02d6c6250cb219ff348 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 Jan 2023 20:05:09 -0700
-Subject: [PATCH 22/26] UPSTREAM: drm/amd/display: Do not add '-mhard-float' to
+Subject: [PATCH 27/27] drm/amd/display: Do not add '-mhard-float' to
  dml_ccflags for clang
+
+commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
 
 When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
 warns:
@@ -20,7 +22,6 @@ Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Tested-by: Anders Roxell <anders.roxell@linaro.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://git.kernel.org/linus/7db038d9790eda558dd6c1dde4cdd58b64789c47
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/gpu/drm/amd/display/dc/dml/Makefile | 3 ++-

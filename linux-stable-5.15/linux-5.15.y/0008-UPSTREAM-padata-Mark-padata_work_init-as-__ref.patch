@@ -1,7 +1,7 @@
-From 2543e17b26023f0f580f8a5a24af1ae56c48f11b Mon Sep 17 00:00:00 2001
+From e1a46ec79500e7bab1fb7367ce4e61e933e4fabb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 13 Dec 2022 11:35:28 -0700
-Subject: [PATCH 09/26] UPSTREAM: padata: Mark padata_work_init() as __ref
+Subject: [PATCH 08/27] UPSTREAM: padata: Mark padata_work_init() as __ref
 
 When building arm64 allmodconfig + ThinLTO with clang and a proposed
 modpost update to account for -ffuncton-sections, the following warning
@@ -32,7 +32,7 @@ Link: https://git.kernel.org/linus/0d24f1b7cc65ee73ea8d04e0d10f77a7cb7a83f3
  1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/padata.c b/kernel/padata.c
-index db45af7728cb..7d8a535ce273 100644
+index b443e19e64cf..71c4a2daf6fb 100644
 --- a/kernel/padata.c
 +++ b/kernel/padata.c
 @@ -99,8 +99,16 @@ static struct padata_work *padata_work_alloc(void)
