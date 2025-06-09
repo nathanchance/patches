@@ -1,7 +1,7 @@
-From 276f25cbe7fdcb45cc5285b5740450effc96adbd Mon Sep 17 00:00:00 2001
+From fd56dddb8ebd1afada3d1ef064773b52211ed8b1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 14 Jun 2023 11:04:36 -0700
-Subject: [PATCH 20/27] MIPS: Move '-Wa,-msoft-float' check from as-option to
+Subject: [PATCH 20/28] MIPS: Move '-Wa,-msoft-float' check from as-option to
  cc-option
 
 This patch is for linux-6.1.y and earlier, it has no direct mainline
