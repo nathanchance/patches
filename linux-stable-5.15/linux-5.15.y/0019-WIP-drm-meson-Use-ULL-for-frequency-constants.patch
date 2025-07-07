@@ -1,0 +1,89 @@
+From 92bc0871efe439b6edfa233f22cdc54662dd1025 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 2 Jul 2025 14:18:33 -0700
+Subject: [PATCH 19/19] WIP: drm/meson: Use ULL for frequency constants
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/meson/meson_vclk.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index dfe0c28a0f05..216fb8adb3ea 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -396,7 +396,7 @@ struct meson_vclk_params {
+ 		.vclk_div = 1,
+ 	},
+ 	[MESON_VCLK_HDMI_DDR_148500] = {
+-		.pll_freq = 2970000000,
++		.pll_freq = 2970000000ULL,
+ 		.phy_freq = 742500000,
+ 		.vclk_freq = 148500000,
+ 		.venc_freq = 148500000,
+@@ -408,7 +408,7 @@ struct meson_vclk_params {
+ 		.vclk_div = 1,
+ 	},
+ 	[MESON_VCLK_HDMI_74250] = {
+-		.pll_freq = 2970000000,
++		.pll_freq = 2970000000ULL,
+ 		.phy_freq = 742500000,
+ 		.vclk_freq = 74250000,
+ 		.venc_freq = 74250000,
+@@ -420,7 +420,7 @@ struct meson_vclk_params {
+ 		.vclk_div = 1,
+ 	},
+ 	[MESON_VCLK_HDMI_148500] = {
+-		.pll_freq = 2970000000,
++		.pll_freq = 2970000000ULL,
+ 		.phy_freq = 1485000000,
+ 		.vclk_freq = 148500000,
+ 		.venc_freq = 148500000,
+@@ -433,7 +433,7 @@ struct meson_vclk_params {
+ 	},
+ 	[MESON_VCLK_HDMI_297000] = {
+ 		.pll_freq = 5940000000,
+-		.phy_freq = 2970000000,
++		.phy_freq = 2970000000ULL,
+ 		.venc_freq = 297000000,
+ 		.vclk_freq = 297000000,
+ 		.pixel_freq = 297000000,
+@@ -457,7 +457,7 @@ struct meson_vclk_params {
+ 	},
+ 	[MESON_VCLK_HDMI_594000_YUV420] = {
+ 		.pll_freq = 5940000000,
+-		.phy_freq = 2970000000,
++		.phy_freq = 2970000000ULL,
+ 		.venc_freq = 594000000,
+ 		.vclk_freq = 594000000,
+ 		.pixel_freq = 297000000,
+@@ -847,7 +847,7 @@ static void meson_vclk_set(struct meson_drm *priv,
+ 		meson_hdmi_pll_generic_set(priv, pll_base_freq);
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXBB)) {
+ 		switch (pll_base_freq) {
+-		case 2970000000:
++		case 2970000000ULL:
+ 			m = 0x3d;
+ 			frac = vic_alternate_clock ? 0xd02 : 0xe00;
+ 			break;
+@@ -865,7 +865,7 @@ static void meson_vclk_set(struct meson_drm *priv,
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXM) ||
+ 		   meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXL)) {
+ 		switch (pll_base_freq) {
+-		case 2970000000:
++		case 2970000000ULL:
+ 			m = 0x7b;
+ 			frac = vic_alternate_clock ? 0x281 : 0x300;
+ 			break;
+@@ -882,7 +882,7 @@ static void meson_vclk_set(struct meson_drm *priv,
+ 		meson_hdmi_pll_set_params(priv, m, frac, od1, od2, od3);
+ 	} else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A)) {
+ 		switch (pll_base_freq) {
+-		case 2970000000:
++		case 2970000000ULL:
+ 			m = 0x7b;
+ 			frac = vic_alternate_clock ? 0x140b4 : 0x18000;
+ 			break;
+-- 
+2.50.0
+
