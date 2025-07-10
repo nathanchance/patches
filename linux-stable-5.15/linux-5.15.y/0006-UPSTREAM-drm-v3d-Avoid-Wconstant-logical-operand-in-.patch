@@ -1,4 +1,4 @@
-From 43f5deb22ab690f38d46779bc32b66be2c6f1140 Mon Sep 17 00:00:00 2001
+From c60e4365fb53926342ec2ccc81091f254be546bd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
 Subject: [PATCH 06/19] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
@@ -39,10 +39,10 @@ Link: https://git.kernel.org/linus/b27211db61aed86f095e76aa61eaef3bf3e0b7c2
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
-index 270134779073..11154eeabd9b 100644
+index 0d551b1d9b05..374e6a8e88ab 100644
 --- a/drivers/gpu/drm/v3d/v3d_drv.h
 +++ b/drivers/gpu/drm/v3d/v3d_drv.h
-@@ -339,7 +339,7 @@ struct v3d_csd_job {
+@@ -347,7 +347,7 @@ struct v3d_csd_job {
  static inline unsigned long nsecs_to_jiffies_timeout(const u64 n)
  {
  	/* nsecs_to_jiffies64() does not guard against overflow */
