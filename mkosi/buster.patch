@@ -1,0 +1,35 @@
+diff --git a/mkosi/distributions/debian.py b/mkosi/distributions/debian.py
+index 4ceec90d..e1e36ece 100644
+--- a/mkosi/distributions/debian.py
++++ b/mkosi/distributions/debian.py
+@@ -51,7 +51,9 @@ class Installer(DistributionInstaller):
+             )
+             return
+ 
+-        mirror = context.config.mirror or "http://deb.debian.org/debian"
++        main_sub = 'archive' if context.config.release == 'buster' else 'deb'
++        sec_sub = main_sub if context.config.release == 'buster' else 'security'
++        mirror = context.config.mirror or f"http://{main_sub}.debian.org/debian"
+         signedby = Path("/usr/share/keyrings/debian-archive-keyring.gpg")
+ 
+         yield AptRepository(
+@@ -63,7 +65,7 @@ class Installer(DistributionInstaller):
+         )
+ 
+         # Debug repos are typically not mirrored.
+-        url = "http://deb.debian.org/debian-debug"
++        url = f"http://{main_sub}.debian.org/debian-debug"
+ 
+         yield AptRepository(
+             types=types,
+@@ -87,8 +89,8 @@ class Installer(DistributionInstaller):
+         yield AptRepository(
+             types=types,
+             # Security updates repos are never mirrored.
+-            url="http://security.debian.org/debian-security",
+-            suite=f"{context.config.release}-security",
++            url=f"http://{sec_sub}.debian.org/debian-security",
++            suite=f"{context.config.release}{'/updates' if context.config.release == 'buster' else '-security'}",
+             components=components,
+             signedby=signedby,
+         )
