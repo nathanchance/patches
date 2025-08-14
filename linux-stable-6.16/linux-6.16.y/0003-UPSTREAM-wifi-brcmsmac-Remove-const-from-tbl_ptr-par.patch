@@ -1,7 +1,7 @@
-From 1b1f7ef10eb956d10edb897d4484b9dde2bae4e6 Mon Sep 17 00:00:00 2001
+From fe9841b71af5831fd054e975ace8fa9e616345c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 19:45:23 -0700
-Subject: [PATCH 01/11] FROMGIT: wifi: brcmsmac: Remove const from tbl_ptr
+Subject: [PATCH 03/12] UPSTREAM: wifi: brcmsmac: Remove const from tbl_ptr
  parameter in wlc_lcnphy_common_read_table()
 
 A new warning in clang [1] complains that diq_start in
@@ -25,7 +25,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
 Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://git.kernel.org/wireless/wireless-next/c/81284e86bf8849f8e98e8ead3ff5811926b2107f
+Link: https://git.kernel.org/linus/81284e86bf8849f8e98e8ead3ff5811926b2107f
 ---
  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -43,8 +43,6 @@ index d0faba240561..b4bba67a45ec 100644
  			     u32 tbl_width, u32 tbl_offset)
  {
  	struct phytbl_info tab;
-
-base-commit: 038d61fd642278bab63ee8ef722c50d10ab01e8f
 -- 
 2.50.1
 

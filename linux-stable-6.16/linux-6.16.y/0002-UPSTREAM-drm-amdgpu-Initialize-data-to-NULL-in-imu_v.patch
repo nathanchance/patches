@@ -1,7 +1,7 @@
-From 487d42900ed7ce27e7484b8a44ec6a25b7843b40 Mon Sep 17 00:00:00 2001
+From ff354334cbe68c0984964ab044d2681805447383 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 16:50:22 -0700
-Subject: [PATCH 05/11] SUBMITTED: drm/amdgpu: Initialize data to NULL in
+Subject: [PATCH 02/12] UPSTREAM: drm/amdgpu: Initialize data to NULL in
  imu_v12_0_program_rlc_ram()
 
 After a recent change in clang to expose uninitialized warnings from
@@ -27,8 +27,9 @@ Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2107
 Fixes: 56159fffaab5 ("drm/amdgpu: use new method to program rlc ram")
 Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-Link: https://lore.kernel.org/r/20250715-drm-amdgpu-fix-const-uninit-warning-v1-1-9683661f3197@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://git.kernel.org/linus/c90f2e1172c51fa25492471dc9910e2d7c1444b9
 ---
  drivers/gpu/drm/amd/amdgpu/imu_v12_0.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

@@ -1,7 +1,7 @@
-From c08875b5700f877da30f320eafb063b920438180 Mon Sep 17 00:00:00 2001
+From 28038ec70fa293aecbe523848f718c4d87cc5fe7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 16:27:35 -0700
-Subject: [PATCH 04/11] SUBMITTED: drm/msm/dpu: Initialize crtc_state to NULL
+Subject: [PATCH 06/12] SUBMITTED: drm/msm/dpu: Initialize crtc_state to NULL
  in dpu_plane_virtual_atomic_check()
 
 After a recent change in clang to expose uninitialized warnings from

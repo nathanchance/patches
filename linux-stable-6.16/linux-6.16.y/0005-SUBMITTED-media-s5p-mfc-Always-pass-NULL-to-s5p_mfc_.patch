@@ -1,7 +1,7 @@
-From d40d0e5da070b6744d62ffecb2a78e1f5f30c6b9 Mon Sep 17 00:00:00 2001
+From 9cc7f99e9093bb478085da7b39fa57b27773a412 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 15:13:07 -0700
-Subject: [PATCH 02/11] SUBMITTED: media: s5p-mfc: Always pass NULL to
+Subject: [PATCH 05/12] SUBMITTED: media: s5p-mfc: Always pass NULL to
  s5p_mfc_cmd_host2risc_v6()
 
 A new warning in clang [1] points out a few places in s5p_mfc_cmd_v6.c
