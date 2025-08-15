@@ -1,7 +1,7 @@
-From 0d67ceb21141b17a2def7c8d168d4b8e0d0259e8 Mon Sep 17 00:00:00 2001
+From 2e2744eefd8146a599cf90d14d9966f42efb09c3 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 16:50:22 -0700
-Subject: [PATCH 03/16] UPSTREAM: drm/amdgpu: Initialize data to NULL in
+Subject: [PATCH 03/15] UPSTREAM: drm/amdgpu: Initialize data to NULL in
  imu_v12_0_program_rlc_ram()
 
 After a recent change in clang to expose uninitialized warnings from
