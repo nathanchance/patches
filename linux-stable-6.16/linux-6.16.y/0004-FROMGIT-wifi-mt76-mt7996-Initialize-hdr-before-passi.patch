@@ -1,4 +1,4 @@
-From 29b19c1cf9e5c61f092a8f8433457fa8e16df89f Mon Sep 17 00:00:00 2001
+From 7c014a8cabfcece5e110c7cea81eed8ad52cd603 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 15:33:25 -0700
 Subject: [PATCH 04/12] FROMGIT: wifi: mt76: mt7996: Initialize hdr before
@@ -30,7 +30,7 @@ Link: https://github.com/nbd168/wireless/commit/214e9e4d80cffd685daa108cb79f991e
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 994526c65bfc..640abb4dce7f 100644
+index dd4b7b8c34ea..4554815f5ce7 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
 @@ -1879,8 +1879,8 @@ mt7996_mcu_get_mmps_mode(enum ieee80211_smps_mode smps)
@@ -43,7 +43,7 @@ index 994526c65bfc..640abb4dce7f 100644
  	struct sk_buff *skb;
  	struct tlv *tlv;
  	int len;
-@@ -3373,7 +3373,7 @@ int mt7996_mcu_set_hdr_trans(struct mt7996_dev *dev, bool hdr_trans)
+@@ -3372,7 +3372,7 @@ int mt7996_mcu_set_hdr_trans(struct mt7996_dev *dev, bool hdr_trans)
  {
  	struct {
  		u8 __rsv[4];
