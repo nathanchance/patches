@@ -1,7 +1,7 @@
-From 0dce78ac734e718e7c508d0b634227092b1f1569 Mon Sep 17 00:00:00 2001
+From bfa8a7a1b7199fa32d8722b181f8a739e0852994 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 19:45:23 -0700
-Subject: [PATCH 05/15] UPSTREAM: wifi: brcmsmac: Remove const from tbl_ptr
+Subject: [PATCH 05/14] UPSTREAM: wifi: brcmsmac: Remove const from tbl_ptr
  parameter in wlc_lcnphy_common_read_table()
 
 A new warning in clang [1] complains that diq_start in

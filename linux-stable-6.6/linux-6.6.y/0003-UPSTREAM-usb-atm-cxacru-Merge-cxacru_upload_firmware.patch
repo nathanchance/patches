@@ -1,7 +1,7 @@
-From d71dd6f1fa138fc954400ecad5ba799921addb1c Mon Sep 17 00:00:00 2001
+From 5882c34c11731a366eecb6735d6712b7b06ad524 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 22 Jul 2025 12:11:18 -0700
-Subject: [PATCH 03/15] UPSTREAM: usb: atm: cxacru: Merge
+Subject: [PATCH 03/14] UPSTREAM: usb: atm: cxacru: Merge
  cxacru_upload_firmware() into cxacru_heavy_init()
 
 After a recent change in clang to expose uninitialized warnings from
