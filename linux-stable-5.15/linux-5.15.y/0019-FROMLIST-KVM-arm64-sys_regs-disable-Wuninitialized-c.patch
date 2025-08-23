@@ -43,5 +43,5 @@ index 989bb5dad2c8..109cca425d3e 100644
 +# Work around a false positive Clang 22 -Wuninitialized-const-pointer warning
 +CFLAGS_sys_regs.o := $(call cc-disable-warning, uninitialized-const-pointer)
 -- 
-2.50.1
+2.51.0
 
