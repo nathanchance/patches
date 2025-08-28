@@ -1,7 +1,7 @@
-From 9a8b0d27ccb180e455340c451b89274925fc7aa4 Mon Sep 17 00:00:00 2001
+From 3b16e41b90be50f65fab83895bdfbc17ac466b72 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 13 Dec 2022 11:35:28 -0700
-Subject: [PATCH 04/18] UPSTREAM: padata: Mark padata_work_init() as __ref
+Subject: [PATCH 04/16] UPSTREAM: padata: Mark padata_work_init() as __ref
 
 When building arm64 allmodconfig + ThinLTO with clang and a proposed
 modpost update to account for -ffuncton-sections, the following warning
