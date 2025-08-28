@@ -1,7 +1,7 @@
-From 3467d08d90d3bb8056e9e8a1c8690788b218522e Mon Sep 17 00:00:00 2001
+From 29c54ec7dd0825a843cfbd01b2381f0d3381377b Mon Sep 17 00:00:00 2001
 From: Justin Stitt <justinstitt@google.com>
 Date: Mon, 28 Jul 2025 14:04:24 -0700
-Subject: [PATCH 19/28] FROMLIST: KVM: arm64: sys_regs: disable
+Subject: [PATCH 15/24] FROMLIST: KVM: arm64: sys_regs: disable
  -Wuninitialized-const-pointer warning
 
 A new warning in Clang 22 [1] complains that @clidr passed to

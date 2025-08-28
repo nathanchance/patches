@@ -1,7 +1,7 @@
-From b094561651b6309ac1fd5a19b8347a84c4e52952 Mon Sep 17 00:00:00 2001
+From 62bda9e5063bd142b87d563b5d3edb6bd615322b Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:56 +0100
-Subject: [PATCH 09/28] UPSTREAM: asm-generic/bitops: Always inline all bit
+Subject: [PATCH 09/24] UPSTREAM: asm-generic/bitops: Always inline all bit
  manipulation helpers
 
 Make it consistent with the atomic/atomic-instrumented.h helpers.
