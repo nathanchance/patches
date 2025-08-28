@@ -1,7 +1,7 @@
-From b36c5a2dd435c12a43c8d3f9cd9c208fad51b94c Mon Sep 17 00:00:00 2001
+From 38a75800e6c4977eeaaba54dcf55a1210205e95a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 15:33:25 -0700
-Subject: [PATCH 06/14] FROMGIT: wifi: mt76: mt7996: Initialize hdr before
+Subject: [PATCH 04/12] FROMGIT: wifi: mt76: mt7996: Initialize hdr before
  passing to skb_put_data()
 
 A new warning in clang [1] points out a couple of places where a hdr
