@@ -1,0 +1,31 @@
+From 2d297ea3bba6abfc7023f788ddf3833159faf9f7 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 29 Aug 2025 19:10:49 -0700
+Subject: [PATCH 13/13] WIP: __SANITIZE_THREAD__
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/compiler-clang.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
+index 9b673fefcef8..4e87935ddd86 100644
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -37,9 +37,12 @@
+ #define __no_sanitize_address
+ #endif
+ 
+-#if __has_feature(thread_sanitizer)
+ /* emulate gcc's __SANITIZE_THREAD__ flag */
++#if __has_feature(thread_sanitizer) && !defined(__SANITIZE_THREAD__)
+ #define __SANITIZE_THREAD__
++#endif
++
++#ifdef __SANITIZE_THREAD__
+ #define __no_sanitize_thread \
+ 		__attribute__((no_sanitize("thread")))
+ #else
+-- 
+2.51.0
+
