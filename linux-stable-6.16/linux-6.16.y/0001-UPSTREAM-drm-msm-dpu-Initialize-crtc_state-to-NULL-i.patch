@@ -1,7 +1,7 @@
-From c9cd709b909510b0557a142a3c9245beceabea90 Mon Sep 17 00:00:00 2001
+From bf19e6cd929311aac465f86bbe7a2c7453198f36 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 16:27:35 -0700
-Subject: [PATCH 3/9] SUBMITTED: drm/msm/dpu: Initialize crtc_state to NULL in
+Subject: [PATCH 01/10] UPSTREAM: drm/msm/dpu: Initialize crtc_state to NULL in
  dpu_plane_virtual_atomic_check()
 
 After a recent change in clang to expose uninitialized warnings from
@@ -30,9 +30,10 @@ Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2106
 Fixes: 774bcfb73176 ("drm/msm/dpu: add support for virtual planes")
 Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://git.kernel.org/linus/daab47925c06a04792ca720d8438abd37775e357
 ---
  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -50,6 +51,8 @@ index 421138bc3cb7..30ff21c01a36 100644
  	int ret;
  
  	if (IS_ERR(plane_state))
+
+base-commit: be15dab9a451155bdf3f5278608fe8dc67e07cc1
 -- 
 2.51.0
 

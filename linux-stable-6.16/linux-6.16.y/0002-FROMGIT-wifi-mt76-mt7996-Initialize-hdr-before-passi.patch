@@ -1,7 +1,7 @@
-From 8f15a6075f13bf51f5ac1a2a24e2103815b1addd Mon Sep 17 00:00:00 2001
+From 71551dfa7eaa53f1c91c99960d311cff3bcb9f83 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 15 Jul 2025 15:33:25 -0700
-Subject: [PATCH 1/9] FROMGIT: wifi: mt76: mt7996: Initialize hdr before
+Subject: [PATCH 02/10] FROMGIT: wifi: mt76: mt7996: Initialize hdr before
  passing to skb_put_data()
 
 A new warning in clang [1] points out a couple of places where a hdr
@@ -24,7 +24,7 @@ Closes: https://github.com/ClangBuiltLinux/linux/issues/2104
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Link: https://patch.msgid.link/20250715-mt7996-fix-uninit-const-pointer-v1-1-b5d8d11d7b78@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://github.com/nbd168/wireless/commit/214e9e4d80cffd685daa108cb79f991e6ff25792
+Link: https://git.kernel.org/wireless/wireless/c/87b07a1fbc6b5c23d3b3584ab4288bc9106d3274
 ---
  drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
@@ -52,8 +52,6 @@ index dd4b7b8c34ea..4554815f5ce7 100644
  	struct hdr_trans_blacklist *req_blacklist;
  	struct hdr_trans_en *req_en;
  	struct sk_buff *skb;
-
-base-commit: be15dab9a451155bdf3f5278608fe8dc67e07cc1
 -- 
 2.51.0
 
