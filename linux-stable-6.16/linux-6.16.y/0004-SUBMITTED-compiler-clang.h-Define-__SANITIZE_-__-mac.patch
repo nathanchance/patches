@@ -1,8 +1,8 @@
-From b4c6b6b3f1a8634d87f17c9147cd5e509dbeef67 Mon Sep 17 00:00:00 2001
+From cab9007cf3758bbad466170e608981b6ac778901 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Sep 2025 15:49:26 -0700
-Subject: [PATCH 05/10] SUBMITTED: compiler-clang.h: Define __SANITIZE_*__
- macros only when undefined
+Subject: [PATCH 4/9] SUBMITTED: compiler-clang.h: Define __SANITIZE_*__ macros
+ only when undefined
 
 Clang 22 recently added support for defining __SANITIZE__ macros similar
 to GCC [1], which causes warnings (or errors with CONFIG_WERROR=y or
