@@ -1,7 +1,7 @@
-From e90a0ac6e48d609ee2009f831d2b4704ab8b52f5 Mon Sep 17 00:00:00 2001
+From 1fec51e5a838a0d46fb6f30e8122cba88d5dbf95 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 23 Nov 2024 19:30:19 -0700
-Subject: [PATCH 01/13] UPSTREAM: riscv: Always inline bitops
+Subject: [PATCH 01/12] UPSTREAM: riscv: Always inline bitops
 
 When building allmodconfig + ThinLTO with certain versions of clang,
 arch_set_bit() may not be inlined, resulting in a modpost warning:
@@ -119,7 +119,7 @@ index fae152ea0508..c6bd3d8354a9 100644
  {
  	unsigned long res;
 
-base-commit: b0c51e95f54e5f4e13a7ada6629125b0bc427a96
+base-commit: d497f0738df9504721852225eb5b162d7c8d4a46
 -- 
 2.51.0
 
