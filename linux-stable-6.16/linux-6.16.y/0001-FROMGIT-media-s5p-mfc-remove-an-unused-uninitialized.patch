@@ -1,7 +1,7 @@
-From bd276cf152675e17c0965c363d0412ddb54b4b34 Mon Sep 17 00:00:00 2001
+From 20356601a4d11f83a4e5b47aa50d2ef3b87650a9 Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Aug 2025 22:54:15 +0200
-Subject: [PATCH 2/9] FROMGIT: media: s5p-mfc: remove an unused/uninitialized
+Subject: [PATCH 1/8] FROMGIT: media: s5p-mfc: remove an unused/uninitialized
  variable
 
 The s5p_mfc_cmd_args structure in the v6 driver is never used, not
@@ -127,6 +127,8 @@ index 47bc3014b5d8..f7c682fca645 100644
  	.sys_init_cmd = s5p_mfc_sys_init_cmd_v6,
  	.sleep_cmd = s5p_mfc_sleep_cmd_v6,
  	.wakeup_cmd = s5p_mfc_wakeup_cmd_v6,
+
+base-commit: 1037d3a33ba609fac558643fbb794b24a562af35
 -- 
 2.51.0
 

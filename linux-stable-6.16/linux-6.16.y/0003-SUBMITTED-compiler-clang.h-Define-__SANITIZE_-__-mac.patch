@@ -1,7 +1,7 @@
-From cab9007cf3758bbad466170e608981b6ac778901 Mon Sep 17 00:00:00 2001
+From cae2652671aeddfa74e61d5307ece3e5eddecb97 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Sep 2025 15:49:26 -0700
-Subject: [PATCH 4/9] SUBMITTED: compiler-clang.h: Define __SANITIZE_*__ macros
+Subject: [PATCH 3/8] SUBMITTED: compiler-clang.h: Define __SANITIZE_*__ macros
  only when undefined
 
 Clang 22 recently added support for defining __SANITIZE__ macros similar

@@ -1,7 +1,7 @@
-From 0eeaed72fdeb54676f869201ad06bc28c254126f Mon Sep 17 00:00:00 2001
+From 94adbc973c363f583f5b92cd7fd371413da3b7e7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 11 Aug 2025 21:10:01 -0700
-Subject: [PATCH 3/9] SUBMITTED: riscv: Use 64-bit variable for output in
+Subject: [PATCH 2/8] SUBMITTED: riscv: Use 64-bit variable for output in
  __get_user_asm
 
 After commit f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for
@@ -28,7 +28,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
-index b88a6218b7f2..ff162db20521 100644
+index f5f4f7f85543..ad6727eb1d4c 100644
 --- a/arch/riscv/include/asm/uaccess.h
 +++ b/arch/riscv/include/asm/uaccess.h
 @@ -98,12 +98,16 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm, unsigne
