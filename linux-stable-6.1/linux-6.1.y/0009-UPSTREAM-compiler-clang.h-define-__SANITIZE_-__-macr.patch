@@ -1,13 +1,13 @@
-From 14c06d7307f4aa2099ad870df3bdabf599bf9fa6 Mon Sep 17 00:00:00 2001
+From 7d2193339a426de3945bc8622f019c9e224ba48e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 2 Sep 2025 15:49:26 -0700
-Subject: [PATCH 10/17] SUBMITTED: compiler-clang.h: Define __SANITIZE_*__
+Subject: [PATCH 09/17] UPSTREAM: compiler-clang.h: define __SANITIZE_*__
  macros only when undefined
 
 Clang 22 recently added support for defining __SANITIZE__ macros similar
-to GCC [1], which causes warnings (or errors with CONFIG_WERROR=y or
-W=e) with the existing defines that the kernel creates to emulate this
-behavior with existing clang versions.
+to GCC [1], which causes warnings (or errors with CONFIG_WERROR=y or W=e)
+with the existing defines that the kernel creates to emulate this behavior
+with existing clang versions.
 
   In file included from <built-in>:3:
   In file included from include/linux/compiler_types.h:171:
@@ -22,13 +22,21 @@ Refactor compiler-clang.h to only define the sanitizer macros when they
 are undefined and adjust the rest of the code to use these macros for
 checking if the sanitizers are enabled, clearing up the warnings and
 allowing the kernel to easily drop these defines when the minimum
-supported version of LLVM for building the kernel becomes 22.0.0 or
-newer.
+supported version of LLVM for building the kernel becomes 22.0.0 or newer.
 
-Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250902-clang-update-sanitize-defines-v1-1-cf3702ca3d92@kernel.org
 Link: https://github.com/llvm/llvm-project/commit/568c23bbd3303518c5056d7f03444dae4fdc8a9c [1]
-Link: https://lore.kernel.org/r/20250902-clang-update-sanitize-defines-v1-1-cf3702ca3d92@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://git.kernel.org/linus/3fac212fe489aa0dbe8d80a42a7809840ca7b0f9
 ---
  include/linux/compiler-clang.h | 29 ++++++++++++++++++++++++-----
  1 file changed, 24 insertions(+), 5 deletions(-)
