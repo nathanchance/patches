@@ -1,7 +1,7 @@
-From 0c4ebe040d58db87aed51e77b7c9e2d7f60e6e39 Mon Sep 17 00:00:00 2001
+From 804d99ab2b3c535fab268a265d9c22d597f9bb8e Mon Sep 17 00:00:00 2001
 From: Stefan Kalscheuer <stefan@stklcode.de>
 Date: Sun, 4 Feb 2024 16:07:26 +0100
-Subject: [PATCH 08/17] UPSTREAM: leds: spi-byte: Use
+Subject: [PATCH 08/16] UPSTREAM: leds: spi-byte: Use
  devm_led_classdev_register_ext()
 
 Use extended classdev registration to generate generic device names from
