@@ -1,7 +1,7 @@
-From d2febbb8fa8ee886d9bf7f736629b18961e3eb15 Mon Sep 17 00:00:00 2001
+From e3bbc17626c8acbe236293d1a6ed55a68ec8bee5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 1 Aug 2025 15:30:21 -0700
-Subject: [PATCH 08/12] HACK: WIP: rtl8712: Zero initialize val in
+Subject: [PATCH 07/11] HACK: WIP: rtl8712: Zero initialize val in
  read_rfreg_hdl()
 
 This is likely not a correct fix. This driver was removed in 6.13 in
