@@ -1,7 +1,7 @@
-From 1742c22dad1ea7380fdce5df1ad60888592a3fa6 Mon Sep 17 00:00:00 2001
+From 3113d35452b1ddd96f660216d66e8742352ab47f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 May 2025 19:49:53 -0700
-Subject: [PATCH 25/25] HACK: STABLE: Disable CONFIG_SVC_I3C_MASTER for Hexagon
+Subject: [PATCH 24/24] HACK: STABLE: Disable CONFIG_SVC_I3C_MASTER for Hexagon
 
 This driver now uses readsb(), which Hexagon does not have.
 

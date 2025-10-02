@@ -1,7 +1,7 @@
-From 8b560d50043b5abf88ec90e1b9d00070596caf11 Mon Sep 17 00:00:00 2001
+From 43d36b40a02a34b4782b06fad4878204939f6efb Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:57 +0100
-Subject: [PATCH 04/25] UPSTREAM: cpumask: Always inline helpers which use bit
+Subject: [PATCH 04/24] UPSTREAM: cpumask: Always inline helpers which use bit
  manipulation functions
 
 Former are always inlined so do that for the latter too, for
