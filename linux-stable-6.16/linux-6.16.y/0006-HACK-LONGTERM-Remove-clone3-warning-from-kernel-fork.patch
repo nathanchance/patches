@@ -1,4 +1,4 @@
-From c6a8082f8fd17ab8ce2312c64638f4b51df6019d Mon Sep 17 00:00:00 2001
+From 5dd13b26030a401e8b6d5fa98a86c2b37ab43769 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Jul 2024 10:31:49 -0700
 Subject: [PATCH 6/7] HACK: LONGTERM: Remove clone3() #warning from
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 1ee8eb11f38b..f6c46e921c4f 100644
+index 0cbc174da76a..8e1d952fea31 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -2887,7 +2887,6 @@ SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
