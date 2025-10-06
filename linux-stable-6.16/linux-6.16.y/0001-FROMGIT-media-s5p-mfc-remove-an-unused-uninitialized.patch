@@ -1,4 +1,4 @@
-From 82689bc9d24b6d88584e52e4d8936e2efc22594b Mon Sep 17 00:00:00 2001
+From f4b02f41d4aa4b75d2c519dd0604bb84c399b76d Mon Sep 17 00:00:00 2001
 From: Arnd Bergmann <arnd@arndb.de>
 Date: Thu, 7 Aug 2025 22:54:15 +0200
 Subject: [PATCH 1/7] FROMGIT: media: s5p-mfc: remove an unused/uninitialized
@@ -128,7 +128,7 @@ index 47bc3014b5d8..f7c682fca645 100644
  	.sleep_cmd = s5p_mfc_sleep_cmd_v6,
  	.wakeup_cmd = s5p_mfc_wakeup_cmd_v6,
 
-base-commit: bcabc18865f367a23e016bf6113420c82aea276d
+base-commit: 683320aeb0e83deac1b6c6794b0567969de09548
 -- 
 2.51.0
 
