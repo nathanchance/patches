@@ -1,4 +1,4 @@
-From ed892ba2427c05ed42016caefc78d1af2e61fe54 Mon Sep 17 00:00:00 2001
+From 2fafc7489c3cb22ea31f664359651c8d16a03ce6 Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
 Subject: [PATCH 05/16] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
@@ -135,5 +135,5 @@ index 2c118713f771..58aad52632eb 100644
  #endif
  			 (1L << PG_dirty) |
 -- 
-2.51.0
+2.51.1
 

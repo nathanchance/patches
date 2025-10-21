@@ -1,4 +1,4 @@
-From f834c9f47bc56bc195259f1b203b5c8003d34498 Mon Sep 17 00:00:00 2001
+From 5b644c378f878f6e9f86b04ef22c7c81be60e647 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:20 -0700
 Subject: [PATCH 03/16] UPSTREAM: drm/i915: Avoid -Wconstant-logical-operand in
@@ -50,5 +50,5 @@ index e6e01c2a74a6..da11970b2861 100644
  		return MAX_JIFFY_OFFSET;
  
 -- 
-2.51.0
+2.51.1
 

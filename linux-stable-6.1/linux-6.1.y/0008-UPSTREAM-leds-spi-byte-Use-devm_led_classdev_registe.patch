@@ -1,4 +1,4 @@
-From e1605bb32168e62bb4557efb5ffa4820504cfc8b Mon Sep 17 00:00:00 2001
+From 78a0ab82daeb7c0759cc7a93138a00fc12938749 Mon Sep 17 00:00:00 2001
 From: Stefan Kalscheuer <stefan@stklcode.de>
 Date: Sun, 4 Feb 2024 16:07:26 +0100
 Subject: [PATCH 08/16] UPSTREAM: leds: spi-byte: Use
@@ -56,5 +56,5 @@ index 6883d3ba382f..eb6481df5997 100644
  		of_node_put(child);
  		mutex_destroy(&led->mutex);
 -- 
-2.51.0
+2.51.1
 
