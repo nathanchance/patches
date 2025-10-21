@@ -1,4 +1,4 @@
-From 8ffce42910c3fd15f11d9f63e265847f6c53aaa0 Mon Sep 17 00:00:00 2001
+From fcb552502090428c3c95ab44fd9dda77bc4d5f9a Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Thu, 13 Jan 2022 16:53:56 +0100
 Subject: [PATCH 09/24] UPSTREAM: asm-generic/bitops: Always inline all bit
@@ -156,5 +156,5 @@ index 37363d570b9b..7ab1ecc37782 100644
  	instrument_atomic_read(addr + BIT_WORD(nr), sizeof(long));
  	return arch_test_bit(nr, addr);
 -- 
-2.51.0
+2.51.1
 

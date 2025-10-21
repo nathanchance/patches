@@ -1,4 +1,4 @@
-From e6c8ba6a34ddbfe1b5b972466f142561cb2f825d Mon Sep 17 00:00:00 2001
+From 3d105e6188e855cfcb8448e96c68cb7637e6bed4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 13 Dec 2022 11:35:28 -0700
 Subject: [PATCH 08/24] UPSTREAM: padata: Mark padata_work_init() as __ref
@@ -55,5 +55,5 @@ index b443e19e64cf..71c4a2daf6fb 100644
  	if (flags & PADATA_WORK_ONSTACK)
  		INIT_WORK_ONSTACK(&pw->pw_work, work_fn);
 -- 
-2.51.0
+2.51.1
 

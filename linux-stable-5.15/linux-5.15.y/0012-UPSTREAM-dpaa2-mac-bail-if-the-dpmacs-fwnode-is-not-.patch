@@ -1,4 +1,4 @@
-From e16b87f18b0610e6ac1e0e1765fffae41f52e309 Mon Sep 17 00:00:00 2001
+From dd30b722df16736cb811b7a4bc97a7297f665f96 Mon Sep 17 00:00:00 2001
 From: Robert-Ionut Alexa <robert-ionut.alexa@nxp.com>
 Date: Thu, 6 Jan 2022 15:59:03 +0200
 Subject: [PATCH 12/24] UPSTREAM: dpaa2-mac: bail if the dpmacs fwnode is not
@@ -39,5 +39,5 @@ index ae6d382d8735..4ace67bfa07c 100644
  		err = -EINVAL;
  		if (is_acpi_device_node(child))
 -- 
-2.51.0
+2.51.1
 

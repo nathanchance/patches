@@ -1,4 +1,4 @@
-From d67a2203e3483f4df40e4dc3dd56d5eb380cb156 Mon Sep 17 00:00:00 2001
+From a3f894df8134838531b3dbb3f90e17108b5a4735 Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Sun, 30 Oct 2022 19:22:02 +0100
 Subject: [PATCH 03/24] UPSTREAM: s390: always build relocatable kernel
@@ -106,5 +106,5 @@ index 05fed61c5e3b..4e6eb31b1469 100644
  	if (__kaslr_offset) {
  		/*
 -- 
-2.51.0
+2.51.1
 

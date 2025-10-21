@@ -1,4 +1,4 @@
-From 593f97818e7267b269a0f8e938c7540eb2b8949b Mon Sep 17 00:00:00 2001
+From 0c54198401eec2b0e568802a4d7c506c269e6b52 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 2 Jul 2025 14:18:33 -0700
 Subject: [PATCH 16/24] WIP: drm/meson: Use ULL for frequency constants
@@ -85,5 +85,5 @@ index dfe0c28a0f05..216fb8adb3ea 100644
  			frac = vic_alternate_clock ? 0x140b4 : 0x18000;
  			break;
 -- 
-2.51.0
+2.51.1
 
