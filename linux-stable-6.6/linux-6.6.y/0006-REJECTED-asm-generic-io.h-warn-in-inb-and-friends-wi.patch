@@ -1,4 +1,4 @@
-From e19bf2fe19d8c26a5c29c4c400b2384efdcb65e7 Mon Sep 17 00:00:00 2001
+From d581b5328011c979d9f4f75bc51fb625156815ba Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 06/10] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index bac63e874c7b..57c39b2954d9 100644
+index 52db695436bb..22905a3d957d 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
@@ -35,7 +35,7 @@ index bac63e874c7b..57c39b2954d9 100644
  #include <linux/string.h> /* for memset() and memcpy() */
  #include <linux/types.h>
  #include <linux/instruction_pointer.h>
-@@ -523,10 +524,6 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
+@@ -557,10 +558,6 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
  #endif
  #endif /* CONFIG_64BIT */
  
@@ -46,7 +46,7 @@ index bac63e874c7b..57c39b2954d9 100644
  #ifndef IO_SPACE_LIMIT
  #define IO_SPACE_LIMIT 0xffff
  #endif
-@@ -541,12 +538,17 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
+@@ -575,12 +572,17 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
  #define _inb _inb
  static inline u8 _inb(unsigned long addr)
  {
@@ -64,7 +64,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -554,12 +556,17 @@ static inline u8 _inb(unsigned long addr)
+@@ -588,12 +590,17 @@ static inline u8 _inb(unsigned long addr)
  #define _inw _inw
  static inline u16 _inw(unsigned long addr)
  {
@@ -82,7 +82,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -567,12 +574,17 @@ static inline u16 _inw(unsigned long addr)
+@@ -601,12 +608,17 @@ static inline u16 _inw(unsigned long addr)
  #define _inl _inl
  static inline u32 _inl(unsigned long addr)
  {
@@ -100,7 +100,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -580,9 +592,13 @@ static inline u32 _inl(unsigned long addr)
+@@ -614,9 +626,13 @@ static inline u32 _inl(unsigned long addr)
  #define _outb _outb
  static inline void _outb(u8 value, unsigned long addr)
  {
@@ -114,7 +114,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -590,9 +606,13 @@ static inline void _outb(u8 value, unsigned long addr)
+@@ -624,9 +640,13 @@ static inline void _outb(u8 value, unsigned long addr)
  #define _outw _outw
  static inline void _outw(u16 value, unsigned long addr)
  {
@@ -128,7 +128,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -600,9 +620,13 @@ static inline void _outw(u16 value, unsigned long addr)
+@@ -634,9 +654,13 @@ static inline void _outw(u16 value, unsigned long addr)
  #define _outl _outl
  static inline void _outl(u32 value, unsigned long addr)
  {
@@ -142,7 +142,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -689,7 +713,12 @@ static inline void outl_p(u32 value, unsigned long addr)
+@@ -723,7 +747,12 @@ static inline void outl_p(u32 value, unsigned long addr)
  #define insb insb
  static inline void insb(unsigned long addr, void *buffer, unsigned int count)
  {
@@ -155,7 +155,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -697,7 +726,12 @@ static inline void insb(unsigned long addr, void *buffer, unsigned int count)
+@@ -731,7 +760,12 @@ static inline void insb(unsigned long addr, void *buffer, unsigned int count)
  #define insw insw
  static inline void insw(unsigned long addr, void *buffer, unsigned int count)
  {
@@ -168,7 +168,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -705,7 +739,12 @@ static inline void insw(unsigned long addr, void *buffer, unsigned int count)
+@@ -739,7 +773,12 @@ static inline void insw(unsigned long addr, void *buffer, unsigned int count)
  #define insl insl
  static inline void insl(unsigned long addr, void *buffer, unsigned int count)
  {
@@ -181,7 +181,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -714,7 +753,11 @@ static inline void insl(unsigned long addr, void *buffer, unsigned int count)
+@@ -748,7 +787,11 @@ static inline void insl(unsigned long addr, void *buffer, unsigned int count)
  static inline void outsb(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -193,7 +193,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -723,7 +766,11 @@ static inline void outsb(unsigned long addr, const void *buffer,
+@@ -757,7 +800,11 @@ static inline void outsb(unsigned long addr, const void *buffer,
  static inline void outsw(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -205,7 +205,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -732,7 +779,11 @@ static inline void outsw(unsigned long addr, const void *buffer,
+@@ -766,7 +813,11 @@ static inline void outsw(unsigned long addr, const void *buffer,
  static inline void outsl(unsigned long addr, const void *buffer,
  			 unsigned int count)
  {
@@ -217,7 +217,7 @@ index bac63e874c7b..57c39b2954d9 100644
  }
  #endif
  
-@@ -1111,8 +1162,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
+@@ -1145,8 +1196,13 @@ static inline void __iomem *ioremap_np(phys_addr_t offset, size_t size)
  #define ioport_map ioport_map
  static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
  {
@@ -252,5 +252,5 @@ index 2829ddb0e316..c60151b2f437 100644
  	iounmap(p);
  }
 -- 
-2.51.0
+2.51.1
 

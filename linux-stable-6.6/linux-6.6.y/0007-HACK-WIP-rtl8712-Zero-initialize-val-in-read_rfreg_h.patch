@@ -1,4 +1,4 @@
-From 195c1438733b79bdd3c030cd19aaf911dd002bd3 Mon Sep 17 00:00:00 2001
+From 73ea7dc1012df898404706688eb29437490891fb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 1 Aug 2025 15:30:21 -0700
 Subject: [PATCH 07/10] HACK: WIP: rtl8712: Zero initialize val in
@@ -25,5 +25,5 @@ index bb7db96ed821..6e2d92f7b22e 100644
  	struct cmd_obj *pcmd  = (struct cmd_obj *)pbuf;
  
 -- 
-2.51.0
+2.51.1
 
