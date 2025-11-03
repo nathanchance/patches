@@ -1,7 +1,7 @@
-From bba410f04be0ecd62ce4b10109154f2b5526de82 Mon Sep 17 00:00:00 2001
+From 0c13c38ffb95d505f43b5423db38a031c8a77429 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Oct 2023 15:19:46 -0700
-Subject: [PATCH 1/9] SUBMITTED: kbuild: Enable
+Subject: [PATCH 05/10] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict in W=1
 
 -Wincompatible-function-pointer-types-strict aims to catch clang kernel
@@ -29,14 +29,14 @@ Link: https://github.com/ClangBuiltLinux/linux/issues/1750
 Link: https://lore.kernel.org/r/20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- scripts/Makefile.extrawarn | 1 +
+ scripts/Makefile.warn | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 1d13cecc7cc7..6c49aadbe513 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -88,6 +88,7 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
+diff --git a/scripts/Makefile.warn b/scripts/Makefile.warn
+index 68e6fafcb80c..e575c6d042c7 100644
+--- a/scripts/Makefile.warn
++++ b/scripts/Makefile.warn
+@@ -117,6 +117,7 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
  KBUILD_CFLAGS += -Wmissing-format-attribute
  KBUILD_CFLAGS += -Wmissing-include-dirs
  KBUILD_CFLAGS += $(call cc-option, -Wunused-const-variable)
@@ -44,8 +44,6 @@ index 1d13cecc7cc7..6c49aadbe513 100644
  
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
-
-base-commit: 6ecd20965bdc21b265a0671ccf36d9ad8043f5ab
 -- 
-2.47.1
+2.51.2
 

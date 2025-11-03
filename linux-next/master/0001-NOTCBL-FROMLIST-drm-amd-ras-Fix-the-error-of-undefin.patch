@@ -1,0 +1,47 @@
+From 1cef697ce69f921b228587bcc3607a573c822359 Mon Sep 17 00:00:00 2001
+From: YiPeng Chai <YiPeng.Chai@amd.com>
+Date: Wed, 29 Oct 2025 10:43:28 +0800
+Subject: [PATCH 01/10] NOTCBL: FROMLIST: drm/amd/ras: Fix the error of
+ undefined reference to `__udivdi3'
+
+Fix the error:
+drivers/gpu/drm/amd/amdgpu/../ras/ras_mgr/amdgpu_ras_mgr.c:132:undefined reference to `__udivdi3'
+
+Closes:https://lore.kernel.org/oe-kbuild-all/202510272144.6SUHUoWx-lkp@intel.com/
+
+Fixs:b5bae0f01786d("drm/amd/ras: Add amdgpu ras management function")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Link: https://patch.msgid.link/20251029024328.2068340-1-YiPeng.Chai@amd.com
+---
+ drivers/gpu/drm/amd/ras/ras_mgr/amdgpu_ras_mgr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/ras/ras_mgr/amdgpu_ras_mgr.c b/drivers/gpu/drm/amd/ras/ras_mgr/amdgpu_ras_mgr.c
+index 8007e49951d8..d09c4a75a7f4 100644
+--- a/drivers/gpu/drm/amd/ras/ras_mgr/amdgpu_ras_mgr.c
++++ b/drivers/gpu/drm/amd/ras/ras_mgr/amdgpu_ras_mgr.c
+@@ -37,7 +37,7 @@
+ #define MAX_XCD_NUM_PER_AID			2
+ 
+ /* typical ECC bad page rate is 1 bad page per 100MB VRAM */
+-#define ESTIMATE_BAD_PAGE_THRESHOLD(size)         ((size)/(100 * 1024 * 1024ULL))
++#define TYPICAL_ECC_BAD_PAGE_RATE (100 * 1024 * 1024ULL)
+ 
+ #define COUNT_BAD_PAGE_THRESHOLD(size) (((size) >> 21) << 4)
+ 
+@@ -129,7 +129,7 @@ static int amdgpu_ras_mgr_init_eeprom_config(struct amdgpu_device *adev,
+ 	 */
+ 	if (amdgpu_bad_page_threshold == NONSTOP_OVER_THRESHOLD)
+ 		eeprom_cfg->eeprom_record_threshold_count =
+-				ESTIMATE_BAD_PAGE_THRESHOLD(adev->gmc.mc_vram_size);
++			div64_u64(adev->gmc.mc_vram_size, TYPICAL_ECC_BAD_PAGE_RATE);
+ 	else if (amdgpu_bad_page_threshold == WARN_NONSTOP_OVER_THRESHOLD)
+ 		eeprom_cfg->eeprom_record_threshold_count =
+ 				COUNT_BAD_PAGE_THRESHOLD(RAS_RESERVED_VRAM_SIZE_DEFAULT);
+
+base-commit: 9823120909776bbca58a3c55ef1f27d49283c1f3
+-- 
+2.51.2
+

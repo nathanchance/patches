@@ -1,0 +1,42 @@
+From c49d6da609d725221e97ce2461f87985bd264705 Mon Sep 17 00:00:00 2001
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Date: Mon, 27 Oct 2025 15:05:41 +0100
+Subject: [PATCH 03/10] NOTCBL: FROMLIST: macintosh/via-pmu-backlight: Include
+ <linux/fb.h> and <linux/of.h>
+
+Include <linux/fb.h> and <linux/of.h> to avoid dependency on backlight
+header to include them. Declares of_machine_is_compatible() and defines
+FB_BACKLIGHT_MAX.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 243ce64b2b37 ("backlight: Do not include <linux/fb.h> in header file")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/linuxppc-dev/CA+G9fYs8fn5URQx2+s2oNxdUgZkSrdLC0P1tNBW_n-6BaBkK2Q@mail.gmail.com/
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <danielt@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Link: https://patch.msgid.link/20251027140646.227025-3-tzimmermann@suse.de
+---
+ drivers/macintosh/via-pmu-backlight.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/macintosh/via-pmu-backlight.c b/drivers/macintosh/via-pmu-backlight.c
+index 26bd9ed5e664..d91825bb0a5c 100644
+--- a/drivers/macintosh/via-pmu-backlight.c
++++ b/drivers/macintosh/via-pmu-backlight.c
+@@ -11,6 +11,8 @@
+ #include <asm/ptrace.h>
+ #include <linux/adb.h>
+ #include <linux/backlight.h>
++#include <linux/fb.h>
++#include <linux/of.h>
+ #include <linux/pmu.h>
+ #include <asm/backlight.h>
+ 
+-- 
+2.51.2
+

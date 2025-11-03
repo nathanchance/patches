@@ -1,7 +1,7 @@
-From 2a0c3b9a3059593bce2baadca7179f83597cbfed Mon Sep 17 00:00:00 2001
+From 65239ac8ccd461da58f609303a547577fe253b8e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 4 Oct 2023 11:43:39 -0700
-Subject: [PATCH 2/9] WIP: kbuild: Promote
+Subject: [PATCH 06/10] WIP: kbuild: Promote
  -Wincompatible-function-pointer-types-strict from W=1
 
 Now that all instances of this have been fixed, move this out of W=1 and
@@ -10,8 +10,8 @@ build time, rather than run time.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/counter/Makefile   | 2 ++
- scripts/Makefile.extrawarn | 2 +-
+ drivers/counter/Makefile | 2 ++
+ scripts/Makefile.warn    | 2 +-
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/counter/Makefile b/drivers/counter/Makefile
@@ -27,11 +27,11 @@ index fa3c1d08f706..80e335e836e4 100644
  obj-$(CONFIG_COUNTER) += counter.o
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index 6c49aadbe513..3a4e05aeb2fb 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -70,6 +70,7 @@ KBUILD_CFLAGS += -Werror=date-time
+diff --git a/scripts/Makefile.warn b/scripts/Makefile.warn
+index e575c6d042c7..4e49c163b767 100644
+--- a/scripts/Makefile.warn
++++ b/scripts/Makefile.warn
+@@ -100,6 +100,7 @@ KBUILD_CFLAGS += -Werror=date-time
  
  # enforce correct pointer usage
  KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-pointer-types)
@@ -39,7 +39,7 @@ index 6c49aadbe513..3a4e05aeb2fb 100644
  
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
-@@ -88,7 +89,6 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
+@@ -117,7 +118,6 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
  KBUILD_CFLAGS += -Wmissing-format-attribute
  KBUILD_CFLAGS += -Wmissing-include-dirs
  KBUILD_CFLAGS += $(call cc-option, -Wunused-const-variable)
@@ -48,5 +48,5 @@ index 6c49aadbe513..3a4e05aeb2fb 100644
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.47.1
+2.51.2
 

@@ -1,0 +1,41 @@
+From a13370a3358dca4407f7ff371745bbb9156b1d6e Mon Sep 17 00:00:00 2001
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Date: Mon, 27 Oct 2025 15:05:40 +0100
+Subject: [PATCH 02/10] NOTCBL: FROMLIST: powermac: backlight: Include
+ <linux/of.h>
+
+Include <linux/of.h> to avoid dependency on backlight header to include
+it. Declares of_find_node_by_name(), of_property_match_string() and
+of_node_put().
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 243ce64b2b37 ("backlight: Do not include <linux/fb.h> in header file")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/linuxppc-dev/CA+G9fYs8fn5URQx2+s2oNxdUgZkSrdLC0P1tNBW_n-6BaBkK2Q@mail.gmail.com/
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <danielt@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Link: https://patch.msgid.link/20251027140646.227025-2-tzimmermann@suse.de
+---
+ arch/powerpc/platforms/powermac/backlight.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/powerpc/platforms/powermac/backlight.c b/arch/powerpc/platforms/powermac/backlight.c
+index 79741370c40c..1796327955c6 100644
+--- a/arch/powerpc/platforms/powermac/backlight.c
++++ b/arch/powerpc/platforms/powermac/backlight.c
+@@ -11,6 +11,7 @@
+ #include <linux/kernel.h>
+ #include <linux/backlight.h>
+ #include <linux/adb.h>
++#include <linux/of.h>
+ #include <linux/pmu.h>
+ #include <linux/atomic.h>
+ #include <linux/export.h>
+-- 
+2.51.2
+
