@@ -1,7 +1,7 @@
-From 1cef697ce69f921b228587bcc3607a573c822359 Mon Sep 17 00:00:00 2001
+From 01d2f7ee95e3fa55d9652c984cbb007c8b21722a Mon Sep 17 00:00:00 2001
 From: YiPeng Chai <YiPeng.Chai@amd.com>
 Date: Wed, 29 Oct 2025 10:43:28 +0800
-Subject: [PATCH 01/10] NOTCBL: FROMLIST: drm/amd/ras: Fix the error of
+Subject: [PATCH 01/11] NOTCBL: FROMLIST: drm/amd/ras: Fix the error of
  undefined reference to `__udivdi3'
 
 Fix the error:
@@ -41,7 +41,7 @@ index 8007e49951d8..d09c4a75a7f4 100644
  		eeprom_cfg->eeprom_record_threshold_count =
  				COUNT_BAD_PAGE_THRESHOLD(RAS_RESERVED_VRAM_SIZE_DEFAULT);
 
-base-commit: 9823120909776bbca58a3c55ef1f27d49283c1f3
+base-commit: 17490bd0527f59d841168457b245581f314b5fa0
 -- 
 2.51.2
 
