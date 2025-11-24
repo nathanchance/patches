@@ -1,4 +1,4 @@
-From fbc19bc6256c16f949733a6fd67dd7db922c0118 Mon Sep 17 00:00:00 2001
+From 5039e13d8c8d4c97e501da0aa0422ee1b62832c1 Mon Sep 17 00:00:00 2001
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 Date: Mon, 10 May 2021 16:52:34 +0200
 Subject: [PATCH 05/10] REJECTED: asm-generic/io.h: warn in inb() and friends
@@ -252,5 +252,5 @@ index 6862982c5f1a..402c38a42592 100644
  #define ARCH_HAS_GENERIC_IOPORT_MAP
  #endif
 -- 
-2.51.2
+2.52.0
 
