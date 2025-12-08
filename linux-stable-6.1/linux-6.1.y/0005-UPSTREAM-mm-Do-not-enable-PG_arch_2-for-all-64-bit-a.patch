@@ -1,7 +1,7 @@
-From 7ff632a532f840f28b1ef42396fe2440f4fbd44d Mon Sep 17 00:00:00 2001
+From 4d57cf8d24854fabf88a230df70e98236f59459c Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
-Subject: [PATCH 05/16] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
+Subject: [PATCH 05/15] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
  architectures
 
 Commit 4beba9486abd ("mm: Add PG_arch_2 page flag") introduced a new
