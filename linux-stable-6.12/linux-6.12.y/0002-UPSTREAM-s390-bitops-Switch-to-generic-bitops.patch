@@ -1,7 +1,7 @@
-From 6d2db6489a5e9594168d9212c9f6473272ac7ca8 Mon Sep 17 00:00:00 2001
+From dbb6001a14cded5e5a65c036b0d9657eb0ebb70a Mon Sep 17 00:00:00 2001
 From: Heiko Carstens <hca@linux.ibm.com>
 Date: Fri, 13 Dec 2024 13:27:33 +0100
-Subject: [PATCH 03/10] UPSTREAM: s390/bitops: Switch to generic bitops
+Subject: [PATCH 2/9] UPSTREAM: s390/bitops: Switch to generic bitops
 
 The generic bitops implementation is nearly identical to the s390
 implementation therefore switch to the generic variant.
