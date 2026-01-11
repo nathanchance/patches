@@ -1,7 +1,7 @@
-From ca2e1f6937749eabf9e1b84fe42d65730f564e9e Mon Sep 17 00:00:00 2001
+From 6d85089838bd5d96471a1fada0db22574e5a82ef Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 Aug 2024 19:38:00 -0700
-Subject: [PATCH 01/15] NOTCBL: REPORTED: Revert "fbdev: offb: replace
+Subject: [PATCH 01/13] NOTCBL: REPORTED: Revert "fbdev: offb: replace
  of_node_put with __free(device_node)"
 
 This reverts commit 96ee5c5712efb7ec5af66e3d600d6258cece0ea5.
@@ -34,7 +34,7 @@ index ea232395e226..4c83a854a45b 100644
  #ifdef __BIG_ENDIAN
  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 
-base-commit: 50cbba13faa294918f0e1a9cb2b0aba19f4e6fba
+base-commit: bec0e10ee67efbd0ad36281745a3edea4fcd8dc2
 -- 
 2.52.0
 
