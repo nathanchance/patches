@@ -1,0 +1,49 @@
+From c9e61bc3ba1ec2cbfa6a95cb4f95ad086d3011eb Mon Sep 17 00:00:00 2001
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
+Date: Tue, 13 Sep 2022 16:26:34 +0800
+Subject: [PATCH 03/10] UPSTREAM: ASoC: ak4458: Add ak4458_reset in device
+ probe and remove
+
+This patch fixup this warning when CONFIG_PM not defined
+
+linux/sound/soc/codecs/ak4458.c:631:13: error: 'ak4458_reset' defined but\
+        not used [-Werror=unused-function]
+  631 | static void ak4458_reset(struct ak4458_priv *ak4458, bool active)
+      |             ^~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+Fixes: e9e7df88996d64 ("ASoC: ak4458: Remove component probe() and remove()")
+Reported-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1663057594-29141-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://git.kernel.org/linus/da995e22fa7193b067f2545e63d726ffe36ba174
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/codecs/ak4458.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index e2e12dbc8cf2..fb1ab335a4c1 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -790,12 +790,16 @@ static int ak4458_i2c_probe(struct i2c_client *i2c)
+ 
+ 	pm_runtime_enable(&i2c->dev);
+ 	regcache_cache_only(ak4458->regmap, true);
++	ak4458_reset(ak4458, false);
+ 
+ 	return 0;
+ }
+ 
+ static void ak4458_i2c_remove(struct i2c_client *i2c)
+ {
++	struct ak4458_priv *ak4458 = i2c_get_clientdata(i2c);
++
++	ak4458_reset(ak4458, true);
+ 	pm_runtime_disable(&i2c->dev);
+ }
+ 
+-- 
+2.52.0
+
