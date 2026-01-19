@@ -1,7 +1,7 @@
-From d700250ad89f56151c26d36d59f97bf2d4f23f47 Mon Sep 17 00:00:00 2001
+From 78b6267d6c4f74295ae652fea2ee08bc1967d1c6 Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Mon, 24 Jul 2023 14:05:40 -0700
-Subject: [PATCH 05/24] UPSTREAM: cpumask: change return types to bool where
+Subject: [PATCH 05/21] UPSTREAM: cpumask: change return types to bool where
  appropriate
 
 Some cpumask functions have integer return types where return values
