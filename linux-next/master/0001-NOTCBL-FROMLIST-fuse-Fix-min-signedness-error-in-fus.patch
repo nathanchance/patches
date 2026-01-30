@@ -1,0 +1,45 @@
+From f514490b6cb349c66298720a29c2f5ffae24625d Mon Sep 17 00:00:00 2001
+From: David Laight <david.laight.linux@gmail.com>
+Date: Tue, 13 Jan 2026 19:22:43 +0000
+Subject: [PATCH 01/10] NOTCBL: FROMLIST: fuse: Fix 'min: signedness error' in
+ fuse_wr_pages()
+
+On 32bit systems 'pos' is s64 and everything else is 32bit so the
+first argument to min() is signed - generating a warning.
+On 64bit systems 'len' is 64bit unsigned forcing everything to unsigned.
+
+Fix by reworking the exprssion to completely avoid 64bit maths on 32bit.
+Use DIV_ROUND_UP() instead of open-coding something equivalent.
+
+Note that the 32bit 'len' cannot overflow because the syscall interface
+limits read/write (etc) to (INT_MAX - PAGE_SIZE) bytes (even on 64bit).
+
+Fixes: 0f5bb0cfb0b4 ("fs: use min() or umin() instead of min_t()")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Reported-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://patch.msgid.link/20260113192243.73983-1-david.laight.linux@gmail.com
+---
+ fs/fuse/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index dffd454e30e2..01b07a09393d 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1323,8 +1323,8 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
+ static inline unsigned int fuse_wr_pages(loff_t pos, size_t len,
+ 				     unsigned int max_pages)
+ {
+-	return min(((pos + len - 1) >> PAGE_SHIFT) - (pos >> PAGE_SHIFT) + 1,
+-		   max_pages);
++	len += pos % PAGE_SIZE;
++	return min(DIV_ROUND_UP(len, PAGE_SIZE), max_pages);
+ }
+ 
+ static ssize_t fuse_perform_write(struct kiocb *iocb, struct iov_iter *ii)
+
+base-commit: 4c87cdd0328495759f6e9f9f4e1e53ef8032a76f
+-- 
+2.52.0
+

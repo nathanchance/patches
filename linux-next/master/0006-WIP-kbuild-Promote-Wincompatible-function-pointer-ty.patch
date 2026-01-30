@@ -1,7 +1,7 @@
-From 010d903ba1b139aa8c19760fd59c116a21a8984d Mon Sep 17 00:00:00 2001
+From f16fd17bc0858cfa14be5237b97797bc31ff963a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 4 Oct 2023 11:43:39 -0700
-Subject: [PATCH 07/11] WIP: kbuild: Promote
+Subject: [PATCH 06/10] WIP: kbuild: Promote
  -Wincompatible-function-pointer-types-strict from W=1
 
 Now that all instances of this have been fixed, move this out of W=1 and
@@ -28,25 +28,25 @@ index fa3c1d08f706..80e335e836e4 100644
  counter-y := counter-core.o counter-sysfs.o counter-chrdev.o
  
 diff --git a/scripts/Makefile.warn b/scripts/Makefile.warn
-index e575c6d042c7..4e49c163b767 100644
+index 74a840518af7..002e27bf3a01 100644
 --- a/scripts/Makefile.warn
 +++ b/scripts/Makefile.warn
-@@ -100,6 +100,7 @@ KBUILD_CFLAGS += -Werror=date-time
+@@ -103,6 +103,7 @@ KBUILD_CFLAGS += -Werror=date-time
  
  # enforce correct pointer usage
- KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-pointer-types)
+ KBUILD_CFLAGS += -Werror=incompatible-pointer-types
 +KBUILD_CFLAGS += $(call cc-option,-Werror=incompatible-function-pointer-types-strict)
  
  # Require designated initializers for all marked structures
  KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
-@@ -117,7 +118,6 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
+@@ -120,7 +121,6 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
  KBUILD_CFLAGS += -Wmissing-format-attribute
  KBUILD_CFLAGS += -Wmissing-include-dirs
- KBUILD_CFLAGS += $(call cc-option, -Wunused-const-variable)
+ KBUILD_CFLAGS += -Wunused-const-variable
 -KBUILD_CFLAGS += $(call cc-option, -Wincompatible-function-pointer-types-strict)
  
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.51.2
+2.52.0
 

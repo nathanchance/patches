@@ -1,0 +1,28 @@
+From 33b9fc3e48cfe44f9dcf3b25b98db761926783bb Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 29 Jan 2026 21:33:44 -0700
+Subject: [PATCH 02/10] NOTCBL: WIP: ARM: defconfig: Drop duplicate
+ 'CONFIG_TI_PRUSS=m'
+
+  arch/arm/configs/multi_v7_defconfig:1152:warning: override: reassigning to symbol TI_PRUSS
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/arm/configs/multi_v7_defconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index f75d75cf91c8..70d05f74049e 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -279,7 +279,6 @@ CONFIG_TI_CPSW_SWITCHDEV=y
+ CONFIG_TI_CPTS=y
+ CONFIG_TI_KEYSTONE_NETCP=y
+ CONFIG_TI_KEYSTONE_NETCP_ETHSS=y
+-CONFIG_TI_PRUSS=m
+ CONFIG_TI_PRUETH=m
+ CONFIG_XILINX_EMACLITE=y
+ CONFIG_SFP=m
+-- 
+2.52.0
+

@@ -1,0 +1,93 @@
+From 6dc132e9a85db7a6c45b168733744214591c0159 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 14 Jan 2026 13:43:31 -0700
+Subject: [PATCH 03/10] SUBMITTED: drm/panel: ilitek-ili9882t: Remove duplicate
+ initializers in tianma_il79900a_dsc
+
+Clang warns (or errors with CONFIG_WERROR=y / W=e):
+
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:95:16: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+     95 |         .vbr_enable = 0,
+        |                       ^
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:90:16: note: previous initialization is here
+     90 |         .vbr_enable = false,
+        |                       ^~~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:97:19: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+     97 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+        |                          ^~~~~~~~~~~~~~~~~~~~~~~
+  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
+     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
+        |                                             ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:91:19: note: previous initialization is here
+     91 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+        |                          ^~~~~~~~~~~~~~~~~~~~~~~
+  include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
+     22 | #define DSC_RC_MODEL_SIZE_CONST             8192
+        |                                             ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:132:25: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+    132 |         .initial_scale_value = 32,
+        |                                ^~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:126:25: note: previous initialization is here
+    126 |         .initial_scale_value = 32,
+        |                                ^~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:133:20: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
+    133 |         .nfl_bpg_offset = 3511,
+        |                           ^~~~
+  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:108:20: note: previous initialization is here
+    108 |         .nfl_bpg_offset = 1402,
+        |                           ^~~~
+
+GCC would warn about this in the same manner but its version,
+-Woverride-init, is disabled for a normal kernel build in
+scripts/Makefile.warn. For clang, -Wextra in drivers/gpu/drm/Makefile
+turns it back but GCC respects turning it off earlier in the command
+line.
+
+Of all the duplicate fields in the initializer, only nfl_bpg_offset is a
+different value. Clear up the duplicate initializers, keeping the
+'false' value for .vbr_enable, as it is bool, and the second value for
+.nfl_bpg_offset, assuming it is the correct one since it was the one
+tested in the original change.
+
+Fixes: 65ce1f5834e9 ("drm/panel: ilitek-ili9882t: Switch Tianma TL121BVMS07 to DSC 120Hz mode")
+Link: https://patch.msgid.link/20260114-panel-ilitek-ili9882t-fix-override-init-v1-1-1d69a2b096df@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+index 370424ddfc80..8b2bfb7d3638 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+@@ -88,11 +88,9 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 	.native_422 = false,
+ 	.simple_422 = false,
+ 	.vbr_enable = false,
+-	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+ 	.pic_width = 1600,
+ 	.pic_height = 2560,
+ 	.convert_rgb = 0,
+-	.vbr_enable = 0,
+ 	.rc_buf_thresh = {14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126},
+ 	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
+ 	.rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST,
+@@ -105,7 +103,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 	.initial_offset = 6144,
+ 	.rc_quant_incr_limit0 = 11,
+ 	.rc_quant_incr_limit1 = 11,
+-	.nfl_bpg_offset = 1402,
+ 	.rc_range_params = {
+ 		{ 0,  4, DSC_BPG_OFFSET(2)},
+ 		{ 0,  4, DSC_BPG_OFFSET(0)},
+@@ -123,7 +120,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
+ 		{ 9, 12, DSC_BPG_OFFSET(-12)},
+ 		{12, 13, DSC_BPG_OFFSET(-12)},
+ 	},
+-	.initial_scale_value = 32,
+ 	.slice_chunk_size = 800,
+ 	.initial_dec_delay = 657,
+ 	.final_offset = 4320,
+-- 
+2.52.0
+
