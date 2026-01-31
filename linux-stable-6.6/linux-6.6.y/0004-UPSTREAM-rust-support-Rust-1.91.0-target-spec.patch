@@ -1,7 +1,7 @@
-From e30cba4b26ca4d9d402149e6e582764dc5fdf759 Mon Sep 17 00:00:00 2001
+From d5b373f1b9597b7e1a49bd13aa39602413179e2a Mon Sep 17 00:00:00 2001
 From: Miguel Ojeda <ojeda@kernel.org>
 Date: Fri, 29 Aug 2025 21:55:25 +0200
-Subject: [PATCH 9/9] UPSTREAM: rust: support Rust >= 1.91.0 target spec
+Subject: [PATCH 04/10] UPSTREAM: rust: support Rust >= 1.91.0 target spec
 
 Starting with Rust 1.91.0 (expected 2025-10-30), the target spec format
 has changed the type of the `target-pointer-width` key from string
@@ -20,10 +20,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
-index 3c6cbe2b278d..bdc32fef0f58 100644
+index 0f211f61dc84..587bf6ef4304 100644
 --- a/scripts/generate_rust_target.rs
 +++ b/scripts/generate_rust_target.rs
-@@ -160,7 +160,11 @@ fn main() {
+@@ -175,7 +175,11 @@ fn main() {
          }
          ts.push("features", features);
          ts.push("llvm-target", "x86_64-linux-gnu");
