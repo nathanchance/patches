@@ -1,0 +1,78 @@
+From a047649021199d305c9e070faa3703b6a08c3ef7 Mon Sep 17 00:00:00 2001
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+Date: Wed, 2 Oct 2024 17:03:55 +0200
+Subject: [PATCH 04/11] UPSTREAM: locking/spinlocks: Make __raw_* lock ops
+ static
+
+If CONFIG_GENERIC_LOCKBREAK=y and CONFIG_DEBUG_LOCK_ALLOC=n
+(e.g. sh/sdk7786_defconfig):
+
+    kernel/locking/spinlock.c:68:17: warning: no previous prototype for '__raw_spin_lock' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:80:26: warning: no previous prototype for '__raw_spin_lock_irqsave' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:98:17: warning: no previous prototype for '__raw_spin_lock_irq' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:103:17: warning: no previous prototype for '__raw_spin_lock_bh' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:68:17: warning: no previous prototype for '__raw_read_lock' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:80:26: warning: no previous prototype for '__raw_read_lock_irqsave' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:98:17: warning: no previous prototype for '__raw_read_lock_irq' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:103:17: warning: no previous prototype for '__raw_read_lock_bh' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:68:17: warning: no previous prototype for '__raw_write_lock' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:80:26: warning: no previous prototype for '__raw_write_lock_irqsave' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:98:17: warning: no previous prototype for '__raw_write_lock_irq' [-Wmissing-prototypes]
+    kernel/locking/spinlock.c:103:17: warning: no previous prototype for '__raw_write_lock_bh' [-Wmissing-prototypes]
+
+All __raw_* lock ops are internal functions without external callers.
+Hence fix this by making them static.
+
+Note that if CONFIG_GENERIC_LOCKBREAK=y, no lock ops are inlined, as all
+of CONFIG_INLINE_*_LOCK* depend on !GENERIC_LOCKBREAK.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Link: https://lkml.kernel.org/r/7201d7fb408375c6c4df541270d787b1b4a32354.1727879348.git.geert+renesas@glider.be
+Link: https://git.kernel.org/linus/afc256e131bb0e1ecb5e2b1df310b20fa7bd714d
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/locking/spinlock.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/kernel/locking/spinlock.c b/kernel/locking/spinlock.c
+index 438c6086d540..7685defd7c52 100644
+--- a/kernel/locking/spinlock.c
++++ b/kernel/locking/spinlock.c
+@@ -65,7 +65,7 @@ EXPORT_PER_CPU_SYMBOL(__mmiowb_state);
+  * towards that other CPU that it should break the lock ASAP.
+  */
+ #define BUILD_LOCK_OPS(op, locktype)					\
+-void __lockfunc __raw_##op##_lock(locktype##_t *lock)			\
++static void __lockfunc __raw_##op##_lock(locktype##_t *lock)		\
+ {									\
+ 	for (;;) {							\
+ 		preempt_disable();					\
+@@ -77,7 +77,7 @@ void __lockfunc __raw_##op##_lock(locktype##_t *lock)			\
+ 	}								\
+ }									\
+ 									\
+-unsigned long __lockfunc __raw_##op##_lock_irqsave(locktype##_t *lock)	\
++static unsigned long __lockfunc __raw_##op##_lock_irqsave(locktype##_t *lock) \
+ {									\
+ 	unsigned long flags;						\
+ 									\
+@@ -95,12 +95,12 @@ unsigned long __lockfunc __raw_##op##_lock_irqsave(locktype##_t *lock)	\
+ 	return flags;							\
+ }									\
+ 									\
+-void __lockfunc __raw_##op##_lock_irq(locktype##_t *lock)		\
++static void __lockfunc __raw_##op##_lock_irq(locktype##_t *lock)	\
+ {									\
+ 	_raw_##op##_lock_irqsave(lock);					\
+ }									\
+ 									\
+-void __lockfunc __raw_##op##_lock_bh(locktype##_t *lock)		\
++static void __lockfunc __raw_##op##_lock_bh(locktype##_t *lock)		\
+ {									\
+ 	unsigned long flags;						\
+ 									\
+-- 
+2.53.0
+
