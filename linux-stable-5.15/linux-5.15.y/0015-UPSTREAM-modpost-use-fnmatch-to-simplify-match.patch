@@ -1,0 +1,123 @@
+From 5c4735eab97c06058dc775f313fa6f2803e1540e Mon Sep 17 00:00:00 2001
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 30 May 2022 18:01:39 +0900
+Subject: [PATCH 15/23] UPSTREAM: modpost: use fnmatch() to simplify match()
+
+Replace the own implementation for wildcard (glob) matching with
+a function call to fnmatch().
+
+Also, change the return type to 'bool'.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://git.kernel.org/linus/a89227d769845eb9e9ab113f9f83df34d3c91db5
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/mod/modpost.c | 74 ++++++++-----------------------------------
+ 1 file changed, 13 insertions(+), 61 deletions(-)
+
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index f2bc130aa508..b093f7f4578b 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -13,6 +13,7 @@
+ 
+ #define _GNU_SOURCE
+ #include <elf.h>
++#include <fnmatch.h>
+ #include <stdio.h>
+ #include <ctype.h>
+ #include <string.h>
+@@ -792,29 +793,6 @@ static char *get_modinfo(struct elf_info *info, const char *tag)
+ 	return get_next_modinfo(info, tag, NULL);
+ }
+ 
+-/**
+- * Test if string s ends in string sub
+- * return 0 if match
+- **/
+-static int strrcmp(const char *s, const char *sub)
+-{
+-	int slen, sublen;
+-
+-	if (!s || !sub)
+-		return 1;
+-
+-	slen = strlen(s);
+-	sublen = strlen(sub);
+-
+-	if ((slen == 0) || (sublen == 0))
+-		return 1;
+-
+-	if (sublen > slen)
+-		return 1;
+-
+-	return memcmp(s + slen - sublen, sub, sublen);
+-}
+-
+ static const char *sym_name(struct elf_info *elf, Elf_Sym *sym)
+ {
+ 	if (sym)
+@@ -823,48 +801,22 @@ static const char *sym_name(struct elf_info *elf, Elf_Sym *sym)
+ 		return "(unknown)";
+ }
+ 
+-/* The pattern is an array of simple patterns.
+- * "foo" will match an exact string equal to "foo"
+- * "*foo" will match a string that ends with "foo"
+- * "foo*" will match a string that begins with "foo"
+- * "*foo*" will match a string that contains "foo"
++/*
++ * Check whether the 'string' argument matches one of the 'patterns',
++ * an array of shell wildcard patterns (glob).
++ *
++ * Return true is there is a match.
+  */
+-static int match(const char *sym, const char * const pat[])
++static bool match(const char *string, const char *const patterns[])
+ {
+-	const char *p;
+-	while (*pat) {
+-		const char *endp;
+-
+-		p = *pat++;
+-		endp = p + strlen(p) - 1;
++	const char *pattern;
+ 
+-		/* "*foo*" */
+-		if (*p == '*' && *endp == '*') {
+-			char *bare = NOFAIL(strndup(p + 1, strlen(p) - 2));
+-			char *here = strstr(sym, bare);
+-
+-			free(bare);
+-			if (here != NULL)
+-				return 1;
+-		}
+-		/* "*foo" */
+-		else if (*p == '*') {
+-			if (strrcmp(sym, p + 1) == 0)
+-				return 1;
+-		}
+-		/* "foo*" */
+-		else if (*endp == '*') {
+-			if (strncmp(sym, p, strlen(p) - 1) == 0)
+-				return 1;
+-		}
+-		/* no wildcards */
+-		else {
+-			if (strcmp(p, sym) == 0)
+-				return 1;
+-		}
++	while ((pattern = *patterns++)) {
++		if (!fnmatch(pattern, string, 0))
++			return true;
+ 	}
+-	/* no match */
+-	return 0;
++
++	return false;
+ }
+ 
+ /* sections that we do not want to do full section mismatch check on */
+-- 
+2.53.0
+

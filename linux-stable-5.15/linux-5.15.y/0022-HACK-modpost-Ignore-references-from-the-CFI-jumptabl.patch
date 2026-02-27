@@ -1,7 +1,7 @@
-From 80859928086b6538a246aa9d0df49e6d227a056a Mon Sep 17 00:00:00 2001
+From ba0850e019cd42096b1c5c2d06f46c4d23d26542 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Dec 2024 17:41:11 -0700
-Subject: [PATCH 20/21] HACK: modpost: Ignore references from the CFI jumptable
+Subject: [PATCH 22/23] HACK: modpost: Ignore references from the CFI jumptable
  section
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index a663a0ea4066..e32e07efd87d 100644
+index b093f7f4578b..e75a3f3498c7 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
-@@ -981,6 +981,7 @@ static const char *const data_sections[] = { DATA_SECTIONS, NULL };
+@@ -935,6 +935,7 @@ static const char *const data_sections[] = { DATA_SECTIONS, NULL };
  	"*_console"
  
  static const char *const head_sections[] = { ".head.text*", NULL };
@@ -21,7 +21,7 @@ index a663a0ea4066..e32e07efd87d 100644
  static const char *const linker_symbols[] =
  	{ "__init_begin", "_sinittext", "_einittext", NULL };
  static const char *const optim_symbols[] = { "*.constprop.*", NULL };
-@@ -1255,6 +1256,10 @@ static int secref_whitelist(const struct sectioncheck *mismatch,
+@@ -1209,6 +1210,10 @@ static int secref_whitelist(const struct sectioncheck *mismatch,
  	if (strstarts(fromsym, ".L"))
  		return 0;
  
