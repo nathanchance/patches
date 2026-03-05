@@ -1,10 +1,16 @@
-From 7dc096c8e230a424e1cd324458e51ffe89113b15 Mon Sep 17 00:00:00 2001
+From 28f23249d0095846fbdc9fe80f5bbc3de1bde17d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 26 Jan 2026 23:01:12 -0700
-Subject: [PATCH 04/10] WIP: media: rockchip: Disable VIDEO_ROCKCHIP_VDEC when
- targeting Hexagon
+Date: Fri, 13 Feb 2026 15:10:06 -0500
+Subject: [PATCH 03/12] SUBMITTED: media: rockchip: Disable VIDEO_ROCKCHIP_VDEC
+ when compile testing for Hexagon
 
-Link: https://github.com/llvm/llvm-project/issues/178535
+Building rkvdec-vdpu383-h264.c can take a few hours to finish building
+with Clang 20.1.0 or newer when compile testing for Hexagon. While this
+is further investigated and understood on the LLVM side [1], disable
+CONFIG_VIDEO_ROCKCHIP_VDEC when compile testing for Hexagon.
+
+Link: https://github.com/llvm/llvm-project/issues/178535 [1]
+Link: https://patch.msgid.link/20260213-media-disable-rockchip-vdec-hexagon-v1-1-3f903398cc83@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/media/platform/rockchip/rkvdec/Kconfig | 3 ++-
@@ -25,5 +31,5 @@ index 5f3bdd848a2c..d03689464206 100644
  	select MEDIA_CONTROLLER
  	select VIDEOBUF2_DMA_CONTIG
 -- 
-2.52.0
+2.53.0
 

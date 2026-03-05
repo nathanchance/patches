@@ -1,7 +1,7 @@
-From fb88da807c5d48cbe01212cc2f7f58ca4f3335d3 Mon Sep 17 00:00:00 2001
+From 8bee33697539c32ddcfc4f473cb87d4724aef825 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 2 Oct 2023 15:19:46 -0700
-Subject: [PATCH 05/10] WIP: kbuild: Enable
+Subject: [PATCH 07/12] WIP: kbuild: Enable
  -Wincompatible-function-pointer-types-strict in W=1
 
 -Wincompatible-function-pointer-types-strict aims to catch clang kernel
@@ -33,10 +33,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/scripts/Makefile.warn b/scripts/Makefile.warn
-index 5567da6c7dfe..74a840518af7 100644
+index e77ca875aea4..e4badb532c62 100644
 --- a/scripts/Makefile.warn
 +++ b/scripts/Makefile.warn
-@@ -120,6 +120,7 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
+@@ -115,6 +115,7 @@ ifneq ($(findstring 1, $(KBUILD_EXTRA_WARN)),)
  KBUILD_CFLAGS += -Wmissing-format-attribute
  KBUILD_CFLAGS += -Wmissing-include-dirs
  KBUILD_CFLAGS += -Wunused-const-variable
@@ -45,5 +45,5 @@ index 5567da6c7dfe..74a840518af7 100644
  KBUILD_CPPFLAGS += -Wundef
  KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
 -- 
-2.52.0
+2.53.0
 

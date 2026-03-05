@@ -1,0 +1,62 @@
+From 46cd2a1bd9618a34ab2096aeeb7a9df49d018d77 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 23 Feb 2026 12:10:29 -0700
+Subject: [PATCH 05/12] SUBMITTED: kbuild: Use '-fms-anonymous-structs' if it
+ is available
+
+Clang recently added '-fms-anonymous-structs' [1] to specifically enable
+the Microsoft tagged anonymous structure / union extension, for which
+the kernel added '-fms-extensions' in commit c4781dc3d1cf ("Kbuild:
+enable -fms-extensions"). Switch to this more narrow option if it is
+available, which would have helped avoid the issue addressed by
+commit a6773e6932cb ("jfs: Rename _inline to avoid conflict with clang's
+'-fms-extensions'"). GCC has talked about adding a similar flag [2] as
+well but potentially naming it differently.
+
+Move the selection of the flag to Kconfig to make it easier to use
+cc-option (as CC_FLAGS_DIALECT may be used in arch Makefiles, which may
+be too early for cc-option in Kbuild) and customize based on compiler
+flag names.
+
+Link: https://github.com/llvm/llvm-project/commit/c391efe6fb67329d8e2fd231692cc6b0ea902956 [1]
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=123623 [2]
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20260223-fms-anonymous-structs-v1-2-8ee406d3c36c@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Makefile     | 2 +-
+ init/Kconfig | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 0ba0a42d8cdf..34bf3377d9cb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -791,7 +791,7 @@ endif
+ 
+ CC_FLAGS_DIALECT := -std=gnu11
+ # Allow including a tagged struct or union anonymously in another struct/union.
+-CC_FLAGS_DIALECT += -fms-extensions
++CC_FLAGS_DIALECT += $(CONFIG_CC_MS_EXTENSIONS)
+ # Clang enables warnings about GNU and Microsoft extensions by default, disable
+ # them because this is expected with the above options.
+ ifdef CONFIG_CC_IS_CLANG
+diff --git a/init/Kconfig b/init/Kconfig
+index 444ce811ea67..beedeba5e5d0 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -960,6 +960,11 @@ config CC_IMPLICIT_FALLTHROUGH
+ 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+ 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
+ 
++config CC_MS_EXTENSIONS
++	string
++	default "-fms-anonymous-structs" if $(cc-option,-fms-anonymous-structs)
++	default "-fms-extensions"
++
+ # Currently, disable gcc-10+ array-bounds globally.
+ # It's still broken in gcc-13, so no upper bound yet.
+ config GCC10_NO_ARRAY_BOUNDS
+-- 
+2.53.0
+
