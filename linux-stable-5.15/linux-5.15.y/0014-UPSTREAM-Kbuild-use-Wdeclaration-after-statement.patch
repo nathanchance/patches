@@ -1,4 +1,4 @@
-From bfd13d2a4aa2d5ee4d9e35e6b54b33cf96caebf6 Mon Sep 17 00:00:00 2001
+From 28fcb416b86b30f4c0c424f01ac3bd8bae77b203 Mon Sep 17 00:00:00 2001
 From: Mark Rutland <mark.rutland@arm.com>
 Date: Tue, 8 Mar 2022 22:56:13 +0100
 Subject: [PATCH 14/23] UPSTREAM: Kbuild: use -Wdeclaration-after-statement
@@ -41,10 +41,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index a663a0ea4066..f2bc130aa508 100644
+index 2fa333fca1f7..6a328adec7f7 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
-@@ -833,8 +833,10 @@ static int match(const char *sym, const char * const pat[])
+@@ -837,8 +837,10 @@ static int match(const char *sym, const char * const pat[])
  {
  	const char *p;
  	while (*pat) {

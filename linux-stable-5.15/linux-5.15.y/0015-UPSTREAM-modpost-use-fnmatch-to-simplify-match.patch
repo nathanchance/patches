@@ -1,4 +1,4 @@
-From 5c4735eab97c06058dc775f313fa6f2803e1540e Mon Sep 17 00:00:00 2001
+From 4dd2b04ee8d206acdc3a74a9778ca66e8d566e62 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 30 May 2022 18:01:39 +0900
 Subject: [PATCH 15/23] UPSTREAM: modpost: use fnmatch() to simplify match()
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 13 insertions(+), 61 deletions(-)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index f2bc130aa508..b093f7f4578b 100644
+index 6a328adec7f7..891930205ee9 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -13,6 +13,7 @@
@@ -27,7 +27,7 @@ index f2bc130aa508..b093f7f4578b 100644
  #include <stdio.h>
  #include <ctype.h>
  #include <string.h>
-@@ -792,29 +793,6 @@ static char *get_modinfo(struct elf_info *info, const char *tag)
+@@ -796,29 +797,6 @@ static char *get_modinfo(struct elf_info *info, const char *tag)
  	return get_next_modinfo(info, tag, NULL);
  }
  
@@ -57,7 +57,7 @@ index f2bc130aa508..b093f7f4578b 100644
  static const char *sym_name(struct elf_info *elf, Elf_Sym *sym)
  {
  	if (sym)
-@@ -823,48 +801,22 @@ static const char *sym_name(struct elf_info *elf, Elf_Sym *sym)
+@@ -827,48 +805,22 @@ static const char *sym_name(struct elf_info *elf, Elf_Sym *sym)
  		return "(unknown)";
  }
  
