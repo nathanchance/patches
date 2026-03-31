@@ -1,0 +1,40 @@
+From 01dd51ca2d48de9e22d69d00acf40951f5bf04c4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 30 Mar 2026 09:58:11 +0200
+Subject: [PATCH 13/20] WIP/REPORTED: net: enetc: Avoid clang
+ -Wsometimes-uninitialized in enetc_pf_probe()
+
+Link: https://lore.kernel.org/20260330073356.GA1017537@ax162/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index 99422c0b4a26..e4c8bdff68c5 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -1285,9 +1285,9 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+ 	struct enetc_ndev_priv *priv;
++	struct enetc_pf *pf = NULL;
+ 	struct net_device *ndev;
+ 	struct enetc_si *si;
+-	struct enetc_pf *pf;
+ 	int err;
+ 
+ 	err = enetc_pf_register_with_ierb(pdev);
+@@ -1395,7 +1395,8 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ err_alloc_netdev:
+ err_device_disabled:
+ err_setup_mac_addresses:
+-	kfree(pf->vf_state);
++	if (pf)
++		kfree(pf->vf_state);
+ err_alloc_vf_state:
+ 	enetc_psi_destroy(pdev);
+ err_psi_create:
+-- 
+2.53.0
+
