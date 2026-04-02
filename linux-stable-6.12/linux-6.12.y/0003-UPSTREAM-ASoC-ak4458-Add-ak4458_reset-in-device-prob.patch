@@ -1,4 +1,4 @@
-From a104f1c99f2753958a13c628100f38a51f6cdf83 Mon Sep 17 00:00:00 2001
+From 5f9227805a99b298580b3f46d74a6d8c641d3bfd Mon Sep 17 00:00:00 2001
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 Date: Tue, 13 Sep 2022 16:26:34 +0800
 Subject: [PATCH 03/14] UPSTREAM: ASoC: ak4458: Add ak4458_reset in device
@@ -24,10 +24,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
-index e2e12dbc8cf2..fb1ab335a4c1 100644
+index 3d9ea78d8bb7..473c95c76c43 100644
 --- a/sound/soc/codecs/ak4458.c
 +++ b/sound/soc/codecs/ak4458.c
-@@ -790,12 +790,16 @@ static int ak4458_i2c_probe(struct i2c_client *i2c)
+@@ -787,12 +787,16 @@ static int ak4458_i2c_probe(struct i2c_client *i2c)
  
  	pm_runtime_enable(&i2c->dev);
  	regcache_cache_only(ak4458->regmap, true);
