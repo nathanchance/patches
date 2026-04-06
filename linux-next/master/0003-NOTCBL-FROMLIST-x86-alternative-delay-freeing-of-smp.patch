@@ -1,0 +1,96 @@
+From f5e41f151fca4696f6412e1262dee11a85eaa56d Mon Sep 17 00:00:00 2001
+From: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Date: Mon, 30 Mar 2026 22:10:00 +0300
+Subject: [PATCH 03/14] NOTCBL: FROMLIST: x86/alternative: delay freeing of
+ smp_locks section
+
+On SMP systems alternative_instructions() frees memory occupied by
+smp_locks section immediately after patching the lock instructions.
+
+The memory is freed using free_init_pages() that calls free_reserved_area()
+that essentially does __free_page() for every page in the range.
+
+Up until recently it didn't update memblock state so in cases when
+CONFIG_ARCH_KEEP_MEMBLOCK is enabled (on x86 it is selected by
+INTEL_TDX_HOST), the state of memblock and the memory map would be
+inconsistent.
+
+Additionally, with CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled feeing of
+smp_locks happens before the memory map is fully initialized and freeing
+reserved memory may case an access to not-yet-initialized struct page when
+__free_page() searches for a buddy page.
+
+Following the discussion in [1], implementation of memblock_free_late() and
+free_reserved_area() was unified to ensure that reserved memory that's
+freed after memblock transfers the pages to the buddy allocator is actually
+freed and that the memblock and the memory map are consistent. As a part of
+these changes, free_reserved_area() now WARN()s when it is called before
+the initialization of the memory map is complete.
+
+The memory map is fully initialized in page_alloc_init_late() that
+completes before initcalls are executed, so it is safe to free reserved
+memory in any initcall except early_initcall().
+
+Move freeing of smp_locks section to an initcall to ensure it will happen
+after the memory map is fully initialized. Since it does not matter which
+exactly initcall to use and the code lives in arch/, pick arch_initcall.
+
+[1] https://lore.kernel.org/all/ec2aaef14783869b3be6e3c253b2dcbf67dbc12a.camel@kernel.crashing.org
+
+Reported-By: Bert Karwatzki <spasswolf@web.de>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202603302154.b50adaf1-lkp@intel.com
+Tested-By: Bert Karwatzki <spasswolf@web.de>
+Link: https://lore.kernel.org/r/20260327140109.7561-1-spasswolf@web.de
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: b2129a39511b ("memblock: make free_reserved_area() update memblock if ARCH_KEEP_MEMBLOCK=y")
+Link: https://patch.msgid.link/20260330191000.1190533-1-rppt@kernel.org
+---
+ arch/x86/kernel/alternative.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index e87da25d1236..62936a3bde19 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -2448,19 +2448,31 @@ void __init alternative_instructions(void)
+ 					    __smp_locks, __smp_locks_end,
+ 					    _text, _etext);
+ 	}
++#endif
+ 
++	restart_nmi();
++	alternatives_patched = 1;
++
++	alt_reloc_selftest();
++}
++
++#ifdef CONFIG_SMP
++/*
++ * With CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled we can free_init_pages() only
++ * after the deferred initialization of the memory map is complete.
++ */
++static int __init free_smp_locks(void)
++{
+ 	if (!uniproc_patched || num_possible_cpus() == 1) {
+ 		free_init_pages("SMP alternatives",
+ 				(unsigned long)__smp_locks,
+ 				(unsigned long)__smp_locks_end);
+ 	}
+-#endif
+ 
+-	restart_nmi();
+-	alternatives_patched = 1;
+-
+-	alt_reloc_selftest();
++	return 0;
+ }
++arch_initcall(free_smp_locks);
++#endif
+ 
+ /**
+  * text_poke_early - Update instructions on a live kernel at boot time
+-- 
+2.53.0
+

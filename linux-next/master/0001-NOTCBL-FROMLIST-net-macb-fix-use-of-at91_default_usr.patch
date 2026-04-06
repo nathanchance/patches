@@ -1,0 +1,81 @@
+From 7925cf847292e98aa06a798c3c2e2eb44475e367 Mon Sep 17 00:00:00 2001
+From: Conor Dooley <conor.dooley@microchip.com>
+Date: Mon, 30 Mar 2026 10:02:00 +0100
+Subject: [PATCH 01/14] NOTCBL: FROMLIST: net: macb: fix use of
+ at91_default_usrio without CONFIG_OF
+
+If CONFIG_OF is not enabled, at91_default_usrio is used undeclared in
+gem_default_config. Rather than move the struct around, take the
+opportunity to rename gem_default_config, as the only compatible it is
+ever used for is "cdns,macb" - not "cdns,gem" at all! With that done,
+remove the use of default_gem_config as a fallback in probe, as every
+device has a specific set of match data.
+
+It pains me a little to leave at91_default_usrio in match data used by
+"cdns,macb", but this is probably required to avoid regressing anyone.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603280028.wQjUrIvv-lkp@intel.com/
+Reported-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Closes: https://lore.kernel.org/all/06a701dcc014$86def5b0$949ce110$@trustnetic.com/
+Fixes: a17871778ee28 ("net: macb: rename macb_default_usrio to at91_default_usrio as not all platforms have mii mode control in usrio")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260330-overture-cactus-c8eb7b9cbecc@spud
+---
+ drivers/net/ethernet/cadence/macb_main.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 7f061d7c95af..1c8ff1749344 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5716,9 +5716,18 @@ static const struct macb_config pic64hpsc_config = {
+ 	.jumbo_max_len = 16383,
+ };
+ 
++static const struct macb_config macb_macb_config = {
++	.caps = MACB_CAPS_GIGABIT_MODE_AVAILABLE |
++		MACB_CAPS_JUMBO |
++		MACB_CAPS_GEM_HAS_PTP,
++	.dma_burst_length = 16,
++	.usrio = &at91_default_usrio,
++	.jumbo_max_len = 10240,
++};
++
+ static const struct of_device_id macb_dt_ids[] = {
+ 	{ .compatible = "cdns,at91sam9260-macb", .data = &at91sam9260_config },
+-	{ .compatible = "cdns,macb" },
++	{ .compatible = "cdns,macb", .data = &macb_macb_config},
+ 	{ .compatible = "cdns,np4-macb", .data = &np4_config },
+ 	{ .compatible = "cdns,pc302-gem", .data = &pc302gem_config },
+ 	{ .compatible = "cdns,gem", .data = &pc302gem_config },
+@@ -5747,15 +5756,6 @@ static const struct of_device_id macb_dt_ids[] = {
+ MODULE_DEVICE_TABLE(of, macb_dt_ids);
+ #endif /* CONFIG_OF */
+ 
+-static const struct macb_config default_gem_config = {
+-	.caps = MACB_CAPS_GIGABIT_MODE_AVAILABLE |
+-		MACB_CAPS_JUMBO |
+-		MACB_CAPS_GEM_HAS_PTP,
+-	.dma_burst_length = 16,
+-	.usrio = &at91_default_usrio,
+-	.jumbo_max_len = 10240,
+-};
+-
+ static int macb_probe(struct platform_device *pdev)
+ {
+ 	struct clk *pclk, *hclk = NULL, *tx_clk = NULL, *rx_clk = NULL;
+@@ -5778,7 +5778,7 @@ static int macb_probe(struct platform_device *pdev)
+ 
+ 	macb_config = of_device_get_match_data(&pdev->dev);
+ 	if (!macb_config)
+-		macb_config = &default_gem_config;
++		return -EINVAL;
+ 
+ 	err = macb_clk_init(pdev, &pclk, &hclk, &tx_clk, &rx_clk, &tsu_clk,
+ 			    macb_config);
+
+base-commit: 2febe6e6ee6e34c7754eff3c4d81aa7b0dcb7979
+-- 
+2.53.0
+
