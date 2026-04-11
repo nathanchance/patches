@@ -1,4 +1,4 @@
-From 01dd51ca2d48de9e22d69d00acf40951f5bf04c4 Mon Sep 17 00:00:00 2001
+From 51d8ea97b51f2754c1cda7ecd16b4230ecf4b508 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 30 Mar 2026 09:58:11 +0200
 Subject: [PATCH 13/20] WIP/REPORTED: net: enetc: Avoid clang
@@ -11,7 +11,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-index 99422c0b4a26..e4c8bdff68c5 100644
+index 8cb4c759b165..488c50678d80 100644
 --- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
 @@ -1285,9 +1285,9 @@ static int enetc_pf_probe(struct pci_dev *pdev,
@@ -25,16 +25,16 @@ index 99422c0b4a26..e4c8bdff68c5 100644
  	int err;
  
  	err = enetc_pf_register_with_ierb(pdev);
-@@ -1395,7 +1395,8 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+@@ -1394,7 +1394,8 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ 	free_netdev(ndev);
  err_alloc_netdev:
- err_device_disabled:
  err_setup_mac_addresses:
 -	kfree(pf->vf_state);
 +	if (pf)
 +		kfree(pf->vf_state);
  err_alloc_vf_state:
+ err_device_disabled:
  	enetc_psi_destroy(pdev);
- err_psi_create:
 -- 
 2.53.0
 
