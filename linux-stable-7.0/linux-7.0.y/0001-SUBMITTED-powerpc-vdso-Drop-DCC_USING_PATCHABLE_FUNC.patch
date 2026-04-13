@@ -1,0 +1,67 @@
+From 3a63980bce8871d32c42419a8bd9f8ca8a6601b6 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 11 Mar 2026 17:39:56 -0700
+Subject: [PATCH 1/7] SUBMITTED: powerpc/vdso: Drop
+ -DCC_USING_PATCHABLE_FUNCTION_ENTRY from 32-bit flags with clang
+
+After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
+friendly"), building 64-bit little endian + CONFIG_COMPAT=y with clang
+results in many warnings along the lines of:
+
+  $ cat arch/powerpc/configs/compat.config
+  CONFIG_COMPAT=y
+
+  $ make -skj"$(nproc)" ARCH=powerpc LLVM=1 ppc64le_defconfig compat.config arch/powerpc/kernel/vdso/
+  ...
+  In file included from <built-in>:4:
+  In file included from lib/vdso/gettimeofday.c:6:
+  In file included from include/vdso/datapage.h:15:
+  In file included from include/vdso/cache.h:5:
+  arch/powerpc/include/asm/cache.h:77:8: warning: unknown attribute 'patchable_function_entry' ignored [-Wunknown-attributes]
+     77 | static inline u32 l1_icache_bytes(void)
+        |        ^~~~~~
+  include/linux/compiler_types.h:235:58: note: expanded from macro 'inline'
+    235 | #define inline inline __gnu_inline __inline_maybe_unused notrace
+        |                                                          ^~~~~~~
+  include/linux/compiler_types.h:215:34: note: expanded from macro 'notrace'
+    215 | #define notrace                 __attribute__((patchable_function_entry(0, 0)))
+        |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ...
+
+arch/powerpc/Makefile adds -DCC_USING_PATCHABLE_FUNCTION_ENTRY to
+KBUILD_CPPFLAGS, which is inherited by the 32-bit vDSO. However, the
+32-bit little endian target does not support
+'-fpatchable-function-entry', resulting in the warnings above.
+
+Remove -DCC_USING_PATCHABLE_FUNCTION_ENTRY from the 32-bit vDSO flags
+when building with clang to avoid the warnings.
+
+Fixes: 73cdf24e81e4 ("powerpc64: make clang cross-build friendly")
+Link: https://patch.msgid.link/20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/powerpc/kernel/vdso/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
+index 8834dfe9d727..368759f81708 100644
+--- a/arch/powerpc/kernel/vdso/Makefile
++++ b/arch/powerpc/kernel/vdso/Makefile
+@@ -62,6 +62,12 @@ CC32FLAGSREMOVE += -fno-stack-clash-protection
+ # 32-bit one. clang validates the values passed to these arguments during
+ # parsing, even when -fno-stack-protector is passed afterwards.
+ CC32FLAGSREMOVE += -mstack-protector-guard%
++# ftrace is disabled for the vdso but arch/powerpc/Makefile adds this define to
++# KBUILD_CPPFLAGS, which enables use of the 'patchable_function_entry'
++# attribute in the 'inline' define via 'notrace'. This attribute is not
++# supported for the powerpcle target, resulting in many instances of
++# -Wunknown-attributes.
++CC32FLAGSREMOVE += -DCC_USING_PATCHABLE_FUNCTION_ENTRY
+ endif
+ LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
+ AS32FLAGS := -D__VDSO32__
+
+base-commit: 028ef9c96e96197026887c0f092424679298aae8
+-- 
+2.53.0
+

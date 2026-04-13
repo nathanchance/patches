@@ -1,0 +1,46 @@
+From c05ac58fd5ca4beb420533b63e2bf338e783d545 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 25 Mar 2026 17:13:44 -0700
+Subject: [PATCH 3/7] SUBMITTED: dtc: Remove unused dts_version in dtc-lexer.l
+
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in dtc-lexer.l:
+
+  ../dtc-lexer.l:42:12: error: variable 'dts_version' set but not used [-Werror,-Wunused-but-set-global]
+     42 | static int dts_version = 1;
+        |            ^
+
+This variable has been unused since commit 4e1a0a0 ("Remove support for
+the legacy DTS source file format."). Remove it to clear up the warning.
+
+Link: https://patch.msgid.link/20260325-dtc-lexer-remove-dts_version-v1-1-0b5d64903bbb@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/dtc/dtc-lexer.l | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/scripts/dtc/dtc-lexer.l b/scripts/dtc/dtc-lexer.l
+index 15d585c80798..1b129b118b0f 100644
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
+ 
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
+ 
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(const char *fmt, ...);
+ 
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
+-- 
+2.53.0
+
