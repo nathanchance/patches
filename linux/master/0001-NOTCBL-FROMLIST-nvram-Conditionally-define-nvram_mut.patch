@@ -1,4 +1,4 @@
-From 2e249be82152532cfa5a2503d1cdfe8df627cd81 Mon Sep 17 00:00:00 2001
+From 9c497a2523d7baf7a6ab1eaf903017e6269c4552 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 14 Apr 2026 04:39:05 +0100
 Subject: [PATCH 01/12] NOTCBL: FROMLIST: nvram: Conditionally define
@@ -32,7 +32,7 @@ index 9eff426a9286..cff2bd4a1fb3 100644
  static int nvram_open_cnt;	/* #times opened */
  static int nvram_open_mode;	/* special open modes */
 
-base-commit: 3cd8b194bf3428dfa53120fee47e827a7c495815
+base-commit: 43cfbdda5af60ffc6272a7b8c5c37d1d0a181ca9
 -- 
 2.53.0
 
