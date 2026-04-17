@@ -1,8 +1,13 @@
-From 57349e78dc90f9f9fc915de068670219fe0aaf32 Mon Sep 17 00:00:00 2001
+From 29fc4bbaa8ae7b6c4656c70a411cdf90b7e8e1c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 27 Mar 2026 22:38:55 +0100
-Subject: [PATCH 3/8] SUBMITTED: scripts/dtc: Remove unused dts_version in
+Date: Thu, 16 Apr 2026 17:46:54 -0700
+Subject: [PATCH 3/8] PENDING: scripts/dtc: Remove unused dts_version in
  dtc-lexer.l
+
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
 A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
 in clang under a new subwarning, -Wunused-but-set-global, points out an
@@ -13,11 +18,10 @@ dtc-lexer.l):
     641 | static int dts_version = 1;
         |            ^
 
-This variable has been unused since commit 658f29a51e98 ("of/flattree:
-Update dtc to current mainline."). Remove it to clear up the warning.
+Remove it to clear up the warning, as it has been unused since
+commit 658f29a51e98 ("of/flattree: Update dtc to current mainline.").
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260327-dtc-drop-dts_version-v1-1-41066690aefd@kernel.org
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/dtc/dtc-lexer.l | 3 ---
