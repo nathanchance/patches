@@ -1,0 +1,131 @@
+From 58ea794ee9e37ca8b5ed1983ba9e7245ba02618a Mon Sep 17 00:00:00 2001
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Date: Tue, 7 Apr 2026 15:04:13 -0500
+Subject: [PATCH 06/12] FROMGIT: scripts/dtc: Update to upstream version
+ v1.7.2-69-g53373d135579
+
+This adds the following commits from upstream:
+
+53373d135579 dtc: Remove unused dts_version in dtc-lexer.l
+caf7465c5d60 libfdt: fdt_check_full: Handle FDT_NOP when FDT_END is expected
+5976c4a66098 libfdt: fdt_rw: Introduce fdt_downgrade_version()
+5bb5bedd347d fdtdump: Return an error code on wrong tag value
+68b960e299f7 fdtdump: Remove dtb version check
+adba02caf554 dtc: Use a consistent type for basenamelen
+8d15a63e84ff libfdt: Verify alignment of sub-blocks in dtb
+
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://git.kernel.org/robh/c/5a09df20872c1897506351636fdafbcda97ff2c0
+---
+ scripts/dtc/checks.c        | 2 +-
+ scripts/dtc/dtc-lexer.l     | 3 ---
+ scripts/dtc/dtc.h           | 2 +-
+ scripts/dtc/libfdt/fdt.c    | 8 ++++++++
+ scripts/dtc/libfdt/fdt_rw.c | 9 +++++++--
+ scripts/dtc/version_gen.h   | 2 +-
+ 6 files changed, 18 insertions(+), 8 deletions(-)
+
+diff --git a/scripts/dtc/checks.c b/scripts/dtc/checks.c
+index 45d0213f3bf3..946c1429e0f1 100644
+--- a/scripts/dtc/checks.c
++++ b/scripts/dtc/checks.c
+@@ -324,7 +324,7 @@ ERROR(node_name_chars, check_node_name_chars, NODECHARS);
+ static void check_node_name_chars_strict(struct check *c, struct dt_info *dti,
+ 					 struct node *node)
+ {
+-	int n = strspn(node->name, c->data);
++	size_t n = strspn(node->name, c->data);
+ 
+ 	if (n < node->basenamelen)
+ 		FAIL(c, dti, node, "Character '%c' not recommended in node name",
+diff --git a/scripts/dtc/dtc-lexer.l b/scripts/dtc/dtc-lexer.l
+index 15d585c80798..1b129b118b0f 100644
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
+ 
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
+ 
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(const char *fmt, ...);
+ 
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
+diff --git a/scripts/dtc/dtc.h b/scripts/dtc/dtc.h
+index 7231200e5d02..473552ebf017 100644
+--- a/scripts/dtc/dtc.h
++++ b/scripts/dtc/dtc.h
+@@ -227,7 +227,7 @@ struct node {
+ 	struct node *next_sibling;
+ 
+ 	char *fullpath;
+-	int basenamelen;
++	size_t basenamelen;
+ 
+ 	cell_t phandle;
+ 	int addr_cells, size_cells;
+diff --git a/scripts/dtc/libfdt/fdt.c b/scripts/dtc/libfdt/fdt.c
+index 95f644c31f94..56d4dcb2dc92 100644
+--- a/scripts/dtc/libfdt/fdt.c
++++ b/scripts/dtc/libfdt/fdt.c
+@@ -110,6 +110,14 @@ int fdt_check_header(const void *fdt)
+ 		    || (fdt_totalsize(fdt) > INT_MAX))
+ 			return -FDT_ERR_TRUNCATED;
+ 
++		/* memrsv block must be 8 byte aligned */
++		if (fdt_off_mem_rsvmap(fdt) % sizeof(uint64_t))
++			return -FDT_ERR_ALIGNMENT;
++
++		/* Structure block must be 4 byte aligned */
++		if (fdt_off_dt_struct(fdt) % FDT_TAGSIZE)
++			return -FDT_ERR_ALIGNMENT;
++
+ 		/* Bounds check memrsv block */
+ 		if (!check_off_(hdrsize, fdt_totalsize(fdt),
+ 				fdt_off_mem_rsvmap(fdt)))
+diff --git a/scripts/dtc/libfdt/fdt_rw.c b/scripts/dtc/libfdt/fdt_rw.c
+index 7475cafce071..90ea14e944cc 100644
+--- a/scripts/dtc/libfdt/fdt_rw.c
++++ b/scripts/dtc/libfdt/fdt_rw.c
+@@ -22,6 +22,12 @@ static int fdt_blocks_misordered_(const void *fdt,
+ 		    (fdt_off_dt_strings(fdt) + fdt_size_dt_strings(fdt)));
+ }
+ 
++static void fdt_downgrade_version(void *fdt)
++{
++	if (!can_assume(LATEST) && fdt_version(fdt) > FDT_LAST_SUPPORTED_VERSION)
++		fdt_set_version(fdt, FDT_LAST_SUPPORTED_VERSION);
++}
++
+ static int fdt_rw_probe_(void *fdt)
+ {
+ 	if (can_assume(VALID_DTB))
+@@ -33,9 +39,8 @@ static int fdt_rw_probe_(void *fdt)
+ 	if (fdt_blocks_misordered_(fdt, sizeof(struct fdt_reserve_entry),
+ 				   fdt_size_dt_struct(fdt)))
+ 		return -FDT_ERR_BADLAYOUT;
+-	if (!can_assume(LATEST) && fdt_version(fdt) > 17)
+-		fdt_set_version(fdt, 17);
+ 
++	fdt_downgrade_version(fdt);
+ 	return 0;
+ }
+ 
+diff --git a/scripts/dtc/version_gen.h b/scripts/dtc/version_gen.h
+index 5730bf457b33..122e684e76a1 100644
+--- a/scripts/dtc/version_gen.h
++++ b/scripts/dtc/version_gen.h
+@@ -1 +1 @@
+-#define DTC_VERSION "DTC 1.7.2-ga26ef640"
++#define DTC_VERSION "DTC 1.7.2-g53373d13"
+-- 
+2.53.0
+

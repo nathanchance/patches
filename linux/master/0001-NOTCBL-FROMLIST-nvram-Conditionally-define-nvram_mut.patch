@@ -1,0 +1,38 @@
+From 2e249be82152532cfa5a2503d1cdfe8df627cd81 Mon Sep 17 00:00:00 2001
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Date: Tue, 14 Apr 2026 04:39:05 +0100
+Subject: [PATCH 01/12] NOTCBL: FROMLIST: nvram: Conditionally define
+ nvram_mutex
+
+This mutex is only used if compiled on one of these three architectures.
+The DEFINE_MUTEX() macro used to confuse the compiler into thinking that
+the mutex was used, but that was recently changed by commit 25500ba7e77c
+("locking/mutex: Remove the list_head from struct mutex")
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202604121134.ZzyH3ZAX-lkp@intel.com/
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://patch.msgid.link/20260414033906.3562980-1-willy@infradead.org
+---
+ drivers/char/nvram.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/char/nvram.c b/drivers/char/nvram.c
+index 9eff426a9286..cff2bd4a1fb3 100644
+--- a/drivers/char/nvram.c
++++ b/drivers/char/nvram.c
+@@ -53,7 +53,9 @@
+ #include <asm/nvram.h>
+ #endif
+ 
++#if defined(CONFIG_PPC32) || defined(CONFIG_X86) || defined(CONFIG_M68K)
+ static DEFINE_MUTEX(nvram_mutex);
++#endif
+ static DEFINE_SPINLOCK(nvram_state_lock);
+ static int nvram_open_cnt;	/* #times opened */
+ static int nvram_open_mode;	/* special open modes */
+
+base-commit: 3cd8b194bf3428dfa53120fee47e827a7c495815
+-- 
+2.53.0
+

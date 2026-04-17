@@ -1,0 +1,45 @@
+From e7866aac6d57d05f25f66fc98d177c30307373b9 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 20 Mar 2026 14:29:33 -0700
+Subject: [PATCH 05/12] FROMGIT: tracing: Adjust cmd_check_undefined to show
+ unexpected undefined symbols
+
+When the check_undefined command in kernel/trace/Makefile fails, there
+is no output, making it hard to understand why the build failed. Capture
+the output of the $(NM) + grep command and print it when failing to make
+it clearer what the problem is.
+
+Fixes: a717943d8ecc ("tracing: Check for undefined symbols in simple_ring_buffer")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260320-cmd_check_undefined-verbose-v1-1-54fc5b061f94@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://git.kernel.org/kvmarm/kvmarm/c/58b4bd18390ec3118d8577e19bdee0d01d40c31e
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/trace/Makefile | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
+index 26f3d61e900d..0dcfe82cf76a 100644
+--- a/kernel/trace/Makefile
++++ b/kernel/trace/Makefile
+@@ -174,7 +174,13 @@ UNDEFINED_ALLOWLIST = __asan __gcov __kasan __kcsan __hwasan __sancov __sanitize
+ 		      $(shell $(NM) -u $(obj)/undefsyms_base.o 2>/dev/null | awk '{print $$2}')
+ 
+ quiet_cmd_check_undefined = NM      $<
+-      cmd_check_undefined = test -z "`$(NM) -u $< | grep -v $(addprefix -e , $(UNDEFINED_ALLOWLIST))`"
++      cmd_check_undefined = \
++          undefsyms=$$($(NM) -u $< | grep -v $(addprefix -e , $(UNDEFINED_ALLOWLIST)) || true); \
++          if [ -n "$$undefsyms" ]; then \
++              echo "Unexpected symbols in $<:" >&2; \
++              echo "$$undefsyms" >&2; \
++              false; \
++          fi
+ 
+ $(obj)/%.o.checked: $(obj)/%.o $(obj)/undefsyms_base.o FORCE
+ 	$(call if_changed,check_undefined)
+-- 
+2.53.0
+

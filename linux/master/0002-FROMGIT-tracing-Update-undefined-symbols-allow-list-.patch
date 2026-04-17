@@ -1,0 +1,39 @@
+From 0f324f0235daca0c50435c002638e3b8308150c7 Mon Sep 17 00:00:00 2001
+From: Vincent Donnefort <vdonnefort@google.com>
+Date: Thu, 12 Mar 2026 11:35:35 +0000
+Subject: [PATCH 02/12] FROMGIT: tracing: Update undefined symbols allow list
+ for simple_ring_buffer
+
+Undefined symbols are not allowed for simple_ring_buffer.c. But some
+compiler emitted symbols are missing in the allowlist. Update it.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Fixes: a717943d8ecc ("tracing: Check for undefined symbols in simple_ring_buffer")
+Closes: https://lore.kernel.org/all/20260311221816.GA316631@ax162/
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260312113535.2213350-1-vdonnefort@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://git.kernel.org/kvmarm/kvmarm/c/5f2f83047126f1cb2986d142d2e76e1fa3cef3f0
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/trace/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
+index 3182e1bc1cf7..3cc490aadc99 100644
+--- a/kernel/trace/Makefile
++++ b/kernel/trace/Makefile
+@@ -137,7 +137,8 @@ obj-$(CONFIG_TRACE_REMOTE_TEST) += remote_test.o
+ # to all kernel symbols. Fail the build if forbidden symbols are found.
+ #
+ UNDEFINED_ALLOWLIST := memset alt_cb_patch_nops __x86 __ubsan __asan __kasan __gcov __aeabi_unwind
+-UNDEFINED_ALLOWLIST += __stack_chk_fail stackleak_track_stack __ref_stack __sanitizer
++UNDEFINED_ALLOWLIST += __stack_chk_fail stackleak_track_stack __ref_stack __sanitizer llvm_gcda llvm_gcov
++UNDEFINED_ALLOWLIST += .TOC\. __clear_pages_unrolled __memmove copy_page warn_slowpath_fmt
+ UNDEFINED_ALLOWLIST := $(addprefix -e , $(UNDEFINED_ALLOWLIST))
+ 
+ quiet_cmd_check_undefined = NM      $<
+-- 
+2.53.0
+
