@@ -1,0 +1,78 @@
+From d4a1f9a46670f6ce767948496a91a37ef9dd1c39 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 16 Apr 2026 16:38:46 -0700
+Subject: [PATCH 03/12] NOTCBL: REPORTED: Revert "arch/riscv: Add bitrev.h file
+ to support rev8 and brev8"
+
+This reverts commit 160423fa4e02f1c187e270f27e898f0b3ef73ce3.
+
+Link: https://lore.kernel.org/20260416231441.GA12905@ax162/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/Kconfig              |  1 -
+ arch/riscv/include/asm/bitrev.h | 41 ---------------------------------
+ 2 files changed, 42 deletions(-)
+ delete mode 100644 arch/riscv/include/asm/bitrev.h
+
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index 618ca516b585..d235396c4514 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -128,7 +128,6 @@ config RISCV
+ 	select HAS_IOPORT if MMU
+ 	select HAVE_ALIGNED_STRUCT_PAGE
+ 	select HAVE_ARCH_AUDITSYSCALL
+-	select HAVE_ARCH_BITREVERSE if RISCV_ISA_ZBKB
+ 	select HAVE_ARCH_HUGE_VMALLOC if HAVE_ARCH_HUGE_VMAP
+ 	select HAVE_ARCH_HUGE_VMAP if MMU && 64BIT
+ 	select HAVE_ARCH_JUMP_LABEL
+diff --git a/arch/riscv/include/asm/bitrev.h b/arch/riscv/include/asm/bitrev.h
+deleted file mode 100644
+index 9f205ac84796..000000000000
+--- a/arch/riscv/include/asm/bitrev.h
++++ /dev/null
+@@ -1,41 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef __ASM_BITREV_H
+-#define __ASM_BITREV_H
+-
+-#include <linux/types.h>
+-#include <asm/cpufeature-macros.h>
+-#include <asm/hwcap.h>
+-#include <asm-generic/bitops/__bitrev.h>
+-
+-static __always_inline __attribute_const__ u32 __arch_bitrev32(u32 x)
+-{
+-	unsigned long result = x;
+-
+-	if (!riscv_has_extension_likely(RISCV_ISA_EXT_ZBKB))
+-		return generic___bitrev32(x);
+-
+-	asm volatile(
+-		".option push\n"
+-		".option arch,+zbkb\n"
+-		"rev8 %0, %0\n"
+-		"brev8 %0, %0\n"
+-		".option pop"
+-		: "+r" (result)
+-	);
+-
+-	if (__riscv_xlen == 64)
+-		return (u32)(result >> 32);
+-
+-	return (u32)result;
+-}
+-
+-static __always_inline __attribute_const__ u16 __arch_bitrev16(u16 x)
+-{
+-	return __arch_bitrev32((u32)x) >> 16;
+-}
+-
+-static __always_inline __attribute_const__ u8 __arch_bitrev8(u8 x)
+-{
+-	return __arch_bitrev32((u32)x) >> 24;
+-}
+-#endif
+-- 
+2.53.0
+

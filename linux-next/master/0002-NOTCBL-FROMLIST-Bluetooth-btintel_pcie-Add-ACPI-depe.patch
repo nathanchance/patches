@@ -1,0 +1,46 @@
+From e8146e06a3e1cd3ff4544984913d23f5b6a17861 Mon Sep 17 00:00:00 2001
+From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Date: Thu, 16 Apr 2026 20:58:03 +0530
+Subject: [PATCH 02/12] NOTCBL: FROMLIST: Bluetooth: btintel_pcie: Add ACPI
+ dependency
+
+The btintel_pcie driver uses ACPI functions (acpi_has_method,
+ACPI_HANDLE, acpi_evaluate_dsm) in btintel_pcie_acpi_reset_method()
+but can be built without CONFIG_ACPI, leading to build failures
+discovered by IBM CI:
+
+drivers/bluetooth/btintel_pcie.c:2309:14: error: implicit declaration
+of function 'acpi_has_method' [-Werror=implicit-function-declaration]
+ 2309 |         if (!acpi_has_method(handle, "_PRR")) {
+      |              ^~~~~~~~~~~~~~~
+
+Add ACPI dependency to the Kconfig entry to prevent building this
+driver when ACPI is disabled, since the driver requires ACPI
+functionality for its reset method.
+
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/ad624e0d-cfd7-4521-ae33-c5c3287b4204@linux.ibm.com/
+Fixes: 912a499a7955 ("Bluetooth: btintel_pcie: Support Product level reset")
+Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Link: https://patch.msgid.link/20260416152803.54396-1-venkat88@linux.ibm.com
+---
+ drivers/bluetooth/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/Kconfig b/drivers/bluetooth/Kconfig
+index c5d45cf91f88..fc1b37044a9b 100644
+--- a/drivers/bluetooth/Kconfig
++++ b/drivers/bluetooth/Kconfig
+@@ -502,7 +502,7 @@ config BT_NXPUART
+ 
+ config BT_INTEL_PCIE
+ 	tristate "Intel HCI PCIe driver"
+-	depends on PCI
++	depends on PCI && ACPI
+ 	select BT_INTEL
+ 	select FW_LOADER
+ 	help
+-- 
+2.53.0
+

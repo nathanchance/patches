@@ -1,7 +1,7 @@
-From 56abaa3b72fbfb9ee558ad2a0c83d2e15b4b0fc2 Mon Sep 17 00:00:00 2001
+From 1f819ba9ab6f1381b27bb261ee9ef672a652b1c7 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 14 Apr 2026 04:39:05 +0100
-Subject: [PATCH 01/10] NOTCBL: FROMLIST: nvram: Conditionally define
+Subject: [PATCH 01/12] NOTCBL: FROMLIST: nvram: Conditionally define
  nvram_mutex
 
 This mutex is only used if compiled on one of these three architectures.
@@ -32,7 +32,7 @@ index 9eff426a9286..cff2bd4a1fb3 100644
  static int nvram_open_cnt;	/* #times opened */
  static int nvram_open_mode;	/* special open modes */
 
-base-commit: e6efabc0afca02efa263aba533f35d90117ab283
+base-commit: 452c3b1ea875276105ac90ba474f72b4cd9b77a2
 -- 
 2.53.0
 
