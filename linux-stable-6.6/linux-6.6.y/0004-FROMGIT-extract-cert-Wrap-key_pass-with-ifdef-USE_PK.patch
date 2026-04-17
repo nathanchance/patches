@@ -1,7 +1,7 @@
-From c19ce08fcfb5c23916dbbff74a2a99024613daaf Mon Sep 17 00:00:00 2001
+From ef632cb67b7904cd43933ba49320dce156db0c32 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 25 Mar 2026 18:19:15 -0700
-Subject: [PATCH 04/12] SUBMITTED: extract-cert: Wrap key_pass with '#ifdef
+Subject: [PATCH 04/12] FROMGIT: extract-cert: Wrap key_pass with '#ifdef
  USE_PKCS11_ENGINE'
 
 A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
@@ -24,8 +24,11 @@ the key_pass assignment line to match the rest of the file.
 
 Cc: stable@vger.kernel.org
 Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://git.kernel.org/nathan/c/4f96b7c68a9904e01049ef610d701b382dca9574
 ---
  certs/extract-cert.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
