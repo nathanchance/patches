@@ -1,20 +1,27 @@
-From c05ac58fd5ca4beb420533b63e2bf338e783d545 Mon Sep 17 00:00:00 2001
+From 9ac802f1584224f2170db09bff5cb737dd254c0f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 25 Mar 2026 17:13:44 -0700
-Subject: [PATCH 3/7] SUBMITTED: dtc: Remove unused dts_version in dtc-lexer.l
+Date: Thu, 16 Apr 2026 17:46:54 -0700
+Subject: [PATCH 2/7] PENDING: scripts/dtc: Remove unused dts_version in
+ dtc-lexer.l
+
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
 A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
 in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in dtc-lexer.l:
+unused static global variable in dtc-lexer.lex.c (compiled from
+dtc-lexer.l):
 
-  ../dtc-lexer.l:42:12: error: variable 'dts_version' set but not used [-Werror,-Wunused-but-set-global]
-     42 | static int dts_version = 1;
+  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
+    641 | static int dts_version = 1;
         |            ^
 
-This variable has been unused since commit 4e1a0a0 ("Remove support for
-the legacy DTS source file format."). Remove it to clear up the warning.
+Remove it to clear up the warning, as it has been unused since
+commit 658f29a51e98 ("of/flattree: Update dtc to current mainline.").
 
-Link: https://patch.msgid.link/20260325-dtc-lexer-remove-dts_version-v1-1-0b5d64903bbb@kernel.org
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/dtc/dtc-lexer.l | 3 ---

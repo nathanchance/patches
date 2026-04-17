@@ -1,7 +1,7 @@
-From 3a63980bce8871d32c42419a8bd9f8ca8a6601b6 Mon Sep 17 00:00:00 2001
+From a6b87b46c3deb59432d2b756b6d1f0a149803fe2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 Mar 2026 17:39:56 -0700
-Subject: [PATCH 1/7] SUBMITTED: powerpc/vdso: Drop
+Subject: [PATCH 3/7] SUBMITTED: powerpc/vdso: Drop
  -DCC_USING_PATCHABLE_FUNCTION_ENTRY from 32-bit flags with clang
 
 After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
@@ -60,8 +60,6 @@ index 8834dfe9d727..368759f81708 100644
  endif
  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
  AS32FLAGS := -D__VDSO32__
-
-base-commit: 028ef9c96e96197026887c0f092424679298aae8
 -- 
 2.53.0
 
