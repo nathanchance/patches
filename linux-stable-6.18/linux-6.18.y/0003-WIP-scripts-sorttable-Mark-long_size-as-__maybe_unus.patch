@@ -1,7 +1,7 @@
-From 0d451bed1e736d058d989274b24c3fa8a3ba0769 Mon Sep 17 00:00:00 2001
+From fac85a9aacd5cad0db02c7e028dfee56f5695054 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 30 Mar 2026 09:51:40 +0200
-Subject: [PATCH 4/8] WIP: scripts/sorttable: Mark long_size as __maybe_unused
+Subject: [PATCH 3/7] WIP: scripts/sorttable: Mark long_size as __maybe_unused
 
   scripts/sorttable.c:452:12: error: variable 'long_size' set but not used [-Werror,-Wunused-but-set-global]
     452 | static int long_size;
