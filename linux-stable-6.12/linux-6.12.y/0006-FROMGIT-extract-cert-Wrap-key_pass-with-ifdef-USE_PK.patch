@@ -1,7 +1,7 @@
-From c1e96473f6578342d58baac77588716453ce531a Mon Sep 17 00:00:00 2001
+From 1fe8bb242d59c97eb49c1c0b61429157ef9dc219 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 25 Mar 2026 18:19:15 -0700
-Subject: [PATCH 06/14] FROMGIT: extract-cert: Wrap key_pass with '#ifdef
+Subject: [PATCH 06/13] FROMGIT: extract-cert: Wrap key_pass with '#ifdef
  USE_PKCS11_ENGINE'
 
 A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
