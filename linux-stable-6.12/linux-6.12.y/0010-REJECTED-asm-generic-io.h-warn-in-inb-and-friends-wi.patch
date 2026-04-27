@@ -24,7 +24,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 64 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/iomap.c b/drivers/pci/iomap.c
-index fe706ed946df..d63ade0fe93d 100644
+index fe706ed946dfd..d63ade0fe93d1 100644
 --- a/drivers/pci/iomap.c
 +++ b/drivers/pci/iomap.c
 @@ -193,11 +193,15 @@ EXPORT_SYMBOL_GPL(pci_iomap_wc);
@@ -44,7 +44,7 @@ index fe706ed946df..d63ade0fe93d 100644
  	iounmap(p);
  }
 diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 6862982c5f1a..402c38a42592 100644
+index 6862982c5f1a9..402c38a425927 100644
 --- a/include/asm-generic/io.h
 +++ b/include/asm-generic/io.h
 @@ -8,6 +8,7 @@
