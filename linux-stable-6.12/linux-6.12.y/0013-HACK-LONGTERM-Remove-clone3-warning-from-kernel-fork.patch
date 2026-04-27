@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/kernel/fork.c b/kernel/fork.c
-index a01cf3a904bfd..5043bf4c59a0c 100644
+index a01cf3a904bf..5043bf4c59a0 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -3109,7 +3109,6 @@ SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
