@@ -1,4 +1,4 @@
-From ea4675ba3a4724a8a5ce36f8d21a7800e837414b Mon Sep 17 00:00:00 2001
+From ce048b54331a5885a5aac83e51b919892da3e9c1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 Mar 2026 17:39:56 -0700
 Subject: [PATCH 1/5] SUBMITTED: powerpc/vdso: Drop
@@ -61,7 +61,7 @@ index 8834dfe9d727..368759f81708 100644
  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
  AS32FLAGS := -D__VDSO32__
 
-base-commit: 7e95b21b3c5177b34c86c46e3128bd3a7311429f
+base-commit: 3fd2ca34a3e7d1f52e7deaa27016379935ae0845
 -- 
 2.54.0
 
