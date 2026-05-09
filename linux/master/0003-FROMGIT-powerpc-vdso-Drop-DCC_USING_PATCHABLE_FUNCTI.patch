@@ -1,7 +1,7 @@
-From bf8bbcfce2099283c8fcd17be5d7d664201fcfbc Mon Sep 17 00:00:00 2001
+From 72002b2e8416291b550bc855dadab469cc7a453d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 Mar 2026 17:39:56 -0700
-Subject: [PATCH 3/7] SUBMITTED: powerpc/vdso: Drop
+Subject: [PATCH 3/7] FROMGIT: powerpc/vdso: Drop
  -DCC_USING_PATCHABLE_FUNCTION_ENTRY from 32-bit flags with clang
 
 After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
@@ -37,8 +37,10 @@ Remove -DCC_USING_PATCHABLE_FUNCTION_ENTRY from the 32-bit vDSO flags
 when building with clang to avoid the warnings.
 
 Fixes: 73cdf24e81e4 ("powerpc64: make clang cross-build friendly")
-Link: https://patch.msgid.link/20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org
+Link: https://git.kernel.org/powerpc/c/60c71369ee356d11ad845ddeb28ceb70ec6cd70e
 ---
  arch/powerpc/kernel/vdso/Makefile | 6 ++++++
  1 file changed, 6 insertions(+)
@@ -61,5 +63,5 @@ index 8834dfe9d727..368759f81708 100644
  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
  AS32FLAGS := -D__VDSO32__
 -- 
-2.53.0
+2.54.0
 
