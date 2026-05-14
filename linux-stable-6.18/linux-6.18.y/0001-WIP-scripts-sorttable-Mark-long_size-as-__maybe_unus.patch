@@ -1,4 +1,4 @@
-From c9d913baef521940f37ab94f9d106cee2c3b3634 Mon Sep 17 00:00:00 2001
+From f2ffacee378a57c38f7a838d6260b85ccce95070 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 30 Mar 2026 09:51:40 +0200
 Subject: [PATCH 1/5] WIP: scripts/sorttable: Mark long_size as __maybe_unused
@@ -27,7 +27,7 @@ index deed676bfe38..8ab635070e29 100644
  #define ERRSTR_MAXSZ	256
  
 
-base-commit: d31a849ff5011dad5c271b53819a0b279e367d68
+base-commit: 52dc660c85dbab60c07c8f1a716d68a4b7d4fc7e
 -- 
 2.54.0
 
