@@ -1,0 +1,95 @@
+From b9b13a9313c71938565499f3785653dbf4bbfe60 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 15 May 2026 19:35:18 +0900
+Subject: [PATCH 13/20] SUBMITTED: Disable -Wattribute-alias for clang-23 and
+ newer
+
+Clang recently added support for -Wattribute-alias [1], which results in
+the same warnings that necessitated commit bee20031772a ("disable
+-Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+
+  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
+    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
+        | ^
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
+        |                                ^
+  kernel/time/itimer.c:325:1: note: aliasee is declared here
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
+        |                         ^
+  <scratch space>:16:1: note: expanded from here
+     16 | __se_sys_alarm
+        | ^
+
+Disable the warnings in the same way for clang-23 and newer.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
+Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
+Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/linux/compat.h         | 2 ++
+ include/linux/compiler-clang.h | 6 ++++++
+ include/linux/syscalls.h       | 2 ++
+ 3 files changed, 10 insertions(+)
+
+diff --git a/include/linux/compat.h b/include/linux/compat.h
+index 77e84d17521e..e5adbe7eeb78 100644
+--- a/include/linux/compat.h
++++ b/include/linux/compat.h
+@@ -72,6 +72,8 @@
+ 	__diag_push();								\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wattribute-alias",				\
++		      "Type aliasing is used to sanitize syscall arguments");\
+ 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
+diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
+index f9de53fff3ac..6ad75f77dc45 100644
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -138,6 +138,12 @@
+ #define __diag_str(s)		__diag_str1(s)
+ #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
+ 
++#if CONFIG_CLANG_VERSION >= 230000
++#define __diag_clang_23(s)	__diag(s)
++#else
++#define __diag_clang_23(s)
++#endif
++
+ #if CONFIG_CLANG_VERSION >= 110000
+ #define __diag_clang_11(s)	__diag(s)
+ #else
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index dcce762b48fa..2c5625686a06 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -240,6 +240,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
+ 	__diag_push();							\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wattribute-alias",			\
++		      "Type aliasing is used to sanitize syscall arguments");\
+ 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
+-- 
+2.54.0
+
