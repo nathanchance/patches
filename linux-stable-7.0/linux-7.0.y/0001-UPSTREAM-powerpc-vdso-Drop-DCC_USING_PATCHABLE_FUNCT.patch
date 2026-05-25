@@ -1,4 +1,4 @@
-From 664a7ee07529a7ee2bf6d01752fc91f4bf314fb4 Mon Sep 17 00:00:00 2001
+From 038a6ee5be392467f0c6e98e07f3c0ecd02ace5d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 11 Mar 2026 17:39:56 -0700
 Subject: [PATCH 1/6] UPSTREAM: powerpc/vdso: Drop
@@ -64,7 +64,7 @@ index 8834dfe9d727..368759f81708 100644
  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
  AS32FLAGS := -D__VDSO32__
 
-base-commit: 9021cc14f7d98b4a1d2c932f52c5343d4d0f6b92
+base-commit: 7e98da22115d049ca74373caddd43e0952becfef
 -- 
 2.54.0
 

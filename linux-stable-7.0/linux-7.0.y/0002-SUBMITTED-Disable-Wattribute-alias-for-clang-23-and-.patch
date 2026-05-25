@@ -1,4 +1,4 @@
-From 6693d2df2fe9bbe2e91b1d94f1809fd1d7f60ef6 Mon Sep 17 00:00:00 2001
+From 53bee5e6d8950eb71b7d7384520a3d13c8cbe3e4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 15 May 2026 19:35:18 +0900
 Subject: [PATCH 2/6] SUBMITTED: Disable -Wattribute-alias for clang-23 and
@@ -92,7 +92,7 @@ index e1123dd28486..527e4e136020 100644
  
  #define __diag_ignore_all(option, comment) \
 diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index 02bd6ddb6278..33f1263e6948 100644
+index 8787b3511c86..051b302c8f4d 100644
 --- a/include/linux/syscalls.h
 +++ b/include/linux/syscalls.h
 @@ -247,6 +247,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
