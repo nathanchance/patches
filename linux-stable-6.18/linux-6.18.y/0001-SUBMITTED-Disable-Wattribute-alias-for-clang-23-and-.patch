@@ -1,4 +1,4 @@
-From e44ef02327a6249b1055062b54c717334b3dcec6 Mon Sep 17 00:00:00 2001
+From 7b1869831cd8c3492228d78fc2ea7ce8bf846b0e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 15 May 2026 19:35:18 +0900
 Subject: [PATCH 1/6] SUBMITTED: Disable -Wattribute-alias for clang-23 and
@@ -105,7 +105,7 @@ index 66c06fcdfe19..808fc4f625ec 100644
  		__attribute__((alias(__stringify(__se_sys##name))));	\
  	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
 
-base-commit: 52386a7b1beb0a7cb5a304935f73c157109c09ad
+base-commit: 83657f4189612e5cbcabc3058acd36c0bd120729
 -- 
 2.54.0
 
