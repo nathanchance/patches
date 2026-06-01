@@ -1,7 +1,7 @@
-From 0ab43541083d0f022757f86c54309e2b41adc853 Mon Sep 17 00:00:00 2001
+From 48a33ae77fde153b8531d97fa868f342fce7f290 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Sat, 5 Feb 2022 16:23:45 +0100
-Subject: [PATCH 01/26] UPSTREAM: lib/xor: make xor prototypes more friendly to
+Subject: [PATCH 01/25] UPSTREAM: lib/xor: make xor prototypes more friendly to
  compiler vectorization
 
 Modern compilers are perfectly capable of extracting parallelism from
@@ -552,7 +552,7 @@ index 80dba916c367..35d917ece4d1 100644
  	preempt_enable();
  }
 diff --git a/arch/s390/lib/xor.c b/arch/s390/lib/xor.c
-index a963c3d8ad0d..fb924a8041dc 100644
+index 7afc06f1d5a8..76d7ca64d231 100644
 --- a/arch/s390/lib/xor.c
 +++ b/arch/s390/lib/xor.c
 @@ -11,7 +11,8 @@
@@ -566,7 +566,7 @@ index a963c3d8ad0d..fb924a8041dc 100644
  	asm volatile(
  		"	larl	1,2f\n"
 @@ -32,8 +33,9 @@ static void xor_xc_2(unsigned long bytes, unsigned long *p1, unsigned long *p2)
- 		: "0", "1", "cc", "memory");
+ 		: : "0", "1", "cc", "memory");
  }
  
 -static void xor_xc_3(unsigned long bytes, unsigned long *p1, unsigned long *p2,
@@ -1207,7 +1207,7 @@ index 2a9fee8ddae3..51b811b62322 100644
  
  #endif
 
-base-commit: 241d66fa280c91b65942d641e92d06c9ae6a0b95
+base-commit: dc027a595035729e290c0adffae363a653acde7c
 -- 
 2.54.0
 
