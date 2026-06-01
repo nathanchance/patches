@@ -1,7 +1,7 @@
-From 7e108f100db43b92bc1ae8144286df9e9148ea27 Mon Sep 17 00:00:00 2001
+From 4631e2a6234558d1c583f23d56aa254dd58a4beb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 Aug 2024 19:38:00 -0700
-Subject: [PATCH 01/20] NOTCBL: REPORTED: Revert "fbdev: offb: replace
+Subject: [PATCH 01/18] NOTCBL: REPORTED: Revert "fbdev: offb: replace
  of_node_put with __free(device_node)"
 
 This reverts commit 96ee5c5712efb7ec5af66e3d600d6258cece0ea5.
@@ -13,7 +13,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
-index ea232395e226..4c83a854a45b 100644
+index e151b0d7b53c..cc23c792b6a9 100644
 --- a/drivers/video/fbdev/offb.c
 +++ b/drivers/video/fbdev/offb.c
 @@ -356,7 +356,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
@@ -34,7 +34,7 @@ index ea232395e226..4c83a854a45b 100644
  #ifdef __BIG_ENDIAN
  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 
-base-commit: dcbcab9d707928cd1679eba21ef0697fbb73b88a
+base-commit: 228da13e907e2b46b7222cfc35290fbfad920bef
 -- 
 2.54.0
 
