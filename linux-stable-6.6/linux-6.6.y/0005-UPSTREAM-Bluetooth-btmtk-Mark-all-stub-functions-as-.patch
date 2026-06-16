@@ -1,0 +1,101 @@
+From 0aea84456156c16c0dc246616f0c36b503209d36 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Jul 2024 10:56:24 -0700
+Subject: [PATCH 05/12] UPSTREAM: Bluetooth: btmtk: Mark all stub functions as
+ inline
+
+Several recent patches added static stubs to btmtk.h without the inline
+keyword, which causes instances of -Wunused-function when those stubs
+are not used anywhere in a file that includes the header:
+
+  In file included from drivers/bluetooth/btusb.c:28:
+  drivers/bluetooth/btmtk.h:254:13: warning: 'btmtk_fw_get_filename' defined but not used [-Wunused-function]
+    254 | static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
+        |             ^~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:249:12: warning: 'btmtk_process_coredump' defined but not used [-Wunused-function]
+    249 | static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+        |            ^~~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:243:12: warning: 'btmtk_register_coredump' defined but not used [-Wunused-function]
+    243 | static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
+        |            ^~~~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:233:12: warning: 'btmtk_setup_firmware' defined but not used [-Wunused-function]
+    233 | static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+        |            ^~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:227:12: warning: 'btmtk_setup_firmware_79xx' defined but not used [-Wunused-function]
+    227 | static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+        |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add inline to all the stubs in btmtk.h (even ones that do not currently
+have any warnings associated with them) to ensure there are never unused
+function warnings from these stubs, as is customary for the kernel.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://git.kernel.org/linus/23e88450bb04f6b44ce4cacbd76cd775e426a5b2
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/bluetooth/btmtk.h | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 3055b9728ae2..5b28d1a2d918 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -196,40 +196,42 @@ static inline int btmtk_set_bdaddr(struct hci_dev *hdev,
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-				     wmt_cmd_sync_func_t wmt_cmd_sync)
++static inline int btmtk_setup_firmware_79xx(struct hci_dev *hdev,
++					    const char *fwname,
++					    wmt_cmd_sync_func_t wmt_cmd_sync)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+-				wmt_cmd_sync_func_t wmt_cmd_sync)
++static inline int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
++				       wmt_cmd_sync_func_t wmt_cmd_sync)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static void btmtk_reset_sync(struct hci_dev *hdev)
++static inline void btmtk_reset_sync(struct hci_dev *hdev)
+ {
+ }
+ 
+-static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
+-				   u32 fw_version)
++static inline int btmtk_register_coredump(struct hci_dev *hdev,
++					  const char *name, u32 fw_version)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
++static inline int btmtk_process_coredump(struct hci_dev *hdev,
++					 struct sk_buff *skb)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
+-				  u32 fw_ver, u32 fw_flavor)
++static inline void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
++					 u32 fw_ver, u32 fw_flavor)
+ {
+ }
+ 
+-static int btmtk_usb_hci_wmt_sync(struct hci_dev *hdev,
+-				  struct btmtk_hci_wmt_params *wmt_params)
++static inline int btmtk_usb_hci_wmt_sync(struct hci_dev *hdev,
++					 struct btmtk_hci_wmt_params *wmt_params)
+ {
+ 	return -EOPNOTSUPP;
+ }
+-- 
+2.54.0
+
