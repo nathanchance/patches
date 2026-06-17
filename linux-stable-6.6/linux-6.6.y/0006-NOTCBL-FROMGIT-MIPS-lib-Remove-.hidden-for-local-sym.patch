@@ -1,0 +1,73 @@
+From 944ff64ffc4e648c0942aec9247d203f2cd3a17b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 8 Jun 2026 20:36:25 -0700
+Subject: [PATCH 06/13] NOTCBL: FROMGIT: MIPS: lib: Remove '.hidden' for local
+ symbols
+
+After a recent change in binutils that warns when local symbols have
+non-default visibility [1], there are a couple instances when building
+arch/mips:
+
+  Assembler messages:
+  {standard input}: Warning: local symbol `__memset' has non-default visibility
+  Assembler messages:
+  {standard input}: Warning: local symbol `__memcpy' has non-default visibility
+
+Remove the '.hidden' directives for these symbols to clear up the
+warnings, as they are pointless with a local symbol, which is by
+definition hidden. This results in no changes to these symbols in nm's
+output when assembled with various copies of binutils.
+
+Closes: https://lore.kernel.org/20260509122517.GA1108596@ax162/
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=c4150acbda1b3ce0602f79cbb7700b39e577be7e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://git.kernel.org/mips/c/5dcd5846f1f9ee637613b285332e9bdb90757eb5
+---
+ arch/mips/lib/memcpy.S | 2 --
+ arch/mips/lib/memset.S | 2 --
+ 2 files changed, 4 deletions(-)
+
+diff --git a/arch/mips/lib/memcpy.S b/arch/mips/lib/memcpy.S
+index a4b4e805ff13..84f85aba6f4b 100644
+--- a/arch/mips/lib/memcpy.S
++++ b/arch/mips/lib/memcpy.S
+@@ -274,7 +274,6 @@
+ 	/* initialize __memcpy if this the first time we execute this macro */
+ 	.ifnotdef __memcpy
+ 	.set __memcpy, 1
+-	.hidden __memcpy /* make sure it does not leak */
+ 	.endif
+ 
+ 	/*
+@@ -538,7 +537,6 @@
+ 	.if __memcpy == 1
+ 	END(memcpy)
+ 	.set __memcpy, 0
+-	.hidden __memcpy
+ 	.endif
+ 
+ .Ll_exc_copy\@:
+diff --git a/arch/mips/lib/memset.S b/arch/mips/lib/memset.S
+index 79405c32cc85..ab087406da66 100644
+--- a/arch/mips/lib/memset.S
++++ b/arch/mips/lib/memset.S
+@@ -89,7 +89,6 @@
+ 	/* Initialize __memset if this is the first time we call this macro */
+ 	.ifnotdef __memset
+ 	.set __memset, 1
+-	.hidden __memset /* Make sure it does not leak */
+ 	.endif
+ 
+ 	sltiu		t0, a2, STORSIZE	/* very small region? */
+@@ -231,7 +230,6 @@
+ 	.if __memset == 1
+ 	END(memset)
+ 	.set __memset, 0
+-	.hidden __memset
+ 	.endif
+ 
+ #ifdef CONFIG_CPU_NO_LOAD_STORE_LR
+-- 
+2.54.0
+
