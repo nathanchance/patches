@@ -1,7 +1,7 @@
-From 5c67de7ac0534d7d1ef9ffa18f072e1e28550499 Mon Sep 17 00:00:00 2001
+From 40002b3ce57a094a5cf6876e7683b8a1538033ce Mon Sep 17 00:00:00 2001
 From: Connor O'Brien <connoro@google.com>
 Date: Wed, 12 Jan 2022 00:25:03 +0000
-Subject: [PATCH 13/26] UPSTREAM: tools/resolve_btfids: Build with host flags
+Subject: [PATCH 13/24] UPSTREAM: tools/resolve_btfids: Build with host flags
 
 resolve_btfids is built using $(HOSTCC) and $(HOSTLD) but does not
 pick up the corresponding flags. As a result, host-specific settings
