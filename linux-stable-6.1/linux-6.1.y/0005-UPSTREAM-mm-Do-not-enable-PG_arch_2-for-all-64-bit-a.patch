@@ -1,7 +1,7 @@
-From c2dd7102f95a82670d9b228c08712e14966430a9 Mon Sep 17 00:00:00 2001
+From fd205bb29241829869221fc5b0579729525215fd Mon Sep 17 00:00:00 2001
 From: Catalin Marinas <catalin.marinas@arm.com>
 Date: Thu, 3 Nov 2022 18:10:34 -0700
-Subject: [PATCH 05/19] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
+Subject: [PATCH 05/18] UPSTREAM: mm: Do not enable PG_arch_2 for all 64-bit
  architectures
 
 Commit 4beba9486abd ("mm: Add PG_arch_2 page flag") introduced a new
@@ -38,10 +38,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  6 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index d889a466468c..04b2ca9d6cbf 100644
+index 9cb8867eb120..40d1fba74eba 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -2043,6 +2043,7 @@ config ARM64_MTE
+@@ -2093,6 +2093,7 @@ config ARM64_MTE
  	depends on ARM64_PAN
  	select ARCH_HAS_SUBPAGE_FAULTS
  	select ARCH_USES_HIGH_VMA_FLAGS
@@ -122,10 +122,10 @@ index a83a42108847..ec532692c4ba 100644
  	default y
  	bool "Enable VM event counters for /proc/vmstat" if EXPERT
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 2c118713f771..58aad52632eb 100644
+index 7023bdf48960..5299c35e41ec 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2461,7 +2461,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
+@@ -2463,7 +2463,7 @@ static void __split_huge_page_tail(struct page *head, int tail,
  			 (1L << PG_workingset) |
  			 (1L << PG_locked) |
  			 (1L << PG_unevictable) |

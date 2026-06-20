@@ -1,7 +1,7 @@
-From ebbdf5b9547e787527137b99c61b18950d9eff76 Mon Sep 17 00:00:00 2001
+From 2c992cb56542f5f79d72666c56aaf78eb76d654b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
-Subject: [PATCH 07/19] UPSTREAM: ARM: imx: Annotate imx7d_enet_init() as
+Subject: [PATCH 07/18] UPSTREAM: ARM: imx: Annotate imx7d_enet_init() as
  __init
 
 After a recent LLVM change [1] that deduces __cold on functions that
