@@ -1,0 +1,57 @@
+From 00bfbf1ed6a09d20f165713f50d3fd59ba8fdff4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 23 Jun 2026 14:47:11 -0700
+Subject: [PATCH 06/13] SUBMITTED: x86/boot/compressed: Disable jump tables for
+ clang
+
+After a recent upstream LLVM change to start generating jump and lookup
+tables in switch statements in more instances [1], linking the
+compressed x86 boot image when CONFIG_KERNEL_ZSTD is enabled fails with:
+
+  ld.lld: error: Unexpected run-time relocations (.rela) detected!
+
+Dumping the relocations in misc.o, which is the only file influenced by
+CONFIG_KERNEL_ZSTD in the decompressor, shows dynamic relocations to
+some string constants, which correspond to the string literals in the
+switch statement in handle_zstd_error():
+
+  Relocation section '.rela.data.rel.ro' at offset 0x277b0 contains 31 entries:
+      Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+  0000000000000000  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 73a
+  0000000000000008  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000010  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000018  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  ...
+
+This optimization is problematic for the decompressor environment, as it
+is built as -fPIE without any explicit absolute references (as described
+at the top of misc.c) while not applying any dynamic relocations, hence
+the linker assertion. To opt out of this optimization, which is of
+little value in this special early boot code, disable jump tables in the
+decompressor when building with clang. This mirrors the other x86
+startup code in arch/x86/boot/startup.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
+Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
+Link: https://patch.msgid.link/20260623-x86-boot-compressed-disable-jt-clang-v1-1-575fccd58107@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/boot/compressed/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
+index ba17496fad1b..875b993a98a4 100644
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -40,6 +40,7 @@ KBUILD_CFLAGS += -Wundef
+ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ cflags-$(CONFIG_X86_32) := -march=i386
+ cflags-$(CONFIG_X86_64) := -mcmodel=small -mno-red-zone
++cflags-$(CONFIG_CC_IS_CLANG) += -fno-jump-tables
+ KBUILD_CFLAGS += $(cflags-y)
+ KBUILD_CFLAGS += -mno-mmx -mno-sse
+ KBUILD_CFLAGS += -ffreestanding -fshort-wchar
+-- 
+2.54.0
+
