@@ -29,7 +29,7 @@ Link: https://git.kernel.org/mips/c/5dcd5846f1f9ee637613b285332e9bdb90757eb5
  2 files changed, 4 deletions(-)
 
 diff --git a/arch/mips/lib/memcpy.S b/arch/mips/lib/memcpy.S
-index a4b4e805ff13..84f85aba6f4b 100644
+index a4b4e805ff135..84f85aba6f4b8 100644
 --- a/arch/mips/lib/memcpy.S
 +++ b/arch/mips/lib/memcpy.S
 @@ -274,7 +274,6 @@
@@ -49,7 +49,7 @@ index a4b4e805ff13..84f85aba6f4b 100644
  
  .Ll_exc_copy\@:
 diff --git a/arch/mips/lib/memset.S b/arch/mips/lib/memset.S
-index 79405c32cc85..ab087406da66 100644
+index 79405c32cc853..ab087406da66a 100644
 --- a/arch/mips/lib/memset.S
 +++ b/arch/mips/lib/memset.S
 @@ -89,7 +89,6 @@
