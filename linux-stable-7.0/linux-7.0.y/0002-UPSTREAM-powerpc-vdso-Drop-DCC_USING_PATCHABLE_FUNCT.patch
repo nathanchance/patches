@@ -47,7 +47,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 6 insertions(+)
 
 diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-index 8834dfe9d7279..368759f817084 100644
+index 8834dfe9d727..368759f81708 100644
 --- a/arch/powerpc/kernel/vdso/Makefile
 +++ b/arch/powerpc/kernel/vdso/Makefile
 @@ -62,6 +62,12 @@ CC32FLAGSREMOVE += -fno-stack-clash-protection
