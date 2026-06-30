@@ -1,0 +1,25 @@
+From 1585dc4a94b9d7c440324d96329e010eb37b532f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 29 Jun 2026 17:20:07 -0700
+Subject: [PATCH 17/25] WIP: Disable -Wstringop-overread in drivers/scsi/pm8001
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/scsi/pm8001/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/scsi/pm8001/Makefile b/drivers/scsi/pm8001/Makefile
+index 02b7338999cc..2d836b688b3f 100644
+--- a/drivers/scsi/pm8001/Makefile
++++ b/drivers/scsi/pm8001/Makefile
+@@ -4,6 +4,7 @@
+ #
+ # Copyright (C) 2008-2009  USI Co., Ltd.
+ 
++ccflags-$(CONFIG_CC_IS_CLANG) := $(call cc-disable-warning,stringop-overread)
+ 
+ obj-$(CONFIG_SCSI_PM8001) += pm80xx.o
+ pm80xx-y += pm8001_init.o \
+-- 
+2.54.0
+
