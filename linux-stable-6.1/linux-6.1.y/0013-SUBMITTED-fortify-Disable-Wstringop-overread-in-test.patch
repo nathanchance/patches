@@ -1,0 +1,55 @@
+From 608333832aad4f8228ce18bef882132dbd2c741b Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 23 Jun 2026 13:23:46 -0700
+Subject: [PATCH 13/21] SUBMITTED: fortify: Disable -Wstringop-overread in
+ tests
+
+clang recently added support for -Wstringop-overread [1], which is on by
+default like -Wfortify-source. This breaks the usage of -Werror in the
+fortify tests, resulting in the following false positive warnings in the
+kernel build:
+
+  warning: unsafe memcmp() usage lacked '__read_overflow2' warning in lib/test_fortify/read_overflow2-memcmp.c
+  warning: unsafe memcmp() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memcmp.c
+  warning: unsafe memchr() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memchr.c
+
+Examining the fortify test logs shows a warning like the following in
+each of the failed logs:
+
+  In file included from lib/test_fortify/read_overflow2-memcmp.c:5:
+  lib/test_fortify/test_fortify.h:34:2: error: 'memcmp' reading 17 bytes from a region of size 16 [-Werror,-Wstringop-overread]
+     34 |         TEST;
+        |         ^
+  lib/test_fortify/read_overflow2-memcmp.c:3:2: note: expanded from macro 'TEST'
+      3 |         memcmp(large, small, sizeof(small) + 1)
+        |         ^
+  1 error generated.
+
+Disable -Wstringop-overread for the fortify tests, as it defeats the
+purpose of testing the Linux specific implementation of fortify, like
+-Wfortify-source.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2168
+Link: https://github.com/llvm/llvm-project/commit/86f2e71cb8d165b59ad31a442b2391e23826133e [1]
+Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/Makefile b/lib/Makefile
+index 6ae66e13f319..ba11fe564b16 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -403,6 +403,7 @@ quiet_cmd_test_fortify = TEST    $@
+       cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
+ 			$< $@ "$(NM)" $(CC) $(c_flags) \
+ 			$(call cc-disable-warning,fortify-source) \
++			$(call cc-disable-warning,stringop-overread) \
+ 			-DKBUILD_EXTRA_WARN1
+ 
+ targets += $(TEST_FORTIFY_LOGS)
+-- 
+2.54.0
+
