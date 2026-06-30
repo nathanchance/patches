@@ -1,8 +1,7 @@
-From a0086125bb8d084aed0a966494d17b08757739e9 Mon Sep 17 00:00:00 2001
+From e3ea65e4055e7e29a7f4eb61f78b82b30a1bd311 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 8 Jun 2026 20:36:25 -0700
-Subject: [PATCH 05/13] NOTCBL: FROMGIT: MIPS: lib: Remove '.hidden' for local
- symbols
+Subject: [PATCH 06/15] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
 
 After a recent change in binutils that warns when local symbols have
 non-default visibility [1], there are a couple instances when building
@@ -22,7 +21,8 @@ Closes: https://lore.kernel.org/20260509122517.GA1108596@ax162/
 Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=c4150acbda1b3ce0602f79cbb7700b39e577be7e [1]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Link: https://git.kernel.org/mips/c/5dcd5846f1f9ee637613b285332e9bdb90757eb5
+Link: https://git.kernel.org/linus/5dcd5846f1f9ee637613b285332e9bdb90757eb5
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  arch/mips/lib/memcpy.S | 2 --
  arch/mips/lib/memset.S | 2 --
