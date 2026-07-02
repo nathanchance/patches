@@ -1,0 +1,49 @@
+From 286e6fb26afdc7c1aff9b2a28cf96d30a01819bc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 30 Jun 2026 20:23:03 -0700
+Subject: [PATCH 28/28] HACK: STABLE: x86/tools: Mark several static variables
+ as unused
+
+arch/x86/boot/tools/build.c:62:22: warning: variable 'efi32_stub_entry' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:63:22: warning: variable 'efi64_stub_entry' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:64:22: warning: variable 'efi_pe_entry' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:65:22: warning: variable 'efi32_pe_entry' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:67:22: warning: variable 'startup_64' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:68:22: warning: variable '_ehead' set but not used [-Wunused-but-set-global]
+arch/x86/boot/tools/build.c:69:22: warning: variable '_end' set but not used [-Wunused-but-set-global]
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/boot/tools/build.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/arch/x86/boot/tools/build.c b/arch/x86/boot/tools/build.c
+index a3725ad46c5a..5dd681226b62 100644
+--- a/arch/x86/boot/tools/build.c
++++ b/arch/x86/boot/tools/build.c
+@@ -59,14 +59,14 @@ u8 buf[SETUP_SECT_MAX*512];
+ #define PECOFF_COMPAT_RESERVE 0x0
+ #endif
+ 
+-static unsigned long efi32_stub_entry;
+-static unsigned long efi64_stub_entry;
+-static unsigned long efi_pe_entry;
+-static unsigned long efi32_pe_entry;
+-static unsigned long kernel_info;
+-static unsigned long startup_64;
+-static unsigned long _ehead;
+-static unsigned long _end;
++static unsigned long efi32_stub_entry __attribute__((unused));
++static unsigned long efi64_stub_entry __attribute__((unused));
++static unsigned long efi_pe_entry __attribute__((unused));
++static unsigned long efi32_pe_entry __attribute__((unused));
++static unsigned long kernel_info __attribute__((unused));
++static unsigned long startup_64 __attribute__((unused));
++static unsigned long _ehead __attribute__((unused));
++static unsigned long _end __attribute__((unused));
+ 
+ /*----------------------------------------------------------------------*/
+ 
+-- 
+2.54.0
+

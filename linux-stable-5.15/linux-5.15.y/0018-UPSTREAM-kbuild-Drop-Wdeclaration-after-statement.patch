@@ -1,0 +1,50 @@
+From 1928f152f133bb9788f87d9d76d0111b1cfb35c5 Mon Sep 17 00:00:00 2001
+From: Peter Zijlstra <peterz@infradead.org>
+Date: Fri, 9 Jun 2023 11:28:30 +0200
+Subject: [PATCH 18/28] UPSTREAM: kbuild: Drop -Wdeclaration-after-statement
+
+With the advent on scope-based resource management it comes really
+tedious to abide by the contraints of -Wdeclaration-after-statement.
+
+It will still be recommeneded to place declarations at the start of a
+scope where possible, but it will no longer be enforced.
+
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/CAHk-%3Dwi-RyoUhbChiVaJZoZXheAwnJ7OO%3DGxe85BkPAd93TwDA%40mail.gmail.com
+Link: https://git.kernel.org/linus/b5ec6fd286dfa466f64cb0e56ed768092d0342ae
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Makefile                          | 3 ---
+ arch/arm64/kernel/vdso32/Makefile | 1 -
+ 2 files changed, 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8f0f22303f62..1e493918b408 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1017,9 +1017,6 @@ endif
+ # arch Makefile may override CC so keep this after arch Makefile is included
+ NOSTDINC_FLAGS += -nostdinc -isystem $(shell $(CC) -print-file-name=include)
+ 
+-# warn about C99 declaration after statement
+-KBUILD_CFLAGS += -Wdeclaration-after-statement
+-
+ # Variable Length Arrays (VLAs) should not be used anywhere in the kernel
+ KBUILD_CFLAGS += -Wvla
+ 
+diff --git a/arch/arm64/kernel/vdso32/Makefile b/arch/arm64/kernel/vdso32/Makefile
+index 83e9399e3836..376999fe06d4 100644
+--- a/arch/arm64/kernel/vdso32/Makefile
++++ b/arch/arm64/kernel/vdso32/Makefile
+@@ -79,7 +79,6 @@ VDSO_CFLAGS += -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+                -std=gnu89
+ VDSO_CFLAGS  += -O2
+ # Some useful compiler-dependent flags from top-level Makefile
+-VDSO_CFLAGS += $(call cc32-option,-Wdeclaration-after-statement,)
+ VDSO_CFLAGS += $(call cc32-option,-Wno-pointer-sign)
+ VDSO_CFLAGS += -fno-strict-overflow
+ VDSO_CFLAGS += $(call cc32-option,-Werror=strict-prototypes)
+-- 
+2.54.0
+
