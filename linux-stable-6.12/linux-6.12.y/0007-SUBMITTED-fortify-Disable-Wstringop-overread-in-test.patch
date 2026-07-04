@@ -1,7 +1,7 @@
-From d3ef331e5ee126c765401b70e750a9ad50f7b9ef Mon Sep 17 00:00:00 2001
+From b882196153cb6a4aa1c2bcd83739d0947faf26f0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 23 Jun 2026 13:23:46 -0700
-Subject: [PATCH 08/16] SUBMITTED: fortify: Disable -Wstringop-overread in
+Subject: [PATCH 07/15] SUBMITTED: fortify: Disable -Wstringop-overread in
  tests
 
 clang recently added support for -Wstringop-overread [1], which is on by
