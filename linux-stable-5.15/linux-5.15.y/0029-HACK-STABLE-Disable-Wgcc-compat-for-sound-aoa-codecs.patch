@@ -1,0 +1,23 @@
+From e5dd36de92eec892b95e1aa29babc9b37189affc Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 17 Jul 2026 15:46:53 -0700
+Subject: [PATCH 29/29] HACK: STABLE: Disable -Wgcc-compat for
+ sound/aoa/codecs/tas.o
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/aoa/codecs/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sound/aoa/codecs/Makefile b/sound/aoa/codecs/Makefile
+index 95f4c3849d55..e31f7edf0e10 100644
+--- a/sound/aoa/codecs/Makefile
++++ b/sound/aoa/codecs/Makefile
+@@ -6,3 +6,4 @@ snd-aoa-codec-toonie-objs := toonie.o
+ obj-$(CONFIG_SND_AOA_ONYX) += snd-aoa-codec-onyx.o
+ obj-$(CONFIG_SND_AOA_TAS) += snd-aoa-codec-tas.o
+ obj-$(CONFIG_SND_AOA_TOONIE) += snd-aoa-codec-toonie.o
++CFLAGS_tas.o += $(call cc-disable-warning,gcc-compat)
+-- 
+2.55.0
+

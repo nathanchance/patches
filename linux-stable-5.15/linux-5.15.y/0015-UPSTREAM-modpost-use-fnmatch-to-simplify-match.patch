@@ -1,7 +1,7 @@
 From d2d4cb691c35e682068a7699f466f8e032b5b690 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 30 May 2022 18:01:39 +0900
-Subject: [PATCH 15/28] UPSTREAM: modpost: use fnmatch() to simplify match()
+Subject: [PATCH 15/29] UPSTREAM: modpost: use fnmatch() to simplify match()
 
 Replace the own implementation for wildcard (glob) matching with
 a function call to fnmatch().

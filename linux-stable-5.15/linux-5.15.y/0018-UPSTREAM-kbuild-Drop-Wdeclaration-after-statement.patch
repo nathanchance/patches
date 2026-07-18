@@ -1,7 +1,7 @@
 From dcec39d301d69802b62e62a7b7472be785f53c50 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Fri, 9 Jun 2023 11:28:30 +0200
-Subject: [PATCH 18/28] UPSTREAM: kbuild: Drop -Wdeclaration-after-statement
+Subject: [PATCH 18/29] UPSTREAM: kbuild: Drop -Wdeclaration-after-statement
 
 With the advent on scope-based resource management it comes really
 tedious to abide by the contraints of -Wdeclaration-after-statement.
