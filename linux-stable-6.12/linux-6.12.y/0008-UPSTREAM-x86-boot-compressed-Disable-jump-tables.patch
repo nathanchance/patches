@@ -1,8 +1,7 @@
-From 4d9c1d576445d9e0370e15033e0ceb422ff70756 Mon Sep 17 00:00:00 2001
+From eef8478b75d3edbb33f96ba555c3f066fa952536 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 23 Jun 2026 14:47:11 -0700
-Subject: [PATCH 08/17] SUBMITTED: x86/boot/compressed: Disable jump tables for
- clang
+Date: Wed, 22 Jul 2026 17:09:43 -0700
+Subject: [PATCH 08/17] UPSTREAM: x86/boot/compressed: Disable jump tables
 
 After a recent upstream LLVM change to start generating jump and lookup
 tables in switch statements in more instances [1], linking the
@@ -27,31 +26,39 @@ This optimization is problematic for the decompressor environment, as it
 is built as -fPIE without any explicit absolute references (as described
 at the top of misc.c) while not applying any dynamic relocations, hence
 the linker assertion. To opt out of this optimization, which is of
-little value in this special early boot code, disable jump tables in the
-decompressor when building with clang. This mirrors the other x86
-startup code in arch/x86/boot/startup.
+little value in this special early boot code, and to mirror the other
+x86 startup code in arch/x86/boot/startup, disable jump tables in the
+decompressor.
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
-Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
-Link: https://patch.msgid.link/20260623-x86-boot-compressed-disable-jt-clang-v1-1-575fccd58107@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
+Link: https://patch.msgid.link/20260722-x86-boot-compressed-disable-jt-clang-v2-1-7373d38482fb@kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
+Link: https://git.kernel.org/linus/4a9ec5ec9555ad62dc5b81a37ac946025c2ea002
 ---
  arch/x86/boot/compressed/Makefile | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 606c74f27459..e6ade7dd74a3 100644
+index 606c74f27459..80ff6c64f939 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
-@@ -31,6 +31,7 @@ KBUILD_CFLAGS += -Wundef
+@@ -27,6 +27,7 @@ targets := vmlinux vmlinux.bin vmlinux.bin.gz vmlinux.bin.bz2 vmlinux.bin.lzma \
+ KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
+ KBUILD_CFLAGS += -std=gnu11
+ KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
++KBUILD_CFLAGS += -fno-jump-tables
+ KBUILD_CFLAGS += -Wundef
  KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
  cflags-$(CONFIG_X86_32) := -march=i386
- cflags-$(CONFIG_X86_64) := -mcmodel=small -mno-red-zone
-+cflags-$(CONFIG_CC_IS_CLANG) += -fno-jump-tables
- KBUILD_CFLAGS += $(cflags-y)
- KBUILD_CFLAGS += -mno-mmx -mno-sse
- KBUILD_CFLAGS += -ffreestanding -fshort-wchar
 -- 
 2.55.0
 
