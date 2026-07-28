@@ -1,7 +1,7 @@
-From 8d704969f7c876f1cf94ef80ec0dff83919d0aca Mon Sep 17 00:00:00 2001
+From 81e55c71afcada1af99aa1562fec45eb573642e7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 23 Jun 2026 13:23:46 -0700
-Subject: [PATCH 2/8] SUBMITTED: fortify: Disable -Wstringop-overread in tests
+Subject: [PATCH 2/8] UPSTREAM: fortify: Disable -Wstringop-overread in tests
 
 clang recently added support for -Wstringop-overread [1], which is on by
 default like -Wfortify-source. This breaks the usage of -Werror in the
@@ -31,8 +31,10 @@ purpose of testing the Linux specific implementation of fortify, like
 Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2168
 Link: https://github.com/llvm/llvm-project/commit/86f2e71cb8d165b59ad31a442b2391e23826133e [1]
-Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://git.kernel.org/linus/c1f3e770eec26d6f96dd6d2ea30555ba7c09a244
 ---
  lib/test_fortify/Makefile | 1 +
  1 file changed, 1 insertion(+)
