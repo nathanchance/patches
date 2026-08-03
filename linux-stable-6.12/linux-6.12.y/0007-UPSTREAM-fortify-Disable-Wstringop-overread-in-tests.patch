@@ -1,7 +1,7 @@
-From 85d6f6d2eec7f9bc995330d91f18fb8910f92ea7 Mon Sep 17 00:00:00 2001
+From f728461cf0f150e94771add805751b5981a238b9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 23 Jun 2026 13:23:46 -0700
-Subject: [PATCH 07/17] UPSTREAM: fortify: Disable -Wstringop-overread in tests
+Subject: [PATCH 07/16] UPSTREAM: fortify: Disable -Wstringop-overread in tests
 
 clang recently added support for -Wstringop-overread [1], which is on by
 default like -Wfortify-source. This breaks the usage of -Werror in the
