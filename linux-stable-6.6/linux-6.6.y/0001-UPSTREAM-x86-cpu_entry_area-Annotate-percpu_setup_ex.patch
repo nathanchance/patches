@@ -1,4 +1,4 @@
-From 095e50200c7df440f0c6e38758751b8c2d11becb Mon Sep 17 00:00:00 2001
+From 691b6e83c7601a26f810692f06612dfcec7571ca Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:18:08 -0700
 Subject: [PATCH 01/15] UPSTREAM: x86/cpu_entry_area: Annotate
@@ -39,7 +39,7 @@ index e91500a80963..575f863f3c75 100644
  	struct cpu_entry_area *cea = get_cpu_entry_area(cpu);
  
 
-base-commit: 6436c12a2ced865a3382b867e3882d08c2d2bf8d
+base-commit: d27334b2888c10d2b60c954c59b186182d833107
 -- 
 2.55.0
 
