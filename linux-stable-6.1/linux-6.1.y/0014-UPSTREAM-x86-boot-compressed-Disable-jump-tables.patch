@@ -1,7 +1,7 @@
 From dd4c9e7ecb97bc67ade9e60bd7b75411018a2376 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 22 Jul 2026 17:09:43 -0700
-Subject: [PATCH 14/22] UPSTREAM: x86/boot/compressed: Disable jump tables
+Subject: [PATCH 14/23] UPSTREAM: x86/boot/compressed: Disable jump tables
 
 After a recent upstream LLVM change to start generating jump and lookup
 tables in switch statements in more instances [1], linking the
