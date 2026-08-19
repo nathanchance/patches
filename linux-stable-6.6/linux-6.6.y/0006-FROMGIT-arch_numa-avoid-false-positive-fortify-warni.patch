@@ -1,7 +1,7 @@
-From bc9eea7487aec2a3c2608d5678cda18a0a2c4f3c Mon Sep 17 00:00:00 2001
+From ef38a898ce9d6fee43ab6836ab4a05ddc611726b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 13 Aug 2026 20:12:55 -0700
-Subject: [PATCH 07/16] FROMGIT: arch_numa: avoid false positive fortify
+Subject: [PATCH 06/15] FROMGIT: arch_numa: avoid false positive fortify
  warning in setup_node_to_cpumask_map()
 
 When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
