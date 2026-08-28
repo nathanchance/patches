@@ -1,4 +1,4 @@
-From 75e818a887b2218c82fbb422bf726fbc679a6083 Mon Sep 17 00:00:00 2001
+From 04da4a05d17f21b44619dcd3ed283c1873432e08 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Fri, 9 Jun 2023 11:28:30 +0200
 Subject: [PATCH 18/29] UPSTREAM: kbuild: Drop -Wdeclaration-after-statement
@@ -20,7 +20,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 4 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 9d11ba195a16..42858c1f2755 100644
+index d74985973e40..c0a99499e128 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1017,9 +1017,6 @@ endif
