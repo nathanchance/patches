@@ -1,8 +1,10 @@
-From 769ae0a745d5812927d9c49e9441225b4b04162d Mon Sep 17 00:00:00 2001
+From 907b88892260d5f6de982b0b63a34daa586dd6ef Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 13 Aug 2026 20:12:55 -0700
-Subject: [PATCH 07/16] FROMGIT: arch_numa: avoid false positive fortify
+Subject: [PATCH 07/16] UPSTREAM: arch_numa: avoid false positive fortify
  warning in setup_node_to_cpumask_map()
+
+commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
 
 When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
 CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
@@ -51,15 +53,15 @@ setup_node_to_cpumask_map() should that condition be violated.
 Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Cc: Kees Cook <kees@kernel.org>
 Cc: Bill Wendling <morbo@google.com>
 Cc: Justin Stitt <justinstitt@google.com>
-Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Nathan Chancellor <nathan@kernel.org>
 Cc: Nick Desaulniers <ndesaulniers@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://git.kernel.org/akpm/mm/c/3b1d6bd7bb11fd040bfa7b712486f5bd41a276cf
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  drivers/base/arch_numa.c | 12 ++++++++++++
  1 file changed, 12 insertions(+)
