@@ -1,7 +1,7 @@
-From c141c94b349397ba67134c68fd64423e33f2f442 Mon Sep 17 00:00:00 2001
+From f0ed0504acf21ff5dda90f6a48e91992bca3b978 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 8 Jun 2026 20:36:25 -0700
-Subject: [PATCH 1/7] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
+Subject: [PATCH 1/6] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
 
 After a recent change in binutils that warns when local symbols have
 non-default visibility [1], there are a couple instances when building
@@ -69,7 +69,7 @@ index 79405c32cc85..ab087406da66 100644
  
  #ifdef CONFIG_CPU_NO_LOAD_STORE_LR
 
-base-commit: 1c732c6b94f0faee1526bd375add2fe10cba2e26
+base-commit: 7cfc41f8e80f11ffa8382ed1a505154ceffb79c7
 -- 
 2.55.0
 
