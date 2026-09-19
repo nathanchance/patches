@@ -1,7 +1,7 @@
-From 6bb3329c4f06d1fe7d975fc8e350d77eef0ef6db Mon Sep 17 00:00:00 2001
+From 986e75b347393f1164cfa6a773b97e6b5425a2a9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 31 Aug 2026 18:46:31 -0700
-Subject: [PATCH 2/6] SUBMITTED: scripts/sorttable: Mark long_size as
+Subject: [PATCH 2/7] UPSTREAM: scripts/sorttable: Mark long_size as
  __maybe_unused
 
 When building in a kernel tree prior to commit b055f4c431e3 ("sorttable:
@@ -21,7 +21,11 @@ appears to be coincidence that the warning disappears after this
 refactoring.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nicolas Schier <n.schier@fritz.com>
 Link: https://patch.msgid.link/20260831-sorttable-long_size-unused-but-set-global-v1-1-8a96b88697e5@kernel.org
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Link: https://git.kernel.org/linus/4f73462856576797b8f3c55564a9be99f76dc67b
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
  scripts/sorttable.c | 2 +-
