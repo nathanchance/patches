@@ -1,0 +1,50 @@
+From 1c9040f836e9de772ad99fa28b96d9bb4778f771 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 18 Sep 2026 12:11:20 -0700
+Subject: [PATCH 22/24] WIP: STABLE-ONLY: -Wconstant-conversion in
+ drivers/usb/misc/sisusbvga/sisusb.c
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/usb/misc/sisusbvga/sisusb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/usb/misc/sisusbvga/sisusb.c b/drivers/usb/misc/sisusbvga/sisusb.c
+index 8ed803c4a251..563c64e4be3b 100644
+--- a/drivers/usb/misc/sisusbvga/sisusb.c
++++ b/drivers/usb/misc/sisusbvga/sisusb.c
+@@ -1880,19 +1880,19 @@ static int sisusb_init_gfxcore(struct sisusb_usb_data *sisusb)
+ 	int ret = 0, i, j, bw, chab, iret, retry = 3;
+ 	u8 tmp8, ramtype;
+ 	u32 tmp32;
+-	static const char mclktable[] = {
++	static const unsigned char mclktable[] = {
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143
+ 	};
+-	static const char eclktable[] = {
++	static const unsigned char eclktable[] = {
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143,
+ 		0x3b, 0x22, 0x01, 143
+ 	};
+-	static const char ramtypetable1[] = {
++	static const unsigned char ramtypetable1[] = {
+ 		0x00, 0x04, 0x60, 0x60,
+ 		0x0f, 0x0f, 0x1f, 0x1f,
+ 		0xba, 0xba, 0xba, 0xba,
+@@ -1901,7 +1901,7 @@ static int sisusb_init_gfxcore(struct sisusb_usb_data *sisusb)
+ 		0x00, 0x00, 0x02, 0x02,
+ 		0x30, 0x30, 0x40, 0x40
+ 	};
+-	static const char ramtypetable2[] = {
++	static const unsigned char ramtypetable2[] = {
+ 		0x77, 0x77, 0x44, 0x44,
+ 		0x77, 0x77, 0x44, 0x44,
+ 		0x00, 0x00, 0x00, 0x00,
+-- 
+2.55.0
+
