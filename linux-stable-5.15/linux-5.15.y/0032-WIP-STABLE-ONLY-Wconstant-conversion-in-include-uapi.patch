@@ -1,0 +1,27 @@
+From 2389f3128cf21205cbb45f9bcb0cc3903badb0e4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 18 Sep 2026 12:14:32 -0700
+Subject: [PATCH 32/33] WIP: STABLE-ONLY: -Wconstant-conversion in
+ include/uapi/linux/ax25.h
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/uapi/linux/ax25.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/uapi/linux/ax25.h b/include/uapi/linux/ax25.h
+index b496b9d8452f..f95e7fdf6143 100644
+--- a/include/uapi/linux/ax25.h
++++ b/include/uapi/linux/ax25.h
+@@ -44,7 +44,7 @@
+ #define AX25_NOUID_BLOCK	1
+ 
+ typedef struct {
+-	char		ax25_call[7];	/* 6 call + SSID (shifted ascii!) */
++	unsigned char	ax25_call[7];	/* 6 call + SSID (shifted ascii!) */
+ } ax25_address;
+ 
+ struct sockaddr_ax25 {
+-- 
+2.55.0
+

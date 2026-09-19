@@ -1,7 +1,7 @@
 From 881f39490bc0c6c9fc6503128290bc5a879f7db2 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 30 Jun 2026 20:23:03 -0700
-Subject: [PATCH 28/29] HACK: STABLE: x86/tools: Mark several static variables
+Subject: [PATCH 28/33] HACK: STABLE: x86/tools: Mark several static variables
  as unused
 
 arch/x86/boot/tools/build.c:62:22: warning: variable 'efi32_stub_entry' set but not used [-Wunused-but-set-global]

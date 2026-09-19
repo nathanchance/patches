@@ -1,0 +1,27 @@
+From 076b657cbf611ddbcafcb5987844573807eac2c4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 18 Sep 2026 12:06:34 -0700
+Subject: [PATCH 30/33] WIP: STABLE-ONLY: -Wconstant-conversion in
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index 0a2d5f461aee..55bac536c96f 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -62,7 +62,7 @@ enum dsi_cmd_type {
+ struct panel_init_cmd {
+ 	enum dsi_cmd_type type;
+ 	size_t len;
+-	const char *data;
++	const unsigned char *data;
+ };
+ 
+ #define _INIT_DCS_CMD(...) { \
+-- 
+2.55.0
+
