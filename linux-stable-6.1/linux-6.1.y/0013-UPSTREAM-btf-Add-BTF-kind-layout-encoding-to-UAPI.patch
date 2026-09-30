@@ -1,0 +1,99 @@
+From 6427a32b57b09d76c351d9ce2dd4c4afc4fa3634 Mon Sep 17 00:00:00 2001
+From: Alan Maguire <alan.maguire@oracle.com>
+Date: Thu, 26 Mar 2026 14:54:36 +0000
+Subject: [PATCH 13/25] UPSTREAM: btf: Add BTF kind layout encoding to UAPI
+
+BTF kind layouts provide information to parse BTF kinds. By separating
+parsing BTF from using all the information it provides, we allow BTF
+to encode new features even if they cannot be used by readers. This
+will be helpful in particular for cases where older tools are used
+to parse newer BTF with kinds the older tools do not recognize;
+the BTF can still be parsed in such cases using kind layout.
+
+The intent is to support encoding of kind layouts optionally so that
+tools like pahole can add this information. For each kind, we record
+
+- length of singular element following struct btf_type
+- length of each of the btf_vlen() elements following
+- a (currently unused) flags field
+
+The ideas here were discussed at [1], [2]; hence
+
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260326145444.2076244-2-alan.maguire@oracle.com
+
+[1] https://lore.kernel.org/bpf/CAEf4BzYjWHRdNNw4B=eOXOs_ONrDwrgX4bn=Nuc1g8JPFC34MA@mail.gmail.com/
+[2] https://lore.kernel.org/bpf/20230531201936.1992188-1-alan.maguire@oracle.com/
+
+Link: https://git.kernel.org/linus/222edc843c158666d2d71793b4b7d0bbb9801883
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ include/uapi/linux/btf.h       | 12 ++++++++++++
+ tools/include/uapi/linux/btf.h | 12 ++++++++++++
+ 2 files changed, 24 insertions(+)
+
+diff --git a/include/uapi/linux/btf.h b/include/uapi/linux/btf.h
+index ec1798b6d3ff..41cc90ac86f5 100644
+--- a/include/uapi/linux/btf.h
++++ b/include/uapi/linux/btf.h
+@@ -8,6 +8,16 @@
+ #define BTF_MAGIC	0xeB9F
+ #define BTF_VERSION	1
+ 
++/*
++ * BTF layout section consists of a struct btf_layout for each known
++ * kind at BTF encoding time.
++ */
++struct btf_layout {
++	__u8 info_sz;		/* size of singular element after btf_type */
++	__u8 elem_sz;		/* size of each of btf_vlen(t) elements */
++	__u16 flags;		/* currently unused */
++};
++
+ struct btf_header {
+ 	__u16	magic;
+ 	__u8	version;
+@@ -19,6 +29,8 @@ struct btf_header {
+ 	__u32	type_len;	/* length of type section	*/
+ 	__u32	str_off;	/* offset of string section	*/
+ 	__u32	str_len;	/* length of string section	*/
++	__u32	layout_off;	/* offset of layout section	*/
++	__u32	layout_len;	/* length of layout section	*/
+ };
+ 
+ /* Max # of type identifier */
+diff --git a/tools/include/uapi/linux/btf.h b/tools/include/uapi/linux/btf.h
+index ec1798b6d3ff..41cc90ac86f5 100644
+--- a/tools/include/uapi/linux/btf.h
++++ b/tools/include/uapi/linux/btf.h
+@@ -8,6 +8,16 @@
+ #define BTF_MAGIC	0xeB9F
+ #define BTF_VERSION	1
+ 
++/*
++ * BTF layout section consists of a struct btf_layout for each known
++ * kind at BTF encoding time.
++ */
++struct btf_layout {
++	__u8 info_sz;		/* size of singular element after btf_type */
++	__u8 elem_sz;		/* size of each of btf_vlen(t) elements */
++	__u16 flags;		/* currently unused */
++};
++
+ struct btf_header {
+ 	__u16	magic;
+ 	__u8	version;
+@@ -19,6 +29,8 @@ struct btf_header {
+ 	__u32	type_len;	/* length of type section	*/
+ 	__u32	str_off;	/* offset of string section	*/
+ 	__u32	str_len;	/* length of string section	*/
++	__u32	layout_off;	/* offset of layout section	*/
++	__u32	layout_len;	/* length of layout section	*/
+ };
+ 
+ /* Max # of type identifier */
+-- 
+2.55.0
+
