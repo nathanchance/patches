@@ -1,7 +1,7 @@
-From 044e14779308a03662eb2ad4b90d8418a1a2ce62 Mon Sep 17 00:00:00 2001
+From f6f20d1aa43be3826cc5cd839d795d02e4e72440 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 25 Sep 2026 22:46:32 +0100
-Subject: [PATCH 2/7] SUBMITTED: random: vDSO: Avoid call to memset() when
+Subject: [PATCH 3/8] SUBMITTED: random: vDSO: Avoid call to memset() when
  zeroing reserved in __cvdso_getrandom_data()
 
 After a recent change in LLVM [1], builds with the random vDSO
