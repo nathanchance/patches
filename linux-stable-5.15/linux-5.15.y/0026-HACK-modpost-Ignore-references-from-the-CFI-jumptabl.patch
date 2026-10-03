@@ -1,4 +1,4 @@
-From 106ad065e47466cc4bc8a2e3513834b6ef0e9791 Mon Sep 17 00:00:00 2001
+From 1f44e2b2deb3991399e3a6b89a6e4de3ac4c0f03 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Dec 2024 17:41:11 -0700
 Subject: [PATCH 26/33] HACK: modpost: Ignore references from the CFI jumptable
@@ -10,7 +10,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 891930205ee9..eee4371fc0ee 100644
+index 75cbc0cdf636..155bee10753a 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -939,6 +939,7 @@ static const char *const data_sections[] = { DATA_SECTIONS, NULL };

@@ -1,4 +1,4 @@
-From d2c1f8bff6945f4d63e71d8409c084e245cce0fa Mon Sep 17 00:00:00 2001
+From 8dfdcacb59da7ab1e1683aed0e839215ca658a52 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 30 May 2022 18:01:39 +0900
 Subject: [PATCH 15/33] UPSTREAM: modpost: use fnmatch() to simplify match()
@@ -16,7 +16,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 13 insertions(+), 61 deletions(-)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 6a328adec7f7..891930205ee9 100644
+index 6aa50e7e05d8..75cbc0cdf636 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -13,6 +13,7 @@
