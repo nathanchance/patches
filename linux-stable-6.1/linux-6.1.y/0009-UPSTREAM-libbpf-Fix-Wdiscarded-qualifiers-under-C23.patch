@@ -1,4 +1,4 @@
-From a79cd961bd69161f7059df199ade81cc8d28322c Mon Sep 17 00:00:00 2001
+From 4ac11e0e4a006c0fe0b8b2cd9a18228ea206949f Mon Sep 17 00:00:00 2001
 From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 Date: Sat, 6 Dec 2025 14:28:25 +0500
 Subject: [PATCH 09/25] UPSTREAM: libbpf: Fix -Wdiscarded-qualifiers under C23
@@ -26,10 +26,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index a4ce4258711b..086099597ee8 100644
+index 39315efbba6d..5a51b946e08d 100644
 --- a/tools/lib/bpf/libbpf.c
 +++ b/tools/lib/bpf/libbpf.c
-@@ -10756,7 +10756,7 @@ static int resolve_full_path(const char *file, char *result, size_t result_sz)
+@@ -10763,7 +10763,7 @@ static int resolve_full_path(const char *file, char *result, size_t result_sz)
  		if (!search_paths[i])
  			continue;
  		for (s = search_paths[i]; s != NULL; s = strchr(s, ':')) {
