@@ -1,8 +1,8 @@
-From bb77043f1a97a2b8b848bfa0cd13872288f1f9c5 Mon Sep 17 00:00:00 2001
+From 5ba2631b3391569b22dd99d9ceee1b82dc33e01e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 25 Sep 2026 22:46:32 +0100
-Subject: [PATCH 09/17] SUBMITTED: random: vDSO: Avoid call to memset() when
- zeroing reserved in __cvdso_getrandom_data()
+Subject: [PATCH 08/17] FROMGIT: random: vDSO: avoid call to memset() when
+ zeroing reserved parameter
 
 After a recent change in LLVM [1], builds with the random vDSO
 implementation, such as PowerPC and RISC-V, fail when checking the vDSO:
@@ -16,39 +16,30 @@ recognize at compile time when it is assigning a static value to a
 contiguous area of memory and turn that into a call to memset(). Both
 clang and GCC assume memset() is always available [2].
 
-clang provides a builtin, __builtin_memset_inline [3][4], that can be
-used to ensure an external function call is not generated when zeroing
-this memory. Use it when it is available.
-
-While GCC has no issues with the current code, it has generated memset()
-before, as seen in commit b7bad082e113 ("random: vDSO: avoid call to out
-of line memset()"). GCC 14 provides '-finline-stringops=memset' [5][6]
-with a similar guarantee to the clang builtin, so use it and
-__builtin_memset() when available.
-
-If no option is available, provide a simple memset_inline() like the one
-from lib/string.c to avoid adding an ugly ifdef.
+Clang has an internal fiddly hook, -max-store-memset, which we can set
+to a high number, to disable generating out of line memset calls [3].
+Similarly, GCC has -finline-stringops=memset to do the same [4], should
+this issue ever hit future version of GCC. While these options wouldn't
+make sense for normal kernel code, it is fine for the extremely limited
+and intentionally compact vDSO code.
 
 Link: https://github.com/llvm/llvm-project/commit/90cebef1411617fc3eedd359bdf00cb44b1c2439 [1]
 Link: https://gcc.gnu.org/onlinedocs/gcc-16.2.0/gcc/Standards.html#index-ffreestanding [2]
-Link: https://github.com/llvm/llvm-project/commit/38637ee477541370a90b37f149069d8e5c0c2efd [3]
-Link: https://clang.llvm.org/docs/LanguageExtensions.html#guaranteed-inlined-memset [4]
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=1ff6d9f7428b0668cd8ab0b3e3ab94f1d733124d [5]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-finline-stringops [6]
-Suggested-by: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://patch.msgid.link/20260925-vdso-getrandom-avoid-memset-llvm-24-v2-1-ce640f872393@kernel.org
-[nathan: backport to 6.12]
+Link: https://github.com/llvm/llvm-project/commit/b28eeb28bea39148738dc375e8a97072a1907e64 [3]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-finline-stringops [4]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2183
+Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://git.kernel.org/crng/random/c/eb13a1ff271b0d180687eebb30611b0b276d5193
 ---
- arch/arm64/kernel/vdso/Makefile   |  2 +-
- arch/loongarch/vdso/Makefile      |  1 +
- arch/powerpc/kernel/vdso/Makefile |  1 +
- arch/s390/kernel/vdso64/Makefile  |  1 +
- arch/x86/entry/vdso/Makefile      |  1 +
- init/Kconfig                      |  7 +++++++
- lib/vdso/getrandom.c              | 19 +++++++++++++++++--
- 7 files changed, 29 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/vdso/Makefile   | 2 +-
+ arch/loongarch/vdso/Makefile      | 1 +
+ arch/powerpc/kernel/vdso/Makefile | 1 +
+ arch/s390/kernel/vdso64/Makefile  | 1 +
+ arch/x86/entry/vdso/Makefile      | 1 +
+ init/Kconfig                      | 5 +++++
+ 6 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/kernel/vdso/Makefile b/arch/arm64/kernel/vdso/Makefile
 index 35685c036044..c4934b22d5e9 100644
@@ -88,17 +79,17 @@ index 6ba68b28ed87..0d29880e3b15 100644
  ccflags-remove-y := $(CC_FLAGS_FTRACE)
  ldflags-y := -Wl,--hash-style=both -nostdlib -shared -z noexecstack $(CLANG_FLAGS)
 diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index 37bb4b761229..b8a5ed127268 100644
+index 37bb4b761229..1f0fdb785ca7 100644
 --- a/arch/s390/kernel/vdso64/Makefile
 +++ b/arch/s390/kernel/vdso64/Makefile
-@@ -22,6 +22,7 @@ obj-cvdso64 := $(addprefix $(obj)/, $(obj-cvdso64))
+@@ -32,6 +32,7 @@ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_
+ KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
++KBUILD_CFLAGS_64 += $(CONFIG_CC_OPT_INLINE_MEMSET)
+ ldflags-y := -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
  
- KBUILD_AFLAGS += -DBUILD_VDSO
- KBUILD_CFLAGS += -DBUILD_VDSO -DDISABLE_BRANCH_PROFILING
-+KBUILD_CFLAGS += $(CONFIG_CC_OPT_INLINE_MEMSET)
- 
- KBUILD_AFLAGS_64 := $(filter-out -m64,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS_64 += -m64
 diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
 index c9216ac4fb1e..e5ade5e89e7e 100644
 --- a/arch/x86/entry/vdso/Makefile
@@ -112,60 +103,21 @@ index c9216ac4fb1e..e5ade5e89e7e 100644
  
  ifdef CONFIG_MITIGATION_RETPOLINE
 diff --git a/init/Kconfig b/init/Kconfig
-index f0e708b4226d..4e97c46cca10 100644
+index f0e708b4226d..7b3d72f3a14d 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -132,6 +132,13 @@ config CC_HAS_COUNTED_BY
+@@ -132,6 +132,11 @@ config CC_HAS_COUNTED_BY
  	# https://github.com/llvm/llvm-project/pull/112636
  	depends on !(CC_IS_CLANG && CLANG_VERSION < 190103)
  
-+config CC_HAS_OPT_INLINE_MEMSET
-+	def_bool $(cc-option,-finline-stringops=memset)
-+
 +config CC_OPT_INLINE_MEMSET
 +	string
-+	default "-finline-stringops=memset" if CC_HAS_OPT_INLINE_MEMSET
++	default "-finline-stringops=memset" if $(cc-option,-finline-stringops=memset)
++	default "-mllvm -max-store-memset=4294967294" if $(cc-option,-mllvm -max-store-memset=4294967294)
 +
  config LD_CAN_USE_KEEP_IN_OVERLAY
  	# ld.lld prior to 21.0.0 did not support KEEP within an overlay description
  	# https://github.com/llvm/llvm-project/pull/130661
-diff --git a/lib/vdso/getrandom.c b/lib/vdso/getrandom.c
-index 938ca539aaa6..b3dc4819e247 100644
---- a/lib/vdso/getrandom.c
-+++ b/lib/vdso/getrandom.c
-@@ -27,6 +27,22 @@
- 	}									\
- } while (0)
- 
-+#if __has_builtin(__builtin_memset_inline)
-+#define memset_inline(dst, value, size) __builtin_memset_inline(dst, value, size)
-+#elif IS_ENABLED(CONFIG_CC_HAS_OPT_INLINE_MEMSET)
-+#define memset_inline(dst, value, size) __builtin_memset(dst, value, size)
-+#else
-+static inline void *memset_inline(void *dst, int value, size_t size)
-+{
-+	char *d = dst;
-+
-+	while (size--)
-+		*d++ = value;
-+
-+	return d;
-+}
-+#endif
-+
- static void memcpy_and_zero_src(void *dst, void *src, size_t len)
- {
- 	if (IS_ENABLED(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS)) {
-@@ -81,8 +97,7 @@ __cvdso_getrandom_data(const struct vdso_rng_data *rng_info, void *buffer, size_
- 		params->size_of_opaque_state = sizeof(*state);
- 		params->mmap_prot = PROT_READ | PROT_WRITE;
- 		params->mmap_flags = MAP_DROPPABLE | MAP_ANONYMOUS;
--		for (size_t i = 0; i < ARRAY_SIZE(params->reserved); ++i)
--			params->reserved[i] = 0;
-+		memset_inline(params->reserved, 0, sizeof(params->reserved));
- 		return 0;
- 	}
- 
 -- 
 2.55.0
 
