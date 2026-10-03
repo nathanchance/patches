@@ -1,4 +1,4 @@
-From 48dffd0026390ffd38de8605bcc96b8e961008d3 Mon Sep 17 00:00:00 2001
+From 24c0dd3eee665da1ee81e25e1d68b98f57c68712 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 25 Sep 2026 22:46:32 +0100
 Subject: [PATCH 3/8] FROMGIT: random: vDSO: avoid call to memset() when
@@ -31,7 +31,7 @@ Closes: https://github.com/ClangBuiltLinux/linux/issues/2183
 Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://git.zx2c4.com/linux-rng/commit/?id=56ff95ee85715047eb5b5220243778af657778c8
+Link: https://git.kernel.org/crng/random/c/eb13a1ff271b0d180687eebb30611b0b276d5193
 ---
  arch/arm64/kernel/vdso/Makefile   | 2 +-
  arch/loongarch/vdso/Makefile      | 1 +
@@ -92,17 +92,17 @@ index 340bbd945591..e67d9bae96de 100644
  ifneq ($(c-gettimeofday-y),)
    CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
 diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index d8f0df742809..b7984e32ffdd 100644
+index d8f0df742809..b6b6d1d62c61 100644
 --- a/arch/s390/kernel/vdso64/Makefile
 +++ b/arch/s390/kernel/vdso64/Makefile
-@@ -22,6 +22,7 @@ obj-cvdso64 := $(addprefix $(obj)/, $(obj-cvdso64))
+@@ -32,6 +32,7 @@ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_
+ KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
++KBUILD_CFLAGS_64 += $(CONFIG_CC_OPT_INLINE_MEMSET)
+ ldflags-y := -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
  
- KBUILD_AFLAGS += -DBUILD_VDSO
- KBUILD_CFLAGS += -DBUILD_VDSO -DDISABLE_BRANCH_PROFILING
-+KBUILD_CFLAGS += $(CONFIG_CC_OPT_INLINE_MEMSET)
- 
- KBUILD_AFLAGS_64 := $(filter-out -m64,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS_64 += -m64
 diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
 index f247f5f5cb44..5836d77aa974 100644
 --- a/arch/x86/entry/vdso/Makefile
@@ -116,7 +116,7 @@ index f247f5f5cb44..5836d77aa974 100644
  
  ifdef CONFIG_MITIGATION_RETPOLINE
 diff --git a/init/Kconfig b/init/Kconfig
-index 6ce315af48c1..5eb19d477b0e 100644
+index 6ce315af48c1..1858e55bfd7c 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -142,6 +142,11 @@ config CC_HAS_COUNTED_BY
@@ -126,7 +126,7 @@ index 6ce315af48c1..5eb19d477b0e 100644
 +config CC_OPT_INLINE_MEMSET
 +	string
 +	default "-finline-stringops=memset" if $(cc-option,-finline-stringops=memset)
-+	default "-mllvm -max-store-memset=4294967295" if $(cc-option,-mllvm -max-store-memset=4294967295)
++	default "-mllvm -max-store-memset=4294967294" if $(cc-option,-mllvm -max-store-memset=4294967294)
 +
  config LD_CAN_USE_KEEP_IN_OVERLAY
  	# ld.lld prior to 21.0.0 did not support KEEP within an overlay description
