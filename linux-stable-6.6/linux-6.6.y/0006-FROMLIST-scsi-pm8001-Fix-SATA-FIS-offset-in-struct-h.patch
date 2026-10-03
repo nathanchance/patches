@@ -1,7 +1,7 @@
-From aefc5d1fb5ae25d0a72100986a4336bd2e3e66b3 Mon Sep 17 00:00:00 2001
+From 24a452765e56c3932a04d9a47fc06c0736c296cb Mon Sep 17 00:00:00 2001
 From: Bart Van Assche <bvanassche@acm.org>
 Date: Mon, 31 Aug 2026 10:48:21 -0700
-Subject: [PATCH 07/16] FROMLIST: scsi: pm8001: Fix SATA FIS offset in struct
+Subject: [PATCH 06/15] FROMLIST: scsi: pm8001: Fix SATA FIS offset in struct
  hw_event_resp
 
 In struct hw_event_resp, sas_identify was defined using struct
@@ -189,10 +189,10 @@ index fc2127dcb58d..b44edcd8be52 100644
  
  
 diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
-index 3afd9443c425..5da5aa577939 100644
+index a84447b67420..ab8e5b3fbd05 100644
 --- a/drivers/scsi/pm8001/pm80xx_hwi.c
 +++ b/drivers/scsi/pm8001/pm80xx_hwi.c
-@@ -3254,7 +3254,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
+@@ -3261,7 +3261,7 @@ hw_event_sata_phy_up(struct pm8001_hba_info *pm8001_ha, void *piomb)
  	phy->sas_phy.oob_mode = SATA_OOB_MODE;
  	sas_notify_phy_event(&phy->sas_phy, PHYE_OOB_DONE, GFP_ATOMIC);
  	spin_lock_irqsave(&phy->sas_phy.frame_rcvd_lock, flags);
