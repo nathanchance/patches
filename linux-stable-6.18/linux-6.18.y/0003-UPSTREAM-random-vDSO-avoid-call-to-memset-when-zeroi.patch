@@ -1,7 +1,7 @@
-From 24c0dd3eee665da1ee81e25e1d68b98f57c68712 Mon Sep 17 00:00:00 2001
+From 7e31adf02f79d199d71b527dc99b09d084b78ef0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 25 Sep 2026 22:46:32 +0100
-Subject: [PATCH 3/8] FROMGIT: random: vDSO: avoid call to memset() when
+Subject: [PATCH 3/8] UPSTREAM: random: vDSO: avoid call to memset() when
  zeroing reserved parameter
 
 After a recent change in LLVM [1], builds with the random vDSO
@@ -31,7 +31,7 @@ Closes: https://github.com/ClangBuiltLinux/linux/issues/2183
 Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://git.kernel.org/crng/random/c/eb13a1ff271b0d180687eebb30611b0b276d5193
+Link: https://git.kernel.org/linus/eb13a1ff271b0d180687eebb30611b0b276d5193
 ---
  arch/arm64/kernel/vdso/Makefile   | 2 +-
  arch/loongarch/vdso/Makefile      | 1 +
