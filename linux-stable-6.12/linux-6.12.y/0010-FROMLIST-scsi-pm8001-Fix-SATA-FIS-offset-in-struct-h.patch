@@ -1,7 +1,7 @@
-From 5174564a52fabdd908bfc92925b0609d5972ccb6 Mon Sep 17 00:00:00 2001
+From cbd34677ff3100eafeb599dfc6616899126b590b Mon Sep 17 00:00:00 2001
 From: Bart Van Assche <bvanassche@acm.org>
 Date: Mon, 31 Aug 2026 10:48:21 -0700
-Subject: [PATCH 09/17] FROMLIST: scsi: pm8001: Fix SATA FIS offset in struct
+Subject: [PATCH 10/17] FROMLIST: scsi: pm8001: Fix SATA FIS offset in struct
  hw_event_resp
 
 In struct hw_event_resp, sas_identify was defined using struct
@@ -328,5 +328,5 @@ index eb8fd37b2066..dd735102c770 100644
  
  /*
 -- 
-2.55.0
+2.56.0
 
