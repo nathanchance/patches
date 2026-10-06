@@ -1,7 +1,7 @@
-From f76709d2e0fe63bc082258d95af21221f2e1c47d Mon Sep 17 00:00:00 2001
+From cd924cbb84ad2463bba1bef417b484ca519f2130 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 18 Sep 2026 12:06:34 -0700
-Subject: [PATCH 30/33] WIP: STABLE-ONLY: -Wconstant-conversion in
+Subject: [PATCH 22/33] WIP: STABLE-ONLY: -Wconstant-conversion in
  drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -23,5 +23,5 @@ index 0a2d5f461aee..55bac536c96f 100644
  
  #define _INIT_DCS_CMD(...) { \
 -- 
-2.55.0
+2.56.0
 

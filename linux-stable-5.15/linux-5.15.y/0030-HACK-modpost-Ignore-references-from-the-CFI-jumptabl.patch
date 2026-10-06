@@ -1,7 +1,7 @@
-From 1f44e2b2deb3991399e3a6b89a6e4de3ac4c0f03 Mon Sep 17 00:00:00 2001
+From 7f37d5dbaf07f35f4b1f90072d26a466dc0bb1f7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Dec 2024 17:41:11 -0700
-Subject: [PATCH 26/33] HACK: modpost: Ignore references from the CFI jumptable
+Subject: [PATCH 30/33] HACK: modpost: Ignore references from the CFI jumptable
  section
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -33,5 +33,5 @@ index 75cbc0cdf636..155bee10753a 100644
  }
  
 -- 
-2.55.0
+2.56.0
 

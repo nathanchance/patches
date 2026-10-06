@@ -1,7 +1,7 @@
-From c7c714e0ce4eac4cb3837d5df59136505a31db32 Mon Sep 17 00:00:00 2001
+From 01b81a9479914e3705f1bd04a1763e9178bb0160 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 31 May 2025 19:49:53 -0700
-Subject: [PATCH 27/33] HACK: STABLE: Disable CONFIG_SVC_I3C_MASTER for Hexagon
+Subject: [PATCH 31/33] HACK: STABLE: Disable CONFIG_SVC_I3C_MASTER for Hexagon
 
 This driver now uses readsb(), which Hexagon does not have.
 
@@ -24,5 +24,5 @@ index 3b8f95916f46..f5265fb91868 100644
  	  Support for Silvaco I3C Dual-Role Master Controller.
  
 -- 
-2.55.0
+2.56.0
 

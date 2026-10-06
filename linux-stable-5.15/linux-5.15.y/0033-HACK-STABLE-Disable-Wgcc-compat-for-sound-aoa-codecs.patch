@@ -1,7 +1,7 @@
-From 2c79c974e1d7dc0b79940a0d229d73f0b2932d2c Mon Sep 17 00:00:00 2001
+From 50d58f6806efe796a493f2987c5c0346f0af50b5 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 17 Jul 2026 15:46:53 -0700
-Subject: [PATCH 29/33] HACK: STABLE: Disable -Wgcc-compat for
+Subject: [PATCH 33/33] HACK: STABLE: Disable -Wgcc-compat for
  sound/aoa/codecs/tas.o
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -19,5 +19,5 @@ index 95f4c3849d55..e31f7edf0e10 100644
  obj-$(CONFIG_SND_AOA_TOONIE) += snd-aoa-codec-toonie.o
 +CFLAGS_tas.o += $(call cc-disable-warning,gcc-compat)
 -- 
-2.55.0
+2.56.0
 

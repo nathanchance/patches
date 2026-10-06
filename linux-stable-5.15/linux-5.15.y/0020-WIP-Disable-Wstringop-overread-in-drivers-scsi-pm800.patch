@@ -1,7 +1,7 @@
-From af35632dda55552725de2c03c6d1ee9662704440 Mon Sep 17 00:00:00 2001
+From 7e2fc508806f17c789e525c4b947c0e209c103fe Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 29 Jun 2026 17:20:07 -0700
-Subject: [PATCH 19/33] WIP: Disable -Wstringop-overread in drivers/scsi/pm8001
+Subject: [PATCH 20/33] WIP: Disable -Wstringop-overread in drivers/scsi/pm8001
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
@@ -21,5 +21,5 @@ index 02b7338999cc..2d836b688b3f 100644
  obj-$(CONFIG_SCSI_PM8001) += pm80xx.o
  pm80xx-y += pm8001_init.o \
 -- 
-2.55.0
+2.56.0
 
