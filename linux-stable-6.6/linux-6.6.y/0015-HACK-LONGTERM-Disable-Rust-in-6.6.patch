@@ -1,7 +1,7 @@
-From 91884be6b8d0ebbf5975c2dcd6a2da2c7b2f5f6e Mon Sep 17 00:00:00 2001
+From 58f35419f3b69473e379e78941e6c67edee8f540 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 16 Jan 2026 16:44:05 -0700
-Subject: [PATCH 13/15] HACK: LONGTERM: Disable Rust in 6.6
+Subject: [PATCH 15/15] HACK: LONGTERM: Disable Rust in 6.6
 
 Some of the fixes for newer tools are not in this tree, breaking the
 build in my Arch Linux build environment.
@@ -24,5 +24,5 @@ index 37e22efbd1e1..0a6997672d3e 100644
  	select HAVE_UACCESS_VALIDATION		if HAVE_OBJTOOL
  	select HAVE_UNSTABLE_SCHED_CLOCK
 -- 
-2.55.0
+2.56.0
 
