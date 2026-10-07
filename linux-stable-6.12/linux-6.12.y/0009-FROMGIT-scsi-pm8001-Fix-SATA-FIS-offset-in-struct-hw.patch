@@ -1,29 +1,29 @@
-From cbd34677ff3100eafeb599dfc6616899126b590b Mon Sep 17 00:00:00 2001
+From 888f2e1c3c2815c2fe5ae298e860c3192c851a7e Mon Sep 17 00:00:00 2001
 From: Bart Van Assche <bvanassche@acm.org>
 Date: Mon, 31 Aug 2026 10:48:21 -0700
-Subject: [PATCH 10/17] FROMLIST: scsi: pm8001: Fix SATA FIS offset in struct
+Subject: [PATCH 09/17] FROMGIT: scsi: pm8001: Fix SATA FIS offset in struct
  hw_event_resp
 
 In struct hw_event_resp, sas_identify was defined using struct
-sas_identify_frame, which is 32 bytes long because it includes a 4-byte
-CRC field. However, PM8001 and PM80xx hardware does not send the CRC in
-the event response frame, providing only the 28-byte identify payload.
+sas_identify_frame, which is 32 bytes long because it includes a 4-byte CRC
+field. However, PM8001 and PM80xx hardware does not send the CRC in the
+event response frame, providing only the 28-byte identify payload.
 
-Because sas_identify had a size of 32 bytes, the following sata_fis
-member was located at byte offset 44 instead of the actual hardware
-offset 40. In hw_event_sata_phy_up(), this discrepancy was worked
-around with negative pointer arithmetic: ((u8 *)&pPayload->sata_fis - 4).
-This triggers a compiler error under Clang with -Wstringop-overread:
+Because sas_identify had a size of 32 bytes, the following sata_fis member
+was located at byte offset 44 instead of the actual hardware offset 40. In
+hw_event_sata_phy_up(), this discrepancy was worked around with negative
+pointer arithmetic: ((u8 *)&pPayload->sata_fis - 4).  This triggers a
+compiler error under Clang with -Wstringop-overread:
 
   error: 'memcpy' reading 20 bytes from a region of size 0
   [-Werror,-Wstringop-overread]
           memcpy(phy->frame_rcvd, ((u8 *)&pPayload->sata_fis - 4),
 
-Move struct sas_identify_frame_local (28 bytes) into pm8001_defs.h,
-and update struct hw_event_resp in both pm8001_hwi.h and pm80xx_hwi.h
-to use struct sas_identify_frame_local followed by sata_fis and a 4-byte
-padding word. This correctly aligns sata_fis at byte offset 40 while
-maintaining the 64-byte total payload size.
+Move struct sas_identify_frame_local (28 bytes) into pm8001_defs.h, and
+update struct hw_event_resp in both pm8001_hwi.h and pm80xx_hwi.h to use
+struct sas_identify_frame_local followed by sata_fis and a 4-byte padding
+word. This correctly aligns sata_fis at byte offset 40 while maintaining
+the 64-byte total payload size.
 
 Update hw_event_sata_phy_up() in pm8001_hwi.c and pm80xx_hwi.c to copy
 directly from &pPayload->sata_fis.
@@ -35,6 +35,8 @@ Fixes: dbf9bfe61571 ("[SCSI] pm8001: add SAS/SATA HBA driver")
 Fixes: f5860992db55 ("[SCSI] pm80xx: Added SPCv/ve specific hardware functionalities and relevant changes in common files")
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Link: https://patch.msgid.link/31963d53810f42970447e78ef46030ab13d2e91f.1788198434.git.bvanassche@acm.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Link: https://git.kernel.org/mkp/scsi/c/cdc97921de02a0c1a8324afa03e8b3e30a72bbe6
 ---
  drivers/scsi/pm8001/pm8001_defs.h |  98 +++++++++++++++++++++++++++++
  drivers/scsi/pm8001/pm8001_hwi.c  |   2 +-
