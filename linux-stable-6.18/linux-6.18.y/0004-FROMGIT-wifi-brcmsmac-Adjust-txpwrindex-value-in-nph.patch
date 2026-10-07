@@ -1,7 +1,7 @@
-From 38b11834a29dec1944ddb5b5327f019035d6a100 Mon Sep 17 00:00:00 2001
+From 74abb78ae14e33c9bcbb3aae376765c8b24db316 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 5 Oct 2026 12:32:59 +0200
-Subject: [PATCH 4/8] SUBMITTED: wifi: brcmsmac: Adjust txpwrindex value in
+Subject: [PATCH 4/8] FROMGIT: wifi: brcmsmac: Adjust txpwrindex value in
  nphy_ipa_rxcal_gaintbl_2GHz
 
 After a recent change in clang to warn on signed char conversions within
@@ -23,8 +23,11 @@ Cc: stable@vger.kernel.org
 Fixes: a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom 802.11n wireless LAN driver.")
 Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
 Link: https://lore.kernel.org/1a107e21b08.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com/ [2]
-Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://git.kernel.org/wireless/wireless-next/c/f7463a9c99a506b3308a852f9aaaf2a26b659e95
 ---
  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
