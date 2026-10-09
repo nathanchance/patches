@@ -1,0 +1,28 @@
+From 149d942360b4ee3f309ac32d948189857c687e33 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 9 Oct 2026 22:47:15 +0100
+Subject: [PATCH 5/9] REPORTED: kbuild: AutoFDO: Handle
+ '-split-machine-functions' rename
+
+Link: https://lore.kernel.org/20261009214501.GA905361@ax162/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.autofdo | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.autofdo b/scripts/Makefile.autofdo
+index 1caf2457e585..0b14a05726ad 100644
+--- a/scripts/Makefile.autofdo
++++ b/scripts/Makefile.autofdo
+@@ -18,7 +18,7 @@ ifdef CONFIG_LTO_CLANG_THIN
+     KBUILD_LDFLAGS += --lto-sample-profile=$(CLANG_AUTOFDO_PROFILE)
+   endif
+   KBUILD_LDFLAGS += --mllvm=-enable-fs-discriminator=true --mllvm=-improved-fs-discriminator=true -plugin-opt=thinlto
+-  KBUILD_LDFLAGS += -plugin-opt=-split-machine-functions
++  KBUILD_LDFLAGS += $(call ld-option,-plugin-opt=-function-splitting=all,-plugin-opt=-split-machine-functions)
+ endif
+ 
+ export CFLAGS_AUTOFDO_CLANG
+-- 
+2.56.0
+
