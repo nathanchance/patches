@@ -1,7 +1,7 @@
-From d77ba18d2547fb26fc273d85620bb94cc04f77fc Mon Sep 17 00:00:00 2001
+From 316f4b7fce26e3a0ec233327bf21480874611326 Mon Sep 17 00:00:00 2001
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 Date: Wed, 2 Oct 2024 17:03:55 +0200
-Subject: [PATCH 04/17] UPSTREAM: locking/spinlocks: Make __raw_* lock ops
+Subject: [PATCH 04/16] UPSTREAM: locking/spinlocks: Make __raw_* lock ops
  static
 
 If CONFIG_GENERIC_LOCKBREAK=y and CONFIG_DEBUG_LOCK_ALLOC=n
