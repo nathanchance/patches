@@ -1,4 +1,4 @@
-From faec41f5b2137aa12d6936060716acdb0f907fb7 Mon Sep 17 00:00:00 2001
+From 9b5b481dae5980266227d1ed82daf539d116658e Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 18 Sep 2026 12:06:34 -0700
 Subject: [PATCH 22/33] WIP: STABLE-ONLY: -Wconstant-conversion in
@@ -6,14 +6,14 @@ Subject: [PATCH 22/33] WIP: STABLE-ONLY: -Wconstant-conversion in
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-index 0a2d5f461aee..55bac536c96f 100644
+index 0a2d5f461aee..0fa870807d4c 100644
 --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
 +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-@@ -62,7 +62,7 @@ enum dsi_cmd_type {
+@@ -62,18 +62,18 @@ enum dsi_cmd_type {
  struct panel_init_cmd {
  	enum dsi_cmd_type type;
  	size_t len;
@@ -22,6 +22,21 @@ index 0a2d5f461aee..55bac536c96f 100644
  };
  
  #define _INIT_DCS_CMD(...) { \
+ 	.type = INIT_DCS_CMD, \
+-	.len = sizeof((char[]){__VA_ARGS__}), \
+-	.data = (char[]){__VA_ARGS__} }
++	.len = sizeof((unsigned char[]){__VA_ARGS__}), \
++	.data = (unsigned char[]){__VA_ARGS__} }
+ 
+ #define _INIT_DELAY_CMD(...) { \
+ 	.type = DELAY_CMD,\
+-	.len = sizeof((char[]){__VA_ARGS__}), \
+-	.data = (char[]){__VA_ARGS__} }
++	.len = sizeof((unsigned char[]){__VA_ARGS__}), \
++	.data = (unsigned char[]){__VA_ARGS__} }
+ 
+ static const struct panel_init_cmd boe_init_cmd[] = {
+ 	_INIT_DELAY_CMD(24),
 -- 
 2.56.0
 
