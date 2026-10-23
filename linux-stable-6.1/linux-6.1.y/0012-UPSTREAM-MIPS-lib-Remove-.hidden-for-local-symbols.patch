@@ -1,7 +1,7 @@
 From 3999c75ddd263eb9c9c0e21137300289e4197dec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 8 Jun 2026 20:36:25 -0700
-Subject: [PATCH 12/25] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
+Subject: [PATCH 12/26] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
 
 After a recent change in binutils that warns when local symbols have
 non-default visibility [1], there are a couple instances when building
