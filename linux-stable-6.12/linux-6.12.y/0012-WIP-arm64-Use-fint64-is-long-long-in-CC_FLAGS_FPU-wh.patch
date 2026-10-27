@@ -1,7 +1,7 @@
-From a1059d6de3d1a0882eb2156cf6601e7abe92d62f Mon Sep 17 00:00:00 2001
+From 7b49829260bb3719c1b409458bc075dd820555f4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Oct 2026 17:43:10 -0700
-Subject: [PATCH 10/17] WIP: arm64: Use '-fint64-is-long-long' in CC_FLAGS_FPU
+Subject: [PATCH 12/19] WIP: arm64: Use '-fint64-is-long-long' in CC_FLAGS_FPU
  when available
 
 The kernel defines 'int64_t' and 'uint64_t' as 'long long' and
