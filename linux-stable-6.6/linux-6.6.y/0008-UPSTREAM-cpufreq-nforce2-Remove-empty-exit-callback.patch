@@ -1,0 +1,42 @@
+From 468d4d0f976eb183b5e17e9012c28ed79db9a855 Mon Sep 17 00:00:00 2001
+From: Viresh Kumar <viresh.kumar@linaro.org>
+Date: Thu, 4 Jul 2024 12:23:52 +0530
+Subject: [PATCH 08/18] UPSTREAM: cpufreq: nforce2: Remove empty exit()
+ callback
+
+The exit() callback is optional, remove the empty one.
+
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://git.kernel.org/linus/bf8a44c07ba61c408e42e5075380de9ddcdc8cb3
+---
+ drivers/cpufreq/cpufreq-nforce2.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/drivers/cpufreq/cpufreq-nforce2.c b/drivers/cpufreq/cpufreq-nforce2.c
+index c58fb697fbba..fbbbe501cf2d 100644
+--- a/drivers/cpufreq/cpufreq-nforce2.c
++++ b/drivers/cpufreq/cpufreq-nforce2.c
+@@ -361,11 +361,6 @@ static int nforce2_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int nforce2_cpu_exit(struct cpufreq_policy *policy)
+-{
+-	return 0;
+-}
+-
+ static struct cpufreq_driver nforce2_driver = {
+ 	.name = "nforce2",
+ 	.flags = CPUFREQ_NO_AUTO_DYNAMIC_SWITCHING,
+@@ -373,7 +368,6 @@ static struct cpufreq_driver nforce2_driver = {
+ 	.target = nforce2_target,
+ 	.get = nforce2_get,
+ 	.init = nforce2_cpu_init,
+-	.exit = nforce2_cpu_exit,
+ };
+ 
+ #ifdef MODULE
+-- 
+2.56.0
+
