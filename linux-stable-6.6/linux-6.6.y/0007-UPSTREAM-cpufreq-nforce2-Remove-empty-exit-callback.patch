@@ -1,7 +1,7 @@
 From 72bdc496bae267c13b00861970e6af11df85bfb8 Mon Sep 17 00:00:00 2001
 From: Viresh Kumar <viresh.kumar@linaro.org>
 Date: Thu, 4 Jul 2024 12:23:52 +0530
-Subject: [PATCH 07/16] UPSTREAM: cpufreq: nforce2: Remove empty exit()
+Subject: [PATCH 07/18] UPSTREAM: cpufreq: nforce2: Remove empty exit()
  callback
 
 The exit() callback is optional, remove the empty one.
