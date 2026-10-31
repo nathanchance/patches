@@ -1,0 +1,87 @@
+From ab57f98d4fbdc2d658664086dc93996f63689676 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 30 Oct 2026 20:28:02 -0700
+Subject: [PATCH 11/11] HACK: LONGTERM: riscv: Remove '__meminit' from
+ create_p*_mapping()
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/2170
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/include/asm/pgtable.h |  2 +-
+ arch/riscv/mm/init.c             | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
+index 9b2e967c9fe0..c8f2b49f7284 100644
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -172,7 +172,7 @@ struct pt_alloc_ops {
+ #endif
+ };
+ 
+-extern struct pt_alloc_ops pt_ops __meminitdata;
++extern struct pt_alloc_ops pt_ops;
+ 
+ #ifdef CONFIG_MMU
+ /* Number of PGD entries that a user-mode program can use */
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 557bf160b503..da987aa14dcb 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -358,7 +358,7 @@ static void __init relocate_kernel(void)
+ #endif /* CONFIG_RELOCATABLE */
+ 
+ #ifdef CONFIG_MMU
+-struct pt_alloc_ops pt_ops __meminitdata;
++struct pt_alloc_ops pt_ops;
+ 
+ pgd_t swapper_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
+ pgd_t trampoline_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
+@@ -452,7 +452,7 @@ static phys_addr_t __meminit alloc_pte_late(uintptr_t va)
+ 	return __pa((pte_t *)ptdesc_address(ptdesc));
+ }
+ 
+-static void __meminit create_pte_mapping(pte_t *ptep, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
++static void create_pte_mapping(pte_t *ptep, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
+ 					 pgprot_t prot)
+ {
+ 	uintptr_t pte_idx = pte_index(va);
+@@ -533,7 +533,7 @@ static phys_addr_t __meminit alloc_pmd_late(uintptr_t va)
+ 	return __pa((pmd_t *)ptdesc_address(ptdesc));
+ }
+ 
+-static void __meminit create_pmd_mapping(pmd_t *pmdp,
++static void create_pmd_mapping(pmd_t *pmdp,
+ 					 uintptr_t va, phys_addr_t pa,
+ 					 phys_addr_t sz, pgprot_t prot)
+ {
+@@ -636,7 +636,7 @@ static phys_addr_t __meminit alloc_p4d_late(uintptr_t va)
+ 	return __pa((p4d_t *)ptdesc_address(ptdesc));
+ }
+ 
+-static void __meminit create_pud_mapping(pud_t *pudp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
++static void create_pud_mapping(pud_t *pudp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
+ 					 pgprot_t prot)
+ {
+ 	pmd_t *nextp;
+@@ -662,7 +662,7 @@ static void __meminit create_pud_mapping(pud_t *pudp, uintptr_t va, phys_addr_t
+ 	create_pmd_mapping(nextp, va, pa, sz, prot);
+ }
+ 
+-static void __meminit create_p4d_mapping(p4d_t *p4dp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
++static void create_p4d_mapping(p4d_t *p4dp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
+ 					 pgprot_t prot)
+ {
+ 	pud_t *nextp;
+@@ -719,7 +719,7 @@ static void __meminit create_p4d_mapping(p4d_t *p4dp, uintptr_t va, phys_addr_t
+ #define create_pmd_mapping(__pmdp, __va, __pa, __sz, __prot) do {} while(0)
+ #endif /* __PAGETABLE_PMD_FOLDED */
+ 
+-void __meminit create_pgd_mapping(pgd_t *pgdp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
++void create_pgd_mapping(pgd_t *pgdp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
+ 				  pgprot_t prot)
+ {
+ 	pgd_next_t *nextp;
+-- 
+2.56.0
+
