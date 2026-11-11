@@ -1,7 +1,7 @@
-From cb572be5b5f45a29c2dc561b5e023d7484973903 Mon Sep 17 00:00:00 2001
+From e72f0669b108118ff29078ae5200eef38dc9aace Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Oct 2026 20:28:02 -0700
-Subject: [PATCH 11/11] HACK: LONGTERM: riscv: Remove '__meminit' from
+Subject: [PATCH 9/9] HACK: LONGTERM: riscv: Remove '__meminit' from
  create_p*_mapping()
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/2170
@@ -12,7 +12,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 9b2e967c9fe0..c8f2b49f7284 100644
+index 420d402336d0..5ceaacf90bb8 100644
 --- a/arch/riscv/include/asm/pgtable.h
 +++ b/arch/riscv/include/asm/pgtable.h
 @@ -172,7 +172,7 @@ struct pt_alloc_ops {
