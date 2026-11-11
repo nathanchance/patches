@@ -1,7 +1,7 @@
-From fa9eb251bbd698274535912879b460785d88e9f1 Mon Sep 17 00:00:00 2001
+From 0c9c942e28859636cb89b521c6413fd1ac337b38 Mon Sep 17 00:00:00 2001
 From: Alan Maguire <alan.maguire@oracle.com>
 Date: Thu, 26 Mar 2026 14:54:36 +0000
-Subject: [PATCH 08/20] UPSTREAM: btf: Add BTF kind layout encoding to UAPI
+Subject: [PATCH 07/18] UPSTREAM: btf: Add BTF kind layout encoding to UAPI
 
 BTF kind layouts provide information to parse BTF kinds. By separating
 parsing BTF from using all the information it provides, we allow BTF

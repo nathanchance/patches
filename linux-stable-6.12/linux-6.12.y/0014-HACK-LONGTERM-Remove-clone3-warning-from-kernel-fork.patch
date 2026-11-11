@@ -1,7 +1,7 @@
-From a6c011b2ded29c86ed1177064da63e2956489ed9 Mon Sep 17 00:00:00 2001
+From 23f39eab1f870250134c9c37496f78efbc8277d4 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Wed, 10 Jul 2024 10:31:49 -0700
-Subject: [PATCH 16/20] HACK: LONGTERM: Remove clone3() #warning from
+Subject: [PATCH 14/18] HACK: LONGTERM: Remove clone3() #warning from
  kernel/fork.c
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -10,10 +10,10 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/kernel/fork.c b/kernel/fork.c
-index f22b79d9954a..eb7af6610804 100644
+index 140a615daf42..88fb4af1ced3 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -3117,7 +3117,6 @@ SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
+@@ -3121,7 +3121,6 @@ SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
  	pid_t set_tid[MAX_PID_NS_LEVEL];
  
  #ifdef __ARCH_BROKEN_SYS_CLONE3
