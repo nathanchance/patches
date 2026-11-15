@@ -1,0 +1,75 @@
+From 281e053d32a190f415ff003ebe3f7a94a064a3ec Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:19:52 -0700
+Subject: [PATCH 03/18] SUBMITTED: sched/topology: Avoid unsequenced accesses
+ to jiffies in sd_init()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in sd_init(), which can
+break the build with CONFIG_WERROR=y / W=e:
+
+  In file included from kernel/sched/build_utility.c:86:
+  kernel/sched/topology.c:2008:29: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+   1998 |                 .last_balance           = jiffies,
+        |                                           ~~~~~~~
+   1999 |                 .balance_interval       = sd_weight,
+   2000 |
+   2001 |                 /* 50% success rate */
+   2002 |                 .newidle_call           = 512,
+   2003 |                 .newidle_success        = 256,
+   2004 |                 .newidle_ratio          = 512,
+   2005 |                 .newidle_stamp          = now,
+   2006 |
+   2007 |                 .max_newidle_lb_cost    = 0,
+   2008 |                 .last_decay_max_lb_cost = jiffies,
+        |                                           ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.7.9.23, the evaluation of the initialization list
+expressions in a designated initializer is indeterminately sequenced
+relative to each other, meaning any side effects in the initialization
+list are unsequenced.
+
+Move the initialization of these fields outside the designated
+initializer to place sequence points between the accesses to jiffies,
+clearing up the warning.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2190
+Fixes: 2b4cfe64dee0 ("sched/numa: Initialize newidle balance stats in sd_numa_init()")
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-topology-wunsequenced-v1-1-686a36fe61f5@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/sched/topology.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index 35478aa2536f..05fcac727188 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -1664,7 +1664,6 @@ sd_init(struct sched_domain_topology_level *tl,
+ 					| sd_flags
+ 					,
+ 
+-		.last_balance		= jiffies,
+ 		.balance_interval	= sd_weight,
+ 
+ 		/* 50% success rate */
+@@ -1673,10 +1672,11 @@ sd_init(struct sched_domain_topology_level *tl,
+ 		.newidle_ratio		= 512,
+ 
+ 		.max_newidle_lb_cost	= 0,
+-		.last_decay_max_lb_cost	= jiffies,
+ 		.child			= child,
+ 		.name			= tl->name,
+ 	};
++	sd->last_balance = jiffies;
++	sd->last_decay_max_lb_cost = jiffies;
+ 
+ 	WARN_ONCE((sd->flags & (SD_SHARE_CPUCAPACITY | SD_ASYM_CPUCAPACITY)) ==
+ 		  (SD_SHARE_CPUCAPACITY | SD_ASYM_CPUCAPACITY),
+-- 
+2.56.0
+
