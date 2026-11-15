@@ -1,0 +1,54 @@
+From 9261826d8b86aa338de15492653346d15e20723f Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:39:29 -0700
+Subject: [PATCH 22/35] SUBMITTED: qca_spi: Avoid unsequenced accesses to
+ jiffies in qcaspi_netdev_tx_timeout()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in
+qcaspi_netdev_tx_timeout(), which can break the build with
+CONFIG_WERROR=y / W=e:
+
+  drivers/net/ethernet/qualcomm/qca_spi.c:805:16: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+    805 |                     jiffies, jiffies - dev_trans_start(dev));
+        |                     ~~~~~~~  ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.2.2.10/12, the evaluation of arguments in a
+function call is indeterminately sequenced, meaning any side effects in
+the arguments are unsequenced.
+
+Add a local variable to hold the value of jiffies before the function
+call so that there are no unsequenced side effects, clearing up the
+warning.
+
+Cc: stable@vger.kernel.org
+Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2197
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-qca_spi-wunsequenced-v1-1-6b219b906db7@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/qualcomm/qca_spi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
+index b7af824116ea..36a42ddf1c2b 100644
+--- a/drivers/net/ethernet/qualcomm/qca_spi.c
++++ b/drivers/net/ethernet/qualcomm/qca_spi.c
+@@ -811,9 +811,10 @@ static void
+ qcaspi_netdev_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ {
+ 	struct qcaspi *qca = netdev_priv(dev);
++	unsigned long j = jiffies;
+ 
+ 	netdev_info(qca->net_dev, "Transmit timeout at %ld, latency %ld\n",
+-		    jiffies, jiffies - dev_trans_start(dev));
++		    j, j - dev_trans_start(dev));
+ 	qca->net_dev->stats.tx_errors++;
+ 	/* Trigger tx queue flush and QCA7000 reset */
+ 	qca->sync = QCASPI_SYNC_UNKNOWN;
+-- 
+2.56.0
+
