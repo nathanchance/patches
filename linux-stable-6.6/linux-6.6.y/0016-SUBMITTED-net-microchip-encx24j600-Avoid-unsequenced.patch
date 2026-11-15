@@ -1,0 +1,53 @@
+From 1d6d50a942e37c39369038942f4134f4a36402e1 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:38:26 -0700
+Subject: [PATCH 16/28] SUBMITTED: net: microchip: encx24j600: Avoid
+ unsequenced accesses to jiffies in encx24j600_tx()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in encx24j600_tx(), which
+can break the build with CONFIG_WERROR=y / W=e:
+
+  drivers/net/ethernet/microchip/encx24j600.c:898:14: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+    898 |                   jiffies, jiffies - dev_trans_start(dev));
+        |                   ~~~~~~~  ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.2.2.10/12, the evaluation of arguments in a
+function call is indeterminately sequenced, meaning any side effects in
+the arguments are unsequenced.
+
+Add a local variable to hold the value of jiffies before the function
+call so that there are no unsequenced side effects, clearing up the
+warning.
+
+Cc: stable@vger.kernel.org
+Fixes: 04fbfce7a222 ("net: Microchip encx24j600 driver")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2196
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-encx24j600-wunsequenced-v1-1-c978fc36cacd@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/microchip/encx24j600.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/microchip/encx24j600.c b/drivers/net/ethernet/microchip/encx24j600.c
+index d7c8aa77ec75..53b08f252220 100644
+--- a/drivers/net/ethernet/microchip/encx24j600.c
++++ b/drivers/net/ethernet/microchip/encx24j600.c
+@@ -891,9 +891,10 @@ static netdev_tx_t encx24j600_tx(struct sk_buff *skb, struct net_device *dev)
+ static void encx24j600_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ {
+ 	struct encx24j600_priv *priv = netdev_priv(dev);
++	unsigned long j = jiffies;
+ 
+ 	netif_err(priv, tx_err, dev, "TX timeout at %ld, latency %ld\n",
+-		  jiffies, jiffies - dev_trans_start(dev));
++		  j, j - dev_trans_start(dev));
+ 
+ 	dev->stats.tx_errors++;
+ 	netif_wake_queue(dev);
+-- 
+2.56.0
+

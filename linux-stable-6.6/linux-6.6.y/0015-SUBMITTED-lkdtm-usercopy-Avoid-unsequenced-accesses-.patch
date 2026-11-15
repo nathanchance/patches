@@ -1,0 +1,122 @@
+From 090ca7661954fcc913b4e506df527251652be002 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:37:31 -0700
+Subject: [PATCH 15/28] SUBMITTED: lkdtm/usercopy: Avoid unsequenced accesses
+ to cache_size in lkdtm_usercopy_init()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in lkdtm_usercopy_init(),
+which can break the build with CONFIG_WERROR=y / W=e:
+
+drivers/misc/lkdtm/usercopy.c:431:9: error: unsequenced accesses to volatile qualified 'cache_size' [-Werror,-Wunsequenced]
+  429 |                 kmem_cache_create_usercopy("lkdtm-usercopy", cache_size,
+      |                                                              ~~~~~~~~~~
+  430 |                                            0, 0,
+  431 |                                            cache_size / 4,
+      |                                            ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior.  Per C11 6.5.2.2.10/12, the evaluation of arguments in a
+function call is indeterminately sequenced, meaning any side effects in
+the arguments are unsequenced.
+
+cache_size is marked as volatile to hide its value from the compile time
+constant checks in the hardened usercopy routines. Refactor the
+calculations based on cache_size into their own volatile variables to
+keep the values hidden while avoiding unsequenced accesses on the same
+object.
+
+Cc: stable@vger.kernel.org
+Fixes: e47e311843de ("lkdtm: Update usercopy tests for whitelisting")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2195
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-lkdtm-usercopy-wunsequenced-v1-1-d9f288701932@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/misc/lkdtm/usercopy.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/misc/lkdtm/usercopy.c b/drivers/misc/lkdtm/usercopy.c
+index 67db57249a34..6c561dc1bcaa 100644
+--- a/drivers/misc/lkdtm/usercopy.c
++++ b/drivers/misc/lkdtm/usercopy.c
+@@ -19,10 +19,15 @@
+  * hardened usercopy checks by added "unconst" to all the const copies,
+  * and making sure "cache_size" isn't optimized into a const.
+  */
++#define CACHE_SIZE 1024
+ static volatile size_t unconst;
+-static volatile size_t cache_size = 1024;
++static volatile size_t cache_size = CACHE_SIZE;
+ static struct kmem_cache *whitelist_cache;
+ 
++/* Whitelisted window in buffer, from kmem_cache_create_usercopy. */
++static volatile size_t cache_whitelist_offset = CACHE_SIZE / 4;
++static volatile size_t cache_whitelist_size = CACHE_SIZE / 16;
++
+ static const unsigned char test_text[] = "This is a test.\n";
+ 
+ /*
+@@ -204,7 +209,6 @@ static void do_usercopy_slab_whitelist(bool to_user)
+ 	unsigned long user_alloc;
+ 	unsigned char *buf = NULL;
+ 	unsigned char __user *user_addr;
+-	size_t offset, size;
+ 
+ 	/* Make sure cache was prepared. */
+ 	if (!whitelist_cache) {
+@@ -233,31 +237,31 @@ static void do_usercopy_slab_whitelist(bool to_user)
+ 
+ 	memset(buf, 'B', cache_size);
+ 
+-	/* Whitelisted window in buffer, from kmem_cache_create_usercopy. */
+-	offset = (cache_size / 4) + unconst;
+-	size = (cache_size / 16) + unconst;
+-
+ 	if (to_user) {
+ 		pr_info("attempting good copy_to_user inside whitelist\n");
+-		if (copy_to_user(user_addr, buf + offset, size)) {
++		if (copy_to_user(user_addr, buf + cache_whitelist_offset,
++				 cache_whitelist_size)) {
+ 			pr_warn("copy_to_user failed unexpectedly?!\n");
+ 			goto free_user;
+ 		}
+ 
+ 		pr_info("attempting bad copy_to_user outside whitelist\n");
+-		if (copy_to_user(user_addr, buf + offset - 1, size)) {
++		if (copy_to_user(user_addr, buf + cache_whitelist_offset - 1,
++				 cache_whitelist_size)) {
+ 			pr_warn("copy_to_user failed, but lacked Oops\n");
+ 			goto free_user;
+ 		}
+ 	} else {
+ 		pr_info("attempting good copy_from_user inside whitelist\n");
+-		if (copy_from_user(buf + offset, user_addr, size)) {
++		if (copy_from_user(buf + cache_whitelist_offset, user_addr,
++				   cache_whitelist_size)) {
+ 			pr_warn("copy_from_user failed unexpectedly?!\n");
+ 			goto free_user;
+ 		}
+ 
+ 		pr_info("attempting bad copy_from_user outside whitelist\n");
+-		if (copy_from_user(buf + offset - 1, user_addr, size)) {
++		if (copy_from_user(buf + cache_whitelist_offset - 1, user_addr,
++				   cache_whitelist_size)) {
+ 			pr_warn("copy_from_user failed, but lacked Oops\n");
+ 			goto free_user;
+ 		}
+@@ -428,8 +432,8 @@ void __init lkdtm_usercopy_init(void)
+ 	whitelist_cache =
+ 		kmem_cache_create_usercopy("lkdtm-usercopy", cache_size,
+ 					   0, 0,
+-					   cache_size / 4,
+-					   cache_size / 16,
++					   cache_whitelist_offset,
++					   cache_whitelist_size,
+ 					   NULL);
+ }
+ 
+-- 
+2.56.0
+

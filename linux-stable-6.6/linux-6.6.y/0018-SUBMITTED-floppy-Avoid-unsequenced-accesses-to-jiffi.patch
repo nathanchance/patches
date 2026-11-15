@@ -1,0 +1,56 @@
+From 9b9290e6899f45c549044f7bd7031b788ace8448 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:41:48 -0700
+Subject: [PATCH 18/28] SUBMITTED: floppy: Avoid unsequenced accesses to
+ jiffies in show_floppy()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in show_floppy(), which can
+break the build with CONFIG_WERROR=y / W=e:
+
+  drivers/block/floppy.c:1839:30: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+   1839 |                 jiffies, interruptjiffies, jiffies - interruptjiffies,
+        |                 ~~~~~~~                    ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.2.2.10/12, the evaluation of arguments in a
+function call is indeterminately sequenced, meaning any side effects in
+the arguments are unsequenced.
+
+Add a local variable to hold the value of jiffies before the function
+call so that there are no unsequenced side effects, clearing up the
+warning.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2198
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-floppy-wunsequenced-v1-1-a54dba6754c4@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/block/floppy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
+index 419143f6cf79..7e152362aa54 100644
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -1825,13 +1825,14 @@ static void reset_fdc(void)
+ 
+ static void show_floppy(int fdc)
+ {
++	unsigned long j = jiffies;
+ 	int i;
+ 
+ 	pr_info("\n");
+ 	pr_info("floppy driver state\n");
+ 	pr_info("-------------------\n");
+ 	pr_info("now=%lu last interrupt=%lu diff=%lu last called handler=%ps\n",
+-		jiffies, interruptjiffies, jiffies - interruptjiffies,
++		j, interruptjiffies, j - interruptjiffies,
+ 		lasthandler);
+ 
+ 	pr_info("timeout_message=%s\n", timeout_message);
+-- 
+2.56.0
+

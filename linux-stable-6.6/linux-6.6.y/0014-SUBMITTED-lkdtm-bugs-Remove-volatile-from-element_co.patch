@@ -1,0 +1,59 @@
+From c45ac8a0192e27148d5e1958a6dd76acf694079d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:35:33 -0700
+Subject: [PATCH 14/28] SUBMITTED: lkdtm/bugs: Remove volatile from
+ element_count
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in lkdtm_FAM_BOUNDS(), which
+can break the build with CONFIG_WERROR=y / W=e:
+
+  drivers/misc/lkdtm/bugs.c:493:31: error: unsequenced accesses to volatile qualified 'element_count' [-Werror,-Wunsequenced]
+    493 |         inst->array[element_count] = element_count;
+        |                     ~~~~~~~~~~~~~    ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.16.3, the value computations of the left and
+right operands of the assignment operator are unsequenced.
+
+This variable is marked volatile to hide its value from the compiler at
+compile time. The same thing can be accomplished with
+OPTIMIZER_HIDE_VAR. Drop volatile from element_count to clear up the
+warning. The tests still pass and there are no warnings at compile time.
+
+Cc: stable@vger.kernel.org
+Fixes: 5d207e83ca41 ("lkdtm: Add FAM_BOUNDS test for __counted_by")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202611140405.wMowxoPE-lkp@intel.com/
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2194
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-lkdtm-bugs-wunsequenced-v1-1-b24f15ce1328@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/misc/lkdtm/bugs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
+index 473ec58f87a2..f1b18b4a65a4 100644
+--- a/drivers/misc/lkdtm/bugs.c
++++ b/drivers/misc/lkdtm/bugs.c
+@@ -363,12 +363,14 @@ struct lkdtm_annotated {
+ 	int array[] __counted_by(count);
+ };
+ 
+-static volatile int fam_count = 4;
++static int fam_count = 4;
+ 
+ static void lkdtm_FAM_BOUNDS(void)
+ {
+ 	struct lkdtm_annotated *inst;
+ 
++	OPTIMIZER_HIDE_VAR(fam_count);
++
+ 	inst = kzalloc(struct_size(inst, array, fam_count + 1), GFP_KERNEL);
+ 	if (!inst) {
+ 		pr_err("FAIL: could not allocate test struct!\n");
+-- 
+2.56.0
+

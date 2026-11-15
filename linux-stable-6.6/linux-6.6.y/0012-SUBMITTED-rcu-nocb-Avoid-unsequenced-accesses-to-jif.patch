@@ -1,0 +1,71 @@
+From 53bcfa1c20c8759fa6d548991cfc345a37a69ca4 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:26:10 -0700
+Subject: [PATCH 12/28] SUBMITTED: rcu/nocb: Avoid unsequenced accesses to
+ jiffies in show_rcu_nocb_state()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in show_rcu_nocb_state(),
+which can break the build with CONFIG_WERROR=y / W=e:
+
+  In file included from kernel/rcu/tree.c:5123:
+  kernel/rcu/tree_nocb.h:1651:3: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+   1650 |                 jiffies - rdp->nocb_bypass_first,
+        |                 ~~~~~~~
+   1651 |                 jiffies - rdp->nocb_nobypass_last,
+        |                 ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.2.2.10/12, the evaluation of arguments in a
+function call is indeterminately sequenced, meaning any side effects in
+the arguments are unsequenced.
+
+Add a local variable to hold the value of jiffies before the function
+call so that there are no unsequenced side effects, clearing up the
+warning.
+
+Cc: stable@vger.kernel.org
+Fixes: f7a81b12d6af ("rcu/nocb: Print no-CBs diagnostics when rcutorture writer unduly delayed")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2192
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-rcu-tree_nocb-wunsequenced-v1-1-057996a86f0e@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ kernel/rcu/tree_nocb.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 42b7f0d4d4d8..2a0141fd8d8f 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -1644,6 +1644,7 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
+ 	struct rcu_segcblist *rsclp = &rdp->cblist;
+ 	bool waslocked;
+ 	bool wassleep;
++	unsigned long j;
+ 
+ 	if (rdp->nocb_gp_rdp == rdp)
+ 		show_rcu_nocb_gp_state(rdp);
+@@ -1655,6 +1656,7 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
+ 
+ 	sprintf(bufw, "%ld", rsclp->gp_seq[RCU_WAIT_TAIL]);
+ 	sprintf(bufr, "%ld", rsclp->gp_seq[RCU_NEXT_READY_TAIL]);
++	j = jiffies;
+ 	pr_info("   CB %d^%d->%d %c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
+ 		rdp->cpu, rdp->nocb_gp_rdp->cpu,
+ 		nocb_next_rdp ? nocb_next_rdp->cpu : -1,
+@@ -1663,8 +1665,8 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
+ 		"lL"[raw_spin_is_locked(&rdp->nocb_lock)],
+ 		"sS"[!!rdp->nocb_cb_sleep],
+ 		".W"[swait_active(&rdp->nocb_cb_wq)],
+-		jiffies - rdp->nocb_bypass_first,
+-		jiffies - rdp->nocb_nobypass_last,
++		j - rdp->nocb_bypass_first,
++		j - rdp->nocb_nobypass_last,
+ 		rdp->nocb_nobypass_count,
+ 		".D"[rcu_segcblist_ready_cbs(rsclp)],
+ 		".W"[!rcu_segcblist_segempty(rsclp, RCU_WAIT_TAIL)],
+-- 
+2.56.0
+

@@ -1,0 +1,49 @@
+From 7e36e6c1c9d1abe9f59017f98f8754397822dbb2 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sat, 14 Nov 2026 21:30:07 -0700
+Subject: [PATCH 13/28] SUBMITTED: mptcp: Avoid unsequenced accesses to jiffies
+ in mptcp_reset_tout_timer()
+
+After a recent improvement in clang to warn on unsequenced accesses to
+volatile variables [1], an instance appears in mptcp_reset_tout_timer(),
+which can break the build with CONFIG_WERROR=y / W=e:
+
+  net/mptcp/protocol.c:3044:20: error: unsequenced accesses to volatile qualified 'jiffies' [-Werror,-Wunsequenced]
+   3044 |                         tcp_jiffies32 + jiffies + mptcp_close_timeout(sk);
+        |                         ~~~~~~~~~~~~~   ^
+
+Per C11 5.1.2.3.2, accessing a volatile object is a side effect. Per C11
+6.5.2, unsequenced side effects on the same scalar object are undefined
+behavior. Per C11 6.5.3, unless otherwise specified, side effects and
+value computations of subexpressions are unsequenced within expressions.
+
+Add an explicit sequence point by splitting the addition expression in
+half, eliminating the undefined behavior and clearing up the warning.
+
+Cc: stable@vger.kernel.org
+Fixes: 76a13b315709 ("mptcp: invoke MP_FAIL response when needed")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2193
+Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
+Link: https://patch.msgid.link/20261114-mptcp-wunsequenced-v1-1-707a73a6c172@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ net/mptcp/protocol.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 7b08b5899ef3..f98ea36356e8 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2803,7 +2803,8 @@ void mptcp_reset_tout_timer(struct mptcp_sock *msk, unsigned long fail_tout)
+ 		return;
+ 
+ 	close_timeout = (unsigned long)inet_csk(sk)->icsk_mtup.probe_timestamp -
+-			tcp_jiffies32 + jiffies + TCP_TIMEWAIT_LEN;
++			tcp_jiffies32;
++	close_timeout += jiffies + TCP_TIMEWAIT_LEN;
+ 
+ 	/* the close timeout takes precedence on the fail one, and here at least one of
+ 	 * them is active
+-- 
+2.56.0
+

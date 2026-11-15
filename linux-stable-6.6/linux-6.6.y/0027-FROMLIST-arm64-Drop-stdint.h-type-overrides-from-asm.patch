@@ -1,7 +1,7 @@
-From d0ee9d1c60945bef9f0537d557c7835788018f3e Mon Sep 17 00:00:00 2001
+From 6aed8be2369a27c8cc67a1ba7e347a5a334f9c13 Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Thu, 29 Oct 2026 14:50:23 +0100
-Subject: [PATCH 18/19] FROMLIST: arm64: Drop stdint.h type overrides from
+Subject: [PATCH 27/28] FROMLIST: arm64: Drop stdint.h type overrides from
  asm/neon-intrinsics.h
 
 None of the users of NEON intrinsics include <linux/types.h> anymore,
