@@ -1,7 +1,7 @@
 From 7c7e38617d5d75233c80152bd194f64986026d4b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 5 Oct 2026 12:32:59 +0200
-Subject: [PATCH 15/35] FROMGIT: wifi: brcmsmac: Adjust txpwrindex value in
+Subject: [PATCH 15/36] FROMGIT: wifi: brcmsmac: Adjust txpwrindex value in
  nphy_ipa_rxcal_gaintbl_2GHz
 
 After a recent change in clang to warn on signed char conversions within
@@ -46,5 +46,5 @@ index 42e7bc67e914..930f22418a4c 100644
  	{0, 0, 0, 0, 0, 20},
  	{0, 0, 0, 3, 0, 20},
 -- 
-2.56.0
+2.56.1
 

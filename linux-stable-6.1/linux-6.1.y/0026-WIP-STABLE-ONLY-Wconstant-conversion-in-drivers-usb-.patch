@@ -1,7 +1,7 @@
-From 92d061a2bb666db09185f4cc43554c0539e7f226 Mon Sep 17 00:00:00 2001
+From 7aed82a6b6c3100c5cfecc80031eb36bac39dfa8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 18 Sep 2026 12:11:20 -0700
-Subject: [PATCH 25/35] WIP: STABLE-ONLY: -Wconstant-conversion in
+Subject: [PATCH 26/36] WIP: STABLE-ONLY: -Wconstant-conversion in
  drivers/usb/misc/sisusbvga/sisusb.c
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -46,5 +46,5 @@ index 8ed803c4a251..563c64e4be3b 100644
  		0x77, 0x77, 0x44, 0x44,
  		0x00, 0x00, 0x00, 0x00,
 -- 
-2.56.0
+2.56.1
 

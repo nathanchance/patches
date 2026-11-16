@@ -1,7 +1,7 @@
-From 365c1c7e6a45b5f9cb5c8baa733aa81c9a23fe5f Mon Sep 17 00:00:00 2001
+From 2bcfe7378cd21b49f63114309eeced83c849c597 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 18 Sep 2026 12:14:32 -0700
-Subject: [PATCH 26/35] WIP: STABLE-ONLY: -Wconstant-conversion in
+Subject: [PATCH 27/36] WIP: STABLE-ONLY: -Wconstant-conversion in
  include/uapi/linux/ax25.h
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
@@ -23,5 +23,5 @@ index b496b9d8452f..f95e7fdf6143 100644
  
  struct sockaddr_ax25 {
 -- 
-2.56.0
+2.56.1
 

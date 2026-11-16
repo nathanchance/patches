@@ -1,7 +1,7 @@
 From 18105391ca48271f388811e1e7fb5b48ac85ea4e Mon Sep 17 00:00:00 2001
 From: Steven Rostedt <rostedt@goodmis.org>
 Date: Sun, 5 Jan 2025 11:22:13 -0500
-Subject: [PATCH 10/35] UPSTREAM: scripts/sorttable: Remove unused write
+Subject: [PATCH 10/36] UPSTREAM: scripts/sorttable: Remove unused write
  functions
 
 The code of sorttable.h was copied from the recordmcount.h  which defined
@@ -93,5 +93,5 @@ index fba40e99f354..4f3b35def95e 100644
  	default:
  		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
 -- 
-2.56.0
+2.56.1
 

@@ -1,7 +1,7 @@
 From 3d5d6f47baeb9fbfcd72ed4742fee36c92aa666b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 18 Jul 2023 14:44:19 -0700
-Subject: [PATCH 02/35] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
+Subject: [PATCH 02/36] UPSTREAM: drm/v3d: Avoid -Wconstant-logical-operand in
  nsecs_to_jiffies_timeout()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -52,5 +52,5 @@ index c1e389635de8..91ea0a80879a 100644
  		return MAX_JIFFY_OFFSET;
  
 -- 
-2.56.0
+2.56.1
 

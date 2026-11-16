@@ -1,7 +1,7 @@
 From 532253881ccdd4636537c35b7a9851f458edfff1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Thu, 22 Aug 2024 17:05:17 -0700
-Subject: [PATCH 07/35] UPSTREAM: ARM: imx: Annotate imx7d_enet_init() as
+Subject: [PATCH 07/36] UPSTREAM: ARM: imx: Annotate imx7d_enet_init() as
  __init
 
 After a recent LLVM change [1] that deduces __cold on functions that
@@ -39,5 +39,5 @@ index 6fdd06bcf988..43cc292f078d 100644
  	imx7d_enet_phy_init();
  	imx7d_enet_clk_sel();
 -- 
-2.56.0
+2.56.1
 

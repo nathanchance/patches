@@ -1,7 +1,7 @@
-From 5f430199960ed255f25bc92874354f05f537d6cb Mon Sep 17 00:00:00 2001
+From c6c2c82ff16cbebf3e49b486c74f8b07fb3cca6a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Oct 2026 12:16:02 -0700
-Subject: [PATCH 34/35] HACK: LLVM-MAIN: arm64: Temporarily detach xor-neon.o
+Subject: [PATCH 35/36] HACK: LLVM-MAIN: arm64: Temporarily detach xor-neon.o
  from the build
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/2185
@@ -68,5 +68,5 @@ index d1c2254e4fd1..48cc16cf19df 100644
  lib-$(CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE) += uaccess_flushcache.o
  
 -- 
-2.56.0
+2.56.1
 

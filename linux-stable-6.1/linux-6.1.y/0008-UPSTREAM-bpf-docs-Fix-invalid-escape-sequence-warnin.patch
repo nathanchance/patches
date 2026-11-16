@@ -1,7 +1,7 @@
 From 13a602e0ebfa2028c206d0a1ec7cd4e4a8232e07 Mon Sep 17 00:00:00 2001
 From: Vishal Chourasia <vishalc@linux.ibm.com>
 Date: Tue, 29 Aug 2023 13:19:31 +0530
-Subject: [PATCH 08/35] UPSTREAM: bpf, docs: Fix invalid escape sequence
+Subject: [PATCH 08/36] UPSTREAM: bpf, docs: Fix invalid escape sequence
  warnings in bpf_doc.py
 
 The script bpf_doc.py generates multiple SyntaxWarnings related to invalid
@@ -212,5 +212,5 @@ index c2da6ed32104..e98a738e6960 100755
                      one_arg += '** '
                  one_arg += '*{}*\\ **'.format(a['name'])
 -- 
-2.56.0
+2.56.1
 
