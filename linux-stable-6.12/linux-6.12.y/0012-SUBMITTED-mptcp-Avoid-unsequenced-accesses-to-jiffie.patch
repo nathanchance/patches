@@ -1,7 +1,7 @@
-From 8eb39ba1923db567370d7cbba87b35967cfac157 Mon Sep 17 00:00:00 2001
+From efe17621844e2539d44a5d8b79834560052ecae9 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:30:07 -0700
-Subject: [PATCH 12/27] SUBMITTED: mptcp: Avoid unsequenced accesses to jiffies
+Subject: [PATCH 12/28] SUBMITTED: mptcp: Avoid unsequenced accesses to jiffies
  in mptcp_reset_tout_timer()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -45,5 +45,5 @@ index ed41368392c9..839e81e9f65a 100644
  	/* the close timeout takes precedence on the fail one, and here at least one of
  	 * them is active
 -- 
-2.56.0
+2.56.1
 

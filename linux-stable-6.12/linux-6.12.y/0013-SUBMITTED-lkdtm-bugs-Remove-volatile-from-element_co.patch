@@ -1,7 +1,7 @@
-From d18cf1efa86d6cd6461c440c38941d9aead59063 Mon Sep 17 00:00:00 2001
+From dc2d17335159d7a51a1de54778138478e5368e9a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:35:33 -0700
-Subject: [PATCH 13/27] SUBMITTED: lkdtm/bugs: Remove volatile from
+Subject: [PATCH 13/28] SUBMITTED: lkdtm/bugs: Remove volatile from
  element_count
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -55,5 +55,5 @@ index 376047beea3d..8e26a8962146 100644
  	if (!inst) {
  		pr_err("FAIL: could not allocate test struct!\n");
 -- 
-2.56.0
+2.56.1
 

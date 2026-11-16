@@ -1,7 +1,7 @@
-From 640199004a06105ef03bb8d8e99a9b2afbf98724 Mon Sep 17 00:00:00 2001
+From 284b3c89f154d4e1c769743ebca1712395ff4fcb Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:41:48 -0700
-Subject: [PATCH 17/27] SUBMITTED: floppy: Avoid unsequenced accesses to
+Subject: [PATCH 17/28] SUBMITTED: floppy: Avoid unsequenced accesses to
  jiffies in show_floppy()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -52,5 +52,5 @@ index 56e9901b4b46..353cf4a4b402 100644
  
  	pr_info("timeout_message=%s\n", timeout_message);
 -- 
-2.56.0
+2.56.1
 

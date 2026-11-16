@@ -1,7 +1,7 @@
-From 6ff1fd58f7ee0466d8560f4022a51c9f45e9476f Mon Sep 17 00:00:00 2001
+From fd1ccd335e46a79e8024735b826da071a3f6478f Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Oct 2026 20:28:02 -0700
-Subject: [PATCH 27/27] HACK: LONGTERM: riscv: Remove '__meminit' from
+Subject: [PATCH 28/28] HACK: LONGTERM: riscv: Remove '__meminit' from
  create_p*_mapping()
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/2170
@@ -83,5 +83,5 @@ index e52f7dabb370..1b707f5beddc 100644
  {
  	pgd_next_t *nextp;
 -- 
-2.56.0
+2.56.1
 
