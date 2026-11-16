@@ -1,7 +1,7 @@
 From 4dfc2f2083453682bfd5b02017836711839117da Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:19:52 -0700
-Subject: [PATCH 10/28] SUBMITTED: sched/topology: Avoid unsequenced accesses
+Subject: [PATCH 10/29] SUBMITTED: sched/topology: Avoid unsequenced accesses
  to jiffies in sd_init()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -73,5 +73,5 @@ index 9fa77e7a6801..05aea9e43ad9 100644
  	sd_span = sched_domain_span(sd);
  	cpumask_and(sd_span, cpu_map, tl->mask(cpu));
 -- 
-2.56.0
+2.56.1
 

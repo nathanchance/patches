@@ -1,7 +1,7 @@
 From 3fa829dea797dfe9d6068d33cae34b54d68dff0c Mon Sep 17 00:00:00 2001
 From: Kees Cook <kees@kernel.org>
 Date: Thu, 12 Dec 2024 17:28:06 -0800
-Subject: [PATCH 04/28] UPSTREAM: fortify: Hide run-time copy size from value
+Subject: [PATCH 04/29] UPSTREAM: fortify: Hide run-time copy size from value
  range tracking
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -159,5 +159,5 @@ index f7e1895367fa..c0cd49d367c4 100644
  
  /*
 -- 
-2.56.0
+2.56.1
 

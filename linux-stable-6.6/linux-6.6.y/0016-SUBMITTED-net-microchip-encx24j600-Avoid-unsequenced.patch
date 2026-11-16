@@ -1,7 +1,7 @@
-From 1d6d50a942e37c39369038942f4134f4a36402e1 Mon Sep 17 00:00:00 2001
+From e955f8930ce8927079a2dbc442c10a99fa5f0a0a Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:38:26 -0700
-Subject: [PATCH 16/28] SUBMITTED: net: microchip: encx24j600: Avoid
+Subject: [PATCH 16/29] SUBMITTED: net: microchip: encx24j600: Avoid
  unsequenced accesses to jiffies in encx24j600_tx()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -49,5 +49,5 @@ index d7c8aa77ec75..53b08f252220 100644
  	dev->stats.tx_errors++;
  	netif_wake_queue(dev);
 -- 
-2.56.0
+2.56.1
 

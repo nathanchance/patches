@@ -1,7 +1,7 @@
-From cc509ecd9e390f0f22bf78d8e75a7036fee20c0a Mon Sep 17 00:00:00 2001
+From b5fb27657d8e9b3aa3a67bf25ecff15f57f973ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Fri, 30 Oct 2026 20:36:00 -0700
-Subject: [PATCH 28/28] HACK: LONGTERM: riscv: Remove '__init' from
+Subject: [PATCH 29/29] HACK: LONGTERM: riscv: Remove '__init' from
  create_p*_mapping()
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/2170
@@ -83,5 +83,5 @@ index 70d06dfa2a86..68e6b34fb9a9 100644
  				      phys_addr_t sz, pgprot_t prot)
  {
 -- 
-2.56.0
+2.56.1
 
