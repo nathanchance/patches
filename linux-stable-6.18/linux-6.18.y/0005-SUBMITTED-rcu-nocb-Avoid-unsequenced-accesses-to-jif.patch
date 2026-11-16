@@ -1,7 +1,7 @@
-From f7e1c91c7e9277604f7d99cc5917e30f1fbcd53d Mon Sep 17 00:00:00 2001
+From d56abde4929177d300878614c9a3e59c34a3651d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:26:10 -0700
-Subject: [PATCH 05/18] SUBMITTED: rcu/nocb: Avoid unsequenced accesses to
+Subject: [PATCH 05/19] SUBMITTED: rcu/nocb: Avoid unsequenced accesses to
  jiffies in show_rcu_nocb_state()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -67,5 +67,5 @@ index e6cd56603cad..22dfe89c670d 100644
  		".D"[rcu_segcblist_ready_cbs(rsclp)],
  		rcu_segcblist_segempty(rsclp, RCU_DONE_TAIL) ? "" : bufd,
 -- 
-2.56.0
+2.56.1
 

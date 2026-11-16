@@ -1,7 +1,7 @@
-From 1122c61b759ebe35ec1730e119d5eed2f83e82fc Mon Sep 17 00:00:00 2001
+From ccd9a71b1e621c9b342b815caea7b7de5c79410c Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Tue, 21 Mar 2023 11:13:46 -0700
-Subject: [PATCH 15/18] HACK: LONGTERM: powerpc: Do not use '-mcpu=440' with
+Subject: [PATCH 16/19] HACK: LONGTERM: powerpc: Do not use '-mcpu=440' with
  clang
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1814
@@ -23,5 +23,5 @@ index 4c321a8ea896..8098c3a4c1c9 100644
  config 464_CPU
  	bool "464 (44x family)"
 -- 
-2.56.0
+2.56.1
 

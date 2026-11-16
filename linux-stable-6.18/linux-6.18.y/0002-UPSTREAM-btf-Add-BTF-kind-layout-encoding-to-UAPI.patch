@@ -1,7 +1,7 @@
 From 6b74c49cbbbd930895c8813a8fc378a95b7bf48b Mon Sep 17 00:00:00 2001
 From: Alan Maguire <alan.maguire@oracle.com>
 Date: Thu, 26 Mar 2026 14:54:36 +0000
-Subject: [PATCH 02/18] UPSTREAM: btf: Add BTF kind layout encoding to UAPI
+Subject: [PATCH 02/19] UPSTREAM: btf: Add BTF kind layout encoding to UAPI
 
 BTF kind layouts provide information to parse BTF kinds. By separating
 parsing BTF from using all the information it provides, we allow BTF
@@ -95,5 +95,5 @@ index 266d4ffa6c07..638615ebddc2 100644
  
  /* Max # of type identifier */
 -- 
-2.56.0
+2.56.1
 

@@ -1,7 +1,7 @@
 From 281e053d32a190f415ff003ebe3f7a94a064a3ec Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:19:52 -0700
-Subject: [PATCH 03/18] SUBMITTED: sched/topology: Avoid unsequenced accesses
+Subject: [PATCH 03/19] SUBMITTED: sched/topology: Avoid unsequenced accesses
  to jiffies in sd_init()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -71,5 +71,5 @@ index 35478aa2536f..05fcac727188 100644
  	WARN_ONCE((sd->flags & (SD_SHARE_CPUCAPACITY | SD_ASYM_CPUCAPACITY)) ==
  		  (SD_SHARE_CPUCAPACITY | SD_ASYM_CPUCAPACITY),
 -- 
-2.56.0
+2.56.1
 
