@@ -1,4 +1,4 @@
-From d9a6629259e03d4b41da139fc9c5661d04a76ad0 Mon Sep 17 00:00:00 2001
+From 4e1c548cc85f16859819e96d1a2e5fba8bc2781b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:30:07 -0700
 Subject: [PATCH 06/19] SUBMITTED: mptcp: Avoid unsequenced accesses to jiffies
@@ -31,7 +31,7 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index df09dcfd15ce..2602339aa2be 100644
+index fdd4c7d87775..decc3db354c7 100644
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
 @@ -2799,7 +2799,8 @@ void mptcp_reset_tout_timer(struct mptcp_sock *msk, unsigned long fail_tout)

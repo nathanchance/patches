@@ -1,4 +1,4 @@
-From 0e16a8f200d2eba5d3d6a149981e798293f7cc31 Mon Sep 17 00:00:00 2001
+From 0d844fa6df6becfbb93db76b217bbccca6a232a0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 8 Jun 2026 20:36:25 -0700
 Subject: [PATCH 01/19] UPSTREAM: MIPS: lib: Remove '.hidden' for local symbols
@@ -69,7 +69,7 @@ index 79405c32cc85..ab087406da66 100644
  
  #ifdef CONFIG_CPU_NO_LOAD_STORE_LR
 
-base-commit: 1cdda838e8475edf89b73ff0cc952005dd0b1fa7
+base-commit: fd7cfd39c88596fec816639ad83cbf3e9d316372
 -- 
 2.56.1
 
