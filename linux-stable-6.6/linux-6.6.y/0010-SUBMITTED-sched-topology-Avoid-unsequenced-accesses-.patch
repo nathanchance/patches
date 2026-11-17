@@ -1,6 +1,6 @@
-From 4dfc2f2083453682bfd5b02017836711839117da Mon Sep 17 00:00:00 2001
+From 9468a5210d299dcfcee7c50fa96d7485c040d67d Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Sat, 14 Nov 2026 21:19:52 -0700
+Date: Mon, 16 Nov 2026 13:55:26 -0700
 Subject: [PATCH 10/29] SUBMITTED: sched/topology: Avoid unsequenced accesses
  to jiffies in sd_init()
 
@@ -31,47 +31,57 @@ expressions in a designated initializer is indeterminately sequenced
 relative to each other, meaning any side effects in the initialization
 list are unsequenced.
 
-Move the initialization of these fields outside the designated
-initializer to place sequence points between the accesses to jiffies,
-clearing up the warning.
+Add a local variable to hold the value of jiffies before the designated
+initializer so that there are no unsequenced side effects while using a
+consistent value, clearing up the warning.
 
 Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2190
 Fixes: 2b4cfe64dee0 ("sched/numa: Initialize newidle balance stats in sd_numa_init()")
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261114-topology-wunsequenced-v1-1-686a36fe61f5@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- kernel/sched/topology.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/topology.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 9fa77e7a6801..05aea9e43ad9 100644
+index 9fa77e7a6801..a396a3836e3a 100644
 --- a/kernel/sched/topology.c
 +++ b/kernel/sched/topology.c
-@@ -1598,7 +1598,6 @@ sd_init(struct sched_domain_topology_level *tl,
+@@ -1561,6 +1561,7 @@ sd_init(struct sched_domain_topology_level *tl,
+ 	struct sched_domain *sd = *per_cpu_ptr(sdd->sd, cpu);
+ 	int sd_id, sd_weight, sd_flags = 0;
+ 	struct cpumask *sd_span;
++	unsigned long j;
+ 
+ #ifdef CONFIG_NUMA
+ 	/*
+@@ -1577,6 +1578,7 @@ sd_init(struct sched_domain_topology_level *tl,
+ 			"wrong sd_flags in topology description\n"))
+ 		sd_flags &= TOPOLOGY_SD_FLAGS;
+ 
++	j = jiffies;
+ 	*sd = (struct sched_domain){
+ 		.min_interval		= sd_weight,
+ 		.max_interval		= 2*sd_weight,
+@@ -1598,7 +1600,7 @@ sd_init(struct sched_domain_topology_level *tl,
  					| sd_flags
  					,
  
 -		.last_balance		= jiffies,
++		.last_balance		= j,
  		.balance_interval	= sd_weight,
  
  		/* 50% success rate */
-@@ -1607,12 +1606,13 @@ sd_init(struct sched_domain_topology_level *tl,
+@@ -1607,7 +1609,7 @@ sd_init(struct sched_domain_topology_level *tl,
  		.newidle_ratio		= 512,
  
  		.max_newidle_lb_cost	= 0,
 -		.last_decay_max_lb_cost	= jiffies,
++		.last_decay_max_lb_cost	= j,
  		.child			= child,
  #ifdef CONFIG_SCHED_DEBUG
  		.name			= tl->name,
- #endif
- 	};
-+	sd->last_balance = jiffies;
-+	sd->last_decay_max_lb_cost = jiffies;
- 
- 	sd_span = sched_domain_span(sd);
- 	cpumask_and(sd_span, cpu_map, tl->mask(cpu));
 -- 
 2.56.1
 
