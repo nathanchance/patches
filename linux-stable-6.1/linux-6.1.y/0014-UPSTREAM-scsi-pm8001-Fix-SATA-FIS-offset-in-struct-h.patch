@@ -1,7 +1,7 @@
-From acb2c822965ff7fbc5e1f98b978034af1ccbe436 Mon Sep 17 00:00:00 2001
+From 9813984890e5576653fb276f7a6dbdf10d72dcf8 Mon Sep 17 00:00:00 2001
 From: Bart Van Assche <bvanassche@acm.org>
 Date: Mon, 31 Aug 2026 10:48:21 -0700
-Subject: [PATCH 14/36] FROMGIT: scsi: pm8001: Fix SATA FIS offset in struct
+Subject: [PATCH 14/37] UPSTREAM: scsi: pm8001: Fix SATA FIS offset in struct
  hw_event_resp
 
 In struct hw_event_resp, sas_identify was defined using struct
@@ -36,7 +36,7 @@ Fixes: f5860992db55 ("[SCSI] pm80xx: Added SPCv/ve specific hardware functionali
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Link: https://patch.msgid.link/31963d53810f42970447e78ef46030ab13d2e91f.1788198434.git.bvanassche@acm.org
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-Link: https://git.kernel.org/mkp/scsi/c/cdc97921de02a0c1a8324afa03e8b3e30a72bbe6
+Link: https://git.kernel.org/linus/cdc97921de02a0c1a8324afa03e8b3e30a72bbe6
 ---
  drivers/scsi/pm8001/pm8001_defs.h |  98 +++++++++++++++++++++++++++++
  drivers/scsi/pm8001/pm8001_hwi.c  |   2 +-

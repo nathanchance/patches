@@ -1,7 +1,7 @@
-From 7c7e38617d5d75233c80152bd194f64986026d4b Mon Sep 17 00:00:00 2001
+From ef612d5f5df0ec82e7b5ddee5cfabf5538e661a7 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 5 Oct 2026 12:32:59 +0200
-Subject: [PATCH 15/36] FROMGIT: wifi: brcmsmac: Adjust txpwrindex value in
+Subject: [PATCH 15/37] UPSTREAM: wifi: brcmsmac: Adjust txpwrindex value in
  nphy_ipa_rxcal_gaintbl_2GHz
 
 After a recent change in clang to warn on signed char conversions within
@@ -27,7 +27,6 @@ Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://git.kernel.org/wireless/wireless-next/c/f7463a9c99a506b3308a852f9aaaf2a26b659e95
 ---
  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

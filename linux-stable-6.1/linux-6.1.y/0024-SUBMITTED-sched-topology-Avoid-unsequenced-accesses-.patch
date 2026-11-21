@@ -1,7 +1,7 @@
-From b08d1614da489a5fbc33d113a27cb20ec8f79306 Mon Sep 17 00:00:00 2001
+From 9f6531048f250cb70f53d9018e87bae0a2a2d1bd Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Nov 2026 13:55:26 -0700
-Subject: [PATCH 16/36] SUBMITTED: sched/topology: Avoid unsequenced accesses
+Subject: [PATCH 24/37] SUBMITTED: sched/topology: Avoid unsequenced accesses
  to jiffies in sd_init()
 
 After a recent improvement in clang to warn on unsequenced accesses to
