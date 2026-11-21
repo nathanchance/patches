@@ -1,7 +1,7 @@
-From 62871c3a0d6c23d96ec34fda8473e9fa64ee79f1 Mon Sep 17 00:00:00 2001
+From 5c505ac4e05944853e4b8dfb40c950d06f12ac60 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Nov 2026 21:45:22 -0700
-Subject: [PATCH 16/28] SUBMITTED: qca_spi: Avoid unsequenced accesses to
+Subject: [PATCH 13/29] UPSTREAM: qca_spi: Avoid unsequenced accesses to
  jiffies in qcaspi_netdev_tx_timeout()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -26,8 +26,12 @@ Cc: stable@vger.kernel.org
 Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2197
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261115-qca_spi-wunsequenced-v2-1-8cf32f12d546@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://patch.msgid.link/20261115-qca_spi-wunsequenced-v2-1-8cf32f12d546@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://git.kernel.org/linus/695d0824cb6b27ff1a1cdeabb2d5138f00b15251
 ---
  drivers/net/ethernet/qualcomm/qca_spi.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

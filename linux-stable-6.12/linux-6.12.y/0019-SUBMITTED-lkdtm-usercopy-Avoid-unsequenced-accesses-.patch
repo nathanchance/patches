@@ -1,7 +1,7 @@
-From a4c9b5155e7b5a4b802e973729d9091ce0c96d1e Mon Sep 17 00:00:00 2001
+From 4a9ec0d8648ba7b96dd8d1df18c8e8628875f0af Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:37:31 -0700
-Subject: [PATCH 14/28] SUBMITTED: lkdtm/usercopy: Avoid unsequenced accesses
+Subject: [PATCH 19/29] SUBMITTED: lkdtm/usercopy: Avoid unsequenced accesses
  to cache_size in lkdtm_usercopy_init()
 
 After a recent improvement in clang to warn on unsequenced accesses to

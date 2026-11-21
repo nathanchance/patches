@@ -1,7 +1,7 @@
-From f185ea9f456da850c0cb7337a04dbaaaac8724cf Mon Sep 17 00:00:00 2001
+From 8380a2d5f01bcfd42f09a44a75111f32c5b189aa Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Nov 2026 20:37:57 -0700
-Subject: [PATCH 10/28] SUBMITTED: blk-throttle: Avoid unsequenced accesses to
+Subject: [PATCH 14/29] FROMGIT: blk-throttle: Avoid unsequenced accesses to
  jiffies in throtl_schedule_pending_timer()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -30,8 +30,11 @@ Cc: stable@vger.kernel.org
 Fixes: 69df0ab030c9 ("blk-throttle: separate out throtl_service_queue->pending_timer from throtl_data->dispatch_work")
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2191
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261115-blk-throttle-wunsequenced-v2-1-1d297c891b82@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Link: https://patch.msgid.link/20261115-blk-throttle-wunsequenced-v2-1-1d297c891b82@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://git.kernel.org/axboe/c/ae1171f38098098e88c13c38e462d27babb50038
 ---
  block/blk-throttle.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
