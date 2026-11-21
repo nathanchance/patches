@@ -1,7 +1,7 @@
-From 6e792a4bd77db34c6f708b057feb5154fbe3aca4 Mon Sep 17 00:00:00 2001
+From 5ff7f1db2e8fb510db0b2870d0271906ebf32c3b Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:35:33 -0700
-Subject: [PATCH 07/19] SUBMITTED: lkdtm/bugs: Remove volatile from
+Subject: [PATCH 11/19] SUBMITTED: lkdtm/bugs: Remove volatile from
  element_count
 
 After a recent improvement in clang to warn on unsequenced accesses to

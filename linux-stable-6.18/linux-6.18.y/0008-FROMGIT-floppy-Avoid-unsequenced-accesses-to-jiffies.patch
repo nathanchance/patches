@@ -1,8 +1,8 @@
-From f28a0cc8504020176fab266246405c566e945dc4 Mon Sep 17 00:00:00 2001
+From e316e86b6158f5925d6cc84599a481c365de7882 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:41:48 -0700
-Subject: [PATCH 11/19] SUBMITTED: floppy: Avoid unsequenced accesses to
- jiffies in show_floppy()
+Subject: [PATCH 08/19] FROMGIT: floppy: Avoid unsequenced accesses to jiffies
+ in show_floppy()
 
 After a recent improvement in clang to warn on unsequenced accesses to
 volatile variables [1], an instance appears in show_floppy(), which can
@@ -25,8 +25,10 @@ warning.
 Cc: stable@vger.kernel.org
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2198
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261114-floppy-wunsequenced-v1-1-a54dba6754c4@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20261114-floppy-wunsequenced-v1-1-a54dba6754c4@kernel.org
+Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Link: https://github.com/evdenis/linux-floppy/commit/c1a8feb71ba8613108b212c705a48e0e136d8c3a
 ---
  drivers/block/floppy.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)

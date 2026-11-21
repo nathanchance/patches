@@ -1,7 +1,7 @@
-From 4e1c548cc85f16859819e96d1a2e5fba8bc2781b Mon Sep 17 00:00:00 2001
+From 18f4421f6f4c656ae767c58f2db754ca1dc4eac1 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:30:07 -0700
-Subject: [PATCH 06/19] SUBMITTED: mptcp: Avoid unsequenced accesses to jiffies
+Subject: [PATCH 04/19] UPSTREAM: mptcp: Avoid unsequenced accesses to jiffies
  in mptcp_reset_tout_timer()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -24,8 +24,11 @@ Cc: stable@vger.kernel.org
 Fixes: 76a13b315709 ("mptcp: invoke MP_FAIL response when needed")
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2193
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261114-mptcp-wunsequenced-v1-1-707a73a6c172@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261114-mptcp-wunsequenced-v1-1-707a73a6c172@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://git.kernel.org/linus/728a2abd15a767f662a44030931ea7b2959b4e88
 ---
  net/mptcp/protocol.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)

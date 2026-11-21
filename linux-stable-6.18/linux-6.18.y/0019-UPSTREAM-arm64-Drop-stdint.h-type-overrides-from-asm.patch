@@ -1,7 +1,7 @@
-From d22ed7a22593eca1d9ba37579e8935c9e2693786 Mon Sep 17 00:00:00 2001
+From daf233d84b89bbfe94744209e875bbf5955e0c0e Mon Sep 17 00:00:00 2001
 From: Ard Biesheuvel <ardb@kernel.org>
 Date: Thu, 29 Oct 2026 14:50:23 +0100
-Subject: [PATCH 18/19] FROMLIST: arm64: Drop stdint.h type overrides from
+Subject: [PATCH 19/19] UPSTREAM: arm64: Drop stdint.h type overrides from
  asm/neon-intrinsics.h
 
 None of the users of NEON intrinsics include <linux/types.h> anymore,
@@ -17,7 +17,11 @@ for all NEON intrinsics code will no longer occur. So drop the pragma
 that disables them as well.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261029135020.272082-9-ardb+git@google.com
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://git.kernel.org/linus/a041bdbe1f3a8efa8a527a89c84d3771232b4942
 ---
  arch/arm64/include/asm/neon-intrinsics.h | 24 +++++-------------------
  1 file changed, 5 insertions(+), 19 deletions(-)

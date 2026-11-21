@@ -1,7 +1,7 @@
-From 0af09244f305ddbb7d9485a202955f48ed14cf0b Mon Sep 17 00:00:00 2001
+From 9e91c8a4b53d896eadf9de65433b42b317a78b64 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sat, 14 Nov 2026 21:26:10 -0700
-Subject: [PATCH 05/19] SUBMITTED: rcu/nocb: Avoid unsequenced accesses to
+Subject: [PATCH 03/19] UPSTREAM: rcu/nocb: Avoid unsequenced accesses to
  jiffies in show_rcu_nocb_state()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -29,8 +29,10 @@ Cc: stable@vger.kernel.org
 Fixes: f7a81b12d6af ("rcu/nocb: Print no-CBs diagnostics when rcutorture writer unduly delayed")
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2192
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261114-rcu-tree_nocb-wunsequenced-v1-1-057996a86f0e@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Joel Fernandes <jfern@kernel.org>
+Signed-off-by: Joel Fernandes <jfern@kernel.org>
+Link: https://git.kernel.org/linus/c3f98ff6309a29979e1867bc3c9d4172755ca122
 ---
  kernel/rcu/tree_nocb.h | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
