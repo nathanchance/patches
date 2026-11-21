@@ -1,7 +1,7 @@
-From e920d421317d2f7b46c79f30d711b037fe6a84d9 Mon Sep 17 00:00:00 2001
+From 09ad7b77fb3da7b1b95087839fe274ded3ea9a26 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Sun, 15 Nov 2026 14:18:07 -0700
-Subject: [PATCH 19/29] SUBMITTED: powerpc/xmon: Avoid unsequenced accesses to
+Subject: [PATCH 17/30] FROMGIT: powerpc/xmon: Avoid unsequenced accesses to
  tsk in show_task()
 
 After a recent improvement in clang to warn on unsequenced accesses to
@@ -32,17 +32,20 @@ Cc: stable@vger.kernel.org
 Fixes: a2305e3de819 ("powerpc: mark local variables around longjmp as volatile")
 Closes: https://github.com/ClangBuiltLinux/linux/issues/2199
 Link: https://github.com/llvm/llvm-project/commit/955715460eaf9188c241c74750637fc82dfcc423 [1]
-Link: https://patch.msgid.link/20261115-xmon-wunsequenced-v1-1-42ae3fe45bf4@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20261115-xmon-wunsequenced-v1-1-42ae3fe45bf4@kernel.org
+Link: https://git.kernel.org/powerpc/c/9ea01307e6c824eb0b8934d95d52bbacae17887d
 ---
  arch/powerpc/xmon/xmon.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
-index 1d815405a3b4..b6c35fce676a 100644
+index cfe3f682b492..354c5a7e3d3e 100644
 --- a/arch/powerpc/xmon/xmon.c
 +++ b/arch/powerpc/xmon/xmon.c
-@@ -3259,8 +3259,9 @@ memzcan(void)
+@@ -3246,8 +3246,9 @@ memzcan(void)
  		printf("%.8lx\n", a - mskip);
  }
  
